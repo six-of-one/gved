@@ -298,6 +298,8 @@ func genpfimage(maze *Maze) {
 	tbas := 0x800
 	var stamp *Stamp
 	stamp = itemGetStamp("ghost")
+	stamp.pnum = 3
+	fillstamp(stamp)
 
 	for stamp != nil {
 
