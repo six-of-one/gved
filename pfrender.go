@@ -311,16 +311,24 @@ func genpfimage(maze *Maze) {
 		wrfile, err := os.Create(wnam)
 		if err == nil {
 			png.Encode(wrfile,wimg)
-				}
+		}
 		defer wrfile.Close()
 		wcnt++
+		cnttw++
+		if cnttw == 1 {
+			stamp.pnum++;
+		}
 
 		tbas += 9
 		stamp.numbers = tilerange(tbas, 9)
 		fillstamp(stamp)
-		if tbas == 0x8fc {
-			stamp = nil
+		if cnttw == 28 {
+			cnttw = 0
+			tbas = 0x7f7
+			if stamp.pnum == 12 {
+				stamp = nil
 			}
+		}
 	}
 
 	if maze.flags&LFLAG4_WRAP_H > 0 {
