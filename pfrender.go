@@ -67,9 +67,6 @@ func genpfimage(maze *Maze) {
 	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
 	img := blankimage(8*2*32+32+extrax, 8*2*32+32+extray)
 
-	// counter for tiles - imprv - dont write dups
-	wcnt := 1
-
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
 
@@ -288,23 +285,38 @@ func genpfimage(maze *Maze) {
 
 			if stamp != nil {
 				writestamptoimage(img, stamp, x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
-// 24 pixels * 24 pixels - temp write out of all tiles
-				wimg := blankimage(24, 24)
-				writestamptoimage(wimg, stamp, 0, 0)
-				wnam := fmt.Sprintf("tl_%d.png",wcnt)
-				wnam = "tl.png"
-				wrfile, err := os.Create(wnam)
-				if err == nil {
-					png.Encode(wrfile,wimg)
-// /					savetopng(os, wimg)
-//  					log.Fatalf("Error creating file: %v", err)
-					 }
-				defer wrfile.Close()
-				wcnt++
 			}
 
 			if dots != 0 {
 				renderdots(img, x*16+16, y*16+16, dots)
+			}
+		}
+	}
+
+	// counter for tiles - imprv - dont write dups
+	wcnt := 1
+	tbas := 0x800
+	var stamp *Stamp
+	stamp = itemGetStamp("ghost")
+
+	for stamp != nil {
+
+// 24 pixels * 24 pixels - temp write out of all tiles
+		wimg := blankimage(24, 24)
+		writestamptoimage(wimg, stamp, 0, 0)
+		wnam := fmt.Sprintf("tl_%d.png",wcnt)
+		wnam = "tl.png"
+		wrfile, err := os.Create(wnam)
+		if err == nil {
+			png.Encode(wrfile,wimg)
+				}
+		defer wrfile.Close()
+		wcnt++
+
+		tbas += 9
+		stamp.numbers = tilerange(0x800, 9)
+		if tbas == 0x8f3 {
+			stamp = nil
 			}
 		}
 	}
