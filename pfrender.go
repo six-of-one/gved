@@ -2,7 +2,10 @@ package main
 
 import (
 	"image"
+	"image/png"
 	"math/rand"
+	"fmt"
+	"os"
 )
 
 // For testing
@@ -63,6 +66,9 @@ func genpfimage(maze *Maze) {
 
 	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
 	img := blankimage(8*2*32+32+extrax, 8*2*32+32+extray)
+
+	// counter for tiles - imprv - dont write dups
+	wcnt := 1
 
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
@@ -282,6 +288,18 @@ func genpfimage(maze *Maze) {
 
 			if stamp != nil {
 				writestamptoimage(img, stamp, x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
+// 24 pixels * 24 pixels - temp write out of all tiles
+				wimg := blankimage(24, 24)
+				writestamptoimage(wimg, stamp, 0, 0)
+				wnam := fmt.Sprintf("tl_%d.png",wcnt)
+				wrfile, err := os.Create(wnam)
+				if err == nil {
+					png.Encode(wrfile,wimg)
+// /					savetopng(os, wimg)
+//  					log.Fatalf("Error creating file: %v", err)
+					 }
+				defer wrfile.Close()
+				wcnt++
 			}
 
 			if dots != 0 {
