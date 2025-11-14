@@ -299,7 +299,7 @@ func genpfimage(maze *Maze) {
 	tbas := 0x800
 	var stamp *Stamp
 	stamp = itemGetStamp("ghost")
-	stamp.pnum = 1
+	stamp.pnum = 0
 	fillstamp(stamp)
 
 	for stamp != nil {
@@ -319,15 +319,17 @@ func genpfimage(maze *Maze) {
 			stamp.pnum++;
 		}
 
-		tbas += 9
-		stamp.numbers = tilerange(tbas, 9)
-		fillstamp(stamp)
+		if stamp.pnum < 12 {
+			tbas += 9
+			stamp.numbers = tilerange(tbas, 9)
+			fillstamp(stamp)
+		}
 		if cnttw == 28 {
 			cnttw = 0
 			tbas = 0x7f7
-			if stamp.pnum == 12 {
-				stamp = nil
-			}
+		}
+		if stamp.pnum == 12 {
+			stamp = nil
 		}
 	}
 
