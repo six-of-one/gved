@@ -295,10 +295,11 @@ func genpfimage(maze *Maze) {
 
 	// counter for tiles - imprv - dont write dups
 	wcnt := 1
+	cnttw := 1
 	tbas := 0x800
 	var stamp *Stamp
 	stamp = itemGetStamp("ghost")
-	stamp.pnum = 3
+	stamp.pnum = 1
 	fillstamp(stamp)
 
 	for stamp != nil {
