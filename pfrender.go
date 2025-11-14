@@ -292,6 +292,7 @@ func genpfimage(maze *Maze) {
 				wimg := blankimage(24, 24)
 				writestamptoimage(wimg, stamp, 0, 0)
 				wnam := fmt.Sprintf("tl_%d.png",wcnt)
+				wnam = "tl.png"
 				wrfile, err := os.Create(wnam)
 				if err == nil {
 					png.Encode(wrfile,wimg)
