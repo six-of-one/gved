@@ -13,6 +13,7 @@ var reFloorAdj = regexp.MustCompile(`^var(\d+)|(hwall)|(vwall)|(dwall)`)
 
 func dofloor(arg string) {
 	split := strings.Split(arg, "-")
+fmt.Printf("fs: %s",split)
 
 	var floorNum = -1
 	var floorColor = 0
@@ -51,8 +52,26 @@ func dofloor(arg string) {
 	// t := floorGetTiles(floorNum, floorAdj)
 	stamp := floorGetStamp(floorNum, floorAdj, floorColor)
 
-	img := blankimage(2*8, 2*8)
-	writestamptoimage(img, stamp, 0, 0)
+	img := blankimage(20*8, 20*8)
+	if floorColor > 0 {
+		for x := 0; x < 159; x = x +16 {
+		for y := 0; y < 159; y = y +16 {
+			writestamptoimage(img, stamp, x, y)
+		}
+		}
+	}
+	if floorColor == 0 {
+		img = blankimage(20*8*16, 20*8)
+		for floorColor < 16 {
+			stamp := floorGetStamp(floorNum, floorAdj, floorColor)
+			for x := 0; x < 159; x = x +16 {
+			for y := 0; y < 159; y = y +16 {
+				writestamptoimage(img, stamp, x + floorColor * 160, y)
+			}
+			}
+			floorColor++
+	}}
+
 	savetopng(opts.Output, img)
 }
 
