@@ -60,14 +60,25 @@ fmt.Printf("fs: %s",split)
 		}
 		}
 	}
+// floor loop - if -1 is passed, zoop out to ? floors
+	floop := 1
+// need to reset floor for inner loop design is to bang out each color for all floors, 0 - 9 floors
+	mfloorNum := floorNum
+	if (floorNum == -1) { floop = 10 }
+// if 0 passed as a floor color, loop out all valid colors, 0 - 15
 	if floorColor == 0 {
-		img = blankimage(20*8*16, 20*8)
+		img = blankimage(20*8*16, 20*8 * floop)
 		for floorColor < 16 {
-			stamp := floorGetStamp(floorNum, floorAdj, floorColor)
-			for x := 0; x < 159; x = x +16 {
-			for y := 0; y < 159; y = y +16 {
-				writestamptoimage(img, stamp, x + floorColor * 160, y)
-			}
+			subfloop := 0
+			floorNum = mfloorNum
+			for subfloop < floop {
+				stamp := floorGetStamp(floorNum, floorAdj, floorColor)
+				for x := 0; x < 159; x = x +16 {
+				for y := 0; y < 159; y = y +16 {
+					writestamptoimage(img, stamp, x + floorColor * 160, y + subfloop * 160)
+				}}
+				subfloop++
+			floorNum++
 			}
 			floorColor++
 	}}

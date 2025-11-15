@@ -409,6 +409,7 @@ func genpfimage(maze *Maze) {
 		writile(stamp, tbas, tbaddr, 16)
 
 		stamp.trans0 = false
+// this fails miserably
 		stamp.ptype = "floor"
 		for i := 0x1011; i < 0x14b2; i += tbaddr {
 
