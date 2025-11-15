@@ -331,6 +331,15 @@ func genpfimage(maze *Maze) {
 			if tbas == 0xcfc { tbas += 4 }
 			if tbas == 0xdfc { tbas += 4 }
 			if tbas == 0xefc { tbas += 4 }
+// x7fc (F4 in gII, FFC here) starts a big skip - jump over 2x2s (walls, floors, etc) and big title pix
+			if tbas == 0xffc { tbas += 1975 }
+			if tbas == 0x18fc { tbas += 4 }
+			if tbas == 0x19fc { tbas += 4 }
+			if tbas == 0x1afc { tbas += 4 }
+// nother big jump
+			if tbas == 0x1c5c { tbas += 932 }
+			if tbas == 0x20fc { tbas += 4 }
+
 			stamp.numbers = tilerange(tbas, 9)
 			fillstamp(stamp)
 		}
