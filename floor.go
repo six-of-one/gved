@@ -62,12 +62,15 @@ fmt.Printf("fs: %s",split)
 		}
 		}
 	}
-// floor loop - if -1 is passed, zoop out to ? floors in a 2560 x 1600 grid
+// floor loop - if floor -1 or any invalid is passed, zoop out to ? floors in a 2560 x 1440 grid
 	floop := 1
-// need to reset floor for inner loop design is to bang out each color for all floors, 0 - 9 floors
-// this does include the -1, which produces ? results
+// need to reset floor for inner loop design is to bang out each color for all floors, 0 - 8 floors
+	if (floorNum == -1) {
+		floop = 9
+// in the default case of no floor input where -1 is set, 0 it, -1 floor is not valid
+		floorNum = 0
+	}
 	mfloorNum := floorNum
-	if (floorNum == -1) { floop = 10 }
 // if 0 passed as a floor color, loop out all valid colors, 0 - 15 in a row 2560 x 160
 	if floorColor == 0 {
 		img = blankimage(20*8*16, 20*8 * floop)
