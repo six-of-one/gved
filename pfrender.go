@@ -55,12 +55,13 @@ func copyedges(maze *Maze) {
 
 func writile(stamp *Stamp, tbas int, tbaddr int, sz int) {
 
+//	fmt.Printf("tbas pass %d\n",tbas)
 	stamp.numbers = tilerange(tbas, tbaddr)
 	fillstamp(stamp)
 
 // 24 pixels * 24 pixels - temp write out of all tiles
 // impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
-	wimg := blankimage(24, 24)
+	wimg := blankimage(sz, sz)
 	writestamptoimage(wimg, stamp, 0, 0)
 	wnam := fmt.Sprintf(".p%d/tl_%05d.png",stamp.pnum,tbas - 0x800)
 	wrfile, err := os.Create(wnam)
@@ -322,7 +323,7 @@ func genpfimage(maze *Maze) {
 
 	for stamp != nil {
 
-		writile(stamp, tbas, tbaddr, 24)
+//		writile(stamp, tbas, tbaddr, 24)
 
 		wcnt++
 // every loop, increase palette # to next till end
@@ -404,8 +405,10 @@ func genpfimage(maze *Maze) {
 		writile(stamp, tbas, tbaddr, 16)
 		tbas = 0xefc
 		writile(stamp, tbas, tbaddr, 16)
+		tbas = 0xffc
+		writile(stamp, tbas, tbaddr, 16)
 
-		for i := 0xffc; i < 0x14b2; i += tbaddr {
+		for i := 0x1011; i < 0x14b2; i += tbaddr {
 
 			writile(stamp, i, tbaddr, 16)
 		}
