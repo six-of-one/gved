@@ -297,6 +297,9 @@ func genpfimage(maze *Maze) {
 	wcnt := 1
 	cnttw := 1
 	tbas := 0x800
+// tb adder controls size of tile render, and mem skip to next tile
+// this could also control the render out 16x16, 24x24 or 32x32
+	tbaddr := 9
 	var stamp *Stamp
 	stamp = itemGetStamp("ghost")
 	stamp.pnum = 0
@@ -322,9 +325,11 @@ func genpfimage(maze *Maze) {
 		}
 
 		if stamp.pnum < 12 {
-			if tbas < 1351 { tbas += 9 }
-			if tbas > 1350 and tbas < 1445 { tbas += 6 }
+			if tbas < 1351 { tbaddr = 9 }
+			if tbas > 1350 and tbas < 1445 { tbaddr = 6 }
+			tbas += tbaddr
 
+// this is a series of skips around odd ball inserts of 2x2 in the 3x3 stamp set
 // 2 x 2s injected into 3 x 3s - later these need done in the 2 x 2 set
 			if tbas == 0x8fc { tbas += 4 }
 			if tbas == 0x9fc { tbas += 4 }
@@ -343,7 +348,7 @@ func genpfimage(maze *Maze) {
 			if tbas == 0x1c5c { tbas += 932 }
 			if tbas == 0x20fc { tbas += 4 }
 
-			stamp.numbers = tilerange(tbas, 9)
+			stamp.numbers = tilerange(tbas, tbaddr)
 			fillstamp(stamp)
 		}
 		if cnttw == 420 {
