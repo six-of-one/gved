@@ -53,6 +53,23 @@ func copyedges(maze *Maze) {
 	}
 }
 
+func writile(stamp *Stamp, tbas int, tbaddr int, sz int) {
+
+	stamp.numbers = tilerange(tbas, tbaddr)
+	fillstamp(stamp)
+
+// 24 pixels * 24 pixels - temp write out of all tiles
+// impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
+	wimg := blankimage(24, 24)
+	writestamptoimage(wimg, stamp, 0, 0)
+	wnam := fmt.Sprintf(".p%d/tl_%05d.png",stamp.pnum,tbas - 0x800)
+	wrfile, err := os.Create(wnam)
+	if err == nil {
+		png.Encode(wrfile,wimg)
+	}
+	wrfile.Close()
+}
+
 var foods = []string{"ifood1", "ifood2", "ifood3"}
 
 func genpfimage(maze *Maze) {
@@ -306,6 +323,11 @@ func genpfimage(maze *Maze) {
 
 	for stamp != nil {
 
+		writile(stamp, tbas, tbaddr, 24)
+/*
+		stamp.numbers = tilerange(tbas, tbaddr)
+		fillstamp(stamp)
+
 // 24 pixels * 24 pixels - temp write out of all tiles
 // impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
 		wimg := blankimage(24, 24)
@@ -316,6 +338,7 @@ func genpfimage(maze *Maze) {
 			png.Encode(wrfile,wimg)
 		}
 		wrfile.Close()
+*/
 		wcnt++
 		cnttw++
 // every loop, increase palette # to next till end
@@ -349,13 +372,24 @@ func genpfimage(maze *Maze) {
 			if tbas == 0x1bc3 { tbas += 4 }
 			if tbas == 0x1bfd { tbas += 3 }
 // nother big jump
-			if tbas == 0x1c5c { tbas += 932 }
-			if tbas == 0x20fc { tbas += 4 }
+//			if tbas == 0x1c48 { tbas += 920 }
+			if tbas == 0x18fc { tbas += 4 }
+			if tbas == 0x19fc { tbas += 4 }
+			if tbas == 0x1afc { tbas += 4 }
+			if tbas == 0x1bfc { tbas += 4 }
+			if tbas == 0x1cfc { tbas += 4 }
+			if tbas == 0x1dfc { tbas += 4 }
+			if tbas == 0x1efc { tbas += 4 }
 
-			stamp.numbers = tilerange(tbas, tbaddr)
-			fillstamp(stamp)
+			if tbas == 0x20fc { tbas += 4 }
+			if tbas == 0x21fc { tbas += 4 }
+			if tbas == 0x22fc { tbas += 4 }
+			if tbas == 0x23fc { tbas += 4 }
+			if tbas == 0x24fc { tbas += 4 }
+			if tbas == 0x25fc { tbas += 4 }
+			if tbas == 0x26fc { tbas += 4 }
 		}
-		if cnttw == 420 {
+		if cnttw == 620 {
 			cnttw = 0
 // dont neet cnttw unless we are writing a GiANT tileset
 			wcnt = 1
