@@ -311,7 +311,6 @@ func genpfimage(maze *Maze) {
 		wimg := blankimage(24, 24)
 		writestamptoimage(wimg, stamp, 0, 0)
 		wnam := fmt.Sprintf(".p%d/tl_%05d.png",stamp.pnum,tbas - 0x800)
-		fmt.Printf(".p%d/tl_%04X.png\n",stamp.pnum,tbas - 0x800)
 		wrfile, err := os.Create(wnam)
 		if err == nil {
 			png.Encode(wrfile,wimg)
@@ -325,8 +324,9 @@ func genpfimage(maze *Maze) {
 		}
 
 		if stamp.pnum < 12 {
-			if tbas < 1351 { tbaddr = 9 }
-			if tbas > 1350 and tbas < 1445 { tbaddr = 6 }
+			if tbas < 0x1b50 { tbaddr = 9 }
+			if tbas > 0x1b49 && tbas < 0x1c56 { tbaddr = 6 }
+//		fmt.Printf("tb adder %d\n",tbaddr)
 			tbas += tbaddr
 
 // this is a series of skips around odd ball inserts of 2x2 in the 3x3 stamp set
@@ -344,6 +344,8 @@ func genpfimage(maze *Maze) {
 			if tbas == 0x18fc { tbas += 4 }
 			if tbas == 0x19fc { tbas += 4 }
 			if tbas == 0x1afc { tbas += 4 }
+			if tbas == 0x1bc3 { tbas += 4 }
+			if tbas == 0x1bfd { tbas += 4 }
 // nother big jump
 			if tbas == 0x1c5c { tbas += 932 }
 			if tbas == 0x20fc { tbas += 4 }
