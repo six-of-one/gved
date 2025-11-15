@@ -324,10 +324,13 @@ func genpfimage(maze *Maze) {
 		}
 
 		if stamp.pnum < 12 {
-			if tbas < 0x1b50 { tbaddr = 9 }
-			if tbas > 0x1b49 && tbas < 0x1c56 { tbaddr = 6 }
+			tbaddr = 9
+			if tbas > 0x1b50 && tbas < 0x1c44 { tbaddr = 6 }
 //		fmt.Printf("tb adder %d\n",tbaddr)
+
 			tbas += tbaddr
+// special case of a 9 unit leading into a 6 unit
+			if tbas == 0x1b48 { tbaddr = 6 }
 
 // this is a series of skips around odd ball inserts of 2x2 in the 3x3 stamp set
 // 2 x 2s injected into 3 x 3s - later these need done in the 2 x 2 set
