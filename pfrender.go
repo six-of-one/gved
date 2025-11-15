@@ -322,12 +322,19 @@ func genpfimage(maze *Maze) {
 
 		if stamp.pnum < 12 {
 			tbas += 9
+// 2 x 2s injected into 3 x 3s - later these need done in the 2 x 2 set
+			if tbas == 0x8fc { tbas += 4 }
 			if tbas == 0x9fc { tbas += 4 }
 			if tbas == 0xafc { tbas += 4 }
+			if tbas == 0xbfc { tbas += 4 }
+// i sense a pattern here... wut up atariiiiiiii
+			if tbas == 0xcfc { tbas += 4 }
+			if tbas == 0xdfc { tbas += 4 }
+			if tbas == 0xefc { tbas += 4 }
 			stamp.numbers = tilerange(tbas, 9)
 			fillstamp(stamp)
 		}
-		if cnttw == 60 {
+		if cnttw == 220 {
 			cnttw = 0
 // back to start - 9 units, as it auto increments before the next load
 			tbas = 0x7f7
