@@ -312,7 +312,6 @@ func genpfimage(maze *Maze) {
 
 	// counter for tiles - imprv - dont write dups
 	wcnt := 1
-	cnttw := 1
 	tbas := 0x800
 // tb adder controls size of tile render, and mem skip to next tile
 // this could also control the render out 16x16, 24x24 or 32x32
@@ -357,7 +356,7 @@ func genpfimage(maze *Maze) {
 			if tbas == 0x1bc3 { tbas += 4 }
 			if tbas == 0x1bfd { tbas += 3 }
 // nother big jump
-//			if tbas == 0x1c48 { tbas += 920 }
+			if tbas == 0x1c48 { tbas += 391 }
 			if tbas == 0x18fc { tbas += 4 }
 			if tbas == 0x19fc { tbas += 4 }
 			if tbas == 0x1afc { tbas += 4 }
@@ -374,7 +373,7 @@ func genpfimage(maze *Maze) {
 			if tbas == 0x25fc { tbas += 4 }
 			if tbas == 0x26fc { tbas += 4 }
 		}
-		if wcnt == 620 {
+		if wcnt == 364 {
 			wcnt = 0
 // back to start - 9 units, as it auto increments before the next load
 			tbas = 0x7f7
@@ -384,6 +383,9 @@ func genpfimage(maze *Maze) {
 			stamp = nil
 		}
 	}
+
+	stamp = itemGetStamp("ghost")
+	stamp.pnum = 0
 
 	if maze.flags&LFLAG4_WRAP_H > 0 {
 		l := itemGetStamp("arrowleft")
