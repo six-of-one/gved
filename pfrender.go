@@ -324,25 +324,10 @@ func genpfimage(maze *Maze) {
 	for stamp != nil {
 
 		writile(stamp, tbas, tbaddr, 24)
-/*
-		stamp.numbers = tilerange(tbas, tbaddr)
-		fillstamp(stamp)
 
-// 24 pixels * 24 pixels - temp write out of all tiles
-// impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
-		wimg := blankimage(24, 24)
-		writestamptoimage(wimg, stamp, 0, 0)
-		wnam := fmt.Sprintf(".p%d/tl_%05d.png",stamp.pnum,tbas - 0x800)
-		wrfile, err := os.Create(wnam)
-		if err == nil {
-			png.Encode(wrfile,wimg)
-		}
-		wrfile.Close()
-*/
 		wcnt++
-		cnttw++
 // every loop, increase palette # to next till end
-		if cnttw == 1 {
+		if wcnt == 1 {
 			stamp.pnum++;
 		}
 
@@ -389,10 +374,8 @@ func genpfimage(maze *Maze) {
 			if tbas == 0x25fc { tbas += 4 }
 			if tbas == 0x26fc { tbas += 4 }
 		}
-		if cnttw == 620 {
-			cnttw = 0
-// dont neet cnttw unless we are writing a GiANT tileset
-			wcnt = 1
+		if wcnt == 620 {
+			wcnt = 0
 // back to start - 9 units, as it auto increments before the next load
 			tbas = 0x7f7
 		}
