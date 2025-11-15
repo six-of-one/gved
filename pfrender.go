@@ -384,8 +384,33 @@ func genpfimage(maze *Maze) {
 		}
 	}
 
-	stamp = itemGetStamp("ghost")
-	stamp.pnum = 0
+	pnum := 0
+	for pnum < 12 {
+
+		stamp = itemGetStamp("potion")
+		stamp.pnum = pnum
+		tbas = 0x8fc
+		tbaddr = 4
+		writile(stamp, tbas, tbaddr, 16)
+		tbas = 0x9fc
+		writile(stamp, tbas, tbaddr, 16)
+		tbas = 0xafc
+		writile(stamp, tbas, tbaddr, 16)
+		tbas = 0xbfc
+		writile(stamp, tbas, tbaddr, 16)
+		tbas = 0xcfc
+		writile(stamp, tbas, tbaddr, 16)
+		tbas = 0xdfc
+		writile(stamp, tbas, tbaddr, 16)
+		tbas = 0xefc
+		writile(stamp, tbas, tbaddr, 16)
+
+		for i := 0xffc; i < 0x14b2; i += tbaddr {
+
+			writile(stamp, i, tbaddr, 16)
+		}
+		pnum++
+	}
 
 	if maze.flags&LFLAG4_WRAP_H > 0 {
 		l := itemGetStamp("arrowleft")
