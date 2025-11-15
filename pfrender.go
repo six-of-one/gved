@@ -307,7 +307,7 @@ func genpfimage(maze *Maze) {
 // impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
 		wimg := blankimage(24, 24)
 		writestamptoimage(wimg, stamp, 0, 0)
-		wnam := fmt.Sprintf("tl_%d.png",wcnt)
+		wnam := fmt.Sprintf(".p%d/tl_%d.png",stamp.pnum,wcnt)
 		wrfile, err := os.Create(wnam)
 		if err == nil {
 			png.Encode(wrfile,wimg)
