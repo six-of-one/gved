@@ -307,7 +307,8 @@ func genpfimage(maze *Maze) {
 // impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
 		wimg := blankimage(24, 24)
 		writestamptoimage(wimg, stamp, 0, 0)
-		wnam := fmt.Sprintf(".p%d/tl_%04X.png",stamp.pnum,tbas - 0x800)
+		wnam := fmt.Sprintf(".p%d/tl_%05d.png",stamp.pnum,tbas - 0x800)
+		fmt.Printf(".p%d/tl_%04X.png\n",stamp.pnum,tbas - 0x800)
 		wrfile, err := os.Create(wnam)
 		if err == nil {
 			png.Encode(wrfile,wimg)
@@ -321,7 +322,9 @@ func genpfimage(maze *Maze) {
 		}
 
 		if stamp.pnum < 12 {
-			tbas += 9
+			if tbas < 1351 { tbas += 9 }
+			if tbas > 1350 and tbas < 1445 { tbas += 6 }
+
 // 2 x 2s injected into 3 x 3s - later these need done in the 2 x 2 set
 			if tbas == 0x8fc { tbas += 4 }
 			if tbas == 0x9fc { tbas += 4 }
@@ -332,7 +335,7 @@ func genpfimage(maze *Maze) {
 			if tbas == 0xdfc { tbas += 4 }
 			if tbas == 0xefc { tbas += 4 }
 // x7fc (F4 in gII, FFC here) starts a big skip - jump over 2x2s (walls, floors, etc) and big title pix
-			if tbas == 0xffc { tbas += 1974 }
+			if tbas == 0xffc { tbas += 2052 }
 			if tbas == 0x18fc { tbas += 4 }
 			if tbas == 0x19fc { tbas += 4 }
 			if tbas == 0x1afc { tbas += 4 }
