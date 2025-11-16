@@ -55,13 +55,66 @@ func dowall(arg string) {
 	}
 	fmt.Printf("Wall number: %d   color: %d   adj: %d\n", wallNum, wallColor, wallAdj)
 
+	img := blankimage(2*8, 2*8)
 	// t := floorGetTiles(floorNum, floorAdj)
 	if wallNum > -1	{
 		stamp := wallGetStamp(wallNum, wallAdj, wallColor)
 
-		img := blankimage(2*8, 2*8)
 		writestamptoimage(img, stamp, 0, 0)
-	}
+	} else {
+// on wallnum = -1 (default or invalid) write entire wall seq on top of sample floor
+		stamp := floorGetStamp(1, 0, 0)
+		img = blankimage(2*16 * 14, 2*16 * 8)
+		for x := 0; x < 447; x = x +16 {
+		for y := 0; y < 255; y = y +16 {
+			writestamptoimage(img, stamp, x, y)
+		}}
+
+// for all wallnum flavours, display each segment
+		for w := 0; w < 8; w++ {
+// 1 unit wall
+			stamp = wallGetStamp(w, 1, wallColor)
+			writestamptoimage(img, stamp, 8, 8 + w * 32)
+// end caps for Ս, ↄ, Ո, ⅽ
+			stamp = wallGetStamp(w, 2, wallColor)
+			writestamptoimage(img, stamp, 8 + 24, 8 + w * 32)
+			stamp = wallGetStamp(w, 8, wallColor)
+			writestamptoimage(img, stamp, 8 + 48, 8 + w * 32)
+			stamp = wallGetStamp(w, 64, wallColor)
+			writestamptoimage(img, stamp, 8 + 72, 8 + w * 32)
+			stamp = wallGetStamp(w, 16, wallColor)
+			writestamptoimage(img, stamp, 8 + 96, 8 + w * 32)
+// corners 🭿, 🭼, 🭽, 🭾
+			stamp = wallGetStamp(w, 10, wallColor)
+			writestamptoimage(img, stamp, 8 + 120, 8 + w * 32)
+			stamp = wallGetStamp(w, 18, wallColor)
+			writestamptoimage(img, stamp, 8 + 144, 8 + w * 32)
+			stamp = wallGetStamp(w, 80, wallColor)
+			writestamptoimage(img, stamp, 8 + 168, 8 + w * 32)
+			stamp = wallGetStamp(w, 72, wallColor)
+			writestamptoimage(img, stamp, 8 + 192, 8 + w * 32)
+// | and ─
+			stamp = wallGetStamp(w, 66, wallColor)
+			writestamptoimage(img, stamp, 8 + 216, 8 + w * 32)
+			stamp = wallGetStamp(w, 24, wallColor)
+			writestamptoimage(img, stamp, 8 + 240, 8 + w * 32)
+// ┼
+			stamp = wallGetStamp(w, 90, wallColor)
+			writestamptoimage(img, stamp, 8 + 264, 8 + w * 32)
+// t's: ┤, ┴, ├, ┬
+			stamp = wallGetStamp(w, 66 + 8, wallColor)
+			writestamptoimage(img, stamp, 8 + 288, 8 + w * 32)
+			stamp = wallGetStamp(w, 24 + 2, wallColor)
+			writestamptoimage(img, stamp, 8 + 312, 8 + w * 32)
+			stamp = wallGetStamp(w, 66 + 16, wallColor)
+			writestamptoimage(img, stamp, 8 + 336, 8 + w * 32)
+			stamp = wallGetStamp(w, 24 + 64, wallColor)
+			writestamptoimage(img, stamp, 8 + 360, 8 + w * 32)
+// 🮘
+			stamp = wallGetStamp(w, 255, wallColor)
+			writestamptoimage(img, stamp, 8 + 384, 8 + w * 32)
+			}
+		}
 
 	savetopng(opts.Output, img)
 }
