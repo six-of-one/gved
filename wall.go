@@ -94,45 +94,63 @@ func dowall(arg string) {
 // 1 unit wall
 			stamp = wallGetStamp(w, 1, wallColor)
 			writestamptoimage(img, stamp, 8, 8 + w * 32)
+// temp - remove all tehse
+waltile(stamp, 1, w)
 
 // end caps for Ս, ↄ, Ո, ⅽ
 			stamp = wallGetStamp(w, 2, wallColor)
 			writestamptoimage(img, stamp, 8 + 24, 8 + w * 32)
+waltile(stamp, 2, w)
 			stamp = wallGetStamp(w, 8, wallColor)
 			writestamptoimage(img, stamp, 8 + 48, 8 + w * 32)
+waltile(stamp, 8, w)
 			stamp = wallGetStamp(w, 64, wallColor)
 			writestamptoimage(img, stamp, 8 + 72, 8 + w * 32)
+waltile(stamp, 64, w)
 			stamp = wallGetStamp(w, 16, wallColor)
 			writestamptoimage(img, stamp, 8 + 96, 8 + w * 32)
+waltile(stamp, 16, w)
 // corners 🭿, 🭼, 🭽, 🭾
 			stamp = wallGetStamp(w, 10, wallColor)
 			writestamptoimage(img, stamp, 8 + 120, 8 + w * 32)
+waltile(stamp, 10, w)
 			stamp = wallGetStamp(w, 18, wallColor)
 			writestamptoimage(img, stamp, 8 + 144, 8 + w * 32)
+waltile(stamp, 18, w)
 			stamp = wallGetStamp(w, 80, wallColor)
 			writestamptoimage(img, stamp, 8 + 168, 8 + w * 32)
+waltile(stamp, 80, w)
 			stamp = wallGetStamp(w, 72, wallColor)
 			writestamptoimage(img, stamp, 8 + 192, 8 + w * 32)
+waltile(stamp, 72, w)
 // | and ─
 			stamp = wallGetStamp(w, 66, wallColor)
 			writestamptoimage(img, stamp, 8 + 216, 8 + w * 32)
+waltile(stamp, 66, w)
 			stamp = wallGetStamp(w, 24, wallColor)
 			writestamptoimage(img, stamp, 8 + 240, 8 + w * 32)
+waltile(stamp, 24, w)
 // ┼
 			stamp = wallGetStamp(w, 90, wallColor)
 			writestamptoimage(img, stamp, 8 + 264, 8 + w * 32)
+waltile(stamp, 90, w)
 // t's: ┤, ┴, ├, ┬
 			stamp = wallGetStamp(w, 66 + 8, wallColor)
 			writestamptoimage(img, stamp, 8 + 288, 8 + w * 32)
+waltile(stamp, 66+8, w)
 			stamp = wallGetStamp(w, 24 + 2, wallColor)
 			writestamptoimage(img, stamp, 8 + 312, 8 + w * 32)
+waltile(stamp, 24+2, w)
 			stamp = wallGetStamp(w, 66 + 16, wallColor)
 			writestamptoimage(img, stamp, 8 + 336, 8 + w * 32)
+waltile(stamp, 66+16, w)
 			stamp = wallGetStamp(w, 24 + 64, wallColor)
 			writestamptoimage(img, stamp, 8 + 360, 8 + w * 32)
+waltile(stamp, 24+64, w)
 // 🮘
 			stamp = wallGetStamp(w, 255, wallColor)
 			writestamptoimage(img, stamp, 8 + 384, 8 + w * 32)
+waltile(stamp, 255, w)
 			}
 		}
 
