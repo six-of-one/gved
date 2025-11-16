@@ -6,9 +6,6 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-
-	"image/png"
-	"os"
 )
 
 var reWallNum = regexp.MustCompile(`^wall(\d+)$`)
@@ -16,6 +13,10 @@ var reWallColor = regexp.MustCompile(`^c(\d+)$`)
 var reWallAdj = regexp.MustCompile(`^(u|ur|r|dr|d|dl|l|ul)$`)
 
 /*
+
+	"image/png"
+	"os"
+
 func waltile(stamp *Stamp, cod int, ww int) {
 // TEMP - remove
 // write all wall seqs as 16x16
