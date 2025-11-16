@@ -486,6 +486,30 @@ func genpfimage(maze *Maze) {
 
 			writile(stamp, i, tbaddr, -24)
 		}
+// pickles
+		for i := 0x2300; i < 0x23fb; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		writile(stamp, 0x25db, tbaddr, -24)
+// ?
+		for i := 0x2400; i < 0x24fb; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		for i := 0x2690; i < 0x26fb; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		for i := 0x1fab; i < 0x1ffb; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+// dragon breath
+		for i := 0x278c; i < 0x27f7; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
 
 		stamp = itemGetStamp("dragon")
 		tbaddr = 16
@@ -501,19 +525,7 @@ func genpfimage(maze *Maze) {
 		for i := 0x2740; i < 0x2760; i += tbaddr {
 
 			writile(stamp, i, tbaddr, -32)
-		}/*
-		for i := 0x2900; i < 0x2b00; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -32)
 		}
-		for i := 0x2d00; i < 0x2d60; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -32)
-		}
-		for i := 0x2f40; i < 0x2f60; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -32)
-		}*/
 
 			stamp = itemGetStamp("exit")
 			for i := 0x39e; i < 0x49d; i += tbaddr {
@@ -524,7 +536,22 @@ func genpfimage(maze *Maze) {
 			for i := 0x49e; i < 0x4af; i += tbaddr {
 
 				writile(stamp, i, tbaddr, 16)
-		}}
+		}
+// missing stuff from main bloot
+// shots
+		tbaddr = 4
+		stamp = itemGetStamp("lobber")
+		stamp.pnum = pnum
+		for i := 0x1448; i < 0x1487; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -16)
+		}
+		for i := 0x148b; i < 0x1517; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -16)
+		}
+
+		}
 		pnum++
 	}
 
