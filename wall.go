@@ -15,6 +15,19 @@ var reWallNum = regexp.MustCompile(`^wall(\d+)$`)
 var reWallColor = regexp.MustCompile(`^c(\d+)$`)
 var reWallAdj = regexp.MustCompile(`^(u|ur|r|dr|d|dl|l|ul)$`)
 
+func waltile(stamp *Stamp, cod int, ww int) {
+// TEMP - remove
+// write all wall seqs as 16x16
+imgb := blankimage(2*8, 2*8)
+writestamptoimage(imgb, stamp, 0, 0)
+wnam := fmt.Sprintf("w%d_%d.png",ww,cod)
+wrfile, err := os.Create(wnam)
+if err == nil {
+	png.Encode(wrfile,imgb)
+}
+wrfile.Close()
+}
+
 func dowall(arg string) {
 	split := strings.Split(arg, "-")
 
@@ -76,22 +89,11 @@ func dowall(arg string) {
 			writestamptoimage(img, stamp, x, y)
 		}}
 
-// TEMP - remove
-// write all wall seqs as 16x16
-imgb := blankimage(2*8, 2*8)
-
 // for all wallnum flavours, display each segment
 		for w := 0; w < 8; w++ {
 // 1 unit wall
 			stamp = wallGetStamp(w, 1, wallColor)
 			writestamptoimage(img, stamp, 8, 8 + w * 32)
-writestamptoimage(imgb, stamp, 0, 0)
-wnam := fmt.Sprintf("w%d_1.png",w)
-wrfile, err := os.Create(wnam)
-if err == nil {
-	png.Encode(wrfile,imgb)
-}
-wrfile.Close()
 
 // end caps for Ս, ↄ, Ո, ⅽ
 			stamp = wallGetStamp(w, 2, wallColor)
