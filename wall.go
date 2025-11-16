@@ -64,7 +64,10 @@ func dowall(arg string) {
 	} else {
 // on wallnum = -1 (default or invalid) write entire wall seq on top of sample floor
 		stamp := floorGetStamp(1, 0, 0)
-		img = blankimage(2*16 * 14, 2*16 * 8)
+		img = blankimage(2*16 * 13.5, 2*16 * 6)
+		if wallColor == 0 {
+			img = blankimage(2*16 * 13.5, 2*16 * 8)
+		}
 		for x := 0; x < 447; x = x +16 {
 		for y := 0; y < 255; y = y +16 {
 			writestamptoimage(img, stamp, x, y)
