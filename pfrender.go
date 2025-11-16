@@ -414,6 +414,10 @@ func genpfimage(maze *Maze) {
 		stamp = itemGetStamp("mfood")
 		stamp.pnum = pnum
 		writile(stamp, 0x277b, 9, -24)
+		stamp = itemGetStamp("treasurelocked")
+		stamp.pnum = pnum
+		writile(stamp, 0x25e4, 9, -24)
+
 // g2 temp powers
 		stamp = itemGetStamp("transportability")
 		stamp.pnum = pnum
@@ -470,11 +474,19 @@ func genpfimage(maze *Maze) {
 		tbas = 0xffc
 		writile(stamp, tbas, tbaddr, 16)
 		stamp = itemGetStamp("exit4")
-			writile(stamp, 0xcfc, tbaddr, 16)
+		writile(stamp, 0xcfc, tbaddr, 16)
 		stamp = itemGetStamp("exit8")
-			writile(stamp, 0xdfc, tbaddr, 16)
+		writile(stamp, 0xdfc, tbaddr, 16)
 
 		if pnum == 0 {
+
+		stamp = itemGetStamp("dragon")
+		tbaddr = 16
+		stamp.pnum = pnum
+		for i := 0x2100; i < 0x2150; i += tbaddr {
+
+			writile(stamp, i, tbaddr, 32)
+		}
 
 			stamp = itemGetStamp("exit")
 			for i := 0x39e; i < 0x49d; i += tbaddr {
