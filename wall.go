@@ -56,10 +56,13 @@ func dowall(arg string) {
 	fmt.Printf("Wall number: %d   color: %d   adj: %d\n", wallNum, wallColor, wallAdj)
 
 	// t := floorGetTiles(floorNum, floorAdj)
-	stamp := wallGetStamp(wallNum, wallAdj, wallColor)
+	if wallNum > -1	{
+		stamp := wallGetStamp(wallNum, wallAdj, wallColor)
 
-	img := blankimage(2*8, 2*8)
-	writestamptoimage(img, stamp, 0, 0)
+		img := blankimage(2*8, 2*8)
+		writestamptoimage(img, stamp, 0, 0)
+	}
+
 	savetopng(opts.Output, img)
 }
 
