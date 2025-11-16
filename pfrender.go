@@ -479,13 +479,40 @@ func genpfimage(maze *Maze) {
 		writile(stamp, 0xdfc, tbaddr, 16)
 
 		if pnum == 0 {
+		stamp = itemGetStamp("it")
+		tbaddr = 9
+		stamp.pnum = pnum
+		for i := 0x2600; i < 0x2690; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
 
 		stamp = itemGetStamp("dragon")
 		tbaddr = 16
 		stamp.pnum = pnum
-		for i := 0x2100; i < 0x2150; i += tbaddr {
+		for i := 0x2100; i < 0x2300; i += tbaddr {
 
-			writile(stamp, i, tbaddr, 32)
+			writile(stamp, i, tbaddr, -32)
+		}
+		for i := 0x2500; i < 0x2560; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -32)
+		}
+		for i := 0x2740; i < 0x2760; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -32)
+		}
+		for i := 0x2900; i < 0x2b00; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -32)
+		}
+		for i := 0x2d00; i < 0x2d60; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -32)
+		}
+		for i := 0x2f40; i < 0x2f60; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -32)
 		}
 
 			stamp = itemGetStamp("exit")
