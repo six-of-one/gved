@@ -15,6 +15,7 @@ var reWallNum = regexp.MustCompile(`^wall(\d+)$`)
 var reWallColor = regexp.MustCompile(`^c(\d+)$`)
 var reWallAdj = regexp.MustCompile(`^(u|ur|r|dr|d|dl|l|ul)$`)
 
+/*
 func waltile(stamp *Stamp, cod int, ww int) {
 // TEMP - remove
 // write all wall seqs as 16x16
@@ -27,6 +28,7 @@ if err == nil {
 }
 wrfile.Close()
 }
+*/
 
 func dowall(arg string) {
 	split := strings.Split(arg, "-")
@@ -95,62 +97,62 @@ func dowall(arg string) {
 			stamp = wallGetStamp(w, 1, wallColor)
 			writestamptoimage(img, stamp, 8, 8 + w * 32)
 // temp - remove all tehse
-waltile(stamp, 1, w)
+//waltile(stamp, 1, w)
 
 // end caps for Ս, ↄ, Ո, ⅽ
 			stamp = wallGetStamp(w, 2, wallColor)
 			writestamptoimage(img, stamp, 8 + 24, 8 + w * 32)
-waltile(stamp, 2, w)
+//waltile(stamp, 2, w)
 			stamp = wallGetStamp(w, 8, wallColor)
 			writestamptoimage(img, stamp, 8 + 48, 8 + w * 32)
-waltile(stamp, 8, w)
+//waltile(stamp, 8, w)
 			stamp = wallGetStamp(w, 64, wallColor)
 			writestamptoimage(img, stamp, 8 + 72, 8 + w * 32)
-waltile(stamp, 64, w)
+//waltile(stamp, 64, w)
 			stamp = wallGetStamp(w, 16, wallColor)
 			writestamptoimage(img, stamp, 8 + 96, 8 + w * 32)
-waltile(stamp, 16, w)
+//waltile(stamp, 16, w)
 // corners 🭿, 🭼, 🭽, 🭾
 			stamp = wallGetStamp(w, 10, wallColor)
 			writestamptoimage(img, stamp, 8 + 120, 8 + w * 32)
-waltile(stamp, 10, w)
+//waltile(stamp, 10, w)
 			stamp = wallGetStamp(w, 18, wallColor)
 			writestamptoimage(img, stamp, 8 + 144, 8 + w * 32)
-waltile(stamp, 18, w)
+//waltile(stamp, 18, w)
 			stamp = wallGetStamp(w, 80, wallColor)
 			writestamptoimage(img, stamp, 8 + 168, 8 + w * 32)
-waltile(stamp, 80, w)
+//waltile(stamp, 80, w)
 			stamp = wallGetStamp(w, 72, wallColor)
 			writestamptoimage(img, stamp, 8 + 192, 8 + w * 32)
-waltile(stamp, 72, w)
+//waltile(stamp, 72, w)
 // | and ─
 			stamp = wallGetStamp(w, 66, wallColor)
 			writestamptoimage(img, stamp, 8 + 216, 8 + w * 32)
-waltile(stamp, 66, w)
+//waltile(stamp, 66, w)
 			stamp = wallGetStamp(w, 24, wallColor)
 			writestamptoimage(img, stamp, 8 + 240, 8 + w * 32)
-waltile(stamp, 24, w)
+//waltile(stamp, 24, w)
 // ┼
 			stamp = wallGetStamp(w, 90, wallColor)
 			writestamptoimage(img, stamp, 8 + 264, 8 + w * 32)
-waltile(stamp, 90, w)
+//waltile(stamp, 90, w)
 // t's: ┤, ┴, ├, ┬
 			stamp = wallGetStamp(w, 66 + 8, wallColor)
 			writestamptoimage(img, stamp, 8 + 288, 8 + w * 32)
-waltile(stamp, 66+8, w)
+//waltile(stamp, 66+8, w)
 			stamp = wallGetStamp(w, 24 + 2, wallColor)
 			writestamptoimage(img, stamp, 8 + 312, 8 + w * 32)
-waltile(stamp, 24+2, w)
+//waltile(stamp, 24+2, w)
 			stamp = wallGetStamp(w, 66 + 16, wallColor)
 			writestamptoimage(img, stamp, 8 + 336, 8 + w * 32)
-waltile(stamp, 66+16, w)
+//waltile(stamp, 66+16, w)
 			stamp = wallGetStamp(w, 24 + 64, wallColor)
 			writestamptoimage(img, stamp, 8 + 360, 8 + w * 32)
-waltile(stamp, 24+64, w)
+//waltile(stamp, 24+64, w)
 // 🮘
 			stamp = wallGetStamp(w, 255, wallColor)
 			writestamptoimage(img, stamp, 8 + 384, 8 + w * 32)
-waltile(stamp, 255, w)
+//waltile(stamp, 255, w)
 			}
 		}
 
