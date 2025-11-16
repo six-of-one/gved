@@ -59,11 +59,19 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int) {
 	stamp.numbers = tilerange(tbas, tbaddr)
 	fillstamp(stamp)
 
+// file name with addr
+// -sz = dont sub x800 from addr (g2 has some dorkishness with gex)
+	wnam := ""
+	if tbas - 0x800 < 0 || sz < 0 {
+		sz = max(sz,-sz)
+		wnam = fmt.Sprintf(".p%d/tl_s%04X.png",stamp.pnum,tbas)
+	} else {
+		wnam = fmt.Sprintf(".p%d/tl_%04X.png",stamp.pnum,tbas - 0x800)
+	}
 // 24 pixels * 24 pixels - temp write out of all tiles
 // impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
 	wimg := blankimage(sz, sz)
 	writestamptoimage(wimg, stamp, 0, 0)
-	wnam := fmt.Sprintf(".p%d/tl_%05d.png",stamp.pnum,tbas - 0x800)
 	wrfile, err := os.Create(wnam)
 	if err == nil {
 		png.Encode(wrfile,wimg)
@@ -323,7 +331,7 @@ func genpfimage(maze *Maze) {
 
 	for stamp != nil {
 
-//		writile(stamp, tbas, tbaddr, 24)
+		writile(stamp, tbas, tbaddr, 24)
 
 		wcnt++
 // every loop, increase palette # to next till end
@@ -386,7 +394,29 @@ func genpfimage(maze *Maze) {
 	}
 
 	pnum := 0
-	for pnum < 12 {
+// put back to 12 CHANGE
+	for pnum < 1 {
+
+// keyring
+		stamp = itemGetStamp("keyring")
+		stamp.pnum = pnum
+		tbas = 0x1d76
+		writile(stamp, tbas, 6, 24)
+		stamp = itemGetStamp("pushwall")
+		stamp.pnum = pnum
+		writile(stamp, 0x20f6, 6, -24)
+		stamp = itemGetStamp("pfood")
+		stamp.pnum = pnum
+		writile(stamp, 0x25ed, 9, -24)
+		stamp = itemGetStamp("ppotion")
+		stamp.pnum = pnum
+		writile(stamp, 0x20fc, 6, -24)
+		stamp = itemGetStamp("mfood")
+		stamp.pnum = pnum
+		writile(stamp, 0x277b, 9, -24)
+		stamp = itemGetStamp("supershot")
+		stamp.pnum = pnum
+		writile(stamp, 0x2788, 6, -24)
 
 		stamp = itemGetStamp("potion")
 		stamp.pnum = pnum
@@ -407,14 +437,23 @@ func genpfimage(maze *Maze) {
 		writile(stamp, tbas, tbaddr, 16)
 		tbas = 0xffc
 		writile(stamp, tbas, tbaddr, 16)
+		stamp = itemGetStamp("exit4")
+			writile(stamp, 0xcfc, tbaddr, 16)
+		stamp = itemGetStamp("exit8")
+			writile(stamp, 0xdfc, tbaddr, 16)
 
-		stamp.trans0 = false
-// this fails miserably
-		stamp.ptype = "floor"
-		for i := 0x1011; i < 0x14b2; i += tbaddr {
+		if pnum == 0 {
 
-//			writile(stamp, i, tbaddr, 16)
-		}
+			stamp = itemGetStamp("exit")
+			for i := 0x39e; i < 0x49d; i += tbaddr {
+
+				writile(stamp, i, tbaddr, 16)
+			}
+			stamp = itemGetStamp("tport")
+			for i := 0x49e; i < 0x4af; i += tbaddr {
+
+				writile(stamp, i, tbaddr, 16)
+		}}
 		pnum++
 	}
 
