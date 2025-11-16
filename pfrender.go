@@ -395,7 +395,7 @@ func genpfimage(maze *Maze) {
 
 	pnum := 0
 // put back to 12 CHANGE
-	for pnum < 1 {
+	for pnum < 2 {
 
 // keyring
 		stamp = itemGetStamp("keyring")
@@ -410,13 +410,45 @@ func genpfimage(maze *Maze) {
 		writile(stamp, 0x25ed, 9, -24)
 		stamp = itemGetStamp("ppotion")
 		stamp.pnum = pnum
-		writile(stamp, 0x20fc, 6, -24)
+		writile(stamp, 0x20fc, 4, -16)
 		stamp = itemGetStamp("mfood")
 		stamp.pnum = pnum
 		writile(stamp, 0x277b, 9, -24)
+// g2 temp powers
+		stamp = itemGetStamp("transportability")
+		stamp.pnum = pnum
+		writile(stamp, 0x23fc, 4, -16)
+		stamp = itemGetStamp("reflect")
+		stamp.pnum = pnum
+		writile(stamp, 0x24fc, 4, -16)
+		stamp = itemGetStamp("repulse")
+		stamp.pnum = pnum
+		writile(stamp, 0x26fc, 4, -16)
+		stamp = itemGetStamp("invuln")
+		stamp.pnum = pnum
+		writile(stamp, 0x2784, 4, -16)
 		stamp = itemGetStamp("supershot")
 		stamp.pnum = pnum
-		writile(stamp, 0x2788, 6, -24)
+		writile(stamp, 0x2788, 4, -16)
+// g1 powers
+		stamp = itemGetStamp("shieldpotion")
+		stamp.pnum = pnum
+		writile(stamp, 0x11fc, 4, 16)
+		stamp = itemGetStamp("speedpotion")
+		stamp.pnum = pnum
+		writile(stamp, 0x12fc, 4, 16)
+		stamp = itemGetStamp("magicpotion")
+		stamp.pnum = pnum
+		writile(stamp, 0x13fc, 4, 16)
+		stamp = itemGetStamp("shotpowerpotion")
+		stamp.pnum = pnum
+		writile(stamp, 0x14fc, 4, 16)
+		stamp = itemGetStamp("shotspeedpotion")
+		stamp.pnum = pnum
+		writile(stamp, 0x15fc, 4, 16)
+		stamp = itemGetStamp("fightpotion")
+		stamp.pnum = pnum
+		writile(stamp, 0x16fc, 4, 16)
 
 		stamp = itemGetStamp("potion")
 		stamp.pnum = pnum
