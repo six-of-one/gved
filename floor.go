@@ -74,7 +74,7 @@ fmt.Printf("fs: %s",split)
 // if 0 passed as a floor color, loop out all valid colors, 0 - 15 in a row 2560 x 160
 	if floorColor == 0 {
 		img = blankimage(20*8*16, 20*8 * floop)
-		for floorColor < 16 {
+	for floorColor < 16 {
 			subfloop := 0
 			floorNum = mfloorNum
 			for subfloop < floop {
