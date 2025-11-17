@@ -568,10 +568,11 @@ if false {
 		tbaddr = 1
 		stamp.pnum = pnum
 		stamp.width = 1
-		for i := 0x0; i < 0x7e0; i += tbaddr {
+		for i := 0x0; i < 0x27ff; i += tbaddr {
 
 			writile(stamp, i, tbaddr, 8)
 		}
+pnum = 12
 
 		pnum++
 	}
