@@ -572,8 +572,6 @@ if false {
 
 			writile(stamp, i, tbaddr, 8)
 		}
-// TEST TEMP
-	pnum = 12
 
 		pnum++
 	}
