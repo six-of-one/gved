@@ -3,7 +3,6 @@ package main
 import (
 	"regexp"
 	"strings"
-	"fmt"
 )
 
 // type Stamp struct {
@@ -500,8 +499,6 @@ func tilerange(start int, count int) []int {
 		r[i] = start
 		start += 1
 	}
-
-fmt.Printf("st:%04d   hx:%04x\n",start, start)
 	return r
 }
 
