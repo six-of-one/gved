@@ -6,7 +6,6 @@ import (
 	"image/png"
 	"math"
 	"os"
-	"fmt"
 )
 
 type Color interface {
