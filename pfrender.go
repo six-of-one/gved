@@ -68,6 +68,10 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int) {
 	} else {
 		wnam = fmt.Sprintf(".p%d/tl_%04X.png",stamp.pnum,tbas - 0x800)
 	}
+// for 8x8 single tile, place is sub color dirs sep from .p*
+	if sz == 8 {
+		wnam = fmt.Sprintf(".8x8/c%d/i%05d.png",stamp.pnum,tbas)
+	}
 // 24 pixels * 24 pixels - temp write out of all tiles
 // impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
 	wimg := blankimage(sz, sz)
@@ -330,11 +334,11 @@ func genpfimage(maze *Maze) {
 	var stamp *Stamp
 	stamp = itemGetStamp("ghost")
 	stamp.pnum = 0
-
+// TEMP - remove wrapper
+if false {
 	for stamp != nil {
 
-// TEMP
-//		writile(stamp, tbas, tbaddr, 24)
+		writile(stamp, tbas, tbaddr, 24)
 
 		wcnt++
 // every loop, increase palette # to next till end
@@ -395,12 +399,14 @@ func genpfimage(maze *Maze) {
 			stamp = nil
 		}
 	}
-
+}
 	pnum := 0
 // TEMP
 // put back to 12 CHANGE
-	for pnum < 2 {
+	for pnum < 12 {
 
+// TEMP - remove wrapper
+if false {
 // keyring
 		stamp = itemGetStamp("keyring")
 		stamp.pnum = pnum
@@ -513,49 +519,6 @@ func genpfimage(maze *Maze) {
 
 			writile(stamp, i, tbaddr, -24)
 		}
-// sets of triples - char and mob, dont seem to render correct
-		stamp = itemGetStamp("arrowup")
-		stamp.pnum = pnum
-		for i := 0x1448; i < 0x1487; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -24)
-		}
-		for i := 0x148b; i < 0x1517; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -24)
-		}
-		for i := 0x1800; i < 0x18fc; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -24)
-		}
-		for i := 0x1900; i < 0x19fc; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -24)
-		}
-		for i := 0x1a00; i < 0x1afc; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -24)
-		}
-		for i := 0x1b00; i < 0x1bfc; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -24)
-		}
-		for i := 0x1c00; i < 0x1cfc; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -24)
-		}
-		for i := 0x1d00; i < 0x1dfc; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -24)
-		}
-		for i := 0x1e00; i < 0x1efc; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -24)
-		}
-		for i := 0x1f00; i < 0x1ffc; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -24)
-		}
 
 // dragon breath
 		for i := 0x278c; i < 0x27f7; i += tbaddr {
@@ -579,6 +542,7 @@ func genpfimage(maze *Maze) {
 			writile(stamp, i, tbaddr, -32)
 		}
 
+// have to be pnum 0 only it seems
 			stamp = itemGetStamp("exit")
 			for i := 0x39e; i < 0x49d; i += tbaddr {
 
@@ -595,13 +559,19 @@ func genpfimage(maze *Maze) {
 				writile(stamp, i, tbaddr, 16)
 			}
 // missing stuff from main bloot
-// shots
-		tbaddr = 4
-		stamp = itemGetStamp("arrowup")
-		stamp.pnum = pnum
-
 
 		}
+// single tile, for all the issues
+		stamp = itemGetStamp("it")
+		tbaddr = 1
+		stamp.pnum = pnum
+		for i := 0x800; i < 0xfe0; i += tbaddr {
+
+			writile(stamp, i, tbaddr, 8)
+		}
+
+// TEMP remove
+}
 		pnum++
 	}
 
