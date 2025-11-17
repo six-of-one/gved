@@ -358,7 +358,6 @@ func genpfimage(maze *Maze) {
 			stamp.width = 3
 			if i > 0x1b50 && i < 0x1c47 { tbaddr = 6 }
 			if i == 0x1bc3 { tbaddr = 4 }
-			if i == 0x1bfd { i = i - 3 }
 			if i & 0xff == 0xfc || tbaddr < 6 {
 				stamp.width = 2
 				writile(stamp, i, tbaddr, 16 ,-0x800)
@@ -367,6 +366,7 @@ func genpfimage(maze *Maze) {
 			} else {
 				writile(stamp, i, tbaddr, 24 ,-0x800)
 			}
+			if i == 0x1bfd { i = i - 3 }
 		}
 		for i := 0x1000; i < 0x17ff; i += tbaddr {
 
@@ -387,8 +387,9 @@ func genpfimage(maze *Maze) {
 		for i := 0x1c48; i < 0x1c87; i += tbaddr {
 			writile(stamp, i, 4, 16 ,-0x800)
 		}
-		for i := 0x1c8c; i < 0x1d75; i += tbaddr {
+		for i := 0x1c8b; i < 0x1d75; i += tbaddr {
 			writile(stamp, i, 4, 16 ,-0x800)
+			if i == 0x1cfb { i++ }
 		}
 		for i := 0x1d7c; i < 0x1db3; i += tbaddr {
 			writile(stamp, i, 4, 16 ,-0x800)
