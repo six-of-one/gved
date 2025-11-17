@@ -411,9 +411,13 @@ func genpfimage(maze *Maze) {
 		}
 		tbaddr = 9
 		stamp.width = 3
-		for i := 0x1dcf; i < 0x1e08; i += tbaddr {
+		for i := 0x1dcf; i < 0x1dfb; i += tbaddr {
 			writile(stamp, i, tbaddr, 24 ,-0x800)
 		}
+		writile(stamp, 0x1600, 9, 24,-0x800)
+		writile(stamp, 0x160d, 6, 24,-0x800)
+		stamp.width = 2
+		writile(stamp, 0x1609, 4, 16 ,-0x800)
 
 // every loop, increase palette # to next till end
 		stamp.pnum++;
