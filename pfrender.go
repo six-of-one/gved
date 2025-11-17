@@ -357,9 +357,11 @@ func genpfimage(maze *Maze) {
 			tbaddr = 9
 			stamp.width = 3
 			if i > 0x1b50 && i < 0x1c47 { tbaddr = 6 }
-			if i & 0xff == 0xfc {
+			if i == 0x1bc3 { tbaddr = 4 }
+			if i == 0x1bfd { tbaddr = 3 }
+			if i & 0xff == 0xfc || tbaddr < 6 {
 				stamp.width = 2
-				writile(stamp, i, 4, 16 ,-0x800)
+				writile(stamp, i, tbaddr, 16 ,-0x800)
 				tbaddr = 4
 
 			} else {
