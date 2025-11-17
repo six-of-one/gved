@@ -61,7 +61,7 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 
 // file name with addr
 // -sz = dont sub x800 from addr (g2 has some dorkishness with gex)
-	wnam := fmt.Sprintf(".p%d/tl_%04X.png",stamp.pnum,tbas + ada)
+	wnam := fmt.Sprintf(".p%d/tl_%05d_%04X.png",stamp.pnum,tbas + ada,tbas + ada)
 // for 8x8 single tile, place is sub color dirs sep from .p*
 	if sz == 8 {
 		wnam = fmt.Sprintf(".8x8/c%d/i%05d.png",stamp.pnum,tbas + ada)
@@ -358,7 +358,7 @@ func genpfimage(maze *Maze) {
 			stamp.width = 3
 			if i > 0x1b50 && i < 0x1c47 { tbaddr = 6 }
 			if i == 0x1bc3 { tbaddr = 4 }
-			if i == 0x1bfd { tbaddr = 3 }
+			if i == 0x1bfd { i = i - 3 }
 			if i & 0xff == 0xfc || tbaddr < 6 {
 				stamp.width = 2
 				writile(stamp, i, tbaddr, 16 ,-0x800)
