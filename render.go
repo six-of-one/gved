@@ -6,6 +6,7 @@ import (
 	"image/png"
 	"math"
 	"os"
+	"fmt"
 )
 
 type Color interface {
@@ -159,6 +160,8 @@ func genstamp_fromarray(tiles []int, width int, ptype string, pnum int) *Stamp {
 func fillstamp(stamp *Stamp) {
 	tc := 0
 	height := len(stamp.numbers) / stamp.width
+
+fmt.Printf("H:%d W:%d\n",height, stamp.width)
 
 	stamp.data = make([]TileData, len(stamp.numbers))
 	// spew.Dump("Stamp: ", stamp)

@@ -561,17 +561,20 @@ if false {
 // missing stuff from main bloot
 
 		}
+// TEMP remove
+}
 // single tile, for all the issues
-		stamp = itemGetStamp("it")
+		stamp = itemGetStamp("ghost")
 		tbaddr = 1
 		stamp.pnum = pnum
-		for i := 0x800; i < 0xfe0; i += tbaddr {
+		stamp.width = 1
+		for i := 0x0; i < 0x7e0; i += tbaddr {
 
 			writile(stamp, i, tbaddr, 8)
 		}
+// TEST TEMP
+	pnum = 12
 
-// TEMP remove
-}
 		pnum++
 	}
 
