@@ -53,7 +53,7 @@ func copyedges(maze *Maze) {
 	}
 }
 
-func writile(stamp *Stamp, tbas int, tbaddr int, sz int) {
+func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 
 //	fmt.Printf("tbas pass %d\n",tbas)
 	stamp.numbers = tilerange(tbas, tbaddr)
@@ -338,7 +338,7 @@ func genpfimage(maze *Maze) {
 if false {
 	for stamp != nil {
 
-		writile(stamp, tbas, tbaddr, 24)
+		writile(stamp, tbas, tbaddr, 24 ,0)
 
 		wcnt++
 // every loop, increase palette # to next till end
@@ -411,82 +411,82 @@ if false {
 		stamp = itemGetStamp("keyring")
 		stamp.pnum = pnum
 		tbas = 0x1d76
-		writile(stamp, tbas, 6, 24)
+		writile(stamp, tbas, 6, 24 ,0)
 		stamp = itemGetStamp("pushwall")
 		stamp.pnum = pnum
-		writile(stamp, 0x20f6, 6, -24)
+		writile(stamp, 0x20f6, 6, -24 ,0)
 		stamp = itemGetStamp("pfood")
 		stamp.pnum = pnum
-		writile(stamp, 0x25ed, 9, -24)
+		writile(stamp, 0x25ed, 9, -24 ,0)
 		stamp = itemGetStamp("ppotion")
 		stamp.pnum = pnum
-		writile(stamp, 0x20fc, 4, -16)
+		writile(stamp, 0x20fc, 4, -16 ,0)
 		stamp = itemGetStamp("mfood")
 		stamp.pnum = pnum
-		writile(stamp, 0x277b, 9, -24)
+		writile(stamp, 0x277b, 9, -24 ,0)
 		stamp = itemGetStamp("treasurelocked")
 		stamp.pnum = pnum
-		writile(stamp, 0x25e4, 9, -24)
+		writile(stamp, 0x25e4, 9, -24 ,0)
 
 // g2 temp powers
 		stamp = itemGetStamp("transportability")
 		stamp.pnum = pnum
-		writile(stamp, 0x23fc, 4, -16)
+		writile(stamp, 0x23fc, 4, -16 ,0)
 		stamp = itemGetStamp("reflect")
 		stamp.pnum = pnum
-		writile(stamp, 0x24fc, 4, -16)
+		writile(stamp, 0x24fc, 4, -16 ,0)
 		stamp = itemGetStamp("repulse")
 		stamp.pnum = pnum
-		writile(stamp, 0x26fc, 4, -16)
+		writile(stamp, 0x26fc, 4, -16 ,0)
 		stamp = itemGetStamp("invuln")
 		stamp.pnum = pnum
-		writile(stamp, 0x2784, 4, -16)
+		writile(stamp, 0x2784, 4, -16 ,0)
 		stamp = itemGetStamp("supershot")
 		stamp.pnum = pnum
-		writile(stamp, 0x2788, 4, -16)
+		writile(stamp, 0x2788, 4, -16 ,0)
 // g1 powers
 		stamp = itemGetStamp("shieldpotion")
 		stamp.pnum = pnum
-		writile(stamp, 0x11fc, 4, 16)
+		writile(stamp, 0x11fc, 4, 16 ,0)
 		stamp = itemGetStamp("speedpotion")
 		stamp.pnum = pnum
-		writile(stamp, 0x12fc, 4, 16)
+		writile(stamp, 0x12fc, 4, 16 ,0)
 		stamp = itemGetStamp("magicpotion")
 		stamp.pnum = pnum
-		writile(stamp, 0x13fc, 4, 16)
+		writile(stamp, 0x13fc, 4, 16 ,0)
 		stamp = itemGetStamp("shotpowerpotion")
 		stamp.pnum = pnum
-		writile(stamp, 0x14fc, 4, 16)
+		writile(stamp, 0x14fc, 4, 16 ,0)
 		stamp = itemGetStamp("shotspeedpotion")
 		stamp.pnum = pnum
-		writile(stamp, 0x15fc, 4, 16)
+		writile(stamp, 0x15fc, 4, 16 ,0)
 		stamp = itemGetStamp("fightpotion")
 		stamp.pnum = pnum
-		writile(stamp, 0x16fc, 4, 16)
+		writile(stamp, 0x16fc, 4, 16 ,0)
 
 		stamp = itemGetStamp("potion")
 		stamp.pnum = pnum
 		tbas = 0x8fc
 		tbaddr = 4
-		writile(stamp, tbas, tbaddr, 16)
+		writile(stamp, tbas, tbaddr, 16 ,0)
 		tbas = 0x9fc
-		writile(stamp, tbas, tbaddr, 16)
+		writile(stamp, tbas, tbaddr, 16 ,0)
 		tbas = 0xafc
-		writile(stamp, tbas, tbaddr, 16)
+		writile(stamp, tbas, tbaddr, 16 ,0)
 		tbas = 0xbfc
-		writile(stamp, tbas, tbaddr, 16)
+		writile(stamp, tbas, tbaddr, 16 ,0)
 		tbas = 0xcfc
-		writile(stamp, tbas, tbaddr, 16)
+		writile(stamp, tbas, tbaddr, 16 ,0)
 		tbas = 0xdfc
-		writile(stamp, tbas, tbaddr, 16)
+		writile(stamp, tbas, tbaddr, 16 ,0)
 		tbas = 0xefc
-		writile(stamp, tbas, tbaddr, 16)
+		writile(stamp, tbas, tbaddr, 16 ,0)
 		tbas = 0xffc
-		writile(stamp, tbas, tbaddr, 16)
+		writile(stamp, tbas, tbaddr, 16 ,0)
 		stamp = itemGetStamp("exit4")
-		writile(stamp, 0xcfc, tbaddr, 16)
+		writile(stamp, 0xcfc, tbaddr, 16 ,0)
 		stamp = itemGetStamp("exit8")
-		writile(stamp, 0xdfc, tbaddr, 16)
+		writile(stamp, 0xdfc, tbaddr, 16 ,0)
 
 		if pnum == 0 {
 		stamp = itemGetStamp("it")
@@ -494,36 +494,36 @@ if false {
 		stamp.pnum = pnum
 		for i := 0x2600; i < 0x2690; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24)
+			writile(stamp, i, tbaddr, -24 ,0)
 		}
 // pickles
 		for i := 0x2300; i < 0x23fb; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24)
+			writile(stamp, i, tbaddr, -24 ,0)
 		}
-		writile(stamp, 0x25db, tbaddr, -24)
+		writile(stamp, 0x25db, tbaddr, -24 ,0)
 // ?
 		for i := 0x2400; i < 0x24fb; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24)
+			writile(stamp, i, tbaddr, -24 ,0)
 		}
 		for i := 0x2690; i < 0x26fb; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24)
+			writile(stamp, i, tbaddr, -24 ,0)
 		}
 		for i := 0x1fab; i < 0x1ffb; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24)
+			writile(stamp, i, tbaddr, -24 ,0)
 		}
 		for i := 0x15cf; i < 0x1608; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24)
+			writile(stamp, i, tbaddr, -24 ,0)
 		}
 
 // dragon breath
 		for i := 0x278c; i < 0x27f7; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24)
+			writile(stamp, i, tbaddr, -24 ,0)
 		}
 
 		stamp = itemGetStamp("dragon")
@@ -531,32 +531,32 @@ if false {
 		stamp.pnum = pnum
 		for i := 0x2100; i < 0x2300; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -32)
+			writile(stamp, i, tbaddr, -32 ,0)
 		}
 		for i := 0x2500; i < 0x2560; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -32)
+			writile(stamp, i, tbaddr, -32 ,0)
 		}
 		for i := 0x2740; i < 0x2760; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -32)
+			writile(stamp, i, tbaddr, -32 ,0)
 		}
 
 // have to be pnum 0 only it seems
 			stamp = itemGetStamp("exit")
 			for i := 0x39e; i < 0x49d; i += tbaddr {
 
-				writile(stamp, i, tbaddr, 16)
+				writile(stamp, i, tbaddr, 16 ,0)
 			}
 			stamp = itemGetStamp("tport")
 			for i := 0x49e; i < 0x4af; i += tbaddr {
 
-				writile(stamp, i, tbaddr, 16)
+				writile(stamp, i, tbaddr, 16 ,0)
 			}
 			stamp = itemGetStamp("tport")
 			for i := 0xc9e; i < 0xcb2; i += tbaddr {
 
-				writile(stamp, i, tbaddr, 16)
+				writile(stamp, i, tbaddr, 16 ,0)
 			}
 // missing stuff from main bloot
 
@@ -570,7 +570,7 @@ if false {
 		stamp.width = 1
 		for i := 0x0; i < 0x27ff; i += tbaddr {
 
-			writile(stamp, i, tbaddr, 8)
+			writile(stamp, i, tbaddr, 8 ,0)
 		}
 pnum = 12
 
