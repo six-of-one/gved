@@ -387,7 +387,7 @@ func genpfimage(maze *Maze) {
 		for i := 0x1c48; i < 0x1c87; i += tbaddr {
 			writile(stamp, i, 4, 16 ,-0x800)
 		}
-		for i := 0x1c8b; i < 0x1d75; i += tbaddr {
+		for i := 0x1c8c; i < 0x1d75; i += tbaddr {
 			writile(stamp, i, 4, 16 ,-0x800)
 		}
 		for i := 0x1d7c; i < 0x1db3; i += tbaddr {
