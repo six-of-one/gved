@@ -61,19 +61,14 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 
 // file name with addr
 // -sz = dont sub x800 from addr (g2 has some dorkishness with gex)
-	wnam := ""
-	if tbas - 0x800 < 0 || sz < 0 {
-		sz = max(sz,-sz)
-		wnam = fmt.Sprintf(".p%d/tl_s%04X.png",stamp.pnum,tbas)
-	} else {
-		wnam = fmt.Sprintf(".p%d/tl_%04X.png",stamp.pnum,tbas - 0x800)
-	}
+	wnam := fmt.Sprintf(".p%d/tl_%04X.png",stamp.pnum,tbas + ada)
 // for 8x8 single tile, place is sub color dirs sep from .p*
 	if sz == 8 {
-		wnam = fmt.Sprintf(".8x8/c%d/i%05d.png",stamp.pnum,tbas)
+		wnam = fmt.Sprintf(".8x8/c%d/i%05d.png",stamp.pnum,tbas + ada)
 	}
 // 24 pixels * 24 pixels - temp write out of all tiles
 // impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
+// special 8 x 8 tiles for unit list
 	wimg := blankimage(sz, sz)
 	writestamptoimage(wimg, stamp, 0, 0)
 	wrfile, err := os.Create(wnam)
@@ -568,7 +563,23 @@ if false {
 		tbaddr = 1
 		stamp.pnum = pnum
 		stamp.width = 1
-		for i := 0x0; i < 0x27ff; i += tbaddr {
+		for i := 0x0; i < 0x7ff; i += tbaddr {
+
+			writile(stamp, i, tbaddr, 8 ,0x800)
+		}
+		for i := 0x800; i < 0xfff; i += tbaddr {
+
+			writile(stamp, i, tbaddr, 8 ,-0x800)
+		}
+		for i := 0x1000; i < 0x17ff; i += tbaddr {
+
+			writile(stamp, i, tbaddr, 8 ,0x800)
+		}
+		for i := 0x1800; i < 0x1fff; i += tbaddr {
+
+			writile(stamp, i, tbaddr, 8 ,-0x800)
+		}
+		for i := 0x2000; i < 0x27ff; i += tbaddr {
 
 			writile(stamp, i, tbaddr, 8 ,0)
 		}
