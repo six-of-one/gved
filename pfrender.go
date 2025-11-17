@@ -391,14 +391,20 @@ func genpfimage(maze *Maze) {
 			writile(stamp, i, 4, 16 ,-0x800)
 			if i == 0x1cfb { i++ }
 		}
-// so doors are an absolute mess, with 2, 3, and 4 wide all mixed up
-		tbaddr = 6
+		writile(stamp, 0x1d48, 4, 16 ,-0x800)
+// so doors are an absolute mess, with 2, 3, and 4 wide all mixed up 
 		stamp.width = 3
-		for i := 0x1d3c; i < 0x1d7b; i += tbaddr {
-			writile(stamp, i, 6, 24,-0x800)
-		}
-		stamp.width = 2
-		tbaddr = 4
+		writile(stamp, 0x1d3c, 6, 24,-0x800)
+		writile(stamp, 0x1d42, 6, 24,-0x800)
+		writile(stamp, 0x1d4c, 6, 24,-0x800)
+		writile(stamp, 0x1d5a, 6, 24,-0x800)
+		writile(stamp, 0x1d68, 6, 24,-0x800)
+		writile(stamp, 0x1d76, 6, 24,-0x800)
+
+		stamp.width = 4
+		writile(stamp, 0x1d52, 8, 32,-0x800)
+		writile(stamp, 0x1d60, 8, 32,-0x800)
+		writile(stamp, 0x1d6e, 8, 32,-0x800)
 // some of these doors are wrong
 		for i := 0x1d7c; i < 0x1db3; i += tbaddr {
 			writile(stamp, i, 4, 16 ,-0x800)
