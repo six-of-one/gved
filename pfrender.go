@@ -329,72 +329,33 @@ func genpfimage(maze *Maze) {
 	var stamp *Stamp
 	stamp = itemGetStamp("ghost")
 	stamp.pnum = 0
-// TEMP - remove wrapper
-if false {
+
 	for stamp != nil {
 
-		writile(stamp, tbas, tbaddr, 24 ,0)
-
 		wcnt++
+
+		tbaddr = 9
+		for i := 0x0; i < 0x7ff; i += tbaddr {
+
+			stamp.width = 3
+			if i & 0xfc == 0xfc {
+				stamp.width = 2
+				writile(stamp, i, 4, 16 ,0x800)
+
+			} else {
+				writile(stamp, i, tbaddr, 24 ,0x800)
+			}
+		}
+
 // every loop, increase palette # to next till end
-		if wcnt == 1 {
-			stamp.pnum++;
-		}
+		stamp.pnum++;
 
-		if stamp.pnum < 12 {
-			tbaddr = 9
-			if tbas > 0x1b50 && tbas < 0x1c44 { tbaddr = 6 }
-//		fmt.Printf("tb adder %d\n",tbaddr)
-			tbas += tbaddr
-
-			if tbas == 0x1b51 { tbaddr = 6 }
-
-// this is a series of skips around odd ball inserts of 2x2 in the 3x3 stamp set
-// 2 x 2s injected into 3 x 3s - later these need done in the 2 x 2 set
-			if tbas == 0x8fc { tbas += 4 }
-			if tbas == 0x9fc { tbas += 4 }
-			if tbas == 0xafc { tbas += 4 }
-			if tbas == 0xbfc { tbas += 4 }
-// i sense a pattern here... wut up atariiiiiiii
-			if tbas == 0xcfc { tbas += 4 }
-			if tbas == 0xdfc { tbas += 4 }
-			if tbas == 0xefc { tbas += 4 }
-// x7fc (F4 in gII, FFC here) starts a big skip - jump over 2x2s (walls, floors, etc) and big title pix
-			if tbas == 0xffc { tbas += 2052 }
-			if tbas == 0x18fc { tbas += 4 }
-			if tbas == 0x19fc { tbas += 4 }
-			if tbas == 0x1afc { tbas += 4 }
-			if tbas == 0x1bc3 { tbas += 4 }
-			if tbas == 0x1bfd { tbas += 3 }
-// nother big jump
-			if tbas == 0x1c48 { tbas += 391 }
-			if tbas == 0x18fc { tbas += 4 }
-			if tbas == 0x19fc { tbas += 4 }
-			if tbas == 0x1afc { tbas += 4 }
-			if tbas == 0x1bfc { tbas += 4 }
-			if tbas == 0x1cfc { tbas += 4 }
-			if tbas == 0x1dfc { tbas += 4 }
-			if tbas == 0x1efc { tbas += 4 }
-
-			if tbas == 0x20fc { tbas += 4 }
-			if tbas == 0x21fc { tbas += 4 }
-			if tbas == 0x22fc { tbas += 4 }
-			if tbas == 0x23fc { tbas += 4 }
-			if tbas == 0x24fc { tbas += 4 }
-			if tbas == 0x25fc { tbas += 4 }
-			if tbas == 0x26fc { tbas += 4 }
-		}
-		if wcnt == 364 {
-			wcnt = 0
-// back to start - 9 units, as it auto increments before the next load
-			tbas = 0x7f7
-		}
 // done, no further pallets
 		if stamp.pnum == 12 {
 			stamp = nil
 		}
 	}
-}
+
 	pnum := 0
 // TEMP
 // put back to 12 CHANGE
@@ -409,36 +370,36 @@ if false {
 		writile(stamp, tbas, 6, 24 ,0)
 		stamp = itemGetStamp("pushwall")
 		stamp.pnum = pnum
-		writile(stamp, 0x20f6, 6, -24 ,0)
+		writile(stamp, 0x20f6, 6, 24 ,0)
 		stamp = itemGetStamp("pfood")
 		stamp.pnum = pnum
-		writile(stamp, 0x25ed, 9, -24 ,0)
+		writile(stamp, 0x25ed, 9, 24 ,0)
 		stamp = itemGetStamp("ppotion")
 		stamp.pnum = pnum
-		writile(stamp, 0x20fc, 4, -16 ,0)
+		writile(stamp, 0x20fc, 4, 16 ,0)
 		stamp = itemGetStamp("mfood")
 		stamp.pnum = pnum
-		writile(stamp, 0x277b, 9, -24 ,0)
+		writile(stamp, 0x277b, 9, 24 ,0)
 		stamp = itemGetStamp("treasurelocked")
 		stamp.pnum = pnum
-		writile(stamp, 0x25e4, 9, -24 ,0)
+		writile(stamp, 0x25e4, 9, 24 ,0)
 
 // g2 temp powers
 		stamp = itemGetStamp("transportability")
 		stamp.pnum = pnum
-		writile(stamp, 0x23fc, 4, -16 ,0)
+		writile(stamp, 0x23fc, 4, 16 ,0)
 		stamp = itemGetStamp("reflect")
 		stamp.pnum = pnum
-		writile(stamp, 0x24fc, 4, -16 ,0)
+		writile(stamp, 0x24fc, 4, 16 ,0)
 		stamp = itemGetStamp("repulse")
 		stamp.pnum = pnum
-		writile(stamp, 0x26fc, 4, -16 ,0)
+		writile(stamp, 0x26fc, 4, 16 ,0)
 		stamp = itemGetStamp("invuln")
 		stamp.pnum = pnum
-		writile(stamp, 0x2784, 4, -16 ,0)
+		writile(stamp, 0x2784, 4, 16 ,0)
 		stamp = itemGetStamp("supershot")
 		stamp.pnum = pnum
-		writile(stamp, 0x2788, 4, -16 ,0)
+		writile(stamp, 0x2788, 4, 16 ,0)
 // g1 powers
 		stamp = itemGetStamp("shieldpotion")
 		stamp.pnum = pnum
@@ -489,36 +450,36 @@ if false {
 		stamp.pnum = pnum
 		for i := 0x2600; i < 0x2690; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24 ,0)
+			writile(stamp, i, tbaddr, 24 ,0)
 		}
 // pickles
 		for i := 0x2300; i < 0x23fb; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24 ,0)
+			writile(stamp, i, tbaddr, 24 ,0)
 		}
-		writile(stamp, 0x25db, tbaddr, -24 ,0)
+		writile(stamp, 0x25db, tbaddr, 24 ,0)
 // ?
 		for i := 0x2400; i < 0x24fb; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24 ,0)
+			writile(stamp, i, tbaddr, 24 ,0)
 		}
 		for i := 0x2690; i < 0x26fb; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24 ,0)
+			writile(stamp, i, tbaddr, 24 ,0)
 		}
 		for i := 0x1fab; i < 0x1ffb; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24 ,0)
+			writile(stamp, i, tbaddr, 24 ,0)
 		}
 		for i := 0x15cf; i < 0x1608; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24 ,0)
+			writile(stamp, i, tbaddr, 24 ,0)
 		}
 
 // dragon breath
 		for i := 0x278c; i < 0x27f7; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -24 ,0)
+			writile(stamp, i, tbaddr, 24 ,0)
 		}
 
 		stamp = itemGetStamp("dragon")
@@ -526,15 +487,15 @@ if false {
 		stamp.pnum = pnum
 		for i := 0x2100; i < 0x2300; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -32 ,0)
+			writile(stamp, i, tbaddr, 32 ,0)
 		}
 		for i := 0x2500; i < 0x2560; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -32 ,0)
+			writile(stamp, i, tbaddr, 32 ,0)
 		}
 		for i := 0x2740; i < 0x2760; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -32 ,0)
+			writile(stamp, i, tbaddr, 32 ,0)
 		}
 
 // have to be pnum 0 only it seems
@@ -558,6 +519,8 @@ if false {
 		}
 // TEMP remove
 }
+// TEMP - remove wrapper
+if false {
 // single tile, for all the issues
 		stamp = itemGetStamp("ghost")
 		tbaddr = 1
@@ -583,6 +546,9 @@ if false {
 
 			writile(stamp, i, tbaddr, 8 ,0)
 		}
+// TEMP remove
+}
+
 pnum = 12
 
 		pnum++
