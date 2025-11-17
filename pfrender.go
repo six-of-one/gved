@@ -319,7 +319,9 @@ func genpfimage(maze *Maze) {
 		}
 	}
 
-	// counter for tiles - imprv - dont write dups
+/// individual tile dumper
+
+// counter for tiles - imprv - dont write dups
 	wcnt := 1
 	tbas := 0x800
 // tb adder controls size of tile render, and mem skip to next tile
@@ -331,7 +333,8 @@ func genpfimage(maze *Maze) {
 
 	for stamp != nil {
 
-		writile(stamp, tbas, tbaddr, 24)
+// TEMP
+//		writile(stamp, tbas, tbaddr, 24)
 
 		wcnt++
 // every loop, increase palette # to next till end
@@ -387,13 +390,14 @@ func genpfimage(maze *Maze) {
 // back to start - 9 units, as it auto increments before the next load
 			tbas = 0x7f7
 		}
-// done, no further paletts
+// done, no further pallets
 		if stamp.pnum == 12 {
 			stamp = nil
 		}
 	}
 
 	pnum := 0
+// TEMP
 // put back to 12 CHANGE
 	for pnum < 2 {
 
@@ -505,6 +509,54 @@ func genpfimage(maze *Maze) {
 
 			writile(stamp, i, tbaddr, -24)
 		}
+		for i := 0x15cf; i < 0x1608; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+// sets of triples - char and mob, dont seem to render correct
+		stamp = itemGetStamp("arrowup")
+		stamp.pnum = pnum
+		for i := 0x1448; i < 0x1487; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		for i := 0x148b; i < 0x1517; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		for i := 0x1800; i < 0x18fc; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		for i := 0x1900; i < 0x19fc; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		for i := 0x1a00; i < 0x1afc; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		for i := 0x1b00; i < 0x1bfc; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		for i := 0x1c00; i < 0x1cfc; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		for i := 0x1d00; i < 0x1dfc; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		for i := 0x1e00; i < 0x1efc; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+		for i := 0x1f00; i < 0x1ffc; i += tbaddr {
+
+			writile(stamp, i, tbaddr, -24)
+		}
+
 // dragon breath
 		for i := 0x278c; i < 0x27f7; i += tbaddr {
 
@@ -536,20 +588,18 @@ func genpfimage(maze *Maze) {
 			for i := 0x49e; i < 0x4af; i += tbaddr {
 
 				writile(stamp, i, tbaddr, 16)
-		}
+			}
+			stamp = itemGetStamp("tport")
+			for i := 0xc9e; i < 0xcb2; i += tbaddr {
+
+				writile(stamp, i, tbaddr, 16)
+			}
 // missing stuff from main bloot
 // shots
 		tbaddr = 4
-		stamp = itemGetStamp("lobber")
+		stamp = itemGetStamp("arrowup")
 		stamp.pnum = pnum
-		for i := 0x1448; i < 0x1487; i += tbaddr {
 
-			writile(stamp, i, tbaddr, -16)
-		}
-		for i := 0x148b; i < 0x1517; i += tbaddr {
-
-			writile(stamp, i, tbaddr, -16)
-		}
 
 		}
 		pnum++
