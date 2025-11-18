@@ -334,7 +334,7 @@ func genpfimage(maze *Maze, mazenum int) {
 	stamp = itemGetStamp("ghost")
 	stamp.pnum = 0
 
-	for stamp != nil {
+	for stamp != nil && mazenum == 116 {
 
 		wcnt++
 		for i := 0x800; i < 0xfff; i += tbaddr {
@@ -458,7 +458,7 @@ func genpfimage(maze *Maze, mazenum int) {
 	pnum := 0
 // TEMP
 // put back to 12 CHANGE
-	for pnum < 12 {
+	for pnum < 12 && mazenum == 116 {
 
 		stamp = itemGetStamp("pushwall")
 		stamp.pnum = pnum
@@ -493,52 +493,7 @@ func genpfimage(maze *Maze, mazenum int) {
 		stamp.pnum = pnum
 		writile(stamp, 0x2788, 4, 16 ,0)
 // g1 powers
-/* handled by loop now
-// keyring
-		stamp = itemGetStamp("keyring")
-		stamp.pnum = pnum
-		tbas = 0x1d76
-		writile(stamp, tbas, 6, 24 ,0)
-
-		stamp = itemGetStamp("shieldpotion")
-		stamp.pnum = pnum
-		writile(stamp, 0x11fc, 4, 16 ,0)
-		stamp = itemGetStamp("speedpotion")
-		stamp.pnum = pnum
-		writile(stamp, 0x12fc, 4, 16 ,0)
-		stamp = itemGetStamp("magicpotion")
-		stamp.pnum = pnum
-		writile(stamp, 0x13fc, 4, 16 ,0)
-		stamp = itemGetStamp("shotpowerpotion")
-		stamp.pnum = pnum
-		writile(stamp, 0x14fc, 4, 16 ,0)
-		stamp = itemGetStamp("shotspeedpotion")
-		stamp.pnum = pnum
-		writile(stamp, 0x15fc, 4, 16 ,0)
-		stamp = itemGetStamp("fightpotion")
-		stamp.pnum = pnum
-		writile(stamp, 0x16fc, 4, 16 ,0)
-
-		stamp = itemGetStamp("potion")
-		stamp.pnum = pnum
-		tbas = 0x8fc
-		tbaddr = 4
-		writile(stamp, tbas, tbaddr, 16 ,0)
-		tbas = 0x9fc
-		writile(stamp, tbas, tbaddr, 16 ,0)
-		tbas = 0xafc
-		writile(stamp, tbas, tbaddr, 16 ,0)
-		tbas = 0xbfc
-		writile(stamp, tbas, tbaddr, 16 ,0)
-		tbas = 0xcfc
-		writile(stamp, tbas, tbaddr, 16 ,0)
-		tbas = 0xdfc
-		writile(stamp, tbas, tbaddr, 16 ,0)
-		tbas = 0xefc
-		writile(stamp, tbas, tbaddr, 16 ,0)
-		tbas = 0xffc
-		writile(stamp, tbas, tbaddr, 16 ,0)
-*/
+// handled by loop now
 
 		stamp = itemGetStamp("it")
 		tbaddr = 9
