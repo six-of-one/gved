@@ -69,7 +69,7 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 	}
 // for 8x8 single tile, place is sub color dirs sep from .p*
 	if sz == 8 {
-		wnam = fmt.Sprintf(".8x8/c%d/i%05d.png",stamp.pnum,tbas + ada)
+		wnam = fmt.Sprintf(".8x8/c%d/i%05d_%04X.png",stamp.pnum,tbas + ada,tbas + ada)
 	}
 // 24 pixels * 24 pixels - temp write out of all tiles
 // impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
@@ -451,14 +451,14 @@ func genpfimage(maze *Maze, mazenum int) {
 
 // done, no further pallets
 
-		if stamp.pnum == 12 {
+		if stamp.pnum == 32 {
 			stamp = nil
 		}
 	}
 
 	pnum := 0
 
-	for pnum < 12 && mazenum == 116 {
+	for pnum < 32 && mazenum == 116 {
 
 		stamp = itemGetStamp("pushwall")
 		stamp.pnum = pnum
