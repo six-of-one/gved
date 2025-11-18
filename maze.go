@@ -52,6 +52,6 @@ func domaze(arg string) {
 	}
 
 	if mazeMeta == 0 {
-		genpfimage(maze)
+		genpfimage(maze, mazeNum)
 	}
 }
