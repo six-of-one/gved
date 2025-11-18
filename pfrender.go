@@ -56,7 +56,8 @@ func copyedges(maze *Maze) {
 func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 
 //	fmt.Printf("tbas pass %d\n",tbas)
-	stamp.numbers = tilerange(tbas, tbaddr)
+// exit tile is special build
+	if ada != 0x7f0 { stamp.numbers = tilerange(tbas, tbaddr) }
 	fillstamp(stamp)
 
 // file name with addr
@@ -326,7 +327,6 @@ func genpfimage(maze *Maze) {
 
 // counter for tiles - imprv - dont write dups
 	wcnt := 1
-	tbas := 0x800
 // tb adder controls size of tile render, and mem skip to next tile
 // this could also control the render out 16x16, 24x24 or 32x32
 	tbaddr := 9
@@ -589,6 +589,7 @@ func genpfimage(maze *Maze) {
 
 // have to be pnum 0 only it seems
 		if pnum == 0 {
+			tbaddr = 4
 			stamp = itemGetStamp("exit4")
 			writile(stamp, 0x4fc, tbaddr, -16 ,0x800)
 			stamp = itemGetStamp("exit8")
@@ -601,17 +602,10 @@ func genpfimage(maze *Maze) {
 				writile(stamp, i, tbaddr, -16 ,0x800)
 			}
 			stamp = itemGetStamp("tport")
-			for i := 0x49e; i < 0x4af; i += tbaddr {
+			for i := 0x49e; i < 0x4b2; i += tbaddr {
 
 				writile(stamp, i, tbaddr, -16 ,0x800)
 			}
-			stamp = itemGetStamp("tport")
-			for i := 0xc9e; i < 0xcb2; i += tbaddr {
-
-				writile(stamp, i, tbaddr, -16 ,0x800)
-			}
-// missing stuff from main bloot
-
 		}
 
 // the single tile set is locked out
