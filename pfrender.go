@@ -451,14 +451,14 @@ func genpfimage(maze *Maze, mazenum int) {
 
 // done, no further pallets
 
-		if stamp.pnum == 32 {
+		if stamp.pnum == 12 {
 			stamp = nil
 		}
 	}
 
 	pnum := 0
 
-	for pnum < 32 && mazenum == 116 {
+	for pnum < 12 && mazenum == 116 {
 
 		stamp = itemGetStamp("pushwall")
 		stamp.pnum = pnum
