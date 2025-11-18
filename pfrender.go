@@ -579,7 +579,7 @@ func genpfimage(maze *Maze, mazenum int) {
 		}
 
 // the single tile set is locked out
-//if false {
+if false {
 // single tile, for all the issues
 		stamp = itemGetStamp("ghost")
 		tbaddr = 1
@@ -606,7 +606,7 @@ func genpfimage(maze *Maze, mazenum int) {
 			writile(stamp, i, tbaddr, 8 ,0)
 		}
 // locked out
-//}
+}
 
 		pnum++
 	}
