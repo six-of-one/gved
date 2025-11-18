@@ -452,13 +452,6 @@ func genpfimage(maze *Maze) {
 // put back to 12 CHANGE
 	for pnum < 12 {
 
-// TEMP - remove wrapper
-if false {
-// keyring
-		stamp = itemGetStamp("keyring")
-		stamp.pnum = pnum
-		tbas = 0x1d76
-		writile(stamp, tbas, 6, 24 ,0)
 		stamp = itemGetStamp("pushwall")
 		stamp.pnum = pnum
 		writile(stamp, 0x20f6, 6, 24 ,0)
@@ -492,6 +485,13 @@ if false {
 		stamp.pnum = pnum
 		writile(stamp, 0x2788, 4, 16 ,0)
 // g1 powers
+/* handled by loop now
+// keyring
+		stamp = itemGetStamp("keyring")
+		stamp.pnum = pnum
+		tbas = 0x1d76
+		writile(stamp, tbas, 6, 24 ,0)
+
 		stamp = itemGetStamp("shieldpotion")
 		stamp.pnum = pnum
 		writile(stamp, 0x11fc, 4, 16 ,0)
@@ -530,10 +530,7 @@ if false {
 		writile(stamp, tbas, tbaddr, 16 ,0)
 		tbas = 0xffc
 		writile(stamp, tbas, tbaddr, 16 ,0)
-		stamp = itemGetStamp("exit4")
-		writile(stamp, 0xcfc, tbaddr, 16 ,0)
-		stamp = itemGetStamp("exit8")
-		writile(stamp, 0xdfc, tbaddr, 16 ,0)
+*/
 
 		stamp = itemGetStamp("it")
 		tbaddr = 9
@@ -592,26 +589,31 @@ if false {
 
 // have to be pnum 0 only it seems
 		if pnum == 0 {
+			stamp = itemGetStamp("exit4")
+			writile(stamp, 0x4fc, tbaddr, -16 ,0x800)
+			stamp = itemGetStamp("exit8")
+			writile(stamp, 0x5fc, tbaddr, -16 ,0x800)
+			writile(stamp, 0x3fc, tbaddr, -16 ,0x800)
 			stamp = itemGetStamp("exit")
+			writile(stamp, 0x39e, tbaddr, -16 ,0x7f0)
 			for i := 0x39e; i < 0x49d; i += tbaddr {
 
-				writile(stamp, i, tbaddr, 16 ,0)
+				writile(stamp, i, tbaddr, -16 ,0x800)
 			}
 			stamp = itemGetStamp("tport")
 			for i := 0x49e; i < 0x4af; i += tbaddr {
 
-				writile(stamp, i, tbaddr, 16 ,0)
+				writile(stamp, i, tbaddr, -16 ,0x800)
 			}
 			stamp = itemGetStamp("tport")
 			for i := 0xc9e; i < 0xcb2; i += tbaddr {
 
-				writile(stamp, i, tbaddr, 16 ,0)
+				writile(stamp, i, tbaddr, -16 ,0x800)
 			}
 // missing stuff from main bloot
 
 		}
-// TEMP remove
-}
+
 // the single tile set is locked out
 if false {
 // single tile, for all the issues
@@ -641,7 +643,7 @@ if false {
 		}
 // locked out
 }
-
+// TEMP remove
 pnum = 12
 
 		pnum++
