@@ -351,6 +351,7 @@ func genpfimage(maze *Maze, mazenum int) {
 			}
 		}
 		tbaddr = 9
+		stamp.width = 3
 		for i := 0x7b3; i < 0x7e2; i += tbaddr {
 
 			writile(stamp, i, 9, 24 ,0x800)
