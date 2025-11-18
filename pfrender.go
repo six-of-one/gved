@@ -60,8 +60,12 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 	fillstamp(stamp)
 
 // file name with addr
-// -sz = dont sub x800 from addr (g2 has some dorkishness with gex)
 	wnam := fmt.Sprintf(".p%d/tl_%05d_%04X.png",stamp.pnum,tbas + ada,tbas + ada)
+// -sz = use (s)pecial file designation
+	if sz < 0 {
+		sz = max(sz,-sz)
+		wnam = fmt.Sprintf(".p%d/tl_s%05d_%04X.png",stamp.pnum,tbas + ada,tbas + ada)
+	}
 // for 8x8 single tile, place is sub color dirs sep from .p*
 	if sz == 8 {
 		wnam = fmt.Sprintf(".8x8/c%d/i%05d.png",stamp.pnum,tbas + ada)
@@ -346,10 +350,18 @@ func genpfimage(maze *Maze) {
 				writile(stamp, i, tbaddr, 24 ,-0x800)
 			}
 		}
-		for i := 0x011; i < 0x4b0; i += tbaddr {
+		stamp.width = 2
+		tbaddr = 4
+		for i := 0x011; i < 0x1e0; i += tbaddr {
 
-			stamp.width = 2
-			tbaddr = 4
+			writile(stamp, i, 4, 16 ,0x800)
+		}
+		for i := 0x1e0; i < 0x39c; i += tbaddr {
+
+			writile(stamp, i, 4, 16 ,0x800)
+		}
+		for i := 0x39e; i < 0x4b0; i += tbaddr {
+
 			writile(stamp, i, 4, 16 ,0x800)
 		}
 		for i := 0x1800; i < 0x1c47; i += tbaddr {
@@ -429,7 +441,8 @@ func genpfimage(maze *Maze) {
 		stamp.pnum++;
 
 // done, no further pallets
-		if stamp.pnum == 12 {
+//TEMP
+		if stamp.pnum == 2 {
 			stamp = nil
 		}
 	}
@@ -522,7 +535,6 @@ if false {
 		stamp = itemGetStamp("exit8")
 		writile(stamp, 0xdfc, tbaddr, 16 ,0)
 
-		if pnum == 0 {
 		stamp = itemGetStamp("it")
 		tbaddr = 9
 		stamp.pnum = pnum
@@ -545,6 +557,7 @@ if false {
 
 			writile(stamp, i, tbaddr, 24 ,0)
 		}
+/* < x2000 handled by 1st loop now
 		for i := 0x1fab; i < 0x1ffb; i += tbaddr {
 
 			writile(stamp, i, tbaddr, 24 ,0)
@@ -553,6 +566,7 @@ if false {
 
 			writile(stamp, i, tbaddr, 24 ,0)
 		}
+*/
 
 // dragon breath
 		for i := 0x278c; i < 0x27f7; i += tbaddr {
@@ -577,6 +591,7 @@ if false {
 		}
 
 // have to be pnum 0 only it seems
+		if pnum == 0 {
 			stamp = itemGetStamp("exit")
 			for i := 0x39e; i < 0x49d; i += tbaddr {
 
@@ -597,7 +612,7 @@ if false {
 		}
 // TEMP remove
 }
-// TEMP - remove wrapper
+// the single tile set is locked out
 if false {
 // single tile, for all the issues
 		stamp = itemGetStamp("ghost")
@@ -624,7 +639,7 @@ if false {
 
 			writile(stamp, i, tbaddr, 8 ,0)
 		}
-// TEMP remove
+// locked out
 }
 
 pnum = 12
