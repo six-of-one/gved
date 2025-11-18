@@ -350,6 +350,7 @@ func genpfimage(maze *Maze, mazenum int) {
 				writile(stamp, i, tbaddr, 24 ,-0x800)
 			}
 		}
+		tbaddr = 9
 		for i := 0x7b3; i < 0x7e2; i += tbaddr {
 
 			writile(stamp, i, 9, 24 ,0x800)
@@ -449,15 +450,14 @@ func genpfimage(maze *Maze, mazenum int) {
 		stamp.pnum++;
 
 // done, no further pallets
-//TEMP
-		if stamp.pnum == 2 {
+
+		if stamp.pnum == 12 {
 			stamp = nil
 		}
 	}
 
 	pnum := 0
-// TEMP
-// put back to 12 CHANGE
+
 	for pnum < 12 && mazenum == 116 {
 
 		stamp = itemGetStamp("pushwall")
@@ -549,8 +549,14 @@ func genpfimage(maze *Maze, mazenum int) {
 
 			writile(stamp, i, tbaddr, 32 ,0)
 		}
+		tbaddr = 2
+		stamp.width = 2
+		for i := 0x25f6; i < 0x25ff; i += tbaddr {
 
-// have to be pnum 0 only it seems
+			writile(stamp, i, tbaddr, 16 ,0)
+		}
+
+// only needed once - pnum 0, even tho this isnt the palette num on these
 		if pnum == 0 {
 			tbaddr = 4
 			stamp = itemGetStamp("exit4")
@@ -572,7 +578,7 @@ func genpfimage(maze *Maze, mazenum int) {
 		}
 
 // the single tile set is locked out
-if false {
+//if false {
 // single tile, for all the issues
 		stamp = itemGetStamp("ghost")
 		tbaddr = 1
@@ -599,9 +605,7 @@ if false {
 			writile(stamp, i, tbaddr, 8 ,0)
 		}
 // locked out
-}
-// TEMP remove
-pnum = 12
+//}
 
 		pnum++
 	}
