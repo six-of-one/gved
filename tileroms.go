@@ -1,5 +1,9 @@
 package main
 
+import (
+	"fmt"
+)
+
 type Romset struct {
 	offset int
 	roms   []string
@@ -55,7 +59,7 @@ var tileRomSets = []Romset{
 func getromset(tilenum int) (int, []string) {
 	whichbank := tilenum / 0x800
 	actualtile := (tilenum % 0x800) + tileRomSets[whichbank].offset
-	// fmt.Printf("tile: 0x%x   romset: %s\n", actualtile, romSets[whichbank].roms)
+	 fmt.Printf("tile: 0x%x   romset: %s\n", actualtile, tileRomSets[whichbank].roms)
 
 	return actualtile, tileRomSets[whichbank].roms
 }

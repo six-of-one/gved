@@ -450,6 +450,9 @@ func genpfimage(maze *Maze, mazenum int) {
 // every loop, increase palette # to next till end
 		stamp.pnum++;
 
+// TEMP - remove for full dump
+// for code testing, only rendering .p0
+stamp.pnum = 12
 // done, no further pallets
 
 		if stamp.pnum == 12 {
@@ -607,7 +610,8 @@ if false {
 		}
 // locked out
 }
-
+// TEMP - remove for full dump
+pnum = 12
 		pnum++
 	}
 
