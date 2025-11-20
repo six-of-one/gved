@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/binary"
+	"fmt"
 )
 
 var slapsticRoms = []string{
@@ -41,7 +42,7 @@ func slapsticMazeGetRealAddr(mazenum int) int {
 	bank := slapsticMazeGetBank(mazenum)
 	addr := slapsticReadMazeOffset(mazenum) + (0x2000 * bank)
 
-	// fmt.Printf("Maze real addr: 0x%06x\n", addr)
+fmt.Printf("Maze real addr: 0x%06x\n", addr)
 	return addr
 }
 
@@ -63,7 +64,9 @@ func slapsticMazeGetBank(mazenum int) int {
 func slapsticReadMazeOffset(mazenum int) int {
 	buf := slapsticReadBytes(0x03800c+(4*mazenum), 4)
 	mazeoffset := binary.BigEndian.Uint32(buf)
-	// fmt.Printf("Offset for maze: 0x%06x\n", mazeoffset)
+
+fmt.Printf("Offset for maze: 0x%06x\n", mazeoffset)
+fmt.Printf("buf: %l\n", buf)
 
 	return int(mazeoffset)
 }

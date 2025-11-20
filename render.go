@@ -6,6 +6,7 @@ import (
 	"image/png"
 	"math"
 	"os"
+//	"fmt"
 )
 
 type Color interface {
@@ -39,6 +40,8 @@ func gettiledatafromfile(file string, tilenum int) TileLinePlane {
 	f.Seek(int64(tilenum*8), 0)
 	cnt, err := f.Read(databytes)
 	check(err)
+
+//fmt.Printf("tn: 0x%x  file: %s\n", tilenum, file)
 
 	if cnt != 8 {
 		panic("failed to read full tile from file")

@@ -59,7 +59,9 @@ var tileRomSets = []Romset{
 func getromset(tilenum int) (int, []string) {
 	whichbank := tilenum / 0x800
 	actualtile := (tilenum % 0x800) + tileRomSets[whichbank].offset
-	 fmt.Printf("tn: 0x%x  tile: 0x%x   romset: %s\n", tilenum, actualtile, tileRomSets[whichbank].roms)
 
+if false {
+fmt.Printf("tn: 0x%x  tile: 0x%x   romset: %s\n", tilenum, actualtile, tileRomSets[whichbank].roms)
+}
 	return actualtile, tileRomSets[whichbank].roms
 }
