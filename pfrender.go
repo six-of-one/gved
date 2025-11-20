@@ -325,6 +325,19 @@ func genpfimage(maze *Maze, mazenum int) {
 
 /// individual tile dumper
 
+/*******************************************
+TTT           ___  DDD                __
+ T   i  L    E     D  d  u  u  m\/m  P  p
+ T   i  L    E--   D  d  u  u  m  m  p__p
+ T   i  LLL  E___  DDD    uu   m  m  p
+
+ *******************************************/
+// lock out with this - set to true to run dump
+// run decode for maze116
+// written to .p[0-11]/tl_%05d_%04X.png
+// where %d and %X are tile start addr
+
+if false {
 // counter for tiles - imprv - dont write dups
 	wcnt := 1
 // tb adder controls size of tile render, and mem skip to next tile
@@ -333,6 +346,8 @@ func genpfimage(maze *Maze, mazenum int) {
 	var stamp *Stamp
 	stamp = itemGetStamp("ghost")
 	stamp.pnum = 0
+
+// 0000 - 1FFF dump
 
 	for stamp != nil && mazenum == 116 {
 
@@ -450,9 +465,6 @@ func genpfimage(maze *Maze, mazenum int) {
 // every loop, increase palette # to next till end
 		stamp.pnum++;
 
-// TEMP - remove for full dump
-// for code testing, only rendering .p0
-stamp.pnum = 12
 // done, no further pallets
 
 		if stamp.pnum == 12 {
@@ -460,6 +472,7 @@ stamp.pnum = 12
 		}
 	}
 
+// gauntlet 2 add ins not handled by 0000 - 1FFF dump
 	pnum := 0
 
 	for pnum < 12 && mazenum == 116 {
@@ -581,9 +594,11 @@ stamp.pnum = 12
 			}
 		}
 
-// the single tile set is locked out
+// the single 8x8 tile set is locked out for normal tile writing ops
+// set true to run
 if false {
 // single tile, for all the issues
+// this is written to .8x8/c[0-11]/i%05d_%04X.png
 		stamp = itemGetStamp("ghost")
 		tbaddr = 1
 		stamp.pnum = pnum
@@ -610,10 +625,10 @@ if false {
 		}
 // locked out
 }
-// TEMP - remove for full dump
-pnum = 12
 		pnum++
 	}
+// Six - end of tile dumper
+}
 
 	if maze.flags&LFLAG4_WRAP_H > 0 {
 		l := itemGetStamp("arrowleft")
