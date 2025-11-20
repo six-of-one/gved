@@ -42,7 +42,7 @@ func slapsticMazeGetRealAddr(mazenum int) int {
 	bank := slapsticMazeGetBank(mazenum)
 	addr := slapsticReadMazeOffset(mazenum) + (0x2000 * bank)
 
-fmt.Printf("Maze real addr: 0x%06x\n", addr)
+fmt.Printf("Maze real addr: 0x%06x, bank %d, boff: 0x%04x\n", addr, bank, 0x2000 * bank)
 	return addr
 }
 
@@ -51,7 +51,7 @@ func slapsticMazeGetBank(mazenum int) int {
 		panic("Invalid maze number requested (must be 0 <= x <= 116")
 	}
 
-	// More or less a direct port of the 68k coede. Should improve this.
+	// More or less a direct port of the 68k cohde. Should improve this.
 	offset := mazenum / 4
 	bi := slapsticBankInfo[offset]
 	offset = (mazenum % 4) * 2
@@ -66,7 +66,7 @@ func slapsticReadMazeOffset(mazenum int) int {
 	mazeoffset := binary.BigEndian.Uint32(buf)
 
 fmt.Printf("Offset for maze: 0x%06x\n", mazeoffset)
-fmt.Printf("buf: %l\n", buf)
+fmt.Printf("big endian buf: %l\n", buf)
 
 	return int(mazeoffset)
 }
