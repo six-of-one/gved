@@ -323,7 +323,7 @@ func genpfimage(maze *Maze, mazenum int) {
 		}
 	}
 
-/// individual tile dumper
+/// Six - individual tile dumper
 
 /*******************************************
 TTT           ___  DDD                __
@@ -629,7 +629,18 @@ if false {
 	}
 // Six - end of tile dumper
 }
+// Six - maze dumper
+if true {
+	fmt.Printf("maze: %d\n", mazenum)
+	for y := 0; y <= lasty; y++ {
+		for x := 0; x <= lastx; x++ {
 
+			fmt.Printf(" %02X", maze[y][x])
+		}
+		fmt.Printf("\n")
+	}
+// Six end maze dumper
+}
 	if maze.flags&LFLAG4_WRAP_H > 0 {
 		l := itemGetStamp("arrowleft")
 		r := itemGetStamp("arrowright")
