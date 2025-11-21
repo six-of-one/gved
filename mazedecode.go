@@ -129,6 +129,23 @@ func mazeDecompress(compressed []int, metaonly bool) *Maze {
 	maze.encodedbytes = len(compressed)
 	maze.secret = compressed[0] & 0x1f
 
+// Six - maze dumper compresssed
+if true {
+	fmt.Printf("compresssed: %d\n", maze.encodedbytes)
+	y := 0
+	for y < maze.encodedbytes {
+		for x := 0; x <= 16; x++ {
+
+			if y < maze.encodedbytes {
+				fmt.Printf(" %02d", compressed[y])
+			}
+			y++
+		}
+		fmt.Printf("\n")
+	}
+// Six end maze dumper
+}
+
 	// This inability to transparently go back and forth between types is
 	// obnoxious.
 	flagbytes := make([]byte, 4)

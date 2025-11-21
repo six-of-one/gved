@@ -635,7 +635,7 @@ if true {
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
-			fmt.Printf(" %02X", maze[y][x])
+			fmt.Printf(" %02d", maze.data[xy{x, y}])
 		}
 		fmt.Printf("\n")
 	}
