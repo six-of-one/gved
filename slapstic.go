@@ -6,11 +6,11 @@ import (
 )
 
 var slapsticRoms = []string{
-//	"ROMs/136043-1105.10a",
-//	"ROMs/136043-1106.10b",
+	"ROMs/136043-1105.10a",
+	"ROMs/136043-1106.10b",
 // g1 exper
-	"ROMs/136037-205.10a",
-	"ROMs/136037-206.10b",
+//	"ROMs/136037-205.10a",
+//	"ROMs/136037-206.10b",
 }
 
 var slapsticBankInfo = []int{
@@ -26,9 +26,9 @@ const (
 
 // Do this the lazy way -- read an oversized chunk, then keep what we need
 func slapsticReadMaze(mazenum int) []int {
-//	addr := slapsticMazeGetRealAddr(mazenum)
+	addr := slapsticMazeGetRealAddr(mazenum)
 // TEMP remove
-addr := 0x3833d;
+//addr := 0x38403;
 	b := slapsticReadBytes(addr, 512)
 
 	var intbuf []int
