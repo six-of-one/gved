@@ -28,7 +28,7 @@ const (
 func slapsticReadMaze(mazenum int) []int {
 // /	addr := slapsticMazeGetRealAddr(mazenum)
 // TEMP remove
-addr := 0x3868c;
+addr := 0x38abe;
 	b := slapsticReadBytes(addr, 512)
 
 	var intbuf []int

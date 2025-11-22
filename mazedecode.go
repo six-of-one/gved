@@ -145,7 +145,7 @@ if true {
 	}
 // Six end maze dumper
 }
-/*
+
 	// This inability to transparently go back and forth between types is
 	// obnoxious.
 	flagbytes := make([]byte, 4)
@@ -159,6 +159,13 @@ if true {
 	maze.floorpattern = (compressed[5] & 0xf0) >> 4
 	maze.wallcolor = compressed[6] & 0x0f
 	maze.floorcolor = (compressed[6] & 0xf0) >> 4
+// TEMP remove
+// g1 wont have any g2 stuff, and might not use flags at all
+maze.flags = 0 //maze.flags & 0x3f;
+maze.wallpattern = 0
+maze.floorpattern = 8
+maze.wallcolor = 9
+maze.floorcolor = 1
 
 	if metaonly {
 		return maze
@@ -170,25 +177,7 @@ if true {
 	vtype2 := compressed[10] // vert type 2
 
 	prev := htype2 // previous value, for 'repeat previous' types
-*/
-// TEST set - remove
-flagbytes := make([]byte, 4)
-flagbytes[0] = 0
-flagbytes[1] = 0
-flagbytes[2] = 0
-flagbytes[3] = 0
-maze.flags = int(binary.BigEndian.Uint32(flagbytes))
-maze.wallpattern = compressed[1] & 0x0f
-maze.floorpattern = (compressed[1] & 0xf0) >> 4
-maze.wallcolor = compressed[2] & 0x0f
-maze.floorcolor = (compressed[2] & 0xf0) >> 4
-htype1 := compressed[3]  // horiz type 1
-htype2 := compressed[4]  // horiz type 2
-vtype1 := compressed[5]  // vert type 1
-vtype2 := compressed[6] // vert type 2
 
-prev := htype2 // previous value, for 'repeat previous' types
-// end test
 	// fmt.Printf("Encoded size: %d\n", maze.encodedbytes)
 
 	// Fill in first row with walls, always
@@ -198,8 +187,7 @@ prev := htype2 // previous value, for 'repeat previous' types
 
 	// Unpack here starts
 	location := 32               // how many spots we've filled
-//	compressed = compressed[11:] // pointer to where we are in the input stream
-	compressed = compressed[7:] // pointer to where we are in the input stream
+	compressed = compressed[11:] // pointer to where we are in the input stream
 
 	for location < 1024 {
 		// fmt.Printf("input remaining: %d, next byte 0x%02x, output remaining: %d\n", len(compressed), compressed[0], 1024-location)
