@@ -137,7 +137,7 @@ if true {
 		for x := 0; x <= 16; x++ {
 
 			if y < maze.encodedbytes {
-				fmt.Printf(" %02d", compressed[y])
+				fmt.Printf(" %02X", compressed[y])
 			}
 			y++
 		}
@@ -162,10 +162,10 @@ if true {
 // TEMP remove
 // g1 wont have any g2 stuff, and might not use flags at all
 maze.flags = 0 //maze.flags & 0x3f;
-maze.wallpattern = 0
-maze.floorpattern = 8
-maze.wallcolor = 9
-maze.floorcolor = 1
+maze.wallpattern = 4
+maze.floorpattern = 2
+maze.wallcolor = 7
+maze.floorcolor = 6
 // TEMP remove
 
 	if metaonly {
