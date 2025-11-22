@@ -190,7 +190,7 @@ maze.floorcolor = 1
 	location := 32               // how many spots we've filled
 //	compressed = compressed[11:] // pointer to where we are in the input stream
 // TEMP remove - uncomment above
-	compressed = compressed[10:] // pointer to where we are in the input stream
+	compressed = compressed[11:] // pointer to where we are in the input stream
 // TEMP remove
 
 	for location < 1024 {
@@ -228,7 +228,11 @@ fmt.Printf("Pos: %04d, left: %03d tok 0x%02x: count:%d lcnt: %d\n", location, le
 			switch prev & 0xc0 {
 			case 0x00: // repeat type
 				if (token & 0x10) != 0 {
+// TEMP remove
+// vexp is going - on loop
+if location - ((count - 1) * 32) > 0 {
 					location = vexpand(maze, location, previtem, count)
+}
 				} else {
 					location = expand(maze, location, previtem, count)
 				}
@@ -246,7 +250,11 @@ fmt.Printf("Pos: %04d, left: %03d tok 0x%02x: count:%d lcnt: %d\n", location, le
 			if (token & 0x20) != 0 { // Repeat wall
 				if (token & 0x10) != 0 {
 					// vertical
+// TEMP remove
+// vexp is going - on loop
+if location - ((count - 1) * 32) > 0 {
 					location = vexpand(maze, location, MAZEOBJ_WALL_REGULAR, count)
+}
 				} else {
 					// horizontal
 					location = expand(maze, location, MAZEOBJ_WALL_REGULAR, count)
