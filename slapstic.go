@@ -27,8 +27,9 @@ const (
 // Do this the lazy way -- read an oversized chunk, then keep what we need
 func slapsticReadMaze(mazenum int) []int {
 // /	addr := slapsticMazeGetRealAddr(mazenum)
-// TEMP remove
+// TEMP remove - put above line back
 addr := 0x38abe;
+// TEMP remove
 	b := slapsticReadBytes(addr, 512)
 
 	var intbuf []int
