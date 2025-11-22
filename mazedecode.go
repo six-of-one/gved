@@ -162,10 +162,10 @@ if true {
 // TEMP remove
 // g1 wont have any g2 stuff, and might not use flags at all
 maze.flags = 0 //maze.flags & 0x3f;
-maze.wallpattern = 4
-maze.floorpattern = 2
-maze.wallcolor = 7
-maze.floorcolor = 6
+maze.wallpattern = 0
+maze.floorpattern = 8
+maze.wallcolor = 9
+maze.floorcolor = 1
 // TEMP remove
 
 	if metaonly {
