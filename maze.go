@@ -35,8 +35,8 @@ func domaze(arg string) {
 		case reMazeNum.MatchString(ss):
 			m, _ := strconv.ParseInt(reMazeNum.FindStringSubmatch(ss)[1], 10, 0)
 			mazeNum = int(m)
-// TEMP remove - restore to 117
-			if mazeNum < 0 || mazeNum > 2117000 {
+// Six: maze num 1 - 117 or start address x38000 - x3FFFF
+			if mazeNum < 0 || mazeNum > 117 && mazeNum < 229376 || mazeNum > 262144 {
 				panic("Invalid maze number specified.")
 			}
 
@@ -45,7 +45,11 @@ func domaze(arg string) {
 		}
 	}
 
-	fmt.Printf("Maze number: %d\n", mazeNum)
+	if mazeNum < 118 {
+		fmt.Printf("Maze number: %d\n", mazeNum)
+	} else {
+		fmt.Printf("Maze address: %X -- %d\n", mazeNum, mazeNum) }
+
 	maze := mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0)
 
 	if opts.Verbose || mazeMeta > 0 {
