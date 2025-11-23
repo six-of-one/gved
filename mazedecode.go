@@ -6,6 +6,7 @@ import (
 	"math/rand"
 )
 
+// this is alinsa's test method where these were sample maze entries prior to real data
 // var typeArr = []int{
 // 	' ', 'a', 'b', 'c', 'd', 'e' /* 'f', 'g', 'h', 'i', */, 'b', 'b', 'b', 'b',
 // 	'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
@@ -23,6 +24,7 @@ func getbytefortype(t int) int {
 }
 
 func index2xy(index int) (x int, y int) {
+// g1 mazes generate index < 0 with some vexpand, just block them off seems ok
 	if index < 0 {
 		fmt.Printf("ERROR: Coordinates requested for index < 0: %d\n", index)
 		panic("Coordinates requested for index < 0")
@@ -69,6 +71,7 @@ func isspecialfloor(t int) bool {
 }
 
 // FIXME: needs to handle vflip and hflip
+// it really doesnt - just import array flip, mirror & rotate code from sanctuary
 func expand(maze *Maze, location int, t int, count int) int {
 	if t == MAZEOBJ_TILE_FLOOR {
 		return (location + count)
@@ -129,7 +132,7 @@ func mazeDecompress(compressed []int, metaonly bool) *Maze {
 	maze.encodedbytes = len(compressed)
 	maze.secret = compressed[0] & 0x1f
 
-// Six - maze dumper compresssed
+// Six - maze dumper compresssed data
 if true {
 	fmt.Printf("compresssed: %d\n", maze.encodedbytes)
 	y := 0

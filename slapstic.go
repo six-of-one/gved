@@ -9,7 +9,7 @@ var slapsticRoms = []string{
 	"ROMs/136043-1105.10a",
 	"ROMs/136043-1106.10b",
 }
-// g1 exper
+// g1 - since no bank info list provided for g1, we just load from direct addr
 var slapsticRomsG1 = []string{
 	"ROMs/136037-205.10a",
 	"ROMs/136037-206.10b",
