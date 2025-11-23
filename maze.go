@@ -50,7 +50,7 @@ func domaze(arg string) {
 	} else {
 		fmt.Printf("Maze address: 0x%X -- %d\n", mazeNum, mazeNum) }
 
-	maze := mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0)
+	maze := mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
 
 	if opts.Verbose || mazeMeta > 0 {
 		mazeMetaPrint(maze)

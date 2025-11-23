@@ -124,7 +124,8 @@ func vexpand(maze *Maze, location int, t int, count int) int {
 }
 
 // Outoput is maze[y][x]
-func mazeDecompress(compressed []int, metaonly bool) *Maze {
+// added g1 / g2 flagger
+func mazeDecompress(compressed []int, metaonly bool, g1g2 int) *Maze {
 	rand.Seed(5)
 	//  var m [32][32]int
 	var maze = &Maze{}
@@ -162,16 +163,21 @@ if true {
 	maze.floorpattern = (compressed[5] & 0xf0) >> 4
 	maze.wallcolor = compressed[6] & 0x0f
 	maze.floorcolor = (compressed[6] & 0xf0) >> 4
-// TEMP remove
+
 // g1 wont have any g2 stuff, and might not use flags at all
-maze.flags = 0 //maze.flags & 0x3f;
-maze.wallpattern = 0
-maze.floorpattern = 8
-maze.wallcolor = 9
-maze.floorcolor = 1
-// TEMP remove
+	flagsv := maze.flags // save so we can print in meta
+	if g1g2 > 0x037FFF {
+		maze.flags = 0 //maze.flags & 0x3f;
+// testing - this could be g1 codes, hard to tell with out the g1 gfx roms loaded
+		if maze.wallpattern > 5 { maze.wallpattern = rand.Intn(4) }
+/*		maze.wallpattern = 0
+		maze.floorpattern = 8
+		maze.wallcolor = 9
+		maze.floorcolor = 1 */
+	}
 
 	if metaonly {
+		maze.flags = flagsv
 		return maze
 	}
 
@@ -191,10 +197,7 @@ maze.floorcolor = 1
 
 	// Unpack here starts
 	location := 32               // how many spots we've filled
-//	compressed = compressed[11:] // pointer to where we are in the input stream
-// TEMP remove - uncomment above
 	compressed = compressed[11:] // pointer to where we are in the input stream
-// TEMP remove
 
 	for location < 1024 {
 		// fmt.Printf("input remaining: %d, next byte 0x%02x, output remaining: %d\n", len(compressed), compressed[0], 1024-location)
@@ -209,7 +212,7 @@ maze.floorcolor = 1
 		longcount := (token & 0x1f) + 1 // used for 'repeat last' and 'skip'
 
 // TEMP comment
-//fmt.Printf("Pos: %04d, left: %03d tok 0x%02x: count:%d lcnt: %d\n", location, len(compressed), token, count, longcount)
+fmt.Printf("Pos: %04d, left: %03d tok 0x%02x: count:%d lcnt: %d\n", location, len(compressed), token, count, longcount)
 
 		switch token & 0xc0 { // look at top two bits
 		case 0x00: // place one of literal object
@@ -280,6 +283,9 @@ if location - ((count - 1) * 32) > 0 {
 	if len(compressed) != 1 || compressed[0] != 0 {
 		fmt.Printf("WARNING: Incomplete maze decode? (%d bytes remaining)\n", len(compressed))
 	}
+
+// six - restore this for meta
+	maze.flags = flagsv
 
 	return maze
 }
