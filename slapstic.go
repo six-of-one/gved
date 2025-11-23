@@ -6,9 +6,11 @@ import (
 )
 
 var slapsticRoms = []string{
-//	"ROMs/136043-1105.10a",
-//	"ROMs/136043-1106.10b",
+	"ROMs/136043-1105.10a",
+	"ROMs/136043-1106.10b",
+}
 // g1 exper
+var slapsticRomsG1 = []string{
 	"ROMs/136037-205.10a",
 	"ROMs/136037-206.10b",
 }
@@ -34,7 +36,7 @@ func slapsticReadMaze(mazenum int) []int {
 	}
 fmt.Printf("Maze real addr: 0x%06x\n", addr)
 
-	b := slapsticReadBytes(addr, 512)
+	b := slapsticReadBytes(addr, 512, mazenum)
 
 	var intbuf []int
 	for i := 0; true; i++ {
@@ -72,7 +74,8 @@ func slapsticMazeGetBank(mazenum int) int {
 }
 
 func slapsticReadMazeOffset(mazenum int) int {
-	buf := slapsticReadBytes(0x03800c+(4*mazenum), 4)
+
+	buf := slapsticReadBytes(0x03800c+(4*mazenum), 4, mazenum)
 	mazeoffset := binary.BigEndian.Uint32(buf)
 
 fmt.Printf("Offset for maze: 0x%06x\n", mazeoffset)
@@ -82,11 +85,14 @@ fmt.Printf("big endian buf: %l\n", buf)
 }
 
 // Read bytes from combined ROM. Only works if reading an even address
-func slapsticReadBytes(offset int, count int) []byte {
+func slapsticReadBytes(offset int, count int, mazn int) []byte {
 	if offset >= SLAPSTIC_START {
 		offset -= SLAPSTIC_START
 	}
 	buf := romSplitRead(slapsticRoms, offset, count)
+	if mazn > 0x037FFF {
+		buf = romSplitRead(slapsticRomsG1, offset, count)
+	}
 
 	return buf
 }
