@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"fmt"
 	"os"
+	"github.com/fogleman/gg"
 )
 
 // For testing
@@ -376,15 +377,35 @@ func genpfimage(maze *Maze, mazenum int) {
 			case G1OBJ_EXIT8:
 				stamp = itemGetStamp("exit8")
 
-			case G1OBJ_MONST_GHOST:
+			case G1OBJ_MONST_GHOST1:
+				fallthrough
+			case G1OBJ_MONST_GHOST2:
+				fallthrough
+			case G1OBJ_MONST_GHOST3:
 				stamp = itemGetStamp("ghost")
-			case G1OBJ_MONST_GRUNT:
+			case G1OBJ_MONST_GRUNT1:
+				fallthrough
+			case G1OBJ_MONST_GRUNT2:
+				fallthrough
+			case G1OBJ_MONST_GRUNT3:
 				stamp = itemGetStamp("grunt")
-			case G1OBJ_MONST_DEMON:
+			case G1OBJ_MONST_DEMON1:
+				fallthrough
+			case G1OBJ_MONST_DEMON2:
+				fallthrough
+			case G1OBJ_MONST_DEMON3:
 				stamp = itemGetStamp("demon")
-			case G1OBJ_MONST_LOBBER:
+			case G1OBJ_MONST_LOBBER1:
+				fallthrough
+			case G1OBJ_MONST_LOBBER2:
+				fallthrough
+			case G1OBJ_MONST_LOBBER3:
 				stamp = itemGetStamp("lobber")
-			case G1OBJ_MONST_SORC:
+			case G1OBJ_MONST_SORC1:
+				fallthrough
+			case G1OBJ_MONST_SORC2:
+				fallthrough
+			case G1OBJ_MONST_SORC3:
 				stamp = itemGetStamp("sorcerer")
 			case G1OBJ_MONST_DEATH:
 				stamp = itemGetStamp("death")
@@ -935,7 +956,6 @@ func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
 		ffmap[xy{nx, ny}] = true
 	}
 
-	return
 }
 
 func ffMakeMap(maze *Maze) FFMap {
