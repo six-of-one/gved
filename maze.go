@@ -35,7 +35,8 @@ func domaze(arg string) {
 		case reMazeNum.MatchString(ss):
 			m, _ := strconv.ParseInt(reMazeNum.FindStringSubmatch(ss)[1], 10, 0)
 			mazeNum = int(m)
-			if mazeNum < 0 || mazeNum > 117 {
+// TEMP remove - restore to 117
+			if mazeNum < 0 || mazeNum > 2117000 {
 				panic("Invalid maze number specified.")
 			}
 
