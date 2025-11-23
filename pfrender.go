@@ -331,7 +331,8 @@ func genpfimage(maze *Maze, mazenum int) {
 				// like it ('jump into block'). I should figure out why.
 			case G1OBJ_TILE_TRAP1:
 				dots = 1
-				fallthrough
+//				fallthrough
+	/*
 			case G1OBJ_TILE_TRAP2:
 				if dots == 0 {
 					dots = 2
@@ -341,6 +342,7 @@ func genpfimage(maze *Maze, mazenum int) {
 				if dots == 0 {
 					dots = 3
 				}
+	*/
 				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
 				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 				stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
@@ -349,6 +351,9 @@ func genpfimage(maze *Maze, mazenum int) {
 				adj := checkwalladj8(maze, x, y)
 				stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
 
+			case G1OBJ_WALL_TRAP1:
+				dots = 1
+				fallthrough
 			case G1OBJ_WALL_REGULAR:
 				adj := checkwalladj8(maze, x, y)
 				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
