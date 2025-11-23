@@ -212,7 +212,7 @@ if true {
 		longcount := (token & 0x1f) + 1 // used for 'repeat last' and 'skip'
 
 // TEMP comment
-fmt.Printf("Pos: %04d, left: %03d tok 0x%02x: count:%d lcnt: %d\n", location, len(compressed), token, count, longcount)
+//fmt.Printf("Pos: %04d, left: %03d tok 0x%02x: count:%d lcnt: %d\n", location, len(compressed), token, count, longcount)
 
 		switch token & 0xc0 { // look at top two bits
 		case 0x00: // place one of literal object

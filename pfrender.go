@@ -313,6 +313,129 @@ func genpfimage(maze *Maze, mazenum int) {
 				// fmt.Printf("WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y))
 			}
 
+// g1 decodes
+			if mazenum > 0x37FFF {
+// /fmt.Printf("g1 dec: %x -- ", whatis(maze, x, y))
+			switch whatis(maze, x, y) {
+
+			case G1OBJ_TILE_FLOOR:
+			// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
+			// stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+			case G1OBJ_TILE_STUN:
+				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
+				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+				stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
+				stamp.pnum = 0
+
+				// Tried to simplify these a bit with a goto, but golang didn't
+				// like it ('jump into block'). I should figure out why.
+			case G1OBJ_TILE_TRAP1:
+				dots = 1
+				fallthrough
+			case G1OBJ_TILE_TRAP2:
+				if dots == 0 {
+					dots = 2
+				}
+				fallthrough
+			case G1OBJ_TILE_TRAP3:
+				if dots == 0 {
+					dots = 3
+				}
+				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
+				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+				stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
+				stamp.pnum = 0
+			case G1OBJ_WALL_DESTRUCTABLE:
+				adj := checkwalladj8(maze, x, y)
+				stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
+
+			case G1OBJ_WALL_REGULAR:
+				adj := checkwalladj8(maze, x, y)
+				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+			case G1OBJ_KEY:
+				stamp = itemGetStamp("key")
+
+			case G1OBJ_DOOR_HORIZ:
+				adj := checkdooradj4(maze, x, y)
+				stamp = doorGetStamp(DOOR_HORIZ, adj)
+			case G1OBJ_DOOR_VERT:
+				adj := checkdooradj4(maze, x, y)
+				stamp = doorGetStamp(DOOR_VERT, adj)
+
+			case G1OBJ_PLAYERSTART:
+				stamp = itemGetStamp("plus")
+			case G1OBJ_EXIT:
+				stamp = itemGetStamp("exit")
+			case G1OBJ_EXIT4:
+				stamp = itemGetStamp("exit4")
+			case G1OBJ_EXIT8:
+				stamp = itemGetStamp("exit8")
+
+			case G1OBJ_MONST_GHOST:
+				stamp = itemGetStamp("ghost")
+			case G1OBJ_MONST_GRUNT:
+				stamp = itemGetStamp("grunt")
+			case G1OBJ_MONST_DEMON:
+				stamp = itemGetStamp("demon")
+			case G1OBJ_MONST_LOBBER:
+				stamp = itemGetStamp("lobber")
+			case G1OBJ_MONST_SORC:
+				stamp = itemGetStamp("sorcerer")
+			case G1OBJ_MONST_DEATH:
+				stamp = itemGetStamp("death")
+
+			case G1OBJ_GEN_GHOST1:
+				stamp = itemGetStamp("ghostgen1")
+			case G1OBJ_GEN_GHOST2:
+				stamp = itemGetStamp("ghostgen2")
+			case G1OBJ_GEN_GHOST3:
+				stamp = itemGetStamp("ghostgen3")
+
+			case G1OBJ_GEN_GRUNT1:
+				fallthrough
+			case G1OBJ_GEN_DEMON1:
+				fallthrough
+			case G1OBJ_GEN_LOBBER1:
+				fallthrough
+			case G1OBJ_GEN_SORC1:
+				stamp = itemGetStamp("generator1")
+
+			case G1OBJ_GEN_GRUNT2:
+				fallthrough
+			case G1OBJ_GEN_DEMON2:
+				fallthrough
+			case G1OBJ_GEN_LOBBER2:
+				fallthrough
+			case G1OBJ_GEN_SORC2:
+				stamp = itemGetStamp("generator2")
+
+			case G1OBJ_GEN_GRUNT3:
+				fallthrough
+			case G1OBJ_GEN_DEMON3:
+				fallthrough
+			case G1OBJ_GEN_LOBBER3:
+				fallthrough
+			case G1OBJ_GEN_SORC3:
+				stamp = itemGetStamp("generator3")
+
+			case G1OBJ_TREASURE:
+				stamp = itemGetStamp("treasure")
+			case G1OBJ_TREASURE_BAG:
+				stamp = itemGetStamp("goldbag")
+			case G1OBJ_FOOD_DESTRUCTABLE:
+				stamp = itemGetStamp("food")
+			case G1OBJ_FOOD_INVULN:
+				stamp = itemGetStamp(foods[rand.Intn(3)])
+			case G1OBJ_POT_DESTRUCTABLE:
+				stamp = itemGetStamp("potion")
+			case G1OBJ_POT_INVULN:
+				stamp = itemGetStamp("ipotion")
+
+			case G1OBJ_TRANSPORTER:
+				stamp = itemGetStamp("tport")
+			default:
+			}}
+// Six: end G1 decode
 			if stamp != nil {
 				writestamptoimage(img, stamp, x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
 			}
