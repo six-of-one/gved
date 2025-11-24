@@ -434,54 +434,54 @@ func genpfimage(maze *Maze, mazenum int) {
 				stamp = itemGetStamp("ghostgen3")
 
 			case G1OBJ_GEN_GRUNT1:
-				gtop.SetRGB(1, 0, 0)
+				gtop.SetRGB(0.65, 0.3, 0.1)
 				gtopl = "G"
-				fallthrough
+				stamp = itemGetStamp("generator1")
 			case G1OBJ_GEN_DEMON1:
 				gtop.SetRGB(1, 0, 0)
 				gtopl = "D"
-				fallthrough
+				stamp = itemGetStamp("generator1")
 			case G1OBJ_GEN_LOBBER1:
 				gtopl = "L"
-				fallthrough
+				gtop.SetRGB(0.7, 0.5, 0.2)
+				stamp = itemGetStamp("generator1")
 			case G1OBJ_GEN_SORC1:
 				gtopl = "S"
-				fallthrough
-			case G1OBJ_GEN_1:
+				gtop.SetRGB(0.37, 0.2, 0.7)
 				stamp = itemGetStamp("generator1")
 
 			case G1OBJ_GEN_GRUNT2:
-				gtop.SetRGB(1, 0, 0)
+				gtop.SetRGB(0.65, 0.3, 0.1)
 				gtopl = "G"
-				fallthrough
+				stamp = itemGetStamp("generator2")
 			case G1OBJ_GEN_DEMON2:
 				gtop.SetRGB(1, 0, 0)
 				gtopl = "D"
-				fallthrough
+				stamp = itemGetStamp("generator2")
 			case G1OBJ_GEN_LOBBER2:
 				gtopl = "L"
-				fallthrough
+				gtop.SetRGB(0.7, 0.5, 0.2)
+				stamp = itemGetStamp("generator2")
 			case G1OBJ_GEN_SORC2:
 				gtopl = "S"
-				fallthrough
-			case G1OBJ_GEN_2:
+				gtop.SetRGB(0.37, 0.2, 0.7)
 				stamp = itemGetStamp("generator2")
 
 			case G1OBJ_GEN_GRUNT3:
-				gtop.SetRGB(1, 0, 0)
+				gtop.SetRGB(0.65, 0.3, 0.1)
 				gtopl = "G"
-				fallthrough
+				stamp = itemGetStamp("generator3")
 			case G1OBJ_GEN_DEMON3:
 				gtop.SetRGB(1, 0, 0)
 				gtopl = "D"
-				fallthrough
+				stamp = itemGetStamp("generator3")
 			case G1OBJ_GEN_LOBBER3:
 				gtopl = "L"
-				fallthrough
+				gtop.SetRGB(0.7, 0.5, 0.2)
+				stamp = itemGetStamp("generator3")
 			case G1OBJ_GEN_SORC3:
 				gtopl = "S"
-				fallthrough
-			case G1OBJ_GEN_3:
+				gtop.SetRGB(0.37, 0.2, 0.7)
 				stamp = itemGetStamp("generator3")
 
 			case G1OBJ_TREASURE:
@@ -504,12 +504,14 @@ func genpfimage(maze *Maze, mazenum int) {
 // Six: end G1 decode
 			if stamp != nil {
 				writestamptoimage(img, stamp, x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
-// generator monster type letter draw
+// generator monster type letter draw - only do when set
 				if gtopl != "" {
+// while each monsters has a letter color, some are hard to read
+					gtop.SetRGB(1, 0, 0)
 					gtop.DrawStringAnchored(gtopl, 4, 4, 0.5, 0.5)
 					gtopim := gtop.Image()
 					offset := image.Pt(x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
-					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Src)
+					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 				}
 			}
 
