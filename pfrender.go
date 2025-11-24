@@ -908,6 +908,15 @@ func isdoor(t int) bool {
 	}
 }
 
+// g1 version
+func isdoorg1(t int) bool {
+	if t == G1OBJ_DOOR_HORIZ || t == G1OBJ_DOOR_VERT {
+		return true
+	} else {
+		return false
+	}
+}
+
 func checkwalladj3(maze *Maze, x int, y int) int {
 	adj := 0
 
@@ -1017,6 +1026,26 @@ func checkdooradj4(maze *Maze, x int, y int) int {
 		adj += 0x04
 	}
 	if isdoor(whatis(maze, x-1, y)) {
+		adj += 0x08
+	}
+
+	return adj
+}
+
+// g1 version
+func checkdooradj4g1(maze *Maze, x int, y int) int {
+	adj := 0
+
+	if isdoorg1(whatis(maze, x, y-1)) {
+		adj += 0x01
+	}
+	if isdoorg1(whatis(maze, x+1, y)) {
+		adj += 0x02
+	}
+	if isdoorg1(whatis(maze, x, y+1)) {
+		adj += 0x04
+	}
+	if isdoorg1(whatis(maze, x-1, y)) {
 		adj += 0x08
 	}
 
