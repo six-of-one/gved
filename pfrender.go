@@ -407,10 +407,10 @@ func genpfimage(maze *Maze, mazenum int) {
 				stamp = itemGetStamp("key")
 
 			case G1OBJ_DOOR_HORIZ:
-				adj := checkdooradj4(maze, x, y)
+				adj := checkdooradj4g1(maze, x, y)
 				stamp = doorGetStamp(DOOR_HORIZ, adj)
 			case G1OBJ_DOOR_VERT:
-				adj := checkdooradj4(maze, x, y)
+				adj := checkdooradj4g1(maze, x, y)
 				stamp = doorGetStamp(DOOR_VERT, adj)
 
 			case G1OBJ_PLAYERSTART:
