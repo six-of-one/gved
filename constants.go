@@ -121,6 +121,10 @@ const (
 	G1OBJ_TRANSPORTER = 59
 	G1OBJ_TILE_STUN = 62
 	G1OBJ_TREASURE_BAG = 64
+// for the gtopl deal
+	G1OBJ_GEN_1 = 71
+	G1OBJ_GEN_2 = 72
+	G1OBJ_GEN_3 = 73
 )
 // Flags for levels
 const (

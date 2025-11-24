@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"fmt"
 	"os"
+	"image/draw"
 	"github.com/fogleman/gg"
 )
 
@@ -136,6 +137,14 @@ func genpfimage(maze *Maze, mazenum int) {
 		for x := 0; x <= lastx; x++ {
 			var stamp *Stamp
 			var dots int // dot count
+// gen type op - letter to draw
+			gtopl := ""
+// gen type op - the context to draw
+			gtop := gg.NewContext(8, 8)
+// gtop font
+			if err := gtop.LoadFontFace("/usr/share/fonts/truetype/ttf-bitstream-vera/VeraBd.ttf", 10); err != nil {
+				panic(err)
+				}
 
 			// We should do better
 			switch whatis(maze, x, y) {
@@ -316,6 +325,13 @@ func genpfimage(maze *Maze, mazenum int) {
 
 // g1 decodes
 			if mazenum > 0x37FFF {
+// gen type op - put a letter on up left corner of every gen to indicate monsters
+//		brw G - grunts
+//		red D - demons
+//		yel L - lobbers
+//		pur S - sorceror
+				gtop.Clear()
+				gtopl = ""
 // /fmt.Printf("g1 dec: %x -- ", whatis(maze, x, y))
 			switch whatis(maze, x, y) {
 
@@ -418,30 +434,54 @@ func genpfimage(maze *Maze, mazenum int) {
 				stamp = itemGetStamp("ghostgen3")
 
 			case G1OBJ_GEN_GRUNT1:
+				gtop.SetRGB(1, 0, 0)
+				gtopl = "G"
 				fallthrough
 			case G1OBJ_GEN_DEMON1:
+				gtop.SetRGB(1, 0, 0)
+				gtopl = "D"
 				fallthrough
 			case G1OBJ_GEN_LOBBER1:
+				gtopl = "L"
 				fallthrough
 			case G1OBJ_GEN_SORC1:
+				gtopl = "S"
+				fallthrough
+			case G1OBJ_GEN_1:
 				stamp = itemGetStamp("generator1")
 
 			case G1OBJ_GEN_GRUNT2:
+				gtop.SetRGB(1, 0, 0)
+				gtopl = "G"
 				fallthrough
 			case G1OBJ_GEN_DEMON2:
+				gtop.SetRGB(1, 0, 0)
+				gtopl = "D"
 				fallthrough
 			case G1OBJ_GEN_LOBBER2:
+				gtopl = "L"
 				fallthrough
 			case G1OBJ_GEN_SORC2:
+				gtopl = "S"
+				fallthrough
+			case G1OBJ_GEN_2:
 				stamp = itemGetStamp("generator2")
 
 			case G1OBJ_GEN_GRUNT3:
+				gtop.SetRGB(1, 0, 0)
+				gtopl = "G"
 				fallthrough
 			case G1OBJ_GEN_DEMON3:
+				gtop.SetRGB(1, 0, 0)
+				gtopl = "D"
 				fallthrough
 			case G1OBJ_GEN_LOBBER3:
+				gtopl = "L"
 				fallthrough
 			case G1OBJ_GEN_SORC3:
+				gtopl = "S"
+				fallthrough
+			case G1OBJ_GEN_3:
 				stamp = itemGetStamp("generator3")
 
 			case G1OBJ_TREASURE:
@@ -464,6 +504,13 @@ func genpfimage(maze *Maze, mazenum int) {
 // Six: end G1 decode
 			if stamp != nil {
 				writestamptoimage(img, stamp, x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
+// generator monster type letter draw
+				if gtopl != "" {
+					gtop.DrawStringAnchored(gtopl, 4, 4, 0.5, 0.5)
+					gtopim := gtop.Image()
+					offset := image.Pt(x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
+					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Src)
+				}
 			}
 
 			if dots != 0 {
