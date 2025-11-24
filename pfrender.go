@@ -140,9 +140,9 @@ func genpfimage(maze *Maze, mazenum int) {
 // gen type op - letter to draw
 			gtopl := ""
 // gen type op - the context to draw
-			gtop := gg.NewContext(8, 8)
+			gtop := gg.NewContext(12, 12)
 // gtop font
-			if err := gtop.LoadFontFace("/usr/share/fonts/truetype/ttf-bitstream-vera/VeraBd.ttf", 10); err != nil {
+			if err := gtop.LoadFontFace("/usr/share/fonts/truetype/ttf-bitstream-vera/VeraBd.ttf", 14); err != nil {
 				panic(err)
 				}
 
@@ -393,35 +393,51 @@ func genpfimage(maze *Maze, mazenum int) {
 			case G1OBJ_EXIT8:
 				stamp = itemGetStamp("exit8")
 
+// temp measure for monster lvls - use # until stamp can encode levels
 			case G1OBJ_MONST_GHOST1:
-				fallthrough
+				gtopl = "1"
+				stamp = itemGetStamp("ghost")
 			case G1OBJ_MONST_GHOST2:
-				fallthrough
+				gtopl = "2"
+				stamp = itemGetStamp("ghost")
 			case G1OBJ_MONST_GHOST3:
+				gtopl = "3"
 				stamp = itemGetStamp("ghost")
 			case G1OBJ_MONST_GRUNT1:
-				fallthrough
+				gtopl = "1"
+				stamp = itemGetStamp("grunt")
 			case G1OBJ_MONST_GRUNT2:
-				fallthrough
+				gtopl = "2"
+				stamp = itemGetStamp("grunt")
 			case G1OBJ_MONST_GRUNT3:
+				gtopl = "3"
 				stamp = itemGetStamp("grunt")
 			case G1OBJ_MONST_DEMON1:
-				fallthrough
+				gtopl = "1"
+				stamp = itemGetStamp("demon")
 			case G1OBJ_MONST_DEMON2:
-				fallthrough
+				gtopl = "2"
+				stamp = itemGetStamp("demon")
 			case G1OBJ_MONST_DEMON3:
+				gtopl = "3"
 				stamp = itemGetStamp("demon")
 			case G1OBJ_MONST_LOBBER1:
-				fallthrough
+				gtopl = "1"
+				stamp = itemGetStamp("lobber")
 			case G1OBJ_MONST_LOBBER2:
-				fallthrough
+				gtopl = "2"
+				stamp = itemGetStamp("lobber")
 			case G1OBJ_MONST_LOBBER3:
+				gtopl = "3"
 				stamp = itemGetStamp("lobber")
 			case G1OBJ_MONST_SORC1:
-				fallthrough
+				gtopl = "1"
+				stamp = itemGetStamp("sorcerer")
 			case G1OBJ_MONST_SORC2:
-				fallthrough
+				gtopl = "2"
+				stamp = itemGetStamp("sorcerer")
 			case G1OBJ_MONST_SORC3:
+				gtopl = "3"
 				stamp = itemGetStamp("sorcerer")
 			case G1OBJ_MONST_DEATH:
 				stamp = itemGetStamp("death")
@@ -508,9 +524,9 @@ func genpfimage(maze *Maze, mazenum int) {
 				if gtopl != "" {
 // while each monsters has a letter color, some are hard to read
 					gtop.SetRGB(1, 0, 0)
-					gtop.DrawStringAnchored(gtopl, 4, 4, 0.5, 0.5)
+					gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
 					gtopim := gtop.Image()
-					offset := image.Pt(x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
+					offset := image.Pt(x*16+16+stamp.nudgex-4, y*16+16+stamp.nudgey-4)
 					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 				}
 			}
