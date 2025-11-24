@@ -558,7 +558,7 @@ func genpfimage(maze *Maze, mazenum int) {
 				writestamptoimage(img, stamp, x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
 // generator monster type letter draw - only do when set
 				if gtopl != "" {
-// while each monsters has a letter color, some are hard to read
+// while each monsters gen has a letter color, some are hard to read - resetting to red
 					gtop.Clear()
 					gtop.SetRGB(1, 0, 0)
 					gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
