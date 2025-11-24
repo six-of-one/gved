@@ -266,37 +266,67 @@ func genpfimage(maze *Maze, mazenum int) {
 			case MAZEOBJ_GEN_GHOST3:
 				stamp = itemGetStamp("ghostgen3")
 
-			case MAZEOBJ_GEN_GRUNT1:
-				fallthrough
-			case MAZEOBJ_GEN_DEMON1:
-				fallthrough
-			case MAZEOBJ_GEN_LOBBER1:
-				fallthrough
-			case MAZEOBJ_GEN_SORC1:
-				fallthrough
 			case MAZEOBJ_GEN_AUX_GRUNT1:
+				gtop.SetRGB(0.65, 0.3, 0.1)
+				gtopl = "G`"
+				stamp = itemGetStamp("generator1")
+			case MAZEOBJ_GEN_GRUNT1:
+				gtop.SetRGB(0.65, 0.3, 0.1)
+				gtopl = "G"
+				stamp = itemGetStamp("generator1")
+			case MAZEOBJ_GEN_DEMON1:
+				gtop.SetRGB(1, 0, 0)
+				gtopl = "D"
+				stamp = itemGetStamp("generator1")
+			case MAZEOBJ_GEN_LOBBER1:
+				gtopl = "L"
+				gtop.SetRGB(0.7, 0.5, 0.2)
+				stamp = itemGetStamp("generator1")
+			case MAZEOBJ_GEN_SORC1:
+				gtopl = "S"
+				gtop.SetRGB(0.37, 0.2, 0.7)
 				stamp = itemGetStamp("generator1")
 
-			case MAZEOBJ_GEN_GRUNT2:
-				fallthrough
-			case MAZEOBJ_GEN_DEMON2:
-				fallthrough
-			case MAZEOBJ_GEN_LOBBER2:
-				fallthrough
-			case MAZEOBJ_GEN_SORC2:
-				fallthrough
 			case MAZEOBJ_GEN_AUX_GRUNT2:
+				gtop.SetRGB(0.65, 0.3, 0.1)
+				gtopl = "G`"
+				stamp = itemGetStamp("generator2")
+			case MAZEOBJ_GEN_GRUNT2:
+				gtop.SetRGB(0.65, 0.3, 0.1)
+				gtopl = "G"
+				stamp = itemGetStamp("generator2")
+			case MAZEOBJ_GEN_DEMON2:
+				gtop.SetRGB(1, 0, 0)
+				gtopl = "D"
+				stamp = itemGetStamp("generator2")
+			case MAZEOBJ_GEN_LOBBER2:
+				gtopl = "L"
+				gtop.SetRGB(0.7, 0.5, 0.2)
+				stamp = itemGetStamp("generator2")
+			case MAZEOBJ_GEN_SORC2:
+				gtopl = "S"
+				gtop.SetRGB(0.37, 0.2, 0.7)
 				stamp = itemGetStamp("generator2")
 
-			case MAZEOBJ_GEN_GRUNT3:
-				fallthrough
-			case MAZEOBJ_GEN_DEMON3:
-				fallthrough
-			case MAZEOBJ_GEN_LOBBER3:
-				fallthrough
-			case MAZEOBJ_GEN_SORC3:
-				fallthrough
 			case MAZEOBJ_GEN_AUX_GRUNT3:
+				gtop.SetRGB(0.65, 0.3, 0.1)
+				gtopl = "G`"
+				stamp = itemGetStamp("generator3")
+			case MAZEOBJ_GEN_GRUNT3:
+				gtop.SetRGB(0.65, 0.3, 0.1)
+				gtopl = "G"
+				stamp = itemGetStamp("generator3")
+			case MAZEOBJ_GEN_DEMON3:
+				gtop.SetRGB(1, 0, 0)
+				gtopl = "D"
+				stamp = itemGetStamp("generator3")
+			case MAZEOBJ_GEN_LOBBER3:
+				gtopl = "L"
+				gtop.SetRGB(0.7, 0.5, 0.2)
+				stamp = itemGetStamp("generator3")
+			case MAZEOBJ_GEN_SORC3:
+				gtopl = "S"
+				gtop.SetRGB(0.37, 0.2, 0.7)
 				stamp = itemGetStamp("generator3")
 
 			case MAZEOBJ_TREASURE:
@@ -330,7 +360,6 @@ func genpfimage(maze *Maze, mazenum int) {
 //		red D - demons
 //		yel L - lobbers
 //		pur S - sorceror
-				gtop.Clear()
 				gtopl = ""
 // /fmt.Printf("g1 dec: %x -- ", whatis(maze, x, y))
 			switch whatis(maze, x, y) {
@@ -365,14 +394,14 @@ func genpfimage(maze *Maze, mazenum int) {
 				stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
 			case G1OBJ_WALL_DESTRUCTABLE:
-				adj := checkwalladj8(maze, x, y)
+				adj := checkwalladj8g1(maze, x, y)
 				stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
 
 			case G1OBJ_WALL_TRAP1:
 				dots = 1
 				fallthrough
 			case G1OBJ_WALL_REGULAR:
-				adj := checkwalladj8(maze, x, y)
+				adj := checkwalladj8g1(maze, x, y)
 				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 			case G1OBJ_KEY:
 				stamp = itemGetStamp("key")
@@ -401,40 +430,28 @@ func genpfimage(maze *Maze, mazenum int) {
 			case G1OBJ_MONST_GHOST3:
 				stamp = itemGetStamp("ghost")
 			case G1OBJ_MONST_GRUNT1:
-				gtopl = "1"
 				stamp = itemGetStamp("grunt1")
 			case G1OBJ_MONST_GRUNT2:
-				gtopl = "2"
 				stamp = itemGetStamp("grunt2")
 			case G1OBJ_MONST_GRUNT3:
-				gtopl = "3"
 				stamp = itemGetStamp("grunt")
 			case G1OBJ_MONST_DEMON1:
-				gtopl = "1"
 				stamp = itemGetStamp("demon1")
 			case G1OBJ_MONST_DEMON2:
-				gtopl = "2"
 				stamp = itemGetStamp("demon2")
 			case G1OBJ_MONST_DEMON3:
-				gtopl = "3"
 				stamp = itemGetStamp("demon")
 			case G1OBJ_MONST_LOBBER1:
-				gtopl = "1"
 				stamp = itemGetStamp("lobber1")
 			case G1OBJ_MONST_LOBBER2:
-				gtopl = "2"
 				stamp = itemGetStamp("lobber2")
 			case G1OBJ_MONST_LOBBER3:
-				gtopl = "3"
 				stamp = itemGetStamp("lobber")
 			case G1OBJ_MONST_SORC1:
-				gtopl = "1"
 				stamp = itemGetStamp("sorcerer1")
 			case G1OBJ_MONST_SORC2:
-				gtopl = "2"
 				stamp = itemGetStamp("sorcerer2")
 			case G1OBJ_MONST_SORC3:
-				gtopl = "3"
 				stamp = itemGetStamp("sorcerer")
 			case G1OBJ_MONST_DEATH:
 				stamp = itemGetStamp("death")
@@ -520,6 +537,7 @@ func genpfimage(maze *Maze, mazenum int) {
 // generator monster type letter draw - only do when set
 				if gtopl != "" {
 // while each monsters has a letter color, some are hard to read
+					gtop.Clear()
 					gtop.SetRGB(1, 0, 0)
 					gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
 					gtopim := gtop.Image()
@@ -943,6 +961,38 @@ func checkwalladj8(maze *Maze, x int, y int) int {
 		adj += 0x40
 	}
 	if iswall(whatis(maze, x+1, y+1)) {
+		adj += 0x80
+	}
+
+	return adj
+}
+
+// g1 version
+func checkwalladj8g1(maze *Maze, x int, y int) int {
+	adj := 0
+
+	if iswallg1(whatis(maze, x-1, y-1)) {
+		adj += 0x01
+	}
+	if iswallg1(whatis(maze, x, y-1)) {
+		adj += 0x02
+	}
+	if iswallg1(whatis(maze, x+1, y-1)) {
+		adj += 0x04
+	}
+	if iswallg1(whatis(maze, x-1, y)) {
+		adj += 0x08
+	}
+	if iswallg1(whatis(maze, x+1, y)) {
+		adj += 0x010
+	}
+	if iswallg1(whatis(maze, x-1, y+1)) {
+		adj += 0x20
+	}
+	if iswallg1(whatis(maze, x, y+1)) {
+		adj += 0x40
+	}
+	if iswallg1(whatis(maze, x+1, y+1)) {
 		adj += 0x80
 	}
 

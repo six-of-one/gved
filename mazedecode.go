@@ -60,6 +60,15 @@ func iswall(t int) bool {
 	}
 }
 
+func iswallg1(t int) bool {
+	if t == G1OBJ_WALL_REGULAR || t == G1OBJ_WALL_DESTRUCTABLE || t == G1OBJ_WALL_TRAP1 { // || t == MAZEOBJ_FORCEFIELDHUB {
+		return true
+	} else {
+		return false
+	}
+}
+
+
 // Is it a floor tile of some type (or similar)
 func isspecialfloor(t int) bool {
 	if t == MAZEOBJ_TILE_STUN || t == MAZEOBJ_TILE_TRAP1 || t == MAZEOBJ_TILE_TRAP2 || t == MAZEOBJ_TILE_TRAP3 || t == MAZEOBJ_EXIT || t == MAZEOBJ_EXITTO6 || t == MAZEOBJ_TRANSPORTER {
