@@ -107,6 +107,8 @@ func genpfimage(maze *Maze, mazenum int) {
 	copyedges(maze)
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
 
+	if mazenum < 0xFFFF {
+// g2 checks
 	for y := 0; y < 32; y++ {
 		for x := 0; x < 32; x++ {
 			adj := 0
@@ -121,7 +123,20 @@ func genpfimage(maze *Maze, mazenum int) {
 			}
 			writestamptoimage(img, stamp, x*16+16, y*16+16)
 		}
-	}
+	}} else {
+// g1 checks
+	for y := 0; y < 32; y++ {
+		for x := 0; x < 32; x++ {
+			adj := 0
+			if maze.wallpattern < 11 {
+				adj = checkwalladj3g1(maze, x, y)
+			}
+
+			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
+			writestamptoimage(img, stamp, x*16+16, y*16+16)
+		}
+
+	}}
 
 	lastx := 32
 	if maze.flags&LFLAG4_WRAP_H > 0 {
@@ -145,6 +160,8 @@ func genpfimage(maze *Maze, mazenum int) {
 			if err := gtop.LoadFontFace("/usr/share/fonts/truetype/ttf-bitstream-vera/VeraBd.ttf", 14); err != nil {
 				panic(err)
 				}
+// g2 decodes
+			if mazenum < 0xFFFF {
 
 			// We should do better
 			switch whatis(maze, x, y) {
@@ -352,7 +369,7 @@ func genpfimage(maze *Maze, mazenum int) {
 			default:
 				// fmt.Printf("WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y))
 			}
-
+			}
 // g1 decodes
 			if mazenum > 0x37FFF {
 // gen type op - put a letter on up left corner of every gen to indicate monsters
@@ -361,6 +378,7 @@ func genpfimage(maze *Maze, mazenum int) {
 //		yel L - lobbers
 //		pur S - sorceror
 				gtopl = ""
+				dots = 0
 // /fmt.Printf("g1 dec: %x -- ", whatis(maze, x, y))
 			switch whatis(maze, x, y) {
 
@@ -368,7 +386,7 @@ func genpfimage(maze *Maze, mazenum int) {
 			// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
 			// stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 			case G1OBJ_TILE_STUN:
-				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
+				adj := checkwalladj3g1(maze, x, y) + rand.Intn(4)
 				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 				stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
@@ -917,6 +935,7 @@ func isdoorg1(t int) bool {
 	}
 }
 
+// g2 version - wall shadow, etc
 func checkwalladj3(maze *Maze, x int, y int) int {
 	adj := 0
 
@@ -935,6 +954,24 @@ func checkwalladj3(maze *Maze, x int, y int) int {
 	return adj
 }
 
+// g1 version
+func checkwalladj3g1(maze *Maze, x int, y int) int {
+	adj := 0
+
+	if iswallg1(whatis(maze, x-1, y)) {
+		adj += 4
+	}
+
+	if iswallg1(whatis(maze, x, y+1)) {
+		adj += 16
+	}
+
+	if iswallg1(whatis(maze, x-1, y+1)) {
+		adj += 8
+	}
+
+	return adj
+}
 // check to see if there's walls on any side of location, for picking
 // which wall tile needs ot be used
 //
