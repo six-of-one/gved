@@ -388,14 +388,13 @@ func genpfimage(maze *Maze, mazenum int) {
 			case G1OBJ_TILE_FLOOR:
 			// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
 			// stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+// dont think g1 has stun tile
 			case G1OBJ_TILE_STUN:
 				adj := checkwalladj3g1(maze, x, y) + rand.Intn(4)
 				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 				stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
 
-				// Tried to simplify these a bit with a goto, but golang didn't
-				// like it ('jump into block'). I should figure out why.
 			case G1OBJ_TILE_TRAP1:
 				dots = 1
 //				fallthrough
