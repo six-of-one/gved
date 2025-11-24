@@ -236,7 +236,14 @@ var itemStamps = map[string]Stamp{
 
 	"tport": Stamp{
 		width:   2,
-		numbers: tilerange(0x49e, 4),
+		numbers: tilerange(0x49e, 4),		// g2
+		ptype:   "teleff",
+		pnum:    0,
+		trans0:  true,
+	},
+	"tportg1": Stamp{
+		width:   2,
+		numbers: tilerange(0x3a4, 4),		// g1
 		ptype:   "teleff",
 		pnum:    0,
 		trans0:  true,

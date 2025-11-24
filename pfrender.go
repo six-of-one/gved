@@ -549,7 +549,7 @@ func genpfimage(maze *Maze, mazenum int) {
 				stamp = itemGetStamp("ipotion")
 
 			case G1OBJ_TRANSPORTER:
-				stamp = itemGetStamp("tport")
+				stamp = itemGetStamp("tportg1")
 			default:
 			}}
 // Six: end G1 decode
