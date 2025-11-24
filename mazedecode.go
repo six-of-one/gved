@@ -172,6 +172,14 @@ if true {
 	maze.floorpattern = (compressed[5] & 0xf0) >> 4
 	maze.wallcolor = compressed[6] & 0x0f
 	maze.floorcolor = (compressed[6] & 0xf0) >> 4
+// g1 test REMOVE
+/*
+	maze.floorpattern = compressed[5] & 0x0f
+	maze.wallpattern = (compressed[5] & 0xf0) >> 4
+	maze.floorcolor = compressed[6] & 0x0f
+	maze.wallcolor = (compressed[6] & 0xf0) >> 4
+*/
+// g1 test REMOVE
 
 // g1 wont have any g2 stuff, and might not use flags at all
 	flagsv := maze.flags // save so we can print in meta

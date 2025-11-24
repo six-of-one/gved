@@ -434,7 +434,7 @@ func genpfimage(maze *Maze, mazenum int) {
 				stamp = doorGetStamp(DOOR_VERT, adj)
 
 			case G1OBJ_PLAYERSTART:
-				stamp = itemGetStamp("plus")
+				stamp = itemGetStamp("plusg1")
 			case G1OBJ_EXIT:
 				stamp = itemGetStamp("exit")
 			case G1OBJ_EXIT4:

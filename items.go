@@ -309,6 +309,13 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true,
 	},
+	"plusg1": Stamp{
+		width:   2,
+		numbers: tilerange(0x1e09, 4),
+		ptype:   "base",
+		pnum:    0,
+		trans0:  true,
+	},
 
 	// FIXME: Needs to be in monsters, really
 	"dragon": Stamp{
