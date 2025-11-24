@@ -377,7 +377,10 @@ func genpfimage(maze *Maze, mazenum int) {
 //		red D - demons
 //		yel L - lobbers
 //		pur S - sorceror
+				gtop.Clear()
 				gtopl = ""
+				gtopcol := false	// disable gen letter seperate colors
+// make sure g2 code (if it runs with g1) doesnt set extra dots on non walls
 				dots = 0
 // /fmt.Printf("g1 dec: %x -- ", whatis(maze, x, y))
 			switch whatis(maze, x, y) {
@@ -481,55 +484,56 @@ func genpfimage(maze *Maze, mazenum int) {
 			case G1OBJ_GEN_GHOST3:
 				stamp = itemGetStamp("ghostgen3")
 
+// if a clear is done after, this SetRGB set bkg somehow
 			case G1OBJ_GEN_GRUNT1:
-				gtop.SetRGB(0.65, 0.3, 0.1)
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
 				gtopl = "G"
 				stamp = itemGetStamp("generator1")
 			case G1OBJ_GEN_DEMON1:
-				gtop.SetRGB(1, 0, 0)
+				if gtopcol { gtop.SetRGB(1, 0, 0) }
 				gtopl = "D"
 				stamp = itemGetStamp("generator1")
 			case G1OBJ_GEN_LOBBER1:
 				gtopl = "L"
-				gtop.SetRGB(0.7, 0.5, 0.2)
+				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
 				stamp = itemGetStamp("generator1")
 			case G1OBJ_GEN_SORC1:
 				gtopl = "S"
-				gtop.SetRGB(0.37, 0.2, 0.7)
+				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
 				stamp = itemGetStamp("generator1")
 
 			case G1OBJ_GEN_GRUNT2:
-				gtop.SetRGB(0.65, 0.3, 0.1)
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
 				gtopl = "G"
 				stamp = itemGetStamp("generator2")
 			case G1OBJ_GEN_DEMON2:
-				gtop.SetRGB(1, 0, 0)
+				if gtopcol { gtop.SetRGB(1, 0, 0) }
 				gtopl = "D"
 				stamp = itemGetStamp("generator2")
 			case G1OBJ_GEN_LOBBER2:
 				gtopl = "L"
-				gtop.SetRGB(0.7, 0.5, 0.2)
+				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
 				stamp = itemGetStamp("generator2")
 			case G1OBJ_GEN_SORC2:
 				gtopl = "S"
-				gtop.SetRGB(0.37, 0.2, 0.7)
+				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
 				stamp = itemGetStamp("generator2")
 
 			case G1OBJ_GEN_GRUNT3:
-				gtop.SetRGB(0.65, 0.3, 0.1)
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
 				gtopl = "G"
 				stamp = itemGetStamp("generator3")
 			case G1OBJ_GEN_DEMON3:
-				gtop.SetRGB(1, 0, 0)
+				if gtopcol { gtop.SetRGB(1, 0, 0) }
 				gtopl = "D"
 				stamp = itemGetStamp("generator3")
 			case G1OBJ_GEN_LOBBER3:
 				gtopl = "L"
-				gtop.SetRGB(0.7, 0.5, 0.2)
+				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
 				stamp = itemGetStamp("generator3")
 			case G1OBJ_GEN_SORC3:
 				gtopl = "S"
-				gtop.SetRGB(0.37, 0.2, 0.7)
+				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
 				stamp = itemGetStamp("generator3")
 
 			case G1OBJ_TREASURE:
