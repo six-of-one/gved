@@ -377,6 +377,25 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 	},
+// encode levels 1, 2 for pre-gen monsters
+	"ghost2": Stamp{
+		width:   3,
+		numbers: tilerange(0x800, 9),
+		ptype:   "base",
+		pnum:    3,
+		trans0:  true,
+		nudgex:  -4,
+		nudgey:  -4,
+	},
+	"ghost1": Stamp{
+		width:   3,
+		numbers: tilerange(0x800, 9),
+		ptype:   "base",
+		pnum:    2,
+		trans0:  true,
+		nudgex:  -4,
+		nudgey:  -4,
+	},
 	"grunt": Stamp{
 		width:   3,
 		numbers: tilerange(0x9e1, 9),

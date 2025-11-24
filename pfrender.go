@@ -393,49 +393,46 @@ func genpfimage(maze *Maze, mazenum int) {
 			case G1OBJ_EXIT8:
 				stamp = itemGetStamp("exit8")
 
-// temp measure for monster lvls - use # until stamp can encode levels
+// temp measure for monster lvls - use # until stamp can encode levels by color
 			case G1OBJ_MONST_GHOST1:
-				gtopl = "1"
-				stamp = itemGetStamp("ghost")
+				stamp = itemGetStamp("ghost1")
 			case G1OBJ_MONST_GHOST2:
-				gtopl = "2"
-				stamp = itemGetStamp("ghost")
+				stamp = itemGetStamp("ghost2")
 			case G1OBJ_MONST_GHOST3:
-				gtopl = "3"
 				stamp = itemGetStamp("ghost")
 			case G1OBJ_MONST_GRUNT1:
 				gtopl = "1"
-				stamp = itemGetStamp("grunt")
+				stamp = itemGetStamp("grunt1")
 			case G1OBJ_MONST_GRUNT2:
 				gtopl = "2"
-				stamp = itemGetStamp("grunt")
+				stamp = itemGetStamp("grunt2")
 			case G1OBJ_MONST_GRUNT3:
 				gtopl = "3"
 				stamp = itemGetStamp("grunt")
 			case G1OBJ_MONST_DEMON1:
 				gtopl = "1"
-				stamp = itemGetStamp("demon")
+				stamp = itemGetStamp("demon1")
 			case G1OBJ_MONST_DEMON2:
 				gtopl = "2"
-				stamp = itemGetStamp("demon")
+				stamp = itemGetStamp("demon2")
 			case G1OBJ_MONST_DEMON3:
 				gtopl = "3"
 				stamp = itemGetStamp("demon")
 			case G1OBJ_MONST_LOBBER1:
 				gtopl = "1"
-				stamp = itemGetStamp("lobber")
+				stamp = itemGetStamp("lobber1")
 			case G1OBJ_MONST_LOBBER2:
 				gtopl = "2"
-				stamp = itemGetStamp("lobber")
+				stamp = itemGetStamp("lobber2")
 			case G1OBJ_MONST_LOBBER3:
 				gtopl = "3"
 				stamp = itemGetStamp("lobber")
 			case G1OBJ_MONST_SORC1:
 				gtopl = "1"
-				stamp = itemGetStamp("sorcerer")
+				stamp = itemGetStamp("sorcerer1")
 			case G1OBJ_MONST_SORC2:
 				gtopl = "2"
-				stamp = itemGetStamp("sorcerer")
+				stamp = itemGetStamp("sorcerer2")
 			case G1OBJ_MONST_SORC3:
 				gtopl = "3"
 				stamp = itemGetStamp("sorcerer")
