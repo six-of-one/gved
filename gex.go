@@ -14,6 +14,8 @@ type TileLineMerged []byte
 
 type TileData []TileLineMerged
 
+var G1 int
+
 // FIXME: change name to something not "numbers"
 type Stamp struct {
 	width   int
@@ -42,6 +44,9 @@ func dotile(tile int) {
 
 func main() {
 	args := gexinit()
+
+// if gauntlet 1 is target, intended to be maze address in rom
+	G1 = 0
 
 	switch runType {
 	case TypeNone:

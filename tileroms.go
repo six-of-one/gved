@@ -22,6 +22,7 @@ var tileRoms = [][]string{
 		"ROMs-g1/136037-116.2b",
 		"ROMs-g1/136037-118.2mn",
 	},
+// these are the g2 - only gfx, leaving them, in case a g1 read slips in a g2 item some way
 	{
 		"ROMs/136043-1123.1c",
 		"ROMs/136043-1124.1p",
