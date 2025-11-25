@@ -880,7 +880,12 @@ if false {
 }
 // Six - maze dumper
 if true {
-	fmt.Printf("maze: %d\n", mazenum)
+	fmt.Printf("maze: %d - 0x%X   ", mazenum, mazenum)
+	if G1 == 0 {
+		fmt.Printf("Gauntlet II\n")
+	} else {
+		fmt.Printf("Gauntlet\n")
+	}
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 

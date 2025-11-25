@@ -46,8 +46,10 @@ func domaze(arg string) {
 	}
 
 	if mazeNum < 118 {
+		fmt.Printf("Gauntlet II\n")
 		fmt.Printf("Maze number: %d\n", mazeNum)
 	} else {
+		fmt.Printf("Gauntlet\n")
 		G1 = mazeNum		// G1 mode active, testing
 		fmt.Printf("Maze address: 0x%X -- %d\n", mazeNum, mazeNum) }
 
