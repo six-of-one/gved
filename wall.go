@@ -13,12 +13,11 @@ var reWallColor = regexp.MustCompile(`^c(\d+)$`)
 var reWallAdj = regexp.MustCompile(`^(u|ur|r|dr|d|dl|l|ul)$`)
 
 /*
-
+// put in import, call fn() to write wall tiles out
 	"image/png"
 	"os"
 
 func waltile(stamp *Stamp, cod int, ww int) {
-// TEMP - remove
 // write all wall seqs as 16x16
 imgb := blankimage(2*8, 2*8)
 writestamptoimage(imgb, stamp, 0, 0)
@@ -97,7 +96,7 @@ func dowall(arg string) {
 // 1 unit wall
 			stamp = wallGetStamp(w, 1, wallColor)
 			writestamptoimage(img, stamp, 8, 8 + w * 32)
-// temp - remove all tehse
+// write walls out to png
 //waltile(stamp, 1, w)
 
 // end caps for Ս, ↄ, Ո, ⅽ
