@@ -9,7 +9,7 @@ type Romset struct {
 	roms   []string
 }
 
-/* rom md5s - these are used by al revs of g1 / g2
+/* rom md5s - these are used by all revs of g1 / g2
 
 aef6687efa3a8dd75bbc5af9886bb56e  ROMs-g1/136037-111.1a
 20b8d6bd306b258fb7d6dcac237dafa2  ROMs-g1/136037-113.1l
