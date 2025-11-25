@@ -9,7 +9,7 @@ type Romset struct {
 	roms   []string
 }
 
-/* rom md5s
+/* rom md5s - these are used by al revs of g1 / g2
 aef6687efa3a8dd75bbc5af9886bb56e  ROMs-g1/gauntletr14/136037-111.1a
 20b8d6bd306b258fb7d6dcac237dafa2  ROMs-g1/gauntletr14/136037-113.1l
 
@@ -40,6 +40,7 @@ c985c04c6630836148e4a01dea9e61b8  ROMs/gaunt2/136043-1124.1p
 090ff7faf44f73f9cc5cdbc32eaac643  ROMs/gaunt2/136043-1126.2p
 */
 
+// gauntlet II roms 
 var tileRoms = [][]string{
 	{
 		"ROMs/136043-1111.1a",
@@ -53,29 +54,6 @@ var tileRoms = [][]string{
 		"ROMs/136037-116.2b",
 		"ROMs/136037-118.2mn",
 	},
-	{
-		"ROMs/136043-1123.1c",
-		"ROMs/136043-1124.1p",
-		"ROMs/136043-1125.2c",
-		"ROMs/136043-1126.2p",
-	},
-}
-
-// gauntlet roms
-var tileRomsG1 = [][]string{
-	{
-		"ROMs-g1/136037-111.1a",
-		"ROMs-g1/136037-113.1l",
-		"ROMs-g1/136037-115.2a",
-		"ROMs-g1/136037-117.2l",
-	},
-	{
-		"ROMs-g1/136037-112.1b",
-		"ROMs-g1/136037-114.1mn",
-		"ROMs-g1/136037-116.2b",
-		"ROMs-g1/136037-118.2mn",
-	},
-// these are the g2 - only gfx, leaving them, in case a g1 read slips in a g2 item some way
 	{
 		"ROMs/136043-1123.1c",
 		"ROMs/136043-1124.1p",
@@ -106,6 +84,53 @@ var tileRomSets = []Romset{
 		roms:   tileRoms[2],
 	},
 }
+// gauntlet roms
+var tileRomsG1 = [][]string{
+	{
+		"ROMs-g1/136037-111.1a",
+		"ROMs-g1/136037-113.1l",
+		"ROMs-g1/136037-115.2a",
+		"ROMs-g1/136037-117.2l",
+	},
+// yes. these are a repeat of the g2 roms
+// no. i dont feel like horking the code to exclude them, i like the structure the way it is
+	{
+		"ROMs-g1/136037-112.1b",
+		"ROMs-g1/136037-114.1mn",
+		"ROMs-g1/136037-116.2b",
+		"ROMs-g1/136037-118.2mn",
+	},
+// these are the g2 - only gfx, leaving them, in case a g1 read slips in a g2 item some way
+	{
+		"ROMs/136043-1123.1c",
+		"ROMs/136043-1124.1p",
+		"ROMs/136043-1125.2c",
+		"ROMs/136043-1126.2p",
+	},
+}
+
+var tileRomSetsG1 = []Romset{
+	{
+		offset: 0x800,
+		roms:   tileRoms[0],
+	},
+	{
+		offset: 0x0,
+		roms:   tileRoms[0],
+	},
+	{
+		offset: 0x800,
+		roms:   tileRoms[1],
+	},
+	{
+		offset: 0x0,
+		roms:   tileRoms[1],
+	},
+	{
+		offset: 0x0,
+		roms:   tileRoms[2],
+	},
+}
 
 // returns the actual tile number to use, and the rom set to use it with
 // Kind of a mess, since it uses knowledge for calculating the tile number
@@ -113,6 +138,9 @@ var tileRomSets = []Romset{
 func getromset(tilenum int) (int, []string) {
 	whichbank := tilenum / 0x800
 	actualtile := (tilenum % 0x800) + tileRomSets[whichbank].offset
+	if G1 > 0 {
+		actualtile = (tilenum % 0x800) + tileRomSetsG1[whichbank].offset
+	}
 
 if false {
 fmt.Printf("tn: 0x%x  tile: 0x%x   romset: %s\n", tilenum, actualtile, tileRomSets[whichbank].roms)
