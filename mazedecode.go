@@ -204,8 +204,7 @@ if true {
 	vtype2 := compressed[10] // vert type 2
 
 	prev := htype2 // previous value, for 'repeat previous' types
-
-	// fmt.Printf("Encoded size: %d\n", maze.encodedbytes)
+//fmt.Printf("Encoded size: %d\n", maze.encodedbytes)
 
 	// Fill in first row with walls, always
 	for i := 0; i < 32; i++ {
@@ -217,7 +216,7 @@ if true {
 	compressed = compressed[11:] // pointer to where we are in the input stream
 
 	for location < 1024 {
-		// fmt.Printf("input remaining: %d, next byte 0x%02x, output remaining: %d\n", len(compressed), compressed[0], 1024-location)
+//fmt.Printf("input remaining: %d, next byte 0x%02x, output remaining: %d\n", len(compressed), compressed[0], 1024-location)
 		if compressed[0] == 0 {
 			fmt.Printf("WARNING: Read end of maze datastream before maze full.\n")
 			break
@@ -228,7 +227,7 @@ if true {
 		count := (token & 0x0f) + 1
 		longcount := (token & 0x1f) + 1 // used for 'repeat last' and 'skip'
 
-// TEMP comment
+// stats
 //fmt.Printf("Pos: %04d, left: %03d tok 0x%02x: count:%d lcnt: %d\n", location, len(compressed), token, count, longcount)
 
 		switch token & 0xc0 { // look at top two bits
@@ -251,11 +250,11 @@ if true {
 			switch prev & 0xc0 {
 			case 0x00: // repeat type
 				if (token & 0x10) != 0 {
-// TEMP remove
-// vexp is going - on loop
-if location - ((count - 1) * 32) > 0 {
+
+// vexp goes negative on g1 mazes - blocking it off seems not to affect g1 maze renders
+			if location - ((count - 1) * 32) > 0 {
 					location = vexpand(maze, location, previtem, count)
-}
+			}
 				} else {
 					location = expand(maze, location, previtem, count)
 				}
@@ -273,11 +272,10 @@ if location - ((count - 1) * 32) > 0 {
 			if (token & 0x20) != 0 { // Repeat wall
 				if (token & 0x10) != 0 {
 					// vertical
-// TEMP remove
-// vexp is going - on loop
-if location - ((count - 1) * 32) > 0 {
+// vexp goes negative on g1 mazes
+			if location - ((count - 1) * 32) > 0 {
 					location = vexpand(maze, location, MAZEOBJ_WALL_REGULAR, count)
-}
+			}
 				} else {
 					// horizontal
 					location = expand(maze, location, MAZEOBJ_WALL_REGULAR, count)
