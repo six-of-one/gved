@@ -168,26 +168,21 @@ if true {
 	flagbytes[3] = byte(compressed[4])
 	maze.flags = int(binary.BigEndian.Uint32(flagbytes))
 
+// g1 test RESTORE
 	maze.wallpattern = compressed[5] & 0x0f
 	maze.floorpattern = (compressed[5] & 0xf0) >> 4
 	maze.wallcolor = compressed[6] & 0x0f
 	maze.floorcolor = (compressed[6] & 0xf0) >> 4
-// g1 test REMOVE
-/*
-	maze.floorpattern = compressed[5] & 0x0f
-	maze.wallpattern = (compressed[5] & 0xf0) >> 4
-	maze.floorcolor = compressed[6] & 0x0f
-	maze.wallcolor = (compressed[6] & 0xf0) >> 4
-*/
-// g1 test REMOVE
 
-// g1 wont have any g2 stuff, and might not use flags at all
+// g1 likely has nothing like g2 stuff, and might not use flags at all
 	flagsv := maze.flags // save so we can print in meta
 	if g1g2 > 0x037FFF {
 		maze.flags = 0 //maze.flags & 0x3f;
 // testing - this could be g1 codes, hard to tell with out the g1 gfx roms loaded
 		if maze.wallpattern > 5 { maze.wallpattern = rand.Intn(4) }
-/*		maze.wallpattern = 0
+/*
+wall and floor patterns seem correct on g1, but not colors
+		maze.wallpattern = 0
 		maze.floorpattern = 8
 		maze.wallcolor = 9
 		maze.floorcolor = 1 */
