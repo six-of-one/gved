@@ -13,8 +13,8 @@ var slapsticRoms = []string{
 // 20[56].10[ab] - r14
 // 10[56].10[ab] - r7
 var slapsticRomsG1 = []string{
-	"ROMs/136037-105.10a",
-	"ROMs/136037-106.10b",
+	"ROMs-g1/gauntletr7/136037-105.10a",
+	"ROMs-g1/gauntletr7/136037-106.10b",
 }
 
 var slapsticBankInfo = []int{
