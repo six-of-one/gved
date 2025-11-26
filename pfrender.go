@@ -133,7 +133,9 @@ func genpfimage(maze *Maze, mazenum int) {
 			}
 
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
-			writestamptoimage(img, stamp, x*16+16, y*16+16)
+// temp - RESTORE (this is for the g1 object over correct wall/floor blank map)
+			img2 := blankimage(8*2*32+32+extrax, 8*2*32+32+extray)
+			writestamptoimage(img2, stamp, x*16+16, y*16+16)
 		}
 
 	}}
@@ -413,15 +415,15 @@ func genpfimage(maze *Maze, mazenum int) {
 				stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
 			case G1OBJ_WALL_DESTRUCTABLE:
-				adj := checkwalladj8g1(maze, x, y)
-				stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
+//				adj := checkwalladj8g1(maze, x, y)
+//				stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
 
 			case G1OBJ_WALL_TRAP1:
 				dots = 1
 				fallthrough
 			case G1OBJ_WALL_REGULAR:
-				adj := checkwalladj8g1(maze, x, y)
-				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+//				adj := checkwalladj8g1(maze, x, y)
+//				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 			case G1OBJ_KEY:
 				stamp = itemGetStamp("key")
 
