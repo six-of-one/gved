@@ -168,7 +168,6 @@ if true {
 	flagbytes[3] = byte(compressed[4])
 	maze.flags = int(binary.BigEndian.Uint32(flagbytes))
 
-// g1 test RESTORE
 	maze.wallpattern = compressed[5] & 0x0f
 	maze.floorpattern = (compressed[5] & 0xf0) >> 4
 	maze.wallcolor = compressed[6] & 0x0f
