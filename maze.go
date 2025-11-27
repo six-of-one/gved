@@ -59,7 +59,7 @@ func domaze(arg string) {
 	xform := make(map[xy]int)
 
 // manual mirror, flip
-	if opts.MH || opts.MV {
+	if opts.MH || opts.MV || opts.MRP || opts.MRM {
 		lastx := 32
 		if maze.flags&LFLAG4_WRAP_H > 0 {
 			lastx = 31
@@ -70,6 +70,7 @@ func domaze(arg string) {
 			lasty = 31
 		}
 // note it
+/*
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
@@ -77,7 +78,34 @@ func domaze(arg string) {
 		}
 		fmt.Printf("\n")
 	}
+*/
 // transform
+// rotate +90 degrees
+		if opts.MRP {
+			for ty := 1; ty <= lasty; ty++ {
+			for tx := 1; tx <= lastx; tx++ {
+				xform[xy{lastx - tx, ty}] = maze.data[xy{ty, tx}]
+				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_HORIZ { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_VERT } else {
+				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_VERT { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_HORIZ } }
+			}}
+		} else {
+		if opts.MRM {
+			for ty := 1; ty <= lasty; ty++ {
+			for tx := 1; tx <= lastx; tx++ {
+				xform[xy{tx, lasty - ty}] = maze.data[xy{ty, tx}]
+				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_HORIZ { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_VERT } else {
+				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_VERT { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_HORIZ } }
+			}}
+		}
+		}
+
+// have to copy back if doing with any mirror cmd
+		if opts.MRP || opts.MRM {
+		if opts.MH || opts.MV {
+		for y := 1; y <= lasty; y++ {
+			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
+		}}}
+
 // mirror x
 		if opts.MH {
 			for ty := 1; ty <= lasty; ty++ {
