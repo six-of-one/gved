@@ -7,6 +7,7 @@ import (
 
 /* 
    g2 - bank info precalculated & addr of maze decoded from rom header per maze number
+ *110[56].10[ab]
 42a7f2b4a456e70319d1a5506341905f  ROMs/136043-1105.10a
 c3feebd1f91ae90056351ffbbcee675b  ROMs/136043-1106.10b
 -- all g2 sets use same maze roms
@@ -17,11 +18,11 @@ var slapsticRoms = []string{
 }
 // g1 - since no bank info list provided for g1, we just load from direct addr
 /*
- 20[56].10[ab] - r14
+ *20[56].10[ab] - r14
 d06c71b1cf55cd3f637c94f3570b5450  ROMs-g1/136037-205.10a
 8193af138bee2b76720709f42082a343  ROMs-g1/136037-206.10b
 -- only r14 uses these
- 10[56].10[ab] - r7
+ *10[56].10[ab] - r7
 862976922791fda377c23039db74c203  ROMs-g1/gauntletr7/136037-105.10a
 16ce166415e8cdc678ef0411371ee004  ROMs-g1/gauntletr7/136037-106.10b
 -- all g1 roms 105.10a / 106.10b are the same
