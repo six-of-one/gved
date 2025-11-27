@@ -22,7 +22,6 @@ func mazeMetaPrint(maze *Maze) {
 }
 
 var reMazeNum = regexp.MustCompile(`^maze(\d+)`)
-var reMazeAddr = regexp.MustCompile(`^addr(\d+)`)
 var reMazeMeta = regexp.MustCompile(`^meta$`)
 
 func domaze(arg string) {
@@ -30,7 +29,6 @@ func domaze(arg string) {
 
 	var mazeNum = -1
 	var mazeMeta = 0
-	var mazeAddr = 0
 
 	for _, ss := range split {
 		switch {
@@ -40,15 +38,6 @@ func domaze(arg string) {
 // Six: g2 maze num 1 - 117 or g1 start address x38000 - x3FFFF
 			if mazeNum < 0 || mazeNum > 117 && mazeNum < 229376 || mazeNum > 262144 {
 				panic("Invalid maze number / address specified.")
-			}
-// allow address override on g2 mazes
-		case reMazeAddr.MatchString(ss):
-			m, _ := strconv.ParseInt(reMazeAddr.FindStringSubmatch(ss)[1], 12, 0)
-			mazeAddr = int(m)
-fmt.Printf("Ovr Maze address: 0x%X -- %d\n", mazeAddr, mazeAddr)
-// Six: g2 maze address x38000 - x3FFFF
-			if mazeAddr < 229376 || mazeAddr > 262144 {
-				mazeAddr = 0
 			}
 
 		case reMazeMeta.MatchString(ss):
@@ -64,7 +53,7 @@ fmt.Printf("Ovr Maze address: 0x%X -- %d\n", mazeAddr, mazeAddr)
 		G1 = mazeNum		// G1 mode active, testing
 		fmt.Printf("Maze address: 0x%X -- %d\n", mazeNum, mazeNum) }
 
-		G2 = mazeAddr
+		G2 = opts.AddrG2
 
 	maze := mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
 

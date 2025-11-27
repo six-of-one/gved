@@ -9,6 +9,7 @@ import (
 
 var opts struct {
 	Animate bool   `short:"a" long:"animate" description:"Animate monster"`
+	AddrG2  int    `long:"ad" default:"0" base:"10" description:"G2 address override (in dec)"`
 	PalType string `long:"pt" default:"base" description:"Palette type"`
 	PalNum  int    `long:"pn" default:"0" base:"16" description:"Palette number (in hex)"`
 	Tile    int    `short:"t" long:"tile" base:"16" description:"Tile number to render (in hex)"`
