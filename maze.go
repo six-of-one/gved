@@ -23,12 +23,14 @@ func mazeMetaPrint(maze *Maze) {
 
 var reMazeNum = regexp.MustCompile(`^maze(\d+)`)
 var reMazeMeta = regexp.MustCompile(`^meta$`)
+var reMazeAddr = regexp.MustCompile(`^addr(\d+)`)
 
 func domaze(arg string) {
 	split := strings.Split(arg, "-")
 
 	var mazeNum = -1
 	var mazeMeta = 0
+	var mazeAddr = 0
 
 	for _, ss := range split {
 		switch {
@@ -38,6 +40,14 @@ func domaze(arg string) {
 // Six: g2 maze num 1 - 117 or g1 start address x38000 - x3FFFF
 			if mazeNum < 0 || mazeNum > 117 && mazeNum < 229376 || mazeNum > 262144 {
 				panic("Invalid maze number / address specified.")
+			}
+// allow address override on g2 mazes
+		case reMazeAddr.MatchString(ss):
+			m, _ := strconv.ParseInt(reMazeAddr.FindStringSubmatch(ss)[1], 10, 0)
+			mazeAddr = int(m)
+// Six: g2 maze address x38000 - x3FFFF
+			if mazeAddr < 229376 || mazeAddr > 262144 {
+				mazeAddr = 0
 			}
 
 		case reMazeMeta.MatchString(ss):

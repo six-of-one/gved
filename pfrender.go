@@ -100,7 +100,7 @@ func genpfimage(maze *Maze, mazenum int) {
 // option to generate image with no floors or walls (say for color correcting g1 mazes we dont have color codes for)
 // maybe make a cli switch?
 
-	nothing := NOWALL
+	nothing := 0
 
 	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
 	img := blankimage(8*2*32+32+extrax, 8*2*32+32+extray)
