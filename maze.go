@@ -73,7 +73,7 @@ func domaze(arg string) {
 		for ty := 0; ty <= lasty; ty++ {
 			for tx := 0; tx <= lastx; tx++ {
 // mirror x
-
+				xform[xy{lastx - tx, ty}] = maze.data[xy{tx, ty}]
 			}
 		}
 // copy back
