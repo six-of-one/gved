@@ -63,6 +63,8 @@ func domaze(arg string) {
 		G1 = mazeNum		// G1 mode active, testing
 		fmt.Printf("Maze address: 0x%X -- %d\n", mazeNum, mazeNum) }
 
+		G2 = mazeAddr
+
 	maze := mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
 
 	if opts.Verbose || mazeMeta > 0 {
