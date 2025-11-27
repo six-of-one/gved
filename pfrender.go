@@ -96,6 +96,10 @@ func genpfimage(maze *Maze, mazenum int) {
 		extray = 16
 	}
 
+// option to generate image with no floors or walls (say for color correcting g1 mazes we dont have color codes for)
+// maybe make a cli switch?
+	nofloorwall := false
+
 	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
 	img := blankimage(8*2*32+32+extrax, 8*2*32+32+extray)
 
@@ -121,7 +125,9 @@ func genpfimage(maze *Maze, mazenum int) {
 				stamp.ptype = "forcefield"
 				stamp.pnum = 0
 			}
-			writestamptoimage(img, stamp, x*16+16, y*16+16)
+			if !nofloorwall {
+				writestamptoimage(img, stamp, x*16+16, y*16+16)
+			}
 		}
 	}} else {
 // g1 checks
@@ -133,10 +139,9 @@ func genpfimage(maze *Maze, mazenum int) {
 			}
 
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
-// temp - RESTORE (this is for the g1 object over correct wall/floor blank map)
-// switch writing img2 - for no walls, no floors
-//			img2 := blankimage(8*2*32+32+extrax, 8*2*32+32+extray)
-			writestamptoimage(img, stamp, x*16+16, y*16+16)
+			if !nofloorwall {
+				writestamptoimage(img, stamp, x*16+16, y*16+16)
+			}
 		}
 
 	}}
@@ -198,12 +203,16 @@ func genpfimage(maze *Maze, mazenum int) {
 				stamp.pnum = 0
 			case MAZEOBJ_WALL_DESTRUCTABLE:
 				adj := checkwalladj8(maze, x, y)
+			if !nofloorwall {
 				stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
+			}
 			case MAZEOBJ_WALL_SECRET:
 				adj := checkwalladj8(maze, x, y)
+			if !nofloorwall {
 				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 				stamp.ptype = "secret"
 				stamp.pnum = 0
+			}
 			case MAZEOBJ_WALL_TRAPCYC1:
 				dots = 1
 				fallthrough
@@ -224,7 +233,9 @@ func genpfimage(maze *Maze, mazenum int) {
 				fallthrough
 			case MAZEOBJ_WALL_REGULAR:
 				adj := checkwalladj8(maze, x, y)
+			if !nofloorwall {
 				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+			}
 			case MAZEOBJ_WALL_MOVABLE:
 				stamp = itemGetStamp("pushwall")
 			case MAZEOBJ_KEY:
@@ -418,7 +429,9 @@ func genpfimage(maze *Maze, mazenum int) {
 			case G1OBJ_WALL_DESTRUCTABLE:
 // temp - RESTORE - comment out 2 lines for no walls, no floors
 				adj := checkwalladj8g1(maze, x, y)
+			if !nofloorwall {
 				stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
+			}
 
 			case G1OBJ_WALL_TRAP1:
 				dots = 1
@@ -426,7 +439,9 @@ func genpfimage(maze *Maze, mazenum int) {
 			case G1OBJ_WALL_REGULAR:
 // temp - RESTORE - comment out 2 lines for no walls, no floors
 				adj := checkwalladj8g1(maze, x, y)
+			if !nofloorwall {
 				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+			}
 			case G1OBJ_KEY:
 				stamp = itemGetStamp("key")
 
