@@ -50,6 +50,7 @@ func slapsticReadMaze(mazenum int) []int {
 	addr := 0x3f354
 	if mazenum < 200 {
 		addr = slapsticMazeGetRealAddr(mazenum)
+// --ad={dec address} overrides gauntlet 2 maze read address here
 		if G2 != 0 { addr = G2 }
 	} else {
 		addr = mazenum
