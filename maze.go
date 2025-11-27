@@ -56,6 +56,31 @@ func domaze(arg string) {
 		G2 = opts.AddrG2
 
 	maze := mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
+	xform := make(map[xy]int)
+
+// manual mirror, flip
+	if opts.MH || opts.MV {
+		lastx := 32
+		if maze.flags&LFLAG4_WRAP_H > 0 {
+			lastx = 31
+		}
+
+		lasty := 32
+		if maze.flags&LFLAG4_WRAP_V > 0 {
+			lasty = 31
+		}
+// transform
+		for ty := 0; ty <= lasty; ty++ {
+			for tx := 0; tx <= lastx; tx++ {
+// mirror x
+
+			}
+		}
+// copy back
+		for y := 0; y <= lasty; y++ {
+			for x := 0; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
+		}
+	}
 
 	if opts.Verbose || mazeMeta > 0 {
 		mazeMetaPrint(maze)

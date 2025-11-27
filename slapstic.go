@@ -55,7 +55,7 @@ func slapsticReadMaze(mazenum int) []int {
 	} else {
 		addr = mazenum
 	}
-fmt.Printf("Maze real addr: 0x%06x - %d > %d\n", addr, addr, G2)
+fmt.Printf("Maze read from: 0x%06x - %d\n", addr, addr)
 
 	b := slapsticReadBytes(addr, 512, mazenum)
 
