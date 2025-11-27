@@ -69,18 +69,38 @@ func domaze(arg string) {
 		if maze.flags&LFLAG4_WRAP_V > 0 {
 			lasty = 31
 		}
+// note it
+	for y := 0; y <= lasty; y++ {
+		for x := 0; x <= lastx; x++ {
+
+			fmt.Printf(" %02d", maze.data[xy{x, y}])
+		}
+		fmt.Printf("\n")
+	}
 // transform
-		for ty := 0; ty <= lasty; ty++ {
-			for tx := 0; tx <= lastx; tx++ {
 // mirror x
-//				xform[xy{lastx - tx, ty}] = maze.data[xy{tx, ty}]
+		if opts.MH {
+			for ty := 1; ty <= lasty; ty++ {
+			for tx := 1; tx <= lastx; tx++ {
+				xform[xy{lastx - tx, ty}] = maze.data[xy{tx, ty}]
+			}}
+		}
+// have to copy back if doing both together
+		if opts.MH && opts.MV {
+		for y := 1; y <= lasty; y++ {
+			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
+		}}
+
 // mirror y: flip
+		if opts.MV {
+			for ty := 1; ty <= lasty; ty++ {
+			for tx := 1; tx <= lastx; tx++ {
 				xform[xy{tx, lasty - ty}] = maze.data[xy{tx, ty}]
-			}
+			}}
 		}
 // copy back
-		for y := 0; y <= lasty; y++ {
-			for x := 0; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
+		for y := 1; y <= lasty; y++ {
+			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}
 	}
 
