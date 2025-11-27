@@ -96,9 +96,11 @@ func genpfimage(maze *Maze, mazenum int) {
 		extray = 16
 	}
 
+// no - thing
 // option to generate image with no floors or walls (say for color correcting g1 mazes we dont have color codes for)
 // maybe make a cli switch?
-	nofloorwall := false
+
+	nothing := NOWALL
 
 	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
 	img := blankimage(8*2*32+32+extrax, 8*2*32+32+extray)
@@ -117,15 +119,17 @@ func genpfimage(maze *Maze, mazenum int) {
 		for x := 0; x < 32; x++ {
 			adj := 0
 			if maze.wallpattern < 11 {
+				if (nothing & NOWALL) == 0 {		// wall shadows here
 				adj = checkwalladj3(maze, x, y)
+				}
 			}
 
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
-			if ffmap[xy{x, y}] == true {
+			if ffmap[xy{x, y}] {
 				stamp.ptype = "forcefield"
 				stamp.pnum = 0
 			}
-			if !nofloorwall {
+			if (nothing & NOFLOOR) == 0 {
 				writestamptoimage(img, stamp, x*16+16, y*16+16)
 			}
 		}
@@ -135,11 +139,13 @@ func genpfimage(maze *Maze, mazenum int) {
 		for x := 0; x < 32; x++ {
 			adj := 0
 			if maze.wallpattern < 11 {
+				if (nothing & NOWALL) == 0 {		// wall shadows here
 				adj = checkwalladj3g1(maze, x, y)
+				}
 			}
 
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
-			if !nofloorwall {
+			if (nothing & NOFLOOR) == 0 {
 				writestamptoimage(img, stamp, x*16+16, y*16+16)
 			}
 		}
@@ -165,7 +171,8 @@ func genpfimage(maze *Maze, mazenum int) {
 			gtopcol := false	// disable gen letter seperate colors
 // gen type op - the context to draw
 			gtop := gg.NewContext(12, 12)
-// gtop font
+// gtop font'
+// --- add default font if load fail?
 			if err := gtop.LoadFontFace("/usr/share/fonts/truetype/ttf-bitstream-vera/VeraBd.ttf", 14); err != nil {
 				panic(err)
 				}
@@ -203,12 +210,12 @@ func genpfimage(maze *Maze, mazenum int) {
 				stamp.pnum = 0
 			case MAZEOBJ_WALL_DESTRUCTABLE:
 				adj := checkwalladj8(maze, x, y)
-			if !nofloorwall {
+			if (nothing & NOWALL) == 0 {
 				stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
 			}
 			case MAZEOBJ_WALL_SECRET:
 				adj := checkwalladj8(maze, x, y)
-			if !nofloorwall {
+			if (nothing & NOWALL) == 0 {
 				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 				stamp.ptype = "secret"
 				stamp.pnum = 0
@@ -233,7 +240,7 @@ func genpfimage(maze *Maze, mazenum int) {
 				fallthrough
 			case MAZEOBJ_WALL_REGULAR:
 				adj := checkwalladj8(maze, x, y)
-			if !nofloorwall {
+			if (nothing & NOWALL) == 0 {
 				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 			}
 			case MAZEOBJ_WALL_MOVABLE:
@@ -427,9 +434,8 @@ func genpfimage(maze *Maze, mazenum int) {
 				stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
 			case G1OBJ_WALL_DESTRUCTABLE:
-// temp - RESTORE - comment out 2 lines for no walls, no floors
 				adj := checkwalladj8g1(maze, x, y)
-			if !nofloorwall {
+			if (nothing & NOWALL) == 0 {
 				stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
 			}
 
@@ -437,9 +443,8 @@ func genpfimage(maze *Maze, mazenum int) {
 				dots = 1
 				fallthrough
 			case G1OBJ_WALL_REGULAR:
-// temp - RESTORE - comment out 2 lines for no walls, no floors
 				adj := checkwalladj8g1(maze, x, y)
-			if !nofloorwall {
+			if (nothing & NOWALL) == 0 {
 				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 			}
 			case G1OBJ_KEY:

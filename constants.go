@@ -122,6 +122,11 @@ const (
 	G1OBJ_TILE_STUN = 62
 	G1OBJ_TREASURE_BAG = 64
 )
+// contrl var nothing that blocks some output
+const (
+	NOFLOOR = 1
+	NOWALL = 2
+)
 // Flags for levels
 const (
 	LFLAG1_ODDANGLE_GHOSTS     = 0x01000000
