@@ -22,8 +22,8 @@ func mazeMetaPrint(maze *Maze) {
 }
 
 var reMazeNum = regexp.MustCompile(`^maze(\d+)`)
-var reMazeMeta = regexp.MustCompile(`^meta$`)
 var reMazeAddr = regexp.MustCompile(`^addr(\d+)`)
+var reMazeMeta = regexp.MustCompile(`^meta$`)
 
 func domaze(arg string) {
 	split := strings.Split(arg, "-")
@@ -43,8 +43,9 @@ func domaze(arg string) {
 			}
 // allow address override on g2 mazes
 		case reMazeAddr.MatchString(ss):
-			m, _ := strconv.ParseInt(reMazeAddr.FindStringSubmatch(ss)[1], 10, 0)
+			m, _ := strconv.ParseInt(reMazeAddr.FindStringSubmatch(ss)[1], 12, 0)
 			mazeAddr = int(m)
+fmt.Printf("Ovr Maze address: 0x%X -- %d\n", mazeAddr, mazeAddr)
 // Six: g2 maze address x38000 - x3FFFF
 			if mazeAddr < 229376 || mazeAddr > 262144 {
 				mazeAddr = 0
