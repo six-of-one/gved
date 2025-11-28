@@ -620,7 +620,7 @@ if true {
 	tbaddr := 9
 	var stamp *Stamp
 	stamp = itemGetStamp("ghost")
-	stamp.pnum = 12
+	stamp.pnum = 0
 
 // 0000 - 1FFF dump
 
@@ -749,7 +749,6 @@ if true {
 
 // gauntlet 2 add ins not handled by 0000 - 1FFF dump
 	pnum := 0
-	pnum = 12
 
 	for pnum < 32 && mazenum == 116 {
 
