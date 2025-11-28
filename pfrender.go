@@ -612,7 +612,7 @@ TTT           ___  DDD                __
 // written to .p[0-11]/tl_%05d_%04X.png
 // where %d and %X are tile start addr
 
-if false {
+if true {
 // counter for tiles - imprv - dont write dups
 	wcnt := 1
 // tb adder controls size of tile render, and mem skip to next tile
@@ -620,7 +620,7 @@ if false {
 	tbaddr := 9
 	var stamp *Stamp
 	stamp = itemGetStamp("ghost")
-	stamp.pnum = 0
+	stamp.pnum = 12
 
 // 0000 - 1FFF dump
 
@@ -742,15 +742,16 @@ if false {
 
 // done, no further pallets
 
-		if stamp.pnum == 12 {
+		if stamp.pnum == 32 {
 			stamp = nil
 		}
 	}
 
 // gauntlet 2 add ins not handled by 0000 - 1FFF dump
 	pnum := 0
+	pnum = 12
 
-	for pnum < 12 && mazenum == 116 {
+	for pnum < 32 && mazenum == 116 {
 
 		stamp = itemGetStamp("pushwall")
 		stamp.pnum = pnum
