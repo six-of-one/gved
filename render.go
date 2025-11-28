@@ -122,7 +122,7 @@ func writetiletoimage(img *image.NRGBA, tile TileData, palette []color.Color, tr
 	for j := 0; j < 8; j++ {
 		for i := 0; i < 8; i++ {
 			tc := tile[j][i]
-			if tc == 0 && trans0 == true {
+			if tc == 0 && trans0 {
 				continue
 			}
 

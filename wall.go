@@ -759,6 +759,7 @@ var shrubDestructStamps = [][]int{
 
 // Not actually used directly. Not sure if they're used directly in the
 // actual Gauntlet code or not. FIXME: figure that out!
+/*
 var shrubOtherStamps = [][]int{
 	{0x77B, 0x77C, 0x77D, 0x77E},
 	{0x77F, 0x780, 0x781, 0x782},
@@ -772,6 +773,7 @@ var shrubOtherStamps = [][]int{
 	{0x79F, 0x7A0, 0x7A1, 0x7A2},
 	{0x7A3, 0x7A4, 0x7A5, 0x7A6},
 }
+*/
 
 // This is the above, but in a different order. It's a table at 0x5EDF4
 // in the original code.

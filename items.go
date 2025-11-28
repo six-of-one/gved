@@ -667,7 +667,7 @@ func doitem(arg string) {
 func itemGetStamp(itemType string) *Stamp {
 	stamp, ok := itemStamps[itemType]
 
-	if ok == false {
+	if !ok {
 		panic("requested bad item: " + itemType)
 	}
 

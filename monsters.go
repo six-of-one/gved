@@ -63,7 +63,7 @@ func domonster(arg string) {
 	opts.PalType = monsters[monsterType].ptype
 	opts.PalNum = monsters[monsterType].pnum + (monsterLevel + 1) // FIME: This is weird and seems wrong
 
-	if opts.Animate == true {
+	if opts.Animate {
 		// t := monsters[monsterType].anims[monsterAction][monsterDir]
 		// x := monsters[monsterType].xsize
 		// y := monsters[monsterType].ysize
