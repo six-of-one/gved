@@ -801,7 +801,7 @@ var basePalettes = [][]color.Color{
 		IRGB{0xDF11}, // 15
 	},
 // attempt the rest of the palettes in mame F4
-// mem dump from 910360 - 9105FF
+// mem dump from 910380 - 9105FF
 /*910380*/
  { IRGB{0x0000}, IRGB{0x0000}, IRGB{0x6F93}, IRGB{0x4F00}, IRGB{0xDF86}, IRGB{0xFF9A}, IRGB{0x6F00}, IRGB{0x9F00}, IRGB{0xFF00}, IRGB{0x8FFF}, IRGB{0xDFFF}, IRGB{0x0000}, IRGB{0x0000}, IRGB{0x0000}, IRGB{0x7F43}, IRGB{0x0000}, },
 /*9103A0*/
