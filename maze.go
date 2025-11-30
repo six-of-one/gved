@@ -189,7 +189,7 @@ fmt.Printf("maze: %d\n",mazeNum)
 			w.Show()
 		}
 // key tester
-			fmt.Printf("Command (q, fFgG, wWeE, rRt, hm, #): ")
+			fmt.Printf("Command (q, fFgG, wWeE, rRt, hm, #a): ")
 			input, _ := consoleReader.ReadByte()
 			ascii := input
 // ESC = 27 and q = 113
@@ -198,7 +198,6 @@ fmt.Printf("maze: %d\n",mazeNum)
 				os.Exit(0)
 			}
 			noact = false
-			cascii := ascii
 			switch ascii {
 			case 10:
 // it picks up the <CR> that enters cmd, mask that off here, do nothing
@@ -253,16 +252,18 @@ fmt.Printf("maze: %d\n",mazeNum)
 			case 104:		// h
 				opts.MH = !opts.MH
 				fmt.Printf("cmd: h - mh: %t\n",opts.MH)
+			case 97:		// a
+				noact = false
 			default:
 				fmt.Printf("unk: %d\n",ascii)
 			}
-			if cascii > 47 && cascii < 58 {
+			if ascii > 47 && ascii < 58 {
 				noact = true
-				bascii, _ := strconv.Atoi(string(cascii))
+				bascii, _ := strconv.Atoi(string(ascii))
 				if anum < 0 {
-					anum = bascii - 47
+					anum = bascii
 				} else {
-					anum = anum * 10 + bascii - 47
+					anum = (anum * 10) + bascii
 				}
 			}
 //			fmt.Printf("ascii: %d\n",ascii)
