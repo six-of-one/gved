@@ -173,6 +173,18 @@ if true {
 	maze.wallcolor = compressed[6] & 0x0f
 	maze.floorcolor = (compressed[6] & 0xf0) >> 4
 
+	if Ovwallpat < 0 {
+		Ovwallpat = maze.wallpattern
+		Ovflorlpat = maze.floorpattern
+		Ovwallcol = maze.wallcolor
+		Ovflorlcol = maze.floorcolor
+	} else {
+		maze.wallpattern = Ovwallpat
+		maze.floorpattern = Ovflorlpat
+		maze.wallcolor = Ovwallcol
+		maze.floorcolor = Ovflorlcol
+	}
+
 // g1 likely has nothing like g2 stuff, and might not use flags at all
 	flagsv := maze.flags // save so we can print in meta
 	if g1g2 > 0x037FFF {

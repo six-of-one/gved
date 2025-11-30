@@ -612,7 +612,7 @@ TTT           ___  DDD                __
 // written to .p[0-11]/tl_%05d_%04X.png
 // where %d and %X are tile start addr
 
-if true {
+if false {
 // counter for tiles - imprv - dont write dups
 	wcnt := 1
 // tb adder controls size of tile render, and mem skip to next tile

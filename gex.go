@@ -17,6 +17,13 @@ type TileData []TileLineMerged
 var G1 int
 var G2 int
 
+// for the user select demo
+var Ovwallpat int
+var Ovflorlpat int
+var Ovwallcol int
+var Ovflorlcol int
+
+
 // FIXME: change name to something not "numbers"
 type Stamp struct {
 	width   int

@@ -136,6 +136,9 @@ func domaze(arg string) {
 		mazeMetaPrint(maze)
 	}
 
+// set 1 override to -1 to set in decoder
+	Ovwallpat = -1
+
 	if mazeMeta == 0 {
 		genpfimage(maze, mazeNum)
 	}
