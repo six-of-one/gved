@@ -55,6 +55,9 @@ func domaze(arg string) {
 
 		G2 = opts.AddrG2
 
+// set 1 override to -1 to set in decoder
+	Ovwallpat = -1
+
 	maze := mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
 	xform := make(map[xy]int)
 
@@ -135,9 +138,6 @@ func domaze(arg string) {
 	if opts.Verbose || mazeMeta > 0 {
 		mazeMetaPrint(maze)
 	}
-
-// set 1 override to -1 to set in decoder
-	Ovwallpat = -1
 
 	if mazeMeta == 0 {
 		genpfimage(maze, mazeNum)
