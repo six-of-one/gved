@@ -157,6 +157,7 @@ func domaze(arg string) {
 
 			genpfimage(maze, mazeNum)
 // key tester
+			fmt.Printf("Command: ")
 			input, _ := consoleReader.ReadByte()
 			ascii := input
 // ESC = 27 and q = 113
@@ -181,21 +182,22 @@ func domaze(arg string) {
 				Ovflorlcol += 1
 			case 71:
 				Ovflorlcol -= 1
+			case 114:		// r
+				opts.MRP = true
+				opts.MRM = false
+			case 82:		// R
+				opts.MRP = false
+				opts.MRM = true
+			case 116:		// t
+				opts.MRP = false
+				opts.MRM = false
+			case 109:		// m
+				opts.MV = !opts.MV
+			case 104:		// m
+				opts.MH = !opts.MH
 			}
 			fmt.Printf("ascii: %d\n",ascii)
 
 		}
 	}
 }
-/*
-r
-ascii: 114
-t
-ascii: 116
-m
-ascii: 109
-h
-ascii: 104
-R
-ascii: 82
-*/
