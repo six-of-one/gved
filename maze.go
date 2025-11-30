@@ -162,6 +162,40 @@ func domaze(arg string) {
 				fmt.Printf("Exiting...\n")
 				os.Exit(0)
 			}
+			switch ascii {
+			case 119:		// w
+				Ovwallpat += 1
+			case 87:		// W
+				Ovwallpat -= 1
+			case 101:		// e
+				Ovwallcol += 1
+			case 69:
+				Ovwallcol -= 1
+			case 102:		// f
+				Ovflorlpat += 1
+			case 70:
+				Ovflorlpat -= 1
+			case 103:		// g
+				Ovflorlcol += 1
+			case 71:
+				Ovflorlcol -= 1
+			}
+			fmt.Printf("ascii: %d\n",ascii)
+
 		}
 	}
 }
+/*
+r
+ascii: 114
+t
+ascii: 116
+m
+ascii: 109
+h
+ascii: 104
+R
+ascii: 82
+T
+ascii: 84
+*/
