@@ -75,9 +75,9 @@ func domaze(arg string) {
     a := app.New()
     w := a.NewWindow("Images")
 	winup := false
-	bimg := canvas
 
 	if mazeMeta == 0 {
+// user controls loop for tweaking
 		for {
 // redo rotates, etc
 
@@ -164,7 +164,7 @@ func domaze(arg string) {
 	}
 
 			Ovimg := genpfimage(maze, mazeNum)
-			bimg = canvas.NewImageFromImage(Ovimg)
+			bimg := canvas.NewImageFromImage(Ovimg)
 
 			w.SetContent(bimg)
 
@@ -172,8 +172,8 @@ func domaze(arg string) {
 				winup = true
 				w.Resize(fyne.NewSize(1024, 1024))
 
-				w.Show()
 			}
+			w.Show()
 
 // key tester
 			fmt.Printf("Command: ")
@@ -187,33 +187,46 @@ func domaze(arg string) {
 			switch ascii {
 			case 119:		// w
 				Ovwallpat += 1
+				fmt.Printf("cmd: w - wallp: %d\n",Ovwallpat)
 			case 87:		// W
 				Ovwallpat -= 1
+				fmt.Printf("cmd: W - wallp: %d\n",Ovwallpat)
 			case 101:		// e
 				Ovwallcol += 1
+				fmt.Printf("cmd: e - wallc: %d\n",Ovwallcol)
 			case 69:
 				Ovwallcol -= 1
+				fmt.Printf("cmd: E - wallc: %d\n",Ovwallcol)
 			case 102:		// f
 				Ovflorlpat += 1
+				fmt.Printf("cmd: f - wallp: %d\n",Ovflorlpat)
 			case 70:
 				Ovflorlpat -= 1
+				fmt.Printf("cmd: F - wallp: %d\n",Ovflorlpat)
 			case 103:		// g
 				Ovflorlcol += 1
+				fmt.Printf("cmd: g - wallp: %d\n",Ovflorlcol)
 			case 71:
 				Ovflorlcol -= 1
+				fmt.Printf("cmd: G - wallp: %d\n",Ovflorlcol)
 			case 114:		// r
 				opts.MRP = true
 				opts.MRM = false
+				fmt.Printf("cmd: r - mr+: %d mr-: %d\n",opts.MRP,opts.MRM)
 			case 82:		// R
 				opts.MRP = false
 				opts.MRM = true
+				fmt.Printf("cmd: R - mr+: %d mr-: %d\n",opts.MRP,opts.MRM)
 			case 116:		// t
 				opts.MRP = false
 				opts.MRM = false
+				fmt.Printf("cmd: t - mr+: %d mr-: %d\n",opts.MRP,opts.MRM)
 			case 109:		// m
 				opts.MV = !opts.MV
-			case 104:		// m
+				fmt.Printf("cmd: m - mv: %d\n",opts.MV)
+			case 104:		// h
 				opts.MH = !opts.MH
+				fmt.Printf("cmd: h - mh: %d\n",opts.MH)
 			}
 //			fmt.Printf("ascii: %d\n",ascii)
 

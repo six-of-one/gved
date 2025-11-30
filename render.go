@@ -47,6 +47,7 @@ func gettiledatafromfile(file string, tilenum int) TileLinePlane {
 		panic("failed to read full tile from file")
 	}
 
+	f.Close()
 	return databytes
 }
 
