@@ -19,9 +19,9 @@ var G2 int
 
 // for the user select demo
 var Ovwallpat int
-var Ovflorlpat int
+var Ovflorpat int
 var Ovwallcol int
-var Ovflorlcol int
+var Ovflorcol int
 
 // FIXME: change name to something not "numbers"
 type Stamp struct {

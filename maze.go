@@ -78,8 +78,10 @@ func domaze(arg string) {
 
 	if mazeMeta == 0 {
 // user controls loop for tweaking
+		noact := false
 		for {
 // redo rotates, etc
+			maze = mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
 
 // manual mirror, flip
 	if opts.MH || opts.MV || opts.MRP || opts.MRM {
@@ -162,7 +164,7 @@ func domaze(arg string) {
 			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}
 	}
-
+		if !noact {
 			Ovimg := genpfimage(maze, mazeNum)
 			bimg := canvas.NewImageFromImage(Ovimg)
 
@@ -174,7 +176,7 @@ func domaze(arg string) {
 
 			}
 			w.Show()
-
+		}
 // key tester
 			fmt.Printf("Command: ")
 			input, _ := consoleReader.ReadByte()
@@ -184,7 +186,10 @@ func domaze(arg string) {
 				fmt.Printf("Exiting...\n")
 				os.Exit(0)
 			}
+			noact = false
 			switch ascii {
+			case 10:
+				noact = true
 			case 119:		// w
 				Ovwallpat += 1
 				fmt.Printf("cmd: w - wallp: %d\n",Ovwallpat)
@@ -198,35 +203,35 @@ func domaze(arg string) {
 				Ovwallcol -= 1
 				fmt.Printf("cmd: E - wallc: %d\n",Ovwallcol)
 			case 102:		// f
-				Ovflorlpat += 1
-				fmt.Printf("cmd: f - wallp: %d\n",Ovflorlpat)
+				Ovflorpat += 1
+				fmt.Printf("cmd: f - floorp: %d\n",Ovflorpat)
 			case 70:
-				Ovflorlpat -= 1
-				fmt.Printf("cmd: F - wallp: %d\n",Ovflorlpat)
+				Ovflorpat -= 1
+				fmt.Printf("cmd: F - floorp: %d\n",Ovflorpat)
 			case 103:		// g
-				Ovflorlcol += 1
-				fmt.Printf("cmd: g - wallp: %d\n",Ovflorlcol)
+				Ovflorcol += 1
+				fmt.Printf("cmd: g - floorc: %d\n",Ovflorcol)
 			case 71:
-				Ovflorlcol -= 1
-				fmt.Printf("cmd: G - wallp: %d\n",Ovflorlcol)
+				Ovflorcol -= 1
+				fmt.Printf("cmd: G - floorc: %d\n",Ovflorcol)
 			case 114:		// r
 				opts.MRP = true
 				opts.MRM = false
-				fmt.Printf("cmd: r - mr+: %d mr-: %d\n",opts.MRP,opts.MRM)
+				fmt.Printf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
 			case 82:		// R
 				opts.MRP = false
 				opts.MRM = true
-				fmt.Printf("cmd: R - mr+: %d mr-: %d\n",opts.MRP,opts.MRM)
+				fmt.Printf("cmd: R - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
 			case 116:		// t
 				opts.MRP = false
 				opts.MRM = false
-				fmt.Printf("cmd: t - mr+: %d mr-: %d\n",opts.MRP,opts.MRM)
+				fmt.Printf("cmd: t - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
 			case 109:		// m
 				opts.MV = !opts.MV
-				fmt.Printf("cmd: m - mv: %d\n",opts.MV)
+				fmt.Printf("cmd: m - mv: %t\n",opts.MV)
 			case 104:		// h
 				opts.MH = !opts.MH
-				fmt.Printf("cmd: h - mh: %d\n",opts.MH)
+				fmt.Printf("cmd: h - mh: %t\n",opts.MH)
 			}
 //			fmt.Printf("ascii: %d\n",ascii)
 

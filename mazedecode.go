@@ -175,14 +175,14 @@ if true {
 
 	if Ovwallpat < 0 {
 		Ovwallpat = maze.wallpattern
-		Ovflorlpat = maze.floorpattern
+		Ovflorpat = maze.floorpattern
 		Ovwallcol = maze.wallcolor
-		Ovflorlcol = maze.floorcolor
+		Ovflorcol = maze.floorcolor
 	} else {
 		maze.wallpattern = Ovwallpat
-		maze.floorpattern = Ovflorlpat
+		maze.floorpattern = Ovflorpat
 		maze.wallcolor = Ovwallcol
-		maze.floorcolor = Ovflorlcol
+		maze.floorcolor = Ovflorcol
 	}
 
 // g1 likely has nothing like g2 stuff, and might not use flags at all
