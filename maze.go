@@ -74,13 +74,24 @@ func domaze(arg string) {
 // setup window
     a := app.New()
     w := a.NewWindow("Images")
+// when to update the window
 	winup := false
 
 	if mazeMeta == 0 {
 // user controls loop for tweaking
 		noact := false
+// input new maze #
+		anum := -1
+
 		for {
-// redo rotates, etc
+
+		if !noact {
+// redo maze #, colors, walls, rotates, etc
+			if anum >= 0 && anum < 118 || anum >= 229376 && anum < 262145 {
+				mazeNum = anum
+				anum = -1
+			}
+fmt.Printf("maze: %d\n",mazeNum)
 			maze = mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
 
 // manual mirror, flip
@@ -164,7 +175,7 @@ func domaze(arg string) {
 			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}
 	}
-		if !noact {
+
 			Ovimg := genpfimage(maze, mazeNum)
 			bimg := canvas.NewImageFromImage(Ovimg)
 
@@ -178,7 +189,7 @@ func domaze(arg string) {
 			w.Show()
 		}
 // key tester
-			fmt.Printf("Command (q, fFgG, wWeE, rRt, hm): ")
+			fmt.Printf("Command (q, fFgG, wWeE, rRt, hm, #): ")
 			input, _ := consoleReader.ReadByte()
 			ascii := input
 // ESC = 27 and q = 113
@@ -187,6 +198,7 @@ func domaze(arg string) {
 				os.Exit(0)
 			}
 			noact = false
+			cascii := ascii
 			switch ascii {
 			case 10:
 // it picks up the <CR> that enters cmd, mask that off here, do nothing
@@ -243,6 +255,15 @@ func domaze(arg string) {
 				fmt.Printf("cmd: h - mh: %t\n",opts.MH)
 			default:
 				fmt.Printf("unk: %d\n",ascii)
+			}
+			if cascii > 47 && cascii < 58 {
+				noact = true
+				bascii, _ := strconv.Atoi(string(cascii))
+				if anum < 0 {
+					anum = bascii - 47
+				} else {
+					anum = anum * 10 + bascii - 47
+				}
 			}
 //			fmt.Printf("ascii: %d\n",ascii)
 
