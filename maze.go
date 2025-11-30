@@ -87,10 +87,11 @@ func domaze(arg string) {
 
 		if !noact {
 // redo maze #, colors, walls, rotates, etc
-			if anum >= 0 && anum < 118 || anum >= 229376 && anum < 262145 {
+			if anum >= 0 && anum < 117 || anum >= 229376 && anum < 262145 {
+				fmt.Printf("new maze: %d\n",anum)
 				mazeNum = anum
 				anum = -1
-			}
+			} else { anum = -1 }
 fmt.Printf("maze: %d\n",mazeNum)
 			maze = mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
 
