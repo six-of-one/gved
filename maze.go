@@ -74,8 +74,6 @@ func domaze(arg string) {
 // setup window
     a := app.New()
     w := a.NewWindow("Images")
-// when to update the window
-	winup := false
 
 	if mazeMeta == 0 {
 // user controls loop for tweaking
@@ -182,15 +180,12 @@ func domaze(arg string) {
 			Ovimg := genpfimage(maze, mazeNum)
 			bimg := canvas.NewImageFromImage(Ovimg)
 
-
-			if !winup {
-				winup = true
-				w.Resize(fyne.NewSize(1024, 1024))
-				w.Show()
-
-			}
 			w.SetContent(bimg)
-//			w.CenterOnScreen()
+
+			w.Resize(fyne.NewSize(1024, 1024))
+
+			w.Show()
+			w.CenterOnScreen()
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 
