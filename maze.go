@@ -208,6 +208,7 @@ func domaze(arg string) {
 				anum = -1
 			case 119:		// w
 				Ovwallpat += 1
+				if anum >= 0 { Ovwallpat = anum }
 				if Ovwallpat > 7 { Ovwallpat = 0 }
 				fmt.Printf("cmd: w - wallp: %d\n",Ovwallpat)
 			case 87:		// W
@@ -216,6 +217,7 @@ func domaze(arg string) {
 				fmt.Printf("cmd: W - wallp: %d\n",Ovwallpat)
 			case 101:		// e
 				Ovwallcol += 1
+				if anum >= 0 { Ovwallcol = anum }
 				if Ovwallcol > 16 { Ovwallcol = 0 }
 				fmt.Printf("cmd: e - wallc: %d\n",Ovwallcol)
 			case 69:
@@ -224,6 +226,7 @@ func domaze(arg string) {
 				fmt.Printf("cmd: E - wallc: %d\n",Ovwallcol)
 			case 102:		// f
 				Ovflorpat += 1
+				if anum >= 0 { Ovflorpat = anum }
 				if Ovflorpat > 8 { Ovflorpat = 0 }
 				fmt.Printf("cmd: f - floorp: %d\n",Ovflorpat)
 			case 70:
@@ -232,7 +235,8 @@ func domaze(arg string) {
 				fmt.Printf("cmd: F - floorp: %d\n",Ovflorpat)
 			case 103:		// g
 				Ovflorcol += 1
-				if Ovflorpat > 15 { Ovflorpat = 0 }
+				if anum >= 0 { Ovflorcol = anum }
+				if Ovflorcol > 15 { Ovflorcol = 0 }
 				fmt.Printf("cmd: g - floorc: %d\n",Ovflorcol)
 			case 71:
 				Ovflorcol -= 1
