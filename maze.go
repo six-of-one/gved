@@ -5,6 +5,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"os"
+	"bufio"
 )
 
 func mazeMetaPrint(maze *Maze) {
@@ -146,11 +148,20 @@ func domaze(arg string) {
 	if opts.Verbose || mazeMeta > 0 {
 		mazeMetaPrint(maze)
 	}
+// setup kby read
+	consoleReader := bufio.NewReaderSize(os.Stdin, 1)
 
 	if mazeMeta == 0 {
 		for {
 			genpfimage(maze, mazeNum)
-
+// key tester
+			input, _ := consoleReader.ReadByte()
+			ascii := input
+// ESC = 27 and q = 113
+			if ascii == 27 || ascii == 113 {
+				fmt.Printf("Exiting...\n")
+				os.Exit(0)
+			}
 		}
 	}
 }
