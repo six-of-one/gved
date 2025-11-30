@@ -205,6 +205,7 @@ func domaze(arg string) {
 			case 10:
 // it picks up the <CR> that enters cmd, mask that off here, do nothing
 				noact = true
+				anum = -1
 			case 119:		// w
 				Ovwallpat += 1
 				if Ovwallpat > 7 { Ovwallpat = 0 }
@@ -260,18 +261,15 @@ func domaze(arg string) {
 				Ovwallpat = -1
 			default:
 				if ascii < 48 || ascii > 57 { fmt.Printf("unk: %d\n",ascii) }
-				anum = -1
 			}
 			if ascii > 47 && ascii < 58 {
 				noact = true
-fmt.Printf("anum: %d\n",anum)
 				bascii, _ := strconv.Atoi(string(ascii))
 				if anum < 0 {
 					anum = bascii
 				} else {
 					anum = (anum * 10) + bascii
 				}
-fmt.Printf("anum: %d\n",anum)
 			}
 //fmt.Printf("ascii: %d\n",ascii)
 
