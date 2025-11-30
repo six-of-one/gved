@@ -63,6 +63,16 @@ func domaze(arg string) {
 	maze := mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
 	xform := make(map[xy]int)
 
+	if opts.Verbose || mazeMeta > 0 {
+		mazeMetaPrint(maze)
+	}
+// setup kby read
+	consoleReader := bufio.NewReaderSize(os.Stdin, 1)
+
+	if mazeMeta == 0 {
+		for {
+// redo rotates, etc
+
 // manual mirror, flip
 	if opts.MH || opts.MV || opts.MRP || opts.MRM {
 		lastx := 32
@@ -145,14 +155,6 @@ func domaze(arg string) {
 		}
 	}
 
-	if opts.Verbose || mazeMeta > 0 {
-		mazeMetaPrint(maze)
-	}
-// setup kby read
-	consoleReader := bufio.NewReaderSize(os.Stdin, 1)
-
-	if mazeMeta == 0 {
-		for {
 			genpfimage(maze, mazeNum)
 // key tester
 			input, _ := consoleReader.ReadByte()
@@ -196,6 +198,4 @@ h
 ascii: 104
 R
 ascii: 82
-T
-ascii: 84
 */
