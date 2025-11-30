@@ -88,16 +88,24 @@ func domaze(arg string) {
 			for ty := 1; ty <= lasty; ty++ {
 			for tx := 1; tx <= lastx; tx++ {
 				xform[xy{lastx - tx, ty}] = maze.data[xy{ty, tx}]
+// g1 - must transform all dors on a rotat since they have horiz & vert dependent
 				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_HORIZ { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_VERT } else {
 				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_VERT { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_HORIZ } }
+// g2
+				if xform[xy{lastx - tx, ty}] == MAZEOBJ_DOOR_HORIZ { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_VERT } else {
+				if xform[xy{lastx - tx, ty}] == MAZEOBJ_DOOR_VERT { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_HORIZ } }
 			}}
 		} else {
 		if opts.MRM {
 			for ty := 1; ty <= lasty; ty++ {
 			for tx := 1; tx <= lastx; tx++ {
 				xform[xy{tx, lasty - ty}] = maze.data[xy{ty, tx}]
+// g1
 				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_HORIZ { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_VERT } else {
 				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_VERT { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_HORIZ } }
+// g2
+				if xform[xy{tx, lasty - ty}] == MAZEOBJ_DOOR_HORIZ { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_VERT } else {
+				if xform[xy{tx, lasty - ty}] == MAZEOBJ_DOOR_VERT { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_HORIZ } }
 			}}
 		}
 		}
