@@ -22,7 +22,6 @@ var Ovwallpat int
 var Ovflorlpat int
 var Ovwallcol int
 var Ovflorlcol int
-var Ovimg string
 
 // FIXME: change name to something not "numbers"
 type Stamp struct {

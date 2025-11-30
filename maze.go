@@ -7,6 +7,9 @@ import (
 	"strings"
 	"os"
 	"bufio"
+	"fyne.io/fyne/v2"
+    "fyne.io/fyne/v2/app"
+    "fyne.io/fyne/v2/canvas"
 )
 
 func mazeMetaPrint(maze *Maze) {
@@ -68,6 +71,11 @@ func domaze(arg string) {
 	}
 // setup kby read
 	consoleReader := bufio.NewReaderSize(os.Stdin, 1)
+// setup window
+    a := app.New()
+    w := a.NewWindow("Images")
+	winup := false
+	bimg := canvas
 
 	if mazeMeta == 0 {
 		for {
@@ -155,7 +163,18 @@ func domaze(arg string) {
 		}
 	}
 
-			genpfimage(maze, mazeNum)
+			Ovimg := genpfimage(maze, mazeNum)
+			bimg = canvas.NewImageFromImage(Ovimg)
+
+			w.SetContent(bimg)
+
+			if !winup {
+				winup = true
+				w.Resize(fyne.NewSize(1024, 1024))
+
+				w.Show()
+			}
+
 // key tester
 			fmt.Printf("Command: ")
 			input, _ := consoleReader.ReadByte()
@@ -196,7 +215,7 @@ func domaze(arg string) {
 			case 104:		// m
 				opts.MH = !opts.MH
 			}
-			fmt.Printf("ascii: %d\n",ascii)
+//			fmt.Printf("ascii: %d\n",ascii)
 
 		}
 	}

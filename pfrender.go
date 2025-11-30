@@ -88,7 +88,7 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 
 var foods = []string{"ifood1", "ifood2", "ifood3"}
 
-func genpfimage(maze *Maze, mazenum int) {
+func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	extrax, extray := 0, 0
 	if (maze.flags & LFLAG4_WRAP_H) == 0 {
 		extrax = 16
@@ -939,6 +939,8 @@ if true {
 		}
 	}
 	savetopng(opts.Output, img)
+// for user select
+	return img
 }
 
 // check to see if there's walls adjacent left, left/up, and up
