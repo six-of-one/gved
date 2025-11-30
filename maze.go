@@ -83,8 +83,8 @@ func domaze(arg string) {
 // input new maze #
 		anum := -1
 		var ascii byte
-
 		for {
+
 
 		if !noact {
 // redo maze #, colors, walls, rotates, etc
@@ -182,17 +182,22 @@ func domaze(arg string) {
 			Ovimg := genpfimage(maze, mazeNum)
 			bimg := canvas.NewImageFromImage(Ovimg)
 
-			w.SetContent(bimg)
 
 			if !winup {
 				winup = true
 				w.Resize(fyne.NewSize(1024, 1024))
+				w.Show()
 
 			}
-			w.Show()
+			w.SetContent(bimg)
+//			w.CenterOnScreen()
+			til := fmt.Sprintf("Maze: %d",mazeNum)
+			w.SetTitle(til)
+
+
+			fmt.Printf("Command (q, fFgG, wWeE, rRt, hm, #a): ")
 		}
 // key tester
-			fmt.Printf("Command (q, fFgG, wWeE, rRt, hm, #a): ")
 			input, _ := consoleReader.ReadByte()
 			ascii = input
 // ESC = 27 and q = 113
