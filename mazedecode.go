@@ -143,7 +143,7 @@ func mazeDecompress(compressed []int, metaonly bool, g1g2 int) *Maze {
 	maze.secret = compressed[0] & 0x1f
 
 // Six - maze dumper compresssed data
-if true {
+if opts.Verbose {
 	fmt.Printf("compresssed: %d\n", maze.encodedbytes)
 	y := 0
 	for y < maze.encodedbytes {

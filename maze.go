@@ -178,7 +178,7 @@ func domaze(arg string) {
 			w.Show()
 		}
 // key tester
-			fmt.Printf("Command: ")
+			fmt.Printf("Command (q, fFgG, wWeE, rRt, hm): ")
 			input, _ := consoleReader.ReadByte()
 			ascii := input
 // ESC = 27 and q = 113
@@ -189,30 +189,39 @@ func domaze(arg string) {
 			noact = false
 			switch ascii {
 			case 10:
+// it picks up the <CR> that enters cmd, mask that off here, do nothing
 				noact = true
 			case 119:		// w
 				Ovwallpat += 1
+				if Ovwallpat > 7 { Ovwallpat = 0 }
 				fmt.Printf("cmd: w - wallp: %d\n",Ovwallpat)
 			case 87:		// W
 				Ovwallpat -= 1
+				if Ovwallpat < 0 { Ovwallpat = 7 }
 				fmt.Printf("cmd: W - wallp: %d\n",Ovwallpat)
 			case 101:		// e
 				Ovwallcol += 1
+				if Ovwallcol > 16 { Ovwallcol = 0 }
 				fmt.Printf("cmd: e - wallc: %d\n",Ovwallcol)
 			case 69:
 				Ovwallcol -= 1
+				if Ovwallcol < 0 { Ovwallcol = 16 }
 				fmt.Printf("cmd: E - wallc: %d\n",Ovwallcol)
 			case 102:		// f
 				Ovflorpat += 1
+				if Ovflorpat > 8 { Ovflorpat = 0 }
 				fmt.Printf("cmd: f - floorp: %d\n",Ovflorpat)
 			case 70:
 				Ovflorpat -= 1
+				if Ovflorpat < 0 { Ovflorpat = 8 }
 				fmt.Printf("cmd: F - floorp: %d\n",Ovflorpat)
 			case 103:		// g
 				Ovflorcol += 1
+				if Ovflorpat > 15 { Ovflorpat = 0 }
 				fmt.Printf("cmd: g - floorc: %d\n",Ovflorcol)
 			case 71:
 				Ovflorcol -= 1
+				if Ovflorcol < 0 { Ovflorcol = 15 }
 				fmt.Printf("cmd: G - floorc: %d\n",Ovflorcol)
 			case 114:		// r
 				opts.MRP = true
@@ -232,6 +241,8 @@ func domaze(arg string) {
 			case 104:		// h
 				opts.MH = !opts.MH
 				fmt.Printf("cmd: h - mh: %t\n",opts.MH)
+			default:
+				fmt.Printf("unk: %d\n",ascii)
 			}
 //			fmt.Printf("ascii: %d\n",ascii)
 

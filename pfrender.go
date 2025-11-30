@@ -905,7 +905,7 @@ if false {
 // Six - end of tile dumper
 }
 // Six - maze dumper
-if true {
+if opts.Verbose {
 	fmt.Printf("maze: %d - 0x%X   ", mazenum, mazenum)
 	if G1 == 0 {
 		fmt.Printf("Gauntlet II\n")
