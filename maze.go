@@ -82,17 +82,19 @@ func domaze(arg string) {
 		noact := false
 // input new maze #
 		anum := -1
+		var ascii byte
 
 		for {
 
 		if !noact {
 // redo maze #, colors, walls, rotates, etc
-			if anum >= 0 && anum < 117 || anum >= 229376 && anum < 262145 {
-				fmt.Printf("new maze: %d\n",anum)
+			if (anum >= 0 && anum < 117 || anum >= 229376 && anum < 262145) && ascii == 97 {
+				fmt.Printf("\nnew maze: %d\n",anum)
 				mazeNum = anum
 				anum = -1
-			} else { anum = -1 }
-fmt.Printf("maze: %d\n",mazeNum)
+// clear these to load new maze
+				Ovwallpat = -1
+			}
 			maze = mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
 
 // manual mirror, flip
@@ -192,7 +194,7 @@ fmt.Printf("maze: %d\n",mazeNum)
 // key tester
 			fmt.Printf("Command (q, fFgG, wWeE, rRt, hm, #a): ")
 			input, _ := consoleReader.ReadByte()
-			ascii := input
+			ascii = input
 // ESC = 27 and q = 113
 			if ascii == 27 || ascii == 113 {
 				fmt.Printf("Exiting...\n")
@@ -255,19 +257,23 @@ fmt.Printf("maze: %d\n",mazeNum)
 				fmt.Printf("cmd: h - mh: %t\n",opts.MH)
 			case 97:		// a
 				noact = false
+				Ovwallpat = -1
 			default:
-				fmt.Printf("unk: %d\n",ascii)
+				if ascii < 48 || ascii > 57 { fmt.Printf("unk: %d\n",ascii) }
+				anum = -1
 			}
 			if ascii > 47 && ascii < 58 {
 				noact = true
+fmt.Printf("anum: %d\n",anum)
 				bascii, _ := strconv.Atoi(string(ascii))
 				if anum < 0 {
 					anum = bascii
 				} else {
 					anum = (anum * 10) + bascii
 				}
+fmt.Printf("anum: %d\n",anum)
 			}
-//			fmt.Printf("ascii: %d\n",ascii)
+//fmt.Printf("ascii: %d\n",ascii)
 
 		}
 	}
