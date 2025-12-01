@@ -73,7 +73,7 @@ if opts.Verbose { fmt.Printf("Maze read from: 0x%06x - %d\n", addr, addr) }
 
 func slapsticMazeGetRealAddr(mazenum int) int {
 	bank := slapsticMazeGetBank(mazenum)
-	addr := slapsticReadMazeOffset(mazenum) + (0x2000 * bank)
+	addr := slapsticReadMazeOffset(mazenum,0xc) + (0x2000 * bank)
 
 if opts.Verbose { fmt.Printf("Maze real addr: 0x%06x, bank %d, boff: 0x%04x\n", addr, bank, 0x2000 * bank) }
 	return addr
@@ -94,14 +94,16 @@ func slapsticMazeGetBank(mazenum int) int {
 	return bi
 }
 
-func slapsticReadMazeOffset(mazenum int) int {
+func slapsticReadMazeOffset(mazenum int, x int) int {
 
-	buf := slapsticReadBytes(0x03800c+(4*mazenum), 4, mazenum)
+// TEST restore - ctrl -z to this
+	buf := slapsticReadBytes(0x038000+x+(4*mazenum), 4, mazenum)
 	mazeoffset := binary.BigEndian.Uint32(buf)
 
 if opts.Verbose { fmt.Printf("Offset for maze %d: 0x%06x\n", mazenum, mazeoffset)
 				  fmt.Printf("big endian buf: %l\n", buf) }
 // TEST remove
+fmt.Printf("buf: %X\n",buf)
 fmt.Printf("Offset for maze %d: 0x%06x\n", mazenum, mazeoffset)
 fmt.Printf("big endian buf: %l\n\n", buf)
 
@@ -115,6 +117,10 @@ func slapsticReadBytes(offset int, count int, mazn int) []byte {
 	}
 	buf := romSplitRead(slapsticRoms, offset, count)
 	if mazn > 0x037FFF {
+		buf = romSplitRead(slapsticRomsG1, offset, count)
+	}
+// TEST remove
+	if mazn > 0 {
 		buf = romSplitRead(slapsticRomsG1, offset, count)
 	}
 
