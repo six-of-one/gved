@@ -103,8 +103,12 @@ func slapsticReadMazeOffset(mazenum int, x int) int {
 if opts.Verbose { fmt.Printf("Offset for maze %d: 0x%06x\n", mazenum, mazeoffset)
 				  fmt.Printf("big endian buf: %l\n", buf) }
 // TEST remove
+if mazenum >= 30 { mazeoffset += 0x2000 }
+if mazenum >= 51 { mazeoffset += 0x2000 }
+if mazenum >= 72 { mazeoffset += 0x2000 }
+//if mazeoffset == 0x38000 { fmt.Printf("bank+ at: %d\n",mazenum) }
 fmt.Printf("buf: %X\n",buf)
-fmt.Printf("Offset for maze %d: 0x%06x\n", mazenum, mazeoffset)
+fmt.Printf("Offset for maze %d: %d - 0x%5X\n", mazenum, mazeoffset+3, mazeoffset+3)
 fmt.Printf("big endian buf: %l\n\n", buf)
 
 	return int(mazeoffset)
