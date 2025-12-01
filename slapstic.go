@@ -99,8 +99,11 @@ func slapsticReadMazeOffset(mazenum int) int {
 	buf := slapsticReadBytes(0x03800c+(4*mazenum), 4, mazenum)
 	mazeoffset := binary.BigEndian.Uint32(buf)
 
-if opts.Verbose { fmt.Printf("Offset for maze: 0x%06x\n", mazeoffset)
+if opts.Verbose { fmt.Printf("Offset for maze %d: 0x%06x\n", mazenum, mazeoffset)
 				  fmt.Printf("big endian buf: %l\n", buf) }
+// TEST remove
+fmt.Printf("Offset for maze %d: 0x%06x\n", mazenum, mazeoffset)
+fmt.Printf("big endian buf: %l\n\n", buf)
 
 	return int(mazeoffset)
 }

@@ -198,6 +198,7 @@ func domaze(arg string) {
 // ESC = 27 and q = 113
 			if ascii == 27 || ascii == 113 {
 				fmt.Printf("Exiting...\n")
+				for i := 0; i < 117; i++ { slapsticReadMazeOffset(i) }
 				os.Exit(0)
 			}
 			noact = false
