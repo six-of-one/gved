@@ -88,6 +88,7 @@ func domaze(arg string) {
 				if anum < 117 {
 					fmt.Printf("\nnew maze: %d\n",anum)
 					mazeNum = anum
+					Aov = 0
 				} else {
 					fmt.Printf("\nnew addr: %d\n",anum)
 					Aov = anum

@@ -67,7 +67,7 @@ var slapsticBankInfo = []int{
 
 // manual detect of bank # add value to come up with correct maze load addr on each maze num
 var slapsticBankInfoG1 = []int{
-	0,
+
 	0, 0, 0, 0, 0, 0, 0, 0,												//	1, 2, 3, 4, 5, 6, 7, 8,
 	0, 0, 0, 0, 0, 0, 0, 0,												//	9, 10, 11, 12, 13, 14, 15, 16,
 	0, 0, 0, 0, 0, 0, 0, 0,												//	17, 18, 19, 20, 21, 22, 23, 24,
@@ -83,7 +83,7 @@ var slapsticBankInfoG1 = []int{
 	0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x6000, 0x6000,		//	88, 89, 90, 91, 92, 93, 94, 95,
 	0x6000, 0x6000, 0x6000, 0x6000, 0x4000, 0x4000, 0x4000, 0x4000,		//	96, 97, 98, 99, 100, 101, 102, 103,
 	0x4000, 0x6000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000,		//	104, 105, 106, 107, 108, 109, 110, 111,
-	0x4000, 0x4000, 0x4000, 0,											//	112, 113, 114,
+	0x4000, 0x4000, 0x4000, 0, 0, 0, 0,								//	112, 113, 114,
 }
 
 const (
@@ -125,7 +125,7 @@ func slapsticMazeGetRealAddr(mazenum int) int {
 		bank = bankof / 0x2000
 	}
 
-if opts.Verbose { fmt.Printf("Maze real addr: %d - 0x%06x, bank %d, boff: 0x%04x\n", addr, addr, bank, 0x2000 * bank) }
+if opts.Verbose { fmt.Printf("G:%d Maze real addr: %d - 0x%06X, bank %d, boff: 0x%04x\n", opts.Gtp, addr, addr, bank, 0x2000 * bank) }
 	return addr
 }
 
@@ -150,7 +150,6 @@ func slapsticMazeGetBank(mazenum int) int {
 
 func slapsticReadMazeOffset(mazenum int, x int) int {
 
-// TEST restore - ctrl -z to this
 	buf := slapsticReadBytes(0x038000+x+(4*mazenum), 4)
 	mazeoffset := binary.BigEndian.Uint32(buf)
 
