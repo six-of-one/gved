@@ -14,7 +14,9 @@ var opts struct {
 	MRP		bool   `long:"mrp" description:"maze: rotate +90"`
 	MRM		bool   `long:"mrm" description:"maze: rotate -90"`
 // cli option to force an address (originally for g2 force)
-	Addr	int    `long:"ad" default:"0" base:"16" description:"maze address x38000 to x3FFFF (in hex)"`
+	Addr	int    `long:"ad" default:"0" base:"16" description:"load maze rom address x38000 to x3FFFF (in hex)"`
+// cli option to use rev 14 maze roms (final release, differs from identical maze roms in r1 - r9)
+	R14		bool   `long:"r14" description:"use gauntlet rev14 maze rom"`
 // select gauntlet 1 or 2 to process - default is 2
 	Gtp 	int    `short:"g" long:"gtp" default:"2" base:"10" description:"Gauntlet to process, 1 or 2"`
 // interactive mode for maze display, select wall & floors, rotates & mirrors, load new mazes, test addresses

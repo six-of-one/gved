@@ -28,12 +28,17 @@ d06c71b1cf55cd3f637c94f3570b5450  ROMs-g1/136037-205.10a
 -- all g1 roms 105.10a / 106.10b are the same
 */
 var slapsticRomsG1 = []string{
-//	"ROMs-g1/gauntletr7/136037-105.10a",
-//	"ROMs-g1/gauntletr7/136037-106.10b",
+
+	"ROMs-g1/gauntletr7/136037-105.10a",
+	"ROMs-g1/gauntletr7/136037-106.10b",
+
+}
+// seperate out g1 rev 14 roms, selectable by --r14
+var slapsticRomsG1fr = []string{
+
 	"ROMs-g1/136037-205.10a",
 	"ROMs-g1/136037-206.10b",
 }
-
 var slapsticBankInfo = []int{
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x54, 0x55, 0x55, 0x55, 0x55, 0x55, 0x55, 0x95,
@@ -65,7 +70,7 @@ var slapsticBankInfo = []int{
 255066 - 254852 =  214					20D6
 */
 
-// manual detect of bank # add value to come up with correct maze load addr on each maze num
+// manual build of bank # add value to come up with correct maze load addr on each maze num
 var slapsticBankInfoG1 = []int{
 																		// recorded from testing, ea. val is -1
 	0, 0, 0, 0, 0, 0, 0, 0,												//	1, 2, 3, 4, 5, 6, 7, 8,
@@ -84,6 +89,7 @@ var slapsticBankInfoG1 = []int{
 	0x6000, 0x6000, 0x6000, 0x6000, 0x4000, 0x4000, 0x4000, 0x4000,		//	96, 97, 98, 99, 100, 101, 102, 103,
 	0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000,		//	104, 105, 106, 107, 108, 109, 110, 111,
 	0x4000, 0x4000, 0x4000,												//	112, 113, 114,
+
 // g1 address read direct for demo maze, score table maze, treasure rooms - these have no big endian store
 	0x3F2F8, 0x3F357, 0x3F3DD, 0x3F479, 0x3F504, 0x3F654,				//	115, 116, 117, 118, 119, 120,
 	0x3F6E6, 0x3F813, 0x3F940, 0x3FA22, 0x3FB20, 0x3FBD8, 0x3FCBD,		//	121, 122, 123, 124, 125, 126, 127,
@@ -179,7 +185,11 @@ func slapsticReadBytes(offset int, count int) []byte {
 	}
 	buf := romSplitRead(slapsticRoms, offset, count)
 	if G1 {
-		buf = romSplitRead(slapsticRomsG1, offset, count)
+		if opts.R14 {
+			buf = romSplitRead(slapsticRomsG1fr, offset, count)
+		} else {
+			buf = romSplitRead(slapsticRomsG1, offset, count)
+		}
 	}
 
 	return buf
