@@ -1,4 +1,10 @@
-gex
+gexmap
 push
 ROMs
+ROMs-g1
+tiledump
+mazeredmps
 output.png
+.walls
+.tmp
+.szf
