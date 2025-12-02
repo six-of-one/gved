@@ -36,11 +36,6 @@ func domaze(arg string) {
 	var mazeMeta = 0
 	var maxmaze = 116
 
-	fmt.Printf("Maze number: %d", mazeNum)
-	if Aov > 0 {
-		fmt.Printf(", address: 0x%X ", Aov)
-	}
-	fmt.Printf("\n")
 // g1 has more mazes, but treasure rooms can only spec from address, for now
 	if G1 { maxmaze = 113 }
 
@@ -57,6 +52,12 @@ func domaze(arg string) {
 			mazeMeta = 1
 		}
 	}
+
+	fmt.Printf("Maze number: %d", mazeNum)
+	if Aov > 0 {
+		fmt.Printf(", address: 0x%X ", Aov)
+	}
+	fmt.Printf("\n")
 
 // set 1 override to -1 to set in decoder
 	Ovwallpat = -1
