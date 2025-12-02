@@ -114,7 +114,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	copyedges(maze)
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
 
-	if mazenum < 0xFFFF {
+	if G2 {
 // g2 checks
 	for y := 0; y < 32; y++ {
 		for x := 0; x < 32; x++ {
@@ -178,7 +178,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				panic(err)
 				}
 // g2 decodes
-			if mazenum < 0xFFFF {
+			if G2 {
 
 			// We should do better
 			switch whatis(maze, x, y) {
@@ -394,7 +394,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			}
 			}
 // g1 decodes
-			if mazenum > 0x37FFF {
+			if G1 {
 // gen type op - put a letter on up left corner of every gen to indicate monsters
 //		brw G - grunts
 //		red D - demons

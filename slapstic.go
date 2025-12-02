@@ -155,11 +155,11 @@ func slapsticReadMazeOffset(mazenum int, x int) int {
 	mazeoffset := binary.BigEndian.Uint32(buf)
 
 if opts.Verbose {
-	if mazeoffset > 0x37fff && mazeoffset < 0x40000 {
+//	if mazeoffset > 0x37fff && mazeoffset < 0x40000 {
 		fmt.Printf("Offset for maze %d: 0x%06x\n", mazenum, mazeoffset)
 		fmt.Printf("big endian buf: %l\n", buf)
-	}}
-
+//	}}
+}
 /*
 fmt.Printf("buf: %X, ",buf)
 fmt.Printf("bank: %X\n",bankof)

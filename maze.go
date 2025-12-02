@@ -85,8 +85,13 @@ func domaze(arg string) {
 		if !noact {
 // redo maze #, colors, walls, rotates, etc
 			if (anum >= 0 && anum < 117 || anum >= 229376 && anum < 262145) && ascii == 97 {
-				fmt.Printf("\nnew maze: %d\n",anum)
-				mazeNum = anum
+				if anum < 117 {
+					fmt.Printf("\nnew maze: %d\n",anum)
+					mazeNum = anum
+				} else {
+					fmt.Printf("\nnew addr: %d\n",anum)
+					Aov = anum
+				}
 				anum = -1
 // clear these to load new maze
 				Ovwallpat = -1
