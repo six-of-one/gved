@@ -134,7 +134,7 @@ func vexpand(maze *Maze, location int, t int, count int) int {
 
 // Outoput is maze[y][x]
 // added g1 / g2 flagger
-func mazeDecompress(compressed []int, metaonly bool, g1g2 int) *Maze {
+func mazeDecompress(compressed []int, metaonly bool) *Maze {
 	rand.Seed(5)
 	//  var m [32][32]int
 	var maze = &Maze{}
@@ -187,16 +187,10 @@ if opts.Verbose {
 
 // g1 likely has nothing like g2 stuff, and might not use flags at all
 	flagsv := maze.flags // save so we can print in meta
-	if g1g2 > 0x037FFF {
+	if G1 {
 		maze.flags = 0 //maze.flags & 0x3f;
 // testing - this could be g1 codes, hard to tell with out the g1 gfx roms loaded
 		if maze.wallpattern > 5 { maze.wallpattern = rand.Intn(4) }
-/*
-wall and floor patterns seem correct on g1, but not colors
-		maze.wallpattern = 0
-		maze.floorpattern = 8
-		maze.wallcolor = 9
-		maze.floorcolor = 1 */
 	}
 
 	if metaonly {

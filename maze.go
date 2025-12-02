@@ -61,7 +61,7 @@ func domaze(arg string) {
 // set 1 override to -1 to set in decoder
 	Ovwallpat = -1
 
-	maze := mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
+	maze := mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0)
 	xform := make(map[xy]int)
 
 	if opts.Verbose || mazeMeta > 0 {
@@ -91,7 +91,9 @@ func domaze(arg string) {
 // clear these to load new maze
 				Ovwallpat = -1
 			}
-			maze = mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0, mazeNum)
+			if Ovwallpat == -1 {
+				maze = mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0)
+			}
 
 // manual mirror, flip
 	if opts.MH || opts.MV || opts.MRP || opts.MRM {
