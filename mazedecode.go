@@ -147,7 +147,7 @@ if opts.Verbose {
 	fmt.Printf("compresssed: %d\n", maze.encodedbytes)
 	y := 0
 	for y < maze.encodedbytes {
-		for x := 0; x <= 16; x++ {
+		for x := 0; x < 16; x++ {
 
 			if y < maze.encodedbytes {
 				fmt.Printf(" %02X", compressed[y])
@@ -222,7 +222,7 @@ wall and floor patterns seem correct on g1, but not colors
 	compressed = compressed[11:] // pointer to where we are in the input stream
 
 	for location < 1024 {
-//fmt.Printf("input remaining: %d, next byte 0x%02x, output remaining: %d\n", len(compressed), compressed[0], 1024-location)
+fmt.Printf("input remaining: %d, next byte 0x%02x, output remaining: %d\n", len(compressed), compressed[0], 1024-location)
 		if compressed[0] == 0 {
 			fmt.Printf("WARNING: Read end of maze datastream before maze full.\n")
 			break
