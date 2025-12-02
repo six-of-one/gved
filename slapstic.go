@@ -41,6 +41,26 @@ var slapsticBankInfo = []int{
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x03, 0xFC, 0x0E,
 }
 
+var slapsticBankInfoG1 = []uint32{
+	0,
+	0, 0, 0, 0, 0, 0, 0, 0,												//	1, 2, 3, 4, 5, 6, 7, 8,
+	0, 0, 0, 0, 0, 0, 0, 0,												//	9, 10, 11, 12, 13, 14, 15, 16,
+	0, 0, 0, 0, 0, 0, 0, 0,												//	17, 18, 19, 20, 21, 22, 23, 24,
+	0, 0, 0, 0, 0,														//	25, 26, 27, 28, 29,
+	0x2000, 0x2000, 0x2000, 0x2000, 0x2000, 0x2000, 0x2000, 0x2000,		//	30, 31, 32, 33, 34, 35, 36, 37,
+	0x2000, 0x2000, 0x2000, 0x2000, 0x2000, 0x2000, 0x2000, 0x2000,		//	38, 39, 40, 41, 42, 43, 44, 45,
+	0x2000, 0x2000, 0x2000, 0x2000, 0x2000,								//	46, 47, 48, 49, 50,
+	0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000,		//	51, 52, 53, 54, 55, 56, 57, 58,
+	0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000,		//	59, 60, 61, 62, 63, 64, 65, 66,
+	0x4000, 0x4000, 0x4000, 0x4000, 0x4000,								//	67, 68, 69, 70, 71,
+	0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000,		//	72, 73, 74, 75, 76, 77, 78, 79,
+	0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000,		//	80, 81, 82, 83, 84, 85, 86, 87,
+	0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000,		//	88, 89, 90, 91, 92, 93, 94, 95,
+	0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000,		//	96, 97, 98, 99, 100, 101, 102, 103,
+	0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000, 0x6000,		//	104, 105, 106, 107, 108, 109, 110, 111,
+	0x6000, 0x6000, 0x6000, 0,											//	112, 113, 114,
+}
+
 const (
 	SLAPSTIC_START = 0x038000
 )
@@ -103,12 +123,12 @@ func slapsticReadMazeOffset(mazenum int, x int) int {
 if opts.Verbose { fmt.Printf("Offset for maze %d: 0x%06x\n", mazenum, mazeoffset)
 				  fmt.Printf("big endian buf: %l\n", buf) }
 // TEST remove
-if mazenum >= 30 { mazeoffset += 0x2000 }
-if mazenum >= 51 { mazeoffset += 0x2000 }
-if mazenum >= 72 { mazeoffset += 0x2000 }
+bankof := slapsticBankInfoG1[mazenum]
+
 //if mazeoffset == 0x38000 { fmt.Printf("bank+ at: %d\n",mazenum) }
 fmt.Printf("buf: %X\n",buf)
-fmt.Printf("Offset for maze %d: %d - 0x%5X\n", mazenum, mazeoffset+3, mazeoffset+3)
+fmt.Printf("bank: %X,\n",bankof)
+fmt.Printf("Offset for maze %d: %d - 0x%5X\n", mazenum, bankof + mazeoffset+3, bankof + mazeoffset+3)
 fmt.Printf("big endian buf: %l\n\n", buf)
 
 	return int(mazeoffset)
