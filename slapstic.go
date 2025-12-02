@@ -125,7 +125,7 @@ func slapsticMazeGetRealAddr(mazenum int) int {
 		bank = bankof / 0x2000
 	}
 
-if opts.Verbose { fmt.Printf("Maze real addr: 0x%06x, bank %d, boff: 0x%04x\n", addr, bank, 0x2000 * bank) }
+if opts.Verbose { fmt.Printf("Maze real addr: %d - 0x%06x, bank %d, boff: 0x%04x\n", addr, addr, bank, 0x2000 * bank) }
 	return addr
 }
 
@@ -155,17 +155,11 @@ func slapsticReadMazeOffset(mazenum int, x int) int {
 	mazeoffset := binary.BigEndian.Uint32(buf)
 
 if opts.Verbose {
-//	if mazeoffset > 0x37fff && mazeoffset < 0x40000 {
-		fmt.Printf("Offset for maze %d: 0x%06x\n", mazenum, mazeoffset)
+	if mazeoffset > 0x37fff && mazeoffset < 0x40000 {
+		fmt.Printf("Offset for maze %d: %d - 0x%06x\n", mazenum, mazeoffset, mazeoffset)
 		fmt.Printf("big endian buf: %l\n", buf)
-//	}}
-}
-/*
-fmt.Printf("buf: %X, ",buf)
-fmt.Printf("bank: %X\n",bankof)
-fmt.Printf("Offset for maze %d: %d - 0x%5X\n", mazenum, bankof + mazeoffset+3, bankof + mazeoffset+3)
-fmt.Printf("big endian buf: %l\n\n", buf)
-*/
+	}}
+
 	return int(mazeoffset)
 }
 
