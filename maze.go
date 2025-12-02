@@ -204,7 +204,7 @@ func domaze(arg string) {
 			w.SetTitle(til)
 
 
-			fmt.Printf("Command (q, fFgG, wWeE, rRt, hm, #a): ")
+			fmt.Printf("Command (?, q, fFgG, wWeE, rRt, hm, 124, #a): ")
 		}
 // key tester
 			input, _ := consoleReader.ReadByte()
@@ -277,6 +277,14 @@ func domaze(arg string) {
 			case 97:		// a
 				noact = false
 				Ovwallpat = -1
+			case 63:
+				fmt.Printf("single letter commands\n\n? - this list\nq - quit program\nf - floor pattern+\nF - floor pattern-\n")
+				fmt.Printf("g - floor color+\nG - floor color-\nw - wall pattern+\nW - wall pattern-\n")
+				fmt.Printf("e - wall color+\nE - wall color-\nr - rotate maze +90 deg\nR - rotate maze -90 deg\n")
+				fmt.Printf("t - turn off rotate\nh - mirror maze horizontal toggle\nm - mirror maze vertical toggle\n")
+				fmt.Printf("1 - gauntlet mazes r1 - r9\n4 - use gauntlet rev 14\n2 - gauntlet 2 mazes\n")
+				fmt.Printf("Command (?, q, fFgG, wWeE, rRt, hm, 124, #a): ")
+				noact = true
 			default:
 				if ascii < 48 || ascii > 57 { fmt.Printf("unk: %d\n",ascii) }
 			}
