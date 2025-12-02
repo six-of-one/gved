@@ -66,14 +66,21 @@ func domaze(arg string) {
 
 	if opts.Verbose || mazeMeta > 0 {
 		mazeMetaPrint(maze)
+		if mazeMeta > 0 { os.Exit(0) }
 	}
+
+	if !opts.Intr {
+		genpfimage(maze, mazeNum)
+		os.Exit(0)
+	}
+
 // setup kby read
 	consoleReader := bufio.NewReaderSize(os.Stdin, 1)
 // setup window
     a := app.New()
     w := a.NewWindow("Images")
 
-	if mazeMeta == 0 {
+// interactive loop here - lets user tweak vars settings & load new mazes
 // user controls loop for tweaking
 		noact := false
 // input new maze #
@@ -284,5 +291,4 @@ func domaze(arg string) {
 //fmt.Printf("ascii: %d\n",ascii)
 
 		}
-	}
 }

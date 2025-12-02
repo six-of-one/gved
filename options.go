@@ -17,6 +17,9 @@ var opts struct {
 	Addr	int    `long:"ad" default:"0" base:"16" description:"maze address x38000 to x3FFFF (in hex)"`
 // select gauntlet 1 or 2 to process - default is 2
 	Gtp 	int    `short:"g" long:"gtp" default:"2" base:"10" description:"Gauntlet to process, 1 or 2"`
+// interactive mode for maze display, select wall & floors, rotates & mirrors, load new mazes, test addresses
+// only with maze{n}, if -i not given, prog just exits with maze in output.png
+	Intr	bool   `short:"i" description:"maze interactive cli mode"`
 // orig options
 	Animate bool   `short:"a" long:"animate" description:"Animate monster"`
 	PalType string `long:"pt" default:"base" description:"Palette type"`

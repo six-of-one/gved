@@ -28,10 +28,10 @@ d06c71b1cf55cd3f637c94f3570b5450  ROMs-g1/136037-205.10a
 -- all g1 roms 105.10a / 106.10b are the same
 */
 var slapsticRomsG1 = []string{
-	"ROMs-g1/gauntletr7/136037-105.10a",
-	"ROMs-g1/gauntletr7/136037-106.10b",
-//	"ROMs-g1/136037-205.10a",
-//	"ROMs-g1/136037-206.10b",
+//	"ROMs-g1/gauntletr7/136037-105.10a",
+//	"ROMs-g1/gauntletr7/136037-106.10b",
+	"ROMs-g1/136037-205.10a",
+	"ROMs-g1/136037-206.10b",
 }
 
 var slapsticBankInfo = []int{
