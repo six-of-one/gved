@@ -8,11 +8,15 @@ import (
 )
 
 var opts struct {
-	MV bool   `long:"mv" description:"maze: mirror vertical"`
-	MH bool   `long:"mh" description:"maze: mirror horizontal ( --mv --mh will rotate 180 )"`
-	MRP bool  `long:"mrp" description:"maze: rotate +90"`
-	MRM bool  `long:"mrm" description:"maze: rotate -90"`
+// cli options to mirror & rotate mazes
+	MV		bool   `long:"mv" description:"maze: mirror vertical"`
+	MH		bool   `long:"mh" description:"maze: mirror horizontal ( --mv --mh will rotate 180 )"`
+	MRP		bool   `long:"mrp" description:"maze: rotate +90"`
+	MRM		bool   `long:"mrm" description:"maze: rotate -90"`
+// cli option to force an address (was org, for g2 force)
 	AddrG2  int    `long:"ad" default:"0" base:"10" description:"G2 address override (in dec)"`
+// select gauntlet 1 or 2 to process - default is 2
+	Gtp 	int    `short:"g" long:"gtp" default:"2" base:"10" description:"Gauntlet to process, 1 or 2 (in dec)"`
 	Animate bool   `short:"a" long:"animate" description:"Animate monster"`
 	PalType string `long:"pt" default:"base" description:"Palette type"`
 	PalNum  int    `long:"pn" default:"0" base:"16" description:"Palette number (in hex)"`
