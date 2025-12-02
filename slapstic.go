@@ -83,7 +83,10 @@ var slapsticBankInfoG1 = []int{
 	0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x6000, 0x6000,		//	88, 89, 90, 91, 92, 93, 94, 95,
 	0x6000, 0x6000, 0x6000, 0x6000, 0x4000, 0x4000, 0x4000, 0x4000,		//	96, 97, 98, 99, 100, 101, 102, 103,
 	0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000,		//	104, 105, 106, 107, 108, 109, 110, 111,
-	0x4000, 0x4000, 0x4000, 0, 0, 0, 0,									//	112, 113, 114,
+	0x4000, 0x4000, 0x4000,												//	112, 113, 114,
+// g1 address read direct for demo maze, score table maze, treasure rooms - these have no big endian store
+	0x3F2F8, 0x3F357, 0x3F3DD, 0x3F479, 0x3F504, 0x3F654,				//	115, 116, 117, 118, 119, 120,
+	0x3F6E6, 0x3F813, 0x3F940, 0x3FA22, 0x3FB20, 0x3FBD8, 0x3FCBD,		//	121, 122, 123, 124, 125, 126, 127,
 }
 
 const (
@@ -121,8 +124,12 @@ func slapsticMazeGetRealAddr(mazenum int) int {
 	if G1 {
 // note: manual load of g1 banks, need proper algorithm for bank data with g1 slaps
 		bankof := slapsticBankInfoG1[mazenum]
-		addr = slapsticReadMazeOffset(mazenum,0x32) + bankof + 3
-		bank = bankof / 0x2000
+		if mazenum < 114 {
+			addr = slapsticReadMazeOffset(mazenum,0x32) + bankof + 3
+			bank = bankof / 0x2000
+		} else {
+			addr = slapsticBankInfoG1[mazenum]
+		}
 	}
 
 if opts.Verbose { fmt.Printf("G:%d Maze real addr: %d - 0x%06X, bank %d, boff: 0x%04x\n", opts.Gtp, addr, addr, bank, 0x2000 * bank) }
@@ -130,6 +137,9 @@ if opts.Verbose { fmt.Printf("G:%d Maze real addr: %d - 0x%06X, bank %d, boff: 0
 }
 
 func slapsticMazeGetBank(mazenum int) int {
+
+	if G1 { return 0 }	// g1 bank info not available here
+
 	if mazenum < 0 || mazenum > 116 {
 		panic("Invalid maze number requested (must be 0 <= x <= 116")
 	}

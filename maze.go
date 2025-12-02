@@ -37,7 +37,7 @@ func domaze(arg string) {
 	var maxmaze = 116
 
 // g1 has more mazes, but treasure rooms can only spec from address, for now
-	if G1 { maxmaze = 113 }
+	if G1 { maxmaze = 127 }
 
 	for _, ss := range split {
 		switch {
@@ -92,8 +92,8 @@ func domaze(arg string) {
 
 		if !noact {
 // redo maze #, colors, walls, rotates, etc
-			if (anum >= 0 && anum < 117 || anum >= 229376 && anum < 262145) && ascii == 97 {
-				if anum < 117 {
+			if (anum >= 0 && anum < 127 || anum >= 229376 && anum < 262145) && ascii == 97 {
+				if anum < 127 {
 					fmt.Printf("\nnew maze: %d\n",anum)
 					mazeNum = anum
 					Aov = 0
