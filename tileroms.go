@@ -146,7 +146,7 @@ func getromset(tilenum int) (int, []string) {
 	}
 
 if false {
-fmt.Printf("G: 0x%X  tn: 0x%x  tile: 0x%x   romset: %s\n", G1, tilenum, actualtile, rombk)  // this doesnt show which romfile used
+fmt.Printf("G:%d  tn: 0x%x  tile: 0x%x   romset: %s\n", opts.Gtp, tilenum, actualtile, rombk)
 }
 	return actualtile, rombk
 }

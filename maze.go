@@ -41,7 +41,7 @@ func domaze(arg string) {
 		fmt.Printf(", address: 0x%X ", Aov)
 	}
 	fmt.Printf("\n")
-// g1 has more mazes, but treasure rooms can only spec from address
+// g1 has more mazes, but treasure rooms can only spec from address, for now
 	if G1 { maxmaze = 113 }
 
 	for _, ss := range split {

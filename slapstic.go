@@ -94,11 +94,10 @@ const (
 func slapsticReadMaze(mazenum int) []int {
 
 	addr := slapsticMazeGetRealAddr(mazenum)
-// --ad={dec address} overrides gauntlet 2 maze read address here
-		if G2 != 0 { addr = G2 }
-	} else {
-		addr = mazenum
-	}
+
+// --ad={hex address} overrides maze read address here
+	if Aov > 0 { addr = Aov }
+
 if opts.Verbose { fmt.Printf("Maze read from: 0x%06x - %d\n", addr, addr) }
 
 	b := slapsticReadBytes(addr, 512)
