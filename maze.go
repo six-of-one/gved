@@ -204,7 +204,7 @@ func domaze(arg string) {
 			w.SetTitle(til)
 
 
-			fmt.Printf("Command (?, q, fFgG, wWeE, rRt, hm, 124, #a): ")
+			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, il, u, v, #a): ",opts.Gtp)
 		}
 // key tester
 			input, _ := consoleReader.ReadByte()
@@ -277,13 +277,39 @@ func domaze(arg string) {
 			case 97:		// a
 				noact = false
 				Ovwallpat = -1
+			case 105:		// i
+				opts.Gtp = 1
+				G1 = true
+				G2 = false
+			case 108:		// l
+				opts.R14 = !opts.R14
+			case 117:		// u
+				opts.Gtp = 2
+				G1 = false
+				G2 = true
+			case 118:		// v
+				lx := 116
+				if G1 { lx = 126 }
+				fmt.Printf("\n valid maze address for Gauntlet %d\nmaze   dec -    hex\n",opts.Gtp)
+				for x := 0; x <= lx;x ++ {
+					ad := slapsticMazeGetRealAddr(x)
+					fmt.Printf("%03d:%d - x%X  ",x,ad,ad)
+					if (x + 1) % 7 == 0 { fmt.Printf("\n") }
+				}
+				fmt.Printf("\n")
 			case 63:
 				fmt.Printf("single letter commands\n\n? - this list\nq - quit program\nf - floor pattern+\nF - floor pattern-\n")
 				fmt.Printf("g - floor color+\nG - floor color-\nw - wall pattern+\nW - wall pattern-\n")
 				fmt.Printf("e - wall color+\nE - wall color-\nr - rotate maze +90 deg\nR - rotate maze -90 deg\n")
 				fmt.Printf("t - turn off rotate\nh - mirror maze horizontal toggle\nm - mirror maze vertical toggle\n")
-				fmt.Printf("1 - gauntlet mazes r1 - r9\n4 - use gauntlet rev 14\n2 - gauntlet 2 mazes\n")
-				fmt.Printf("Command (?, q, fFgG, wWeE, rRt, hm, 124, #a): ")
+				fmt.Printf("i - gauntlet mazes r1 - r9\nl - use gauntlet rev 14\nu - gauntlet 2 mazes\n")
+				fmt.Printf("{n}a - load maze 0 - 126 g1, 0 - 116 g2, or address 229376 - 262143\n")
+				fmt.Printf("v - valid address list                      * note some address will cause crash out\n")
+				fmt.Printf("    commands can be chained - i.e. i5a will switch to g1 and load maze 5\n")
+				fmt.Printf("G%d ",opts.Gtp)
+				if opts.R14 { fmt.Printf("(r14)")
+				} else { fmt.Printf("(r1-9)") }
+				fmt.Printf(" Command (?, q, fFgG, wWeE, rRt, hm, il, u, v, #a): ")
 				noact = true
 			default:
 				if ascii < 48 || ascii > 57 { fmt.Printf("unk: %d\n",ascii) }

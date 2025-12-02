@@ -66,7 +66,10 @@ func main() {
 		fmt.Printf("Gauntlet II\n")
 		G2 = true
 	} else {
-		fmt.Printf("Gauntlet\n")
+		fmt.Printf("Gauntlet ")
+		if opts.R14 { fmt.Printf("(rev 14)")
+		} else { fmt.Printf("(rev 1 - 9)") }
+		fmt.Printf("\n")
 		G1 = true
 	}
 
