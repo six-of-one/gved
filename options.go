@@ -13,10 +13,11 @@ var opts struct {
 	MH		bool   `long:"mh" description:"maze: mirror horizontal ( --mv --mh will rotate 180 )"`
 	MRP		bool   `long:"mrp" description:"maze: rotate +90"`
 	MRM		bool   `long:"mrm" description:"maze: rotate -90"`
-// cli option to force an address (was org, for g2 force)
-	AddrG2  int    `long:"ad" default:"0" base:"10" description:"G2 address override (in dec)"`
+// cli option to force an address (originally for g2 force)
+	Addr	int    `long:"ad" default:"0" base:"16" description:"maze address x38000 to x3FFFF (in hex)"`
 // select gauntlet 1 or 2 to process - default is 2
-	Gtp 	int    `short:"g" long:"gtp" default:"2" base:"10" description:"Gauntlet to process, 1 or 2 (in dec)"`
+	Gtp 	int    `short:"g" long:"gtp" default:"2" base:"10" description:"Gauntlet to process, 1 or 2"`
+// orig options
 	Animate bool   `short:"a" long:"animate" description:"Animate monster"`
 	PalType string `long:"pt" default:"base" description:"Palette type"`
 	PalNum  int    `long:"pn" default:"0" base:"16" description:"Palette number (in hex)"`

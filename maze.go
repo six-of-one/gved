@@ -34,14 +34,22 @@ func domaze(arg string) {
 
 	var mazeNum = -1
 	var mazeMeta = 0
+	var maxmaze = 116
+
+	fmt.Printf("Maze number: %d", mazeNum)
+	if Aov > 0 {
+		fmt.Printf(", address: 0x%X ", Aov)
+	}
+	fmt.Printf("\n")
+// g1 has more mazes, but treasure rooms can only spec from address
+	if G1 { maxmaze = 113 }
 
 	for _, ss := range split {
 		switch {
 		case reMazeNum.MatchString(ss):
 			m, _ := strconv.ParseInt(reMazeNum.FindStringSubmatch(ss)[1], 10, 0)
 			mazeNum = int(m)
-// Six: g2 maze num 1 - 117 or g1 start address x38000 - x3FFFF
-			if mazeNum < 0 || mazeNum > 117 && mazeNum < 229376 || mazeNum > 262144 {
+			if mazeNum < 0 || mazeNum > maxmaze {
 				panic("Invalid maze number / address specified.")
 			}
 
@@ -49,16 +57,6 @@ func domaze(arg string) {
 			mazeMeta = 1
 		}
 	}
-
-	if mazeNum < 118 {
-		fmt.Printf("Gauntlet II\n")
-		fmt.Printf("Maze number: %d\n", mazeNum)
-	} else {
-		fmt.Printf("Gauntlet\n")
-		G1 = mazeNum		// G1 mode active, testing
-		fmt.Printf("Maze address: 0x%X -- %d\n", mazeNum, mazeNum) }
-
-		G2 = opts.AddrG2
 
 // set 1 override to -1 to set in decoder
 	Ovwallpat = -1

@@ -14,8 +14,12 @@ type TileLineMerged []byte
 
 type TileData []TileLineMerged
 
-var G1 int
-var G2 int
+// indicate which maze set to decode
+var G1 bool
+var G2 bool
+// override the maze address selection by slapstic table
+// this is mostly for research, some address will crash gex
+var Aov int
 
 // for the user select demo
 var Ovwallpat int
@@ -52,10 +56,21 @@ func dotile(tile int) {
 func main() {
 	args := gexinit()
 
-// if gauntlet 1 is target, intended to be maze address in rom
-	G1 = 0
-// can override g2 address load from maze slapstic
-	G2 = 0
+// new retool - G1 is gauntlet maze, G2 is gauntlet 2 maze
+	G1 = false
+	G2 = false
+// override slapstic maze table lookup address
+	Aov = 0
+
+	if opts.Gtp == 2 {
+		fmt.Printf("Gauntlet II\n")
+		G2 = true
+	} else {
+		fmt.Printf("Gauntlet\n")
+		G1 = true
+	}
+
+	if opts.Addr > 0x37fff && opts.Addr < 0x40000 { Aov = opts.Addr }
 
 	switch runType {
 	case TypeNone:

@@ -140,7 +140,7 @@ func getromset(tilenum int) (int, []string) {
 	whichbank := tilenum / 0x800
 	actualtile := (tilenum % 0x800) + tileRomSets[whichbank].offset
 	rombk := tileRomSets[whichbank].roms
-	if G1 > 0 {
+	if G1 {
 // in g1 mode - select g1 roms, actualtile will have same value, offsets are same
 		rombk = tileRomSetsG1[whichbank].roms
 	}

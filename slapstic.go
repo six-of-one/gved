@@ -66,7 +66,7 @@ var slapsticBankInfo = []int{
 */
 
 // manual detect of bank # add value to come up with correct maze load addr on each maze num
-var slapsticBankInfoG1 = []uint32{
+var slapsticBankInfoG1 = []int{
 	0,
 	0, 0, 0, 0, 0, 0, 0, 0,												//	1, 2, 3, 4, 5, 6, 7, 8,
 	0, 0, 0, 0, 0, 0, 0, 0,												//	9, 10, 11, 12, 13, 14, 15, 16,
@@ -92,9 +92,8 @@ const (
 
 // Do this the lazy way -- read an oversized chunk, then keep what we need
 func slapsticReadMaze(mazenum int) []int {
-	addr := 0x3f354
-	if mazenum < 200 {
-		addr = slapsticMazeGetRealAddr(mazenum)
+
+	addr := slapsticMazeGetRealAddr(mazenum)
 // --ad={dec address} overrides gauntlet 2 maze read address here
 		if G2 != 0 { addr = G2 }
 	} else {
@@ -102,7 +101,7 @@ func slapsticReadMaze(mazenum int) []int {
 	}
 if opts.Verbose { fmt.Printf("Maze read from: 0x%06x - %d\n", addr, addr) }
 
-	b := slapsticReadBytes(addr, 512, mazenum)
+	b := slapsticReadBytes(addr, 512)
 
 	var intbuf []int
 	for i := 0; true; i++ {
@@ -119,6 +118,13 @@ if opts.Verbose { fmt.Printf("Maze read from: 0x%06x - %d\n", addr, addr) }
 func slapsticMazeGetRealAddr(mazenum int) int {
 	bank := slapsticMazeGetBank(mazenum)
 	addr := slapsticReadMazeOffset(mazenum,0xc) + (0x2000 * bank)
+
+	if G1 {
+// note: manual load of g1 banks, need proper algorithm for bank data with g1 slaps
+		bankof := slapsticBankInfoG1[mazenum]
+		addr = slapsticReadMazeOffset(mazenum,0x32) + bankof + 3
+		bank = bankof / 0x2000
+	}
 
 if opts.Verbose { fmt.Printf("Maze real addr: 0x%06x, bank %d, boff: 0x%04x\n", addr, bank, 0x2000 * bank) }
 	return addr
@@ -146,34 +152,28 @@ func slapsticMazeGetBank(mazenum int) int {
 func slapsticReadMazeOffset(mazenum int, x int) int {
 
 // TEST restore - ctrl -z to this
-	buf := slapsticReadBytes(0x038000+x+(4*mazenum), 4, mazenum)
+	buf := slapsticReadBytes(0x038000+x+(4*mazenum), 4)
 	mazeoffset := binary.BigEndian.Uint32(buf)
 
 if opts.Verbose { fmt.Printf("Offset for maze %d: 0x%06x\n", mazenum, mazeoffset)
 				  fmt.Printf("big endian buf: %l\n", buf) }
-// TEST remove
-bankof := slapsticBankInfoG1[mazenum]
 
-//if mazeoffset == 0x38000 { fmt.Printf("bank+ at: %d\n",mazenum) }
-fmt.Printf("buf: %X\n",buf)
-fmt.Printf("bank: %X,\n",bankof)
+/*
+fmt.Printf("buf: %X, ",buf)
+fmt.Printf("bank: %X\n",bankof)
 fmt.Printf("Offset for maze %d: %d - 0x%5X\n", mazenum, bankof + mazeoffset+3, bankof + mazeoffset+3)
 fmt.Printf("big endian buf: %l\n\n", buf)
-
+*/
 	return int(mazeoffset)
 }
 
 // Read bytes from combined ROM. Only works if reading an even address
-func slapsticReadBytes(offset int, count int, mazn int) []byte {
+func slapsticReadBytes(offset int, count int) []byte {
 	if offset >= SLAPSTIC_START {
 		offset -= SLAPSTIC_START
 	}
 	buf := romSplitRead(slapsticRoms, offset, count)
-	if mazn > 0x037FFF {
-		buf = romSplitRead(slapsticRomsG1, offset, count)
-	}
-// TEST remove
-	if mazn > 0 {
+	if G1 {
 		buf = romSplitRead(slapsticRomsG1, offset, count)
 	}
 
