@@ -139,6 +139,10 @@ func slapsticMazeGetBank(mazenum int) int {
 	return bi
 }
 
+// cohde philosophizing: do i add 3 and use the g2 decode (which works except floor/wall colors)
+//                       or not add 3 and put in an adjust in mazedecode for g1 mazes having 3 more lead in bytes
+// followup - disassemble trace of g1 & see if the decoder is different
+
 func slapsticReadMazeOffset(mazenum int, x int) int {
 
 // TEST restore - ctrl -z to this
