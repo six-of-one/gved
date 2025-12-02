@@ -87,9 +87,9 @@ func main() {
 // TEST remove
 //			for z := 20; z < 50; z++ {
 //				fmt.Printf("\n\n---------------------\naddr series: %d\n---------------------\n\n",z)
-				for i := 0; i < 114; i++ { slapsticReadMazeOffset(i,50)
-//				for i := 0; i < 115; i++ { slapsticMazeGetRealAddr(i)
-				fmt.Printf("\n")}
+//				for i := 0; i < 126; i++ { slapsticReadMazeOffset(i,50)
+//				for i := 0; i < 126; i++ { slapsticMazeGetRealAddr(i)
+//				fmt.Printf("\n")}
 		dofloor(args[0])
 	case TypeWall:
 		dowall(args[0])
