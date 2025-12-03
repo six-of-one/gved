@@ -524,7 +524,6 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			case G1OBJ_EXIT8:
 				stamp = itemGetStamp("exit8")
 
-// temp measure for monster lvls - use # until stamp can encode levels by color
 			case G1OBJ_MONST_GHOST1:
 				stamp = itemGetStamp("ghost1")
 			case G1OBJ_MONST_GHOST2:
