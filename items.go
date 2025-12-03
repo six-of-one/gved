@@ -52,7 +52,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true, nudgex: -4,
-		nudgey: -4,
+		nudgey: -8,
 	},
 	"ifood2": Stamp{
 		width:   3,
@@ -60,7 +60,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true, nudgex: -4,
-		nudgey: -4,
+		nudgey: -8
 	},
 	"ifood3": Stamp{
 		width:   3,
@@ -68,7 +68,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true, nudgex: -4,
-		nudgey: -4,
+		nudgey: -8,
 	},
 	"mfood": Stamp{
 		width:   3,
@@ -213,7 +213,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  -9,
 	},
 	"treasurelocked": Stamp{
 		width:   3,
@@ -334,7 +334,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    5,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  -7,
 	},
 	"generator2": Stamp{
 		width:   3,
@@ -343,7 +343,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    5,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  -7,
 	},
 	"generator3": Stamp{
 		width:   3,
@@ -352,7 +352,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    5,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  -7,
 	},
 	"ghostgen1": Stamp{
 		width:   3,
@@ -361,7 +361,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    5,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  -5,
 	},
 	"ghostgen2": Stamp{
 		width:   3,
@@ -370,7 +370,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    5,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  -7,
 	},
 	"ghostgen3": Stamp{
 		width:   3,
@@ -379,7 +379,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    5,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  -9,
 	},
 
 	"ghost": Stamp{

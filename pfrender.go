@@ -163,6 +163,78 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 		lasty = 31
 	}
 
+// seperating walls from other ents so walls dont overwrite 24 x 24 ents
+// unless emu is wrong, this is the way g & g2 draw walls, see screens
+	for y := 0; y <= lasty; y++ {
+		for x := 0; x <= lastx; x++ {
+			var stamp *Stamp
+			var dots int // dot count
+
+			if G2 {
+				switch whatis(maze, x, y) {
+				case MAZEOBJ_WALL_DESTRUCTABLE:
+					adj := checkwalladj8(maze, x, y)
+				if (nothing & NOWALL) == 0 {
+					stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
+				}
+				case MAZEOBJ_WALL_SECRET:
+					adj := checkwalladj8(maze, x, y)
+				if (nothing & NOWALL) == 0 {
+					stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+					stamp.ptype = "secret"
+					stamp.pnum = 0
+				}
+				case MAZEOBJ_WALL_TRAPCYC1:
+					dots = 1
+					fallthrough
+				case MAZEOBJ_WALL_TRAPCYC2:
+					if dots == 0 {
+						dots = 2
+					}
+					fallthrough
+				case MAZEOBJ_WALL_TRAPCYC3:
+					if dots == 0 {
+						dots = 3
+					}
+					fallthrough
+				case MAZEOBJ_WALL_RANDOM:
+					if dots == 0 {
+						dots = 4
+					}
+					fallthrough
+				case MAZEOBJ_WALL_REGULAR:
+					adj := checkwalladj8(maze, x, y)
+				if (nothing & NOWALL) == 0 {
+					stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+				}
+			}}
+			if G1 {
+				switch whatis(maze, x, y) {
+					case G1OBJ_WALL_DESTRUCTABLE:
+						adj := checkwalladj8g1(maze, x, y)
+					if (nothing & NOWALL) == 0 {
+						stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
+					}
+
+					case G1OBJ_WALL_TRAP1:
+						dots = 1
+						fallthrough
+					case G1OBJ_WALL_REGULAR:
+						adj := checkwalladj8g1(maze, x, y)
+					if (nothing & NOWALL) == 0 {
+						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+					}
+				}}
+			if stamp != nil {
+				writestamptoimage(img, stamp, x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
+			}
+
+			if dots != 0 {
+				renderdots(img, x*16+16, y*16+16, dots)
+			}
+		}
+	}
+
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 			var stamp *Stamp
@@ -208,41 +280,6 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 				stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
-			case MAZEOBJ_WALL_DESTRUCTABLE:
-				adj := checkwalladj8(maze, x, y)
-			if (nothing & NOWALL) == 0 {
-				stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
-			}
-			case MAZEOBJ_WALL_SECRET:
-				adj := checkwalladj8(maze, x, y)
-			if (nothing & NOWALL) == 0 {
-				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
-				stamp.ptype = "secret"
-				stamp.pnum = 0
-			}
-			case MAZEOBJ_WALL_TRAPCYC1:
-				dots = 1
-				fallthrough
-			case MAZEOBJ_WALL_TRAPCYC2:
-				if dots == 0 {
-					dots = 2
-				}
-				fallthrough
-			case MAZEOBJ_WALL_TRAPCYC3:
-				if dots == 0 {
-					dots = 3
-				}
-				fallthrough
-			case MAZEOBJ_WALL_RANDOM:
-				if dots == 0 {
-					dots = 4
-				}
-				fallthrough
-			case MAZEOBJ_WALL_REGULAR:
-				adj := checkwalladj8(maze, x, y)
-			if (nothing & NOWALL) == 0 {
-				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
-			}
 			case MAZEOBJ_WALL_MOVABLE:
 				stamp = itemGetStamp("pushwall")
 			case MAZEOBJ_KEY:
@@ -433,20 +470,6 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 				stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
-			case G1OBJ_WALL_DESTRUCTABLE:
-				adj := checkwalladj8g1(maze, x, y)
-			if (nothing & NOWALL) == 0 {
-				stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
-			}
-
-			case G1OBJ_WALL_TRAP1:
-				dots = 1
-				fallthrough
-			case G1OBJ_WALL_REGULAR:
-				adj := checkwalladj8g1(maze, x, y)
-			if (nothing & NOWALL) == 0 {
-				stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
-			}
 			case G1OBJ_KEY:
 				stamp = itemGetStamp("key")
 
