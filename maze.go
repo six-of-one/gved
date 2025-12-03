@@ -204,7 +204,7 @@ func domaze(arg string) {
 			w.SetTitle(til)
 
 
-			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, il, u, v, #a): ",opts.Gtp)
+			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
 		}
 // key tester
 			input, _ := consoleReader.ReadByte()

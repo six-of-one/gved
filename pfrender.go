@@ -210,9 +210,9 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 // test of some items not place in mazes
 				case MAZEOBJ_TILE_FLOOR:
 					if opts.SP {
-						ts := rand.Intn(410)
+						ts := rand.Intn(470)
 						if ts == 2 { maze.data[xy{x, y}] = 	MAZEOBJ_TREASURE_BAG }
-						if ts == 11 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+						if ts == 111 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 						if ts == 311 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 					}
 			}}
@@ -235,8 +235,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 // test of some items not place in mazes - place in empty floor tile @random
 				case MAZEOBJ_TILE_FLOOR:
 					if opts.SP {
-						ts := rand.Intn(410)
-// note: these are injected into maze data - they seem to repeat ?
+						ts := rand.Intn(470)
 						if ts == 2 { maze.data[xy{x, y}] = G1OBJ_TREASURE_BAG }
 						if ts == 11 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 						if ts == 311 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
@@ -462,7 +461,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 					}
 				}
 			default:
-				// fmt.Printf("WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y))
+				if opts.Verbose { fmt.Printf("G2 WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
 			}
 			}
 // g1 decodes
@@ -653,6 +652,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 					}
 				}
 			default:
+				if opts.Verbose { fmt.Printf("G1 WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
 			}}
 // Six: end G1 decode
 			if stamp != nil {
