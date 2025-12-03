@@ -60,7 +60,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true, nudgex: -4,
-		nudgey: -8
+		nudgey: -8,
 	},
 	"ifood3": Stamp{
 		width:   3,

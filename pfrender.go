@@ -204,25 +204,42 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 					fallthrough
 				case MAZEOBJ_WALL_REGULAR:
 					adj := checkwalladj8(maze, x, y)
-				if (nothing & NOWALL) == 0 {
-					stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+					if (nothing & NOWALL) == 0 {
+						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 				}
+// test of some items not place in mazes
+				case MAZEOBJ_TILE_FLOOR:
+					if opts.SP {
+						ts := rand.Intn(410)
+						if ts == 2 { maze.data[xy{x, y}] = 	MAZEOBJ_TREASURE_BAG }
+						if ts == 11 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+						if ts == 311 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+					}
 			}}
 			if G1 {
 				switch whatis(maze, x, y) {
-					case G1OBJ_WALL_DESTRUCTABLE:
-						adj := checkwalladj8g1(maze, x, y)
-					if (nothing & NOWALL) == 0 {
-						stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
-					}
+				case G1OBJ_WALL_DESTRUCTABLE:
+					adj := checkwalladj8g1(maze, x, y)
+				if (nothing & NOWALL) == 0 {
+					stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
+				}
 
-					case G1OBJ_WALL_TRAP1:
-						dots = 1
-						fallthrough
-					case G1OBJ_WALL_REGULAR:
-						adj := checkwalladj8g1(maze, x, y)
+				case G1OBJ_WALL_TRAP1:
+					dots = 1
+					fallthrough
+				case G1OBJ_WALL_REGULAR:
+					adj := checkwalladj8g1(maze, x, y)
 					if (nothing & NOWALL) == 0 {
 						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+				}
+// test of some items not place in mazes - place in empty floor tile @random
+				case MAZEOBJ_TILE_FLOOR:
+					if opts.SP {
+						ts := rand.Intn(410)
+// note: these are injected into maze data - they seem to repeat ?
+						if ts == 2 { maze.data[xy{x, y}] = G1OBJ_TREASURE_BAG }
+						if ts == 11 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+						if ts == 311 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 					}
 				}}
 			if stamp != nil {
@@ -425,6 +442,25 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				stamp = ffGetStamp(adj)
 			case MAZEOBJ_TRANSPORTER:
 				stamp = itemGetStamp("tport")
+// testing special potions
+			case MAZEOBJ_HIDDENPOT:
+				if opts.SP {
+					ts := rand.Intn(6)
+					switch ts {
+					case 1:
+						stamp = itemGetStamp("speedpotion")
+					case 2:
+						stamp = itemGetStamp("shotpowerpotion")
+					case 3:
+						stamp = itemGetStamp("shotspeedpotion")
+					case 4:
+						stamp = itemGetStamp("shieldpotion")
+					case 5:
+						stamp = itemGetStamp("fightpotion")
+					case 6:
+						stamp = itemGetStamp("magicpotion")
+					}
+				}
 			default:
 				// fmt.Printf("WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y))
 			}
@@ -597,6 +633,25 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 			case G1OBJ_TRANSPORTER:
 				stamp = itemGetStamp("tportg1")
+// testing special potions
+			case MAZEOBJ_HIDDENPOT:
+				if opts.SP {
+					ts := rand.Intn(6)
+					switch ts {
+					case 1:
+						stamp = itemGetStamp("speedpotion")
+					case 2:
+						stamp = itemGetStamp("shotpowerpotion")
+					case 3:
+						stamp = itemGetStamp("shotspeedpotion")
+					case 4:
+						stamp = itemGetStamp("shieldpotion")
+					case 5:
+						stamp = itemGetStamp("fightpotion")
+					case 6:
+						stamp = itemGetStamp("magicpotion")
+					}
+				}
 			default:
 			}}
 // Six: end G1 decode

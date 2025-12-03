@@ -283,6 +283,8 @@ func domaze(arg string) {
 				G2 = false
 			case 108:		// l
 				opts.R14 = !opts.R14
+			case 115:		// s
+				opts.SP = !opts.SP
 			case 117:		// u
 				opts.Gtp = 2
 				G1 = false
@@ -301,7 +303,7 @@ func domaze(arg string) {
 				fmt.Printf("single letter commands\n\n? - this list\nq - quit program\nf - floor pattern+\nF - floor pattern-\n")
 				fmt.Printf("g - floor color+\nG - floor color-\nw - wall pattern+\nW - wall pattern-\n")
 				fmt.Printf("e - wall color+\nE - wall color-\nr - rotate maze +90 deg\nR - rotate maze -90 deg\n")
-				fmt.Printf("t - turn off rotate\nh - mirror maze horizontal toggle\nm - mirror maze vertical toggle\n")
+				fmt.Printf("t - turn off rotate\nh - mirror maze horizontal toggle\nm - mirror maze vertical toggle\ns - toggle rnd special potion")
 				fmt.Printf("i - gauntlet mazes r1 - r9\nl - use gauntlet rev 14\nu - gauntlet 2 mazes\n")
 				fmt.Printf("{n}a - load maze 0 - 126 g1, 0 - 116 g2, or address 229376 - 262143\n")
 				fmt.Printf("v - valid address list                      * note some address will cause crash out\n")
@@ -309,7 +311,7 @@ func domaze(arg string) {
 				fmt.Printf("G%d ",opts.Gtp)
 				if opts.R14 { fmt.Printf("(r14)")
 				} else { fmt.Printf("(r1-9)") }
-				fmt.Printf(" Command (?, q, fFgG, wWeE, rRt, hm, il, u, v, #a): ")
+				fmt.Printf(" Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ")
 				noact = true
 			default:
 				if ascii < 48 || ascii > 57 { fmt.Printf("unk: %d\n",ascii) }
