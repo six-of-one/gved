@@ -301,7 +301,7 @@ func domaze(arg string) {
 				fmt.Printf("single letter commands\n\n? - this list\nq - quit program\nf - floor pattern+\nF - floor pattern-\n")
 				fmt.Printf("g - floor color+\nG - floor color-\nw - wall pattern+\nW - wall pattern-\n")
 				fmt.Printf("e - wall color+\nE - wall color-\nr - rotate maze +90 deg\nR - rotate maze -90 deg\n")
-				fmt.Printf("t - turn off rotate\nh - mirror maze horizontal toggle\nm - mirror maze vertical toggle\ns - toggle rnd special potion")
+				fmt.Printf("t - turn off rotate\nh - mirror maze horizontal toggle\nm - mirror maze vertical toggle\ns - toggle rnd special potion\n")
 				fmt.Printf("i - gauntlet mazes r1 - r9\nl - use gauntlet rev 14\nu - gauntlet 2 mazes\n")
 				fmt.Printf("{n}a - load maze 0 - 126 g1, 0 - 116 g2, or address 229376 - 262143\n")
 				fmt.Printf("v - valid address list                      * note some address will cause crash out\n")
