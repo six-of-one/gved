@@ -172,9 +172,8 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			gtopcol := false	// disable gen letter seperate colors
 // gen type op - the context to draw
 			gtop := gg.NewContext(12, 12)
-// gtop font'
-// --- add default font if load fail?
-			if err := gtop.LoadFontFace("/usr/share/fonts/truetype/ttf-bitstream-vera/VeraBd.ttf", 14); err != nil {
+// gtop font
+			if err := gtop.LoadFontFace(".font/VeraBd.ttf", 14); err != nil {
 				panic(err)
 				}
 // g2 decodes
