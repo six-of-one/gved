@@ -1118,7 +1118,7 @@ var gauntletPalettes = map[string][][]color.Color{
 	"floor":      floorPalettes,
 	"wall":       wallPalettes,
 	"base":       basePalettes,
-	"baseg1":     g1basePalettes,
+	"gbase":      g1basePalettes,
 	"warrior":    warriorPalettes,
 	"valkyrie":   valkyriePalettes,
 	"wizard":     wizardPalettes,
