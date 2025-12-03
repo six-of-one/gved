@@ -10,6 +10,7 @@ import (
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/app"
     "fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/driver/desktop"
 )
 
 func mazeMetaPrint(maze *Maze) {
@@ -188,6 +189,9 @@ func domaze(arg string) {
 			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}
 	}
+// TEST - move
+Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyTab}
+// TEST - move
 
 			Ovimg := genpfimage(maze, mazeNum)
 			bimg := canvas.NewImageFromImage(Ovimg)
@@ -201,6 +205,9 @@ func domaze(arg string) {
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 
+			w.Canvas().AddShortcut(Tab, func(shortcut fyne.Shortcut) {
+					fmt.Printf("tapped Tab")
+				})
 
 			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
 		}
