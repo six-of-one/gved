@@ -185,7 +185,10 @@ func genimage_fromarray(tiles []int, xtiles int, ytiles int) *image.NRGBA {
 
 // FIXME: Rename later!
 func writestamptoimage(img *image.NRGBA, stamp *Stamp, xloc int, yloc int) {
-	p := gauntletPalettes[stamp.ptype][stamp.pnum]
+	ptyp := stamp.ptype
+// gauntlet has diff base pallet from g2, this is easiest way
+	if ptyp == "base" && G1 { ptyp = "g1base" }
+	p := gauntletPalettes[ptyp][stamp.pnum]
 	for y := 0; y < len(stamp.data)/stamp.width; y++ {
 		for x := 0; x < stamp.width; x++ {
 			// fmt.Printf("Writing to image at %d,%d\n", xloc, yloc)
