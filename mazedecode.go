@@ -190,7 +190,10 @@ if opts.Verbose {
 	if G1 {
 		maze.flags = 0 //maze.flags & 0x3f;
 // testing - this could be g1 codes, hard to tell with out the g1 gfx roms loaded
-		if maze.wallpattern > 5 { maze.wallpattern = rand.Intn(4) }
+		if maze.wallpattern > 5 {
+			maze.wallpattern = rand.Intn(4)
+			fmt.Printf("maze.wallpattern = rand.Intn(4)\n")
+		}
 	}
 
 	if metaonly {
