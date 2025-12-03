@@ -189,9 +189,6 @@ func domaze(arg string) {
 			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}
 	}
-// TEST - move
-Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyTab}
-// TEST - move
 
 			Ovimg := genpfimage(maze, mazeNum)
 			bimg := canvas.NewImageFromImage(Ovimg)
@@ -205,10 +202,14 @@ Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyTab}
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 
-			w.Canvas().AddShortcut(Tab, func(shortcut fyne.Shortcut) {
-					fmt.Printf("tapped Tab")
-				})
-
+if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
+        deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
+            fmt.Printf("Desktop key down: %a\n", key)
+        })
+        deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
+            fmt.Printf("Desktop key up: %a\n", key)
+        })
+    }
 			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
 		}
 // key tester
