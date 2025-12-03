@@ -461,7 +461,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 					}
 				}
 			default:
-				if opts.Verbose { fmt.Printf("G2 WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
+				if opts.Verbose && false { fmt.Printf("G2 WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
 			}
 			}
 // g1 decodes
@@ -651,7 +651,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 					}
 				}
 			default:
-				if opts.Verbose { fmt.Printf("G1 WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
+				if opts.Verbose && false { fmt.Printf("G1 WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
 			}}
 // Six: end G1 decode
 			if stamp != nil {
