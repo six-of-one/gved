@@ -199,17 +199,15 @@ func domaze(arg string) {
 
 			w.Show()
 			w.CenterOnScreen()
+			view := w.view()
+
+			view.SetPos(w.xpos, w.ypos)
+
+			view.Show()
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 
-if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
-        deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
-            fmt.Printf("Desktop key down: %a\n", key)
-        })
-        deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
-            fmt.Printf("Desktop key up: %a\n", key)
-        })
-    }
+
 			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
 		}
 // key tester
