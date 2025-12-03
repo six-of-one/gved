@@ -102,12 +102,10 @@ func domaze(arg string) {
 					Aov = anum
 				}
 				anum = -1
-// clear these to load new maze
+// clear these when load new maze
 				Ovwallpat = -1
 			}
-			if Ovwallpat == -1 {
-				maze = mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0)
-			}
+			maze = mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0)
 
 // manual mirror, flip
 	if opts.MH || opts.MV || opts.MRP || opts.MRM {
