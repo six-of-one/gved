@@ -99,6 +99,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 // no - thing
 // option to generate image with no floors or walls (say for color correcting g1 mazes we dont have color codes for)
+// nofloor = 1, nowall = 2, no both = 3
 // maybe make a cli switch?
 
 	nothing := 0
