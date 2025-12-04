@@ -97,6 +97,9 @@ func domaze(arg string) {
 	gotilengine.TLN_CreateBitmap(560,560,32)
 	bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 	gotilengine.TLN_SetLayerBitmap(0, bkg)
+	if gotilengine.TLN_ProcessWindow() != 0 {
+			gotilengine.TLN_DrawFrame(0)
+		}
 // testing gotilengine win
 
 // interactive loop here - lets user tweak vars settings & load new mazes
@@ -224,10 +227,8 @@ func domaze(arg string) {
 			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 			gotilengine.TLN_SetLayerBitmap(0, bkg)
 
-			k := 50
-			if gotilengine.TLN_ProcessWindow() != 0 && k > 0 {
+			if gotilengine.TLN_ProcessWindow() != 0 {
 					gotilengine.TLN_DrawFrame(0)
-					k--
 				}
 			tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d",mazeNum)))
 			gotilengine.TLN_SetWindowTitle(tewtil)
@@ -257,6 +258,8 @@ Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyReturn, Modifier: fyne.KeyMod
 // ESC = 27 and q = 113
 			if ascii == 27 || ascii == 113 {
 				fmt.Printf("Exiting...\n")
+				gotilengine.TLN_DeleteBitmap(bkg)
+				gotilengine.TLN_Deinit()
 				os.Exit(0)
 			}
 			noact = false
