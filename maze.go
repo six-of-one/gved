@@ -100,7 +100,7 @@ func domaze(arg string) {
 	menuHelp := fyne.NewMenu("Help ", menuItemAbout)
 	mainMenu := fyne.NewMainMenu(menuExit, menuHelp)
 	w.SetMainMenu(mainMenu)
-	w.SetPadded(false)
+
 //	menuItemAbout.Action()
 
 	genpfimage(maze, mazeNum)
