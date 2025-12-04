@@ -20,47 +20,6 @@ import (
 	"github.com/thechampagne/gotilengine"
 )
 
-type TLN_Input int
-
-const (
-	INPUT_NONE TLN_Input = iota // no input
-	INPUT_UP                   // up direction
-	INPUT_DOWN                 // down direction
-	INPUT_LEFT                 // left direction
-	INPUT_RIGHT                // right direction
-	INPUT_BUTTON1              // 1st action button
-	INPUT_BUTTON2              // 2nd action button
-	INPUT_BUTTON3              // 3th action button
-	INPUT_BUTTON4              // 4th action button
-	INPUT_BUTTON5              // 5th action button
-	INPUT_BUTTON6              // 6th action button
-	INPUT_START                // Start button
-	INPUT_QUIT                 // Window close (only Player 1 keyboard)
-	INPUT_CRT                  // CRT toggle (only Player 1 keyboard)
-
-	// ... up to 32 unique inputs
-
-	// Assuming PLAYER1, PLAYER2, PLAYER3, PLAYER4 are defined constants
-	// Define them here for completeness (example values)
-	PLAYER1 = 1
-	PLAYER2 = 2
-	PLAYER3 = 3
-	PLAYER4 = 4
-
-	INPUT_P1 = TLN_Input(PLAYER1 << 5) // request player 1 input (default)
-	INPUT_P2 = TLN_Input(PLAYER2 << 5) // request player 2 input
-	INPUT_P3 = TLN_Input(PLAYER3 << 5) // request player 3 input
-	INPUT_P4 = TLN_Input(PLAYER4 << 5) // request player 4 input
-
-	// compatibility symbols for pre-1.18 input model
-	INPUT_A = INPUT_BUTTON1
-	INPUT_B = INPUT_BUTTON2
-	INPUT_C = INPUT_BUTTON3
-	INPUT_D = INPUT_BUTTON4
-	INPUT_E = INPUT_BUTTON5
-	INPUT_F = INPUT_BUTTON6
-)
-
 func mazeMetaPrint(maze *Maze) {
 	fmt.Printf("  Encoded length: %3d bytes\n", maze.encodedbytes)
 	fmt.Printf("  Wall pattern: %02d, Wall color: %02d     Floor pattern: %02d, Floor color: %02d\n",
@@ -273,10 +232,10 @@ func domaze(arg string) {
 			tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d",mazeNum)))
 			gotilengine.TLN_SetWindowTitle(tewtil)
 
-			for f := 1; f < 60; f++ {
-			kc := (gotilengine.CUint8) (f)
+			for f := 1; f < 160; f++ {
+			kc := (gotilengine.TLN_Input) (f)
 			if gotilengine.TLN_GetInput(kc) != 0 {
-	            fmt.Printf("Desktop key down: Z\n",)
+	            fmt.Printf("gotilengine key down: %d\n",f)
 			}}
 
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
