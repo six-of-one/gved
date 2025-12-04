@@ -199,15 +199,14 @@ func domaze(arg string) {
 
 			w.Show()
 			w.CenterOnScreen()
-			view := w.view()
-
-			view.SetPos(w.xpos, w.ypos)
-
-			view.Show()
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 
-
+keyEvent := &fyne.KeyEvent{Name: keyName, Physical: fyne.HardwareKey{ScanCode: scancode}}
+	focused := w.Canvas().Focused()
+	if focused != nil {
+		focused.TypedKey(keyEvent)
+	}
 			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
 		}
 // key tester
