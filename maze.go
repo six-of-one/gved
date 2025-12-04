@@ -85,9 +85,7 @@ func domaze(arg string) {
 // setup window
     a := app.New()
     w := a.NewWindow("Images")
-	upthw := true
-			Ovimg := genpfimage(maze, mazeNum)
-			bimg := canvas.NewRasterFromImage(Ovimg)
+	genpfimage(maze, mazeNum)
 
 // testing gotilengine win
 	var bkg gotilengine.TLN_Bitmap
@@ -98,7 +96,6 @@ func domaze(arg string) {
 	bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 	gotilengine.TLN_SetLayerBitmap(0, bkg)
 	gtk := (gotilengine.CInt) (int (1))
-	k := 1
 	if gotilengine.TLN_ProcessWindow() != 0 {
 			gotilengine.TLN_DrawFrame(0)
 		}
@@ -212,26 +209,18 @@ func domaze(arg string) {
 		}
 	}
 
-			opts.Output = fmt.Sprintf("output%d.png",k)
-			k++
-
-			Ovimg = genpfimage(maze, mazeNum)
-			bimg = canvas.NewRasterFromImage(Ovimg)
+			Ovimg := genpfimage(maze, mazeNum)
+			bimg := canvas.NewRasterFromImage(Ovimg)
 
 			w.Canvas().SetContent(bimg)
-
-			if upthw {
-				w.Resize(fyne.NewSize(1024, 1024))
-				upthw = false
-			}
+			w.Resize(fyne.NewSize(1024, 1024))
 			w.Show()
 			w.CenterOnScreen()
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 
-			bkgfil = (gotilengine.CString) (C.CString(opts.Output))
 			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
-			gotilengine.TLN_SetLayerBitmap(1, bkg)
+			gotilengine.TLN_SetLayerBitmap(0, bkg)
 
 			if gotilengine.TLN_ProcessWindow() != 0 {
 					gotilengine.TLN_DrawFrame(gtk)
