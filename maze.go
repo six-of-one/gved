@@ -14,6 +14,7 @@ import (
 	"bufio"
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/dialog"
     "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/driver/desktop"
 // /	"unsafe"
@@ -88,6 +89,20 @@ func domaze(arg string) {
 // setup window
     a := app.New()
     w := a.NewWindow("Images")
+
+	menuItemExit := fyne.NewMenuItem("Exit...", func() {
+		os.Exit(0)
+	})
+	menuExit := fyne.NewMenu("Exit ", menuItemExit)
+	menuItemAbout := fyne.NewMenuItem("About...", func() {
+		dialog.ShowInformation("About G¹G²ved", "Gauntlet / Gauntlet 2 visual editor\nAuthor: Six\n\ngithub.com/six-of-one/", w)
+	})
+	menuHelp := fyne.NewMenu("Help ", menuItemAbout)
+	mainMenu := fyne.NewMainMenu(menuExit, menuHelp)
+	w.SetMainMenu(mainMenu)
+	w.SetPadded(false)
+//	menuItemAbout.Action()
+
 	genpfimage(maze, mazeNum)
 
 // testing gotilengine win
