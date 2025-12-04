@@ -1,5 +1,7 @@
 package main
 
+import "C"
+
 import (
 	"fmt"
 	"regexp"
@@ -11,6 +13,8 @@ import (
     "fyne.io/fyne/v2/app"
     "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/driver/desktop"
+// /	"unsafe"
+	"github.com/thechampagne/gotilengine"
 )
 
 func mazeMetaPrint(maze *Maze) {
@@ -84,6 +88,15 @@ func domaze(arg string) {
 	upthw := true
 			Ovimg := genpfimage(maze, mazeNum)
 			bimg := canvas.NewRasterFromImage(Ovimg)
+
+// testing gotilengine win
+	var bkg gotilengine.TLN_Bitmap
+	bkgfil := (gotilengine.CString) (C.CString("output.png"))
+	gotilengine.TLN_Init(800, 800, 1, 0, 0)
+	gotilengine.TLN_CreateWindow((gotilengine.CString) (C.NULL), 0)
+	gotilengine.TLN_CreateBitmap(560,560,32)
+	bkg = gotilengine.TLN_LoadBitmap(bkgfil)
+	gotilengine.TLN_SetLayerBitmap(0, bkg)
 
 // interactive loop here - lets user tweak vars settings & load new mazes
 // user controls loop for tweaking
@@ -213,13 +226,15 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         })
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
             fmt.Printf("Desktop key up: %v\n", key)
+			os.Exit(0)
         })
     }
 
-Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyTab, Modifier: fyne.KeyModifierControl}
+Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyReturn, Modifier: fyne.KeyModifierControl}
 
                        w.Canvas().AddShortcut(Tab, func(shortcut fyne.Shortcut) {
-                                       fmt.Printf("tapped Tab")
+                                       fmt.Printf("tapped Tab\n")
+									   os.Exit(0)
                                })
 
 			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
