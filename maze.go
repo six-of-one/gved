@@ -202,13 +202,10 @@ func domaze(arg string) {
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 
-keyEvent := &fyne.KeyEvent{Name: keyName, Physical: fyne.HardwareKey{ScanCode: scancode}}
-	focused := w.Canvas().Focused()
-	if focused != nil {
-		focused.TypedKey(keyEvent)
-	}
-			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
-		}
+			 w.Canvas().SetOnTypedKey(func(k *fyne.KeyEvent) {
+				  w.Close()
+				})
+			a.Run()
 // key tester
 			input, _ := consoleReader.ReadByte()
 			ascii = input
