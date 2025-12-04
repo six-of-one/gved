@@ -98,6 +98,11 @@ func domaze(arg string) {
 	bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 	gotilengine.TLN_SetLayerBitmap(0, bkg)
 
+	if gotilengine.TLN_ProcessWindow() != 0 {
+			gotilengine.TLN_DrawFrame(0)
+		}
+// testing gotilengine win
+
 // interactive loop here - lets user tweak vars settings & load new mazes
 // user controls loop for tweaking
 		noact := false
