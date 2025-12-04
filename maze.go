@@ -92,15 +92,11 @@ func domaze(arg string) {
 // testing gotilengine win
 	var bkg gotilengine.TLN_Bitmap
 	bkgfil := (gotilengine.CString) (C.CString("output.png"))
-	gotilengine.TLN_Init(800, 800, 1, 0, 0)
+	gotilengine.TLN_Init(560, 560, 1, 0, 0)
 	gotilengine.TLN_CreateWindow((gotilengine.CString) (C.NULL), 0)
 	gotilengine.TLN_CreateBitmap(560,560,32)
 	bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 	gotilengine.TLN_SetLayerBitmap(0, bkg)
-
-	if gotilengine.TLN_ProcessWindow() != 0 {
-			gotilengine.TLN_DrawFrame(0)
-		}
 // testing gotilengine win
 
 // interactive loop here - lets user tweak vars settings & load new mazes
@@ -218,12 +214,23 @@ func domaze(arg string) {
 
 			if upthw {
 				w.Resize(fyne.NewSize(1024, 1024))
-				w.Show()
 				upthw = false
 			}
-// /			w.CenterOnScreen()
+			w.Show()
+			w.CenterOnScreen()
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
+
+			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
+			gotilengine.TLN_SetLayerBitmap(0, bkg)
+
+			k := 50
+			if gotilengine.TLN_ProcessWindow() != 0 && k > 0 {
+					gotilengine.TLN_DrawFrame(0)
+					k--
+				}
+			tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d",mazeNum)))
+			gotilengine.TLN_SetWindowTitle(tewtil)
 
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
