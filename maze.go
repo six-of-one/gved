@@ -81,6 +81,9 @@ func domaze(arg string) {
 // setup window
     a := app.New()
     w := a.NewWindow("Images")
+	upthw := true
+			Ovimg := genpfimage(maze, mazeNum)
+			bimg := canvas.NewRasterFromImage(Ovimg)
 
 // interactive loop here - lets user tweak vars settings & load new mazes
 // user controls loop for tweaking
@@ -190,22 +193,37 @@ func domaze(arg string) {
 		}
 	}
 
-			Ovimg := genpfimage(maze, mazeNum)
-			bimg := canvas.NewImageFromImage(Ovimg)
+			Ovimg = genpfimage(maze, mazeNum)
+			bimg = canvas.NewRasterFromImage(Ovimg)
 
-			w.SetContent(bimg)
+			w.Canvas().SetContent(bimg)
 
-			w.Resize(fyne.NewSize(1024, 1024))
-
-			w.Show()
-			w.CenterOnScreen()
+			if upthw {
+				w.Resize(fyne.NewSize(1024, 1024))
+				w.Show()
+				upthw = false
+			}
+// /			w.CenterOnScreen()
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 
-			 w.Canvas().SetOnTypedKey(func(k *fyne.KeyEvent) {
-				  w.Close()
-				})
-			a.Run()
+if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
+        deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
+            fmt.Printf("Desktop key down: %v\n", key)
+        })
+        deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
+            fmt.Printf("Desktop key up: %v\n", key)
+        })
+    }
+
+Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyTab, Modifier: fyne.KeyModifierControl}
+
+                       w.Canvas().AddShortcut(Tab, func(shortcut fyne.Shortcut) {
+                                       fmt.Printf("tapped Tab")
+                               })
+
+			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
+		}
 // key tester
 			input, _ := consoleReader.ReadByte()
 			ascii = input
