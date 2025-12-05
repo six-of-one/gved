@@ -12,6 +12,7 @@ import (
 	"strings"
 	"os"
 	"bufio"
+	"time"
 /*
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/app"
@@ -107,7 +108,7 @@ func domaze(arg string) {
 
 	genpfimage(maze, mazeNum)
 
-// testing gotilengine win
+// testing gotilengine
 	var bkg gotilengine.TLN_Bitmap
 	bkgfil := (gotilengine.CString) (C.CString("output.png"))
 	gotilengine.TLN_Init(560, 560, 1, 0, 0)
@@ -119,8 +120,7 @@ func domaze(arg string) {
 	if gotilengine.TLN_ProcessWindow() != 0 {
 			gotilengine.TLN_DrawFrame(0)
 		}
-	gotilengine.TLN_SetLayerPriority(0, 1);
-// testing gotilengine win
+// testing gotilengine
 
 // interactive loop here - lets user tweak vars settings & load new mazes
 // user controls loop for tweaking
@@ -241,7 +241,7 @@ func domaze(arg string) {
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 */
-			gotilengine.TLN_CreateBitmap(560,560,32)
+//			gotilengine.TLN_CreateBitmap(560,560,32)
 			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 			gotilengine.TLN_SetLayerBitmap(0, bkg)
 
@@ -252,8 +252,8 @@ func domaze(arg string) {
 //			crte := true
 			gtk = 0
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
-					gotilengine.TLN_DrawFrame(gtk)
-			gotilengine.TLN_SetLayerBitmap(0, bkg)
+					gotilengine.TLN_DrawFrame(0)
+// /			gotilengine.TLN_SetLayerBitmap(0, bkg)
 			tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d - frame %d",mazeNum,gtk)))
 			gotilengine.TLN_SetWindowTitle(tewtil)
 // this really only detects:
@@ -280,7 +280,8 @@ func domaze(arg string) {
 							nokp = false
 						}
 					}}
-				if gtk < 60 { gtk++ }
+				gtk++
+				time.Sleep(8 * time.Microsecond)
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
 				fmt.Printf("Exited window...\n")
