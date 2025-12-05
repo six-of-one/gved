@@ -88,7 +88,6 @@ func domaze(arg string) {
 
 // setup kby read
 	consoleReader := bufio.NewReaderSize(os.Stdin, 1)
-	kt := 0
 // setup window
 /*
     a := app.New()
@@ -245,21 +244,30 @@ func domaze(arg string) {
 			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 			gotilengine.TLN_SetLayerBitmap(0, bkg)
 
-			if gotilengine.TLN_ProcessWindow() != 0 {
-					gotilengine.TLN_DrawFrame(gtk)
-					gtk++
-					fmt.Printf("window frame %d\n",gtk)
-				} else  {
-					fmt.Printf("window refresh fail\n")
-				}
 			tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d",mazeNum)))
 			gotilengine.TLN_SetWindowTitle(tewtil)
 
-			for f := 1; f < 160; f++ {
-			kc := (gotilengine.TLN_Input) (f)
-			if gotilengine.TLN_GetInput(kc) != 0 {
-	            fmt.Printf("gotilengine key down: %d\n",f)
-			}}
+			nokp := true
+			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
+					gotilengine.TLN_DrawFrame(gtk)
+					gtk++
+			tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d - frame %d",mazeNum,gtk)))
+			gotilengine.TLN_SetWindowTitle(tewtil)
+//					fmt.Printf("window frame %d\n",gtk)
+					for f := 1; f < 160; f++ {
+					kc := (gotilengine.TLN_Input) (f)
+					if gotilengine.TLN_GetInput(kc) != 0 {
+						fmt.Printf("gotilengine key down: %d\n",f)
+						nokp = false
+					}}
+				}
+				if gotilengine.TLN_ProcessWindow() == 0 {
+					fmt.Printf("Exited window...\n")
+					gotilengine.TLN_DeleteBitmap(bkg)
+					gotilengine.TLN_Deinit()
+					os.Exit(0)
+				}
+
 /*
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
@@ -281,8 +289,6 @@ Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyReturn, Modifier: fyne.KeyMod
 			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
 		}
 // key tester
-			fmt.Printf("kt: %d\n",kt)
-			kt++
 			input, _ := consoleReader.ReadByte()
 			ascii = input
 // ESC = 27 and q = 113
