@@ -241,21 +241,14 @@ func domaze(arg string) {
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 */
-//			gotilengine.TLN_CreateBitmap(560,560,32)
 			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 			gotilengine.TLN_SetLayerBitmap(0, bkg)
 
-//			tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d",mazeNum)))
-//			gotilengine.TLN_SetWindowTitle(tewtil)
-
 			nokp := true
-//			crte := true
 			gtk = 0
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
-					gotilengine.TLN_DrawFrame(0)
-// /			gotilengine.TLN_SetLayerBitmap(0, bkg)
-			tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d - frame %d",mazeNum,gtk)))
-			gotilengine.TLN_SetWindowTitle(tewtil)
+				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d - frame %d",mazeNum,gtk)))
+				gotilengine.TLN_SetWindowTitle(tewtil)
 // this really only detects:
 // arrows ^ 1, v 2, < 3, > 4
 // buttons	z 5, x 6, c 7, v 8
@@ -282,6 +275,7 @@ func domaze(arg string) {
 					}}
 				gtk++
 				time.Sleep(8 * time.Microsecond)
+				gotilengine.TLN_DrawFrame(0)
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
 				fmt.Printf("Exited window...\n")
