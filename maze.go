@@ -242,6 +242,8 @@ func domaze(arg string) {
 			w.SetTitle(til)
 */
 			time.Sleep(2 * time.Second)
+			gotilengine.TLN_DeleteBitmap(bkg)
+			gotilengine.TLN_CreateBitmap(560,560,32)
 			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 			gotilengine.TLN_SetLayerBitmap(0, bkg)
 
@@ -284,8 +286,7 @@ func domaze(arg string) {
 						}
 					}}
 				gtk++
-				gotilengine.TLN_DisableLayerClip(0)
-				gotilengine.TLN_DisableLayerMosaic(1)
+				gotilengine.TLN_SetBGColor(17,17,17)
 				gotilengine.TLN_SetLayerPosition(0,mx,my)
 				time.Sleep(8 * time.Millisecond)
 				gotilengine.TLN_DrawFrame(0)
