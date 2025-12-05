@@ -241,6 +241,7 @@ func domaze(arg string) {
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 */
+			time.Sleep(1 * time.Second)
 			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 			gotilengine.TLN_SetLayerBitmap(0, bkg)
 
@@ -274,7 +275,7 @@ func domaze(arg string) {
 						}
 					}}
 				gtk++
-				time.Sleep(8 * time.Microsecond)
+				time.Sleep(8 * time.Millisecond)
 				gotilengine.TLN_DrawFrame(0)
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
