@@ -110,7 +110,7 @@ func domaze(arg string) {
 // testing gotilengine win
 	var bkg gotilengine.TLN_Bitmap
 	bkgfil := (gotilengine.CString) (C.CString("output.png"))
-	gotilengine.TLN_Init(560, 560, 2, 0, 0)
+	gotilengine.TLN_Init(560, 560, 1, 0, 0)
 	gotilengine.TLN_CreateWindow((gotilengine.CString) (C.NULL), 0)
 	gotilengine.TLN_CreateBitmap(560,560,32)
 	bkg = gotilengine.TLN_LoadBitmap(bkgfil)
@@ -119,6 +119,7 @@ func domaze(arg string) {
 	if gotilengine.TLN_ProcessWindow() != 0 {
 			gotilengine.TLN_DrawFrame(0)
 		}
+	gotilengine.TLN_SetLayerPriority(0, 1);
 // testing gotilengine win
 
 // interactive loop here - lets user tweak vars settings & load new mazes
@@ -249,7 +250,7 @@ func domaze(arg string) {
 
 			nokp := true
 //			crte := true
-			gtk++
+			gtk = 0
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
 					gotilengine.TLN_DrawFrame(gtk)
 			gotilengine.TLN_SetLayerBitmap(0, bkg)
@@ -262,17 +263,24 @@ func domaze(arg string) {
 					for f := 1; f < 99; f++ {
 					kc := (gotilengine.TLN_Input) (f)
 					if gotilengine.TLN_GetInput(kc) != 0 {
-						if f == 13 {
-//							if crte {
-//								crte = false
-								gotilengine.TLN_DisableCRTEffect()
-//							}
-						} else {
+						ascii = 0
+						switch f {
+						case 1:
+							anum = mazeNum - 1
+							nokp = false
+							ascii = 17
+						case 2:
+							anum = mazeNum + 1
+							nokp = false
+							ascii = 17
+						case 13:
+							gotilengine.TLN_DisableCRTEffect()
+						default:
 							fmt.Printf("gotilengine key down: %d\n",f)
 							nokp = false
 						}
 					}}
-//					fmt.Printf("crte: %v\n",crte)
+				if gtk < 60 { gtk++ }
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
 				fmt.Printf("Exited window...\n")
@@ -302,8 +310,12 @@ Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyReturn, Modifier: fyne.KeyMod
 			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
 		}
 // key tester
+		if ascii != 17 {
 			input, _ := consoleReader.ReadByte()
 			ascii = input
+		} else {
+			ascii = 97
+		}
 // ESC = 27 and q = 113
 			if ascii == 27 || ascii == 113 {
 				fmt.Printf("Exiting...\n")
