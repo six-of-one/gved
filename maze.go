@@ -111,7 +111,7 @@ func domaze(arg string) {
 // testing gotilengine
 	var bkg gotilengine.TLN_Bitmap
 	bkgfil := (gotilengine.CString) (C.CString("output.png"))
-	gotilengine.TLN_Init(560, 560, 2, 24, 0)
+	gotilengine.TLN_Init(560, 560, 2, 24, 1)
 	gotilengine.TLN_CreateWindow((gotilengine.CString) (C.NULL), 0)
 	gotilengine.TLN_CreateBitmap(560,560,32)
 	bkg = gotilengine.TLN_LoadBitmap(bkgfil)
@@ -246,6 +246,8 @@ func domaze(arg string) {
 			gotilengine.TLN_SetLayerBitmap(0, bkg)
 
 			nokp := true
+			mx := (gotilengine.CInt) (int (0))
+			my := (gotilengine.CInt) (int (0))
 			gtk = 0
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
 				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d - frame %d",mazeNum,gtk)))
@@ -260,10 +262,18 @@ func domaze(arg string) {
 						ascii = 0
 						switch f {
 						case 1:
+							my--
+						case 2:
+							my++
+						case 3:
+							mx--
+						case 4:
+							mx++
+						case 5:
 							anum = mazeNum - 1
 							nokp = false
 							ascii = 17
-						case 2:
+						case 6:
 							anum = mazeNum + 1
 							nokp = false
 							ascii = 17
@@ -275,8 +285,8 @@ func domaze(arg string) {
 						}
 					}}
 				gtk++
-//				gotilengine.TLN_SetLayerPosition(0,gtk & 15,0)
-				time.Sleep(8 * time.Millisecond)
+				gotilengine.TLN_SetLayerPosition(0,mx,my)
+				time.Sleep(4 * time.Millisecond)
 				gotilengine.TLN_DrawFrame(0)
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
