@@ -361,7 +361,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    5,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -5,
+		nudgey:  -4,
 	},
 	"ghostgen2": Stamp{
 		width:   3,
@@ -370,7 +370,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    5,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -7,
+		nudgey:  -5,
 	},
 	"ghostgen3": Stamp{
 		width:   3,
@@ -379,7 +379,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    5,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -9,
+		nudgey:  -7,
 	},
 
 	"ghost": Stamp{
@@ -444,7 +444,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    8,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  -6,
 	},
 	"demon2": Stamp{
 		width:   3,
@@ -453,7 +453,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    7,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  -6,
 	},
 	"demon1": Stamp{
 		width:   3,
@@ -462,7 +462,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    6,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  -6,
 	},
 	"lobber": Stamp{
 		width:   3,
