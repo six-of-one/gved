@@ -285,6 +285,7 @@ func domaze(arg string) {
 					}}
 				gtk++
 				gotilengine.TLN_DisableLayerClip(0)
+				gotilengine.TLN_DisableLayerMosaic(1)
 				gotilengine.TLN_SetLayerPosition(0,mx,my)
 				time.Sleep(8 * time.Millisecond)
 				gotilengine.TLN_DrawFrame(0)
