@@ -250,13 +250,13 @@ func domaze(arg string) {
 			my := (gotilengine.CInt) (int (0))
 			gtk = 0
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
-				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d - frame %d",mazeNum,gtk)))
+				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - frame %d",mazeNum,mx,my,gtk)))
 				gotilengine.TLN_SetWindowTitle(tewtil)
 // this really only detects:
 // arrows ^ 1, v 2, < 3, > 4
 // buttons	z 5, x 6, c 7, v 8
 // 			enter 11, bkspc 13
-					for f := 1; f < 99; f++ {
+					for f := 1; f < 16; f++ {
 					kc := (gotilengine.TLN_Input) (f)
 					if gotilengine.TLN_GetInput(kc) != 0 {
 						ascii = 0
@@ -280,13 +280,13 @@ func domaze(arg string) {
 						case 13:
 							gotilengine.TLN_DisableCRTEffect()
 						default:
-							fmt.Printf("gotilengine key down: %d\n",f)
 							nokp = false
 						}
 					}}
 				gtk++
+				gotilengine.TLN_DisableLayerClip(0)
 				gotilengine.TLN_SetLayerPosition(0,mx,my)
-				time.Sleep(4 * time.Millisecond)
+				time.Sleep(8 * time.Millisecond)
 				gotilengine.TLN_DrawFrame(0)
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
