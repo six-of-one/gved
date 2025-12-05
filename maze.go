@@ -237,8 +237,11 @@ func domaze(arg string) {
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 
+//			gotilengine.TLN_CreateBitmap(560,560,32)
 			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
-			gotilengine.TLN_SetLayerBitmap(0, bkg)
+//			bkg = (gotilengine.TLN_Bitmap) (Ovimg)
+//			gotilengine.TLN_SetLayerBitmap(0, bkg)
+			gotilengine.TLN_SetBGBitmap(bkg)
 
 			if gotilengine.TLN_ProcessWindow() != 0 {
 					gotilengine.TLN_DrawFrame(gtk)
