@@ -213,7 +213,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -9,
+		nudgey:  -8,
 	},
 	"treasurelocked": Stamp{
 		width:   3,
@@ -231,7 +231,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  -8,
 	},
 
 	"tport": Stamp{
