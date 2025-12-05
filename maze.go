@@ -244,29 +244,42 @@ func domaze(arg string) {
 			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 			gotilengine.TLN_SetLayerBitmap(0, bkg)
 
-			tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d",mazeNum)))
-			gotilengine.TLN_SetWindowTitle(tewtil)
+//			tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d",mazeNum)))
+//			gotilengine.TLN_SetWindowTitle(tewtil)
 
 			nokp := true
+//			crte := true
+			gtk++
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
 					gotilengine.TLN_DrawFrame(gtk)
-					gtk++
+			gotilengine.TLN_SetLayerBitmap(0, bkg)
 			tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d - frame %d",mazeNum,gtk)))
 			gotilengine.TLN_SetWindowTitle(tewtil)
-//					fmt.Printf("window frame %d\n",gtk)
-					for f := 1; f < 160; f++ {
+// this really only detects:
+// arrows ^ 1, v 2, < 3, > 4
+// buttons	z 5, x 6, c 7, v 8
+// 			enter 11, bkspc 13
+					for f := 1; f < 99; f++ {
 					kc := (gotilengine.TLN_Input) (f)
 					if gotilengine.TLN_GetInput(kc) != 0 {
-						fmt.Printf("gotilengine key down: %d\n",f)
-						nokp = false
+						if f == 13 {
+//							if crte {
+//								crte = false
+								gotilengine.TLN_DisableCRTEffect()
+//							}
+						} else {
+							fmt.Printf("gotilengine key down: %d\n",f)
+							nokp = false
+						}
 					}}
-				}
-				if gotilengine.TLN_ProcessWindow() == 0 {
-					fmt.Printf("Exited window...\n")
-					gotilengine.TLN_DeleteBitmap(bkg)
-					gotilengine.TLN_Deinit()
-					os.Exit(0)
-				}
+//					fmt.Printf("crte: %v\n",crte)
+			}
+			if gotilengine.TLN_ProcessWindow() == 0 {
+				fmt.Printf("Exited window...\n")
+				gotilengine.TLN_DeleteBitmap(bkg)
+				gotilengine.TLN_Deinit()
+				os.Exit(0)
+			}
 
 /*
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
