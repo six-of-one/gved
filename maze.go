@@ -241,7 +241,7 @@ func domaze(arg string) {
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 */
-			time.Sleep(1 * time.Second)
+			time.Sleep(5 * time.Second)
 			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 			gotilengine.TLN_SetLayerBitmap(0, bkg)
 
@@ -250,7 +250,6 @@ func domaze(arg string) {
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
 				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d - frame %d",mazeNum,gtk)))
 				gotilengine.TLN_SetWindowTitle(tewtil)
-				gotilengine.TLN_UpdateFrame(0)
 // this really only detects:
 // arrows ^ 1, v 2, < 3, > 4
 // buttons	z 5, x 6, c 7, v 8
