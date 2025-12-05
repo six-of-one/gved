@@ -247,7 +247,6 @@ func domaze(arg string) {
 
 			nokp := true
 			gtk = 0
-			gotilengine.TLN_DisableLayer(0)
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
 				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d - frame %d",mazeNum,gtk)))
 				gotilengine.TLN_SetWindowTitle(tewtil)
@@ -276,13 +275,14 @@ func domaze(arg string) {
 						}
 					}}
 				gtk++
+//				gotilengine.TLN_SetLayerPosition(0,gtk & 15,0)
 				time.Sleep(8 * time.Millisecond)
-				gotilengine.TLN_EnableLayer(0)
 				gotilengine.TLN_DrawFrame(0)
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
 				fmt.Printf("Exited window...\n")
 				gotilengine.TLN_DeleteBitmap(bkg)
+				gotilengine.TLN_DeleteWindow()
 				gotilengine.TLN_Deinit()
 				os.Exit(0)
 			}
