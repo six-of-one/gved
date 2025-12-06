@@ -110,13 +110,16 @@ func domaze(arg string) {
 
 // testing gotilengine
 	var bkg gotilengine.TLN_Bitmap
+	var bkgb gotilengine.TLN_Bitmap
 	bkgfil := (gotilengine.CString) (C.CString("output.png"))
+	bkgfilb := (gotilengine.CString) (C.CString("output2.png"))
 	gotilengine.TLN_Init(560, 560, 2, 24, 1)
 	gotilengine.TLN_CreateWindow((gotilengine.CString) (C.NULL), 0)
 	gotilengine.TLN_CreateBitmap(560,560,32)
 	bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 	gotilengine.TLN_SetLayerBitmap(0, bkg)
 	gtk := (gotilengine.CInt) (int (1))
+	gotilengine.TLN_DisableCRTEffect()
 	if gotilengine.TLN_ProcessWindow() != 0 {
 			gotilengine.TLN_DrawFrame(0)
 		}
@@ -230,7 +233,6 @@ func domaze(arg string) {
 		}
 	}
 
-			genpfimage(maze, mazeNum)
 /*
 			Ovimg := genpfimage(maze, mazeNum)
 			bimg := canvas.NewRasterFromImage(Ovimg)
@@ -241,11 +243,21 @@ func domaze(arg string) {
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 */
-			time.Sleep(2 * time.Second)
-			gotilengine.TLN_DeleteBitmap(bkg)
-			gotilengine.TLN_CreateBitmap(560,560,32)
-			bkg = gotilengine.TLN_LoadBitmap(bkgfil)
-			gotilengine.TLN_SetLayerBitmap(0, bkg)
+//			gotilengine.TLN_DeleteBitmap(bkg)
+//			gotilengine.TLN_CreateBitmap(560,560,32)
+			if opts.Output == "output.png" {
+				opts.Output = "output2.png"
+				genpfimage(maze, mazeNum)
+				time.Sleep(2 * time.Second)
+				bkgb = gotilengine.TLN_LoadBitmap(bkgfilb)
+				gotilengine.TLN_SetLayerBitmap(0, bkgb)
+			} else {
+				opts.Output = "output.png"
+				genpfimage(maze, mazeNum)
+				time.Sleep(2 * time.Second)
+				bkg = gotilengine.TLN_LoadBitmap(bkgfil)
+				gotilengine.TLN_SetLayerBitmap(0, bkg)
+			}
 
 			nokp := true
 			mx := (gotilengine.CInt) (int (0))
