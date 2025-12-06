@@ -248,9 +248,9 @@ func domaze(arg string) {
 //				gotilengine.TLN_Init(560, 560, 2, 24, 1)
 //				gotilengine.TLN_CreateBitmap(560,560,32)
 				bkg = gotilengine.TLN_LoadBitmap(bkgfil)
-				time.Sleep(3 * time.Second)
+				time.Sleep(1 * time.Second)
 				gotilengine.TLN_SetLayerBitmap(0, bkg)
-				time.Sleep(4 * time.Second)
+//				time.Sleep(4 * time.Second)
 				gotilengine.TLN_SetBGColor(91,1,1)
 			}
 			sec = true
@@ -280,11 +280,11 @@ func domaze(arg string) {
 						case 4:
 							mx++
 						case 5:
-							anum = mazeNum - 1
+							anum = mazeNum
 							nokp = false
 							ascii = 17
 						case 6:
-							anum = mazeNum + 1
+							anum = mazeNum + 2
 							nokp = false
 							ascii = 17
 						case 13:
