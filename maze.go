@@ -65,7 +65,7 @@ func domaze(arg string) {
 		}
 	}
 
-	fmt.Printf("Maze number: %d", mazeNum)
+	fmt.Printf("Maze number: %d", mazeNum + 1)
 	if Aov > 0 {
 		fmt.Printf(", address: 0x%X ", Aov)
 	}
@@ -110,19 +110,18 @@ func domaze(arg string) {
 
 // testing gotilengine
 	var bkg gotilengine.TLN_Bitmap
-	var bkgb gotilengine.TLN_Bitmap
 	bkgfil := (gotilengine.CString) (C.CString("output.png"))
-	bkgfilb := (gotilengine.CString) (C.CString("output2.png"))
 	gotilengine.TLN_Init(560, 560, 2, 24, 1)
 	gotilengine.TLN_CreateWindow((gotilengine.CString) (C.NULL), 0)
 	gotilengine.TLN_CreateBitmap(560,560,32)
 	bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 	gotilengine.TLN_SetLayerBitmap(0, bkg)
-	gtk := (gotilengine.CInt) (int (1))
 	gotilengine.TLN_DisableCRTEffect()
+	gtk := (gotilengine.CInt) (int (1))
 	if gotilengine.TLN_ProcessWindow() != 0 {
 			gotilengine.TLN_DrawFrame(0)
 		}
+	sec := false	// is it the first load? dont redo the bitmap
 // testing gotilengine
 
 // interactive loop here - lets user tweak vars settings & load new mazes
@@ -136,10 +135,10 @@ func domaze(arg string) {
 
 		if !noact {
 // redo maze #, colors, walls, rotates, etc
-			if (anum >= 0 && anum < 127 || anum >= 229376 && anum < 262145) && ascii == 97 {
-				if anum < 127 {
+			if (anum > 0 && anum <= 127 || anum >= 229376 && anum < 262145) && ascii == 97 {
+				if anum <= 127 {
 					fmt.Printf("\nnew maze: %d\n",anum)
-					mazeNum = anum
+					mazeNum = anum - 1
 					Aov = 0
 				} else {
 					fmt.Printf("\nnew addr: %d\n",anum)
@@ -233,6 +232,7 @@ func domaze(arg string) {
 		}
 	}
 
+			genpfimage(maze, mazeNum)
 /*
 			Ovimg := genpfimage(maze, mazeNum)
 			bimg := canvas.NewRasterFromImage(Ovimg)
@@ -243,28 +243,24 @@ func domaze(arg string) {
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 */
-//			gotilengine.TLN_DeleteBitmap(bkg)
-//			gotilengine.TLN_CreateBitmap(560,560,32)
-			if opts.Output == "output.png" {
-				opts.Output = "output2.png"
-				genpfimage(maze, mazeNum)
-				time.Sleep(3 * time.Second)
-				bkgb = gotilengine.TLN_LoadBitmap(bkgfilb)
-				gotilengine.TLN_SetLayerBitmap(1, bkgb)
-			} else {
-				opts.Output = "output.png"
-				genpfimage(maze, mazeNum)
-				time.Sleep(3 * time.Second)
+			if sec {
+//				gotilengine.TLN_DeleteBitmap(bkg)
+//				gotilengine.TLN_Init(560, 560, 2, 24, 1)
+//				gotilengine.TLN_CreateBitmap(560,560,32)
 				bkg = gotilengine.TLN_LoadBitmap(bkgfil)
-				gotilengine.TLN_SetLayerBitmap(1, bkg)
+				time.Sleep(3 * time.Second)
+				gotilengine.TLN_SetLayerBitmap(0, bkg)
+				time.Sleep(4 * time.Second)
+				gotilengine.TLN_SetBGColor(91,1,1)
 			}
+			sec = true
 
 			nokp := true
 			mx := (gotilengine.CInt) (int (0))
 			my := (gotilengine.CInt) (int (0))
 			gtk = 0
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
-				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - frame %d",mazeNum,mx,my,gtk)))
+				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - ½ frames %d",mazeNum + 1,mx,my,gtk)))
 				gotilengine.TLN_SetWindowTitle(tewtil)
 // this really only detects:
 // arrows ^ 1, v 2, < 3, > 4
@@ -298,15 +294,13 @@ func domaze(arg string) {
 						}
 					}}
 				gtk++
-				gotilengine.TLN_SetBGColor(222,1,1)
-				gotilengine.TLN_SetLayerPosition(1,mx,my)
+				gotilengine.TLN_SetLayerPosition(0,mx,my)
 				time.Sleep(8 * time.Millisecond)
 				gotilengine.TLN_DrawFrame(0)
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
 				fmt.Printf("Exited window...\n")
 				gotilengine.TLN_DeleteBitmap(bkg)
-				gotilengine.TLN_DeleteBitmap(bkgb)
 				gotilengine.TLN_DeleteWindow()
 				gotilengine.TLN_Deinit()
 				os.Exit(0)
@@ -437,7 +431,7 @@ Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyReturn, Modifier: fyne.KeyMod
 				fmt.Printf("e - wall color+\nE - wall color-\nr - rotate maze +90 deg\nR - rotate maze -90 deg\n")
 				fmt.Printf("t - turn off rotate\nh - mirror maze horizontal toggle\nm - mirror maze vertical toggle\ns - toggle rnd special potion\n")
 				fmt.Printf("i - gauntlet mazes r1 - r9\nl - use gauntlet rev 14\nu - gauntlet 2 mazes\n")
-				fmt.Printf("{n}a - load maze 0 - 126 g1, 0 - 116 g2, or address 229376 - 262143\n")
+				fmt.Printf("{n}a - load maze 1 - 127 g1, 1 - 117 g2, or address 229376 - 262143\n")
 				fmt.Printf("v - valid address list                      * note some address will cause crash out\n")
 				fmt.Printf("    commands can be chained - i.e. i5a will switch to g1 and load maze 5\n")
 				fmt.Printf("G%d ",opts.Gtp)
