@@ -257,23 +257,23 @@ func domaze(arg string) {
 			w.SetTitle(til)
 */
 			if sec {
-//				gotilengine.TLN_DeleteBitmap(bkg)
 //				gotilengine.TLN_Init(560, 560, 2, 24, 1)
-//				gotilengine.TLN_CreateBitmap(560,560,32)
-				time.Sleep(1 * time.Second)
+				gotilengine.TLN_DeleteBitmap(bkg)
+				gotilengine.TLN_CreateBitmap(560,560,32)
+				time.Sleep(15 * time.Second)
 				bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 				gotilengine.TLN_SetBGColor(91,1,1)
-				if ly == 1 {
+//				if ly == 1 {
 					ly = 0
 					gotilengine.TLN_DisableLayer(1)
 					gotilengine.TLN_EnableLayer(0)
 					gotilengine.TLN_SetLayerBitmap(0, bkg)
-				} else {
+/*				} else {
 					ly = 1
 					gotilengine.TLN_DisableLayer(0)
 					gotilengine.TLN_EnableLayer(1)
 					gotilengine.TLN_SetLayerBitmap(1, bkg)
-				}
+				}*/
 //			gotilengine.TLN_DrawFrame(0)
 			}
 			sec = true
@@ -323,7 +323,7 @@ func domaze(arg string) {
 								crt = false
 								time.Sleep(250 * time.Millisecond)
 							} else {
-								gotilengine.TLN_ConfigCRTEffect(2,0)
+								gotilengine.TLN_ConfigCRTEffect(1,0)
 								suser = "enabl CRT"
 								crt = true
 								time.Sleep(250 * time.Millisecond)
