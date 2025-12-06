@@ -247,11 +247,11 @@ func domaze(arg string) {
 //				gotilengine.TLN_DeleteBitmap(bkg)
 //				gotilengine.TLN_Init(560, 560, 2, 24, 1)
 //				gotilengine.TLN_CreateBitmap(560,560,32)
-//				time.Sleep(2 * time.Second)
+				time.Sleep(4 * time.Second)
 				bkg = gotilengine.TLN_LoadBitmap(bkgfil)
-				gotilengine.TLN_SetLayerBitmap(0, bkg)
 				gotilengine.TLN_SetBGColor(91,1,1)
-				gotilengine.TLN_DrawFrame(0)
+				gotilengine.TLN_SetLayerBitmap(0, bkg)
+//				gotilengine.TLN_DrawFrame(0)
 			}
 			sec = true
 
@@ -262,9 +262,6 @@ func domaze(arg string) {
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
 				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - ½ frames %d",mazeNum + 1,mx,my,gtk)))
 				gotilengine.TLN_SetWindowTitle(tewtil)
-				if gtk % 200 == 0 {
-					gotilengine.TLN_DisableCRTEffect()
-				}
 // this really only detects:
 // arrows ^ 1, v 2, < 3, > 4
 // buttons	z 5, x 6, c 7, v 8
