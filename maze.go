@@ -117,11 +117,14 @@ func domaze(arg string) {
 	bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 	gotilengine.TLN_SetLayerBitmap(0, bkg)
 	gotilengine.TLN_DisableCRTEffect()
+	crt := false
 	gtk := (gotilengine.CInt) (int (1))
 	if gotilengine.TLN_ProcessWindow() != 0 {
 			gotilengine.TLN_DrawFrame(0)
 		}
 	sec := false	// is it the first load? dont redo the bitmap
+	suser := " "	// user action string
+
 // testing gotilengine
 
 // interactive loop here - lets user tweak vars settings & load new mazes
@@ -140,16 +143,17 @@ func domaze(arg string) {
 					fmt.Printf("\nnew maze: %d\n",anum)
 					mazeNum = anum - 1
 					Aov = 0
+					suser = fmt.Sprintf("maze = %d",anum)
 				} else {
 					fmt.Printf("\nnew addr: %d\n",anum)
 					Aov = anum
+					suser = fmt.Sprintf("addr = %d",anum)
 				}
 				anum = -1
 // clear these when load new maze
 				Ovwallpat = -1
 			}
 			maze = mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0)
-			gotilengine.TLN_DisableCRTEffect()
 
 // manual mirror, flip
 	if opts.MH || opts.MV || opts.MRP || opts.MRM {
@@ -227,6 +231,13 @@ func domaze(arg string) {
 				xform[xy{tx, lasty - ty}] = maze.data[xy{tx, ty}]
 			}}
 		}
+		if opts.MH || opts.MV || opts.MRP || opts.MRM {
+			suser += ","
+			if opts.MV { suser += " m-vert" }
+			if opts.MH { suser += " m-horz" }
+			if opts.MRP { suser += "+90°" }
+			if opts.MRM { suser += "-90°" }
+		}
 // copy back
 		for y := 1; y <= lasty; y++ {
 			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
@@ -248,7 +259,6 @@ func domaze(arg string) {
 //				gotilengine.TLN_DeleteBitmap(bkg)
 //				gotilengine.TLN_Init(560, 560, 2, 24, 1)
 //				gotilengine.TLN_CreateBitmap(560,560,32)
-				gotilengine.TLN_ConfigCRTEffect(1,0)
 				time.Sleep(1 * time.Second)
 				bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 				gotilengine.TLN_SetBGColor(91,1,1)
@@ -262,7 +272,7 @@ func domaze(arg string) {
 			my := (gotilengine.CInt) (int (0))
 			gtk = 0
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
-				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - ½ frames %d",mazeNum + 1,mx,my,gtk)))
+				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - ½ frames %d, <-%s",mazeNum + 1,mx,my,gtk,suser)))
 				gotilengine.TLN_SetWindowTitle(tewtil)
 // this really only detects:
 // arrows ^ 1, v 2, < 3, > 4
@@ -283,14 +293,26 @@ func domaze(arg string) {
 							mx++
 						case 5:
 							anum = mazeNum
+							suser = "maze -1"
 							nokp = false
 							ascii = 17
 						case 6:
 							anum = mazeNum + 2
+							suser = "maze +1"
 							nokp = false
 							ascii = 17
 						case 13:
-							gotilengine.TLN_DisableCRTEffect()
+							if crt {
+								gotilengine.TLN_DisableCRTEffect()
+								suser = "disab CRT"
+								crt = false
+								time.Sleep(1 * time.Second)
+							} else {
+								gotilengine.TLN_ConfigCRTEffect(1,0)
+								suser = "enabl CRT"
+								crt = true
+								time.Sleep(1 * time.Second)
+							}
 						default:
 							nokp = false
 						}
@@ -430,7 +452,7 @@ Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyReturn, Modifier: fyne.KeyMod
 			case 63:
 				fmt.Printf("single letter commands\n\n? - this list\nq - quit program\nf - floor pattern+\nF - floor pattern-\n")
 				fmt.Printf("g - floor color+\nG - floor color-\nw - wall pattern+\nW - wall pattern-\n")
-				fmt.Printf("e - wall color+\nE - wall color-\nr - rotate maze +90 deg\nR - rotate maze -90 deg\n")
+				fmt.Printf("e - wall color+\nE - wall color-\nr - rotate maze +90°\nR - rotate maze -90°\n")
 				fmt.Printf("t - turn off rotate\nh - mirror maze horizontal toggle\nm - mirror maze vertical toggle\ns - toggle rnd special potion\n")
 				fmt.Printf("i - gauntlet mazes r1 - r9\nl - use gauntlet rev 14\nu - gauntlet 2 mazes\n")
 				fmt.Printf("{n}a - load maze 1 - 127 g1, 1 - 117 g2, or address 229376 - 262143\n")
