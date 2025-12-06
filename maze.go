@@ -248,15 +248,15 @@ func domaze(arg string) {
 			if opts.Output == "output.png" {
 				opts.Output = "output2.png"
 				genpfimage(maze, mazeNum)
-				time.Sleep(2 * time.Second)
+				time.Sleep(3 * time.Second)
 				bkgb = gotilengine.TLN_LoadBitmap(bkgfilb)
-				gotilengine.TLN_SetLayerBitmap(0, bkgb)
+				gotilengine.TLN_SetLayerBitmap(1, bkgb)
 			} else {
 				opts.Output = "output.png"
 				genpfimage(maze, mazeNum)
-				time.Sleep(2 * time.Second)
+				time.Sleep(3 * time.Second)
 				bkg = gotilengine.TLN_LoadBitmap(bkgfil)
-				gotilengine.TLN_SetLayerBitmap(0, bkg)
+				gotilengine.TLN_SetLayerBitmap(1, bkg)
 			}
 
 			nokp := true
@@ -298,14 +298,15 @@ func domaze(arg string) {
 						}
 					}}
 				gtk++
-				gotilengine.TLN_SetBGColor(17,17,17)
-				gotilengine.TLN_SetLayerPosition(0,mx,my)
+				gotilengine.TLN_SetBGColor(222,1,1)
+				gotilengine.TLN_SetLayerPosition(1,mx,my)
 				time.Sleep(8 * time.Millisecond)
 				gotilengine.TLN_DrawFrame(0)
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
 				fmt.Printf("Exited window...\n")
 				gotilengine.TLN_DeleteBitmap(bkg)
+				gotilengine.TLN_DeleteBitmap(bkgb)
 				gotilengine.TLN_DeleteWindow()
 				gotilengine.TLN_Deinit()
 				os.Exit(0)
