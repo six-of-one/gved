@@ -285,12 +285,16 @@ func domaze(arg string) {
 						switch f {
 						case 1:
 							my--
+							time.Sleep(10 * time.Millisecond)
 						case 2:
 							my++
+							time.Sleep(10 * time.Millisecond)
 						case 3:
 							mx--
+							time.Sleep(10 * time.Millisecond)
 						case 4:
 							mx++
+							time.Sleep(10 * time.Millisecond)
 						case 5:
 							anum = mazeNum
 							suser = "maze -1"
@@ -306,12 +310,12 @@ func domaze(arg string) {
 								gotilengine.TLN_DisableCRTEffect()
 								suser = "disab CRT"
 								crt = false
-								time.Sleep(1 * time.Second)
+								time.Sleep(250 * time.Millisecond)
 							} else {
-								gotilengine.TLN_ConfigCRTEffect(1,0)
+								gotilengine.TLN_ConfigCRTEffect(2,0)
 								suser = "enabl CRT"
 								crt = true
-								time.Sleep(1 * time.Second)
+								time.Sleep(250 * time.Millisecond)
 							}
 						default:
 							nokp = false
