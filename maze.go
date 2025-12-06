@@ -274,7 +274,7 @@ func domaze(arg string) {
 					gotilengine.TLN_EnableLayer(1)
 					gotilengine.TLN_SetLayerBitmap(1, bkg)
 				}
-//				gotilengine.TLN_DrawFrame(0)
+//			gotilengine.TLN_DrawFrame(0)
 			}
 			sec = true
 
@@ -283,7 +283,7 @@ func domaze(arg string) {
 			my := (gotilengine.CInt) (int (0))
 			gtk = 0
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
-				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - ly: %d ½ frames %d, <-%s",mazeNum + 1,mx,my,ly,gtk,suser)))
+				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - ly: %d, ½ frames %d, <-%s",mazeNum + 1,mx,my,ly,gtk,suser)))
 				gotilengine.TLN_SetWindowTitle(tewtil)
 // this really only detects:
 // arrows ^ 1, v 2, < 3, > 4
@@ -334,7 +334,7 @@ func domaze(arg string) {
 					}}
 				gtk++
 				gotilengine.TLN_SetLayerPosition(ly,mx,my)
-				time.Sleep(10 * time.Millisecond)
+//				time.Sleep(6 * time.Millisecond)
 				gotilengine.TLN_DrawFrame(0)
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
