@@ -118,6 +118,7 @@ func domaze(arg string) {
 	gotilengine.TLN_SetLayerBitmap(0, bkg)
 	gotilengine.TLN_DisableCRTEffect()
 	crt := false
+	ly := (gotilengine.CInt) (int (0))	// curr layer
 	gtk := (gotilengine.CInt) (int (1))
 	if gotilengine.TLN_ProcessWindow() != 0 {
 			gotilengine.TLN_DrawFrame(0)
@@ -262,7 +263,17 @@ func domaze(arg string) {
 				time.Sleep(1 * time.Second)
 				bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 				gotilengine.TLN_SetBGColor(91,1,1)
-				gotilengine.TLN_SetLayerBitmap(0, bkg)
+				if ly == 1 {
+					ly = 0
+					gotilengine.TLN_DisableLayer(1)
+					gotilengine.TLN_EnableLayer(0)
+					gotilengine.TLN_SetLayerBitmap(0, bkg)
+				} else {
+					ly = 1
+					gotilengine.TLN_DisableLayer(0)
+					gotilengine.TLN_EnableLayer(1)
+					gotilengine.TLN_SetLayerBitmap(1, bkg)
+				}
 //				gotilengine.TLN_DrawFrame(0)
 			}
 			sec = true
@@ -322,9 +333,9 @@ func domaze(arg string) {
 						}
 					}}
 				gtk++
-				gotilengine.TLN_SetLayerPosition(0,mx,my)
-				time.Sleep(8 * time.Millisecond)
-				gotilengine.TLN_DrawFrame(0)
+				gotilengine.TLN_SetLayerPosition(ly,mx,my)
+				time.Sleep(17 * time.Millisecond)
+				gotilengine.TLN_DrawFrame(ly)
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
 				fmt.Printf("Exited window...\n")
