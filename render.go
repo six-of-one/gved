@@ -6,6 +6,7 @@ import (
 	"image/png"
 	"math"
 	"os"
+	"time"
 //	"fmt"
 )
 
@@ -200,8 +201,12 @@ func writestamptoimage(img *image.NRGBA, stamp *Stamp, xloc int, yloc int) {
 
 func savetopng(fn string, img *image.NRGBA) {
 	f, _ := os.OpenFile(fn, os.O_WRONLY|os.O_CREATE, 0600)
-	defer f.Close()
+	//defer f.Close()
 	png.Encode(f, img)
+// attempt get TLN_SetLayerBitmap work wright
+	time.Sleep(2 * time.Second)
+	f.Close()
+
 }
 
 // func genanim(animarray []int, xtiles int, ytiles int) []*image.Paletted {

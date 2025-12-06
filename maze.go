@@ -247,11 +247,11 @@ func domaze(arg string) {
 //				gotilengine.TLN_DeleteBitmap(bkg)
 //				gotilengine.TLN_Init(560, 560, 2, 24, 1)
 //				gotilengine.TLN_CreateBitmap(560,560,32)
+				time.Sleep(2 * time.Second)
 				bkg = gotilengine.TLN_LoadBitmap(bkgfil)
-				time.Sleep(1 * time.Second)
 				gotilengine.TLN_SetLayerBitmap(0, bkg)
-//				time.Sleep(4 * time.Second)
 				gotilengine.TLN_SetBGColor(91,1,1)
+				gotilengine.TLN_DrawFrame(0)
 			}
 			sec = true
 
