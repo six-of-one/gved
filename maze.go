@@ -149,6 +149,7 @@ func domaze(arg string) {
 				Ovwallpat = -1
 			}
 			maze = mazeDecompress(slapsticReadMaze(mazeNum), mazeMeta > 0)
+			gotilengine.TLN_DisableCRTEffect()
 
 // manual mirror, flip
 	if opts.MH || opts.MV || opts.MRP || opts.MRM {
@@ -247,7 +248,8 @@ func domaze(arg string) {
 //				gotilengine.TLN_DeleteBitmap(bkg)
 //				gotilengine.TLN_Init(560, 560, 2, 24, 1)
 //				gotilengine.TLN_CreateBitmap(560,560,32)
-				time.Sleep(4 * time.Second)
+				gotilengine.TLN_ConfigCRTEffect(1,0)
+				time.Sleep(1 * time.Second)
 				bkg = gotilengine.TLN_LoadBitmap(bkgfil)
 				gotilengine.TLN_SetBGColor(91,1,1)
 				gotilengine.TLN_SetLayerBitmap(0, bkg)

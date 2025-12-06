@@ -204,7 +204,7 @@ func savetopng(fn string, img *image.NRGBA) {
 	//defer f.Close()
 	png.Encode(f, img)
 // attempt get TLN_SetLayerBitmap work wright
-	time.Sleep(2 * time.Second)
+	time.Sleep(3 * time.Second)
 	f.Close()
 
 }
