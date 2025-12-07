@@ -282,10 +282,8 @@ func domaze(arg string) {
 			mx := (gotilengine.CInt) (int (0))
 			my := (gotilengine.CInt) (int (0))
 			gtk = 0
-			if gotilengine.TLN_ProcessWindow() != 0 {
-				gotilengine.TLN_DrawFrame(0)
-			}
-
+// atempt to limit draw if no changes
+			gtkl := 30
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
 				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - ly: %d, ½ frames %d, <-%s",mazeNum + 1,mx,my,ly,gtk,suser)))
 				gotilengine.TLN_SetWindowTitle(tewtil)
@@ -301,23 +299,15 @@ func domaze(arg string) {
 						case 1:
 							my--
 							time.Sleep(10 * time.Millisecond)
-							gotilengine.TLN_SetLayerPosition(ly,mx,my)
-							gotilengine.TLN_DrawFrame(0)
 						case 2:
 							my++
 							time.Sleep(10 * time.Millisecond)
-							gotilengine.TLN_SetLayerPosition(ly,mx,my)
-							gotilengine.TLN_DrawFrame(0)
 						case 3:
 							mx--
 							time.Sleep(10 * time.Millisecond)
-							gotilengine.TLN_SetLayerPosition(ly,mx,my)
-							gotilengine.TLN_DrawFrame(0)
 						case 4:
 							mx++
 							time.Sleep(10 * time.Millisecond)
-							gotilengine.TLN_SetLayerPosition(ly,mx,my)
-							gotilengine.TLN_DrawFrame(0)
 						case 5:
 							anum = mazeNum
 							suser = "maze -1"
@@ -334,20 +324,23 @@ func domaze(arg string) {
 								suser = "disab CRT"
 								crt = false
 								time.Sleep(250 * time.Millisecond)
-								gotilengine.TLN_DrawFrame(0)
 							} else {
 								gotilengine.TLN_ConfigCRTEffect(1,0)
 								suser = "enabl CRT"
 								crt = true
 								time.Sleep(250 * time.Millisecond)
-								gotilengine.TLN_DrawFrame(0)
 							}
 						default:
 							nokp = false
 						}
 					}}
 				gtk++
+				gotilengine.TLN_SetLayerPosition(ly,mx,my)
 				time.Sleep(6 * time.Millisecond)
+				if gtkl > 0 {
+					gotilengine.TLN_DrawFrame(0)
+					gtkl--
+				}
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
 				fmt.Printf("Exited window...\n")
