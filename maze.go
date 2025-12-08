@@ -285,7 +285,7 @@ func domaze(arg string) {
 // atempt to limit draw if no changes
 			gtkl := 30
 			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
-				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - ly: %d, ½ frames %d, <-%s",mazeNum + 1,mx,my,ly,gtk,suser)))
+				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - ly: %d, ½ frames %d, drawing: %d, <-%s",mazeNum + 1,mx,my,ly,gtk,gtkl,suser)))
 				gotilengine.TLN_SetWindowTitle(tewtil)
 // this really only detects:
 // arrows ^ 1, v 2, < 3, > 4
@@ -299,15 +299,19 @@ func domaze(arg string) {
 						case 1:
 							my--
 							time.Sleep(10 * time.Millisecond)
+							gtkl = 30
 						case 2:
 							my++
 							time.Sleep(10 * time.Millisecond)
+							gtkl = 30
 						case 3:
 							mx--
 							time.Sleep(10 * time.Millisecond)
+							gtkl = 30
 						case 4:
 							mx++
 							time.Sleep(10 * time.Millisecond)
+							gtkl = 30
 						case 5:
 							anum = mazeNum
 							suser = "maze -1"
@@ -324,11 +328,13 @@ func domaze(arg string) {
 								suser = "disab CRT"
 								crt = false
 								time.Sleep(250 * time.Millisecond)
+								gtkl = 30
 							} else {
 								gotilengine.TLN_ConfigCRTEffect(1,0)
 								suser = "enabl CRT"
 								crt = true
 								time.Sleep(250 * time.Millisecond)
+								gtkl = 30
 							}
 						default:
 							nokp = false
@@ -340,6 +346,10 @@ func domaze(arg string) {
 				if gtkl > 0 {
 					gotilengine.TLN_DrawFrame(0)
 					gtkl--
+				}
+				gte := gotilengine.TLN_GetLastError()
+				if gte > 0 {
+					fmt.Printf("Error: %d\n",gte)
 				}
 			}
 			if gotilengine.TLN_ProcessWindow() == 0 {
