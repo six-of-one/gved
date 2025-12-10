@@ -993,6 +993,7 @@ if opts.Verbose {
 //			fmt.Printf(" %02d", maze.data[xy{x, y}])
 			fmt.Printf("SVRLOAD[1][3][%d] = \"0x%x\";\n", i, sanct_vrt[maze.data[xy{x, y}]])
 			i++
+			if sanct_vrt[maze.data[xy{x, y}]] < 0x1000 { fmt.Printf("// error used - %d\n",sanct_vrt[maze.data[xy{x, y}]]) }
 		}
 		fmt.Printf("\n")
 	}
