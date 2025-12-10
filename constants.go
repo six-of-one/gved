@@ -291,7 +291,7 @@ var sanct_vrt = []int{
 	 0x8020,		// 	G1MP_FOOD_INVULN: 43,
 	 0x8060,		// 	G1MP_POT_DESTRUCTABLE: 44,
 	 0x000045,		// 	G1MP_nospec_45: 45,
-	 0x80f0,		// 	G1OBJ_INVISIBL: 46,
+	 0x80f0,		// 	G1MP_INVISIBL: 46,
 	 0x000047,		// 	G1MP_nospec_47: 47,
 	 0x000048,		// 	G1MP_nospec_48: 48,
 	 0x000049,		// 	G1MP_nospec_49: 49,
