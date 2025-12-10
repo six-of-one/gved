@@ -985,7 +985,11 @@ if false {
 if opts.Verbose {
 // paste in sanctuary converter
 	i := 0
-	fmt.Printf("	SVRLOAD[1] = [ ];\n	SVRLOAD[1][2] = \"Level %d\";\n	SVRLOAD[1][3] = [ ];\n	SVRLOAD[1][4] =\"1089\";\n", mazenum)
+	mz := mazenum + 1
+	if mz > 116 { mz = mz - 2 }		// sanctuary does not have 115 as demo or 116 as score table
+	if mz == 115 { mz = 0 }
+	if mz == 116 { mz = 126 }		// 1 past se end
+	fmt.Printf("	SVRLOAD[1] = [ ];\n	SVRLOAD[1][1] = \"levels/glevel%d.png\"\n	SVRLOAD[1][2] = \"Level %d\";\n	SVRLOAD[1][3] = [ ];\n	SVRLOAD[1][4] =\"1089\";\n", mz, mz)
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
