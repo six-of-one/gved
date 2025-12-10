@@ -982,22 +982,26 @@ if false {
 // Six - end of tile dumper
 }
 // Six - maze dumper
-if opts.Verbose {
-// paste in sanctuary converter
+if opts.Verbose || opts.Se {
 	i := 0
-	mz := mazenum + 1
-	if mz > 116 { mz = mz - 2 }		// sanctuary does not have 115 as demo or 116 as score table
-	if mz == 115 { mz = 0 }
-	if mz == 116 { mz = 126 }		// 1 past se end
-	fmt.Printf("	SVRLOAD[1] = [ ];\n	SVRLOAD[1][1] = \"levels/glevel%d.png\"\n	SVRLOAD[1][2] = \"Level %d\";\n	SVRLOAD[1][3] = [ ];\n	SVRLOAD[1][4] =\"1089\";\n", mz, mz)
+	if opts.Se {
+// paste in sanctuary converter
+		mz := mazenum + 1
+		if mz > 116 { mz = mz - 2 }		// sanctuary does not have 115 as demo or 116 as score table
+		if mz == 115 { mz = 0 }
+		if mz == 116 { mz = 126 }		// 1 past se end
+		fmt.Printf("	SVRLOAD[1] = [ ];\n	SVRLOAD[1][1] = \"levels/glevel%d.png\"\n	SVRLOAD[1][2] = \"Level %d\";\n	SVRLOAD[1][3] = [ ];\n	SVRLOAD[1][4] =\"1089\";\n", mz, mz)
+	}
+
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
-// test of converter - still need cnv to sanctuary data
-//			fmt.Printf(" %02d", maze.data[xy{x, y}])
-			fmt.Printf("	SVRLOAD[1][3][%d] = \"0x%x\";\n", i, sanct_vrt[maze.data[xy{x, y}]])
-			i++
-			if sanct_vrt[maze.data[xy{x, y}]] < 0x1000 { fmt.Printf("// error used - %d\n",sanct_vrt[maze.data[xy{x, y}]]) }
+			if opts.Verbose { fmt.Printf(" %02d", maze.data[xy{x, y}]) }
+			if opts.Se {
+				fmt.Printf("	SVRLOAD[1][3][%d] = \"0x%x\";\n", i, sanct_vrt[maze.data[xy{x, y}]])
+				i++
+				if sanct_vrt[maze.data[xy{x, y}]] < 0x1000 { fmt.Printf("// error used - %d\n",sanct_vrt[maze.data[xy{x, y}]]) }
+			}
 		}
 		fmt.Printf("\n")
 	}

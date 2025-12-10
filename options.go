@@ -24,6 +24,7 @@ var opts struct {
 // interactive mode for maze display, select wall & floors, rotates & mirrors, load new mazes, test addresses
 // only with maze{n}, if -i not given, prog just exits with maze in output.png
 	Intr	bool   `short:"i" description:"maze interactive cli mode"`
+	Se		bool   `short:"z" description:"sanctuary engine data output"`
 // orig options
 	Animate bool   `short:"a" long:"animate" description:"Animate monster"`
 	PalType string `long:"pt" default:"base" description:"Palette type"`
