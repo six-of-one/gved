@@ -985,13 +985,13 @@ if false {
 if opts.Verbose {
 // paste in sanctuary converter
 	i := 0
+	fmt.Printf("	SVRLOAD[1] = [ ];\n	SVRLOAD[1][2] = \"Level %d\";\nSVRLOAD[1][3] = [ ];\nSVRLOAD[1][4] =\"1089\";\n", mazenum)
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
 // test of converter - still need cnv to sanctuary data
 //			fmt.Printf(" %02d", maze.data[xy{x, y}])
-			fmt.Printf("	SVRLOAD[1] = [ ];\n	SVRLOAD[1][2] = \"Level %d\";\nSVRLOAD[1][3] = [ ];\nSVRLOAD[1][4] =\"1089\";\n", mazenum)
-			fmt.Printf("SVRLOAD[1][3][%d] = \"0x%x\";", i, maze.data[xy{x, y}])
+			fmt.Printf("SVRLOAD[1][3][%d] = \"0x%x\";\n", i, maze.data[xy{x, y}])
 			i++
 		}
 		fmt.Printf("\n")
