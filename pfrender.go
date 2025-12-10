@@ -8,6 +8,7 @@ import (
 	"os"
 	"image/draw"
 	"github.com/fogleman/gg"
+	"image/color"
 )
 
 // For testing
@@ -54,6 +55,25 @@ func copyedges(maze *Maze) {
 			maze.data[xy{i, 32}] = maze.data[xy{i, 0}]
 		}
 	}
+}
+
+// for maze output to se
+func ParseHexColor(s string) (c color.RGBA, err error) {
+    c.A = 0xff
+    switch len(s) {
+    case 7:
+        _, err = fmt.Sscanf(s, "#%02x%02x%02x", &c.R, &c.G, &c.B)
+    case 4:
+        _, err = fmt.Sscanf(s, "#%1x%1x%1x", &c.R, &c.G, &c.B)
+        // Double the hex digits:
+        c.R *= 17
+        c.G *= 17
+        c.B *= 17
+    default:
+        err = fmt.Errorf("invalid length, must be 7 or 4")
+
+    }
+    return
 }
 
 func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
@@ -629,6 +649,8 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				stamp = itemGetStamp("potion")
 			case G1OBJ_POT_INVULN:
 				stamp = itemGetStamp("ipotion")
+			case G1OBJ_INVISIBL:
+				stamp = itemGetStamp("invis")
 
 			case G1OBJ_TRANSPORTER:
 				stamp = itemGetStamp("tportg1")
@@ -984,9 +1006,10 @@ if false {
 // Six - maze dumper
 if opts.Verbose || opts.Se {
 	i := 0
+	mz := mazenum + 1
+	wimg := blankimage(lastx, lasty)
 	if opts.Se {
 // paste in sanctuary converter
-		mz := mazenum + 1
 		if mz > 116 { mz = mz - 2 }		// sanctuary does not have 115 as demo or 116 as score table
 		if mz == 115 { mz = 0 }
 		if mz == 116 { mz = 126 }		// 1 past se end
@@ -998,12 +1021,25 @@ if opts.Verbose || opts.Se {
 
 			if opts.Verbose { fmt.Printf(" %02d", maze.data[xy{x, y}]) }
 			if opts.Se {
-				fmt.Printf("	SVRLOAD[1][3][%d] = \"0x%x\";\n", i, sanct_vrt[maze.data[xy{x, y}]])
+//				fmt.Printf("	SVRLOAD[1][3][%d] = \"0x%x\";\n", i, sanct_vrt[maze.data[xy{x, y}]])
 				i++
-				if sanct_vrt[maze.data[xy{x, y}]] < 0x1000 { fmt.Printf("// error used - %d\n",sanct_vrt[maze.data[xy{x, y}]]) }
+				if sanct_vrt[maze.data[xy{x, y}]] < 0x1000 { fmt.Printf("// error used - %X\n",sanct_vrt[maze.data[xy{x, y}]]) }
+				hexc := fmt.Sprintf("#%06x",sanct_vrt[maze.data[xy{x, y}]])
+				mcol, err := ParseHexColor(hexc)
+				if err == nil {
+					wimg.Set(x,y,mcol)
+				}
 			}
 		}
-		fmt.Printf("\n")
+//		fmt.Printf("\n")
+	}
+	if opts.Se {
+		wnam := fmt.Sprintf("selvls/glevel%d.png",mz)
+		wrfile, err := os.Create(wnam)
+		if err == nil {
+			png.Encode(wrfile,wimg)
+		}
+		wrfile.Close()
 	}
 // Six end maze dumper
 }
