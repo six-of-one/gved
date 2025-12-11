@@ -1089,7 +1089,7 @@ if opts.Verbose || opts.Se {
 				i++
 				if sanct_vrt[maze.data[xy{x, y}]] < 0x1000 { fmt.Printf("// error used - %X\n",sanct_vrt[maze.data[xy{x, y}]]) }
 				hexc := fmt.Sprintf("#%06x",sanct_vrt[maze.data[xy{x, y}]])
-				if G2 { hexc = fmt.Sprintf("#%06x",sanct_vrt[maze.data[xy{x, y}]]) }	// CHANGE: sanct_vrt2
+				if G2 { hexc = fmt.Sprintf("#%06x",sanct_vrt2[maze.data[xy{x, y}]]) }	// CHANGE: sanct_vrt2
 				mcol, err := ParseHexColor(hexc)
 				if err == nil {
 					wimg.Set(x,y,mcol)
