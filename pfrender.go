@@ -287,9 +287,47 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				}
 // g2 decodes
 			if G2 {
-
+// hack for score table map display of: gold bag after treasure box, special potions
+	opr := 3				// 3 sets of special potions
+	if x > 1 && mazenum == 103 {	// dont hit past end of array & only do on score table maze
+		ts := maze.data[xy{x, y}]
+		tt := maze.data[xy{x-1, y}]
+		if ts == MAZEOBJ_TREASURE && tt == MAZEOBJ_TREASURE { maze.data[xy{x, y}] = 76 }
+		if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY && opr == 3 {
+			maze.data[xy{x-1, y}] = 73
+			maze.data[xy{x, y}] = 70
+			opr--
+		}
+		if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY && opr == 2 {
+			maze.data[xy{x-1, y}] = 75
+			maze.data[xy{x, y}] = 71
+			opr--
+		}
+		if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY && opr == 1 {
+			maze.data[xy{x-1, y}] = 72
+			maze.data[xy{x, y}] = 74
+			opr--
+		}
+	}
 			// We should do better
 			switch whatis(maze, x, y) {
+// specials are jammed in somewhere in G2 code, we just do this
+// specials added after convert to se id'ed them on maze 115, score table block
+			case 70:
+				stamp = itemGetStamp("speedpotion")
+			case 71:
+				stamp = itemGetStamp("shotpowerpotion")
+			case 72:
+				stamp = itemGetStamp("shotspeedpotion")
+			case 73:
+				stamp = itemGetStamp("shieldpotion")
+			case 74:
+				stamp = itemGetStamp("fightpotion")
+			case 75:
+				stamp = itemGetStamp("magicpotion")
+			case 76:
+				stamp = itemGetStamp("goldbag")
+
 			case MAZEOBJ_TILE_FLOOR:
 			// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
 			// stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
