@@ -1077,7 +1077,7 @@ if opts.Verbose || opts.Se {
 			if mz == 115 { mz = 0 }
 			if mz == 116 { mz = 127 }		// 1 past se end
 		}
-//		fmt.Printf("	SVRLOAD[1] = [ ];\n	SVRLOAD[1][1] = \"levels/glevel%d.png\"\n	SVRLOAD[1][2] = \"Level %d\";\n	SVRLOAD[1][3] = [ ];\n	SVRLOAD[1][4] =\"1089\";\n", mz, mz)
+		fmt.Printf("	SVRLOAD[1] = [ ];\n	SVRLOAD[1][1] = \"levels/glevel%d.png\"\n	SVRLOAD[1][2] = \"Level %d\";\n	SVRLOAD[1][3] = [ ];\n	SVRLOAD[1][4] =\"1089\";\n", mz, mz)
 	}
 
 	for y := 0; y <= lasty; y++ {
