@@ -289,23 +289,23 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			if G2 {
 // hack for score table map display of: gold bag after treasure box, special potions
 	opr := 3				// 3 sets of special potions
-	if x > 1 && mazenum == 103 {	// dont hit past end of array & only do on score table maze
+	if x < (lastx - 1) && mazenum == 103 {	// dont hit past end of array & only do on score table maze
 		ts := maze.data[xy{x, y}]
-		tt := maze.data[xy{x-1, y}]
+		tt := maze.data[xy{x+1, y}]
 		if ts == MAZEOBJ_TREASURE && tt == MAZEOBJ_TREASURE { maze.data[xy{x, y}] = 76 }
 		if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY && opr == 3 {
-			maze.data[xy{x-1, y}] = 73
-			maze.data[xy{x, y}] = 70
+			maze.data[xy{x, y}] = 73
+			maze.data[xy{x+1, y}] = 70
 			opr--
 		}
 		if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY && opr == 2 {
-			maze.data[xy{x-1, y}] = 75
-			maze.data[xy{x, y}] = 71
+			maze.data[xy{x, y}] = 75
+			maze.data[xy{x+1, y}] = 71
 			opr--
 		}
 		if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY && opr == 1 {
-			maze.data[xy{x-1, y}] = 72
-			maze.data[xy{x, y}] = 74
+			maze.data[xy{x, y}] = 72
+			maze.data[xy{x+1, y}] = 74
 			opr--
 		}
 	}
