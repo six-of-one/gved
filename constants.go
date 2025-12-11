@@ -386,7 +386,7 @@ var sanct_vrt2 = []int{
 	 0x400150,		// 	MAZEOBJ_MONST_DRAGON: 60,
 	 0x000061,		// 	MAZEOBJ_HIDDENPOT: 61,
 	 0x80a0,		// 	G1MP_TRANSPORTER: 62,
-	 0x000063,		// 	G1MP_nospec_: 63,
+	 0x8130,		// 	MAZEOBJ_FORCEFIELDHUB: 63,
 	 0x000064,		// 	G1MP_nospec_: 64,
 	 0x400100,		//  thief is hacked in for score table maze sample area
 	 0x000066,		// 	G1MP_nospec_: 66,
