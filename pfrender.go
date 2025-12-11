@@ -1087,9 +1087,16 @@ if opts.Verbose || opts.Se {
 			if opts.Se {
 //				fmt.Printf("	SVRLOAD[1][3][%d] = \"0x%x\";\n", i, sanct_vrt[maze.data[xy{x, y}]])
 				i++
-				if sanct_vrt[maze.data[xy{x, y}]] < 0x1000 { fmt.Printf("// error used - %X\n",sanct_vrt[maze.data[xy{x, y}]]) }
-				hexc := fmt.Sprintf("#%06x",sanct_vrt[maze.data[xy{x, y}]])
-				if G2 { hexc = fmt.Sprintf("#%06x",sanct_vrt2[maze.data[xy{x, y}]]) }	// CHANGE: sanct_vrt2
+				var vr int
+				var hexc string
+				if G1 {
+					vr = sanct_vrt[maze.data[xy{x, y}]]
+					hexc = fmt.Sprintf("#%06x",sanct_vrt[maze.data[xy{x, y}]])
+				} else {
+					vr = sanct_vrt2[maze.data[xy{x, y}]]
+					hexc = fmt.Sprintf("#%06x",sanct_vrt2[maze.data[xy{x, y}]])	// CHANGE: sanct_vrt2
+				}
+				if vr < 0x1000 { fmt.Printf("// error used - %X\n",vr) }
 				mcol, err := ParseHexColor(hexc)
 				if err == nil {
 					wimg.Set(x,y,mcol)
