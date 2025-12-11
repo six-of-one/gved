@@ -1103,7 +1103,7 @@ if opts.Verbose || opts.Se {
 				}
 			}
 		}
-//		fmt.Printf("\n")
+		if opts.Verbose { fmt.Printf("\n") }
 	}
 	if opts.Se {
 		wnam := fmt.Sprintf("selvls/glevel%d.png",mz)
