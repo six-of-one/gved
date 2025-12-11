@@ -536,6 +536,15 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 	},
+	"thief": Stamp{
+		width:   3,
+		numbers: tilerange(0xdea, 9),
+		ptype:   "base",
+		pnum:    0,
+		trans0:  true,
+		nudgex:  -4,
+		nudgey:  -4,
+	},
 	"acid": Stamp{
 		width:   3,
 		numbers: tilerange(0x2300, 9),

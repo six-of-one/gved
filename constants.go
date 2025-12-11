@@ -94,6 +94,7 @@ const (
 	G1OBJ_MONST_SORC2 = 22
 	G1OBJ_MONST_SORC3 = 23
 	G1OBJ_MONST_DEATH = 24
+	G1OBJ_MONST_THIEF = 65
 	G1OBJ_GEN_GHOST1 = 25
 	G1OBJ_GEN_GHOST2 = 26
 	G1OBJ_GEN_GHOST3 = 27
@@ -316,5 +317,6 @@ var sanct_vrt = []int{
 	 0x80c0,		// 	G1MP_TILE_STUN: 62,
 	 0x000063,		// 	G1MP_nospec_60: 63,
 	 0x8090,		// 	G1MP_TREASURE_BAG: 64,
+	 0x400100,		//  thief is hacked in for score table maze sample area
 
 }

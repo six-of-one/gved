@@ -272,6 +272,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 		}
 	}
 
+	opr := 3				// 3 sets of special potions
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 			var stamp *Stamp
@@ -288,25 +289,29 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 // g2 decodes
 			if G2 {
 // hack for score table map display of: gold bag after treasure box, special potions
-	opr := 3				// 3 sets of special potions
 	if x < (lastx - 1) && mazenum == 103 {	// dont hit past end of array & only do on score table maze
 		ts := maze.data[xy{x, y}]
 		tt := maze.data[xy{x+1, y}]
-		if ts == MAZEOBJ_TREASURE && tt == MAZEOBJ_TREASURE { maze.data[xy{x, y}] = 76 }
-		if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY && opr == 3 {
-			maze.data[xy{x, y}] = 73
-			maze.data[xy{x+1, y}] = 70
-			opr--
-		}
-		if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY && opr == 2 {
-			maze.data[xy{x, y}] = 75
-			maze.data[xy{x+1, y}] = 71
-			opr--
-		}
-		if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY && opr == 1 {
-			maze.data[xy{x, y}] = 72
-			maze.data[xy{x+1, y}] = 74
-			opr--
+		if ts == MAZEOBJ_TREASURE && tt == MAZEOBJ_TREASURE { maze.data[xy{x+1, y}] = 76 }
+		switch opr {
+		case 1:
+			if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY {
+				maze.data[xy{x, y}] = 72
+				maze.data[xy{x+1, y}] = 74
+				opr--
+			}
+		case 2:
+			if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY {
+				maze.data[xy{x, y}] = 75
+				maze.data[xy{x+1, y}] = 71
+				opr--
+			}
+		case 3:
+			if ts == MAZEOBJ_KEY && tt == MAZEOBJ_KEY {
+				maze.data[xy{x, y}] = 73
+				maze.data[xy{x+1, y}] = 70
+				opr--
+			}
 		}
 	}
 			// We should do better
@@ -615,6 +620,12 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				stamp = itemGetStamp("sorcerer")
 			case G1OBJ_MONST_DEATH:
 				stamp = itemGetStamp("death")
+// when death shows up on score board maze, hack theif into sample area
+				if mazenum == 115 {
+					maze.data[xy{x, y + 3}] = G1OBJ_MONST_THIEF
+				}
+			case G1OBJ_MONST_THIEF:
+				stamp = itemGetStamp("thief")
 
 			case G1OBJ_GEN_GHOST1:
 				stamp = itemGetStamp("ghostgen1")
