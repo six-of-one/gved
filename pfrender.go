@@ -1078,6 +1078,7 @@ if opts.Verbose || opts.Se {
 				i++
 				if sanct_vrt[maze.data[xy{x, y}]] < 0x1000 { fmt.Printf("// error used - %X\n",sanct_vrt[maze.data[xy{x, y}]]) }
 				hexc := fmt.Sprintf("#%06x",sanct_vrt[maze.data[xy{x, y}]])
+				if G2 { hexc = fmt.Sprintf("#%06x",sanct_vrt[maze.data[xy{x, y}]]) }	// CHANGE: sanct_vrt2
 				mcol, err := ParseHexColor(hexc)
 				if err == nil {
 					wimg.Set(x,y,mcol)
@@ -1088,6 +1089,7 @@ if opts.Verbose || opts.Se {
 	}
 	if opts.Se {
 		wnam := fmt.Sprintf("selvls/glevel%d.png",mz)
+		if G2 { wnam = fmt.Sprintf("selvls/g2level%d.png",mz) }
 		wrfile, err := os.Create(wnam)
 		if err == nil {
 			png.Encode(wrfile,wimg)
