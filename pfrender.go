@@ -462,19 +462,6 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				stamp = ffGetStamp(adj)
 			case MAZEOBJ_TRANSPORTER:
 				stamp = itemGetStamp("tport")
-// specials added after convert to se id'ed them on maze 115, score table block
-			case 0x55:
-				stamp = itemGetStamp("speedpotion")
-			case 0x60:
-				stamp = itemGetStamp("shotpowerpotion")
-			case 0x63:
-				stamp = itemGetStamp("shotspeedpotion")
-			case 0x54:
-				stamp = itemGetStamp("shieldpotion")
-//			case G1OBJ_X_FIGHT:
-//				stamp = itemGetStamp("fightpotion")
-//			case G1OBJ_X_MAGIC:
-//				stamp = itemGetStamp("magicpotion")
 // testing special potions
 			case MAZEOBJ_HIDDENPOT:
 				if opts.SP {
