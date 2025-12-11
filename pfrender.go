@@ -651,6 +651,19 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				stamp = itemGetStamp("ipotion")
 			case G1OBJ_INVISIBL:
 				stamp = itemGetStamp("invis")
+// specials added after convert to se id'ed them on maze 115, score table block
+			case G1OBJ_X_SPEED:
+				stamp = itemGetStamp("speedpotion")
+			case G1OBJ_X_SHOTPW:
+				stamp = itemGetStamp("shotpowerpotion")
+			case G1OBJ_X_SHTSPD:
+				stamp = itemGetStamp("shotspeedpotion")
+			case G1OBJ_X_ARMOR:
+				stamp = itemGetStamp("shieldpotion")
+			case G1OBJ_X_FIGHT:
+				stamp = itemGetStamp("fightpotion")
+			case G1OBJ_X_MAGIC:
+				stamp = itemGetStamp("magicpotion")
 
 			case G1OBJ_TRANSPORTER:
 				stamp = itemGetStamp("tportg1")
@@ -1007,12 +1020,14 @@ if false {
 if opts.Verbose || opts.Se {
 	i := 0
 	mz := mazenum + 1
-	wimg := blankimage(lastx, lasty)
+	wimg := blankimage(33, 33)
 	if opts.Se {
 // paste in sanctuary converter
-		if mz > 116 { mz = mz - 2 }		// sanctuary does not have 115 as demo or 116 as score table
-		if mz == 115 { mz = 0 }
-		if mz == 116 { mz = 126 }		// 1 past se end
+		if mz > 116 { mz = mz - 2 }	else {	// sanctuary does not have 115 as demo or 116 as score table
+// just a convention for se - these are already numbered in the system and not at 115 and 116
+			if mz == 115 { mz = 0 }
+			if mz == 116 { mz = 127 }		// 1 past se end
+		}
 		fmt.Printf("	SVRLOAD[1] = [ ];\n	SVRLOAD[1][1] = \"levels/glevel%d.png\"\n	SVRLOAD[1][2] = \"Level %d\";\n	SVRLOAD[1][3] = [ ];\n	SVRLOAD[1][4] =\"1089\";\n", mz, mz)
 	}
 
