@@ -257,7 +257,7 @@ var sanct_vrt = []int{
 	 0x404000,		// 	G1MP_WALL_REGULAR: 2,
 	 0xc0c000,		// 	G1MP_DOOR_HORIZ: 3,
 	 0xc0c000,		// 	G1MP_DOOR_VERT: 4,
-	 0xf000,		//  G1MP_PLAYERSTART: 5,
+	 0xf000,		// 	G1MP_PLAYERSTART: 5,
 	 0x4000,		// 	G1MP_EXIT: 6,
 	 0x4010,		// 	G1MP_EXIT4: 7,
 	 0x4020,		// 	G1MP_EXIT8: 8,
