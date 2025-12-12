@@ -47,7 +47,7 @@ var slapsticBankInfo = []int{
 }
 
 // there is an odd issue with the following maze address reads
-/*
+/*							maze start # = 1
 52:246030 - 3C10E
 53-246202 - 3C1BA
 54-246554 - 3C31A
@@ -63,6 +63,7 @@ followup - in a side by side tracethru {newcode} with mazedumps_g1, these (new) 
 followup - in a side by side tracethru {newcode} with mazedumps_g1, these (new) mismatch: 78, 79, 80, 81
 
 matchups with _g1 dumps
+- mazedumps_g1 start # = 0
 
 mazedumps_g1 vs. r1-9_$N
 
