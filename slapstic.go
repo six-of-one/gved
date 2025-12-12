@@ -53,10 +53,28 @@ var slapsticBankInfo = []int{
 54-246554 - 3C31A
 55-246874 - 3C45A
 
+followup - in a side by side tracethru {newcode} with mazedumps_g1, these (new) mismatch: 51, 52, 53, 54
+
 78:254218 - 3E10A
 79-254442 - 3E1EA
 80-254629 - 3E2A5
 81-254852 - 3E384
+
+followup - in a side by side tracethru {newcode} with mazedumps_g1, these (new) mismatch: 78, 79, 80, 81
+
+matchups with _g1 dumps
+
+mazedumps_g1 vs. r1-9_$N
+
+051			:		078
+052			:		079
+053			:		080
+054			:		081
+
+077			:		052
+078			:		053
+079			:		054
+080			:		055
 
 // where the following values differ from what was manually discovered to load those mazes in g1rv7
 
