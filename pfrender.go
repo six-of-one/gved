@@ -183,7 +183,20 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	if maze.flags&LFLAG4_WRAP_V > 0 {
 		lasty = 31
 	}
+// g1 wrap data is still not known, just making this manual for now
+	horz := true		// check horz first
+	for i := 0; i < 70; i++ {
 
+		if g1wrp[i] < 0 { i = 70 } else {
+
+		if mazenum == g1wrp[i] {
+			if horz { lastx = 31 } else {
+				lasty = 31
+			}
+		}
+		if g1wrp[i] == 200 { horz = false }		// check vert
+		}
+	}
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & g2 draw walls, see screens
 	for y := 0; y <= lasty; y++ {

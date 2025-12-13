@@ -135,6 +135,15 @@ const (
 	NOFLOOR = 1
 	NOWALL = 2
 )
+// G1 - list of "wrap levels"
+var g1wrp = []int{
+// horiz wraps
+	7, 15, 26, 32, 34, 36, 38, 39, 40, 54, 74, 77, 80, 97, 98, 116, 118, 121,
+	200,
+// vert wraps
+	32, 33, -1,
+}
+
 // Flags for levels
 const (
 	LFLAG1_ODDANGLE_GHOSTS     = 0x01000000
