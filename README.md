@@ -11,7 +11,7 @@ G¹G²ved
 command line suggestions:
 * gved -i maze115
     (interactive system)
-* gved -g2 -v ma
+* gved -v -g2 maze7
     (view output.png)
 * gved floor0
     (view output.png)
