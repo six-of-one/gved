@@ -249,7 +249,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 	},
 
-	// FIXME: missing all the various directions
+	// ?: missing all the various directions
 	"ff": Stamp{
 		width:   2,
 		numbers: tilerange(0x4a2, 4),
