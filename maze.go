@@ -93,7 +93,7 @@ func domaze(arg string) {
 // setup window
 
     a := app.New()
-    w = a.NewWindow("Images")
+    w = a.NewWindow("G¹G²ved")
 
 	menuItemExit := fyne.NewMenuItem("Exit...", func() {
 		os.Exit(0)
@@ -236,7 +236,7 @@ func domaze(arg string) {
 			w.Resize(fyne.NewSize(1024, 1024))
 			w.Show()
 			w.CenterOnScreen()
-			til := fmt.Sprintf("Maze: %d",mazeNum)
+			til := fmt.Sprintf("G¹G²ved Maze: %d",mazeNum)
 			w.SetTitle(til)
 			w.Canvas().SetOnTypedRune(typedRune)
 
