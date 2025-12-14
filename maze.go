@@ -55,14 +55,14 @@ func domaze(arg string) {
 		switch {
 		case reMazeNum.MatchString(ss):
 			m, _ := strconv.ParseInt(reMazeNum.FindStringSubmatch(ss)[1], 10, 0)
-			mazeNum = int(m)
-			if mazeNum < 0 || mazeNum > maxmaze {
-				panic("Invalid maze number / address specified.")
-			}
+			mazeNum = int(m) - 1
 
 		case reMazeMeta.MatchString(ss):
 			mazeMeta = 1
 		}
+	}
+	if mazeNum < 0 || mazeNum > maxmaze {
+		panic("Invalid maze number / address specified.")
 	}
 
 	fmt.Printf("Maze number: %d", mazeNum + 1)

@@ -80,8 +80,8 @@ func main() {
 		if opts.Tile > 0 {
 			dotile(opts.Tile)
 		} else {
-			fmt.Println("nothing selected - options required\n")
-// do a 'help' 
+			fmt.Println("nothing selected - more options required, try:\n./gved -i maze1\n./gved floor0\n./gved wall0\nnote: non-interactive generates output.png\n")
+// do a 'help'
 			a := "./gved"
 			a0 := "-h"
 			cmd := exec.Command(a, a0)
