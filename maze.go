@@ -12,16 +12,13 @@ import (
 	"strings"
 	"os"
 	"bufio"
-	"time"
-/*
+//	"time"
+
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
     "fyne.io/fyne/v2/canvas"
-	"fyne.io/fyne/v2/driver/desktop"
-*/
-// /	"unsafe"
-	"github.com/thechampagne/gotilengine"
+//	"fyne.io/fyne/v2/driver/desktop"
 )
 
 func mazeMetaPrint(maze *Maze) {
@@ -90,7 +87,7 @@ func domaze(arg string) {
 // setup kby read
 	consoleReader := bufio.NewReaderSize(os.Stdin, 1)
 // setup window
-/*
+
     a := app.New()
     w := a.NewWindow("Images")
 
@@ -104,29 +101,13 @@ func domaze(arg string) {
 	menuHelp := fyne.NewMenu("Help ", menuItemAbout)
 	mainMenu := fyne.NewMainMenu(menuExit, menuHelp)
 	w.SetMainMenu(mainMenu)
-*/
+
 
 	genpfimage(maze, mazeNum)
 
-// testing gotilengine
-	var bkg gotilengine.TLN_Bitmap
-	bkgfil := (gotilengine.CString) (C.CString("output.png"))
-	gotilengine.TLN_Init(560, 560, 2, 24, 1)
-	gotilengine.TLN_CreateWindow((gotilengine.CString) (C.NULL), 0)
-	gotilengine.TLN_CreateBitmap(560,560,32)
-	bkg = gotilengine.TLN_LoadBitmap(bkgfil)
-	gotilengine.TLN_SetLayerBitmap(0, bkg)
-	gotilengine.TLN_DisableCRTEffect()
-	crt := false
-	ly := (gotilengine.CInt) (int (0))	// curr layer
-	gtk := (gotilengine.CInt) (int (1))
-	if gotilengine.TLN_ProcessWindow() != 0 {
-			gotilengine.TLN_DrawFrame(0)
-		}
-	sec := false	// is it the first load? dont redo the bitmap
+// testing gotilengine - leftover
 	suser := " "	// user action string
 
-// testing gotilengine
 
 // interactive loop here - lets user tweak vars settings & load new mazes
 // user controls loop for tweaking
@@ -245,8 +226,6 @@ func domaze(arg string) {
 		}
 	}
 
-			genpfimage(maze, mazeNum)
-/*
 			Ovimg := genpfimage(maze, mazeNum)
 			bimg := canvas.NewRasterFromImage(Ovimg)
 			w.Canvas().SetContent(bimg)
@@ -255,111 +234,7 @@ func domaze(arg string) {
 			w.CenterOnScreen()
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
-*/
-			if sec {
-//				gotilengine.TLN_Init(560, 560, 2, 24, 1)
-				gotilengine.TLN_DeleteBitmap(bkg)
-				gotilengine.TLN_CreateBitmap(560,560,32)
-				time.Sleep(15 * time.Second)
-				bkg = gotilengine.TLN_LoadBitmap(bkgfil)
-				gotilengine.TLN_SetBGColor(91,1,1)
-//				if ly == 1 {
-					ly = 0
-					gotilengine.TLN_DisableLayer(1)
-					gotilengine.TLN_EnableLayer(0)
-					gotilengine.TLN_SetLayerBitmap(0, bkg)
-/*				} else {
-					ly = 1
-					gotilengine.TLN_DisableLayer(0)
-					gotilengine.TLN_EnableLayer(1)
-					gotilengine.TLN_SetLayerBitmap(1, bkg)
-				}*/
-//			gotilengine.TLN_DrawFrame(0)
-			}
-			sec = true
-
-			nokp := true
-			mx := (gotilengine.CInt) (int (0))
-			my := (gotilengine.CInt) (int (0))
-			gtk = 0
-// atempt to limit draw if no changes
-			gtkl := 30
-			for gotilengine.TLN_ProcessWindow() != 0 && nokp {
-				tewtil := (gotilengine.CString) (C.CString(fmt.Sprintf("Maze: %d @ [%d, %d] - ly: %d, ½ frames %d, drawing: %d, <-%s",mazeNum + 1,mx,my,ly,gtk,gtkl,suser)))
-				gotilengine.TLN_SetWindowTitle(tewtil)
-// this really only detects:
-// arrows ^ 1, v 2, < 3, > 4
-// buttons	z 5, x 6, c 7, v 8
-// 			enter 11, bkspc 13
-					for f := 1; f < 16; f++ {
-					kc := (gotilengine.TLN_Input) (f)
-					if gotilengine.TLN_GetInput(kc) != 0 {
-						ascii = 0
-						switch f {
-						case 1:
-							my--
-							time.Sleep(10 * time.Millisecond)
-							gtkl = 30
-						case 2:
-							my++
-							time.Sleep(10 * time.Millisecond)
-							gtkl = 30
-						case 3:
-							mx--
-							time.Sleep(10 * time.Millisecond)
-							gtkl = 30
-						case 4:
-							mx++
-							time.Sleep(10 * time.Millisecond)
-							gtkl = 30
-						case 5:
-							anum = mazeNum
-							suser = "maze -1"
-							nokp = false
-							ascii = 17
-						case 6:
-							anum = mazeNum + 2
-							suser = "maze +1"
-							nokp = false
-							ascii = 17
-						case 13:
-							if crt {
-								gotilengine.TLN_DisableCRTEffect()
-								suser = "disab CRT"
-								crt = false
-								time.Sleep(250 * time.Millisecond)
-								gtkl = 30
-							} else {
-								gotilengine.TLN_ConfigCRTEffect(1,0)
-								suser = "enabl CRT"
-								crt = true
-								time.Sleep(250 * time.Millisecond)
-								gtkl = 30
-							}
-						default:
-							nokp = false
-						}
-					}}
-				gtk++
-				gotilengine.TLN_SetLayerPosition(ly,mx,my)
-				time.Sleep(6 * time.Millisecond)
-				if gtkl > 0 {
-					gotilengine.TLN_DrawFrame(0)
-					gtkl--
-				}
-				gte := gotilengine.TLN_GetLastError()
-				if gte > 0 {
-					fmt.Printf("Error: %d\n",gte)
-				}
-			}
-			if gotilengine.TLN_ProcessWindow() == 0 {
-				fmt.Printf("Exited window...\n")
-				gotilengine.TLN_DeleteBitmap(bkg)
-				gotilengine.TLN_DeleteWindow()
-				gotilengine.TLN_Deinit()
-				os.Exit(0)
-			}
-
+			w.Canvas().SetOnTypedRune(typedRune)
 /*
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
@@ -380,6 +255,7 @@ Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyReturn, Modifier: fyne.KeyMod
 */
 			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
 		}
+		a.Run()
 // key tester
 		if ascii != 17 {
 			input, _ := consoleReader.ReadByte()
@@ -390,8 +266,8 @@ Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyReturn, Modifier: fyne.KeyMod
 // ESC = 27 and q = 113
 			if ascii == 27 || ascii == 113 {
 				fmt.Printf("Exiting...\n")
-				gotilengine.TLN_DeleteBitmap(bkg)
-				gotilengine.TLN_Deinit()
+//				gotilengine.TLN_DeleteBitmap(bkg)
+//				gotilengine.TLN_Deinit()
 				os.Exit(0)
 			}
 			noact = false
@@ -508,4 +384,10 @@ Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyReturn, Modifier: fyne.KeyMod
 //fmt.Printf("ascii: %d\n",ascii)
 
 		}
+}
+
+func typedRune(r rune) {
+
+	fmt.Printf("in keys event - %x\n",r)
+	if r == 'q' { os.Exit(0) }
 }
