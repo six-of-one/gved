@@ -46,47 +46,7 @@ var slapsticBankInfo = []int{
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x03, 0xFC, 0x0E,
 }
 
-// there is an odd issue with the following maze address reads
 /*							maze start # = 1
-52:246030 - 3C10E
-53-246202 - 3C1BA
-54-246554 - 3C31A
-55-246874 - 3C45A
-
-followup - in a side by side tracethru {newcode} with mazedumps_g1, these (new) mismatch: 51, 52, 53, 54
-
-78:254218 - 3E10A
-79-254442 - 3E1EA
-80-254629 - 3E2A5
-81-254852 - 3E384
-
-followup - in a side by side tracethru {newcode} with mazedumps_g1, these (new) mismatch: 78, 79, 80, 81
-
-matchups with _g1 dumps
-- mazedumps_g1 start # = 0
-
-mazedumps_g1 vs. r1-9_$N
-
-051			:		078
-052			:		079
-053			:		080
-054			:		081
-
-077			:		052
-078			:		053
-079			:		054
-080			:		055
-
-// where the following values differ from what was manually discovered to load those mazes in g1rv7
-
-246026 - 246030 =  -4	  bank adjust	1FFC
-246250 - 246202 =  48					2030
-246437 - 246554 =  -117					1F8B
-246660 - 246874 =  -214					1F2A
-254222 - 254218 =  4					2004
-254394 - 254442 =  -48					1FD0
-254746 - 254629 =  117					2075
-255066 - 254852 =  214					20D6
 
 banks:
 0		x38000
