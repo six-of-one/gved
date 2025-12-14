@@ -5,6 +5,7 @@ G¹G²ved
     (and eventually sanctuary...)
 - interactive mode still needs code moved out of terminal ops gotilengine display
 - had issues with gotilengine.TLN_DrawFrame(0) only wanting to draw 2 or 3 mazes
+- right now the only interactive cmd is 'Q' for quit
 
 command line suggestions:
 * gved -i maze115
@@ -16,7 +17,7 @@ command line suggestions:
 
 Issues
 ======
-* still only a viewer
+* still only a viewer (and it wont work the way it is...)
 * possible to crash with valid parms
 
 Attributions
