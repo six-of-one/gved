@@ -24,7 +24,7 @@ var monsters = map[string]Monster{
 		xsize: 3,
 		ysize: 3,
 		ptype: "base",
-		pnum:  0, // FIXME: This is weird and seems wrong
+		pnum:  4,
 		// palette: gauntletPalettes["base"][0],
 		anims: ghostAnims,
 	},
