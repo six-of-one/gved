@@ -82,6 +82,7 @@ func domaze(arg string) {
 		if mazeMeta > 0 { os.Exit(0) }
 	}
 
+// interactive viewer not selected - gen maze, output png & exit
 	if !opts.Intr {
 		genpfimage(maze, mazeNum)
 		os.Exit(0)
@@ -374,16 +375,16 @@ func domaze(arg string) {
 
 func typedRune(r rune) {
 
-	fmt.Printf("in keys event - %x\n",r)
-//	if r == 'q' { os.Exit(0) }
+//	fmt.Printf("in keys event - %x\n",r)
+	if r == 'q' { os.Exit(0) }
 
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
             fmt.Printf("Desktop key down: %h\n", key.Name)
         })
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
-            fmt.Printf("Desktop key up: %v\n", key)
-			if key.Name == "Q" { os.Exit(0) }
+//            fmt.Printf("Desktop key up: %v\n", key)
+			if key.Name == "Escape" { os.Exit(0) }
        })
     }
 }
