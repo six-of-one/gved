@@ -31,8 +31,10 @@ func mazeMetaPrint(maze *Maze) {
 			fmt.Printf("%s ", v)
 		}
 	}
-	fmt.Printf("\n  Random food adds: %d\n", (maze.flags&LFLAG3_RANDOMFOOD_MASK)>>8)
-	fmt.Printf("  Secret trick: %2d - %s\n", maze.secret, mazeSecretStrings[maze.secret])
+	if G2 {
+		fmt.Printf("\n  Random food adds: %d\n", (maze.flags&LFLAG3_RANDOMFOOD_MASK)>>8)
+		fmt.Printf("  Secret trick: %2d - %s\n", maze.secret, mazeSecretStrings[maze.secret])
+	}
 }
 
 var reMazeNum = regexp.MustCompile(`^maze(\d+)`)
