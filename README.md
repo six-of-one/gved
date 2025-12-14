@@ -3,7 +3,7 @@ G¹G²ved
 
 - visual editor for gauntlet, gauntlet 2 mazes
     (and eventually sanctuary...)
-- gauntlet roms required: g1 in ./ROMs-g1 and g2 in ./ROMs (see slapstic.go for details)
+- gauntlet roms required: g1 in ./ROMs-g1 and g2 in ./ROMs (MUST be unzipped! see slapstic.go for details)
 - interactive mode still needs code moved out of terminal ops gotilengine display
 - had issues with gotilengine.TLN_DrawFrame(0) only wanting to draw 2 or 3 mazes
 - right now the only interactive cmd is 'Q' for quit
