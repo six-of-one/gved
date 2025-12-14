@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image/png"
 	"os"
+	"os/exec"
 )
 
 type TileLinePlane []byte
@@ -18,7 +19,7 @@ type TileData []TileLineMerged
 var G1 bool
 var G2 bool
 // override the maze address selection by slapstic table
-// this is mostly for research, some address will crash gex
+// this is mostly for research, some address will crash gved
 var Aov int
 
 // for the user select demo
@@ -27,7 +28,6 @@ var Ovflorpat int
 var Ovwallcol int
 var Ovflorcol int
 
-// FIXME: change name to something not "numbers"
 type Stamp struct {
 	width   int
 	numbers []int
@@ -80,7 +80,17 @@ func main() {
 		if opts.Tile > 0 {
 			dotile(opts.Tile)
 		} else {
-			fmt.Println("nothing selected - options required")
+			fmt.Println("nothing selected - options required\n")
+// do a 'help' 
+			a := "./gved"
+			a0 := "-h"
+			cmd := exec.Command(a, a0)
+			stdout, err := cmd.Output()
+			if err != nil {
+				fmt.Println(err.Error())
+		    }
+			fmt.Printf("\n")
+			fmt.Println(string(stdout))
 			os.Exit(1)
 		}
 	case TypeFloor:

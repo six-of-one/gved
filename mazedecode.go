@@ -79,8 +79,6 @@ func isspecialfloor(t int) bool {
 	}
 }
 
-// FIXME: needs to handle vflip and hflip
-// it really doesnt - just import array flip, mirror & rotate code from sanctuary
 func expand(maze *Maze, location int, t int, count int) int {
 	if t == MAZEOBJ_TILE_FLOOR {
 		return (location + count)
@@ -109,7 +107,6 @@ func expand(maze *Maze, location int, t int, count int) int {
 	return location + count
 }
 
-// FIXME: Needs to handle vflip and hflip
 func vexpand(maze *Maze, location int, t int, count int) int {
 	if t == MAZEOBJ_TILE_FLOOR {
 		return location + 1
