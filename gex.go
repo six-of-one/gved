@@ -80,7 +80,7 @@ func main() {
 		if opts.Tile > 0 {
 			dotile(opts.Tile)
 		} else {
-			fmt.Println("Missing or incorrect identity line.")
+			fmt.Println("nothing selected - options required")
 			os.Exit(1)
 		}
 	case TypeFloor:
