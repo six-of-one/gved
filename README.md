@@ -4,7 +4,7 @@ G¹G²ved
 - visual editor for gauntlet, gauntlet 2 mazes
     (and eventually sanctuary...)
 
-Some commands you could try:
+command line suggestions:
 * gved -i maze115
     (interactive system)
 * gved -g2 -v maze1
@@ -12,9 +12,10 @@ Some commands you could try:
 * gved floor0
     (view output.png)
 
-KNOWN ISSUES
-============
+Issues
+======
 * still only a viewer
+* possible to crash with valid parms
 
 Attributions
 =============
