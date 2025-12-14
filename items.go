@@ -638,7 +638,7 @@ func tilerange(start int, count int) []int {
 // 		xsize: 3,
 // 		ysize: 3,
 // 		ptype: "base",
-// 		pnum:  0, // FIXME: This is weird and seems wrong
+// 		pnum:  4,
 // 		// palette: gauntletPalettes["base"][0],
 // 		anims: ghostAnims,
 // 	},
@@ -672,12 +672,15 @@ func doitem(arg string) {
 	savetopng(opts.Output, img)
 }
 
-// FIXME: In the future, maybe just return nil and not panic
 func itemGetStamp(itemType string) *Stamp {
 	stamp, ok := itemStamps[itemType]
 
 	if !ok {
-		panic("requested bad item: " + itemType)
+// failed to get that item - just return extra speed as a warning
+		stamp, ok = itemStamps["speedpotion"]
+		if !ok {
+			panic("total fail bad item: " + itemType + "and speedpotion")
+		}
 	}
 
 	fillstamp(&stamp)
