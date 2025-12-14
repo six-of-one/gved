@@ -17,7 +17,7 @@ command line suggestions:
 
 Issues
 ======
-* still only a viewer (and it wont work the way it is...)
+* still only a viewer
 * possible to crash with valid parms
 
 Attributions
