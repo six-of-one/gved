@@ -18,7 +18,7 @@ import (
     "fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
     "fyne.io/fyne/v2/canvas"
-//	"fyne.io/fyne/v2/driver/desktop"
+	"fyne.io/fyne/v2/driver/desktop"
 )
 
 func mazeMetaPrint(maze *Maze) {
@@ -37,6 +37,7 @@ func mazeMetaPrint(maze *Maze) {
 	}
 }
 
+var w fyne.Window
 var reMazeNum = regexp.MustCompile(`^maze(\d+)`)
 var reMazeMeta = regexp.MustCompile(`^meta$`)
 
@@ -91,7 +92,7 @@ func domaze(arg string) {
 // setup window
 
     a := app.New()
-    w := a.NewWindow("Images")
+    w = a.NewWindow("Images")
 
 	menuItemExit := fyne.NewMenuItem("Exit...", func() {
 		os.Exit(0)
@@ -237,24 +238,7 @@ func domaze(arg string) {
 			til := fmt.Sprintf("Maze: %d",mazeNum)
 			w.SetTitle(til)
 			w.Canvas().SetOnTypedRune(typedRune)
-/*
-if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
-        deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
-            fmt.Printf("Desktop key down: %v\n", key)
-        })
-        deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
-            fmt.Printf("Desktop key up: %v\n", key)
-			os.Exit(0)
-        })
-    }
 
-Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyReturn, Modifier: fyne.KeyModifierControl}
-
-                       w.Canvas().AddShortcut(Tab, func(shortcut fyne.Shortcut) {
-                                       fmt.Printf("tapped Tab\n")
-									   os.Exit(0)
-                               })
-*/
 			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
 		}
 		a.Run()
@@ -391,5 +375,15 @@ Tab    := &desktop.CustomShortcut{KeyName: fyne.KeyReturn, Modifier: fyne.KeyMod
 func typedRune(r rune) {
 
 	fmt.Printf("in keys event - %x\n",r)
-	if r == 'q' { os.Exit(0) }
+//	if r == 'q' { os.Exit(0) }
+
+if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
+        deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
+            fmt.Printf("Desktop key down: %h\n", key.Name)
+        })
+        deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
+            fmt.Printf("Desktop key up: %v\n", key)
+			if key.Name == "Q" { os.Exit(0) }
+       })
+    }
 }

@@ -16,7 +16,7 @@ var slapsticRoms = []string{
 	"ROMs/136043-1105.10a",
 	"ROMs/136043-1106.10b",
 }
-// g1 - since no bank info list provided for g1, we just load from direct addr
+// g1 - now using big endian table with caveat of +3 to use G2 decoder
 /*
  *20[56].10[ab] - r14
 d06c71b1cf55cd3f637c94f3570b5450  ROMs-g1/136037-205.10a
