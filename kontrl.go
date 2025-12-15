@@ -104,7 +104,7 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			if key.Name == "RightShift" { shift = false }
        })
     }
-//	fmt.Printf("r %v shift %v key %v\n",r,shift,br)
+//	fmt.Printf("r %v shift %v\n",r,shift)
 
 		relodsub = true
 		switch r {
@@ -118,40 +118,44 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			if opts.mnum > maxmaze { opts.mnum = 0 }
 		case 'w':
 			Ovwallpat += 1
-			if anum >= 0 { Ovwallpat = anum }
+			if anum > 0 { Ovwallpat = anum - 1; anum = 0 }
 			if Ovwallpat > 7 { Ovwallpat = 0 }
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
-		case 25:		// W
+		case 87:		// W
 			Ovwallpat -= 1
 			if Ovwallpat < 0 { Ovwallpat = 7 }
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
+			relod = true
 		case 'e':
 			Ovwallcol += 1
-			if anum >= 0 { Ovwallcol = anum }
+			if anum > 0 { Ovwallcol = anum - 1; anum = 0 }
 			if Ovwallcol > 16 { Ovwallcol = 0 }
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
-		case 26:		// E
+		case 69:		// E
 			Ovwallcol -= 1
 			if Ovwallcol < 0 { Ovwallcol = 16 }
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
+			relod = true
 		case 'f':
 			Ovflorpat += 1
-			if anum >= 0 { Ovflorpat = anum }
+			if anum > 0 { Ovflorpat = anum - 1; anum = 0 }
 			if Ovflorpat > 8 { Ovflorpat = 0 }
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
-		case 41:		// F 
+		case 70:		// F
 			Ovflorpat -= 1
 			if Ovflorpat < 0 { Ovflorpat = 8 }
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
+			relod = true
 		case 'g':
 			Ovflorcol += 1
-			if anum >= 0 { Ovflorcol = anum }
+			if anum > 0 { Ovflorcol = anum - 1; anum = 0 }
 			if Ovflorcol > 15 { Ovflorcol = 0 }
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
-		case 42:		// G
+		case 71:		// G
 			Ovflorcol -= 1
 			if Ovflorcol < 0 { Ovflorcol = 15 }
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
+			relod = true
 		case 'r':
 			opts.MRP = true
 			opts.MRM = false
@@ -160,6 +164,7 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			opts.MRP = false
 			opts.MRM = true
 			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
+			relod = true
 		case 't':
 			opts.MRP = false
 			opts.MRM = false
