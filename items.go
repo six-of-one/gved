@@ -21,6 +21,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    0,
 		trans0:  false,
+		mask:    NOTHN,
 	},
 
 	"key": Stamp{
@@ -37,6 +38,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NODOR,
 	},
 
 	"food": Stamp{
@@ -46,6 +48,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true, nudgex: -4,
 		nudgey: -4,
+		mask:    NOFUD,
 	},
 	"ifood1": Stamp{
 		width:   3,
@@ -54,6 +57,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true, nudgex: -4,
 		nudgey: -8,
+		mask:    NOFUD,
 	},
 	"ifood2": Stamp{
 		width:   3,
@@ -62,6 +66,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true, nudgex: -4,
 		nudgey: -8,
+		mask:    NOFUD,
 	},
 	"ifood3": Stamp{
 		width:   3,
@@ -70,6 +75,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true, nudgex: -4,
 		nudgey: -8,
+		mask:    NOFUD,
 	},
 	"mfood": Stamp{
 		width:   3,
@@ -78,6 +84,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true, nudgex: -4,
 		nudgey: -4,
+		mask:    NOFUD,
 	},
 	"pfood": Stamp{
 		width:   3,
@@ -86,6 +93,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true, nudgex: -4,
 		nudgey: -4,
+		mask:    NOFUD,
 	},
 
 	"potion": Stamp{
@@ -220,6 +228,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOEXP,
 	},
 
 	"treasure": Stamp{
@@ -230,6 +239,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -8,
+		mask:    NOTRS,
 	},
 	"treasurelocked": Stamp{
 		width:   3,
@@ -239,6 +249,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOTRS,
 	},
 	"goldbag": Stamp{
 		width:   3,
@@ -248,6 +259,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -8,
+		mask:    NOTRS,
 	},
 
 	"tport": Stamp{
@@ -256,6 +268,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "teleff",
 		pnum:    0,
 		trans0:  true,
+		mask:    NOEXP,
 	},
 	"tportg1": Stamp{
 		width:   2,
@@ -263,6 +276,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "teleff",
 		pnum:    0,
 		trans0:  true,
+		mask:    NOEXP,
 	},
 
 	// ?: missing all the various directions
@@ -272,6 +286,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "teleff",
 		pnum:    0,
 		trans0:  true,
+		mask:    NOTRAP,
 	},
 
 	"exit": Stamp{
@@ -280,6 +295,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "floor",
 		pnum:    0,
 		trans0:  false,
+		mask:    NOEXP,
 	},
 	"exit4": Stamp{
 		width:   2,
@@ -287,6 +303,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "floor",
 		pnum:    0,
 		trans0:  false,
+		mask:    NOEXP,
 	},
 	"exit6": Stamp{
 		width:   2,
@@ -294,6 +311,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "floor",
 		pnum:    0,
 		trans0:  false,
+		mask:    NOEXP,
 	},
 	"exit8": Stamp{
 		width:   2,
@@ -301,6 +319,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "floor",
 		pnum:    0,
 		trans0:  false,
+		mask:    NOEXP,
 	},
 
 	"vdoor": Stamp{
@@ -309,6 +328,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    0,
 		trans0:  true,
+		mask:    NODOR,
 	},
 	"hdoor": Stamp{
 		width:   2,
@@ -316,6 +336,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    0,
 		trans0:  true,
+		mask:    NODOR,
 	},
 
 	"plus": Stamp{
@@ -324,6 +345,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOTHN,
 	},
 	"plusg1": Stamp{
 		width:   2,
@@ -331,6 +353,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    0,
 		trans0:  true,
+		mask:    NOTHN,
 	},
 
 	// FIXME: Needs to be in monsters, really
@@ -342,6 +365,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  0,
 		nudgey:  -16, // because we're rendering the maze "upside-down" (I think)
+		mask:    NOMON,
 	},
 	"generator1": Stamp{
 		width:   3,
@@ -351,6 +375,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -7,
+		mask:    NOGEN,
 	},
 	"generator2": Stamp{
 		width:   3,
@@ -360,6 +385,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -7,
+		mask:    NOGEN,
 	},
 	"generator3": Stamp{
 		width:   3,
@@ -369,6 +395,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -7,
+		mask:    NOGEN,
 	},
 	"ghostgen1": Stamp{
 		width:   3,
@@ -378,6 +405,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOGEN,
 	},
 	"ghostgen2": Stamp{
 		width:   3,
@@ -387,6 +415,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -5,
+		mask:    NOGEN,
 	},
 	"ghostgen3": Stamp{
 		width:   3,
@@ -396,6 +425,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -7,
+		mask:    NOGEN,
 	},
 
 	"ghost": Stamp{
@@ -406,6 +436,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 // encode levels 1, 2 for pre-gen monsters
 	"ghost2": Stamp{
@@ -416,6 +447,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"ghost1": Stamp{
 		width:   3,
@@ -425,6 +457,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"grunt": Stamp{
 		width:   3,
@@ -434,6 +467,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"grunt2": Stamp{
 		width:   3,
@@ -443,6 +477,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"grunt1": Stamp{
 		width:   3,
@@ -452,6 +487,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"demon": Stamp{
 		width:   3,
@@ -461,6 +497,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -6,
+		mask:    NOMON,
 	},
 	"demon2": Stamp{
 		width:   3,
@@ -470,6 +507,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -6,
+		mask:    NOMON,
 	},
 	"demon1": Stamp{
 		width:   3,
@@ -479,6 +517,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -6,
+		mask:    NOMON,
 	},
 	"lobber": Stamp{
 		width:   3,
@@ -488,6 +527,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"lobber2": Stamp{
 		width:   3,
@@ -497,6 +537,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"lobber1": Stamp{
 		width:   3,
@@ -506,6 +547,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"sorcerer": Stamp{
 		width:   3,
@@ -515,6 +557,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"sorcerer2": Stamp{
 		width:   3,
@@ -524,6 +567,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"sorcerer1": Stamp{
 		width:   3,
@@ -533,6 +577,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"auxgrunt": Stamp{
 		width:   3,
@@ -542,6 +587,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"death": Stamp{
 		width:   3,
@@ -551,6 +597,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"thief": Stamp{
 		width:   3,
@@ -560,6 +607,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"acid": Stamp{
 		width:   3,
@@ -569,6 +617,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"supersorc": Stamp{
 		width:   3,
@@ -578,6 +627,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 	"it": Stamp{
 		width:   3,
@@ -587,6 +637,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
+		mask:    NOMON,
 	},
 
 	"arrowleft": Stamp{

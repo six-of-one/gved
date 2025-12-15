@@ -140,7 +140,7 @@ const (
 	NODOR = 32		// doors keys
 	NOTRAP = 64		// trap, stun, ff tiles
 	NOEXP = 128		// exit, push wall, rest
-	NOTHN = 256		// all things
+	NOTHN = 256		// none of the above
 	NOFLOOR = 512
 	NOWALL = 1024
 )
