@@ -76,6 +76,6 @@ func upwin(simg *image.NRGBA, mazeN int) {
 	w.Resize(fyne.NewSize(1024, 1024))
 	w.Show()
 
-	til := fmt.Sprintf("G¹G²ved Maze: %d",mazeN)
+	til := fmt.Sprintf("G¹G²ved Maze: %d",mazeN + 1)
 	w.SetTitle(til)
 }
