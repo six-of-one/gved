@@ -16,6 +16,11 @@ command line suggestions:
 * gved floor0
     (view output.png)
 
+Research
+========
+gaunt_prog.gnumeric
+(yes, it is gnumeric, libreoffice will open, but without the fancy parts)
+
 Issues
 ======
 * still only a viewer
