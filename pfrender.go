@@ -296,7 +296,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 // gen type op - the context to draw
 			gtop := gg.NewContext(12, 12)
 // gtop font
-			if err := gtop.LoadFontFace(".font/VeraBd.ttf", 14); err != nil {
+			if err := gtop.LoadFontFace(".font/VrBd.ttf", 14); err != nil {
 				panic(err)
 				}
 // g2 decodes
