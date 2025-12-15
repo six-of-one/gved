@@ -95,22 +95,6 @@ func domaze(arg string) {
 	w.Resize(fyne.NewSize(1024, 1024))
 	w.ShowAndRun()
 
-// interactive loop here - lets user tweak vars settings & load new mazes
-// user controls loop for tweaking
-		noact := false
-// input new maze #
-		anum := -1
-		var ascii byte
-
-		if !noact {
-// redo maze #, colors, walls, rotates, etc
-			if (anum > 0 && anum <= 127 || anum >= 229376 && anum < 262145) && ascii == 97 {
-				anum = -1
-// clear these when load new maze
-				Ovwallpat = -1
-			}
-			maze = mazeDecompress(slapsticReadMaze(mazeNum), false)
-
 // manual mirror, flip
 	if opts.MH || opts.MV || opts.MRP || opts.MRM {
 		lastx := 32
@@ -199,7 +183,5 @@ func domaze(arg string) {
 			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}
 	}
-
-		}
 
 }
