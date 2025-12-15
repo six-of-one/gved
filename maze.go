@@ -15,8 +15,8 @@ import (
 //	"time"
 
 	"fyne.io/fyne/v2"
-    "fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/dialog"
+//	"fyne.io/fyne/v2/app"
+//	"fyne.io/fyne/v2/dialog"
     "fyne.io/fyne/v2/canvas"
 //	"fyne.io/fyne/v2/driver/desktop"
 )
@@ -89,22 +89,9 @@ func domaze(arg string) {
 
 // setup kby read
 	consoleReader := bufio.NewReaderSize(os.Stdin, 1)
-// setup window
 
-    a = app.New()
-    w = a.NewWindow("G¹G²ved")
-
-	menuItemExit := fyne.NewMenuItem("Exit...", func() {
-		os.Exit(0)
-	})
-	menuExit := fyne.NewMenu("Exit ", menuItemExit)
-	menuItemAbout := fyne.NewMenuItem("About...", func() {
-		dialog.ShowInformation("About G¹G²ved", "Gauntlet / Gauntlet 2 visual editor\nAuthor: Six\n\ngithub.com/six-of-one/", w)
-	})
-	menuHelp := fyne.NewMenu("Help ", menuItemAbout)
-	mainMenu := fyne.NewMainMenu(menuExit, menuHelp)
-	w.SetMainMenu(mainMenu)
-
+// in interactive, start the window
+	aw_init()
 
 	genpfimage(maze, mazeNum)
 
