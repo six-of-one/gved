@@ -177,6 +177,7 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)
 		case 'i':
 			opts.Gtp = 1
+			opts.R14 = false
 			G1 = true
 			G2 = false
 			maxmaze = 126
