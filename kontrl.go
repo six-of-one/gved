@@ -64,7 +64,8 @@ func aw_init() {
 	menuItemKeys := fyne.NewMenuItem("Keys ?", func() {
 
 		strp := cpad("single letter commands",36)
-		strp += cpad("\n\n? - this list",52)
+		strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
+//		strp += cpad("\n\n? - this list",52)
 		strp += cpad("\nq - quit program",42)
 		strp += cpad("\nf - floor pattern+",43)
 		strp += cpad("\ng - floor color+",45)
@@ -75,17 +76,18 @@ func aw_init() {
 		strp += cpad("\nh - mirror maze horizontal toggle",31)
 		strp += "\nm - mirror maze vertical toggle"
 		strp += cpad("\ns - toggle rnd special potion",34)
-		strp += cpad("\ni - gauntlet mazes r1 - r9",39)
+		strp += cpad("\ni - gauntlet mazes r1 - r9",38)
 		strp += cpad("\nl - use gauntlet rev 14",40)
-		strp += cpad("\nu - gauntlet 2 mazes",40)
+		strp += cpad("\nu - gauntlet 2 mazes",39)
 		strp += cpad("\nv - valid address list",42)
-		strp += cpad("\n{n}umeric of valid maze",38)
+		strp += cpad("\n{n}umeric of valid maze",37)
 		strp += cpad("\n - load maze 1 - 127 g1",42)
 		strp += cpad("\n - load maze 1 - 117 g2",42)
-		strp += cpad("\n - load address 229376 - 262143",4)
-		strp += "\n * note some address causes crash"
-		strp += cpad("\n    commands can be chained:",42)
-		strp += cpad("\ni.e. i5a switch to g1, load maze 5",8)
+		strp += "\n - load address 229376 - 262143 "
+		strp += "\n * note some address will crash"
+//		strp += cpad("\n    commands can be chained:",38)
+//		strp += "\n- i5a switch to g1, load maze 5"
+		strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
 		strb := fmt.Sprintf("\nG%d ",opts.Gtp)
 		if opts.R14 { strb += "(r14)"
 			} else { strb += "(r1-9)" }
