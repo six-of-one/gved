@@ -26,10 +26,41 @@ var a fyne.App
 // since this is all that is called without other handler / timers
 // - this is where maze update and edits will vector
 
+var anum int
+
 func typedRune(r rune) {
 
 //	fmt.Printf("in keys event - %x\n",r)
 	if r == 'q' { os.Exit(0) }
+
+	switch r {
+	case '0':
+		anum = (anum * 10)
+	case '1':
+		anum = (anum * 10) + 1
+	case '2':
+		anum = (anum * 10) + 2
+	case '3':
+		anum = (anum * 10) + 3
+	case '4':
+		anum = (anum * 10) + 4
+	case '5':
+		anum = (anum * 10) + 5
+	case '6':
+		anum = (anum * 10) + 6
+	case '7':
+		anum = (anum * 10) + 7
+	case '8':
+		anum = (anum * 10) + 8
+	case '9':
+		anum = (anum * 10) + 9
+	case '`':
+		anum = 0
+	}
+	if r >= '0' && r <= '9' || r == '`' {
+		til := fmt.Sprintf("G¹G²ved Maze: %d -- numeric: %d",opts.mnum + 1, anum)
+		w.SetTitle(til)
+	}
 
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
@@ -101,12 +132,13 @@ func aw_init() {
 	menuItemLIC := fyne.NewMenuItem("License", func() {
 		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
 	})
-	menuHint := fyne.NewMenu("?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a")
+	menuHint := fyne.NewMenu("cmds: q, fFgG, wWeE, rRt, hm, s, il, u, v, #a")
 
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
 	mainMenu := fyne.NewMainMenu(menuExit, menuHelp, menuHint)
 	w.SetMainMenu(mainMenu)
 	w.Canvas().SetOnTypedRune(typedRune)
+	anum = 0
 }
 
 // update contents

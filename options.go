@@ -8,6 +8,7 @@ import (
 )
 
 var opts struct {
+	mnum	int		`description:"maze: number"`
 // cli options to mirror & rotate mazes
 	MV		bool   `long:"mv" description:"maze: mirror vertical"`
 	MH		bool   `long:"mh" description:"maze: mirror horizontal ( --mv --mh will rotate 180 )"`

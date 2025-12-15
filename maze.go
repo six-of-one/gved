@@ -60,6 +60,7 @@ func domaze(arg string) {
 		panic("Invalid maze number / address specified.")
 	}
 
+	opts.mnum = mazeNum
 	fmt.Printf("Maze number: %d", mazeNum + 1)
 	if Aov > 0 {
 		fmt.Printf(", address: 0x%X ", Aov)
@@ -100,8 +101,6 @@ func domaze(arg string) {
 // input new maze #
 		anum := -1
 		var ascii byte
-		for {
-
 
 		if !noact {
 // redo maze #, colors, walls, rotates, etc
@@ -332,7 +331,5 @@ func domaze(arg string) {
 					anum = (anum * 10) + bascii
 				}
 			}
-//fmt.Printf("ascii: %d\n",ascii)
 
-		}
 }
