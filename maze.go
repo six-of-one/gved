@@ -211,7 +211,7 @@ func domaze(arg string) {
 	}
 
 			Ovimg := genpfimage(maze, mazeNum)
-			upwin(Ovimg, mazeNum)
+			upwin(Ovimg)
 			w.Resize(fyne.NewSize(1024, 1024))
 			w.Show()
 
@@ -321,15 +321,6 @@ func domaze(arg string) {
 				noact = true
 			default:
 				if ascii < 48 || ascii > 57 { fmt.Printf("unk: %d\n",ascii) }
-			}
-			if ascii > 47 && ascii < 58 {
-				noact = true
-				bascii, _ := strconv.Atoi(string(ascii))
-				if anum < 0 {
-					anum = bascii
-				} else {
-					anum = (anum * 10) + bascii
-				}
 			}
 
 }

@@ -58,8 +58,8 @@ func typedRune(r rune) {
 		anum = 0
 	}
 	if r >= '0' && r <= '9' || r == '`' {
-		til := fmt.Sprintf("G¹G²ved Maze: %d -- numeric: %d",opts.mnum + 1, anum)
-		w.SetTitle(til)
+		til := fmt.Sprintf("numeric: %d", anum)
+		uptitl(opts.mnum, til)
 	}
 
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
@@ -143,13 +143,21 @@ func aw_init() {
 
 // update contents
 
-func upwin(simg *image.NRGBA, mazeN int) {
+func upwin(simg *image.NRGBA) {
 
 	bimg := canvas.NewRasterFromImage(simg)
 	w.Canvas().SetContent(bimg)
 	w.Resize(fyne.NewSize(1024, 1024))
 	w.Show()
 
+	uptitl(opts.mnum, "")
+}
+
+// title special info update
+
+func uptitl(mazeN int, spaux string) {
+
 	til := fmt.Sprintf("G¹G²ved Maze: %d",mazeN + 1)
+	if spaux != "" { til += " -- " + spaux }
 	w.SetTitle(til)
 }
