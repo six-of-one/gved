@@ -29,6 +29,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NODOR,
 	},
 	"keyring": Stamp{
 		width:   3,
@@ -93,6 +94,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 	"ipotion": Stamp{
 		width:   2,
@@ -100,6 +102,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 	"ppotion": Stamp{
 		width:   2,
@@ -107,6 +110,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 
 	"shieldpotion": Stamp{
@@ -115,6 +119,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 	"speedpotion": Stamp{
 		width:   2,
@@ -122,6 +127,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 	"magicpotion": Stamp{
 		width:   2,
@@ -129,6 +135,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 	"shotpowerpotion": Stamp{
 		width:   2,
@@ -136,6 +143,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 	"shotspeedpotion": Stamp{
 		width:   2,
@@ -143,6 +151,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 	"fightpotion": Stamp{
 		width:   2,
@@ -150,6 +159,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 
 	"invis": Stamp{
@@ -159,6 +169,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true, nudgex: -4,
 		nudgey: -4,
+		mask:    NOPOT,
 	},
 	"transportability": Stamp{
 		width:   2,
@@ -166,6 +177,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 	"reflect": Stamp{
 		width:   2,
@@ -173,6 +185,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 	"repulse": Stamp{
 		width:   2,
@@ -180,6 +193,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 	"invuln": Stamp{
 		width:   2,
@@ -187,6 +201,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 	"supershot": Stamp{
 		width:   2,
@@ -194,6 +209,7 @@ var itemStamps = map[string]Stamp{
 		ptype:   "base",
 		pnum:    1,
 		trans0:  true,
+		mask:    NOPOT,
 	},
 
 	"pushwall": Stamp{
@@ -683,6 +699,9 @@ func itemGetStamp(itemType string) *Stamp {
 		}
 	}
 
-	fillstamp(&stamp)
+// if nothing bit matches mask in item, send blank back
+	if stamp.mask & nothing == 0 {
+		fillstamp(&stamp)
+	}
 	return &stamp
 }

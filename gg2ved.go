@@ -51,6 +51,7 @@ type Stamp struct {
 	trans0  bool
 	nudgex  int
 	nudgey  int
+	mask	int
 }
 
 func check(e error) {
