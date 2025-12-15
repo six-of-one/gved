@@ -19,7 +19,7 @@ interactive mode:
 * 'v' - lists maze rom addresses to terminal gved was run from
 * 'z'. 'x' - previous & next maze - loops
 * visual ops should be straight forward
-* 's' - displays special potions and random empty locs
+* 's' - displays special potions at random empty locs
 * writes output.png as each maze is viewed
 * 'p', 'P' - floor and wall invisible in output.png
 

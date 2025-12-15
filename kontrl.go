@@ -187,6 +187,12 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			G2 = false
 			maxmaze = 126
 			spau = "G¹ "
+		case 'p':
+			nothing = nothing ^ NOFLOOR
+			spau = fmt.Sprintf("no floors: %d\n",nothing & NOFLOOR)
+		case 80:
+			nothing = nothing ^ NOWALL
+			spau = fmt.Sprintf("no walls: %d\n",nothing & NOWALL)
 		case 's':
 			opts.SP = !opts.SP
 		case 'u':
@@ -250,7 +256,7 @@ func aw_init() {
 	menuItemLIC := fyne.NewMenuItem("License", func() {
 		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
 	})
-	menuHint := fyne.NewMenu("cmds: ?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a")
+	menuHint := fyne.NewMenu("cmds: ?, q, fFgG, wWeE, rRt, hm, pP, s, il, u, v, #a")
 
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
 	mainMenu := fyne.NewMainMenu(menuExit, menuHelp, menuHint)
@@ -294,6 +300,8 @@ func keyhints() {
 	strp += cpad("\nR - rotate maze -90°",42)
 	strp += cpad("\nh - mirror maze horizontal toggle",31)
 	strp += "\nm - mirror maze vertical toggle"
+	strp += cpad("\np - toggle floor invis",41)
+	strp += cpad("\nP - toggle wall invis",42)
 	strp += cpad("\ns - toggle rnd special potion",34)
 	strp += cpad("\ni - gauntlet mazes r1 - r9",38)
 	strp += cpad("\nl - use gauntlet rev 14",40)

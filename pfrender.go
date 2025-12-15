@@ -107,6 +107,7 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 }
 
 var foods = []string{"ifood1", "ifood2", "ifood3"}
+var nothing int
 
 func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	extrax, extray := 0, 0
@@ -117,12 +118,10 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 		extray = 16
 	}
 
-// no - thing
+// no {floor|wall} - only things
 // option to generate image with no floors or walls (say for color correcting g1 mazes we dont have color codes for)
 // nofloor = 1, nowall = 2, no both = 3
 // maybe make a cli switch?
-
-	nothing := 0
 
 	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
 	img := blankimage(8*2*32+32+extrax, 8*2*32+32+extray)
