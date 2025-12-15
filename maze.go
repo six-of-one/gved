@@ -15,10 +15,6 @@ import (
 //	"time"
 
 	"fyne.io/fyne/v2"
-//	"fyne.io/fyne/v2/app"
-//	"fyne.io/fyne/v2/dialog"
-    "fyne.io/fyne/v2/canvas"
-//	"fyne.io/fyne/v2/driver/desktop"
 )
 
 func mazeMetaPrint(maze *Maze) {
@@ -93,7 +89,6 @@ func domaze(arg string) {
 // in interactive, start the window
 	aw_init()
 
-	genpfimage(maze, mazeNum)
 
 // testing gotilengine - leftover
 	suser := " "	// user action string
@@ -217,14 +212,9 @@ func domaze(arg string) {
 	}
 
 			Ovimg := genpfimage(maze, mazeNum)
-			bimg := canvas.NewRasterFromImage(Ovimg)
-			w.Canvas().SetContent(bimg)
 			w.Resize(fyne.NewSize(1024, 1024))
 			w.Show()
-			w.CenterOnScreen()
-			til := fmt.Sprintf("G¹G²ved Maze: %d",mazeNum)
-			w.SetTitle(til)
-			w.Canvas().SetOnTypedRune(typedRune)
+			upwin(Ovimg, mazeNum)
 
 			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
 		}
