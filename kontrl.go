@@ -31,6 +31,9 @@ var shift bool
 
 func typedRune(r rune) {
 
+	spau := ""
+// relod
+	relod := false
 // shifting
 	shift = false
 
@@ -39,7 +42,6 @@ func typedRune(r rune) {
 
 // new maze
 	if r == 'a' {
-		spau := ""
 		if (anum > 0 && anum <= 127 || anum >= 229376 && anum < 262145) {
 
 			if anum <= 127 {
@@ -52,13 +54,10 @@ func typedRune(r rune) {
 				opts.mnum = 0
 				spau = fmt.Sprintf("addr = %d",anum)
 			}
-			anum = -1
+			anum = 0
 // clear these when load new maze
 			Ovwallpat = -1
-			maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)
-			Ovimg := genpfimage(maze, opts.mnum)
-			upwin(Ovimg)
-			uptitl(opts.mnum, spau)
+			relod = true
 		}
 	}
 
@@ -103,6 +102,12 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			if key.Name == "Escape" { os.Exit(0) }
        })
     }
+	if (relod) {
+		maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)
+		Ovimg := genpfimage(maze, opts.mnum)
+		upwin(Ovimg)
+		uptitl(opts.mnum, spau)
+	}
 }
 
 // pad for dialog page
