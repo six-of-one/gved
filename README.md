@@ -14,6 +14,15 @@ command line suggestions:
 * gved floor0
     (view output.png)
 
+interactive mode:
+* '?' - calls up key hints dialog
+* 'v' - lists maze rom addresses to terminal gved was run from
+* 'z'. 'x' - previous & next maze - loops
+* visual ops should be straight forward
+* 's' - displays special potions and random empty locs
+* writes output.png as each maze is viewed
+* 'p', 'P' - floor and wall invisible in output.png
+
 Research
 ========
 * gaunt_prog.gnumeric (yes, it is gnumeric - libreoffice will open, but without the fancy parts)
