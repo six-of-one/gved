@@ -62,13 +62,6 @@ func typedRune(r rune) {
 		}
 	}
 
-// maze # + or 1
-	if r == 'z' || r == 'x' {
-
-		Ovwallpat = -1
-		relod = true
-	}
-
 // (almost) blind numeric input
 	switch r {
 	case '0':
@@ -110,9 +103,16 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			if key.Name == "Escape" { os.Exit(0) }
        })
     }
+	fmt.Printf("shift key %v\n",shift)
 	// main loop - shift required
 		relodsub := true
 		switch r {
+		case 'z':
+			Ovwallpat = -1
+			opts.mnum -= 1
+		case 'x':
+			Ovwallpat = -1
+			opts.mnum += 1
 		case 'w':
 			if shift {
 				Ovwallpat -= 1
@@ -187,6 +187,7 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			G2 = true
 		default:
 			relodsub = false
+			fmt.Printf("default key\n")
 		}
 	if (relod || relodsub) {
 		maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)

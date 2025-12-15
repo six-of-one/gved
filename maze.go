@@ -228,75 +228,7 @@ func domaze(arg string) {
 // it picks up the <CR> that enters cmd, mask that off here, do nothing
 				noact = true
 				anum = -1
-			case 119:		// w
-				Ovwallpat += 1
-				if anum >= 0 { Ovwallpat = anum }
-				if Ovwallpat > 7 { Ovwallpat = 0 }
-				fmt.Printf("cmd: w - wallp: %d\n",Ovwallpat)
-			case 87:		// W
-				Ovwallpat -= 1
-				if Ovwallpat < 0 { Ovwallpat = 7 }
-				fmt.Printf("cmd: W - wallp: %d\n",Ovwallpat)
-			case 101:		// e
-				Ovwallcol += 1
-				if anum >= 0 { Ovwallcol = anum }
-				if Ovwallcol > 16 { Ovwallcol = 0 }
-				fmt.Printf("cmd: e - wallc: %d\n",Ovwallcol)
-			case 69:
-				Ovwallcol -= 1
-				if Ovwallcol < 0 { Ovwallcol = 16 }
-				fmt.Printf("cmd: E - wallc: %d\n",Ovwallcol)
-			case 102:		// f
-				Ovflorpat += 1
-				if anum >= 0 { Ovflorpat = anum }
-				if Ovflorpat > 8 { Ovflorpat = 0 }
-				fmt.Printf("cmd: f - floorp: %d\n",Ovflorpat)
-			case 70:
-				Ovflorpat -= 1
-				if Ovflorpat < 0 { Ovflorpat = 8 }
-				fmt.Printf("cmd: F - floorp: %d\n",Ovflorpat)
-			case 103:		// g
-				Ovflorcol += 1
-				if anum >= 0 { Ovflorcol = anum }
-				if Ovflorcol > 15 { Ovflorcol = 0 }
-				fmt.Printf("cmd: g - floorc: %d\n",Ovflorcol)
-			case 71:
-				Ovflorcol -= 1
-				if Ovflorcol < 0 { Ovflorcol = 15 }
-				fmt.Printf("cmd: G - floorc: %d\n",Ovflorcol)
-			case 114:		// r
-				opts.MRP = true
-				opts.MRM = false
-				fmt.Printf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
-			case 82:		// R
-				opts.MRP = false
-				opts.MRM = true
-				fmt.Printf("cmd: R - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
-			case 116:		// t
-				opts.MRP = false
-				opts.MRM = false
-				fmt.Printf("cmd: t - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
-			case 109:		// m
-				opts.MV = !opts.MV
-				fmt.Printf("cmd: m - mv: %t\n",opts.MV)
-			case 104:		// h
-				opts.MH = !opts.MH
-				fmt.Printf("cmd: h - mh: %t\n",opts.MH)
-			case 97:		// a
-				noact = false
-				Ovwallpat = -1
-			case 105:		// i
-				opts.Gtp = 1
-				G1 = true
-				G2 = false
-			case 108:		// l
-				opts.R14 = !opts.R14
-			case 115:		// s
-				opts.SP = !opts.SP
-			case 117:		// u
-				opts.Gtp = 2
-				G1 = false
-				G2 = true
+
 			case 118:		// v
 				lx := 116
 				if G1 { lx = 126 }
