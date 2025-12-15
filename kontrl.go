@@ -198,6 +198,7 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 		}
 	if (relod || relodsub) {
 		maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)
+		mazeloop(maze)
 		Ovimg := genpfimage(maze, opts.mnum)
 		upwin(Ovimg)
 		uptitl(opts.mnum, spau)

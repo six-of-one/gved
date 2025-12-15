@@ -71,7 +71,6 @@ func domaze(arg string) {
 	Ovwallpat = -1
 
 	maze := mazeDecompress(slapsticReadMaze(mazeNum), false)
-	xform := make(map[xy]int)
 
 	if opts.Verbose || mazeMeta > 0 {
 		mazeMetaPrint(maze)
@@ -95,6 +94,11 @@ func domaze(arg string) {
 	w.Resize(fyne.NewSize(1024, 1024))
 	w.ShowAndRun()
 
+}
+
+func mazeloop(maze *Maze) {
+// to transform maze, array copy
+	xform := make(map[xy]int)
 // manual mirror, flip
 	if opts.MH || opts.MV || opts.MRP || opts.MRM {
 		lastx := 32
@@ -183,5 +187,4 @@ func domaze(arg string) {
 			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}
 	}
-
 }
