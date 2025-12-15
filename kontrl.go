@@ -64,19 +64,32 @@ func aw_init() {
 	menuItemKeys := fyne.NewMenuItem("Keys ?", func() {
 
 		strp := cpad("single letter commands",36)
-		strp += cpad("\n\n? - this list",38)
-		strp += cpad("\nq - quit program",37)
-		strp += fmt.Sprintf("\nf - floor pattern+\nF - floor pattern-\n" +
-			"g - floor color+\nG - floor color-\nw - wall pattern+\nW - wall pattern-\n" +
-			"e - wall color+\nE - wall color-\nr - rotate maze +90°\nR - rotate maze -90°\n" +
-			"t - turn off rotate\nh - mirror maze horizontal toggle\nm - mirror maze vertical toggle\ns - toggle rnd special potion\n" +
-			"i - gauntlet mazes r1 - r9\nl - use gauntlet rev 14\nu - gauntlet 2 mazes\nv - valid address list\n" +
-			"{n}umeric of valid maze\n - load maze 1 - 127 g1\n - load maze 1 - 117 g2\n - load address 229376 - 262143\n" +
-			" * note some address causes crash\n" +
-			"    commands can be chained:\ni.e. i5a switch to g1, load maze 5\n" +
-			"G%d ",opts.Gtp)
-		if opts.R14 { strp += "(r14)"
-			} else { strp += "(r1-9)" }
+		strp += cpad("\n\n? - this list",52)
+		strp += cpad("\nq - quit program",42)
+		strp += cpad("\nf - floor pattern+",43)
+		strp += cpad("\ng - floor color+",45)
+		strp += cpad("\nw - wall pattern+",43)
+		strp += cpad("\ne - wall color+",46)
+		strp += cpad("\nr - rotate maze +90°",41)
+		strp += cpad("\nR - rotate maze -90°",42)
+		strp += cpad("\nh - mirror maze horizontal toggle",31)
+		strp += "\nm - mirror maze vertical toggle"
+		strp += cpad("\ns - toggle rnd special potion",34)
+		strp += cpad("\ni - gauntlet mazes r1 - r9",39)
+		strp += cpad("\nl - use gauntlet rev 14",40)
+		strp += cpad("\nu - gauntlet 2 mazes",40)
+		strp += cpad("\nv - valid address list",42)
+		strp += cpad("\n{n}umeric of valid maze",38)
+		strp += cpad("\n - load maze 1 - 127 g1",42)
+		strp += cpad("\n - load maze 1 - 117 g2",42)
+		strp += cpad("\n - load address 229376 - 262143",4)
+		strp += "\n * note some address causes crash"
+		strp += cpad("\n    commands can be chained:",42)
+		strp += cpad("\ni.e. i5a switch to g1, load maze 5",8)
+		strb := fmt.Sprintf("\nG%d ",opts.Gtp)
+		if opts.R14 { strb += "(r14)"
+			} else { strb += "(r1-9)" }
+		strp += cpad(strb,50)
 
 		dialog.ShowInformation("Command Keys", strp, w)
 	})
