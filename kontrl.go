@@ -45,11 +45,9 @@ func typedRune(r rune) {
 		if (anum > 0 && anum <= 127 || anum >= 229376 && anum < 262145) {
 
 			if anum <= 127 {
-//				fmt.Printf("\nnew maze: %d\n",anum)
 				opts.mnum = anum - 1
 				Aov = 0
 			} else {
-//				fmt.Printf("\nnew addr: %d\n",anum)
 				Aov = anum
 				opts.mnum = 0
 				spau = fmt.Sprintf("addr = %d",anum)
@@ -104,7 +102,7 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			if key.Name == "RightShift" { shift = false }
        })
     }
-//	fmt.Printf("r %v shift %v\n",r,shift)
+	fmt.Printf("r %v shift %v\n",r,shift)
 
 		relodsub = true
 		switch r {
@@ -197,6 +195,19 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			G2 = true
 			maxmaze = 116
 			spau = "G² mazes"
+		case 'v':
+			lx := 116
+			if G1 { lx = 126 }
+			fmt.Printf("\n valid maze address for Gauntlet %d\nmaze   dec -    hex\n",opts.Gtp)
+			for x := 0; x <= lx;x ++ {
+					ad := slapsticMazeGetRealAddr(x)
+					fmt.Printf("%03d:%d - x%X  ",x + 1,ad,ad)
+					if (x + 1) % 7 == 0 { fmt.Printf("\n") }
+			}
+			fmt.Printf("\n")
+			dialog.ShowInformation("G¹G²ved", "Gauntlet / Gauntlet 2 valid maze address list\nplease check terminal where gved command was issued\n\ngithub.com/six-of-one/", w)
+		case 63:
+			keyhints()
 		default:
 			relodsub = false
 		}
@@ -232,47 +243,14 @@ func aw_init() {
 		os.Exit(0)
 	})
 	menuExit := fyne.NewMenu("Exit ", menuItemExit)
-	menuItemKeys := fyne.NewMenuItem("Keys ?", func() {
-
-		strp := cpad("single letter commands",36)
-		strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
-//		strp += cpad("\n\n? - this list",52)
-		strp += cpad("\nq - quit program",42)
-		strp += cpad("\nf - floor pattern+",43)
-		strp += cpad("\ng - floor color+",45)
-		strp += cpad("\nw - wall pattern+",43)
-		strp += cpad("\ne - wall color+",46)
-		strp += cpad("\nr - rotate maze +90°",41)
-		strp += cpad("\nR - rotate maze -90°",42)
-		strp += cpad("\nh - mirror maze horizontal toggle",31)
-		strp += "\nm - mirror maze vertical toggle"
-		strp += cpad("\ns - toggle rnd special potion",34)
-		strp += cpad("\ni - gauntlet mazes r1 - r9",38)
-		strp += cpad("\nl - use gauntlet rev 14",40)
-		strp += cpad("\nu - gauntlet 2 mazes",39)
-		strp += cpad("\nv - valid address list",42)
-		strp += cpad("\n{n}umeric of valid maze",37)
-		strp += cpad("\n - load maze 1 - 127 g1",42)
-		strp += cpad("\n - load maze 1 - 117 g2",42)
-		strp += "\n - load address 229376 - 262143 "
-		strp += "\n * note some address will crash"
-//		strp += cpad("\n    commands can be chained:",38)
-//		strp += "\n- i5a switch to g1, load maze 5"
-		strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
-		strb := fmt.Sprintf("\nG%d ",opts.Gtp)
-		if opts.R14 { strb += "(r14)"
-			} else { strb += "(r1-9)" }
-		strp += cpad(strb,50)
-
-		dialog.ShowInformation("Command Keys", strp, w)
-	})
+	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
 	menuItemAbout := fyne.NewMenuItem("About", func() {
 		dialog.ShowInformation("About G¹G²ved", "Gauntlet / Gauntlet 2 visual editor\nAuthor: Six [a programmer]\n\ngithub.com/six-of-one/", w)
 	})
 	menuItemLIC := fyne.NewMenuItem("License", func() {
 		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
 	})
-	menuHint := fyne.NewMenu("cmds: q, fFgG, wWeE, rRt, hm, s, il, u, v, #a")
+	menuHint := fyne.NewMenu("cmds: ?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a")
 
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
 	mainMenu := fyne.NewMainMenu(menuExit, menuHelp, menuHint)
@@ -301,4 +279,39 @@ func uptitl(mazeN int, spaux string) {
 	til := fmt.Sprintf("G¹G²ved Maze: %d",mazeN + 1)
 	if spaux != "" { til += " -- " + spaux }
 	w.SetTitle(til)
+}
+
+func keyhints() {
+	strp := cpad("single letter commands",36)
+	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
+//		strp += cpad("\n\n? - this list",52)
+	strp += cpad("\nq - quit program",42)
+	strp += cpad("\nf - floor pattern+",43)
+	strp += cpad("\ng - floor color+",45)
+	strp += cpad("\nw - wall pattern+",43)
+	strp += cpad("\ne - wall color+",46)
+	strp += cpad("\nr - rotate maze +90°",41)
+	strp += cpad("\nR - rotate maze -90°",42)
+	strp += cpad("\nh - mirror maze horizontal toggle",31)
+	strp += "\nm - mirror maze vertical toggle"
+	strp += cpad("\ns - toggle rnd special potion",34)
+	strp += cpad("\ni - gauntlet mazes r1 - r9",38)
+	strp += cpad("\nl - use gauntlet rev 14",40)
+	strp += cpad("\nu - gauntlet 2 mazes",39)
+//		strp += cpad("\nv - valid address list",42)
+	strp += "\nv - all maze addr (in termninal)"
+	strp += cpad("\n{n}umeric of valid maze",37)
+	strp += cpad("\n - load maze 1 - 127 g1",42)
+	strp += cpad("\n - load maze 1 - 117 g2",42)
+	strp += "\n - load address 229376 - 262143 "
+	strp += "\n * note some address will crash"
+//		strp += cpad("\n    commands can be chained:",38)
+//		strp += "\n- i5a switch to g1, load maze 5"
+	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
+	strb := fmt.Sprintf("\nG%d ",opts.Gtp)
+	if opts.R14 { strb += "(r14)"
+		} else { strb += "(r1-9)" }
+	strp += cpad(strb,50)
+
+	dialog.ShowInformation("Command Keys", strp, w)
 }
