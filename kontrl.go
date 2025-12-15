@@ -35,8 +35,7 @@ func typedRune(r rune) {
 	spau := ""
 // relod
 	relod := false
-// shifting
-	shift = false
+	relodsub := false
 
 //	fmt.Printf("in keys event - %x\n",r)
 	if r == 'q' { os.Exit(0) }
@@ -92,20 +91,57 @@ func typedRune(r rune) {
 		uptitl(opts.mnum, til)
 	}
 
+	br := ' '		// some issue exists with detecting shifted vals
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
             fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "LeftShift" { shift = true }
 			if key.Name == "RightShift" { shift = true }
+			if key.Name == "E" { br = 'e' }
+			if key.Name == "F" { br = 'f' }
+			if key.Name == "G" { br = 'g' }
+			if key.Name == "R" { br = 'r' }
+			if key.Name == "W" { br = 'w' }
         })
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
 //            fmt.Printf("Desktop key up: %v\n", key)
 			if key.Name == "Escape" { os.Exit(0) }
+			if key.Name == "LeftShift" { shift = false }
+			if key.Name == "RightShift" { shift = false }
        })
     }
 	fmt.Printf("shift key %v\n",shift)
 	// main loop - shift required
-		relodsub := true
+		if shift {
+		switch br {
+		case 'w':
+			Ovwallpat -= 1
+			if Ovwallpat < 0 { Ovwallpat = 7 }
+			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
+			relod = true
+		case 'e':
+			Ovwallcol -= 1
+			if Ovwallcol < 0 { Ovwallcol = 16 }
+			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
+			relod = true
+		case 'f':
+			Ovflorpat -= 1
+			if Ovflorpat < 0 { Ovflorpat = 8 }
+			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
+			relod = true
+		case 'g':
+			Ovflorcol -= 1
+			if Ovflorcol < 0 { Ovflorcol = 15 }
+			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
+			relod = true
+		case 'r':
+			opts.MRP = false
+			opts.MRM = true
+			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
+			relod = true
+		}
+		} else {
+		relodsub = true
 		switch r {
 		case 'z':
 			Ovwallpat = -1
@@ -116,53 +152,28 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			opts.mnum += 1
 			if opts.mnum > maxmaze { opts.mnum = 0 }
 		case 'w':
-			if shift {
-				Ovwallpat -= 1
-				if Ovwallpat < 0 { Ovwallpat = 7 }
-			} else {
-				Ovwallpat += 1
-				if anum >= 0 { Ovwallpat = anum }
-				if Ovwallpat > 7 { Ovwallpat = 0 }
-			}
+			Ovwallpat += 1
+			if anum >= 0 { Ovwallpat = anum }
+			if Ovwallpat > 7 { Ovwallpat = 0 }
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
 		case 'e':
-			if shift {
-				Ovwallcol -= 1
-				if Ovwallcol < 0 { Ovwallcol = 16 }
-			} else {
-				Ovwallcol += 1
-				if anum >= 0 { Ovwallcol = anum }
-				if Ovwallcol > 16 { Ovwallcol = 0 }
-			}
+			Ovwallcol += 1
+			if anum >= 0 { Ovwallcol = anum }
+			if Ovwallcol > 16 { Ovwallcol = 0 }
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
 		case 'f':
-			if shift {
-				Ovflorpat -= 1
-				if Ovflorpat < 0 { Ovflorpat = 8 }
-			} else {
-				Ovflorpat += 1
-				if anum >= 0 { Ovflorpat = anum }
-				if Ovflorpat > 8 { Ovflorpat = 0 }
-			}
+			Ovflorpat += 1
+			if anum >= 0 { Ovflorpat = anum }
+			if Ovflorpat > 8 { Ovflorpat = 0 }
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
 		case 'g':		// g
-			if shift {
-				Ovflorcol -= 1
-				if Ovflorcol < 0 { Ovflorcol = 15 }
-			} else {
-				Ovflorcol += 1
-				if anum >= 0 { Ovflorcol = anum }
-				if Ovflorcol > 15 { Ovflorcol = 0 }
-			}
+			Ovflorcol += 1
+			if anum >= 0 { Ovflorcol = anum }
+			if Ovflorcol > 15 { Ovflorcol = 0 }
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
 		case 'r':		// r
-			if shift {
-				opts.MRP = false
-				opts.MRM = true
-			} else {
-				opts.MRP = true
-				opts.MRM = false
-			}
+			opts.MRP = true
+			opts.MRM = false
 			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
 		case 't':
 			opts.MRP = false
@@ -195,6 +206,7 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 		default:
 			relodsub = false
 			fmt.Printf("default key\n")
+		}
 		}
 	if (relod || relodsub) {
 		maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)
@@ -271,6 +283,7 @@ func aw_init() {
 	w.SetMainMenu(mainMenu)
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
+	shift = false
 }
 
 // update contents
