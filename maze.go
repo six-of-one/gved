@@ -212,11 +212,10 @@ func domaze(arg string) {
 	}
 
 			Ovimg := genpfimage(maze, mazeNum)
+			upwin(Ovimg, mazeNum)
 			w.Resize(fyne.NewSize(1024, 1024))
 			w.Show()
-			upwin(Ovimg, mazeNum)
 
-			fmt.Printf("G%d Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ",opts.Gtp)
 		}
 		a.Run()
 // key tester
@@ -319,17 +318,6 @@ func domaze(arg string) {
 				}
 				fmt.Printf("\n")
 			case 63:
-				fmt.Printf("single letter commands\n\n? - this list\nq - quit program\nf - floor pattern+\nF - floor pattern-\n")
-				fmt.Printf("g - floor color+\nG - floor color-\nw - wall pattern+\nW - wall pattern-\n")
-				fmt.Printf("e - wall color+\nE - wall color-\nr - rotate maze +90°\nR - rotate maze -90°\n")
-				fmt.Printf("t - turn off rotate\nh - mirror maze horizontal toggle\nm - mirror maze vertical toggle\ns - toggle rnd special potion\n")
-				fmt.Printf("i - gauntlet mazes r1 - r9\nl - use gauntlet rev 14\nu - gauntlet 2 mazes\n")
-				fmt.Printf("{n}a - load maze 1 - 127 g1, 1 - 117 g2, or address 229376 - 262143\n")
-				fmt.Printf("v - valid address list                      * note some address will cause crash out\n")
-				fmt.Printf("    commands can be chained - i.e. i5a will switch to g1 and load maze 5\n")
-				fmt.Printf("G%d ",opts.Gtp)
-				if opts.R14 { fmt.Printf("(r14)")
-				} else { fmt.Printf("(r1-9)") }
 				fmt.Printf(" Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ")
 				noact = true
 			default:
