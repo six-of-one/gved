@@ -91,18 +91,18 @@ func typedRune(r rune) {
 
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
-            fmt.Printf("Desktop key down: %h\n", key.Name)
+//            fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "LeftShift" { shift = true }
 			if key.Name == "RightShift" { shift = true }
         })
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
-            fmt.Printf("Desktop key up: %v\n", key)
+//            fmt.Printf("Desktop key up: %v\n", key)
 			if key.Name == "Escape" { os.Exit(0) }
 			if key.Name == "LeftShift" { shift = false }
 			if key.Name == "RightShift" { shift = false }
        })
     }
-	fmt.Printf("r %v shift %v\n",r,shift)
+//	fmt.Printf("r %v shift %v\n",r,shift)
 
 		relodsub = true
 		switch r {
@@ -193,6 +193,11 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 		case 80:
 			nothing = nothing ^ NOWALL
 			spau = fmt.Sprintf("no walls: %d\n",nothing & NOWALL)
+		case 84:
+			nt := (nothing & 511) + 1
+			nothing = (nothing & 1536) + (nt & 511)
+			if anum > 0 { nothing = (nothing & 1536) + anum; anum = 0 }		// set lower 9 bits of no-thing mask [ but not walls or floors ]
+			spau = fmt.Sprintf("no things: %d\n",nothing & 511)				// display no things mask
 		case 's':
 			opts.SP = !opts.SP
 		case 'u':
@@ -256,7 +261,7 @@ func aw_init() {
 	menuItemLIC := fyne.NewMenuItem("License", func() {
 		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
 	})
-	menuHint := fyne.NewMenu("cmds: ?, q, fFgG, wWeE, rRt, hm, pP, s, il, u, v, #a")
+	menuHint := fyne.NewMenu("cmds: ?, q, fFgG, wWeE, rRt, hm, pPT, s, il, u, v, #a")
 
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
 	mainMenu := fyne.NewMainMenu(menuExit, menuHelp, menuHint)
@@ -302,6 +307,7 @@ func keyhints() {
 	strp += "\nm - mirror maze vertical toggle"
 	strp += cpad("\np - toggle floor invis",41)
 	strp += cpad("\nP - toggle wall invis",42)
+	strp += cpad("\nT - loop invis things",42)
 	strp += cpad("\ns - toggle rnd special potion",34)
 	strp += cpad("\ni - gauntlet mazes r1 - r9",38)
 	strp += cpad("\nl - use gauntlet rev 14",40)

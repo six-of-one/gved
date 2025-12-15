@@ -130,10 +130,19 @@ const (
 	G1OBJ_TILE_STUN = 62
 	G1OBJ_TREASURE_BAG = 64
 )
-// contrl var nothing that blocks some output
+// contrl var nothing [ no-thing ] that blocks elements output
 const (
-	NOFLOOR = 1
-	NOWALL = 2
+	NOGEN = 1		// all generators
+	NOMON = 2		// all monster, dragon
+	NOFUD = 4		// all food
+	NOTRS = 8		// treas, locked
+	NOPOT = 16		// pots & t.powers
+	NODOR = 32		// doors keys
+	NOTRAP = 64		// trap, stun, ff tiles
+	NOEXP = 128		// exit, push wall, rest
+	NOTHN = 256		// all things
+	NOFLOOR = 512
+	NOWALL = 1024
 )
 // G1 - list of "wrap levels"
 var g1wrp = []int{
