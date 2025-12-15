@@ -25,6 +25,7 @@ Issues
 ======
 * still only a viewer
 * possible to crash with valid parms
+* G¹ floor and wall colors are still being rendered with G² color palette
 
 Attributions
 =============
