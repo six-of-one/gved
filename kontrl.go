@@ -180,12 +180,14 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			G1 = true
 			G2 = false
 			maxmaze = 126
+			spau = "G¹ "
 		case 'l':
 			opts.Gtp = 1
 			opts.R14 = !opts.R14
 			G1 = true
 			G2 = false
 			maxmaze = 126
+			spau = "G¹ "
 		case 's':
 			opts.SP = !opts.SP
 		case 'u':
@@ -193,10 +195,14 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			G1 = false
 			G2 = true
 			maxmaze = 116
+			spau = "G² mazes"
 		default:
 			relodsub = false
 		}
 
+		if spau == "G¹ " {
+			if opts.R14 { spau += "rv14" } else { spau += "rv1-9" }
+		}
 	if (relod || relodsub) {
 		maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)
 		mazeloop(maze)
