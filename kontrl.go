@@ -31,6 +31,7 @@ var shift bool
 
 func typedRune(r rune) {
 
+// special aux string - put ops in title after maze #
 	spau := ""
 // relod
 	relod := false
@@ -59,6 +60,13 @@ func typedRune(r rune) {
 			Ovwallpat = -1
 			relod = true
 		}
+	}
+
+// maze # + or 1
+	if r == 'z' || r == 'x' {
+
+		Ovwallpat = -1
+		relod = true
 	}
 
 // (almost) blind numeric input
@@ -102,7 +110,85 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			if key.Name == "Escape" { os.Exit(0) }
        })
     }
-	if (relod) {
+	// main loop - shift required
+		relodsub := true
+		switch r {
+		case 'w':
+			if shift {
+				Ovwallpat -= 1
+				if Ovwallpat < 0 { Ovwallpat = 7 }
+			} else {
+				Ovwallpat += 1
+				if anum >= 0 { Ovwallpat = anum }
+				if Ovwallpat > 7 { Ovwallpat = 0 }
+			}
+			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
+		case 'e':
+			if shift {
+				Ovwallcol -= 1
+				if Ovwallcol < 0 { Ovwallcol = 16 }
+			} else {
+				Ovwallcol += 1
+				if anum >= 0 { Ovwallcol = anum }
+				if Ovwallcol > 16 { Ovwallcol = 0 }
+			}
+			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
+		case 'f':
+			if shift {
+				Ovflorpat -= 1
+				if Ovflorpat < 0 { Ovflorpat = 8 }
+			} else {
+				Ovflorpat += 1
+				if anum >= 0 { Ovflorpat = anum }
+				if Ovflorpat > 8 { Ovflorpat = 0 }
+			}
+			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
+		case 'g':		// g
+			if shift {
+				Ovflorcol -= 1
+				if Ovflorcol < 0 { Ovflorcol = 15 }
+			} else {
+				Ovflorcol += 1
+				if anum >= 0 { Ovflorcol = anum }
+				if Ovflorcol > 15 { Ovflorcol = 0 }
+			}
+			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
+		case 'r':		// r
+			if shift {
+				opts.MRP = false
+				opts.MRM = true
+			} else {
+				opts.MRP = true
+				opts.MRM = false
+			}
+			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
+		case 't':
+			opts.MRP = false
+			opts.MRM = false
+			spau = fmt.Sprintf("cmd: t - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
+		case 'm':
+			opts.MV = !opts.MV
+			spau = fmt.Sprintf("cmd: m - mv: %t\n",opts.MV)
+		case 'h':
+			opts.MH = !opts.MH
+			spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)
+		case 'i':
+			opts.Gtp = 1
+			G1 = true
+			G2 = false
+		case 'l':
+			opts.R14 = !opts.R14
+			relod = true
+		case 's':
+			opts.SP = !opts.SP
+		case 'u':
+			opts.Gtp = 2
+			G1 = false
+			G2 = true
+		default:
+			relodsub = false
+		}
+	if (relod || relodsub) {
 		maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)
 		Ovimg := genpfimage(maze, opts.mnum)
 		upwin(Ovimg)
