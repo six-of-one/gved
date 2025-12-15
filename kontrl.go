@@ -110,9 +110,11 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 		case 'z':
 			Ovwallpat = -1
 			opts.mnum -= 1
+			if opts.mnum < 0 { opts.mnum = maxmaze }
 		case 'x':
 			Ovwallpat = -1
 			opts.mnum += 1
+			if opts.mnum > maxmaze { opts.mnum = 0 }
 		case 'w':
 			if shift {
 				Ovwallpat -= 1
@@ -176,15 +178,20 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			opts.Gtp = 1
 			G1 = true
 			G2 = false
+			maxmaze = 127
 		case 'l':
+			opts.Gtp = 1
 			opts.R14 = !opts.R14
-			relod = true
+			G1 = true
+			G2 = false
+			maxmaze = 127
 		case 's':
 			opts.SP = !opts.SP
 		case 'u':
 			opts.Gtp = 2
 			G1 = false
 			G2 = true
+			maxmaze = 116
 		default:
 			relodsub = false
 			fmt.Printf("default key\n")

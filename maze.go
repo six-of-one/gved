@@ -35,13 +35,14 @@ func mazeMetaPrint(maze *Maze) {
 
 var reMazeNum = regexp.MustCompile(`^maze(\d+)`)
 var reMazeMeta = regexp.MustCompile(`^meta$`)
+var maxmaze int
 
 func domaze(arg string) {
 	split := strings.Split(arg, "-")
 
 	var mazeNum = -1
 	var mazeMeta = 0
-	var maxmaze = 116
+	maxmaze = 116
 
 // g1 has more mazes, but treasure rooms can only spec from address, for now
 	if G1 { maxmaze = 127 }
