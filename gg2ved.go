@@ -1,5 +1,19 @@
 package main
 
+/*
+notes:
+
+a. update mazedumps with new visuals from gved
+- consider removing these due to technicality of ownership of visual
+
+1. port terminal controls (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a)
+   from gotilengine system over to fyne window SetOnKey*
+
+2. possibly seperate new controls & window from maze.go into kontrl.go
+   b. make struct for this containing details (gotta cut back on globals)
+
+*/
+
 import (
 	"fmt"
 	"image/png"
