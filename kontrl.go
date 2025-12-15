@@ -27,12 +27,42 @@ var a fyne.App
 // - this is where maze update and edits will vector
 
 var anum int
+var shift bool
 
 func typedRune(r rune) {
+
+// shifting
+	shift = false
 
 //	fmt.Printf("in keys event - %x\n",r)
 	if r == 'q' { os.Exit(0) }
 
+// new maze
+	if r == 'a' {
+		spau := ""
+		if (anum > 0 && anum <= 127 || anum >= 229376 && anum < 262145) {
+
+			if anum <= 127 {
+//				fmt.Printf("\nnew maze: %d\n",anum)
+				opts.mnum = anum - 1
+				Aov = 0
+			} else {
+//				fmt.Printf("\nnew addr: %d\n",anum)
+				Aov = anum
+				opts.mnum = 0
+				spau = fmt.Sprintf("addr = %d",anum)
+			}
+			anum = -1
+// clear these when load new maze
+			Ovwallpat = -1
+			maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)
+			Ovimg := genpfimage(maze, opts.mnum)
+			upwin(Ovimg)
+			uptitl(opts.mnum, spau)
+		}
+	}
+
+// (almost) blind numeric input
 	switch r {
 	case '0':
 		anum = (anum * 10)
@@ -65,6 +95,8 @@ func typedRune(r rune) {
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
             fmt.Printf("Desktop key down: %h\n", key.Name)
+			if key.Name == "LeftShift" { shift = true }
+			if key.Name == "RightShift" { shift = true }
         })
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
 //            fmt.Printf("Desktop key up: %v\n", key)
@@ -77,7 +109,7 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 
 func cpad(st string, d int) string {
 
-	spout := st+"                                                                          "
+	spout := st+"                                                                          " // jsut guess at a pad fill
 	return string(spout[:d])
 }
 
