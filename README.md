@@ -18,9 +18,8 @@ command line suggestions:
 
 Research
 ========
-* gaunt_prog.gnumeric
-(yes, it is gnumeric - libreoffice will open, but without the fancy parts)
-- stats compiled from G¹/ G² roms
+* gaunt_prog.gnumeric (yes, it is gnumeric - libreoffice will open, but without the fancy parts)
+* stats compiled from G¹/ G² roms
 
 Issues
 ======
