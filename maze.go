@@ -11,7 +11,6 @@ import (
 	"strconv"
 	"strings"
 	"os"
-	"bufio"
 //	"time"
 
 	"fyne.io/fyne/v2"
@@ -45,7 +44,7 @@ func domaze(arg string) {
 	maxmaze = 116
 
 // g1 has more mazes, but treasure rooms can only spec from address, for now
-	if G1 { maxmaze = 127 }
+	if G1 { maxmaze = 126 }
 
 	for _, ss := range split {
 		switch {
@@ -85,16 +84,16 @@ func domaze(arg string) {
 		os.Exit(0)
 	}
 
-// setup kby read
-	consoleReader := bufio.NewReaderSize(os.Stdin, 1)
-
 // in interactive, start the window
 	aw_init()
 
 
 // testing gotilengine - leftover
-	suser := " "	// user action string
 
+	Ovimg := genpfimage(maze, mazeNum)
+	upwin(Ovimg)
+	w.Resize(fyne.NewSize(1024, 1024))
+	w.ShowAndRun()
 
 // interactive loop here - lets user tweak vars settings & load new mazes
 // user controls loop for tweaking
@@ -106,16 +105,6 @@ func domaze(arg string) {
 		if !noact {
 // redo maze #, colors, walls, rotates, etc
 			if (anum > 0 && anum <= 127 || anum >= 229376 && anum < 262145) && ascii == 97 {
-				if anum <= 127 {
-					fmt.Printf("\nnew maze: %d\n",anum)
-					mazeNum = anum - 1
-					Aov = 0
-					suser = fmt.Sprintf("maze = %d",anum)
-				} else {
-					fmt.Printf("\nnew addr: %d\n",anum)
-					Aov = anum
-					suser = fmt.Sprintf("addr = %d",anum)
-				}
 				anum = -1
 // clear these when load new maze
 				Ovwallpat = -1
@@ -198,53 +187,19 @@ func domaze(arg string) {
 				xform[xy{tx, lasty - ty}] = maze.data[xy{tx, ty}]
 			}}
 		}
-		if opts.MH || opts.MV || opts.MRP || opts.MRM {
+/*		if opts.MH || opts.MV || opts.MRP || opts.MRM {
 			suser += ","
 			if opts.MV { suser += " m-vert" }
 			if opts.MH { suser += " m-horz" }
 			if opts.MRP { suser += "+90°" }
 			if opts.MRM { suser += "-90°" }
-		}
+		}*/
 // copy back
 		for y := 1; y <= lasty; y++ {
 			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}
 	}
 
-			Ovimg := genpfimage(maze, mazeNum)
-			upwin(Ovimg)
-			w.Resize(fyne.NewSize(1024, 1024))
-			w.Show()
-
 		}
-		a.Run()
-// key tester
-		if ascii != 17 {
-			input, _ := consoleReader.ReadByte()
-			ascii = input
-		}
-			noact = false
-			switch ascii {
-			case 10:
-// it picks up the <CR> that enters cmd, mask that off here, do nothing
-				noact = true
-				anum = -1
-
-			case 118:		// v
-				lx := 116
-				if G1 { lx = 126 }
-				fmt.Printf("\n valid maze address for Gauntlet %d\nmaze   dec -    hex\n",opts.Gtp)
-				for x := 0; x <= lx;x ++ {
-					ad := slapsticMazeGetRealAddr(x)
-					fmt.Printf("%03d:%d - x%X  ",x,ad,ad)
-					if (x + 1) % 7 == 0 { fmt.Printf("\n") }
-				}
-				fmt.Printf("\n")
-			case 63:
-				fmt.Printf(" Command (?, q, fFgG, wWeE, rRt, hm, s, il, u, v, #a): ")
-				noact = true
-			default:
-				if ascii < 48 || ascii > 57 { fmt.Printf("unk: %d\n",ascii) }
-			}
 
 }

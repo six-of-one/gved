@@ -178,13 +178,13 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			opts.Gtp = 1
 			G1 = true
 			G2 = false
-			maxmaze = 127
+			maxmaze = 126
 		case 'l':
 			opts.Gtp = 1
 			opts.R14 = !opts.R14
 			G1 = true
 			G2 = false
-			maxmaze = 127
+			maxmaze = 126
 		case 's':
 			opts.SP = !opts.SP
 		case 'u':
