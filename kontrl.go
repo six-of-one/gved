@@ -91,7 +91,6 @@ func typedRune(r rune) {
 		uptitl(opts.mnum, til)
 	}
 
-	br := ' '		// some issue exists with detecting shifted vals
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
             fmt.Printf("Desktop key down: %h\n", key.Name)
@@ -100,47 +99,13 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         })
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
             fmt.Printf("Desktop key up: %v\n", key)
-			if key.Name == "E" { br = 'e' }
-			if key.Name == "F" { br = 'f' }
-			if key.Name == "G" { br = 'g' }
-			if key.Name == "r" { br = 'r' }
-			if key.Name == "w" { br = 'w' }
 			if key.Name == "Escape" { os.Exit(0) }
 			if key.Name == "LeftShift" { shift = false }
 			if key.Name == "RightShift" { shift = false }
        })
     }
-	fmt.Printf("shift %v key %v\n",shift,br)
-	// main loop - shift required
-		if shift {
-		switch br {
-		case 'w':
-			Ovwallpat -= 1
-			if Ovwallpat < 0 { Ovwallpat = 7 }
-			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
-			relod = true
-		case 'e':
-			Ovwallcol -= 1
-			if Ovwallcol < 0 { Ovwallcol = 16 }
-			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
-			relod = true
-		case 'f':
-			Ovflorpat -= 1
-			if Ovflorpat < 0 { Ovflorpat = 8 }
-			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
-			relod = true
-		case 'g':
-			Ovflorcol -= 1
-			if Ovflorcol < 0 { Ovflorcol = 15 }
-			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
-			relod = true
-		case 'r':
-			opts.MRP = false
-			opts.MRM = true
-			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
-			relod = true
-		}
-		} else {
+//	fmt.Printf("r %v shift %v key %v\n",r,shift,br)
+
 		relodsub = true
 		switch r {
 		case 'z':
@@ -156,24 +121,44 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			if anum >= 0 { Ovwallpat = anum }
 			if Ovwallpat > 7 { Ovwallpat = 0 }
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
+		case 25:		// W
+			Ovwallpat -= 1
+			if Ovwallpat < 0 { Ovwallpat = 7 }
+			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
 		case 'e':
 			Ovwallcol += 1
 			if anum >= 0 { Ovwallcol = anum }
 			if Ovwallcol > 16 { Ovwallcol = 0 }
+			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
+		case 26:		// E
+			Ovwallcol -= 1
+			if Ovwallcol < 0 { Ovwallcol = 16 }
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
 		case 'f':
 			Ovflorpat += 1
 			if anum >= 0 { Ovflorpat = anum }
 			if Ovflorpat > 8 { Ovflorpat = 0 }
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
-		case 'g':		// g
+		case 41:		// F 
+			Ovflorpat -= 1
+			if Ovflorpat < 0 { Ovflorpat = 8 }
+			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
+		case 'g':
 			Ovflorcol += 1
 			if anum >= 0 { Ovflorcol = anum }
 			if Ovflorcol > 15 { Ovflorcol = 0 }
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
-		case 'r':		// r
+		case 42:		// G
+			Ovflorcol -= 1
+			if Ovflorcol < 0 { Ovflorcol = 15 }
+			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
+		case 'r':
 			opts.MRP = true
 			opts.MRM = false
+			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
+		case 82:		// R
+			opts.MRP = false
+			opts.MRM = true
 			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
 		case 't':
 			opts.MRP = false
@@ -206,7 +191,7 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 		default:
 			relodsub = false
 		}
-		}
+
 	if (relod || relodsub) {
 		maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)
 		mazeloop(maze)
