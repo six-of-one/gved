@@ -86,9 +86,6 @@ func domaze(arg string) {
 // in interactive, start the window
 	aw_init()
 
-
-// testing gotilengine - leftover
-
 	Ovimg := genpfimage(maze, mazeNum)
 	upwin(Ovimg)
 	w.Resize(fyne.NewSize(1024, 1024))
@@ -175,13 +172,7 @@ func mazeloop(maze *Maze) {
 				xform[xy{tx, lasty - ty}] = maze.data[xy{tx, ty}]
 			}}
 		}
-/*		if opts.MH || opts.MV || opts.MRP || opts.MRM {
-			suser += ","
-			if opts.MV { suser += " m-vert" }
-			if opts.MH { suser += " m-horz" }
-			if opts.MRP { suser += "+90°" }
-			if opts.MRM { suser += "-90°" }
-		}*/
+
 // copy back
 		for y := 1; y <= lasty; y++ {
 			for x := 1; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }

@@ -289,7 +289,7 @@ func upwin(simg *image.NRGBA) {
 	bimg := canvas.NewRasterFromImage(simg)
 	w.Canvas().SetContent(bimg)
 	w.Resize(fyne.NewSize(1024, 1024))
-	w.Show()
+//	w.Show()
 
 	uptitl(opts.mnum, "")
 }
