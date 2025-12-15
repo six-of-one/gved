@@ -97,20 +97,20 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
             fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "LeftShift" { shift = true }
 			if key.Name == "RightShift" { shift = true }
+        })
+        deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
+            fmt.Printf("Desktop key up: %v\n", key)
 			if key.Name == "E" { br = 'e' }
 			if key.Name == "F" { br = 'f' }
 			if key.Name == "G" { br = 'g' }
-			if key.Name == "R" { br = 'r' }
-			if key.Name == "W" { br = 'w' }
-        })
-        deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
-//            fmt.Printf("Desktop key up: %v\n", key)
+			if key.Name == "r" { br = 'r' }
+			if key.Name == "w" { br = 'w' }
 			if key.Name == "Escape" { os.Exit(0) }
 			if key.Name == "LeftShift" { shift = false }
 			if key.Name == "RightShift" { shift = false }
        })
     }
-	fmt.Printf("shift key %v\n",shift)
+	fmt.Printf("shift %v key %v\n",shift,br)
 	// main loop - shift required
 		if shift {
 		switch br {
@@ -205,7 +205,6 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			maxmaze = 116
 		default:
 			relodsub = false
-			fmt.Printf("default key\n")
 		}
 		}
 	if (relod || relodsub) {
