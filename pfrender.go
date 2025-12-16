@@ -278,7 +278,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				writestamptoimage(img, stamp, x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
 			}
 
-			if dots != 0 {
+			if dots != 0 && nothing & NOWALL == 0 {
 				renderdots(img, x*16+16, y*16+16, dots)
 			}
 		}
@@ -350,9 +350,11 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			// stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 			case MAZEOBJ_TILE_STUN:
 				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
-				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
-				stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
-				stamp.pnum = 0
+				if (nothing & NOTRAP) == 0 {
+					stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+					stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
+					stamp.pnum = 0
+				}
 
 				// Tried to simplify these a bit with a goto, but golang didn't
 				// like it ('jump into block'). I should figure out why.
@@ -369,9 +371,11 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 					dots = 3
 				}
 				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
-				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
-				stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
-				stamp.pnum = 0
+				if (nothing & NOTRAP) == 0 {
+					stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+					stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
+					stamp.pnum = 0
+				} else { dots = 0 }
 			case MAZEOBJ_WALL_MOVABLE:
 				stamp = itemGetStamp("pushwall")
 			case MAZEOBJ_KEY:
@@ -578,9 +582,11 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				}
 	*/
 				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
-				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
-				stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
-				stamp.pnum = 0
+				if (nothing & NOTRAP) == 0 {
+					stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+					stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
+					stamp.pnum = 0
+				}
 			case G1OBJ_KEY:
 				stamp = itemGetStamp("key")
 
@@ -758,14 +764,16 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 // while each monsters gen has a letter color, some are hard to read - resetting to red
 					gtop.Clear()
 					if !gtopcol { gtop.SetRGB(1, 0, 0) }
-					gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
+					if nothing & NOGEN == 0 {
+						gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
+					}
 					gtopim := gtop.Image()
 					offset := image.Pt(x*16+16+stamp.nudgex-4, y*16+16+stamp.nudgey-4)
 					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 				}
 			}
 
-			if dots != 0 {
+			if dots != 0 && nothing & NOWALL == 0 {
 				renderdots(img, x*16+16, y*16+16, dots)
 			}
 		}

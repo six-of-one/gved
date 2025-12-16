@@ -314,7 +314,7 @@ func keyhints() {
 	strp += cpad("\nu - gauntlet 2 mazes",39)
 //		strp += cpad("\nv - valid address list",42)
 	strp += "\nv - all maze addr (in termninal)"
-	strp += cpad("\n{n}umeric of valid maze",37)
+	strp += cpad("\n{n}a numeric of valid maze",35)
 	strp += cpad("\n - load maze 1 - 127 g1",42)
 	strp += cpad("\n - load maze 1 - 117 g2",42)
 	strp += "\n - load address 229376 - 262143 "

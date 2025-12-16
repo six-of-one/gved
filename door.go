@@ -30,6 +30,7 @@ func doorGetStamp(doorDir int, doorAdj int) *Stamp {
 	var stamp *Stamp
 	tiles := doorGetTiles(doorDir, doorAdj)
 
+  if (nothing & NODOR) == 0 {
 	if tiles == nil {
 		switch doorDir {
 		case DOOR_HORIZ:
@@ -41,6 +42,7 @@ func doorGetStamp(doorDir int, doorAdj int) *Stamp {
 		stamp = genstamp_fromarray(tiles, 2, "base", 0)
 		stamp.trans0 = true
 	}
+  }
 	return stamp
 }
 
