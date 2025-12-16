@@ -185,6 +185,8 @@ func mazeloop(maze *Maze) {
 	}
 }
 
+// verify manually selected address, or page keys 'z' 'x' move thru address list
+
 // ad - address to test
 // dr - direction to move in array
 // a. select next addr in loop (dr = 1, -1)

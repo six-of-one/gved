@@ -106,6 +106,8 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 
 		relodsub = true
 		switch r {
+		case 65:		// A
+			Aov = addrver(slapsticMazeGetRealAddr(opts.mnum), 0)
 		case 'z':
 			Ovwallpat = -1
 			opts.mnum -= 1
@@ -296,8 +298,8 @@ func upwin(simg *image.NRGBA) {
 
 func uptitl(mazeN int, spaux string) {
 
-	til := fmt.Sprintf("G¹G²ved Maze: %d",mazeN + 1)
-	if Aov > 0 { til = fmt.Sprintf("G¹G²ved Maze addr: %X - %d",Aov,Aov) }
+	til := fmt.Sprintf("G¹G²ved Maze: %d addr: %X",mazeN + 1, slapsticMazeGetRealAddr(mazeN))
+	if Aov > 0 { til = fmt.Sprintf("G¹G²ved Override addr: %X - %d",Aov,Aov) }
 	if spaux != "" { til += " -- " + spaux }
 	w.SetTitle(til)
 }
@@ -333,8 +335,9 @@ func keyhints() {
 //		strp += "\n- i5a switch to g1, load maze 5"
 	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
 	strb := fmt.Sprintf("\nG%d ",opts.Gtp)
+	if G1 {
 	if opts.R14 { strb += "(r14)"
-		} else { strb += "(r1-9)" }
+		} else { strb += "(r1-9)" }}
 	strp += cpad(strb,50)
 
 	dialog.ShowInformation("Command Keys", strp, w)
