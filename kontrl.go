@@ -107,24 +107,28 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 		relodsub = true
 		switch r {
 		case 65:		// A
-			Aov = addrver(slapsticMazeGetRealAddr(opts.mnum), 0)
+			if Aov > 0 { Aov = 0 } else {
+				Aov = addrver(slapsticMazeGetRealAddr(opts.mnum), 0)
+			}
 		case 'z':
 			Ovwallpat = -1
-			opts.mnum -= 1
-			if opts.mnum < 0 { opts.mnum = maxmaze }
 // allow step parse through valid address
 			if Aov > 0 {
 				nav := addrver(Aov, -1)
 				Aov = nav
+			} else {
+				opts.mnum -= 1
 			}
+			if opts.mnum < 0 { opts.mnum = maxmaze }
 		case 'x':
 			Ovwallpat = -1
-			opts.mnum += 1
-			if opts.mnum > maxmaze { opts.mnum = 0 }
 			if Aov > 0 {
 				nav := addrver(Aov, 1)
 				Aov = nav
+			} else {
+				opts.mnum += 1
 			}
+			if opts.mnum > maxmaze { opts.mnum = 0 }
 		case 'w':
 			Ovwallpat += 1
 			if anum > 0 { Ovwallpat = anum - 1; anum = 0 }
@@ -272,7 +276,7 @@ func aw_init() {
 	menuItemLIC := fyne.NewMenuItem("License", func() {
 		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
 	})
-	menuHint := fyne.NewMenu("cmds: ?, q, fFgG, wWeE, rRt, hm, pPT, s, il, u, v, #a")
+	menuHint := fyne.NewMenu("cmds: ?, q, fFgG, wWeE, rRt, hm, pPT, s, il, u, v, A #a")
 
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
 	mainMenu := fyne.NewMainMenu(menuExit, menuHelp, menuHint)
@@ -326,6 +330,7 @@ func keyhints() {
 	strp += cpad("\nu - gauntlet 2 mazes",39)
 //		strp += cpad("\nv - valid address list",42)
 	strp += "\nv - all maze addr (in termninal)"
+	strp += cpad("\nA - toggle a override",41)
 	strp += cpad("\n{n}a numeric of valid maze",35)
 	strp += cpad("\n - load maze 1 - 127 g1",42)
 	strp += cpad("\n - load maze 1 - 117 g2",42)

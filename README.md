@@ -17,7 +17,8 @@ command line suggestions:
 interactive mode:
 * '?' - calls up key hints dialog
 * 'v' - lists maze rom addresses to terminal gved was run from
-* 'z'. 'x' - previous & next maze - loops
+* 'z'. 'x' - previous & next maze - loops (address ov loops too)
+* 'A' - switch between maze # and address override with Aov = {curr maze addr}
 * visual ops should be straight forward
 * 's' - displays special potions at random empty locs
 * writes output.png as each maze is viewed
