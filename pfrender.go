@@ -147,8 +147,11 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
 			if ffmap[xy{x, y}] {
-				stamp.ptype = "forcefield"
-				stamp.pnum = 0
+				if nothing & NOTRAP == 0 {
+					stamp.ptype = "forcefield"
+					stamp.pnum = 0
+					writestamptoimage(img, stamp, x*16+16, y*16+16)
+				}
 			}
 			if (nothing & NOFLOOR) == 0 {
 				writestamptoimage(img, stamp, x*16+16, y*16+16)
@@ -518,7 +521,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 			case MAZEOBJ_FORCEFIELDHUB:
 				adj := checkffadj4(maze, x, y)
-				stamp = ffGetStamp(adj)
+				if nothing & NOEXP == 0 { stamp = ffGetStamp(adj) }
 			case MAZEOBJ_TRANSPORTER:
 				stamp = itemGetStamp("tport")
 // testing special potions
