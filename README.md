@@ -4,7 +4,7 @@ G¹G²ved
 - visual editor for gauntlet, gauntlet 2 mazes
     (and eventually sanctuary...)
 - gauntlet roms required: G¹ in ./ROMs-g1 and G² in ./ROMs (MUST be unzipped! see slapstic.go for details)
-- had issues with gotilengine.TLN_DrawFrame(0) only wanting to draw 2 or 3 mazes
+- fyne window module - had issues with gotilengine.TLN_DrawFrame(0) only wanting to draw 2 or 3 mazes
 
 command line suggestions:
 * gved -i maze115
@@ -31,12 +31,11 @@ Research
 Issues
 ======
 * still only a viewer
-* possible to crash with valid parms
 * G¹ floor and wall colors are still being rendered with G² color palette
 
 Attributions
 =============
-- based on code from https://github.com/alinsavix/gex/tree/master
+- based on code from [gex](https://github.com/alinsavix/gex/tree/master)
 
 License
 =======

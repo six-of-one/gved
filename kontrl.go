@@ -48,7 +48,7 @@ func typedRune(r rune) {
 				opts.mnum = anum - 1
 				Aov = 0
 			} else {
-				Aov = anum
+				Aov = addrver(anum, 0)
 				opts.mnum = 0
 				spau = fmt.Sprintf("addr = %d",anum)
 			}

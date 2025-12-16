@@ -185,24 +185,52 @@ func mazeloop(maze *Maze) {
 	}
 }
 
-// only g1 for now
+// ad - address to test
+// dr - direction to move in array
+// a. select next addr in loop (dr = 1, -1)
+// b. verify an entered addr (dr = 0)
+
+
 func addrver(ad int, dr int) int {
 
-	as := g1validaddr[0]	// addr search set
-	rt := as				// return
+	rt := 0					// return
+	rn := 0					// return nearest
 	i := 0
 	if G1 {
 
+	as := g1validaddr[0]	// addr search set
 	for as > 0 {
 		if ad == as {
-			if (i + dr) == -1 { rt =  g1validaddr[len(g1validaddr)-1]} else {
+			if (i + dr) == -1 { rt = g1validaddr[len(g1validaddr)-1]} else {		// looped array start, get end
 				rt = g1validaddr[i + dr]
+			}
+		} else {
+			if dr == 0 {	// for addr entry verify, pick nearest lower if not found
+				if ad > g1validaddr[i] { rn = g1validaddr[i] }
 			}
 		}
 		i++
 		as = g1validaddr[i]
 	}
-	if rt == -1 { rt = g1validaddr[0] }
-	} else { rt = 0 }
+	if rt == -1 { rt = g1validaddr[0] }		// looped end of array, get 1st
+	} else {
+
+	as := g2validaddr[0]
+	for as > 0 {
+		if ad == as {
+			if (i + dr) == -1 { rt =  g2validaddr[len(g2validaddr)-1]} else {
+				rt = g2validaddr[i + dr]
+			}
+		} else {
+			if dr == 0 {
+				if ad > g2validaddr[i] { rn = g2validaddr[i] }
+			}
+		}
+		i++
+		as = g2validaddr[i]
+	}
+	if rt == -1 { rt = g2validaddr[0] }
+	}
+	if rt == 0 && dr == 0 && rn > 0 { rt = rn }
 	return rt
 }
