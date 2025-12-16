@@ -110,10 +110,18 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			Ovwallpat = -1
 			opts.mnum -= 1
 			if opts.mnum < 0 { opts.mnum = maxmaze }
+			if Aov > 0 {
+				nav := addrver(Aov, -1)
+				Aov = nav
+			}
 		case 'x':
 			Ovwallpat = -1
 			opts.mnum += 1
 			if opts.mnum > maxmaze { opts.mnum = 0 }
+			if Aov > 0 {
+				nav := addrver(Aov, 1)
+				Aov = nav
+			}
 		case 'w':
 			Ovwallpat += 1
 			if anum > 0 { Ovwallpat = anum - 1; anum = 0 }
@@ -288,6 +296,7 @@ func upwin(simg *image.NRGBA) {
 func uptitl(mazeN int, spaux string) {
 
 	til := fmt.Sprintf("G¹G²ved Maze: %d",mazeN + 1)
+	if Aov > 0 { til = fmt.Sprintf("G¹G²ved Maze addr: %X - %d",Aov,Aov) }
 	if spaux != "" { til += " -- " + spaux }
 	w.SetTitle(til)
 }
