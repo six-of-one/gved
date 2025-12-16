@@ -423,6 +423,7 @@ var sanct_vrt2 = []int{
 }
 
 // the list of valid address in g1
+// this will allow parsing entire viewable maze space while avoiding crashes
 
 var g1validaddr = []int {
 

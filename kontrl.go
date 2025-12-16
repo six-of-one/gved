@@ -110,6 +110,7 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			Ovwallpat = -1
 			opts.mnum -= 1
 			if opts.mnum < 0 { opts.mnum = maxmaze }
+// allow step parse through valid address
 			if Aov > 0 {
 				nav := addrver(Aov, -1)
 				Aov = nav

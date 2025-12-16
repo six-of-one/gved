@@ -184,3 +184,25 @@ func mazeloop(maze *Maze) {
 		}
 	}
 }
+
+// only g1 for now
+func addrver(ad int, dr int) int {
+
+	as := g1validaddr[0]	// addr search set
+	rt := as				// return
+	i := 0
+	if G1 {
+
+	for as > 0 {
+		if ad == as {
+			if (i + dr) == -1 { rt =  g1validaddr[len(g1validaddr)-1]} else {
+				rt = g1validaddr[i + dr]
+			}
+		}
+		i++
+		as = g1validaddr[i]
+	}
+	if rt == -1 { rt = g1validaddr[0] }
+	} else { rt = 0 }
+	return rt
+}
