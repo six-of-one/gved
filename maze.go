@@ -94,6 +94,8 @@ func domaze(arg string) {
 
 }
 
+// loop called by typedRune in kontrol.go to re-issue maze after viewer parm changes
+
 func mazeloop(maze *Maze) {
 // to transform maze, array copy
 	xform := make(map[xy]int)
