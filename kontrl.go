@@ -335,9 +335,7 @@ func keyhints() {
 	strp += cpad("\n - load maze 1 - 127 g1",42)
 	strp += cpad("\n - load maze 1 - 117 g2",42)
 	strp += "\n - load address 229376 - 262143 "
-	strp += "\n * note some address will crash"
-//		strp += cpad("\n    commands can be chained:",38)
-//		strp += "\n- i5a switch to g1, load maze 5"
+//	strp += "\n * note some address will crash"
 	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
 	strb := fmt.Sprintf("\nG%d ",opts.Gtp)
 	if G1 {
