@@ -28,6 +28,13 @@ interactive mode:
 * 'w' 'e' 'f' 'g' - can all be proceded by #, just like #a
 * writes output.png as each maze is viewed
 
+Notes
+=====
+- some features are for research only...
+- address override was used to verify gauntlet maze reads vs. link table at 0x38032
+- rotate 90° is only used in sanctuary, NOT in gauntlet or g2
+- the vars visual ops are view ONLY and do not yet allow editing
+
 Research
 ========
 * gaunt_prog.gnumeric (yes, it is gnumeric - libreoffice will open, but without the fancy parts)
