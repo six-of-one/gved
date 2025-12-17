@@ -298,7 +298,6 @@ func upwin(simg *image.NRGBA) {
 	geow := int(math.Max(560,opts.Geow))	// 556 is min, maze doesnt seem to fit or shrink smaller
 	geoh := int(math.Max(594,opts.Geoh)) // 594 min
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
-	fmt.Printf("Window st: %d x %d opt: %v x %v\n",geow,geoh,opts.Geow,opts.Geoh)
 //	w.Show()
 
 	uptitl(opts.mnum, "")

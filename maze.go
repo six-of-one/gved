@@ -90,23 +90,20 @@ func domaze(arg string) {
 
 // handle window resize lock
 	go func() {
-		time.Sleep(5 * time.Second)
+		time.Sleep(3 * time.Second)		// some hang time to allow win to display & size, otherwise w x h is 1 x 1
 		bgeow := int(opts.Geow)
 		bgeoh := int(opts.Geoh)
 		for {
-			width := int(w.Content().Size().Width)
-			height :=int(w.Content().Size().Height)
-			dw := bgeow - width
-			dh := bgeoh - height
+// dont know why the +8, +36 needed, dont know if it will ever vary ??
+			width := int(w.Content().Size().Width) + 8
+			height :=int(w.Content().Size().Height) + 36
+//					fmt.Printf("Window was resized! st: %d x %d n: %v x %v delta: %d, %d\n",bgeow,bgeoh,w.Content().Size().Width,w.Content().Size().Height,dw,dh)
 			if width != bgeow || height != bgeoh {
 					// window was resized
-					fmt.Printf("Window was resized! st: %d x %d n: %v x %v delta: %d, %d\n",bgeow,bgeoh,width,height,dw,dh)
 // provide live resize so other vis ops dont bounce it back
 // for some reason maze updates resize the window down w -= 8 & h -= 36 to minimun
-				if dw != 8 && dh != 36 {
-					opts.Geow = float64(width)
-					opts.Geoh = float64(height)
-				}
+				opts.Geow = float64(width)
+				opts.Geoh = float64(height)
 			}
 			bgeow = int(opts.Geow)
 			bgeoh = int(opts.Geoh)
