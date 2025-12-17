@@ -54,7 +54,9 @@ func domaze(arg string) {
 		}
 	}
 	if mazeNum < 0 || mazeNum > maxmaze {
-		panic("Invalid maze number / address specified.")
+		if opts.Intr { mazeNum = 0 } else {			// interactive defauklt to gauntlet maze 1 if no spec
+			panic("Invalid maze number / address specified.")
+		}
 	}
 
 	opts.mnum = mazeNum

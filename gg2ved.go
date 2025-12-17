@@ -94,19 +94,22 @@ func main() {
 	case TypeNone:
 		if opts.Tile > 0 {
 			dotile(opts.Tile)
+			fmt.Println("dotile \n")
 		} else {
-			fmt.Println("nothing selected - more options required, try:\n./gved -i maze1\n./gved floor0\n./gved wall0\nnote: non-interactive generates output.png\n")
+			if opts.Intr { domaze("maze1") } else {		// set interactive but left out maze# - do it by default
+				fmt.Println("nothing selected - more options required, try:\n./gved -i maze1\n./gved floor0\n./gved wall0\nnote: non-interactive generates output.png\n")
 // do a 'help'
-			a := "./gved"
-			a0 := "-h"
-			cmd := exec.Command(a, a0)
-			stdout, err := cmd.Output()
-			if err != nil {
-				fmt.Println(err.Error())
-		    }
-			fmt.Printf("\n")
-			fmt.Println(string(stdout))
-			os.Exit(1)
+				a := "./gved"
+				a0 := "-h"
+				cmd := exec.Command(a, a0)
+				stdout, err := cmd.Output()
+				if err != nil {
+					fmt.Println(err.Error())
+				}
+				fmt.Printf("\n")
+				fmt.Println(string(stdout))
+				os.Exit(1)
+			}
 		}
 	case TypeFloor:
 		dofloor(args[0])
