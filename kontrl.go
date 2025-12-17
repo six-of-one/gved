@@ -6,11 +6,8 @@ import (
 	"image"
 	"fmt"
 	"math"
-//	"regexp"
-//	"strconv"
-//	"strings"
 	"os"
-//	"bufio"
+	"io/ioutil"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -287,6 +284,32 @@ func aw_init() {
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
 	shift = false
+// get default win size
+
+	if opts.Geow == 1024 && opts.Geoh == 1024 {		// defs set
+
+		data, err := ioutil.ReadFile(".wstats")
+		if err != nil {
+			return
+		}
+		ist := string(data)
+		fmt.Println(string(data))
+		var geow float64
+		var geoh float64
+		fmt.Sscanf(ist,"%v %v", &geow, &geoh)
+		opts.Geow = math.Max(560,geow)
+		opts.Geoh = math.Max(594,geoh)
+	fmt.Printf("Load window size: %v x %v\n",geow,geoh)
+
+	} else {
+		file, err := os.Create(".wstats")
+		if err == nil {
+			wfs := fmt.Sprintf("%d %d",int(opts.Geow),int(opts.Geoh))
+			file.WriteString(wfs)
+			file.Close()
+fmt.Printf("saving .wstats file\n")
+		}
+	}
 }
 
 // update contents
@@ -323,7 +346,7 @@ func wizecon() {
 	for {
 // dont know why the +8, +36 needed, dont know if it will ever vary ??
 		width := int(w.Content().Size().Width) + 8
-		height :=int(w.Content().Size().Height) + 36
+		height := int(w.Content().Size().Height) + 36
 //x					fmt.Printf("Window was resized! st: %d x %d n: %v x %v delta: %d, %d\n",bgeow,bgeoh,w.Content().Size().Width,w.Content().Size().Height,dw,dh)
 		if width != bgeow || height != bgeoh {
 				// window was resized
@@ -331,6 +354,14 @@ func wizecon() {
 // for some reason maze updates resize the window down w -= 8 & h -= 36 to minimun
 			opts.Geow = float64(width)
 			opts.Geoh = float64(height)
+// save stat
+			file, err := os.Create(".wstats")
+			if err == nil {
+				wfs := fmt.Sprintf("%d %d",width,height)
+				file.WriteString(wfs)
+				file.Close()
+	fmt.Printf("saving .wstats file\n")
+			}
 		}
 		bgeow = int(opts.Geow)
 		bgeoh = int(opts.Geoh)
