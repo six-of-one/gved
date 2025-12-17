@@ -88,23 +88,29 @@ func domaze(arg string) {
 	Ovimg := genpfimage(maze, mazeNum)
 	upwin(Ovimg)
 
-// handle window resize
+// handle window resize lock
 	go func() {
-		bgeow := int(w.Content().Size().Width)
-		bgeoh := int(w.Content().Size().Height)
+		time.Sleep(5 * time.Second)
+		bgeow := int(opts.Geow)
+		bgeoh := int(opts.Geoh)
 		for {
 			width := int(w.Content().Size().Width)
-			height :=int( w.Content().Size().Height)
+			height :=int(w.Content().Size().Height)
+			dw := bgeow - width
+			dh := bgeoh - height
 			if width != bgeow || height != bgeoh {
 					// window was resized
-					fmt.Printf("Window was resized! %v x %v\n",width,height)
+					fmt.Printf("Window was resized! st: %d x %d n: %v x %v delta: %d, %d\n",bgeow,bgeoh,width,height,dw,dh)
 // provide live resize so other vis ops dont bounce it back
-				opts.Geow = float64(width)
-				opts.Geoh = float64(height)
+// for some reason maze updates resize the window down w -= 8 & h -= 36 to minimun
+				if dw != 8 && dh != 36 {
+					opts.Geow = float64(width)
+					opts.Geoh = float64(height)
+				}
 			}
-			bgeow = width
-			bgeoh = height
-			time.Sleep(100 * time.Millisecond) // you may want to change this
+			bgeow = int(opts.Geow)
+			bgeoh = int(opts.Geoh)
+			time.Sleep(2 * time.Second)
 		}
 	}()
 
