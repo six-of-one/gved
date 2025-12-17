@@ -16,6 +16,8 @@ var opts struct {
 	MRM		bool   `long:"mrm" description:"maze: rotate -90"`
 // option to randomly inject special potions and gold bags
 	SP		bool   `short:"s" long:"sp" description:"random insert special potions, gold bags"`
+// option to load mask for batch
+	Mask	int   `long:"mask" default:"0" base:"16" description:"mask to hide elements"`
 // cli option to force an address (originally for g2 force)
 	Addr	int    `long:"ad" default:"0" base:"16" description:"load maze rom address x38000 to x3FFFF (in hex)"`
 // cli option to use rev 14 maze roms (final release, differs from identical maze roms in r1 - r9)

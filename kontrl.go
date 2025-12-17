@@ -284,6 +284,7 @@ func aw_init() {
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
 	shift = false
+
 // get default win size
 
 	if opts.Geow == 1024 && opts.Geoh == 1024 {		// defs set
@@ -292,11 +293,9 @@ func aw_init() {
 		if err != nil {
 			return
 		}
-		ist := string(data)
-		fmt.Println(string(data))
 		var geow float64
 		var geoh float64
-		fmt.Sscanf(ist,"%v %v", &geow, &geoh)
+		fmt.Sscanf(string(data),"%v %v", &geow, &geoh)
 		opts.Geow = math.Max(560,geow)
 		opts.Geoh = math.Max(594,geoh)
 	fmt.Printf("Load window size: %v x %v\n",geow,geoh)
@@ -307,7 +306,6 @@ func aw_init() {
 			wfs := fmt.Sprintf("%d %d",int(opts.Geow),int(opts.Geoh))
 			file.WriteString(wfs)
 			file.Close()
-fmt.Printf("saving .wstats file\n")
 		}
 	}
 }
@@ -360,7 +358,7 @@ func wizecon() {
 				wfs := fmt.Sprintf("%d %d",width,height)
 				file.WriteString(wfs)
 				file.Close()
-	fmt.Printf("saving .wstats file\n")
+//q	fmt.Printf("saving .wstats file\n")
 			}
 		}
 		bgeow = int(opts.Geow)
