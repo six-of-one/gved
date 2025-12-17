@@ -124,7 +124,10 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 // maybe make a cli switch?
 
 	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
-	img := blankimage(8*2*32+32+extrax, 8*2*32+32+extray)
+	xspc := 32
+	xpad := 16
+	if opts.Nob { xspc = 0; xpad = 0 }
+	img := blankimage(8*2*32+xspc+extrax, 8*2*32+xspc+extray)
 
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
@@ -150,11 +153,11 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				if nothing & NOTRAP == 0 {
 					stamp.ptype = "forcefield"
 					stamp.pnum = 0
-					writestamptoimage(img, stamp, x*16+16, y*16+16)
+					writestamptoimage(img, stamp, x*16+xpad, y*16+xpad)
 				}
 			}
 			if (nothing & NOFLOOR) == 0 {
-				writestamptoimage(img, stamp, x*16+16, y*16+16)
+				writestamptoimage(img, stamp, x*16+xpad, y*16+xpad)
 			}
 		}
 	}} else {
@@ -173,7 +176,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
 			if (nothing & NOFLOOR) == 0 {
-				writestamptoimage(img, stamp, x*16+16, y*16+16)
+				writestamptoimage(img, stamp, x*16+xpad, y*16+xpad)
 			}
 		}
 
@@ -283,11 +286,11 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 					}
 				}}
 			if stamp != nil {
-				writestamptoimage(img, stamp, x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
+				writestamptoimage(img, stamp, x*16+xpad+stamp.nudgex, y*16+xpad+stamp.nudgey)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
-				renderdots(img, x*16+16, y*16+16, dots)
+				renderdots(img, x*16+xpad, y*16+xpad, dots)
 			}
 		}
 	}
@@ -766,7 +769,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			}}
 // Six: end G1 decode
 			if stamp != nil {
-				writestamptoimage(img, stamp, x*16+16+stamp.nudgex, y*16+16+stamp.nudgey)
+				writestamptoimage(img, stamp, x*16+xpad+stamp.nudgex, y*16+xpad+stamp.nudgey)
 // generator monster type letter draw - only do when set
 				if gtopl != "" {
 // while each monsters gen has a letter color, some are hard to read - resetting to red
@@ -776,13 +779,13 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 						gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
 					}
 					gtopim := gtop.Image()
-					offset := image.Pt(x*16+16+stamp.nudgex-4, y*16+16+stamp.nudgey-4)
+					offset := image.Pt(x*16+xpad+stamp.nudgex-4, y*16+xpad+stamp.nudgey-4)
 					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 				}
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
-				renderdots(img, x*16+16, y*16+16, dots)
+				renderdots(img, x*16+xpad, y*16+xpad, dots)
 			}
 		}
 	}
@@ -1144,21 +1147,23 @@ if opts.Verbose || opts.Se {
 	}
 // Six end maze dumper
 }
-	if maze.flags&LFLAG4_WRAP_H > 0 {
-		l := itemGetStamp("arrowleft")
-		r := itemGetStamp("arrowright")
-		for i := 2; i <= 32; i++ {
-			writestamptoimage(img, l, 0, i*16)
-			writestamptoimage(img, r, 32*16+16, i*16)
+	if xspc == 32 {
+		if maze.flags&LFLAG4_WRAP_H > 0 {
+			l := itemGetStamp("arrowleft")
+			r := itemGetStamp("arrowright")
+			for i := 2; i <= 32; i++ {
+				writestamptoimage(img, l, 0, i*16)
+				writestamptoimage(img, r, 32*16+16, i*16)
+			}
 		}
-	}
 
-	if maze.flags&LFLAG4_WRAP_V > 0 {
-		u := itemGetStamp("arrowup")
-		d := itemGetStamp("arrowdown")
-		for i := 1; i < 32; i++ {
-			writestamptoimage(img, u, i*16+16, 0)
-			writestamptoimage(img, d, i*16+16, 32*16+16)
+		if maze.flags&LFLAG4_WRAP_V > 0 {
+			u := itemGetStamp("arrowup")
+			d := itemGetStamp("arrowdown")
+			for i := 1; i < 32; i++ {
+				writestamptoimage(img, u, i*16+16, 0)
+				writestamptoimage(img, d, i*16+16, 32*16+16)
+			}
 		}
 	}
 	savetopng(opts.Output, img)

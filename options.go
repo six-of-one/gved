@@ -17,7 +17,8 @@ var opts struct {
 // option to randomly inject special potions and gold bags
 	SP		bool   `short:"s" long:"sp" description:"random insert special potions, gold bags"`
 // option to load mask for batch
-	Mask	int   `long:"mask" default:"0" base:"16" description:"mask to hide elements"`
+	Mask	int    `long:"mask" default:"0" base:"16" description:"mask to hide elements"`
+	Nob		bool   `long:"nb" description:"no border around outer wall "`
 // cli option to force an address (originally for g2 force)
 	Addr	int    `long:"ad" default:"0" base:"16" description:"load maze rom address x38000 to x3FFFF (in hex)"`
 // cli option to use rev 14 maze roms (final release, differs from identical maze roms in r1 - r9)
