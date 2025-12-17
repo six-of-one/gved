@@ -162,8 +162,11 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	for y := 0; y < 32; y++ {
 		for x := 0; x < 32; x++ {
 			adj := 0
+			nwt := NOWALL | NOG1W
+			if whatis(maze, x, y) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
+			if whatis(maze, x, y) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
 			if maze.wallpattern < 11 {
-				if (nothing & NOWALL) == 0 {		// wall shadows here
+				if (nothing & nwt) == 0 {		// wall shadows here
 				adj = checkwalladj3g1(maze, x, y)
 				}
 			}
@@ -253,6 +256,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 					}
 			}}
 			if G1 {
+				nwt := NOWALL | NOG1W
 				switch whatis(maze, x, y) {
 				case G1OBJ_WALL_DESTRUCTABLE:
 					adj := checkwalladj8g1(maze, x, y)
@@ -262,10 +266,11 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 				case G1OBJ_WALL_TRAP1:
 					dots = 1
+					nwt = NOWALL
 					fallthrough
 				case G1OBJ_WALL_REGULAR:
 					adj := checkwalladj8g1(maze, x, y)
-					if (nothing & NOWALL) == 0 {
+					if (nothing & nwt) == 0 {
 						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 				}
 // test of some items not place in mazes - place in empty floor tile @random
@@ -737,7 +742,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 			case G1OBJ_TRANSPORTER:
 				stamp = itemGetStamp("tportg1")
-// testing special potions
+// testing special potions - seperate from actual placed in maze above, this is the view tester option
 			case MAZEOBJ_HIDDENPOT:
 				if opts.SP {
 					ts := rand.Intn(6)

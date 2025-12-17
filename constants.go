@@ -138,11 +138,12 @@ const (
 	NOTRS = 8		// treas, locked
 	NOPOT = 16		// pots & t.powers
 	NODOR = 32		// doors keys
-	NOTRAP = 64		// trap, stun, ff tiles
-	NOEXP = 128		// exit, push wall, rest
-	NOTHN = 256		// none of the above
+	NOTRAP = 64		// trap & floor dots, stun, ff tiles
+	NOEXP = 128		// exit, push wall
+	NOTHN = 256		// anything else left
 	NOFLOOR = 512
 	NOWALL = 1024
+	NOG1W = 2048		// g1 std wall only
 )
 // G1 - list of "wrap levels"
 var g1wrp = []int{
