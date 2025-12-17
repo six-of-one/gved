@@ -68,7 +68,7 @@ func domaze(arg string) {
 
 // set 1 override to -1 to set in decoder
 	Ovwallpat = -1
-	nothing = opts.Mask & 0x7ff;
+	nothing = opts.Mask & 0xfff;
 
 	maze := mazeDecompress(slapsticReadMaze(mazeNum), false)
 
