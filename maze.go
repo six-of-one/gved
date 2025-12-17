@@ -12,8 +12,6 @@ import (
 	"strings"
 	"os"
 //	"time"
-
-	"fyne.io/fyne/v2"
 )
 
 func mazeMetaPrint(maze *Maze) {
@@ -89,7 +87,7 @@ func domaze(arg string) {
 
 	Ovimg := genpfimage(maze, mazeNum)
 	upwin(Ovimg)
-	w.Resize(fyne.NewSize(1024, 1024))
+
 // only run Show once, here - a second time relocates the win to 0,0
 // yes... even though fyne can NOT reposition windows, must be a bug
 	w.ShowAndRun()

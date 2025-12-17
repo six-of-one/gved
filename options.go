@@ -22,10 +22,12 @@ var opts struct {
 	R14		bool   `long:"r14" description:"use gauntlet rev14 maze rom"`
 // select gauntlet 1 or 2 to process - default is 2
 	Gtp 	int    `short:"g" long:"gtp" default:"1" base:"10" description:"Gauntlet to process, 1 or 2"`
+	Se		bool   `short:"z" description:"sanctuary engine data output"`
 // interactive mode for maze display, select wall & floors, rotates & mirrors, load new mazes, test addresses
 // only with maze{n}, if -i not given, prog just exits with maze in output.png
-	Intr	bool   `short:"i" description:"maze interactive cli mode"`
-	Se		bool   `short:"z" description:"sanctuary engine data output"`
+	Intr	bool   `short:"i" description:"maze interactive cli mode and following parms"`
+	Geow float64   `long:"xw" default:"1024" description:"window width in pixels"`
+	Geoh float64   `long:"xh" default:"1024" description:"window height in pixels"`
 // orig options
 	Animate bool   `short:"a" long:"animate" description:"Animate monster"`
 	PalType string `long:"pt" default:"base" description:"Palette type"`
