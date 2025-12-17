@@ -11,7 +11,6 @@ import (
 	"strconv"
 	"strings"
 	"os"
-	"time"
 )
 
 func mazeMetaPrint(maze *Maze) {
@@ -88,27 +87,9 @@ func domaze(arg string) {
 	Ovimg := genpfimage(maze, mazeNum)
 	upwin(Ovimg)
 
-// handle window resize lock
+// call handle window resize lock
 	go func() {
-		time.Sleep(3 * time.Second)		// some hang time to allow win to display & size, otherwise w x h is 1 x 1
-		bgeow := int(opts.Geow)
-		bgeoh := int(opts.Geoh)
-		for {
-// dont know why the +8, +36 needed, dont know if it will ever vary ??
-			width := int(w.Content().Size().Width) + 8
-			height :=int(w.Content().Size().Height) + 36
-//					fmt.Printf("Window was resized! st: %d x %d n: %v x %v delta: %d, %d\n",bgeow,bgeoh,w.Content().Size().Width,w.Content().Size().Height,dw,dh)
-			if width != bgeow || height != bgeoh {
-					// window was resized
-// provide live resize so other vis ops dont bounce it back
-// for some reason maze updates resize the window down w -= 8 & h -= 36 to minimun
-				opts.Geow = float64(width)
-				opts.Geoh = float64(height)
-			}
-			bgeow = int(opts.Geow)
-			bgeoh = int(opts.Geoh)
-			time.Sleep(2 * time.Second)
-		}
+		wizecon()
 	}()
 
 // only run Show once, here - a second time relocates the win to 0,0

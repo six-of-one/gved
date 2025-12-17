@@ -11,7 +11,7 @@ import (
 //	"strings"
 	"os"
 //	"bufio"
-//	"time"
+	"time"
 
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/app"
@@ -296,7 +296,7 @@ func upwin(simg *image.NRGBA) {
 	bimg := canvas.NewRasterFromImage(simg)
 	w.Canvas().SetContent(bimg)
 	geow := int(math.Max(560,opts.Geow))	// 556 is min, maze doesnt seem to fit or shrink smaller
-	geoh := int(math.Max(594,opts.Geoh)) // 594 min
+	geoh := int(math.Max(594,opts.Geoh))	// 594 min
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
 //	w.Show()
 
@@ -311,6 +311,31 @@ func uptitl(mazeN int, spaux string) {
 	if Aov > 0 { til = fmt.Sprintf("G¹G²ved Override addr: %X - %d",Aov,Aov) }
 	if spaux != "" { til += " -- " + spaux }
 	w.SetTitle(til)
+}
+
+// window resize control
+
+func wizecon() {
+
+	time.Sleep(3 * time.Second)		// some hang time to allow win to display & size, otherwise w x h is 1 x 1
+	bgeow := int(opts.Geow)
+	bgeoh := int(opts.Geoh)
+	for {
+// dont know why the +8, +36 needed, dont know if it will ever vary ??
+		width := int(w.Content().Size().Width) + 8
+		height :=int(w.Content().Size().Height) + 36
+//x					fmt.Printf("Window was resized! st: %d x %d n: %v x %v delta: %d, %d\n",bgeow,bgeoh,w.Content().Size().Width,w.Content().Size().Height,dw,dh)
+		if width != bgeow || height != bgeoh {
+				// window was resized
+// provide live resize so other vis ops dont bounce it back
+// for some reason maze updates resize the window down w -= 8 & h -= 36 to minimun
+			opts.Geow = float64(width)
+			opts.Geoh = float64(height)
+		}
+		bgeow = int(opts.Geow)
+		bgeoh = int(opts.Geoh)
+		time.Sleep(2 * time.Second)
+	}
 }
 
 func keyhints() {
