@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"os"
-//	"time"
+	"time"
 )
 
 func mazeMetaPrint(maze *Maze) {
@@ -87,6 +87,26 @@ func domaze(arg string) {
 
 	Ovimg := genpfimage(maze, mazeNum)
 	upwin(Ovimg)
+
+// handle window resize
+	go func() {
+		bgeow := int(w.Content().Size().Width)
+		bgeoh := int(w.Content().Size().Height)
+		for {
+			width := int(w.Content().Size().Width)
+			height :=int( w.Content().Size().Height)
+			if width != bgeow || height != bgeoh {
+					// window was resized
+					fmt.Printf("Window was resized! %v x %v\n",width,height)
+// provide live resize so other vis ops dont bounce it back
+				opts.Geow = float64(width)
+				opts.Geoh = float64(height)
+			}
+			bgeow = width
+			bgeoh = height
+			time.Sleep(100 * time.Millisecond) // you may want to change this
+		}
+	}()
 
 // only run Show once, here - a second time relocates the win to 0,0
 // yes... even though fyne can NOT reposition windows, must be a bug

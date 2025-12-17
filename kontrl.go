@@ -295,8 +295,8 @@ func upwin(simg *image.NRGBA) {
 
 	bimg := canvas.NewRasterFromImage(simg)
 	w.Canvas().SetContent(bimg)
-	geow := math.Max(560,opts.Geow)	// 556 is min, maze doesnt seem to fit or shrink smaller
-	geoh := math.Max(594,opts.Geoh) // 594 min
+	geow := int(math.Max(560,opts.Geow))	// 556 is min, maze doesnt seem to fit or shrink smaller
+	geoh := int(math.Max(594,opts.Geoh)) // 594 min
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
 //	w.Show()
 
