@@ -18,7 +18,7 @@ compresssed: 169
  5D 74 56 C1 07 21 C1 33 00
   Encoded length: 169 bytes
   Wall pattern: 02, Wall color: 13     Floor pattern: 00, Floor color: 04
-  Flags: EXIT_CHOOSE_ONE WALLS_CYCLIC ODDANGLE_GHOSTS FAST_GRUNTS 
+  Flags: EXIT_CHOOSE_ONE FAST_GRUNTS ODDANGLE_GHOSTS WALLS_CYCLIC 
   Random food adds: 4
   Secret trick:  3 - Try Transportability (into exit)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

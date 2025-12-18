@@ -28,7 +28,7 @@ compresssed: 329
  31 C2 1A 51 A0 19 1A C1 00
   Encoded length: 329 bytes
   Wall pattern: 15, Wall color: 01     Floor pattern: 02, Floor color: 01
-  Flags: EXIT_CHOOSE_ONE TRAPS_LOCAL FAST_GRUNTS EXIT_FAKE WRAP_H ODDANGLE_GHOSTS 
+  Flags: TRAPS_LOCAL EXIT_FAKE ODDANGLE_GHOSTS WRAP_H FAST_GRUNTS EXIT_CHOOSE_ONE 
   Random food adds: 0
   Secret trick: 11 - Don't Be Fooled
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

@@ -20,7 +20,7 @@ compresssed: 205
  19 40 18 2E C2 1E 80 C1 52 10 52 19 00
   Encoded length: 205 bytes
   Wall pattern: 01, Wall color: 10     Floor pattern: 01, Floor color: 09
-  Flags: WRAP_H SHOTS_HURT 
+  Flags: SHOTS_HURT WRAP_H 
   Random food adds: 2
   Secret trick: 14 - Go On a Diet (no food)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

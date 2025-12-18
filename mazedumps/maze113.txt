@@ -30,7 +30,7 @@ compresssed: 361
  80 08 C0 63 2E A0 2E 10 00
   Encoded length: 361 bytes
   Wall pattern: 01, Wall color: 05     Floor pattern: 06, Floor color: 09
-  Flags: WALLS_CYCLIC EXIT_CHOOSE_ONE 
+  Flags: EXIT_CHOOSE_ONE WALLS_CYCLIC 
   Random food adds: 0
   Secret trick:  6 - Watch What You Shoot (shoot secret walls)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

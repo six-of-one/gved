@@ -25,7 +25,7 @@ compresssed: 280
  C3 2F B2 C1 21 C0 1A 00
   Encoded length: 280 bytes
   Wall pattern: 02, Wall color: 14     Floor pattern: 07, Floor color: 00
-  Flags: EXIT_CHOOSE_ONE FAST_DEATHS WALLS_CYCLIC FAST_AUX_GRUNTS 
+  Flags: FAST_DEATHS WALLS_CYCLIC EXIT_CHOOSE_ONE FAST_AUX_GRUNTS 
   Random food adds: 0
   Secret trick:  4 - Try Transportability (onto secret wall)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

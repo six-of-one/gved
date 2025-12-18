@@ -34,7 +34,7 @@ compresssed: 417
  00
   Encoded length: 417 bytes
   Wall pattern: 01, Wall color: 15     Floor pattern: 03, Floor color: 09
-  Flags: EXIT_MOVES WRAP_H WRAP_V 
+  Flags: WRAP_H EXIT_MOVES WRAP_V 
   Random food adds: 0
   Secret trick:  7 - Save Super Shots
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

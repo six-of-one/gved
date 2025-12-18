@@ -23,7 +23,7 @@ compresssed: 246
  2B 1A C9 B3 C6 00
   Encoded length: 246 bytes
   Wall pattern: 00, Wall color: 00     Floor pattern: 00, Floor color: 00
-  Flags: INVIS_ALLWALLS INVIS_TRAPWALLS 
+  Flags: INVIS_TRAPWALLS INVIS_ALLWALLS 
   Random food adds: 0
   Secret trick:  5 - Watch What You Shoot (shoot foods)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

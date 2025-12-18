@@ -21,7 +21,7 @@ compresssed: 217
  1A C5 1A C5 1A 60 C0 10 00
   Encoded length: 217 bytes
   Wall pattern: 04, Wall color: 00     Floor pattern: 06, Floor color: 15
-  Flags: SHOTS_HURT EXIT_FAKE EXIT_CHOOSE_ONE FAST_DEMONS 
+  Flags: SHOTS_HURT FAST_DEMONS EXIT_FAKE EXIT_CHOOSE_ONE 
   Random food adds: 4
   Secret trick: 11 - Don't Be Fooled
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

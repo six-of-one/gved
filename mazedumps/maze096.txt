@@ -22,7 +22,7 @@ compresssed: 235
  18 E5 1D C1 35 04 15 A0 1F C1 00
   Encoded length: 235 bytes
   Wall pattern: 12, Wall color: 00     Floor pattern: 02, Floor color: 12
-  Flags: TRAPS_RANDOM SHOTS_STUN WRAP_H 
+  Flags: SHOTS_STUN WRAP_H TRAPS_RANDOM 
   Random food adds: 0
   Secret trick:  2 - Try Transportability (onto death)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

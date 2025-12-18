@@ -29,7 +29,7 @@ compresssed: 338
  31 00
   Encoded length: 338 bytes
   Wall pattern: 03, Wall color: 04     Floor pattern: 03, Floor color: 15
-  Flags: EXIT_CHOOSE_ONE WALLS_DELETABLE1 ODDANGLE_GRUNTS 
+  Flags: EXIT_CHOOSE_ONE ODDANGLE_GRUNTS WALLS_DELETABLE1 
   Random food adds: 1
   Secret trick: 17 - Don't Hurt Friends
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

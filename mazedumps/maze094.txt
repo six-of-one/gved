@@ -22,7 +22,7 @@ compresssed: 239
  CB 1C A0 EA C5 25 A0 C8 B6 31 CD B7 CD 31 00
   Encoded length: 239 bytes
   Wall pattern: 02, Wall color: 14     Floor pattern: 01, Floor color: 01
-  Flags: INVIS_TRAPWALLS WRAP_H WRAP_V 
+  Flags: WRAP_V INVIS_TRAPWALLS WRAP_H 
   Random food adds: 0
   Secret trick: 10 - Try Pushing a Wall
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

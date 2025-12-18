@@ -15,7 +15,7 @@ compresssed: 122
  D1 1D C2 46 D8 45 BE D8 45 00
   Encoded length: 122 bytes
   Wall pattern: 02, Wall color: 13     Floor pattern: 01, Floor color: 06
-  Flags: ODDANGLE_GRUNTS FAST_AUX_GRUNTS ODDANGLE_GRUNTS 
+  Flags: FAST_AUX_GRUNTS ODDANGLE_GRUNTS ODDANGLE_GRUNTS 
   Random food adds: 0
   Secret trick:  0 - No trick
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

@@ -39,7 +39,7 @@ compresssed: 499
  A0 2F 00
   Encoded length: 499 bytes
   Wall pattern: 01, Wall color: 05     Floor pattern: 06, Floor color: 09
-  Flags: EXIT_CHOOSE_ONE WRAP_H TRAPS_LOCAL 
+  Flags: WRAP_H TRAPS_LOCAL EXIT_CHOOSE_ONE 
   Random food adds: 1
   Secret trick: 15 - Be Pushy
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

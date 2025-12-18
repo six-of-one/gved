@@ -20,7 +20,7 @@ compresssed: 207
  10 A0 21 A0 2E 43 62 A0 C6 2F A0 2E C1 0F 00
   Encoded length: 207 bytes
   Wall pattern: 00, Wall color: 08     Floor pattern: 06, Floor color: 13
-  Flags: WALLS_CYCLIC FAST_GRUNTS ODDANGLE_GRUNTS ODDANGLE_GRUNTS 
+  Flags: ODDANGLE_GRUNTS WALLS_CYCLIC FAST_GRUNTS ODDANGLE_GRUNTS 
   Random food adds: 2
   Secret trick:  8 - Don't Use Invulnerability
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

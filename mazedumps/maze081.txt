@@ -32,7 +32,7 @@ compresssed: 395
  31 E1 C4 0A E3 2E 19 81 07 C1 00
   Encoded length: 395 bytes
   Wall pattern: 02, Wall color: 02     Floor pattern: 06, Floor color: 03
-  Flags: TRAPS_LOCAL SHOTS_HURT WRAP_H 
+  Flags: WRAP_H TRAPS_LOCAL SHOTS_HURT 
   Random food adds: 0
   Secret trick:  2 - Try Transportability (onto death)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

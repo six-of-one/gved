@@ -25,7 +25,7 @@ compresssed: 280
  E0 C3 74 B5 1F C6 1F 00
   Encoded length: 280 bytes
   Wall pattern: 00, Wall color: 07     Floor pattern: 06, Floor color: 00
-  Flags: FAST_GRUNTS FAST_SORCERERS 
+  Flags: FAST_SORCERERS FAST_GRUNTS 
   Random food adds: 0
   Secret trick:  1 - Try Transportability (onto demon)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

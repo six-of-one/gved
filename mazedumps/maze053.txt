@@ -24,7 +24,7 @@ compresssed: 259
  A0 1E 00
   Encoded length: 259 bytes
   Wall pattern: 02, Wall color: 09     Floor pattern: 05, Floor color: 01
-  Flags: EXIT_FAKE EXIT_CHOOSE_ONE WRAP_H 
+  Flags: EXIT_CHOOSE_ONE WRAP_H EXIT_FAKE 
   Random food adds: 0
   Secret trick: 14 - Go On a Diet (no food)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

@@ -18,7 +18,7 @@ compresssed: 174
  2E C0 35 B3 57 C1 56 C0 72 C1 12 CD 0F 00
   Encoded length: 174 bytes
   Wall pattern: 04, Wall color: 14     Floor pattern: 01, Floor color: 11
-  Flags: FAST_GHOSTS FAST_GRUNTS EXIT_CHOOSE_ONE 
+  Flags: FAST_GRUNTS FAST_GHOSTS EXIT_CHOOSE_ONE 
   Random food adds: 0
   Secret trick: 10 - Try Pushing a Wall
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

@@ -18,7 +18,7 @@ compresssed: 168
  C7 1E C8 1E C5 18 10 00
   Encoded length: 168 bytes
   Wall pattern: 01, Wall color: 06     Floor pattern: 01, Floor color: 06
-  Flags: INVIS_ALLWALLS EXIT_CHOOSE_ONE 
+  Flags: EXIT_CHOOSE_ONE INVIS_ALLWALLS 
   Random food adds: 1
   Secret trick:  2 - Try Transportability (onto death)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

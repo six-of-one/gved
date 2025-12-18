@@ -22,7 +22,7 @@ compresssed: 229
  28 C6 31 A0 00
   Encoded length: 229 bytes
   Wall pattern: 02, Wall color: 11     Floor pattern: 04, Floor color: 14
-  Flags: WALLS_CYCLIC WRAP_H 
+  Flags: WRAP_H WALLS_CYCLIC 
   Random food adds: 0
   Secret trick:  3 - Try Transportability (into exit)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

@@ -29,7 +29,7 @@ compresssed: 352
  10 41 53 40 43 05 0A 40 10 05 42 09 42 C2 10 00
   Encoded length: 352 bytes
   Wall pattern: 01, Wall color: 05     Floor pattern: 06, Floor color: 09
-  Flags: TRAPS_LOCAL INVIS_TRAPWALLS EXIT_CHOOSE_ONE 
+  Flags: EXIT_CHOOSE_ONE TRAPS_LOCAL INVIS_TRAPWALLS 
   Random food adds: 0
   Secret trick: 14 - Go On a Diet (no food)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

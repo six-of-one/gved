@@ -26,7 +26,7 @@ compresssed: 296
  B3 33 19 3E 1B 1F C0 00
   Encoded length: 296 bytes
   Wall pattern: 00, Wall color: 12     Floor pattern: 06, Floor color: 08
-  Flags: WRAP_H WRAP_V 
+  Flags: WRAP_V WRAP_H 
   Random food adds: 0
   Secret trick:  1 - Try Transportability (onto demon)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

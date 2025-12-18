@@ -22,7 +22,7 @@ compresssed: 239
  BE 22 C7 35 B3 C3 0F C3 B3 35 C1 1D C4 1D 00
   Encoded length: 239 bytes
   Wall pattern: 03, Wall color: 08     Floor pattern: 04, Floor color: 04
-  Flags: EXIT_CHOOSE_ONE SHOTS_HURT 
+  Flags: SHOTS_HURT EXIT_CHOOSE_ONE 
   Random food adds: 0
   Secret trick: 17 - Don't Hurt Friends
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

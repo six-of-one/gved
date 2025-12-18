@@ -26,7 +26,7 @@ compresssed: 301
  2E B2 1D 44 C5 10 B9 0A 2E 0B 2E 0C 00
   Encoded length: 301 bytes
   Wall pattern: 01, Wall color: 12     Floor pattern: 07, Floor color: 02
-  Flags: FAST_SORCERERS EXIT_FAKE EXIT_CHOOSE_ONE 
+  Flags: EXIT_CHOOSE_ONE EXIT_FAKE FAST_SORCERERS 
   Random food adds: 0
   Secret trick: 11 - Don't Be Fooled
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

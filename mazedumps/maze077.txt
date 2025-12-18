@@ -25,7 +25,7 @@ compresssed: 282
  18 35 53 61 36 19 C3 09 31 00
   Encoded length: 282 bytes
   Wall pattern: 01, Wall color: 10     Floor pattern: 05, Floor color: 03
-  Flags: WRAP_H TRAPS_RANDOM 
+  Flags: TRAPS_RANDOM WRAP_H 
   Random food adds: 0
   Secret trick: 13 - Don't Be Greedy (no treasure)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

@@ -21,7 +21,7 @@ compresssed: 210
  3B 00
   Encoded length: 210 bytes
   Wall pattern: 01, Wall color: 10     Floor pattern: 05, Floor color: 00
-  Flags: EXIT_CHOOSE_ONE FAST_GRUNTS FAST_DEATHS 
+  Flags: FAST_GRUNTS FAST_DEATHS EXIT_CHOOSE_ONE 
   Random food adds: 6
   Secret trick:  8 - Don't Use Invulnerability
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

@@ -31,7 +31,7 @@ compresssed: 381
  2F 04 A0 E7 CA 19 31 B3 E5 3E A0 C7 00
   Encoded length: 381 bytes
   Wall pattern: 14, Wall color: 14     Floor pattern: 02, Floor color: 11
-  Flags: ODDANGLE_GRUNTS WRAP_H 
+  Flags: WRAP_H ODDANGLE_GRUNTS 
   Random food adds: 0
   Secret trick:  4 - Try Transportability (onto secret wall)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

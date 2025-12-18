@@ -25,7 +25,7 @@ compresssed: 275
  D1 0F 00
   Encoded length: 275 bytes
   Wall pattern: 02, Wall color: 04     Floor pattern: 00, Floor color: 03
-  Flags: EXIT_FAKE EXIT_CHOOSE_ONE 
+  Flags: EXIT_CHOOSE_ONE EXIT_FAKE 
   Random food adds: 0
   Secret trick:  6 - Watch What You Shoot (shoot secret walls)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02

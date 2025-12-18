@@ -24,7 +24,7 @@ compresssed: 263
  BE 2E D1 28 C9 32 00
   Encoded length: 263 bytes
   Wall pattern: 04, Wall color: 01     Floor pattern: 08, Floor color: 01
-  Flags: FAST_GRUNTS TRAPS_LOCAL ODDANGLE_GHOSTS FAST_SORCERERS FAST_LOBBERS 
+  Flags: ODDANGLE_GHOSTS TRAPS_LOCAL FAST_GRUNTS FAST_SORCERERS FAST_LOBBERS 
   Random food adds: 0
   Secret trick:  9 - Don't Get Hit (while killing a dragon)
  02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02
