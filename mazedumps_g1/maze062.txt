@@ -1,7 +1,7 @@
-Maze number: 62
-Loading maze from addr: 03b7bb
-  Encoded length: 213 bytes
-  Wall pattern: 00, Wall color: 06     Floor pattern: 03, Floor color: 00
+Maze number: 61
+Loading maze from addr: 03b71c
+  Encoded length: 159 bytes
+  Wall pattern: 01, Wall color: 00     Floor pattern: 03, Floor color: 08
   Flags: 
   Random food adds: 0
   Secret trick:  0 - No trick

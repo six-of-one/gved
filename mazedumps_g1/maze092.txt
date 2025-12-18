@@ -1,7 +1,7 @@
-Maze number: 92
-Loading maze from addr: 03cd19
-  Encoded length: 279 bytes
-  Wall pattern: 00, Wall color: 08     Floor pattern: 02, Floor color: 03
-  Flags: EXIT_CHOOSE_ONE 
+Maze number: 91
+Loading maze from addr: 03cc17
+  Encoded length: 258 bytes
+  Wall pattern: 00, Wall color: 07     Floor pattern: 01, Floor color: 05
+  Flags: SHOTS_STUN 
   Random food adds: 0
   Secret trick:  0 - No trick

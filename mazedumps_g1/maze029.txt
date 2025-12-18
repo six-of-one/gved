@@ -1,7 +1,7 @@
-Maze number: 29
-Loading maze from addr: 03a000
-  Encoded length: 399 bytes
-  Wall pattern: 04, Wall color: 07     Floor pattern: 08, Floor color: 09
+Maze number: 28
+Loading maze from addr: 039e32
+  Encoded length: 225 bytes
+  Wall pattern: 01, Wall color: 14     Floor pattern: 02, Floor color: 13
   Flags: 
   Random food adds: 0
   Secret trick:  0 - No trick

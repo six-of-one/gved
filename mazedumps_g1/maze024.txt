@@ -1,7 +1,7 @@
-Maze number: 24
-Loading maze from addr: 03999c
-  Encoded length: 328 bytes
-  Wall pattern: 04, Wall color: 13     Floor pattern: 07, Floor color: 06
-  Flags: EXIT_CHOOSE_ONE 
+Maze number: 23
+Loading maze from addr: 0398b0
+  Encoded length: 236 bytes
+  Wall pattern: 00, Wall color: 02     Floor pattern: 00, Floor color: 00
+  Flags: 
   Random food adds: 0
   Secret trick:  0 - No trick
