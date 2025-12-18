@@ -234,6 +234,10 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			dialog.ShowInformation("G¹G²ved", "Gauntlet / Gauntlet 2 valid maze address list\nplease check terminal where gved command was issued\n\ngithub.com/six-of-one/", w)
 		case 63:
 			keyhints()
+		case 'd':
+			fmt.Printf("editor on maze: %03d\n",opts.mnum+1)
+		case 68:		// D
+			fmt.Printf("editor off maze: %03d\n",opts.mnum+1)
 		default:
 			relodsub = false
 		}
@@ -276,7 +280,7 @@ func aw_init() {
 	menuItemLIC := fyne.NewMenuItem("License", func() {
 		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
 	})
-	menuHint := fyne.NewMenu("cmds: ?, q, fFgG, wWeE, rRt, hm, pPT, s, il, u, v, A #a")
+	menuHint := fyne.NewMenu("cmds: ?, q, dD, fFgG, wWeE, rRt, hm, pPT, s, il, u, v, A #a")
 
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
 	mainMenu := fyne.NewMainMenu(menuExit, menuHelp, menuHint)
@@ -372,6 +376,7 @@ func keyhints() {
 	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
 //		strp += cpad("\n\n? - this list",52)
 	strp += cpad("\nq - quit program",42)
+	strp += cpad("\nd - editor mode",43)
 	strp += cpad("\nf - floor pattern+",43)
 	strp += cpad("\ng - floor color+",45)
 	strp += cpad("\nw - wall pattern+",43)
