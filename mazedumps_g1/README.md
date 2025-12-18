@@ -8,11 +8,11 @@ Notes
 update for mazedumps_g1 follows, settling:
 
 * gved handles gauntlet maze read from link table at 0x38032
+* - except all horiz scroll mazes - those will be done later
 * gauntlet tile roms are also read, excepting floor and wall color ram palettes
 * palette for base tiles is known and used for gauntlet renders now
 * current floor and wall colors obtained from F4 option in emu
-* trap walls and shootable walls may not color correct, they are gved rendered
-* except all horiz scroll mazes - those will be done later
+* trap walls and shootable walls may not appear correct color or attach, they are gved rendered
 * pre-genned monsters are now the correct level and color palette
 * pyramid monster gens now have a red letter: D, G, L, S to indicate monster type
 
