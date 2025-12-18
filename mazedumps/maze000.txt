@@ -1,6 +1,0 @@
-Maze number: 0
-  Encoded length: 130 bytes
-  Wall pattern: 01, Wall color: 13     Floor pattern: 06, Floor color: 01
-  Flags: 
-  Random food adds: 0
-  Secret trick:  0 - No trick
