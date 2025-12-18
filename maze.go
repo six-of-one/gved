@@ -3,8 +3,6 @@ package main
 // #include <stdlib.h>
 // #include <Tilengine.h>
 
-import "C"
-
 import (
 	"fmt"
 	"regexp"
