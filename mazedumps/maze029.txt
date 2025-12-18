@@ -1,6 +1,6 @@
-Maze number: 29
-  Encoded length: 231 bytes
-  Wall pattern: 01, Wall color: 15     Floor pattern: 06, Floor color: 10
-  Flags: WRAP_H 
-  Random food adds: 0
-  Secret trick:  2 - Try Transportability (onto death)
+Maze number: 28
+  Encoded length: 178 bytes
+  Wall pattern: 00, Wall color: 05     Floor pattern: 04, Floor color: 01
+  Flags: SHOTS_STUN 
+  Random food adds: 3
+  Secret trick:  8 - Don't Use Invulnerability

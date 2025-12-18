@@ -1,6 +1,6 @@
-Maze number: 63
-  Encoded length: 380 bytes
-  Wall pattern: 01, Wall color: 15     Floor pattern: 03, Floor color: 11
-  Flags: 
+Maze number: 62
+  Encoded length: 297 bytes
+  Wall pattern: 00, Wall color: 13     Floor pattern: 00, Floor color: 05
+  Flags: WRAP_H 
   Random food adds: 0
-  Secret trick: 12 - Don't Be Greedy (no keys or potions)
+  Secret trick: 10 - Try Pushing a Wall

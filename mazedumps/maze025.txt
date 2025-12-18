@@ -1,6 +1,6 @@
-Maze number: 25
-  Encoded length: 268 bytes
-  Wall pattern: 04, Wall color: 09     Floor pattern: 07, Floor color: 11
-  Flags: EXIT_MOVES WRAP_H 
-  Random food adds: 0
-  Secret trick: 12 - Don't Be Greedy (no keys or potions)
+Maze number: 24
+  Encoded length: 256 bytes
+  Wall pattern: 00, Wall color: 01     Floor pattern: 05, Floor color: 12
+  Flags: WALLS_DELETABLE1 
+  Random food adds: 3
+  Secret trick:  5 - Watch What You Shoot (shoot foods)

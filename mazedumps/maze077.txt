@@ -1,6 +1,6 @@
-Maze number: 77
-  Encoded length: 349 bytes
-  Wall pattern: 00, Wall color: 08     Floor pattern: 02, Floor color: 13
-  Flags: EXIT_FAKE FAST_DEMONS FAST_LOBBERS FAST_AUX_GRUNTS EXIT_CHOOSE_ONE FAST_SORCERERS FAST_GRUNTS WALLS_CYCLIC FAST_GHOSTS FAST_DEATHS 
-  Random food adds: 3
-  Secret trick: 11 - Don't Be Fooled
+Maze number: 76
+  Encoded length: 282 bytes
+  Wall pattern: 01, Wall color: 10     Floor pattern: 05, Floor color: 03
+  Flags: WRAP_H TRAPS_RANDOM 
+  Random food adds: 0
+  Secret trick: 13 - Don't Be Greedy (no treasure)

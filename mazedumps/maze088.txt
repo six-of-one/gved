@@ -1,6 +1,6 @@
-Maze number: 88
-  Encoded length: 294 bytes
-  Wall pattern: 00, Wall color: 14     Floor pattern: 05, Floor color: 12
-  Flags: WALLS_DELETABLE1 
-  Random food adds: 1
-  Secret trick:  8 - Don't Use Invulnerability
+Maze number: 87
+  Encoded length: 314 bytes
+  Wall pattern: 12, Wall color: 06     Floor pattern: 02, Floor color: 12
+  Flags: WRAP_H 
+  Random food adds: 0
+  Secret trick: 16 - IT Could Be Nice

@@ -1,6 +1,6 @@
-Maze number: 70
-  Encoded length: 359 bytes
-  Wall pattern: 00, Wall color: 14     Floor pattern: 05, Floor color: 09
-  Flags: WRAP_H 
+Maze number: 69
+  Encoded length: 234 bytes
+  Wall pattern: 01, Wall color: 00     Floor pattern: 00, Floor color: 00
+  Flags: TRAPS_RANDOM EXIT_CHOOSE_ONE WRAP_H EXIT_FAKE WRAP_V 
   Random food adds: 0
-  Secret trick:  6 - Watch What You Shoot (shoot secret walls)
+  Secret trick: 11 - Don't Be Fooled

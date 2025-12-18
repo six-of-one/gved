@@ -1,6 +1,6 @@
-Maze number: 83
-  Encoded length: 280 bytes
-  Wall pattern: 00, Wall color: 07     Floor pattern: 06, Floor color: 00
-  Flags: FAST_GRUNTS FAST_SORCERERS 
+Maze number: 82
+  Encoded length: 398 bytes
+  Wall pattern: 03, Wall color: 14     Floor pattern: 03, Floor color: 07
+  Flags: WRAP_H 
   Random food adds: 0
-  Secret trick:  1 - Try Transportability (onto demon)
+  Secret trick:  7 - Save Super Shots

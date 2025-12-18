@@ -1,6 +1,6 @@
-Maze number: 41
-  Encoded length: 217 bytes
-  Wall pattern: 00, Wall color: 14     Floor pattern: 04, Floor color: 06
-  Flags: 
-  Random food adds: 4
-  Secret trick:  9 - Don't Get Hit (while killing a dragon)
+Maze number: 40
+  Encoded length: 295 bytes
+  Wall pattern: 02, Wall color: 03     Floor pattern: 00, Floor color: 15
+  Flags: EXIT_CHOOSE_ONE WRAP_H 
+  Random food adds: 0
+  Secret trick: 10 - Try Pushing a Wall

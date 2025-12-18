@@ -1,6 +1,6 @@
-Maze number: 57
-  Encoded length: 239 bytes
-  Wall pattern: 03, Wall color: 08     Floor pattern: 04, Floor color: 04
-  Flags: SHOTS_HURT EXIT_CHOOSE_ONE 
+Maze number: 56
+  Encoded length: 218 bytes
+  Wall pattern: 02, Wall color: 01     Floor pattern: 07, Floor color: 00
+  Flags: 
   Random food adds: 0
-  Secret trick: 17 - Don't Hurt Friends
+  Secret trick:  1 - Try Transportability (onto demon)

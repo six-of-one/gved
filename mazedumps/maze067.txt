@@ -1,6 +1,6 @@
-Maze number: 67
-  Encoded length: 222 bytes
-  Wall pattern: 08, Wall color: 00     Floor pattern: 01, Floor color: 15
-  Flags: FAST_AUX_GRUNTS 
+Maze number: 66
+  Encoded length: 345 bytes
+  Wall pattern: 04, Wall color: 05     Floor pattern: 07, Floor color: 13
+  Flags: SHOTS_HURT TRAPS_LOCAL 
   Random food adds: 0
-  Secret trick:  9 - Don't Get Hit (while killing a dragon)
+  Secret trick: 13 - Don't Be Greedy (no treasure)

@@ -1,6 +1,6 @@
-Maze number: 72
-  Encoded length: 291 bytes
-  Wall pattern: 04, Wall color: 12     Floor pattern: 04, Floor color: 14
-  Flags: FAST_AUX_GRUNTS 
+Maze number: 71
+  Encoded length: 275 bytes
+  Wall pattern: 02, Wall color: 04     Floor pattern: 00, Floor color: 03
+  Flags: EXIT_CHOOSE_ONE EXIT_FAKE 
   Random food adds: 0
-  Secret trick:  1 - Try Transportability (onto demon)
+  Secret trick:  6 - Watch What You Shoot (shoot secret walls)

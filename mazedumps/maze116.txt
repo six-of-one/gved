@@ -1,7 +1,6 @@
-Maze number: 116
-WARNING: Read end of maze datastream before maze full.
-  Encoded length: 409 bytes
+Maze number: 115
+  Encoded length: 287 bytes
   Wall pattern: 01, Wall color: 10     Floor pattern: 03, Floor color: 13
-  Flags: WALLS_CYCLIC 
+  Flags: 
   Random food adds: 0
   Secret trick:  0 - No trick

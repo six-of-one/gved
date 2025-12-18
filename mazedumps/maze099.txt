@@ -1,6 +1,6 @@
-Maze number: 99
-  Encoded length: 297 bytes
-  Wall pattern: 04, Wall color: 12     Floor pattern: 05, Floor color: 04
-  Flags: WRAP_H ODDANGLE_GHOSTS 
+Maze number: 98
+  Encoded length: 290 bytes
+  Wall pattern: 04, Wall color: 12     Floor pattern: 00, Floor color: 07
+  Flags: WRAP_H 
   Random food adds: 0
-  Secret trick:  9 - Don't Get Hit (while killing a dragon)
+  Secret trick: 14 - Go On a Diet (no food)

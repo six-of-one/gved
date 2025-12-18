@@ -1,6 +1,6 @@
-Maze number: 10
-  Encoded length: 169 bytes
-  Wall pattern: 02, Wall color: 13     Floor pattern: 00, Floor color: 04
-  Flags: ODDANGLE_GHOSTS FAST_GRUNTS WALLS_CYCLIC EXIT_CHOOSE_ONE 
-  Random food adds: 4
+Maze number: 9
+  Encoded length: 125 bytes
+  Wall pattern: 00, Wall color: 02     Floor pattern: 05, Floor color: 07
+  Flags: 
+  Random food adds: 0
   Secret trick:  3 - Try Transportability (into exit)

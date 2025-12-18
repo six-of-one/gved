@@ -1,6 +1,6 @@
-Maze number: 49
-  Encoded length: 177 bytes
-  Wall pattern: 00, Wall color: 14     Floor pattern: 02, Floor color: 15
-  Flags: ODDANGLE_GRUNTS ODDANGLE_GRUNTS SHOTS_STUN EXIT_CHOOSE_ONE 
+Maze number: 48
+  Encoded length: 305 bytes
+  Wall pattern: 01, Wall color: 00     Floor pattern: 06, Floor color: 12
+  Flags: 
   Random food adds: 0
-  Secret trick:  7 - Save Super Shots
+  Secret trick:  5 - Watch What You Shoot (shoot foods)

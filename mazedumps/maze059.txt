@@ -1,6 +1,6 @@
-Maze number: 59
-  Encoded length: 276 bytes
-  Wall pattern: 12, Wall color: 00     Floor pattern: 02, Floor color: 00
-  Flags: ODDANGLE_GRUNTS 
+Maze number: 58
+  Encoded length: 250 bytes
+  Wall pattern: 01, Wall color: 15     Floor pattern: 08, Floor color: 03
+  Flags: WALLS_DELETABLE1 
   Random food adds: 0
   Secret trick:  1 - Try Transportability (onto demon)

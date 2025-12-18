@@ -1,6 +1,6 @@
-Maze number: 15
-  Encoded length: 329 bytes
-  Wall pattern: 15, Wall color: 01     Floor pattern: 02, Floor color: 01
-  Flags: EXIT_CHOOSE_ONE FAST_GRUNTS EXIT_FAKE ODDANGLE_GHOSTS WRAP_H TRAPS_LOCAL 
-  Random food adds: 0
-  Secret trick: 11 - Don't Be Fooled
+Maze number: 14
+  Encoded length: 207 bytes
+  Wall pattern: 00, Wall color: 08     Floor pattern: 06, Floor color: 13
+  Flags: ODDANGLE_GRUNTS WALLS_CYCLIC ODDANGLE_GRUNTS FAST_GRUNTS 
+  Random food adds: 2
+  Secret trick:  8 - Don't Use Invulnerability

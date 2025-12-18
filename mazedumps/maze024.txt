@@ -1,6 +1,6 @@
-Maze number: 24
-  Encoded length: 256 bytes
-  Wall pattern: 00, Wall color: 01     Floor pattern: 05, Floor color: 12
-  Flags: WALLS_DELETABLE1 
-  Random food adds: 3
-  Secret trick:  5 - Watch What You Shoot (shoot foods)
+Maze number: 23
+  Encoded length: 229 bytes
+  Wall pattern: 02, Wall color: 11     Floor pattern: 04, Floor color: 14
+  Flags: WRAP_H WALLS_CYCLIC 
+  Random food adds: 0
+  Secret trick:  3 - Try Transportability (into exit)

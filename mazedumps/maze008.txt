@@ -1,6 +1,6 @@
-Maze number: 8
-  Encoded length: 173 bytes
-  Wall pattern: 02, Wall color: 08     Floor pattern: 08, Floor color: 04
-  Flags: WALLS_DELETABLE1 
-  Random food adds: 0
-  Secret trick: 15 - Be Pushy
+Maze number: 7
+  Encoded length: 378 bytes
+  Wall pattern: 00, Wall color: 08     Floor pattern: 02, Floor color: 03
+  Flags: TRAPS_LOCAL EXIT_CHOOSE_ONE 
+  Random food adds: 4
+  Secret trick: 13 - Don't Be Greedy (no treasure)

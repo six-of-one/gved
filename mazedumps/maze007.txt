@@ -1,6 +1,6 @@
-Maze number: 7
-  Encoded length: 378 bytes
-  Wall pattern: 00, Wall color: 08     Floor pattern: 02, Floor color: 03
-  Flags: TRAPS_LOCAL EXIT_CHOOSE_ONE 
-  Random food adds: 4
+Maze number: 6
+  Encoded length: 220 bytes
+  Wall pattern: 08, Wall color: 00     Floor pattern: 01, Floor color: 10
+  Flags: WRAP_H 
+  Random food adds: 0
   Secret trick: 13 - Don't Be Greedy (no treasure)

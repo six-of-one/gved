@@ -1,6 +1,6 @@
-Maze number: 73
-  Encoded length: 428 bytes
-  Wall pattern: 11, Wall color: 00     Floor pattern: 02, Floor color: 15
-  Flags: TRAPS_LOCAL 
+Maze number: 72
+  Encoded length: 291 bytes
+  Wall pattern: 04, Wall color: 12     Floor pattern: 04, Floor color: 14
+  Flags: FAST_AUX_GRUNTS 
   Random food adds: 0
-  Secret trick:  4 - Try Transportability (onto secret wall)
+  Secret trick:  1 - Try Transportability (onto demon)

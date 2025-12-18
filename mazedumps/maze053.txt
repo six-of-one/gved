@@ -1,6 +1,6 @@
-Maze number: 53
-  Encoded length: 235 bytes
-  Wall pattern: 02, Wall color: 11     Floor pattern: 04, Floor color: 10
-  Flags: ODDANGLE_GRUNTS 
+Maze number: 52
+  Encoded length: 259 bytes
+  Wall pattern: 02, Wall color: 09     Floor pattern: 05, Floor color: 01
+  Flags: EXIT_FAKE WRAP_H EXIT_CHOOSE_ONE 
   Random food adds: 0
-  Secret trick: 17 - Don't Hurt Friends
+  Secret trick: 14 - Go On a Diet (no food)

@@ -1,6 +1,6 @@
-Maze number: 107
-  Encoded length: 214 bytes
+Maze number: 106
+  Encoded length: 218 bytes
   Wall pattern: 01, Wall color: 05     Floor pattern: 06, Floor color: 09
-  Flags: EXIT_CHOOSE_ONE WALLS_DELETABLE1 
+  Flags: EXIT_MOVES 
   Random food adds: 0
-  Secret trick: 14 - Go On a Diet (no food)
+  Secret trick:  6 - Watch What You Shoot (shoot secret walls)

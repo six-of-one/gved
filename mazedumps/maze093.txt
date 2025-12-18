@@ -1,6 +1,6 @@
-Maze number: 93
-  Encoded length: 239 bytes
-  Wall pattern: 02, Wall color: 14     Floor pattern: 01, Floor color: 01
-  Flags: WRAP_V INVIS_TRAPWALLS WRAP_H 
+Maze number: 92
+  Encoded length: 279 bytes
+  Wall pattern: 01, Wall color: 09     Floor pattern: 03, Floor color: 01
+  Flags: FAST_AUX_GRUNTS FAST_DEATHS WALLS_DELETABLE2 SHOTS_HURT ODDANGLE_GRUNTS EXIT_CHOOSE_ONE 
   Random food adds: 0
-  Secret trick: 10 - Try Pushing a Wall
+  Secret trick: 12 - Don't Be Greedy (no keys or potions)

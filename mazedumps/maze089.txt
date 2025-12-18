@@ -1,6 +1,6 @@
-Maze number: 89
-  Encoded length: 302 bytes
-  Wall pattern: 06, Wall color: 00     Floor pattern: 01, Floor color: 01
-  Flags: 
-  Random food adds: 0
-  Secret trick: 15 - Be Pushy
+Maze number: 88
+  Encoded length: 294 bytes
+  Wall pattern: 00, Wall color: 14     Floor pattern: 05, Floor color: 12
+  Flags: WALLS_DELETABLE1 
+  Random food adds: 1
+  Secret trick:  8 - Don't Use Invulnerability

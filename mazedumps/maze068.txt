@@ -1,6 +1,6 @@
-Maze number: 68
-  Encoded length: 296 bytes
-  Wall pattern: 02, Wall color: 04     Floor pattern: 00, Floor color: 10
-  Flags: WRAP_H 
+Maze number: 67
+  Encoded length: 222 bytes
+  Wall pattern: 08, Wall color: 00     Floor pattern: 01, Floor color: 15
+  Flags: FAST_AUX_GRUNTS 
   Random food adds: 0
-  Secret trick:  3 - Try Transportability (into exit)
+  Secret trick:  9 - Don't Get Hit (while killing a dragon)

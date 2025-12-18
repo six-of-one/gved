@@ -1,6 +1,6 @@
-Maze number: 74
-  Encoded length: 417 bytes
-  Wall pattern: 01, Wall color: 15     Floor pattern: 03, Floor color: 09
-  Flags: WRAP_V EXIT_MOVES WRAP_H 
+Maze number: 73
+  Encoded length: 428 bytes
+  Wall pattern: 11, Wall color: 00     Floor pattern: 02, Floor color: 15
+  Flags: TRAPS_LOCAL 
   Random food adds: 0
-  Secret trick:  7 - Save Super Shots
+  Secret trick:  4 - Try Transportability (onto secret wall)

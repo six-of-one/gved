@@ -1,6 +1,6 @@
-Maze number: 81
-  Encoded length: 402 bytes
-  Wall pattern: 01, Wall color: 03     Floor pattern: 04, Floor color: 10
-  Flags: WRAP_H 
+Maze number: 80
+  Encoded length: 395 bytes
+  Wall pattern: 02, Wall color: 02     Floor pattern: 06, Floor color: 03
+  Flags: SHOTS_HURT WRAP_H TRAPS_LOCAL 
   Random food adds: 0
-  Secret trick: 12 - Don't Be Greedy (no keys or potions)
+  Secret trick:  2 - Try Transportability (onto death)

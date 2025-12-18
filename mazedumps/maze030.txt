@@ -1,6 +1,6 @@
-Maze number: 30
-  Encoded length: 260 bytes
-  Wall pattern: 01, Wall color: 08     Floor pattern: 02, Floor color: 02
-  Flags: 
-  Random food adds: 2
-  Secret trick: 15 - Be Pushy
+Maze number: 29
+  Encoded length: 231 bytes
+  Wall pattern: 01, Wall color: 15     Floor pattern: 06, Floor color: 10
+  Flags: WRAP_H 
+  Random food adds: 0
+  Secret trick:  2 - Try Transportability (onto death)

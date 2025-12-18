@@ -1,6 +1,6 @@
-Maze number: 103
-  Encoded length: 101 bytes
-  Wall pattern: 01, Wall color: 02     Floor pattern: 02, Floor color: 13
-  Flags: 
+Maze number: 102
+  Encoded length: 122 bytes
+  Wall pattern: 02, Wall color: 13     Floor pattern: 01, Floor color: 06
+  Flags: FAST_AUX_GRUNTS ODDANGLE_GRUNTS ODDANGLE_GRUNTS 
   Random food adds: 0
   Secret trick:  0 - No trick

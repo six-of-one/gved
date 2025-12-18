@@ -1,6 +1,6 @@
-Maze number: 13
-  Encoded length: 344 bytes
-  Wall pattern: 11, Wall color: 00     Floor pattern: 02, Floor color: 04
-  Flags: 
-  Random food adds: 0
-  Secret trick:  9 - Don't Get Hit (while killing a dragon)
+Maze number: 12
+  Encoded length: 210 bytes
+  Wall pattern: 01, Wall color: 10     Floor pattern: 05, Floor color: 00
+  Flags: FAST_GRUNTS EXIT_CHOOSE_ONE FAST_DEATHS 
+  Random food adds: 6
+  Secret trick:  8 - Don't Use Invulnerability

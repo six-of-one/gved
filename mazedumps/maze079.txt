@@ -1,6 +1,6 @@
-Maze number: 79
-  Encoded length: 273 bytes
-  Wall pattern: 06, Wall color: 00     Floor pattern: 05, Floor color: 00
-  Flags: WRAP_H TRAPS_RANDOM 
+Maze number: 78
+  Encoded length: 263 bytes
+  Wall pattern: 04, Wall color: 01     Floor pattern: 08, Floor color: 01
+  Flags: FAST_LOBBERS FAST_SORCERERS ODDANGLE_GHOSTS FAST_GRUNTS TRAPS_LOCAL 
   Random food adds: 0
-  Secret trick: 10 - Try Pushing a Wall
+  Secret trick:  9 - Don't Get Hit (while killing a dragon)

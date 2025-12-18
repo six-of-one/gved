@@ -1,6 +1,6 @@
-Maze number: 98
-  Encoded length: 290 bytes
-  Wall pattern: 04, Wall color: 12     Floor pattern: 00, Floor color: 07
-  Flags: WRAP_H 
+Maze number: 97
+  Encoded length: 337 bytes
+  Wall pattern: 00, Wall color: 01     Floor pattern: 00, Floor color: 14
+  Flags: SHOTS_HURT 
   Random food adds: 0
-  Secret trick: 14 - Go On a Diet (no food)
+  Secret trick: 12 - Don't Be Greedy (no keys or potions)

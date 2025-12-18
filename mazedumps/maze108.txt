@@ -1,6 +1,6 @@
-Maze number: 108
-  Encoded length: 499 bytes
+Maze number: 107
+  Encoded length: 214 bytes
   Wall pattern: 01, Wall color: 05     Floor pattern: 06, Floor color: 09
-  Flags: TRAPS_LOCAL EXIT_CHOOSE_ONE WRAP_H 
-  Random food adds: 1
-  Secret trick: 15 - Be Pushy
+  Flags: EXIT_CHOOSE_ONE WALLS_DELETABLE1 
+  Random food adds: 0
+  Secret trick: 14 - Go On a Diet (no food)

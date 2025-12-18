@@ -1,6 +1,6 @@
-Maze number: 82
-  Encoded length: 398 bytes
-  Wall pattern: 03, Wall color: 14     Floor pattern: 03, Floor color: 07
+Maze number: 81
+  Encoded length: 402 bytes
+  Wall pattern: 01, Wall color: 03     Floor pattern: 04, Floor color: 10
   Flags: WRAP_H 
   Random food adds: 0
-  Secret trick:  7 - Save Super Shots
+  Secret trick: 12 - Don't Be Greedy (no keys or potions)

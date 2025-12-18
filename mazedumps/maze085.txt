@@ -1,6 +1,6 @@
-Maze number: 85
-  Encoded length: 245 bytes
-  Wall pattern: 14, Wall color: 00     Floor pattern: 02, Floor color: 10
-  Flags: FAST_GRUNTS 
+Maze number: 84
+  Encoded length: 274 bytes
+  Wall pattern: 01, Wall color: 15     Floor pattern: 08, Floor color: 08
+  Flags: TRAPS_RANDOM FAST_GHOSTS 
   Random food adds: 0
-  Secret trick:  7 - Save Super Shots
+  Secret trick:  8 - Don't Use Invulnerability

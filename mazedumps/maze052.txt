@@ -1,6 +1,6 @@
-Maze number: 52
-  Encoded length: 259 bytes
-  Wall pattern: 02, Wall color: 09     Floor pattern: 05, Floor color: 01
-  Flags: EXIT_FAKE WRAP_H EXIT_CHOOSE_ONE 
+Maze number: 51
+  Encoded length: 174 bytes
+  Wall pattern: 04, Wall color: 14     Floor pattern: 01, Floor color: 11
+  Flags: FAST_GRUNTS EXIT_CHOOSE_ONE FAST_GHOSTS 
   Random food adds: 0
-  Secret trick: 14 - Go On a Diet (no food)
+  Secret trick: 10 - Try Pushing a Wall

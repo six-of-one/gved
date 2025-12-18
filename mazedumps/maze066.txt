@@ -1,6 +1,6 @@
-Maze number: 66
-  Encoded length: 345 bytes
-  Wall pattern: 04, Wall color: 05     Floor pattern: 07, Floor color: 13
-  Flags: SHOTS_HURT TRAPS_LOCAL 
+Maze number: 65
+  Encoded length: 238 bytes
+  Wall pattern: 04, Wall color: 00     Floor pattern: 04, Floor color: 07
+  Flags: 
   Random food adds: 0
-  Secret trick: 13 - Don't Be Greedy (no treasure)
+  Secret trick:  2 - Try Transportability (onto death)

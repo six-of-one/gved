@@ -1,6 +1,6 @@
-Maze number: 40
-  Encoded length: 295 bytes
-  Wall pattern: 02, Wall color: 03     Floor pattern: 00, Floor color: 15
-  Flags: EXIT_CHOOSE_ONE WRAP_H 
-  Random food adds: 0
-  Secret trick: 10 - Try Pushing a Wall
+Maze number: 39
+  Encoded length: 217 bytes
+  Wall pattern: 04, Wall color: 00     Floor pattern: 06, Floor color: 15
+  Flags: EXIT_FAKE EXIT_CHOOSE_ONE FAST_DEMONS SHOTS_HURT 
+  Random food adds: 4
+  Secret trick: 11 - Don't Be Fooled

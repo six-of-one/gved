@@ -1,6 +1,6 @@
-Maze number: 97
-  Encoded length: 337 bytes
-  Wall pattern: 00, Wall color: 01     Floor pattern: 00, Floor color: 14
-  Flags: SHOTS_HURT 
-  Random food adds: 0
-  Secret trick: 12 - Don't Be Greedy (no keys or potions)
+Maze number: 96
+  Encoded length: 285 bytes
+  Wall pattern: 01, Wall color: 14     Floor pattern: 02, Floor color: 12
+  Flags: INVIS_TRAPWALLS SHOTS_STUN TRAPS_LOCAL 
+  Random food adds: 4
+  Secret trick: 13 - Don't Be Greedy (no treasure)

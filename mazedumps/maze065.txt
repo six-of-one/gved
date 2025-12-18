@@ -1,6 +1,6 @@
-Maze number: 65
-  Encoded length: 238 bytes
-  Wall pattern: 04, Wall color: 00     Floor pattern: 04, Floor color: 07
-  Flags: 
+Maze number: 64
+  Encoded length: 280 bytes
+  Wall pattern: 02, Wall color: 14     Floor pattern: 07, Floor color: 00
+  Flags: FAST_AUX_GRUNTS WALLS_CYCLIC FAST_DEATHS EXIT_CHOOSE_ONE 
   Random food adds: 0
-  Secret trick:  2 - Try Transportability (onto death)
+  Secret trick:  4 - Try Transportability (onto secret wall)

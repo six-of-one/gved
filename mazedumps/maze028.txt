@@ -1,6 +1,6 @@
-Maze number: 28
-  Encoded length: 178 bytes
-  Wall pattern: 00, Wall color: 05     Floor pattern: 04, Floor color: 01
-  Flags: SHOTS_STUN 
-  Random food adds: 3
-  Secret trick:  8 - Don't Use Invulnerability
+Maze number: 27
+  Encoded length: 267 bytes
+  Wall pattern: 00, Wall color: 00     Floor pattern: 08, Floor color: 12
+  Flags: WRAP_H 
+  Random food adds: 0
+  Secret trick:  7 - Save Super Shots

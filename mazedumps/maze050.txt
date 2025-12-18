@@ -1,6 +1,6 @@
-Maze number: 50
-  Encoded length: 244 bytes
-  Wall pattern: 04, Wall color: 09     Floor pattern: 06, Floor color: 06
-  Flags: WRAP_H 
+Maze number: 49
+  Encoded length: 177 bytes
+  Wall pattern: 00, Wall color: 14     Floor pattern: 02, Floor color: 15
+  Flags: ODDANGLE_GRUNTS ODDANGLE_GRUNTS SHOTS_STUN EXIT_CHOOSE_ONE 
   Random food adds: 0
-  Secret trick: 16 - IT Could Be Nice
+  Secret trick:  7 - Save Super Shots

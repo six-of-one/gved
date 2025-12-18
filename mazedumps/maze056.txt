@@ -1,6 +1,6 @@
-Maze number: 56
-  Encoded length: 218 bytes
-  Wall pattern: 02, Wall color: 01     Floor pattern: 07, Floor color: 00
-  Flags: 
-  Random food adds: 0
-  Secret trick:  1 - Try Transportability (onto demon)
+Maze number: 55
+  Encoded length: 153 bytes
+  Wall pattern: 02, Wall color: 08     Floor pattern: 07, Floor color: 03
+  Flags: FAST_GRUNTS FAST_DEMONS 
+  Random food adds: 1
+  Secret trick: 15 - Be Pushy

@@ -1,6 +1,6 @@
-Maze number: 90
-  Encoded length: 355 bytes
-  Wall pattern: 01, Wall color: 10     Floor pattern: 04, Floor color: 07
-  Flags: WALLS_DELETABLE2 
+Maze number: 89
+  Encoded length: 302 bytes
+  Wall pattern: 06, Wall color: 00     Floor pattern: 01, Floor color: 01
+  Flags: 
   Random food adds: 0
-  Secret trick:  9 - Don't Get Hit (while killing a dragon)
+  Secret trick: 15 - Be Pushy

@@ -1,6 +1,6 @@
-Maze number: 37
-  Encoded length: 181 bytes
-  Wall pattern: 02, Wall color: 15     Floor pattern: 05, Floor color: 06
-  Flags: EXIT_CHOOSE_ONE 
-  Random food adds: 5
-  Secret trick: 16 - IT Could Be Nice
+Maze number: 36
+  Encoded length: 390 bytes
+  Wall pattern: 00, Wall color: 03     Floor pattern: 08, Floor color: 06
+  Flags: WRAP_H 
+  Random food adds: 0
+  Secret trick: 17 - Don't Hurt Friends

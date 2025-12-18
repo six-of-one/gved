@@ -1,6 +1,6 @@
-Maze number: 60
-  Encoded length: 301 bytes
-  Wall pattern: 01, Wall color: 12     Floor pattern: 07, Floor color: 02
-  Flags: EXIT_FAKE EXIT_CHOOSE_ONE FAST_SORCERERS 
+Maze number: 59
+  Encoded length: 276 bytes
+  Wall pattern: 12, Wall color: 00     Floor pattern: 02, Floor color: 00
+  Flags: ODDANGLE_GRUNTS 
   Random food adds: 0
-  Secret trick: 11 - Don't Be Fooled
+  Secret trick:  1 - Try Transportability (onto demon)

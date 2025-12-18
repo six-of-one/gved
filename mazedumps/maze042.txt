@@ -1,6 +1,6 @@
-Maze number: 42
-  Encoded length: 394 bytes
-  Wall pattern: 04, Wall color: 08     Floor pattern: 04, Floor color: 02
-  Flags: WALLS_DELETABLE1 WRAP_H EXIT_CHOOSE_ONE WRAP_V 
-  Random food adds: 0
-  Secret trick: 17 - Don't Hurt Friends
+Maze number: 41
+  Encoded length: 217 bytes
+  Wall pattern: 00, Wall color: 14     Floor pattern: 04, Floor color: 06
+  Flags: 
+  Random food adds: 4
+  Secret trick:  9 - Don't Get Hit (while killing a dragon)

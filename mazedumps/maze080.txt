@@ -1,6 +1,6 @@
-Maze number: 80
-  Encoded length: 395 bytes
-  Wall pattern: 02, Wall color: 02     Floor pattern: 06, Floor color: 03
-  Flags: SHOTS_HURT WRAP_H TRAPS_LOCAL 
+Maze number: 79
+  Encoded length: 273 bytes
+  Wall pattern: 06, Wall color: 00     Floor pattern: 05, Floor color: 00
+  Flags: WRAP_H TRAPS_RANDOM 
   Random food adds: 0
-  Secret trick:  2 - Try Transportability (onto death)
+  Secret trick: 10 - Try Pushing a Wall

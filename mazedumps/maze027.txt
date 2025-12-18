@@ -1,6 +1,6 @@
-Maze number: 27
-  Encoded length: 267 bytes
-  Wall pattern: 00, Wall color: 00     Floor pattern: 08, Floor color: 12
-  Flags: WRAP_H 
-  Random food adds: 0
-  Secret trick:  7 - Save Super Shots
+Maze number: 26
+  Encoded length: 232 bytes
+  Wall pattern: 02, Wall color: 05     Floor pattern: 02, Floor color: 07
+  Flags: EXIT_CHOOSE_ONE WALLS_DELETABLE1 
+  Random food adds: 2
+  Secret trick:  5 - Watch What You Shoot (shoot foods)

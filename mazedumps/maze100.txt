@@ -1,6 +1,6 @@
-Maze number: 100
-  Encoded length: 246 bytes
-  Wall pattern: 00, Wall color: 00     Floor pattern: 00, Floor color: 00
-  Flags: INVIS_TRAPWALLS INVIS_ALLWALLS 
+Maze number: 99
+  Encoded length: 297 bytes
+  Wall pattern: 04, Wall color: 12     Floor pattern: 05, Floor color: 04
+  Flags: WRAP_H ODDANGLE_GHOSTS 
   Random food adds: 0
-  Secret trick:  5 - Watch What You Shoot (shoot foods)
+  Secret trick:  9 - Don't Get Hit (while killing a dragon)

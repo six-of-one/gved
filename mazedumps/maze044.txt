@@ -1,6 +1,6 @@
-Maze number: 44
-  Encoded length: 351 bytes
-  Wall pattern: 02, Wall color: 13     Floor pattern: 05, Floor color: 07
-  Flags: WRAP_H 
+Maze number: 43
+  Encoded length: 381 bytes
+  Wall pattern: 14, Wall color: 14     Floor pattern: 02, Floor color: 11
+  Flags: WRAP_H ODDANGLE_GRUNTS 
   Random food adds: 0
-  Secret trick: 13 - Don't Be Greedy (no treasure)
+  Secret trick:  4 - Try Transportability (onto secret wall)

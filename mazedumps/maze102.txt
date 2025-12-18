@@ -1,6 +1,6 @@
-Maze number: 102
-  Encoded length: 122 bytes
-  Wall pattern: 02, Wall color: 13     Floor pattern: 01, Floor color: 06
-  Flags: FAST_AUX_GRUNTS ODDANGLE_GRUNTS ODDANGLE_GRUNTS 
-  Random food adds: 0
-  Secret trick:  0 - No trick
+Maze number: 101
+  Encoded length: 189 bytes
+  Wall pattern: 03, Wall color: 14     Floor pattern: 06, Floor color: 12
+  Flags: EXIT_CHOOSE_ONE 
+  Random food adds: 4
+  Secret trick:  4 - Try Transportability (onto secret wall)

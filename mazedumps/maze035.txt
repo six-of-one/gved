@@ -1,6 +1,6 @@
-Maze number: 35
-  Encoded length: 194 bytes
-  Wall pattern: 00, Wall color: 07     Floor pattern: 01, Floor color: 15
+Maze number: 34
+  Encoded length: 333 bytes
+  Wall pattern: 03, Wall color: 06     Floor pattern: 03, Floor color: 00
   Flags: 
   Random food adds: 0
-  Secret trick: 16 - IT Could Be Nice
+  Secret trick:  5 - Watch What You Shoot (shoot foods)

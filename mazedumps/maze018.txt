@@ -1,6 +1,6 @@
-Maze number: 18
-  Encoded length: 208 bytes
-  Wall pattern: 03, Wall color: 05     Floor pattern: 04, Floor color: 00
-  Flags: EXIT_MOVES WALLS_CYCLIC 
-  Random food adds: 6
-  Secret trick: 12 - Don't Be Greedy (no keys or potions)
+Maze number: 17
+  Encoded length: 191 bytes
+  Wall pattern: 03, Wall color: 15     Floor pattern: 03, Floor color: 02
+  Flags: WRAP_H 
+  Random food adds: 3
+  Secret trick:  4 - Try Transportability (onto secret wall)
