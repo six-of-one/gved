@@ -174,7 +174,7 @@ if opts.Verbose {
 		maze.floorcolor = Ovflorcol
 	}
 
-	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum)
+	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
 	edip := lod_maz(fil)
 	if edip != 0 {
 		for y := 0; y < 11; y++ {
