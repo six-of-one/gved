@@ -57,24 +57,29 @@ func lod_maz(fil string) int {
 	if err == nil {
 		var esc int
 		dscan := fmt.Sprintf("%s",data)
+		fmt.Print(dscan)
 		fmt.Sscanf(dscan,"%d %d %d\n",&edp,&opts.DimX,&opts.DimY)
 		for y := 0; y < 11; y++ {
 			fmt.Sscanf(dscan," %02X", &eflg[y])
+fmt.Printf(" %02X", eflg[y])
 		}
 		fmt.Sscanf(dscan,"\n")
+fmt.Printf("\n")
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
 
 				fmt.Sscanf(dscan," %02d", &esc)
 				ebuf[xy{x, y}] = esc
+fmt.Printf(" %02d", ebuf[xy{x, y}])
 			}
 			fmt.Sscanf(dscan,"\n")
+fmt.Printf("\n")
 		}
 	} else {
 		fmt.Printf("loading maze %s, error:\n",fil)
 		fmt.Print(err)
 	}
-	return edp
+	return 0
 }
 
 func stor_maz(mazn int) {
