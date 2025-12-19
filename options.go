@@ -8,8 +8,8 @@ import (
 )
 
 var opts struct {
-	mnum	int		`description:"maze: number"`
-	edat	bool    `description:"maze: edit active"`
+	mnum	int    `description:"maze: number"`
+	edat	int    `default:"0" description:"maze: edit active"`
 // cli options to mirror & rotate mazes
 	MV		bool   `long:"mv" description:"maze: mirror vertical"`
 	MH		bool   `long:"mh" description:"maze: mirror horizontal ( --mv --mh will rotate 180 )"`
