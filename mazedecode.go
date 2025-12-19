@@ -302,5 +302,12 @@ if opts.Verbose {
 // six - restore this for meta
 	maze.flags = flagsv
 
+// editor override
+	if edip != 0 {
+		for y := 0; y <= opts.DimX; y++ {
+			for x := 0; x <= opts.DimY; x++ {
+			maze.data[xy{x, y}] = ebuf[xy{x, y}]
+		}}
+	}
 	return maze
 }
