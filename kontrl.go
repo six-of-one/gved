@@ -236,13 +236,13 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			fmt.Printf("editor on maze: %03d\n",opts.mnum+1)
 			if opts.edat != 1 {
 				opts.edat = 1
-				stor_maz(opts.mnum+1)
+				stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
 			}
 		case 68:		// D
 			fmt.Printf("editor off maze: %03d\n",opts.mnum+1)
 			if opts.edat != 0 {
 				opts.edat = 0
-				ed_sav(opts.mnum+1)
+				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
 			}
 		default:
 			relodsub = false
@@ -276,15 +276,38 @@ func menu_sav() {
 	if opts.edat == 1 {
 		dia := fmt.Sprintf("Save buffer for maze %d in .ed/g%dmaze%03d.ed ?",opts.mnum+1,opts.Gtp,opts.mnum+1)
 		dialog.ShowConfirm("Saving",dia, menu_savit, w)
-		dialog.ShowInformation("Saving",dia,w)
-	} else { dialog.ShowInformation("Fail","edit mode is not active!",w) }
+	} else { dialog.ShowInformation("Save Fail","edit mode is not active!",w) }
+}
+
+func menu_lodit(y bool) {
+	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
+	if y { lod_maz(fil) }
 }
 
 func menu_lod() {
-	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
-	dia := fmt.Sprintf("Maze %d from %s",opts.mnum+1,fil)
-	dialog.ShowInformation("Loading",dia,w)
-	lod_maz(fil)
+	if opts.edat == 1 {
+		dia := fmt.Sprintf("Load buffer for maze %d from .ed/g%dmaze%03d.ed ?:",opts.mnum+1,opts.Gtp,opts.mnum+1)
+		dialog.ShowConfirm("Loading",dia, menu_lodit, w)
+	} else { dialog.ShowInformation("Load Fail","edit mode is not active!",w) }
+}
+
+func menu_rst(y bool) {
+	if y {
+		opts.edat = -1	// code to tell maze decompress not to load buffer file
+		maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)
+		mazeloop(maze)
+		Ovimg := genpfimage(maze, opts.mnum)
+		upwin(Ovimg)
+		opts.edat = 1
+		//ed_sav(opts.mnum+1)	// reset does not overwrite file buffer, still need to save
+	}
+}
+
+func menu_res() {
+	if opts.edat == 1 {
+		dia := fmt.Sprintf("Reset buffer for maze %d from G%d ROM ?\n - reset does not save to file",opts.mnum+1,opts.Gtp)
+		dialog.ShowConfirm("Loading",dia, menu_rst, w)
+	} else { dialog.ShowInformation("Reset Fail","edit mode is not active!",w) }
 }
 
 // init app and win
@@ -294,6 +317,7 @@ func aw_init() {
     a = app.New()
     w = a.NewWindow("G¹G²ved")
 
+// quit menu option does not exit to term!
 	menuItemExit := fyne.NewMenuItem("Exit", func() {
 		os.Exit(0)
 	})
@@ -301,10 +325,11 @@ func aw_init() {
 
 	menuItemSave := fyne.NewMenuItem("Save buffer", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer", menu_lod)
+	menuItemReset := fyne.NewMenuItem("Reset buffer", menu_res)
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
-		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n\nLoad - overwrite current buffer with file contents this maze\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
+		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
-	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemEdhin)
+	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin)
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
 	menuItemAbout := fyne.NewMenuItem("About", func() {

@@ -147,6 +147,8 @@ func stor_maz(mazn int) {
 
 func ed_sav(mazn int) {
 
+	eflg[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
+	eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,mazn)
 	sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
 }

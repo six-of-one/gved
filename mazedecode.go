@@ -144,6 +144,20 @@ if opts.Verbose {
 	}
 // Six end maze dumper
 }
+
+	edip := 0
+	if opts.edat >= 0 {
+		fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
+		edip = lod_maz(fil)
+		if edip != 0 {
+			for y := 0; y < 11; y++ {
+//				maze.optbyts[y] = eflg[y]
+				compressed[y] = eflg[y]
+			}
+		}
+		opts.edat = edip
+	}
+
 // save for edat
 	for y := 0; y < 11; y++ {
 		maze.optbyts[y] = compressed[y]
@@ -173,16 +187,6 @@ if opts.Verbose {
 		maze.wallcolor = Ovwallcol
 		maze.floorcolor = Ovflorcol
 	}
-
-	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
-	edip := lod_maz(fil)
-	if edip != 0 {
-		for y := 0; y < 11; y++ {
-			maze.optbyts[y] = eflg[y]
-			compressed[y] = eflg[y]
-		}
-	}
-	opts.edat = edip
 
 // g1 likely has nothing like g2 stuff, and might not use flags at all
 	flagsv := maze.flags // save so we can print in meta
