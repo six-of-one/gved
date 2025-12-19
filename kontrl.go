@@ -26,6 +26,7 @@ var a fyne.App
 
 var anum int
 var shift bool
+var ctrl bool
 
 func typedRune(r rune) {
 
@@ -92,12 +93,19 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 //            fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "LeftShift" { shift = true }
 			if key.Name == "RightShift" { shift = true }
+			if key.Name == "LeftControl" { ctrl = true }
+			if key.Name == "RightControl" { ctrl = true }
         })
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
 //            fmt.Printf("Desktop key up: %v\n", key)
 			if key.Name == "Escape" { os.Exit(0) }
 			if key.Name == "LeftShift" { shift = false }
 			if key.Name == "RightShift" { shift = false }
+			if key.Name == "LeftControl" { ctrl = false }
+			if key.Name == "RightControl" { ctrl = false }
+			if key.Name == "S" && ctrl { menu_sav() }
+			if key.Name == "L" && ctrl  { menu_lod() }
+			if key.Name == "R" && ctrl  { menu_res() }
        })
     }
 //	fmt.Printf("r %v shift %v\n",r,shift)
@@ -213,6 +221,8 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			spau = fmt.Sprintf("no things: %d\n",nothing & 511)				// display no things mask
 		case 's':
 			opts.SP = !opts.SP
+		case 76:
+			opts.Nogtop = !opts.Nogtop
 		case 'u':
 			opts.Gtp = 2
 			G1 = false
@@ -323,9 +333,9 @@ func aw_init() {
 	})
 	menuExit := fyne.NewMenu("Exit ", menuItemExit)
 
-	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-S", menu_sav)
-	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-L", menu_lod)
-	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-R", menu_res)
+	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
+	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
+	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-r", menu_res)
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
@@ -340,7 +350,7 @@ func aw_init() {
 	})
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
 
-	menuHint := fyne.NewMenu("cmds: ?, q, dD, fFgG, wWeE, rRt, hm, pPT, s, il, u, v, A #a")
+	menuHint := fyne.NewMenu("cmds: ?, q, dD, fFgG, wWeE, rRt, hm, pPT, sL, il, u, v, A #a")
 
 	mainMenu := fyne.NewMainMenu(menuExit, editMenu, menuHelp, menuHint)
 	w.SetMainMenu(mainMenu)
@@ -448,6 +458,7 @@ func keyhints() {
 	strp += cpad("\nP - toggle wall invis",42)
 	strp += cpad("\nT - loop invis things",42)
 	strp += cpad("\ns - toggle rnd special potion",34)
+	strp += cpad("\nL - generator indicate letter",35)
 	strp += cpad("\ni - gauntlet mazes r1 - r9",38)
 	strp += cpad("\nl - use gauntlet rev 14",40)
 	strp += cpad("\nu - gauntlet 2 mazes",39)

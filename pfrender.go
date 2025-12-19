@@ -744,7 +744,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			if stamp != nil {
 				writestamptoimage(img, stamp, x*16+xpad+stamp.nudgex, y*16+xpad+stamp.nudgey)
 // generator monster type letter draw - only do when set
-				if gtopl != "" {
+				if gtopl != "" && !opts.Nogtop {
 // while each monsters gen has a letter color, some are hard to read - resetting to red
 					gtop.Clear()
 					if !gtopcol { gtop.SetRGB(1, 0, 0) }
