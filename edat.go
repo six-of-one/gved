@@ -5,6 +5,7 @@ import (
 	"strings"
 	"os"
 	"io/ioutil"
+	"bufio"
 )
 
 /*
@@ -37,9 +38,9 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 		for y := 0; y <= my; y++ {
 			for x := 0; x <= mx; x++ {
 
-				wfs += fmt.Sprintf(" %02d", mdat[xy{x, y}])
+				wfs += fmt.Sprintf("%02d\n", mdat[xy{x, y}])
 			}
-			wfs += "\n"
+//			wfs += "\n"
 		}
 		file.WriteString(wfs)
 		file.Close()
@@ -57,27 +58,41 @@ func lod_maz(fil string) int {
 	if err == nil {
 		var esc int
 		dscan := fmt.Sprintf("%s",data)
-		fmt.Print(dscan)
-		fmt.Sscanf(dscan,"%d %d %d\n",&edp,&opts.DimX,&opts.DimY)
+//		fmt.Print(dscan)
+    scanr := bufio.NewScanner(strings.NewReader(dscan))
+/*    for scanr.Scan() {
+        l := scanr.Text()
+        fmt.Println(l)
+
+    }*/
+		l := "0 32 32"
+		if scanr.Scan() { l = scanr.Text() }
+		fmt.Sscanf(l,"%d %d %d",&edp,&opts.DimX,&opts.DimY)
+fmt.Printf("\ned %d, %02d x %02d\n", edp,opts.DimX,opts.DimY)
+		l = " 00 00 00 00 00 00 00 00 00 00 00"
+		if scanr.Scan() { l = scanr.Text() }
+		fmt.Sscanf(l," %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X", &eflg[0], &eflg[1], &eflg[2], &eflg[3], &eflg[4], &eflg[5], &eflg[6], &eflg[7], &eflg[8], &eflg[9], &eflg[10])
 		for y := 0; y < 11; y++ {
-			fmt.Sscanf(dscan," %02X", &eflg[y])
+//			fmt.Sscanf(l," %02X", &eflg[y])
 fmt.Printf(" %02X", eflg[y])
 		}
-		fmt.Sscanf(dscan,"\n")
+//		fmt.Sscanf(dscan,"\n")
 fmt.Printf("\n")
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
-
-				fmt.Sscanf(dscan," %02d", &esc)
+				l = "02"
+				if scanr.Scan() { l = scanr.Text() }
+				fmt.Sscanf(l,"%02d", &esc)
 				ebuf[xy{x, y}] = esc
 fmt.Printf(" %02d", ebuf[xy{x, y}])
 			}
-			fmt.Sscanf(dscan,"\n")
+//			fmt.Sscanf(dscan,"\n")
 fmt.Printf("\n")
 		}
 	} else {
 		fmt.Printf("loading maze %s, error:\n",fil)
 		fmt.Print(err)
+		fmt.Printf("\n")
 	}
 	return 0
 }
