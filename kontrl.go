@@ -323,9 +323,9 @@ func aw_init() {
 	})
 	menuExit := fyne.NewMenu("Exit ", menuItemExit)
 
-	menuItemSave := fyne.NewMenuItem("Save buffer", menu_sav)
-	menuItemLoad := fyne.NewMenuItem("Load buffer", menu_lod)
-	menuItemReset := fyne.NewMenuItem("Reset buffer", menu_res)
+	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-S", menu_sav)
+	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-L", menu_lod)
+	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-R", menu_res)
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})

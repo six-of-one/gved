@@ -73,7 +73,7 @@ func lod_maz(fil string) int {
 			fmt.Printf("\n")
 		}
 
-		ebuf = make(map[xy]int)
+		if ebuf == nil { ebuf = make(map[xy]int) }
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
 				l = "02"
@@ -130,7 +130,7 @@ func stor_maz(mazn int) {
 			}
 			opts.DimX = lastx
 			opts.DimY = lasty
-			ebuf = make(map[xy]int)
+			if ebuf == nil { ebuf = make(map[xy]int) }
 			for y := 0; y <= lasty; y++ {
 				for x := 0; x <= lastx; x++ {
 				ebuf[xy{x, y}] = maze.data[xy{x, y}]
