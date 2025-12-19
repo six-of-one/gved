@@ -81,6 +81,7 @@ func lod_maz(fil string) int {
 	if opts.Verbose { fmt.Printf("%02s ",l) }
 				fmt.Sscanf(l,"%02d", &esc)
 				ebuf[xy{x, y}] = esc
+				edp = 1		// tell sender we loaded some maze part
 			}
 	if opts.Verbose { fmt.Printf("\n") }
 		}

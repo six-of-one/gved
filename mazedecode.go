@@ -145,8 +145,8 @@ if opts.Verbose {
 // Six end maze dumper
 }
 
-	edip := 0
-	if opts.edat >= 0 {
+	edip := 0		// this is now file loaded, does not replace edat mode
+	if opts.edat > 0 {
 		fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
 		edip = lod_maz(fil)
 		if edip != 0 {
@@ -155,7 +155,6 @@ if opts.Verbose {
 				compressed[y] = eflg[y]
 			}
 		}
-		opts.edat = edip
 	}
 
 // save for edat
@@ -309,7 +308,7 @@ if opts.Verbose {
 	maze.flags = flagsv
 
 // editor override
-	if edip != 0 {
+	if opts.edat > 0 && edip != 0 {
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
 			maze.data[xy{x, y}] = ebuf[xy{x, y}]
