@@ -234,11 +234,16 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			keyhints()
 		case 'd':
 			fmt.Printf("editor on maze: %03d\n",opts.mnum+1)
-			opts.edat = 1
-			stor_maz(opts.mnum+1)
+			if opts.edat != 1 {
+				opts.edat = 1
+				stor_maz(opts.mnum+1)
+			}
 		case 68:		// D
 			fmt.Printf("editor off maze: %03d\n",opts.mnum+1)
-			opts.edat = 0
+			if opts.edat != 0 {
+				opts.edat = 0
+				ed_sav(opts.mnum+1)
+			}
 		default:
 			relodsub = false
 		}

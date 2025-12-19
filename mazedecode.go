@@ -174,6 +174,14 @@ if opts.Verbose {
 		maze.floorcolor = Ovflorcol
 	}
 
+	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum)
+	edip := lod_maz(fil)
+	if edip != 0 {
+		for y := 0; y < 11; y++ {
+			maze.optbyts[y] = eflg[y]
+			compressed[y] = eflg[y]
+		}
+	}
 // g1 likely has nothing like g2 stuff, and might not use flags at all
 	flagsv := maze.flags // save so we can print in meta
 	if G1 {
