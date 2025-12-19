@@ -112,10 +112,13 @@ func stor_maz(mazn int) {
 			for y := 0; y < 11; y++ {
 				eflg[y] = maze.optbyts[y]
 			}
-			ebuf = make(map[xy]int)
-
 			opts.DimX = lastx
 			opts.DimY = lasty
+			ebuf = make(map[xy]int)
+			for y := 0; y <= lasty; y++ {
+				for x := 0; x <= lastx; x++ {
+				ebuf[xy{x, y}] = maze.data[xy{x, y}]
+			}}
 			sav_maz(fil, ebuf, eflg, lastx, lasty)
 		} else {
 		fmt.Print(err)
