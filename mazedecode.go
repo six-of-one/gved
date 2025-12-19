@@ -37,6 +37,7 @@ type Maze struct {
 	wallcolor    int
 	floorpattern int
 	floorcolor   int
+	optbyts  [11]int
 }
 
 // Is a maze object a wall?
@@ -143,7 +144,10 @@ if opts.Verbose {
 	}
 // Six end maze dumper
 }
-
+// save for edat
+	for y := 0; y < 11; y++ {
+		maze.optbyts[y] = compressed[y]
+	}
 	// This inability to transparently go back and forth between types is
 	// obnoxious.
 	flagbytes := make([]byte, 4)
