@@ -157,7 +157,7 @@ if opts.Verbose {
 		}
 	}
 // resetting buffer
-	if opts.edat < 1 {
+	if opts.edat < 1 || edip == 0 {
 		for y := 0; y < 11; y++ {
 			eflg[y] = compressed[y]
 		}
@@ -321,7 +321,7 @@ if opts.Verbose {
 		}}
 	}
 	// resetting buffer
-	if opts.edat < 1 {
+	if opts.edat < 1 || edip == 0 {
 		if ebuf == nil { ebuf = make(map[xy]int) }
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
