@@ -391,7 +391,7 @@ func upwin(simg *image.NRGBA) {
 
 func uptitl(mazeN int, spaux string) {
 
-	til := fmt.Sprintf("G¹G²ved Maze: %d addr: %X",mazeN + 1, slapsticMazeGetRealAddr(mazeN))
+	til := fmt.Sprintf("G¹G²ved Maze: %d addr: %X edit: %d",mazeN + 1, slapsticMazeGetRealAddr(mazeN),opts.edat)
 	if Aov > 0 { til = fmt.Sprintf("G¹G²ved Override addr: %X - %d",Aov,Aov) }
 	if spaux != "" { til += " -- " + spaux }
 	w.SetTitle(til)
