@@ -58,38 +58,31 @@ func lod_maz(fil string) int {
 	if err == nil {
 		esc := 0
 		dscan := fmt.Sprintf("%s",data)
-//		fmt.Print(dscan)
-    scanr := bufio.NewScanner(strings.NewReader(dscan))
-/*    for scanr.Scan() {
-        l := scanr.Text()
-        fmt.Println(l)
-
-    }*/
-		l := "0 32 32"
+// may not be the optimal way, but it works for now
+	    scanr := bufio.NewScanner(strings.NewReader(dscan))
+		l := "0 32 32"	// the default on scan failure will produce a solid block of wall 32 x 32
 		if scanr.Scan() { l = scanr.Text() }
 		fmt.Sscanf(l,"%d %d %d",&edp,&opts.DimX,&opts.DimY)
-fmt.Printf("\ned %d, %02d x %02d\n", edp,opts.DimX,opts.DimY)
+// keeping the verbose scan track for now
+	if opts.Verbose { fmt.Printf("\nscanned:\ned %d, %02d x %02d\n", edp,opts.DimX,opts.DimY) }
 		l = " 00 00 00 00 00 00 00 0B 5A 5B 49"
 		if scanr.Scan() { l = scanr.Text() }
 		fmt.Sscanf(l," %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", &eflg[0], &eflg[1], &eflg[2], &eflg[3], &eflg[4], &eflg[5], &eflg[6], &eflg[7], &eflg[8], &eflg[9], &eflg[10])
-		for y := 0; y < 11; y++ {
-//			fmt.Sscanf(l," %02X", &eflg[y])
-fmt.Printf(" %02X", eflg[y])
+	if opts.Verbose {
+			for y := 0; y < 11; y++ { fmt.Printf(" %02X", eflg[y]) }
+			fmt.Printf("\n")
 		}
-//		fmt.Sscanf(dscan,"\n")
-fmt.Printf("\n")
+
 		ebuf = make(map[xy]int)
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
 				l = "02"
 				if scanr.Scan() { l = scanr.Text() }
-				fmt.Print(l)
+	if opts.Verbose { fmt.Printf("%d ",l) }
 				fmt.Sscanf(l,"%02d", &esc)
 				ebuf[xy{x, y}] = esc
-//fmt.Printf(" %02d", ebuf[xy{x, y}])
 			}
-//			fmt.Sscanf(dscan,"\n")
-fmt.Printf("\n")
+	if opts.Verbose { fmt.Printf("\n") }
 		}
 	} else {
 		fmt.Printf("loading maze %s, error:\n",fil)
