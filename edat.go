@@ -78,7 +78,7 @@ func lod_maz(fil string) int {
 			for x := 0; x <= opts.DimY; x++ {
 				l = "02"
 				if scanr.Scan() { l = scanr.Text() }
-	if opts.Verbose { fmt.Printf("%d ",l) }
+	if opts.Verbose { fmt.Printf("%02s ",l) }
 				fmt.Sscanf(l,"%02d", &esc)
 				ebuf[xy{x, y}] = esc
 			}
@@ -89,7 +89,7 @@ func lod_maz(fil string) int {
 		fmt.Print(err)
 		fmt.Printf("\n")
 	}
-	return 0
+	return edp
 }
 
 func stor_maz(mazn int) {

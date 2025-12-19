@@ -182,6 +182,8 @@ if opts.Verbose {
 			compressed[y] = eflg[y]
 		}
 	}
+	opts.edat = edip
+
 // g1 likely has nothing like g2 stuff, and might not use flags at all
 	flagsv := maze.flags // save so we can print in meta
 	if G1 {

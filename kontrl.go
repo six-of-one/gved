@@ -268,6 +268,25 @@ func cpad(st string, d int) string {
 	return string(spout[:d])
 }
 
+func menu_savit(y bool) {
+	if y { ed_sav(opts.mnum+1) }
+}
+
+func menu_sav() {
+	if opts.edat == 1 {
+		dia := fmt.Sprintf("Save buffer for maze %d in .ed/g%dmaze%03d.ed ?",opts.mnum+1,opts.Gtp,opts.mnum+1)
+		dialog.ShowConfirm("Saving",dia, menu_savit, w)
+		dialog.ShowInformation("Saving",dia,w)
+	} else { dialog.ShowInformation("Fail","edit mode is not active!",w) }
+}
+
+func menu_lod() {
+	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
+	dia := fmt.Sprintf("Maze %d from %s",opts.mnum+1,fil)
+	dialog.ShowInformation("Loading",dia,w)
+	lod_maz(fil)
+}
+
 // init app and win
 
 func aw_init() {
@@ -279,17 +298,26 @@ func aw_init() {
 		os.Exit(0)
 	})
 	menuExit := fyne.NewMenu("Exit ", menuItemExit)
+
+	menuItemSave := fyne.NewMenuItem("Save buffer", menu_sav)
+	menuItemLoad := fyne.NewMenuItem("Load buffer", menu_lod)
+	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
+		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n\nLoad - overwrite current buffer with file contents this maze\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
+	})
+	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemEdhin)
+
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
 	menuItemAbout := fyne.NewMenuItem("About", func() {
 		dialog.ShowInformation("About G¹G²ved", "Gauntlet / Gauntlet 2 visual editor\nAuthor: Six [a programmer]\n\ngithub.com/six-of-one/", w)
 	})
 	menuItemLIC := fyne.NewMenuItem("License", func() {
-		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
+		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor - gved\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
 	})
+	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
+
 	menuHint := fyne.NewMenu("cmds: ?, q, dD, fFgG, wWeE, rRt, hm, pPT, s, il, u, v, A #a")
 
-	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
-	mainMenu := fyne.NewMainMenu(menuExit, menuHelp, menuHint)
+	mainMenu := fyne.NewMainMenu(menuExit, editMenu, menuHelp, menuHint)
 	w.SetMainMenu(mainMenu)
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
