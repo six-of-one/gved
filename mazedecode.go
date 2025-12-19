@@ -156,6 +156,12 @@ if opts.Verbose {
 			}
 		}
 	}
+// resetting buffer
+	if opts.edat < 0 {
+		for y := 0; y < 11; y++ {
+			eflg[y] = compressed[y]
+		}
+	}
 
 // save for edat
 	for y := 0; y < 11; y++ {
@@ -312,6 +318,12 @@ if opts.Verbose {
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
 			maze.data[xy{x, y}] = ebuf[xy{x, y}]
+		}}
+	}
+	if opts.edat < 0 {
+		for y := 0; y <= opts.DimX; y++ {
+			for x := 0; x <= opts.DimY; x++ {
+			ebuf[xy{x, y}] = maze.data[xy{x, y}]
 		}}
 	}
 	return maze
