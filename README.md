@@ -23,9 +23,11 @@ interactive mode:
 * visual ops should be straight forward
 * 'r', 'R' - rotate maze +/- 90° are NOT a feature of gauntlet or g2
 * 's' - displays special potions / gold bags at random empty locs
+* 'L' - toggle generator monster indicator
 * 'p', 'P' - floor and wall invisible in output.png
 * 'T' - cycle bitmask to hide vars items (ref constants.go), can be set by #'T'
-* 'w' 'e' 'f' 'g' - can all be proceded by #, just like #a
+* 'w' 'e' 'f' 'g' - can all be proceded by #, just like #a, and shifted W,E,F,G reverse ops 
+* 'd' 'D' - turn edit mode on/ off
 * writes output.png as each maze is viewed
 
 Notes
@@ -42,7 +44,7 @@ Research
 
 Issues
 ======
-* still only a viewer
+* mostly still a viewer
 * G¹ floor and wall colors are still being rendered with G² color palette
 
 Attributions
