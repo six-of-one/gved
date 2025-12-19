@@ -121,13 +121,13 @@ func stor_maz(mazn int) {
 			}}
 			sav_maz(fil, ebuf, eflg, lastx, lasty)
 		} else {
-		fmt.Print(err)
-		return
+			fmt.Print(err)
 		}
+		return
 	}
 
 	fmt.Printf("buffer: %s\n",data)
-
+// handle g3 mazes here ?
 }
 
 func ed_sav(mazn int) {
