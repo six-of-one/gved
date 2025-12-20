@@ -12,6 +12,7 @@ import (
     "fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
     "fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/driver/desktop"
 )
 
@@ -335,7 +336,7 @@ func aw_init() {
 
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
-	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-r", menu_res)
+	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-rgp", menu_res)
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
@@ -383,12 +384,23 @@ func aw_init() {
 	}
 }
 
+type tappableIcon struct {
+	widget.Icon
+}
+
+func newTappableIcon(res *canvas.Raster) *tappableIcon {
+	icon := &tappableIcon{}
+	icon.ExtendBaseWidget(icon)
+	icon.SetResource(res)
+
+	return icon
+}
 // update contents
 
 func upwin(simg *image.NRGBA) {
 
 	bimg := canvas.NewRasterFromImage(simg)
-	w.Canvas().SetContent(bimg)
+	w.Canvas().SetContent(newTappableIcon(bimg))
 	geow := int(math.Max(560,opts.Geow))	// 556 is min, maze doesnt seem to fit or shrink smaller
 	geoh := int(math.Max(594,opts.Geoh))	// 594 min
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
