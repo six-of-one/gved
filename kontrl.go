@@ -13,6 +13,7 @@ import (
 	"fyne.io/fyne/v2/dialog"
     "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/driver/desktop"
+	"fyne.io/fyne/v2/widget"
 )
 
 // kontrol is for fyne window ops & input management
@@ -383,6 +384,22 @@ func aw_init() {
 	}
 }
 
+// test
+type tappableIcon struct {
+	widget.Icon
+}
+
+func newTappableIcon(res fyne.Resource) *tappableIcon {
+	icon := &tappableIcon{}
+	icon.ExtendBaseWidget(icon)
+	icon.SetResource(res)
+
+	return icon
+}
+
+func (t *tappableIcon) Tapped(_ *fyne.PointEvent) {
+	fmt.Println("I have been tapped")
+}
 // update contents
 
 func upwin(simg *image.NRGBA) {
@@ -393,6 +410,10 @@ func upwin(simg *image.NRGBA) {
 	geoh := int(math.Max(594,opts.Geoh))	// 594 min
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
 //	w.Show()
+tres,err := fyne.LoadResourceFromPath("output.png")
+if err == nil { w.SetContent(newTappableIcon(tres)) } else {
+	fmt.Printf("Error on mouse clickable surface: %v",err)
+}
 
 	uptitl(opts.mnum, "")
 }
