@@ -416,10 +416,10 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 	px := 0.0
 	py := 0.0
 	fmt.Sscanf(pos,"{%f %f}",&px,&py)
-	fmt.Printf(" clk: %.2f x %.2f ",px,py)
-	mx := int(px / opts.dtec)
-	my := int(py / opts.dtec)
-opts.dtec = 16.0
+	fmt.Printf(" clk: %.2f x %.2f ",px - 1,py - 1)
+	mx := int((px - 1) / opts.dtec)
+	my := int((py - 1 ) / opts.dtec)
+
 	fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,mx,my,ebuf[xy{mx, my}])
 }
 // update contents
@@ -431,12 +431,13 @@ func upwin(simg *image.NRGBA) {
 	geow := int(math.Max(560,opts.Geow))	// 560 is min, maze doesnt seem to fit or shrink smaller
 	geoh := int(math.Max(586,opts.Geoh))	// 586 min
 	if opts.edat > 0 {
+//		geow = geow & 0xfe0	+ 13			// multiples of 32
 		ngeoh := geow + 26					// square maze + 26 for menu bar
 		if ngeoh != geoh { dialog.ShowInformation("Edit mode","set window ratio to edit",w) }
 		geoh = ngeoh
-		opts.dtec = 16.0 * (float64(geow) / 512.0)				// the size of a tile, odd window size may cause issues
-		fmt.Printf(" dtec: %f\n",opts.dtec)
 	}
+	opts.dtec = 16.0 * (float64(geow) / 544.0)				// the size of a tile, odd window size may cause issues
+	fmt.Printf(" dtec: %f\n",opts.dtec)
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
 
 tres,err := fyne.LoadResourceFromPath("output.png")
