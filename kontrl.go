@@ -93,7 +93,7 @@ func typedRune(r rune) {
 
 	if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
-            fmt.Printf("Desktop key down: %h\n", key.Name)
+//            fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "BackSpace" {
 				anum = (anum / 10);
 				til := fmt.Sprintf("numeric: %d", anum)
@@ -411,7 +411,7 @@ func newTappableIcon(res fyne.Resource) *tappableIcon {
 }
 
 func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
-	fmt.Printf("tapped - pos:%v ",e.Position)
+	fmt.Printf("tapped - pos:%v - del: %t",e.Position,del)
 	pos := fmt.Sprintf("%v",e.Position)
 	px := 0.0
 	py := 0.0
