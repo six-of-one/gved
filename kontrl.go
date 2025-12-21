@@ -383,7 +383,7 @@ func aw_init() {
 		var geoh float64
 		fmt.Sscanf(string(data),"%v %v", &geow, &geoh)
 		opts.Geow = math.Max(560,geow)
-		opts.Geoh = math.Max(594,geoh)
+		opts.Geoh = math.Max(586,geoh)
 	fmt.Printf("Load window size: %v x %v\n",geow,geoh)
 
 	} else {
@@ -411,8 +411,16 @@ func newTappableIcon(res fyne.Resource) *tappableIcon {
 }
 
 func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
-	fmt.Printf("tapped - pos:%v, shf:%v, ctrl:%v\n",e.Position,shift,ctrl)
-
+	fmt.Printf("tapped - pos:%v ",e.Position)
+	pos := fmt.Sprintf("%v",e.Position)
+	px := 0.0
+	py := 0.0
+	fmt.Sscanf(pos,"{%f %f}",&px,&py)
+	fmt.Printf(" clk: %.2f x %.2f ",px,py)
+	mx := int(px / opts.dtec)
+	my := int(py / opts.dtec)
+opts.dtec = 16.0
+	fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,mx,my,ebuf[xy{mx, my}])
 }
 // update contents
 
@@ -426,6 +434,8 @@ func upwin(simg *image.NRGBA) {
 		ngeoh := geow + 26					// square maze + 26 for menu bar
 		if ngeoh != geoh { dialog.ShowInformation("Edit mode","set window ratio to edit",w) }
 		geoh = ngeoh
+		opts.dtec = 16.0 * (float64(geow) / 512.0)				// the size of a tile, odd window size may cause issues
+		fmt.Printf(" dtec: %f\n",opts.dtec)
 	}
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
 
