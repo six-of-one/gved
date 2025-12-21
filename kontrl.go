@@ -396,7 +396,7 @@ func aw_init() {
 	}
 }
 
-// test
+// click area for edits
 
 type tappableIcon struct {
 	widget.Icon
@@ -440,10 +440,11 @@ func upwin(simg *image.NRGBA) {
 	fmt.Printf(" dtec: %f\n",opts.dtec)
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
 
-tres,err := fyne.LoadResourceFromPath("output.png")
-if err == nil { w.SetContent(newTappableIcon(tres)) } else {
-	fmt.Printf("Error on mouse clickable surface: %v",err)
-}
+// turns display into clickable edit area
+	tres,err := fyne.LoadResourceFromPath("output.png")
+	if err == nil { w.SetContent(newTappableIcon(tres)) } else {
+		fmt.Printf("Error on mouse clickable surface: %v",err)
+	}
 
 	uptitl(opts.mnum, "")
 }
