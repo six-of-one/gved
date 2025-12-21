@@ -99,7 +99,8 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
 	xspc := 32
 	xpad := 16
-	if opts.Nob { xspc = 0; xpad = 0 }
+// dont draw the arrow space border
+	if !opts.Aob { xspc = 0; xpad = 0 }
 	img := blankimage(8*2*32+xspc+extrax, 8*2*32+xspc+extray)
 
 	// Map out where forcefield floor tiles are, so we can lay those down first

@@ -19,7 +19,8 @@ var opts struct {
 	SP		bool   `short:"s" long:"sp" description:"random insert special potions, gold bags"`
 // option to load mask for batch
 	Mask	int    `long:"mask" default:"0" base:"16" description:"mask to hide elements"`
-	Nob		bool   `long:"nb" description:"no border around outer wall"`
+// draw a tile size border around maze for horiz & vert loop indicator arrows - must be turned OFF for edit mode
+	Aob		bool   `long:"ab" description:"arrow border around outer wall"`
 	Nogtop	bool   `long:"ngt" description:"no generator indicate letter"`
 // cli option to force an address (originally for g2 force)
 	Addr	int    `long:"ad" default:"0" base:"16" description:"load maze rom address x38000 to x3FFFF (in hex)"`

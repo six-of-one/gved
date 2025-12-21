@@ -249,14 +249,16 @@ func typedRune(r rune) {
 		case 63:
 			keyhints()
 		case 'd':
-			fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
-			if opts.edat != 1 {
-				opts.edat = 1
-				stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
+			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit in border mode!", w) } else {
+				if opts.edat != 1 {
+					fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
+					opts.edat = 1
+					stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
+				}
 			}
 		case 68:		// D
-			fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 			if opts.edat != 0 {
+				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 				opts.edat = 0
 				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
 			}
@@ -416,7 +418,11 @@ func upwin(simg *image.NRGBA) {
 //	w.Canvas().SetContent(bimg)
 	geow := int(math.Max(560,opts.Geow))	// 556 is min, maze doesnt seem to fit or shrink smaller
 	geoh := int(math.Max(594,opts.Geoh))	// 594 min
-	if opts.edat > 0 { geoh = int(float64(geow) * ratio) }
+	if opts.edat > 0 {
+		ngeoh := int(float64(geow) * ratio)
+		if ngeoh != geoh { dialog.ShowInformation("Edit mode","set window ratio 1:1.0317 to edit",w) }
+		geoh = ngeoh
+	}
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
 
 tres,err := fyne.LoadResourceFromPath("output.png")
