@@ -89,7 +89,7 @@ func typedRune(r rune) {
 		uptitl(opts.mnum, til)
 	}
 
-if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
+	if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
 //            fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "BackSpace" {
@@ -360,6 +360,7 @@ func aw_init() {
 	mainMenu := fyne.NewMainMenu(menuExit, editMenu, menuHelp, menuHint)
 	w.SetMainMenu(mainMenu)
 	w.Canvas().SetOnTypedRune(typedRune)
+	w.SetContent(newHoldableButton("Button"))
 	anum = 0
 	shift = false
 
@@ -389,6 +390,23 @@ func aw_init() {
 }
 
 // test
+type holdableButton struct {
+    widget.Button
+}
+func newHoldableButton(label string) *holdableButton {
+    button := &holdableButton{}
+    button.ExtendBaseWidget(button)
+    button.Text=label
+    return button
+}
+
+func (h *holdableButton) MouseDown(*desktop.MouseEvent){
+    fmt.Println("down")
+}
+func (h *holdableButton) MouseUp(*desktop.MouseEvent){
+    fmt.Println("up")
+}
+
 type tappableIcon struct {
 	widget.Icon
 }
@@ -403,6 +421,7 @@ func newTappableIcon(res fyne.Resource) *tappableIcon {
 
 func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 	fmt.Printf("tapped - pos:%v, AP:%v\n",e.Position,e.AbsolutePosition)
+
 }
 // update contents
 
@@ -418,7 +437,7 @@ tres,err := fyne.LoadResourceFromPath("output.png")
 if err == nil { w.SetContent(newTappableIcon(tres)) } else {
 	fmt.Printf("Error on mouse clickable surface: %v",err)
 }
-
+w.SetContent(newHoldableButton("Button"))
 	uptitl(opts.mnum, "")
 }
 
