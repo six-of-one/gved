@@ -102,9 +102,9 @@ func domaze(arg string) {
 
 func remaze(mazn int) {
 
-	maze := mazeDecompress(slapsticReadMaze(mazn), false)
-	mazeloop(maze)
-	Ovimg := genpfimage(maze, mazn)
+	edmaze := mazeDecompress(slapsticReadMaze(mazn), false)
+	mazeloop(edmaze)
+	Ovimg := genpfimage(edmaze, mazn)
 	upwin(Ovimg)
 }
 

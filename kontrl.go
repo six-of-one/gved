@@ -369,7 +369,7 @@ func aw_init() {
 	w.SetMainMenu(mainMenu)
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
-	shift = false
+	delstak = 0
 
 // get default win size
 
@@ -421,6 +421,21 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 	my := int(py / opts.dtec)
 
 	fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,mx,my,ebuf[xy{mx, my}])
+	if del {
+		delbuf.mx[delstak] = mx
+		delbuf.my[delstak] = my
+		delbuf.elem[delstak] = ebuf[xy{mx, my}]
+		fmt.Printf(" st elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
+		delstak++
+		ebuf[xy{mx, my}] = 0	// delete anything for now makes a floor
+		fmt.Printf(" dl elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
+	}
+	for y := 0; y <= opts.DimX; y++ {
+		for x := 0; x <= opts.DimY; x++ {
+		edmaze.data[xy{x, y}] = ebuf[xy{x, y}]
+	}}
+	Ovimg := genpfimage(edmaze, opts.mnum)
+	upwin(Ovimg)
 }
 // update contents
 

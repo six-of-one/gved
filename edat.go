@@ -15,8 +15,20 @@ more complexity will be required for:
  b. sanctuary (g3) mazes
 */
 
+var edmaze *Maze
 var ebuf MazeData
 var eflg [11]int
+
+// deleted elements buffer
+
+type Deletebuf struct {
+	mx     [1000]int
+	my     [1000]int
+	elem   [1000]int
+}
+
+var delbuf = &Deletebuf{}
+var delstak int
 
 // save maze to file in .ed
 

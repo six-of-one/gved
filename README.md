@@ -44,7 +44,7 @@ Research
 
 Issues
 ======
-* mostly still a viewer
+* editing is very rudimentary
 * G¹ floor and wall colors are still being rendered with G² color palette
 
 Attributions
