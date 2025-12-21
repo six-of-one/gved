@@ -340,7 +340,7 @@ func aw_init() {
 
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
-	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-rgp", menu_res)
+	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-r", menu_res)
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
@@ -403,19 +403,22 @@ func newTappableIcon(res fyne.Resource) *tappableIcon {
 }
 
 func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
-	fmt.Printf("tapped - pos:%v, AP:%v\n",e.Position,e.AbsolutePosition)
+	fmt.Printf("tapped - pos:%v, shf:%v, ctrl:%v\n",e.Position,shift,ctrl)
 
 }
 // update contents
 
 func upwin(simg *image.NRGBA) {
 
+// ration required by edit win y = x * ratio
+	ratio := 1.0316529
 //	bimg := canvas.NewRasterFromImage(simg)
 //	w.Canvas().SetContent(bimg)
 	geow := int(math.Max(560,opts.Geow))	// 556 is min, maze doesnt seem to fit or shrink smaller
 	geoh := int(math.Max(594,opts.Geoh))	// 594 min
+	if opts.edat > 0 { geoh = int(float64(geow) * ratio) }
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
-//	w.Show()
+
 tres,err := fyne.LoadResourceFromPath("output.png")
 if err == nil { w.SetContent(newTappableIcon(tres)) } else {
 	fmt.Printf("Error on mouse clickable surface: %v",err)
