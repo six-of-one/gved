@@ -10,6 +10,7 @@ import (
 var opts struct {
 	mnum	int    `description:"maze: number"`
 	edat	int    `default:"0" description:"maze: edit active"`
+	dtec	int    `default:"16" description:"edit: tile size detector for click"`
 // cli options to mirror & rotate mazes
 	MV		bool   `long:"mv" description:"maze: mirror vertical"`
 	MH		bool   `long:"mh" description:"maze: mirror horizontal ( --mv --mh will rotate 180 )"`
@@ -33,7 +34,7 @@ var opts struct {
 // only with maze{n}, if -i not given, prog just exits with maze in output.png
 	Intr	bool   `short:"i" description:"maze interactive cli mode and following parms"`
 	Geow float64   `long:"xw" default:"1024" description:"window width in pixels"`
-	Geoh float64   `long:"xh" default:"1024" description:"window height in pixels"`
+	Geoh float64   `long:"xh" default:"1050" description:"window height in pixels, maze disp is 26 px less"`
 // orig options
 	Animate bool   `short:"a" long:"animate" description:"Animate monster"`
 	PalType string `long:"pt" default:"base" description:"Palette type"`

@@ -28,6 +28,8 @@ var a fyne.App
 var anum int
 var shift bool
 var ctrl bool
+var del bool
+var logo bool		// other wise labeld "win" key
 
 func typedRune(r rune) {
 
@@ -91,12 +93,14 @@ func typedRune(r rune) {
 
 	if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
-//            fmt.Printf("Desktop key down: %h\n", key.Name)
+            fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "BackSpace" {
 				anum = (anum / 10);
 				til := fmt.Sprintf("numeric: %d", anum)
 				uptitl(opts.mnum, til)
 			}
+			if key.Name == "Delete" { del = true }
+			if key.Name == "LeftSuper" { logo = true }
 			if key.Name == "LeftShift" { shift = true }
 			if key.Name == "RightShift" { shift = true }
 			if key.Name == "LeftControl" { ctrl = true }
@@ -105,6 +109,8 @@ func typedRune(r rune) {
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
 //            fmt.Printf("Desktop key up: %v\n", key)
 			if key.Name == "Escape" { os.Exit(0) }
+			if key.Name == "Delete" { del = false }
+			if key.Name == "LeftSuper" { logo = false }
 			if key.Name == "LeftShift" { shift = false }
 			if key.Name == "RightShift" { shift = false }
 			if key.Name == "LeftControl" { ctrl = false }
@@ -367,7 +373,7 @@ func aw_init() {
 
 // get default win size
 
-	if opts.Geow == 1024 && opts.Geoh == 1024 {		// defs set
+	if opts.Geow == 1024 && opts.Geoh == 1050 {		// defs set
 
 		data, err := ioutil.ReadFile(".wstats")
 		if err != nil {
