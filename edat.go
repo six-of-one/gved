@@ -86,9 +86,11 @@ func lod_maz(fil string) int {
 	if opts.Verbose { fmt.Printf("\n") }
 		}
 	} else {
-		fmt.Printf("loading maze %s, error:\n",fil)
+// this warning will issue if a maze buffer save has not happened and the maze is viewed
+		fmt.Printf("loading maze %s, warning:\n",fil)
 		fmt.Print(err)
 		fmt.Printf("\n")
+		fmt.Printf("Note: 'no such file' when no buffer save yet and the maze is viewed\n")
 	}
 	return edp
 }
@@ -98,7 +100,7 @@ func stor_maz(mazn int) {
 	var lastx int
 	var lasty int
 	var maze *Maze
-	fmt.Printf("buffer maze entry\n")
+//	fmt.Printf("buffer maze entry\n")
 
 // if g1 or g2 edit, get size & control bytes
 // g3 will be edit of sanctuary mazes

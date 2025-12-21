@@ -249,7 +249,7 @@ func typedRune(r rune) {
 		case 63:
 			keyhints()
 		case 'd':
-			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit in border mode!", w) } else {
+			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 				if opts.edat != 1 {
 					fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
 					opts.edat = 1
