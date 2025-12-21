@@ -92,6 +92,11 @@ func typedRune(r rune) {
 if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
 //            fmt.Printf("Desktop key down: %h\n", key.Name)
+			if key.Name == "BackSpace" {
+				anum = (anum / 10);
+				til := fmt.Sprintf("numeric: %d", anum)
+				uptitl(opts.mnum, til)
+			}
 			if key.Name == "LeftShift" { shift = true }
 			if key.Name == "RightShift" { shift = true }
 			if key.Name == "LeftControl" { ctrl = true }
