@@ -86,11 +86,11 @@ func lod_maz(fil string) int {
 	if opts.Verbose { fmt.Printf("\n") }
 		}
 	} else {
-// this warning will issue if a maze buffer save has not happened and the maze is viewed
+// this warning will issue if a maze buffer save (maze not being edited) has not happened because and the maze is viewed
 		fmt.Printf("loading maze %s, warning:\n",fil)
 		fmt.Print(err)
 		fmt.Printf("\n")
-		fmt.Printf("Note: 'no such file' when no buffer save yet and the maze is viewed\n")
+		fmt.Printf("Note: 'no such file' if maze is not being edited and the maze is viewed when editor is on\n")
 	}
 	return edp
 }

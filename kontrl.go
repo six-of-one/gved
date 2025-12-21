@@ -412,15 +412,13 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 
 func upwin(simg *image.NRGBA) {
 
-// ration required by edit win y = x * ratio
-	ratio := 1.0316529
 //	bimg := canvas.NewRasterFromImage(simg)
 //	w.Canvas().SetContent(bimg)
-	geow := int(math.Max(560,opts.Geow))	// 556 is min, maze doesnt seem to fit or shrink smaller
-	geoh := int(math.Max(594,opts.Geoh))	// 594 min
+	geow := int(math.Max(560,opts.Geow))	// 560 is min, maze doesnt seem to fit or shrink smaller
+	geoh := int(math.Max(586,opts.Geoh))	// 586 min
 	if opts.edat > 0 {
-		ngeoh := int(float64(geow) * ratio)
-		if ngeoh != geoh { dialog.ShowInformation("Edit mode","set window ratio 1:1.0317 to edit",w) }
+		ngeoh := geow + 26					// square maze + 26 for menu bar
+		if ngeoh != geoh { dialog.ShowInformation("Edit mode","set window ratio to edit",w) }
 		geoh = ngeoh
 	}
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
