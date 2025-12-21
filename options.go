@@ -33,8 +33,8 @@ var opts struct {
 // interactive mode for maze display, select wall & floors, rotates & mirrors, load new mazes, test addresses
 // only with maze{n}, if -i not given, prog just exits with maze in output.png
 	Intr	bool   `short:"i" description:"maze interactive cli mode and following parms"`
-	Geow float64   `long:"xw" default:"1024" description:"window width in pixels"`
-	Geoh float64   `long:"xh" default:"1050" description:"window height in pixels, maze disp is 26 px less"`
+	Geow float64   `long:"xw" default:"1060" description:"window width in pixels"`
+	Geoh float64   `long:"xh" default:"1086" description:"window height in pixels, maze disp is 26 px less"`
 // orig options
 	Animate bool   `short:"a" long:"animate" description:"Animate monster"`
 	PalType string `long:"pt" default:"base" description:"Palette type"`
