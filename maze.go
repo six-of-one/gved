@@ -98,16 +98,6 @@ func domaze(arg string) {
 
 }
 
-// reload maze while editing & update window - generates output.png
-
-func remaze(mazn int) {
-
-	edmaze := mazeDecompress(slapsticReadMaze(mazn), false)
-	mazeloop(edmaze)
-	Ovimg := genpfimage(edmaze, mazn)
-	upwin(Ovimg)
-}
-
 // loop called by typedRune in kontrol.go to re-issue maze after viewer parm changes
 
 func mazeloop(maze *Maze) {

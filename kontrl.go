@@ -118,6 +118,8 @@ func typedRune(r rune) {
 			if key.Name == "S" && ctrl { menu_sav() }
 			if key.Name == "L" && ctrl  { menu_lod() }
 			if key.Name == "R" && ctrl  { menu_res() }
+			if key.Name == "Z" && ctrl  { undo() }
+			if key.Name == "Y" && ctrl  { redo() }
        })
     }
 //	fmt.Printf("r %v shift %v\n",r,shift)
@@ -333,6 +335,27 @@ func menu_res() {
 	} else { dialog.ShowInformation("Reset Fail","edit mode is not active!",w) }
 }
 
+func undo() {
+	if delstak > 0 {
+		delstak--
+		sw := ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}]
+		ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}] = delbuf.elem[delstak]
+		delbuf.elem[delstak] = sw
+		ed_maze()
+	}
+}
+
+func redo() {
+	if delbuf.elem[delstak] != -1 {
+		sw := ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}]
+		ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}] = delbuf.elem[delstak]
+		delbuf.elem[delstak] = sw
+		delstak++
+		ed_maze()
+	}
+	ed_maze()
+}
+
 // init app and win
 
 func aw_init() {
@@ -427,15 +450,11 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 		delbuf.elem[delstak] = ebuf[xy{mx, my}]
 		fmt.Printf(" st elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
 		delstak++
+		delbuf.elem[delstak] = -1 	// when undeleting this is the end
 		ebuf[xy{mx, my}] = 0	// delete anything for now makes a floor
 		fmt.Printf(" dl elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 	}
-	for y := 0; y <= opts.DimX; y++ {
-		for x := 0; x <= opts.DimY; x++ {
-		edmaze.data[xy{x, y}] = ebuf[xy{x, y}]
-	}}
-	Ovimg := genpfimage(edmaze, opts.mnum)
-	upwin(Ovimg)
+	ed_maze()
 }
 // update contents
 

@@ -17,6 +17,7 @@ more complexity will be required for:
 
 var edmaze *Maze
 var ebuf MazeData
+var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var eflg [11]int
 
 // deleted elements buffer
@@ -93,6 +94,7 @@ func lod_maz(fil string) int {
 	if opts.Verbose { fmt.Printf("%02s ",l) }
 				fmt.Sscanf(l,"%02d", &esc)
 				ebuf[xy{x, y}] = esc
+				ubuf[xy{x, y}] = esc
 				edp = 1		// tell sender we loaded some maze part
 			}
 	if opts.Verbose { fmt.Printf("\n") }
@@ -167,4 +169,24 @@ func ed_sav(mazn int) {
 	eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,mazn)
 	sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
+}
+
+// udpate maze from edits
+func ed_maze() {
+	for y := 0; y <= opts.DimX; y++ {
+		for x := 0; x <= opts.DimY; x++ {
+		edmaze.data[xy{x, y}] = ebuf[xy{x, y}]
+	}}
+	Ovimg := genpfimage(edmaze, opts.mnum)
+	upwin(Ovimg)
+}
+
+// reload maze while editing & update window - generates output.png
+
+func remaze(mazn int) {
+fmt.Printf("in remaze\n")
+	edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
+	mazeloop(edmaze)
+	Ovimg := genpfimage(edmaze, mazn)
+	upwin(Ovimg)
 }
