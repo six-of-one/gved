@@ -118,6 +118,7 @@ func typedRune(r rune) {
 			if key.Name == "S" && ctrl { menu_sav() }
 			if key.Name == "L" && ctrl  { menu_lod() }
 			if key.Name == "R" && ctrl  { menu_res() }
+			if key.Name == "U" && ctrl  { uswap() }
 			if key.Name == "Z" && ctrl  { undo() }
 			if key.Name == "Y" && ctrl  { redo() }
        })
@@ -353,6 +354,16 @@ func redo() {
 		delstak++
 		ed_maze()
 	}
+	ed_maze()
+}
+
+func uswap() {
+	for y := 0; y <= opts.DimX; y++ {
+		for x := 0; x <= opts.DimY; x++ {
+			sw := ebuf[xy{x,y}]
+			ebuf[xy{x,y}] = ubuf[xy{x,y}]
+			ubuf[xy{x,y}] = sw
+	}}
 	ed_maze()
 }
 

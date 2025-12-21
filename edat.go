@@ -87,6 +87,7 @@ func lod_maz(fil string) int {
 		}
 
 		if ebuf == nil { ebuf = make(map[xy]int) }
+		if ubuf == nil { ubuf = make(map[xy]int) }
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
 				l = "02"
