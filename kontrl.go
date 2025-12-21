@@ -401,8 +401,8 @@ func newTappableIcon(res fyne.Resource) *tappableIcon {
 	return icon
 }
 
-func (t *tappableIcon) Tapped(_ *fyne.PointEvent) {
-	fmt.Println("I have been tapped")
+func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
+	fmt.Printf("tapped - pos:%v, AP:%v\n",e.Position,e.AbsolutePosition)
 }
 // update contents
 
