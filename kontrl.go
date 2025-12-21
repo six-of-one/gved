@@ -11,7 +11,7 @@ import (
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
-    "fyne.io/fyne/v2/canvas"
+//    "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
 )
@@ -263,10 +263,7 @@ if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
 			if opts.R14 { spau += "rv14" } else { spau += "rv1-9" }
 		}
 	if (relod || relodsub) {
-		maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)
-		mazeloop(maze)
-		Ovimg := genpfimage(maze, opts.mnum)
-		upwin(Ovimg)
+		remaze(opts.mnum)
 		uptitl(opts.mnum, spau)
 	}
 }
@@ -292,7 +289,11 @@ func menu_sav() {
 
 func menu_lodit(y bool) {
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
-	if y { lod_maz(fil) }
+	if y {
+		Ovwallpat = -1
+		lod_maz(fil)
+		remaze(opts.mnum)
+	}
 }
 
 func menu_lod() {
@@ -305,10 +306,8 @@ func menu_lod() {
 func menu_rst(y bool) {
 	if y {
 		opts.edat = -1	// code to tell maze decompress not to load buffer file
-		maze := mazeDecompress(slapsticReadMaze(opts.mnum), false)
-		mazeloop(maze)
-		Ovimg := genpfimage(maze, opts.mnum)
-		upwin(Ovimg)
+		Ovwallpat = -1
+		remaze(opts.mnum)
 		opts.edat = 1
 		//ed_sav(opts.mnum+1)	// reset does not overwrite file buffer, still need to save
 	}
@@ -404,8 +403,8 @@ func (t *tappableIcon) Tapped(_ *fyne.PointEvent) {
 
 func upwin(simg *image.NRGBA) {
 
-	bimg := canvas.NewRasterFromImage(simg)
-	w.Canvas().SetContent(bimg)
+//	bimg := canvas.NewRasterFromImage(simg)
+//	w.Canvas().SetContent(bimg)
 	geow := int(math.Max(560,opts.Geow))	// 556 is min, maze doesnt seem to fit or shrink smaller
 	geoh := int(math.Max(594,opts.Geoh))	// 594 min
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))

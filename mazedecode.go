@@ -161,7 +161,6 @@ if opts.Verbose {
 		for y := 0; y < 11; y++ {
 			eflg[y] = compressed[y]
 		}
-		Ovwallpat = -1;
 	}
 
 // save for edat
