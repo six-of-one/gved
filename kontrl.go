@@ -21,6 +21,11 @@ import (
 var w fyne.Window
 var a fyne.App
 
+// status keeper
+
+var statup *fyne.Menu
+var smod string
+
 // input keys and keypress checks for canvas/ window
 // since this is all that is called without other handler / timers
 // - this is where maze update and edits will vector
@@ -260,16 +265,20 @@ func typedRune(r rune) {
 		case 'd':
 			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 				if opts.edat != 1 {
+					smod = "Edit mode: "
 					fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
 					opts.edat = 1
 					stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
+					statlin("on")
 				}
 			}
 		case 68:		// D
 			if opts.edat != 0 {
+				smod = "View mode: "
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 				opts.edat = 0
 				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
+					statlin("on")
 			}
 		default:
 			relodsub = false
@@ -367,13 +376,9 @@ func uswap() {
 	ed_maze()
 }
 
-// init app and win
+// set menus
 
-func aw_init() {
-
-    a = app.New()
-    w = a.NewWindow("G¹G²ved")
-
+func st_menu(ss string) {
 // quit menu option does not exit to term!
 	menuItemExit := fyne.NewMenuItem("Exit", func() {
 		os.Exit(0)
@@ -399,8 +404,20 @@ func aw_init() {
 
 	menuHint := fyne.NewMenu("cmds: ?, q, dD, fFgG, wWeE, rRt, hm, pPT, sL, il, u, v, A #a")
 
-	mainMenu := fyne.NewMainMenu(menuExit, editMenu, menuHelp, menuHint)
+	statup = fyne.NewMenu(ss)
+
+	mainMenu := fyne.NewMainMenu(menuExit, editMenu, menuHelp, menuHint, statup)
 	w.SetMainMenu(mainMenu)
+}
+
+// init app and win
+
+func aw_init() {
+
+    a = app.New()
+    w = a.NewWindow("G¹G²ved")
+
+	st_menu("view mode:")
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
 	delstak = 0
@@ -428,6 +445,13 @@ func aw_init() {
 			file.Close()
 		}
 	}
+}
+
+// update stat line
+
+func statlin(ss string) {
+
+	st_menu(smod + ss)
 }
 
 // click area for edits
@@ -498,7 +522,7 @@ func upwin(simg *image.NRGBA) {
 
 func uptitl(mazeN int, spaux string) {
 
-	til := fmt.Sprintf("G¹G²ved Maze: %d addr: %X edit: %d",mazeN + 1, slapsticMazeGetRealAddr(mazeN),opts.edat)
+	til := fmt.Sprintf("G¹G²ved Maze: %d addr: %X",mazeN + 1, slapsticMazeGetRealAddr(mazeN),opts.edat)
 	if Aov > 0 { til = fmt.Sprintf("G¹G²ved Override addr: %X - %d",Aov,Aov) }
 	if spaux != "" { til += " -- " + spaux }
 	w.SetTitle(til)
