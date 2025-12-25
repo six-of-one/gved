@@ -142,6 +142,7 @@ func typedRune(r rune) {
 		case 92:
 			cmdoff = !cmdoff
 			if cmdoff { cmdhin = "cmds: ? '\\' - enable cmds, A #a, dD, L" }
+			fmt.Printf("hint: %s\n", cmdhin)
 			statlin(cmdhin,"")
 		case 63:
 			keyhints()
@@ -160,6 +161,7 @@ func typedRune(r rune) {
 					stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
 					statlin(cmdhin,"on")
 				}
+				relod = true
 			}
 		case 68:		// D
 			if opts.edat != 0 {
@@ -486,26 +488,28 @@ func newTappableIcon(res fyne.Resource) *tappableIcon {
 
 func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 	fmt.Printf("tapped - pos:%v - del: %t",e.Position,del)
-	pos := fmt.Sprintf("%v",e.Position)
-	px := 0.0
-	py := 0.0
-	fmt.Sscanf(pos,"{%f %f}",&px,&py)
-	fmt.Printf(" clk: %.2f x %.2f ",px,py)
-	mx := int(px / opts.dtec)
-	my := int(py / opts.dtec)
+	if opts.edat > 0 {
+		pos := fmt.Sprintf("%v",e.Position)
+		px := 0.0
+		py := 0.0
+		fmt.Sscanf(pos,"{%f %f}",&px,&py)
+		fmt.Printf(" clk: %.2f x %.2f ",px,py)
+		mx := int(px / opts.dtec)
+		my := int(py / opts.dtec)
 
-	fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,mx,my,ebuf[xy{mx, my}])
-	if del {
-		delbuf.mx[delstak] = mx
-		delbuf.my[delstak] = my
-		delbuf.elem[delstak] = ebuf[xy{mx, my}]
-		fmt.Printf(" st elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
-		delstak++
-		delbuf.elem[delstak] = -1 	// when undeleting this is the end
-		ebuf[xy{mx, my}] = 0	// delete anything for now makes a floor
-		fmt.Printf(" dl elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
+		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,mx,my,ebuf[xy{mx, my}])
+		if del {
+			delbuf.mx[delstak] = mx
+			delbuf.my[delstak] = my
+			delbuf.elem[delstak] = ebuf[xy{mx, my}]
+			fmt.Printf(" st elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
+			delstak++
+			delbuf.elem[delstak] = -1 	// when undeleting this is the end
+			ebuf[xy{mx, my}] = 0	// delete anything for now makes a floor
+			fmt.Printf(" dl elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
+		}
+		ed_maze()
 	}
-	ed_maze()
 }
 // update contents
 
