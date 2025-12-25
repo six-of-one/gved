@@ -25,6 +25,7 @@ var a fyne.App
 
 var statup *fyne.Menu
 var hintup *fyne.Menu
+var mainMenu *fyne.MainMenu
 var smod string
 
 // input keys and keypress checks for canvas/ window
@@ -141,7 +142,7 @@ func typedRune(r rune) {
 		switch r {
 		case 92:
 			cmdoff = !cmdoff
-			if cmdoff { cmdhin = "cmds: ? '\\' - enable cmds, A #a, dD, L" }
+			if cmdoff { cmdhin = "cmds: ? '\\' - enable cmds, q, A #a, dD, L" }
 			fmt.Printf("hint: %s\n", cmdhin)
 			statlin(cmdhin,"")
 		case 63:
@@ -171,6 +172,8 @@ func typedRune(r rune) {
 				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
 					statlin(cmdhin,"on")
 			}
+		default:
+			relodsub = false
 		}
 // view cmd keys - also on edit, but blockable
 	  if !cmdoff {
@@ -396,7 +399,7 @@ func uswap() {
 
 // set menus
 
-func st_menu(hs string, ss string) {
+func st_menu() {
 // quit menu option does not exit to term!
 	menuItemExit := fyne.NewMenuItem("Exit", func() {
 		os.Exit(0)
@@ -420,11 +423,11 @@ func st_menu(hs string, ss string) {
 	})
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
 
-	hintup = fyne.NewMenu(hs)
+	hintup = fyne.NewMenu("cmds: ?\\, q, dD, fFgG, wWeE, rRt, hm, pPT, sL, il, u, v, A #a")
 
-	statup = fyne.NewMenu(ss)
+	statup = fyne.NewMenu("view mode:")
 
-	mainMenu := fyne.NewMainMenu(menuExit, editMenu, menuHelp, hintup, statup)
+	mainMenu = fyne.NewMainMenu(menuExit, editMenu, menuHelp, hintup, statup)
 	w.SetMainMenu(mainMenu)
 }
 
@@ -435,7 +438,7 @@ func aw_init() {
     a = app.New()
     w = a.NewWindow("G¹G²ved")
 
-	st_menu("cmds: ?\\, q, dD, fFgG, wWeE, rRt, hm, pPT, sL, il, u, v, A #a","view mode:")
+	st_menu()
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
 	delstak = 0
@@ -469,7 +472,9 @@ func aw_init() {
 
 func statlin(hs string,ss string) {
 
-	st_menu(hs, smod + ss)
+	hintup.Label = hs
+	statup.Label = smod + ss
+	mainMenu.Refresh()
 }
 
 // click area for edits
