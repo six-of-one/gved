@@ -141,19 +141,39 @@ func typedRune(r rune) {
 		switch r {
 		case 92:
 			cmdoff = !cmdoff
-			if cmdoff { cmdhin = "cmds: ? '\\' - enable cmds" }
+			if cmdoff { cmdhin = "cmds: ? '\\' - enable cmds, A #a, dD, L" }
 			statlin(cmdhin,"")
 		case 63:
 			keyhints()
+		case 65:		// A
+			if Aov > 0 { Aov = 0 } else {
+				Aov = addrver(slapsticMazeGetRealAddr(opts.mnum), 0)
+			}
+		case 76:
+			opts.Nogtop = !opts.Nogtop
+		case 'd':
+			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
+				if opts.edat != 1 {
+					smod = "Edit mode: "
+					fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
+					opts.edat = 1
+					stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
+					statlin(cmdhin,"on")
+				}
+			}
+		case 68:		// D
+			if opts.edat != 0 {
+				smod = "View mode: "
+				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
+				opts.edat = 0
+				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
+					statlin(cmdhin,"on")
+			}
 		}
 // view cmd keys - also on edit, but blockable
 	  if !cmdoff {
 		relodsub = true
 		switch r {
-		case 65:		// A
-			if Aov > 0 { Aov = 0 } else {
-				Aov = addrver(slapsticMazeGetRealAddr(opts.mnum), 0)
-			}
 		case 'z':
 			Ovwallpat = -1
 // allow step parse through valid address
@@ -259,8 +279,6 @@ func typedRune(r rune) {
 			spau = fmt.Sprintf("no things: %d\n",nothing & 511)				// display no things mask
 		case 's':
 			opts.SP = !opts.SP
-		case 76:
-			opts.Nogtop = !opts.Nogtop
 		case 'u':
 			opts.Gtp = 2
 			G1 = false
@@ -278,24 +296,6 @@ func typedRune(r rune) {
 			}
 			fmt.Printf("\n")
 			dialog.ShowInformation("G¹G²ved", "Gauntlet / Gauntlet 2 valid maze address list\nplease check terminal where gved command was issued\n\ngithub.com/six-of-one/", w)
-		case 'd':
-			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
-				if opts.edat != 1 {
-					smod = "Edit mode: "
-					fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
-					opts.edat = 1
-					stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
-					statlin(cmdhin,"on")
-				}
-			}
-		case 68:		// D
-			if opts.edat != 0 {
-				smod = "View mode: "
-				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
-				opts.edat = 0
-				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
-					statlin(cmdhin,"on")
-			}
 		default:
 			relodsub = false
 		}
