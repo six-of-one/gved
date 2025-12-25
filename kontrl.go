@@ -24,11 +24,15 @@ var a fyne.App
 // status keeper
 
 var statup *fyne.Menu
+var hintup *fyne.Menu
 var smod string
 
 // input keys and keypress checks for canvas/ window
 // since this is all that is called without other handler / timers
 // - this is where maze update and edits will vector
+
+// disable some cmd keys for edit mode click opts
+var cmdoff bool
 
 var anum int
 var shift bool
@@ -130,6 +134,20 @@ func typedRune(r rune) {
     }
 //	fmt.Printf("r %v shift %v\n",r,shift)
 
+		cmdhin := "cmds: ?\\, q, dD, fFgG, wWeE, rRt, hm, pPT, sL, il, u, v, A #a"
+
+// keys that '\' doesnt block, no maze reloads
+		relodsub = false
+		switch r {
+		case 92:
+			cmdoff = !cmdoff
+			if cmdoff { cmdhin = "cmds: ? '\\' - enable cmds" }
+			statlin(cmdhin,"")
+		case 63:
+			keyhints()
+		}
+// view cmd keys - also on edit, but blockable
+	  if !cmdoff {
 		relodsub = true
 		switch r {
 		case 65:		// A
@@ -260,8 +278,6 @@ func typedRune(r rune) {
 			}
 			fmt.Printf("\n")
 			dialog.ShowInformation("G¹G²ved", "Gauntlet / Gauntlet 2 valid maze address list\nplease check terminal where gved command was issued\n\ngithub.com/six-of-one/", w)
-		case 63:
-			keyhints()
 		case 'd':
 			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 				if opts.edat != 1 {
@@ -269,7 +285,7 @@ func typedRune(r rune) {
 					fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
 					opts.edat = 1
 					stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
-					statlin("on")
+					statlin(cmdhin,"on")
 				}
 			}
 		case 68:		// D
@@ -278,12 +294,12 @@ func typedRune(r rune) {
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 				opts.edat = 0
 				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
-					statlin("on")
+					statlin(cmdhin,"on")
 			}
 		default:
 			relodsub = false
 		}
-
+	  }
 		if spau == "G¹ " {
 			if opts.R14 { spau += "rv14" } else { spau += "rv1-9" }
 		}
@@ -378,7 +394,7 @@ func uswap() {
 
 // set menus
 
-func st_menu(ss string) {
+func st_menu(hs string, ss string) {
 // quit menu option does not exit to term!
 	menuItemExit := fyne.NewMenuItem("Exit", func() {
 		os.Exit(0)
@@ -402,11 +418,11 @@ func st_menu(ss string) {
 	})
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
 
-	menuHint := fyne.NewMenu("cmds: ?, q, dD, fFgG, wWeE, rRt, hm, pPT, sL, il, u, v, A #a")
+	hintup = fyne.NewMenu(hs)
 
 	statup = fyne.NewMenu(ss)
 
-	mainMenu := fyne.NewMainMenu(menuExit, editMenu, menuHelp, menuHint, statup)
+	mainMenu := fyne.NewMainMenu(menuExit, editMenu, menuHelp, hintup, statup)
 	w.SetMainMenu(mainMenu)
 }
 
@@ -417,7 +433,7 @@ func aw_init() {
     a = app.New()
     w = a.NewWindow("G¹G²ved")
 
-	st_menu("view mode:")
+	st_menu("cmds: ?\\, q, dD, fFgG, wWeE, rRt, hm, pPT, sL, il, u, v, A #a","view mode:")
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
 	delstak = 0
@@ -449,9 +465,9 @@ func aw_init() {
 
 // update stat line
 
-func statlin(ss string) {
+func statlin(hs string,ss string) {
 
-	st_menu(smod + ss)
+	st_menu(hs, smod + ss)
 }
 
 // click area for edits
@@ -566,6 +582,7 @@ func keyhints() {
 	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
 //		strp += cpad("\n\n? - this list",52)
 	strp += cpad("\nq - quit program",42)
+	strp += cpad("\n\\ - toggle cmd keys",41)
 	strp += cpad("\nd - editor mode",43)
 	strp += cpad("\nf - floor pattern+",43)
 	strp += cpad("\ng - floor color+",45)
