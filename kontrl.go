@@ -50,7 +50,8 @@ func typedRune(r rune) {
 	relodsub := false
 
 //	fmt.Printf("in keys event - %x\n",r)
-	if r == 'q' { os.Exit(0) }
+// <ESC> also exits
+	if r == 81 { os.Exit(0) }
 
 // new maze
 	if r == 'a' {
@@ -133,20 +134,21 @@ func typedRune(r rune) {
 			if key.Name == "Y" && ctrl  { redo() }
        })
     }
-//	fmt.Printf("r %v shift %v\n",r,shift)
+	fmt.Printf("r %v shift %v\n",r,shift)
 
-		cmdhin := "cmds: ?\\, q, dD, fFgG, wWeE, rRt, hm, pPT, sL, il, u, v, A #a"
+		cmdhin := "cmds: ?\\, Q, dD, fFgG, wWeE, rRt, hm, pPT, sL, S, il, u, v, A #a"
 
 // keys that '\' doesnt block, no maze reloads
 		relodsub = false
 		switch r {
 		case 92:
 			cmdoff = !cmdoff
-			if cmdoff { cmdhin = "cmds: ? '\\' - enable cmds, q, A #a, dD, L" }
+// a,d only lower case not avail for edit hotkey
+			if cmdoff { cmdhin = "cmds: ? '\\' - enable cmds, Q, A #a, dD, L, S" }
 			fmt.Printf("hint: %s\n", cmdhin)
 			statlin(cmdhin,"")
 			relod = true
-		case 63:
+		case 63:		// ?
 			keyhints()
 		case 65:		// A
 			if Aov > 0 { Aov = 0 } else {
@@ -173,6 +175,7 @@ func typedRune(r rune) {
 				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
 					statlin(cmdhin,"on")
 			}
+			case 83:		// S
 		default:
 			relodsub = false
 		}
@@ -424,7 +427,7 @@ func st_menu() {
 	})
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
 
-	hintup = fyne.NewMenu("cmds: ?\\, q, dD, fFgG, wWeE, rRt, hm, pPT, sL, il, u, v, A #a")
+	hintup = fyne.NewMenu("cmds: ?\\, Q, dD, fFgG, wWeE, rRt, hm, pPT, sL, S, il, u, v, A #a")
 
 	statup = fyne.NewMenu("view mode:")
 
@@ -591,7 +594,7 @@ func keyhints() {
 	strp := cpad("single letter commands",36)
 	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
 //		strp += cpad("\n\n? - this list",52)
-	strp += cpad("\nq - quit program",42)
+	strp += cpad("\nQ - quit program",42)
 	strp += cpad("\n\\ - toggle cmd keys",41)
 	strp += cpad("\nd - editor mode",43)
 	strp += cpad("\nf - floor pattern+",43)
