@@ -111,6 +111,7 @@ func typedRune(r rune) {
 				uptitl(opts.mnum, til)
 			}
 			if key.Name == "Delete" { del = true }
+			if key.Name == "BackSpace" { del = true }
 			if key.Name == "LeftSuper" { logo = true }
 			if key.Name == "LeftShift" { shift = true }
 			if key.Name == "RightShift" { shift = true }
@@ -121,6 +122,7 @@ func typedRune(r rune) {
 //            fmt.Printf("Desktop key up: %v\n", key)
 			if key.Name == "Escape" { os.Exit(0) }
 			if key.Name == "Delete" { del = false }
+			if key.Name == "BackSpace" { del = false }
 			if key.Name == "LeftSuper" { logo = false }
 			if key.Name == "LeftShift" { shift = false }
 			if key.Name == "RightShift" { shift = false }
@@ -455,7 +457,9 @@ func aw_init() {
 	st_menu()
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
+// ed stuff, consider moving
 	delstak = 0
+	sdb = -1
 
 // get default win size
 

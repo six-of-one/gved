@@ -20,7 +20,7 @@ var ebuf MazeData
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var sd [27]MazeData	// save data buffers - save off maze copies
 var sdmax = 27
-var sdb int
+var sdb int			// current sd selected, -1 when on ebuf
 var eflg [11]int
 
 // deleted elements buffer
