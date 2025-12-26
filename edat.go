@@ -19,6 +19,7 @@ var edmaze *Maze
 var ebuf MazeData
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var sd [27]MazeData	// save data buffers - save off maze copies
+var sdfl [27]int
 var sdmax = 27
 var sdb int			// current sd selected, -1 when on ebuf
 var eflg [11]int
@@ -68,7 +69,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 
 // load stored maze data into ebuf / eflg
 
-func lod_maz(fil string) int {
+func lod_maz(fil string, mdat MazeData, ud bool) int {
 	data, err := ioutil.ReadFile(fil)
 	edp := 0
 	if err == nil {
@@ -89,7 +90,7 @@ func lod_maz(fil string) int {
 			fmt.Printf("\n")
 		}
 
-		if ebuf == nil { ebuf = make(map[xy]int) }
+		if mdat == nil { mdat = make(map[xy]int) }
 		if ubuf == nil { ubuf = make(map[xy]int) }
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
@@ -97,8 +98,8 @@ func lod_maz(fil string) int {
 				if scanr.Scan() { l = scanr.Text() }
 	if opts.Verbose { fmt.Printf("%02s ",l) }
 				fmt.Sscanf(l,"%02d", &esc)
-				ebuf[xy{x, y}] = esc
-				ubuf[xy{x, y}] = esc
+				mdat[xy{x, y}] = esc
+				if ud { ubuf[xy{x, y}] = esc }		// store ubuf data on flag
 				edp = 1		// tell sender we loaded some maze part
 			}
 	if opts.Verbose { fmt.Printf("\n") }
