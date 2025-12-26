@@ -145,6 +145,7 @@ func typedRune(r rune) {
 			if cmdoff { cmdhin = "cmds: ? '\\' - enable cmds, q, A #a, dD, L" }
 			fmt.Printf("hint: %s\n", cmdhin)
 			statlin(cmdhin,"")
+			relod = true
 		case 63:
 			keyhints()
 		case 65:		// A

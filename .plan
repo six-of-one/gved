@@ -5,6 +5,7 @@ G¹G²ved ops
 edator ideas:
 
 shift-del toggle click-delete mode
+ctrl-h toggle clcik item replace modes
 rubber-band ops will also del
 
 rubber-band ops - click and drag will expand to set region of place / del / edit
@@ -20,5 +21,4 @@ a palette system similar to edit in sanctuary
 
 a basic "playable" mode to test mazes
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
-
 
