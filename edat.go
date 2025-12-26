@@ -19,7 +19,7 @@ var edmaze *Maze
 var ebuf MazeData
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var sd [27]MazeData	// save data buffers - save off maze copies
-var sdfl [27]int
+var sdfl [27][11]int
 var sdmax = 27
 var sdb int			// current sd selected, -1 when on ebuf
 var eflg [11]int
@@ -67,9 +67,9 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 	}
 }
 
-// load stored maze data into ebuf / eflg
+// load stored maze data into ebuf / eflg or other data stores
 
-func lod_maz(fil string, mdat MazeData, ud bool) int {
+func lod_maz(fil string, mdat MazeData, fdat [11]int, ud bool) int {
 	data, err := ioutil.ReadFile(fil)
 	edp := 0
 	if err == nil {
