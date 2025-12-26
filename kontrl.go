@@ -155,7 +155,10 @@ func typedRune(r rune) {
 				Aov = addrver(slapsticMazeGetRealAddr(opts.mnum), 0)
 			}
 		case 76:
-			opts.Nogtop = !opts.Nogtop
+// with anum != 0, this becomes load s[1] buffer into ebuf, if in edit
+			if opts.edat > 0 && anum > 0 {
+
+			} else {opts.Nogtop = !opts.Nogtop  }
 		case 'd':
 			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 				if opts.edat != 1 {
@@ -176,6 +179,13 @@ func typedRune(r rune) {
 					statlin(cmdhin,"on")
 			}
 			case 83:		// S
+// have anum !=0, save that buffer
+				if anum > 0 {
+
+				} else {
+// with no anum, rotate curr ebuf thru s[1] - s[27], store eb in s[0]
+
+				}
 		default:
 			relodsub = false
 		}
@@ -610,6 +620,7 @@ func keyhints() {
 	strp += cpad("\nT - loop invis things",42)
 	strp += cpad("\ns - toggle rnd special potion",34)
 	strp += cpad("\nL - generator indicate letter",35)
+	strp += cpad("\n{n}S save curr to buffer #",35)
 	strp += cpad("\ni - gauntlet mazes r1 - r9",38)
 	strp += cpad("\nl - use gauntlet rev 14",40)
 	strp += cpad("\nu - gauntlet 2 mazes",39)

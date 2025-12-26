@@ -18,6 +18,7 @@ more complexity will be required for:
 var edmaze *Maze
 var ebuf MazeData
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
+var sd [27]MazeData
 var eflg [11]int
 
 // deleted elements buffer
