@@ -154,11 +154,11 @@ func typedRune(r rune) {
 			if Aov > 0 { Aov = 0 } else {
 				Aov = addrver(slapsticMazeGetRealAddr(opts.mnum), 0)
 			}
-		case 76:
+		case 76:		// L
 // with anum != 0, this becomes load s[1] buffer into ebuf, if in edit
 			if opts.edat > 0 && anum > 0 {
 
-			} else {opts.Nogtop = !opts.Nogtop  }
+			} else { opts.Nogtop = !opts.Nogtop }
 		case 'd':
 			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 				if opts.edat != 1 {

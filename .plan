@@ -22,3 +22,8 @@ a palette system similar to edit in sanctuary
 a basic "playable" mode to test mazes
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
 
+multiple save buffers to store vars maze edits, page thru all wiht 'S', store with #'S', load with #'L'
+- have to be in edit mode to load
+- can always store & page
+- save to disk on set, load up on launch  for all sd files found
+- modify lod_maz to pass mazedata & bool for ubuf
