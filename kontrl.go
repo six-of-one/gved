@@ -182,13 +182,17 @@ func typedRune(r rune) {
 				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
 					statlin(cmdhin,"on")
 			}
-			case 83:		// S
+		case 83:		// S
 // have anum !=0, save that buffer
 				if anum > 0 {
 
 				} else {
 // with no anum, rotate curr ebuf thru s[1] - s[27], store eb in s[0]
 
+				case 67:
+					cycl++
+					if cycl > 64 { cycl = 0 }
+					statlin(cmdhin,string(cycl)) }
 				}
 		default:
 			relodsub = false
@@ -546,7 +550,6 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 			if edkey == 82 { ebuf[xy{mx, my}] = repl }
 			if edkey == 99 { ebuf[xy{mx, my}] = cycl }
 			if edkey == 114 { repl = ebuf[xy{mx, my}] }
-			if edkey == 67 { cycl++; if cycl > 64 { cycl = 0 }; statlin("cmds: ? '\\' - enable cmds, Q, A #a, dD, L, S",string(cycl)) }
 			}
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}
