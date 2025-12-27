@@ -139,7 +139,7 @@ func typedRune(r rune) {
     }
 //	fmt.Printf("r %v shift %v\n",r,shift)
 		edkey = int(r)
-	
+
 		cmdhin := "cmds: ?\\, Q, dD, fFgG, wWeE, rRt, hm, pPT, sL, S, il, u, v, A #a"
 
 // keys that '\' doesnt block, no maze reloads
@@ -513,7 +513,7 @@ func newTappableIcon(res fyne.Resource) *tappableIcon {
 }
 
 func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
-	fmt.Printf("tapped - pos:%v - del: %t",e.Position,del)
+	fmt.Printf("tapped - pos:%v - edk: %d",e.Position,edkey)
 	if opts.edat > 0 {
 		pos := fmt.Sprintf("%v",e.Position)
 		px := 0.0
