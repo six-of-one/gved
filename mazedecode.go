@@ -148,7 +148,8 @@ if opts.Verbose {
 	opts.edip = 0		// this is now file loaded, does not replace edat mode
 	if opts.edat > 0 {
 		fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
-		opts.edip = lod_maz(fil, ebuf, eflg, true)
+		opts.edip = lod_maz(fil, ebuf, true)
+		for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }
 		if opts.edip != 0 {
 			for y := 0; y < 11; y++ {
 //				maze.optbyts[y] = eflg[y]

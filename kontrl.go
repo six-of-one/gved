@@ -353,7 +353,8 @@ func menu_lodit(y bool) {
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
 	if y {
 		Ovwallpat = -1
-		lod_maz(fil, ebuf, eflg, true)
+		lod_maz(fil, ebuf, true)
+		for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }
 		remaze(opts.mnum)
 	}
 }

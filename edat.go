@@ -23,6 +23,7 @@ var sdfl [27][13]int
 var sdmax = 27
 var sdb int			// current sd selected, -1 when on ebuf
 var eflg [11]int
+var tflg [13]int	// transfer flags - because they dont pass as a parm?
 
 // deleted elements buffer
 
@@ -69,7 +70,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 
 // load stored maze data into ebuf / eflg or other data stores
 
-func lod_maz(fil string, mdat MazeData, fdat [11]int, ud bool) int {
+func lod_maz(fil string, mdat MazeData, ud bool) int {
 
 	data, err := ioutil.ReadFile(fil)
 	edp := 0
@@ -81,13 +82,15 @@ func lod_maz(fil string, mdat MazeData, fdat [11]int, ud bool) int {
 		l := "0 32 32"	// the default on scan failure will produce a solid block of wall 32 x 32
 		if scanr.Scan() { l = scanr.Text() }
 		fmt.Sscanf(l,"%d %d %d",&edp,&opts.DimX,&opts.DimY)
+		tflg[12] = opts.DimX
+		tflg[13] = opts.DimY
 // keeping the verbose scan track for now
 	if opts.Verbose { fmt.Printf("\nscanned:\ned %d, %02d x %02d\n", edp,opts.DimX,opts.DimY) }
 		l = " 00 00 00 00 00 00 00 0B 5A 5B 49"
 		if scanr.Scan() { l = scanr.Text() }
-		fmt.Sscanf(l," %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", &fdat[0], &fdat[1], &fdat[2], &fdat[3], &fdat[4], &fdat[5], &fdat[6], &fdat[7], &fdat[8], &fdat[9], &fdat[10])
+		fmt.Sscanf(l," %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", &tflg[0], &tflg[1], &tflg[2], &tflg[3], &tflg[4], &tflg[5], &tflg[6], &tflg[7], &tflg[8], &tflg[9], &tflg[10])
 	if opts.Verbose {
-			for y := 0; y < 11; y++ { fmt.Printf(" %02X", fdat[y]) }
+			for y := 0; y < 11; y++ { fmt.Printf(" %02X", tflg[y]) }
 			fmt.Printf("\n")
 		}
 
