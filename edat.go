@@ -19,7 +19,7 @@ var edmaze *Maze
 var ebuf MazeData
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var sd [27]MazeData	// save data buffers - save off maze copies
-var sdfl [27][11]int
+var sdfl [27][13]int
 var sdmax = 27
 var sdb int			// current sd selected, -1 when on ebuf
 var eflg [11]int
@@ -70,6 +70,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 // load stored maze data into ebuf / eflg or other data stores
 
 func lod_maz(fil string, mdat MazeData, fdat [11]int, ud bool) int {
+
 	data, err := ioutil.ReadFile(fil)
 	edp := 0
 	if err == nil {
@@ -84,9 +85,9 @@ func lod_maz(fil string, mdat MazeData, fdat [11]int, ud bool) int {
 	if opts.Verbose { fmt.Printf("\nscanned:\ned %d, %02d x %02d\n", edp,opts.DimX,opts.DimY) }
 		l = " 00 00 00 00 00 00 00 0B 5A 5B 49"
 		if scanr.Scan() { l = scanr.Text() }
-		fmt.Sscanf(l," %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", &eflg[0], &eflg[1], &eflg[2], &eflg[3], &eflg[4], &eflg[5], &eflg[6], &eflg[7], &eflg[8], &eflg[9], &eflg[10])
+		fmt.Sscanf(l," %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", &fdat[0], &fdat[1], &fdat[2], &fdat[3], &fdat[4], &fdat[5], &fdat[6], &fdat[7], &fdat[8], &fdat[9], &fdat[10])
 	if opts.Verbose {
-			for y := 0; y < 11; y++ { fmt.Printf(" %02X", eflg[y]) }
+			for y := 0; y < 11; y++ { fmt.Printf(" %02X", fdat[y]) }
 			fmt.Printf("\n")
 		}
 
