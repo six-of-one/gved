@@ -512,6 +512,8 @@ func newTappableIcon(res fyne.Resource) *tappableIcon {
 	return icon
 }
 
+var repl int		// edit key R is replace - r click caps element
+
 func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 	fmt.Printf("tapped - pos:%v - edk: %d",e.Position,edkey)
 	if opts.edat > 0 {
@@ -532,10 +534,14 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 			fmt.Printf(" st elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
 			delstak++
 			delbuf.elem[delstak] = -1 	// when undeleting this is the end
-			if del { ebuf[xy{mx, my}] = 0 }	// delete anything for now makes a floor
+			if del { ebuf[xy{mx, my}] = 0 } else {	// delete anything for now makes a floor
 			if edkey == 119 { ebuf[xy{mx, my}] = 2 }
 			if edkey == 98 { ebuf[xy{mx, my}] = 3 }
 			if edkey == 66 { ebuf[xy{mx, my}] = 4 }
+			if edkey == 66 { ebuf[xy{mx, my}] = 4 }
+			if edkey == 82 { ebuf[xy{mx, my}] = repl }
+			if edkey == 114 { repl = ebuf[xy{mx, my}] }
+			}
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}
 		ed_maze()
