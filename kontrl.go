@@ -178,7 +178,8 @@ func typedRune(r rune) {
 			cycl++
 			fmt.Printf("cyc %d \n",cycl)
 			if cycl > 64 { cycl = 0 }
-			statlin(cmdhin,string(cycl))
+			stu := fmt.Sprintf("cyc: %d",cycl)
+			statlin(cmdhin,stu)
 			edkey = 99						// pre set store cycl when cycling
 		case 68:		// D
 			if opts.edat != 0 {
