@@ -441,7 +441,11 @@ func st_menu() {
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
 	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-r", menu_res)
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
-		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nd: turn editor on, init maze store in .ed/\nD: turn editor off, saves edits to file\ndel, backspace - set floor *\nC: cycle edit item #, c: place item *\n#c enter number {1-64}c and place that item *\nr: select item at cursor, R: place item *\nb - horiz door, B - vert door, w - wall *\nk - key, t - transporter *\nedit keys lock when pressed, hit 'b' and place doors\n* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
+		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
+			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nd: turn editor on, init maze store in .ed/\n"+
+			"D: turn editor off, saves edits to file\ndel, backspace - set floor *\nC: cycle edit item #, c: place item *\n#c enter number {1-64}c and place that item *\n"+
+			"r: select item at cursor, R: place item *\nb - horiz door, B - vert door, w - wall *\nk - key, t - transporter *\n"+
+			"edit keys lock when pressed, hit 'b' and place doors\n* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
 	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin)
 
