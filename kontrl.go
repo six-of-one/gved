@@ -463,6 +463,7 @@ func aw_init() {
 // ed stuff, consider moving
 	delstak = 0
 	sdb = -1
+	cycl = 0
 
 // get default win size
 
@@ -512,7 +513,10 @@ func newTappableIcon(res fyne.Resource) *tappableIcon {
 	return icon
 }
 
-var repl int		// edit key R is replace - r click caps element
+var repl int		// edit key r is replace - R click caps element
+var cycl int		// cyclical set - C cycles, c sets
+
+// edkey 'locks' on when pressed
 
 func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 	fmt.Printf("tapped - pos:%v - edk: %d",e.Position,edkey)
@@ -535,12 +539,14 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 			delstak++
 			delbuf.elem[delstak] = -1 	// when undeleting this is the end
 			if del { ebuf[xy{mx, my}] = 0 } else {	// delete anything for now makes a floor
-			if edkey == 119 { ebuf[xy{mx, my}] = 2 }
-			if edkey == 98 { ebuf[xy{mx, my}] = 3 }
-			if edkey == 66 { ebuf[xy{mx, my}] = 4 }
-			if edkey == 66 { ebuf[xy{mx, my}] = 4 }
+			if edkey == 119 { ebuf[xy{mx, my}] = G1OBJ_WALL_REGULAR }
+			if edkey == 98 { ebuf[xy{mx, my}] = G1OBJ_DOOR_HORIZ }
+			if edkey == 66 { ebuf[xy{mx, my}] = G1OBJ_DOOR_VERT }
+			if edkey == 116 { ebuf[xy{mx, my}] = G1OBJ_TRANSPORTER }
 			if edkey == 82 { ebuf[xy{mx, my}] = repl }
+			if edkey == 99 { ebuf[xy{mx, my}] = cycl }
 			if edkey == 114 { repl = ebuf[xy{mx, my}] }
+			if edkey == 67 { cycl++; if cycl > 64 { cycl = 0 }; statlin("cmds: ? '\\' - enable cmds, Q, A #a, dD, L, S",string(cycl)) }
 			}
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}
