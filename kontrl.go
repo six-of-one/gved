@@ -532,7 +532,7 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 			delstak++
 			delbuf.elem[delstak] = -1 	// when undeleting this is the end
 			if del { ebuf[xy{mx, my}] = 0 }	// delete anything for now makes a floor
-			if edkey == 118 { ebuf[xy{mx, my}] = 2 }
+			if edkey == 119 { ebuf[xy{mx, my}] = 2 }
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}
 		ed_maze()
