@@ -445,7 +445,8 @@ func st_menu() {
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nd: turn editor on, init maze store in .ed/\n"+
 			"D: turn editor off, saves edits to file\ndel, backspace - set floor *\nC: cycle edit item #, c: place item *\n#c enter number {1-64}c and place that item *\n"+
 			"r: select item at cursor, R: place item *\nb - horiz door, B - vert door, w - wall *\nk - key, t - transporter *\n"+
-			"edit keys lock when pressed, hit 'b' and place doors\n* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
+			"edit keys lock when pressed, hit 'b' and place doors\nLogo/ Super key - \n"+
+			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
 	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin)
 
@@ -535,7 +536,7 @@ var cycl int		// cyclical set - C cycles, c sets
 // edkey 'locks' on when pressed
 
 func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
-	fmt.Printf("tapped - pos:%v - edk: %d",e.Position,edkey)
+	fmt.Printf("tapped - pos:%v - edk: %d sup: %t",e.Position,edkey,logo)
 	if opts.edat > 0 {
 		pos := fmt.Sprintf("%v",e.Position)
 		px := 0.0
@@ -561,7 +562,6 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 			if edkey == 98 { ebuf[xy{mx, my}] = G1OBJ_DOOR_HORIZ }
 			if edkey == 66 { ebuf[xy{mx, my}] = G1OBJ_DOOR_VERT }
 			if edkey == 116 { ebuf[xy{mx, my}] = G1OBJ_TRANSPORTER }
-			if edkey == 82 { ebuf[xy{mx, my}] = repl }
 			if edkey == 99 {
 				if anum > 0 && anum < 65 {
 					cycl = anum
@@ -570,6 +570,7 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 					ebuf[xy{mx, my}] = cycl
 				}
 			}
+			if edkey == 82 { ebuf[xy{mx, my}] = repl }
 			if edkey == 114 { repl = ebuf[xy{mx, my}] }
 			}
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
