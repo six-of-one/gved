@@ -184,7 +184,7 @@ func typedRune(r rune) {
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 				opts.edat = 0
 				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
-					statlin(cmdhin,"on")
+				statlin(cmdhin,"off")
 			}
 			case 67:		// C
 				cycl++
@@ -441,7 +441,7 @@ func st_menu() {
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
 	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-r", menu_res)
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
-		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
+		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nd: turn editor on, init maze store in .ed/\nD: turn editor off, saves edits to file\nC: cycle edit item #, c: place item (req \)\n#c enter number {1-64}c and place that item\nr: select item at cursor, R: place item\nedit keys lock when pressed, hit 'b' and place doors\ndel, backspace - set floor\nb - horiz door, B - vert door, w - wall\nk - key, t - transporter\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
 	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin)
 
