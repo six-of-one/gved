@@ -137,7 +137,7 @@ func typedRune(r rune) {
 			if key.Name == "Y" && ctrl  { redo() }
        })
     }
-//	fmt.Printf("r %v shift %v\n",r,shift)
+	fmt.Printf("r %v shift %v\n",r,shift)
 		edkey = int(r)
 
 		cmdhin := "cmds: ?\\, Q, dD, fFgG, wWeE, rRt, hm, pPT, sL, S, il, u, v, A #a"
@@ -145,7 +145,7 @@ func typedRune(r rune) {
 // keys that '\' doesnt block, no maze reloads
 		relodsub = false
 		switch r {
-		case 92:
+		case 92:		// \
 			cmdoff = !cmdoff
 // a,d only lower case not avail for edit hotkey
 			if cmdoff { cmdhin = "cmds: ? '\\' - enable cmds, Q, A #a, dD, L, S" }
