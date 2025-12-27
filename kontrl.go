@@ -189,11 +189,11 @@ func typedRune(r rune) {
 				} else {
 // with no anum, rotate curr ebuf thru s[1] - s[27], store eb in s[0]
 
-				case 67:
-					cycl++
-					if cycl > 64 { cycl = 0 }
-					statlin(cmdhin,string(cycl)) }
 				}
+		case 67:
+			cycl++
+			if cycl > 64 { cycl = 0 }
+			statlin(cmdhin,string(cycl)) }
 		default:
 			relodsub = false
 		}
