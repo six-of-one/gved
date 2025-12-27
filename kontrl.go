@@ -174,6 +174,11 @@ func typedRune(r rune) {
 				}
 				relod = true
 			}
+		case 67:		// C
+			cycl++
+			fmt.Printf("cyc %d \n",cycl)
+			if cycl > 64 { cycl = 0 }
+			statlin(cmdhin,string(cycl)) }
 		case 68:		// D
 			if opts.edat != 0 {
 				smod = "View mode: "
@@ -190,10 +195,6 @@ func typedRune(r rune) {
 // with no anum, rotate curr ebuf thru s[1] - s[27], store eb in s[0]
 
 				}
-		case 67:
-			cycl++
-			if cycl > 64 { cycl = 0 }
-			statlin(cmdhin,string(cycl)) }
 		default:
 			relodsub = false
 		}
