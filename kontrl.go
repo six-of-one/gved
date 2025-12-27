@@ -40,6 +40,7 @@ var shift bool
 var ctrl bool
 var del bool
 var logo bool		// other wise labeld "win" key
+var edkey int		// for passing edit keys to clicker
 
 func typedRune(r rune) {
 
@@ -137,7 +138,8 @@ func typedRune(r rune) {
        })
     }
 //	fmt.Printf("r %v shift %v\n",r,shift)
-
+		edkey = int(r)
+	
 		cmdhin := "cmds: ?\\, Q, dD, fFgG, wWeE, rRt, hm, pPT, sL, S, il, u, v, A #a"
 
 // keys that '\' doesnt block, no maze reloads
@@ -522,15 +524,16 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 		my := int(py / opts.dtec)
 
 		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,mx,my,ebuf[xy{mx, my}])
-		if del {
+		if del || cmdoff {
 			delbuf.mx[delstak] = mx
 			delbuf.my[delstak] = my
 			delbuf.elem[delstak] = ebuf[xy{mx, my}]
 			fmt.Printf(" st elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
 			delstak++
 			delbuf.elem[delstak] = -1 	// when undeleting this is the end
-			ebuf[xy{mx, my}] = 0	// delete anything for now makes a floor
-			fmt.Printf(" dl elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
+			if del { ebuf[xy{mx, my}] = 0 }	// delete anything for now makes a floor
+			if edkey == 118 { ebuf[xy{mx, my}] = 2 }
+			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}
 		ed_maze()
 	}
