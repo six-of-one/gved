@@ -178,14 +178,6 @@ func typedRune(r rune) {
 				}
 				relod = true
 			}
-		case 67:		// C
-			cycl++
-			fmt.Printf("cyc %d \n",cycl)
-			if cycl > 64 { cycl = 0 }
-			stu := fmt.Sprintf("cyc: %d",cycl)
-			statlin(cmdhin,stu)
-			edkey = 99						// pre set store cycl when cycling
-			relod = true
 		case 68:		// D
 			if opts.edat != 0 {
 				smod = "View mode: "
@@ -194,6 +186,14 @@ func typedRune(r rune) {
 				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
 					statlin(cmdhin,"on")
 			}
+			case 67:		// C
+				cycl++
+				fmt.Printf("cyc %d \n",cycl)
+				if cycl > 64 { cycl = 0 }
+				stu := fmt.Sprintf("cyc: %d",cycl)
+				statlin(cmdhin,stu)
+				edkey = 99						// pre set store cycl when cycling
+				relod = true
 		case 83:		// S
 // have anum !=0, save that buffer
 				if anum > 0 {
