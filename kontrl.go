@@ -523,6 +523,7 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 		mx := int(px / opts.dtec)
 		my := int(py / opts.dtec)
 
+// no access, keys: ? Q, A #a, dD, L, S
 		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,mx,my,ebuf[xy{mx, my}])
 		if del || cmdoff {
 			delbuf.mx[delstak] = mx
@@ -533,6 +534,8 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 			delbuf.elem[delstak] = -1 	// when undeleting this is the end
 			if del { ebuf[xy{mx, my}] = 0 }	// delete anything for now makes a floor
 			if edkey == 119 { ebuf[xy{mx, my}] = 2 }
+			if edkey == 98 { ebuf[xy{mx, my}] = 3 }
+			if edkey == 66 { ebuf[xy{mx, my}] = 4 }
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}
 		ed_maze()
