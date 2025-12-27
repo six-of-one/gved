@@ -146,11 +146,15 @@ func typedRune(r rune) {
 		relodsub = false
 		switch r {
 		case 92:		// \
+			ska := "cmd keys mode"
 			cmdoff = !cmdoff
 // a,d only lower case not avail for edit hotkey
-			if cmdoff { cmdhin = "cmds: ? '\\' - enable cmds, Q, A #a, dD, L, S" }
+			if cmdoff {
+				cmdhin = "cmds: ? '\\' - enable cmds, Q, #c, A #a, dD, L, S"
+				ska = "edit keys mode"
+			}
 			fmt.Printf("hint: %s\n", cmdhin)
-			statlin(cmdhin,"")
+			statlin(cmdhin,ska)
 			relod = true
 		case 63:		// ?
 			keyhints()
@@ -181,6 +185,7 @@ func typedRune(r rune) {
 			stu := fmt.Sprintf("cyc: %d",cycl)
 			statlin(cmdhin,stu)
 			edkey = 99						// pre set store cycl when cycling
+			relod = true
 		case 68:		// D
 			if opts.edat != 0 {
 				smod = "View mode: "
@@ -547,11 +552,20 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 			delbuf.elem[delstak] = -1 	// when undeleting this is the end
 			if del { ebuf[xy{mx, my}] = 0 } else {	// delete anything for now makes a floor
 			if edkey == 119 { ebuf[xy{mx, my}] = G1OBJ_WALL_REGULAR }
+			if edkey == 107 { ebuf[xy{mx, my}] = G1OBJ_KEY }
+// above are same as G2
 			if edkey == 98 { ebuf[xy{mx, my}] = G1OBJ_DOOR_HORIZ }
 			if edkey == 66 { ebuf[xy{mx, my}] = G1OBJ_DOOR_VERT }
 			if edkey == 116 { ebuf[xy{mx, my}] = G1OBJ_TRANSPORTER }
 			if edkey == 82 { ebuf[xy{mx, my}] = repl }
-			if edkey == 99 { ebuf[xy{mx, my}] = cycl }
+			if edkey == 99 {
+				if anum > 0 && anum < 65 {
+					cycl = anum
+					anum = 0
+				} else {
+					ebuf[xy{mx, my}] = cycl
+				}
+			}
 			if edkey == 114 { repl = ebuf[xy{mx, my}] }
 			}
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
