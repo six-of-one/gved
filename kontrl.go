@@ -136,7 +136,7 @@ func typedRune(r rune) {
 			if key.Name == "Y" && ctrl  { redo() }
        })
     }
-	fmt.Printf("r %v shift %v\n",r,shift)
+//	fmt.Printf("r %v shift %v\n",r,shift)
 
 		cmdhin := "cmds: ?\\, Q, dD, fFgG, wWeE, rRt, hm, pPT, sL, S, il, u, v, A #a"
 
