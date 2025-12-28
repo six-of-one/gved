@@ -545,15 +545,6 @@ type tappableIcon struct {
 	widget.Icon
 }
 
-// this ok, but cant see mouse btn down seperate from up
-func newTappableIcon(res fyne.Resource) *tappableIcon {
-	icon := &tappableIcon{}
-	icon.ExtendBaseWidget(icon)
-	icon.SetResource(res)
-
-	return icon
-}
-
 var repl int		// replace will be by ctrl-h in select area or entire maze, by match
 var cycl int		// cyclical set - C cycles, c sets
 
@@ -630,27 +621,10 @@ func upwin(simg *image.NRGBA) {
 
 // turns display into clickable edit area
 	btn := newHoldableButton()
-//	btn  := widget.NewButton("", func(){
-//		fmt.Println("Image clicked...")})
-	box := container.NewPadded(btn, bimg)
+	box := container.NewPadded(btn, bimg)		// key to seeing maze & having the click button will full mouse sense
 	w.SetContent(box)
 	fmt.Printf("btn sz %v\n",btn.Size())
 
-/*
-	tres,err := fyne.LoadResourceFromPath("output.png")
-	if err == nil {
-//		w.SetContent(newTappableIcon(tres))
-		btn := newHoldableButton(tres)
-//		btn.Resize(fyne.NewSize(float32(geow - 4), float32(geoh - 30)))
-		box := container.NewPadded(bimg, btn)
-		w.SetContent(box)
-		fmt.Printf("btn sz %v\n",btn.Size())
-} else {
-		fmt.Printf("Error on mouse clickable surface: %v",err)
-//		bimg := canvas.NewRasterFromImage(simg)
-		w.Canvas().SetContent(bimg)
-	}
-*/
 	uptitl(opts.mnum, "")
 }
 
