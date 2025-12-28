@@ -578,8 +578,8 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 					ebuf[xy{mx, my}] = cycl
 				}
 			}
-			if edkey == 182 { ebuf[xy{mx, my}] = repl }		// R
-			if edkey == 214 { repl = ebuf[xy{mx, my}] }		// r
+			if edkey == 182 { ebuf[xy{mx, my}] = repl }		//
+			if edkey == 214 { repl = ebuf[xy{mx, my}] }		// just placeholder until new repl done
 			}
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}}
