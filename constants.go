@@ -288,7 +288,7 @@ var g1edit_keymap = []int{
 	  0,   0,   0,   0,   0,   0,  59,   0,   0,   2,	//  unit     110 = n  o  p  q  r  s  t  u  v  w
 	  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,	//  unit     120 = x  y  z  {  |  }  ~
 	 													// * - not currently reassignable, they are edit mode ctrl keys
-														// ?, Q, #c C, A #a, dD, L, S, rR
+														// ?, Q, #c C, A #a, dD, L, S
 }
 
 var g2edit_keymap = []int{
@@ -308,7 +308,7 @@ var g2edit_keymap = []int{
 		  0,   0,   0,   0,   0,   0,  57,   0,   0,   2,	//  unit     110 = n  o  p  q  r  s  t  u  v  w
 		  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,	//  unit     120 = x  y  z  {  |  }  ~
 															 // * - not currently reassignable, they are edit mode ctrl keys
-															// ?, Q, #c C, A #a, dD, L, S, rR
+															// ?, Q, #c C, A #a, dD, L, S
 }
 
 // sanctuary converter values
