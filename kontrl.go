@@ -545,11 +545,11 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 		fmt.Printf(" clk: %.2f x %.2f ",px,py)
 		mx := int(px / opts.dtec)
 		my := int(py / opts.dtec)
-		var presskey int
+		var setcode int			// code to store given edit hotkey
 		if G1 {
-			presskey = g1edit_keymap[edkey]
+			setcode = g1edit_keymap[edkey]
 		} else {
-			presskey = g2edit_keymap[edkey]
+			setcode = g2edit_keymap[edkey]
 		}
 
 // no access, keys: ? Q, A #a, dD, L, S
@@ -562,14 +562,15 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 			delstak++
 			delbuf.elem[delstak] = -1 	// when undeleting this is the end
 			if del { ebuf[xy{mx, my}] = 0 } else {	// delete anything for now makes a floor
-			if edkey == 119 { ebuf[xy{mx, my}] = G1OBJ_WALL_REGULAR }
+			if setcode > 0 { ebuf[xy{mx, my}] = setcode }
+		/*	if edkey == 119 { ebuf[xy{mx, my}] = G1OBJ_WALL_REGULAR }
 			if edkey == 107 { ebuf[xy{mx, my}] = G1OBJ_KEY }
 // above are same as G2
 			if edkey == 98 { ebuf[xy{mx, my}] = G1OBJ_DOOR_HORIZ }
 			if edkey == 66 { ebuf[xy{mx, my}] = G1OBJ_DOOR_VERT }
-			if edkey == 116 { ebuf[xy{mx, my}] = G1OBJ_TRANSPORTER }
-			if edkey == 99 {
-				if anum > 0 && anum < 65 {					// C
+			if edkey == 116 { ebuf[xy{mx, my}] = G1OBJ_TRANSPORTER } */
+			if edkey == 99 {					// c
+				if anum > 0 && anum < 65 {
 					cycl = anum
 					anum = 0
 				} else {
