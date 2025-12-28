@@ -15,7 +15,7 @@ import (
     "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
-//	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/container"
 )
 
 // kontrol is for fyne window ops & input management
@@ -524,15 +524,11 @@ type holdableButton struct {
     widget.Button
 }
 func newHoldableButton(res fyne.Resource) *holdableButton {
-	geow := int(math.Max(560,opts.Geow))
-	geoh := int(math.Max(586,opts.Geoh))
 
     button := &holdableButton{}
     button.ExtendBaseWidget(button)
-	button.Resize(fyne.NewSize(float32(geow - 4), float32(geoh - 30)))
-//	button.Icon = res
-	button.Importance = widget.LowImportance
-	fmt.Printf("maxsz %v\n",button.Size())
+//	button.SetIcon(res)
+//	button.Importance = widget.LowImportance
 	return button
 }
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
@@ -626,23 +622,31 @@ func upwin(simg *image.NRGBA) {
 	opts.dtec = 16.0 * (float64(geow - 4) / 528.0)				// the size of a tile, odd window size may cause issues
 	fmt.Printf(" dtec: %f\n",opts.dtec)
 	bimg := canvas.NewRasterFromImage(simg)
-	w.Canvas().SetContent(bimg)
+//	w.Canvas().SetContent(bimg)
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
 
+	btn  := widget.NewButton("", func(){
+		fmt.Println("Image clicked...")})
+//		btn.Resize(fyne.NewSize(float32(geow - 4), float32(geoh - 30)))
+	box := container.NewPadded(btn, bimg)
+	w.SetContent(box)
+	fmt.Printf("btn sz %v\n",btn.Size())
 // turns display into clickable edit area
+/*
 	tres,err := fyne.LoadResourceFromPath("output.png")
 	if err == nil {
 //		w.SetContent(newTappableIcon(tres))
 		btn := newHoldableButton(tres)
-		w.SetContent(btn)
 //		btn.Resize(fyne.NewSize(float32(geow - 4), float32(geoh - 30)))
-//		btn.Icon = tres
+		box := container.NewPadded(bimg, btn)
+		w.SetContent(box)
+		fmt.Printf("btn sz %v\n",btn.Size())
 } else {
 		fmt.Printf("Error on mouse clickable surface: %v",err)
-		bimg := canvas.NewRasterFromImage(simg)
+//		bimg := canvas.NewRasterFromImage(simg)
 		w.Canvas().SetContent(bimg)
 	}
-
+*/
 	uptitl(opts.mnum, "")
 }
 
