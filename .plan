@@ -26,4 +26,4 @@ multiple save buffers to store vars maze edits, page thru all wiht 'S', store wi
 - have to be in edit mode to load
 - can always store & page
 - save to disk on set, load up on launch  for all sd files found
-- modify lod_maz to pass mazedata & bool for ubuf
+* modify lod_maz to pass mazedata & bool for ubuf
