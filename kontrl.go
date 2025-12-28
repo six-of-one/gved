@@ -523,15 +523,16 @@ func statlin(hs string,ss string) {
 type holdableButton struct {
     widget.Button
 }
-func newHoldableButton(label string) *holdableButton {
+func newHoldableButton(res fyne.Resource) *fyne.Container {
     button := &holdableButton{}
     button.ExtendBaseWidget(button)
+	button.SetResource(res)
 //    button.Text=label
-	rect := container.NewMax(canvas.NewRectangle(
-	color.NRGBA{R: 0, G: 0, B: 180, A: 255}), button)
+//	rect := container.NewMax(canvas.NewRectangle(
+//	color.NRGBA{R: 0, G: 0, B: 250, A: 0}), button)
 //	w.SetContent(rect)
-//	return button
-	return rect
+	return button
+//	return rect
 }
 func (h *holdableButton) MouseDown(*desktop.MouseEvent){
     fmt.Printf("down\n")
@@ -628,7 +629,10 @@ func upwin(simg *image.NRGBA) {
 
 // turns display into clickable edit area
 	tres,err := fyne.LoadResourceFromPath("output.png")
-	if err == nil { w.SetContent(newTappableIcon(tres)) } else {
+	if err == nil {
+		w.SetContent(newTappableIcon(tres))
+		w.SetContent(newHoldableButton(tres))
+	} else {
 		fmt.Printf("Error on mouse clickable surface: %v",err)
 	}
 
