@@ -481,13 +481,6 @@ func aw_init() {
 	delstak = 0
 	sdb = -1
 	cycl = 0
-	for i := 0; i <= 126; i++ {
-		if G1 {
-			keymap[i] = g1edit_keymap[i]
-		} else {
-			keymap[i] = g2edit_keymap[i]
-		}
-	}
 
 // get default win size
 
