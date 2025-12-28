@@ -554,6 +554,13 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 
 // no access, keys: ? Q, A #a, dD, L, S
 		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,mx,my,ebuf[xy{mx, my}])
+		if logo {		// superkey, do a reassign
+			if G1 {
+				g1edit_keymap[edkey] = ebuf[xy{mx, my}]
+			} else {
+				g2edit_keymap[edkey] = ebuf[xy{mx, my}]
+			}
+		} else {
 		if del || cmdoff {
 			delbuf.mx[delstak] = mx
 			delbuf.my[delstak] = my
@@ -575,7 +582,7 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 			if edkey == 214 { repl = ebuf[xy{mx, my}] }		// r
 			}
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
-		}
+		}}
 		ed_maze()
 	}
 }
