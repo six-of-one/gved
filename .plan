@@ -9,12 +9,12 @@ ctrl-h toggle clcik item replace modes
 rubber-band ops will also del
 
 rubber-band ops - click and drag will expand to set region of place / del / edit
-- some modes will auto operates
+- some modes will auto operate
 
 replace mode - either over entire maze, rubber band region, select y/n on each find, or click item replace
 
 some type of quick-key insert system, maybe shifted # or so
-- possibly assignable hot-keys
+* possibly assignable hot-keys
 
 a palette system similar to edit in sanctuary
 - and the edit options dialog
