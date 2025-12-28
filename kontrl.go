@@ -530,7 +530,7 @@ func newTappableIcon(res fyne.Resource) *tappableIcon {
 	return icon
 }
 
-var repl int		// edit key r is replace - R click caps element
+var repl int		// replace will be by ctrl-h in select area or entire maze, by match
 var cycl int		// cyclical set - C cycles, c sets
 
 // edkey 'locks' on when pressed
@@ -563,12 +563,6 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 			delbuf.elem[delstak] = -1 	// when undeleting this is the end
 			if del { ebuf[xy{mx, my}] = 0 } else {	// delete anything for now makes a floor
 			if setcode > 0 { ebuf[xy{mx, my}] = setcode }
-		/*	if edkey == 119 { ebuf[xy{mx, my}] = G1OBJ_WALL_REGULAR }
-			if edkey == 107 { ebuf[xy{mx, my}] = G1OBJ_KEY }
-// above are same as G2
-			if edkey == 98 { ebuf[xy{mx, my}] = G1OBJ_DOOR_HORIZ }
-			if edkey == 66 { ebuf[xy{mx, my}] = G1OBJ_DOOR_VERT }
-			if edkey == 116 { ebuf[xy{mx, my}] = G1OBJ_TRANSPORTER } */
 			if edkey == 99 {					// c
 				if anum > 0 && anum < 65 {
 					cycl = anum
@@ -577,8 +571,8 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 					ebuf[xy{mx, my}] = cycl
 				}
 			}
-			if edkey == 82 { ebuf[xy{mx, my}] = repl }		// R
-			if edkey == 114 { repl = ebuf[xy{mx, my}] }		// r
+			if edkey == 182 { ebuf[xy{mx, my}] = repl }		// R
+			if edkey == 214 { repl = ebuf[xy{mx, my}] }		// r
 			}
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}
