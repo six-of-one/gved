@@ -18,6 +18,8 @@ more complexity will be required for:
 var edmaze *Maze
 var ebuf MazeData
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
+var keymap [126]int
+
 var sd [27]MazeData	// save data buffers - save off maze copies
 var sdfl [27][14]int
 var sdmax = 27

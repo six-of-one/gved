@@ -149,7 +149,7 @@ func typedRune(r rune) {
 			ska := "cmd keys mode"
 			cmdoff = !cmdoff
 // a,d only lower case not avail for edit hotkey
-			if cmdoff && opts.edat < 1 {
+			if cmdoff && opts.edat > 0 {
 				cmdhin = "cmds: ? '\\' - enable cmds, Q, #c C, A #a, dD, L, S"
 				ska = "edit keys mode"
 			}
@@ -206,7 +206,7 @@ func typedRune(r rune) {
 			relodsub = false
 		}
 // view cmd keys - also on edit, but blockable
-	  if !cmdoff  || opts.edat < 1 {
+	  if !cmdoff || opts.edat < 1 {
 		relodsub = true
 		switch r {
 		case 'z':
@@ -445,7 +445,7 @@ func st_menu() {
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nd: turn editor on, init maze store in .ed/\n"+
 			"D: turn editor off, saves edits to file\ndel, backspace - set floor *\nC: cycle edit item #, c: place item *\n#c enter number {1-64}c and place that item *\n"+
 			"r: select item at cursor, R: place item *\nb - horiz door, B - vert door, w - wall *\nk - key, t - transporter *\n"+
-			"edit keys lock when pressed, hit 'b' and place doors\nLogo/ Super key - \n"+
+			"edit keys lock when pressed, hit 'b' and place doors\nLogo/ Super key - click to reassing current key\n"+
 			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
 	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin)
@@ -481,6 +481,13 @@ func aw_init() {
 	delstak = 0
 	sdb = -1
 	cycl = 0
+	for i := 0; i <= 126; i++ {
+		if G1 {
+			keymap[i] = g1edit_keymap[i]
+		} else {
+			keymap[i] = g2edit_keymap[i]
+		}
+	}
 
 // get default win size
 
