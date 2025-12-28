@@ -87,6 +87,8 @@ func domaze(arg string) {
 	Ovimg := genpfimage(maze, mazeNum)
 	upwin(Ovimg)
 
+	w.SetContent(newHoldableButton("Button"))
+
 // call handle window resize lock
 	go func() {
 		wizecon()

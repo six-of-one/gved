@@ -7,13 +7,15 @@ import (
 	"os"
 	"io/ioutil"
 	"time"
+	"image/color"
 
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
-//    "fyne.io/fyne/v2/canvas"
+    "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
+	"fyne.io/fyne/v2/container"
 )
 
 // kontrol is for fyne window ops & input management
@@ -518,6 +520,26 @@ func statlin(hs string,ss string) {
 
 // click area for edits
 
+type holdableButton struct {
+    widget.Button
+}
+func newHoldableButton(label string) *holdableButton {
+    button := &holdableButton{}
+    button.ExtendBaseWidget(button)
+//    button.Text=label
+	rect := container.NewMax(canvas.NewRectangle(
+	color.NRGBA{R: 0, G: 0, B: 180, A: 255}), button)
+//	w.SetContent(rect)
+//	return button
+	return rect
+}
+func (h *holdableButton) MouseDown(*desktop.MouseEvent){
+    fmt.Printf("down\n")
+}
+func (h *holdableButton) MouseUp(*desktop.MouseEvent){
+    fmt.Printf("up\n")
+}
+
 type tappableIcon struct {
 	widget.Icon
 }
@@ -536,7 +558,7 @@ var cycl int		// cyclical set - C cycles, c sets
 // edkey 'locks' on when pressed
 
 func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
-	fmt.Printf("tapped - pos:%v - edk: %d sup: %t",e.Position,edkey,logo)
+	fmt.Printf("tapped - pos:%v - edk: %d sup: %t\n",e.Position,edkey,logo)
 	if opts.edat > 0 {
 		pos := fmt.Sprintf("%v",e.Position)
 		px := 0.0
