@@ -7,15 +7,15 @@ import (
 	"os"
 	"io/ioutil"
 	"time"
-	"image/color"
+//		"image/color"
 
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
-    "fyne.io/fyne/v2/canvas"
+//    "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
-	"fyne.io/fyne/v2/container"
+//	"fyne.io/fyne/v2/container"
 )
 
 // kontrol is for fyne window ops & input management
@@ -523,22 +523,18 @@ func statlin(hs string,ss string) {
 type holdableButton struct {
     widget.Button
 }
-func newHoldableButton(res fyne.Resource) *fyne.Container {
+func newHoldableButton(res fyne.Resource) *holdableButton {
+
     button := &holdableButton{}
     button.ExtendBaseWidget(button)
-	button.SetResource(res)
-//    button.Text=label
-//	rect := container.NewMax(canvas.NewRectangle(
-//	color.NRGBA{R: 0, G: 0, B: 250, A: 0}), button)
-//	w.SetContent(rect)
+	button.Icon = res
 	return button
-//	return rect
 }
-func (h *holdableButton) MouseDown(*desktop.MouseEvent){
-    fmt.Printf("down\n")
+func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
+    fmt.Printf("down %v\n",mm)
 }
-func (h *holdableButton) MouseUp(*desktop.MouseEvent){
-    fmt.Printf("up\n")
+func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
+    fmt.Printf("up %v\n",mm)
 }
 
 type tappableIcon struct {
@@ -631,7 +627,9 @@ func upwin(simg *image.NRGBA) {
 	tres,err := fyne.LoadResourceFromPath("output.png")
 	if err == nil {
 		w.SetContent(newTappableIcon(tres))
-		w.SetContent(newHoldableButton(tres))
+		btn := newHoldableButton(tres)
+		btn.Resize(fyne.NewSize(float32(geow), float32(geoh)))
+		w.SetContent(btn)
 	} else {
 		fmt.Printf("Error on mouse clickable surface: %v",err)
 	}
