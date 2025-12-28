@@ -545,6 +545,12 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 		fmt.Printf(" clk: %.2f x %.2f ",px,py)
 		mx := int(px / opts.dtec)
 		my := int(py / opts.dtec)
+		var presskey int
+		if G1 {
+			presskey = g1edit_keymap[edkey]
+		} else {
+			presskey = g2edit_keymap[edkey]
+		}
 
 // no access, keys: ? Q, A #a, dD, L, S
 		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,mx,my,ebuf[xy{mx, my}])
@@ -563,15 +569,15 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 			if edkey == 66 { ebuf[xy{mx, my}] = G1OBJ_DOOR_VERT }
 			if edkey == 116 { ebuf[xy{mx, my}] = G1OBJ_TRANSPORTER }
 			if edkey == 99 {
-				if anum > 0 && anum < 65 {
+				if anum > 0 && anum < 65 {					// C
 					cycl = anum
 					anum = 0
 				} else {
 					ebuf[xy{mx, my}] = cycl
 				}
 			}
-			if edkey == 82 { ebuf[xy{mx, my}] = repl }
-			if edkey == 114 { repl = ebuf[xy{mx, my}] }
+			if edkey == 82 { ebuf[xy{mx, my}] = repl }		// R
+			if edkey == 114 { repl = ebuf[xy{mx, my}] }		// r
 			}
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}
