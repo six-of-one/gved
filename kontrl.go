@@ -149,8 +149,8 @@ func typedRune(r rune) {
 			ska := "cmd keys mode"
 			cmdoff = !cmdoff
 // a,d only lower case not avail for edit hotkey
-			if cmdoff {
-				cmdhin = "cmds: ? '\\' - enable cmds, Q, #c, A #a, dD, L, S"
+			if cmdoff && opts.edat < 1 {
+				cmdhin = "cmds: ? '\\' - enable cmds, Q, #c C, A #a, dD, L, S"
 				ska = "edit keys mode"
 			}
 			fmt.Printf("hint: %s\n", cmdhin)
@@ -206,7 +206,7 @@ func typedRune(r rune) {
 			relodsub = false
 		}
 // view cmd keys - also on edit, but blockable
-	  if !cmdoff {
+	  if !cmdoff  || opts.edat < 1 {
 		relodsub = true
 		switch r {
 		case 'z':
