@@ -529,8 +529,9 @@ func newHoldableButton(res fyne.Resource) *holdableButton {
 
     button := &holdableButton{}
     button.ExtendBaseWidget(button)
-	button.Icon = res
-	button.Resize(fyne.NewSize(float32(geow - 4), float32(geoh - 32)))
+	button.Resize(fyne.NewSize(float32(geow - 4), float32(geoh - 30)))
+//	button.Icon = res
+	button.Importance = widget.LowImportance
 	fmt.Printf("maxsz %v\n",button.Size())
 	return button
 }
@@ -624,17 +625,19 @@ func upwin(simg *image.NRGBA) {
 	}
 	opts.dtec = 16.0 * (float64(geow - 4) / 528.0)				// the size of a tile, odd window size may cause issues
 	fmt.Printf(" dtec: %f\n",opts.dtec)
+	bimg := canvas.NewRasterFromImage(simg)
+	w.Canvas().SetContent(bimg)
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
 
 // turns display into clickable edit area
 	tres,err := fyne.LoadResourceFromPath("output.png")
 	if err == nil {
-		w.SetContent(newTappableIcon(tres))
+//		w.SetContent(newTappableIcon(tres))
 		btn := newHoldableButton(tres)
-//		btn.Icon = tres
 		w.SetContent(btn)
-		btn.Resize(fyne.NewSize(float32(geow - 4), float32(geoh - 32)))
-	} else {
+//		btn.Resize(fyne.NewSize(float32(geow - 4), float32(geoh - 30)))
+//		btn.Icon = tres
+} else {
 		fmt.Printf("Error on mouse clickable surface: %v",err)
 		bimg := canvas.NewRasterFromImage(simg)
 		w.Canvas().SetContent(bimg)
