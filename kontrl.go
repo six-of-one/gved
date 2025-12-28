@@ -520,20 +520,23 @@ func statlin(hs string,ss string) {
 
 // click area for edits
 
+// button we can detect click and release areas for rubberband area & fills
+
 type holdableButton struct {
     widget.Button
 }
-func newHoldableButton(res fyne.Resource) *holdableButton {
+
+func newHoldableButton() *holdableButton {
 
     button := &holdableButton{}
     button.ExtendBaseWidget(button)
-//	button.SetIcon(res)
-//	button.Importance = widget.LowImportance
 	return button
 }
+
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
     fmt.Printf("down %v\n",mm)
 }
+
 func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
     fmt.Printf("up %v\n",mm)
 }
@@ -542,6 +545,7 @@ type tappableIcon struct {
 	widget.Icon
 }
 
+// this ok, but cant see mouse btn down seperate from up
 func newTappableIcon(res fyne.Resource) *tappableIcon {
 	icon := &tappableIcon{}
 	icon.ExtendBaseWidget(icon)
@@ -622,16 +626,16 @@ func upwin(simg *image.NRGBA) {
 	opts.dtec = 16.0 * (float64(geow - 4) / 528.0)				// the size of a tile, odd window size may cause issues
 	fmt.Printf(" dtec: %f\n",opts.dtec)
 	bimg := canvas.NewRasterFromImage(simg)
-//	w.Canvas().SetContent(bimg)
 	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
 
-	btn  := widget.NewButton("", func(){
-		fmt.Println("Image clicked...")})
-//		btn.Resize(fyne.NewSize(float32(geow - 4), float32(geoh - 30)))
+// turns display into clickable edit area
+	btn := newHoldableButton()
+//	btn  := widget.NewButton("", func(){
+//		fmt.Println("Image clicked...")})
 	box := container.NewPadded(btn, bimg)
 	w.SetContent(box)
 	fmt.Printf("btn sz %v\n",btn.Size())
-// turns display into clickable edit area
+
 /*
 	tres,err := fyne.LoadResourceFromPath("output.png")
 	if err == nil {
