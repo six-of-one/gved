@@ -12,7 +12,7 @@ import (
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
-//    "fyne.io/fyne/v2/canvas"
+    "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
 //	"fyne.io/fyne/v2/container"
@@ -524,10 +524,14 @@ type holdableButton struct {
     widget.Button
 }
 func newHoldableButton(res fyne.Resource) *holdableButton {
+	geow := int(math.Max(560,opts.Geow))
+	geoh := int(math.Max(586,opts.Geoh))
 
     button := &holdableButton{}
     button.ExtendBaseWidget(button)
 	button.Icon = res
+	button.Resize(fyne.NewSize(float32(geow - 4), float32(geoh - 32)))
+	fmt.Printf("maxsz %v\n",button.Size())
 	return button
 }
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
@@ -609,8 +613,7 @@ func (t *tappableIcon) Tapped(e *fyne.PointEvent) {
 
 func upwin(simg *image.NRGBA) {
 
-//	bimg := canvas.NewRasterFromImage(simg)
-//	w.Canvas().SetContent(bimg)                 ┌» un-borded maze is 528 x 528 for a 33 x 33 cell maze
+//								                 ┌» un-borded maze is 528 x 528 for a 33 x 33 cell maze
 	geow := int(math.Max(560,opts.Geow))	// 560 is min, maze doesnt seem to fit or shrink smaller
 	geoh := int(math.Max(586,opts.Geoh))	// 586 min
 	if opts.edat > 0 {
@@ -628,10 +631,13 @@ func upwin(simg *image.NRGBA) {
 	if err == nil {
 		w.SetContent(newTappableIcon(tres))
 		btn := newHoldableButton(tres)
-		btn.Resize(fyne.NewSize(float32(geow), float32(geoh)))
+//		btn.Icon = tres
 		w.SetContent(btn)
+		btn.Resize(fyne.NewSize(float32(geow - 4), float32(geoh - 32)))
 	} else {
 		fmt.Printf("Error on mouse clickable surface: %v",err)
+		bimg := canvas.NewRasterFromImage(simg)
+		w.Canvas().SetContent(bimg)
 	}
 
 	uptitl(opts.mnum, "")
