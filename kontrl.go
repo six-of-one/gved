@@ -560,7 +560,7 @@ var cycl int		// cyclical set - C cycles, c sets
 // edkey 'locks' on when pressed
 
 func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
-    fmt.Printf("up %v\n",mm)
+ //   fmt.Printf("up %v\n",mm)
 	if opts.edat > 0 {
 		ax := 0.0	// absolute x & y
 		ay := 0.0
@@ -582,7 +582,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 
 // no access, keys: ? Q, A #a, dD, L, S
 		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,mx,my,ebuf[xy{mx, my}])
-		if logo && cmdoff {		// superkey, do a reassign
+		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			if G1 {
 				g1edit_keymap[edkey] = ebuf[xy{mx, my}]
 			} else {
@@ -593,7 +593,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 			delbuf.mx[delstak] = mx
 			delbuf.my[delstak] = my
 			delbuf.elem[delstak] = ebuf[xy{mx, my}]
-			fmt.Printf(" st elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
+			fmt.Printf(" del elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
 			delstak++
 			delbuf.elem[delstak] = -1 	// when undeleting this is the end
 			if del { ebuf[xy{mx, my}] = 0 } else {	// delete anything for now makes a floor
