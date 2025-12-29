@@ -534,8 +534,8 @@ func newHoldableButton() *holdableButton {
 }
 
 // store x & y when mouse button goes down - to start rubberband area
-var sxmd int
-var symd int
+var sxmd float32
+var symd float32
 
 // &{{{387 545} {379 509.92188}} 4 0}
 
@@ -547,10 +547,8 @@ func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	mb := 0		// mb 1 = left, 2 = right, 4 = middle
 	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
 	pos := fmt.Sprintf("%v",mm)
-	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&ix,&iy,&mb,&mk)
-	sxmd = int(ix)	// store int of click pos
-	symd = int(iy)
-	fmt.Printf("%d down: %d x %d \n",mb,sxmd,symd)
+	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&sxmd,&symd,&mb,&mk)
+	fmt.Printf("%d down: %.2f x %.2f \n",mb,sxmd,symd)
 }
 
 
@@ -573,6 +571,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		fmt.Printf("%d up: %.2f x %.2f \n",mb,ix,iy)
 		ex := int(ix / opts.dtec)
 		ey := int(iy / opts.dtec)
+		sx := int(sxmd / opts.dtec)
+		sy := int(symd / opts.dtec)
 		var setcode int			// code to store given edit hotkey
 		if G1 {
 			setcode = g1edit_keymap[edkey]
@@ -590,9 +590,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 			}
 		} else {
 		if del || cmdoff {
-			sx := sxmd
 			if ex < sx { t := ex; ex = sx; sx = t }		// swap if end smaller than start
-			sy := symd
 			if ey < sy { t := ey; ey = sy; sy = t }
 		 for my := sx; my <= ex; my++ {
 		   for mx := sy; mx <= ey; mx++ {
