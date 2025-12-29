@@ -581,17 +581,17 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		}
 
 // no access, keys: ? Q, A #a, dD, L, S
-		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,bx,by,ebuf[xy{bx, by}])
+		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,ebuf[xy{ex, ey}])
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			if G1 {
-				g1edit_keymap[edkey] = ebuf[xy{bx, by}]
+				g1edit_keymap[edkey] = ebuf[xy{ex, ey}]
 			} else {
-				g2edit_keymap[edkey] = ebuf[xy{bx, by}]
+				g2edit_keymap[edkey] = ebuf[xy{ex, ey}]
 			}
 		} else {
 		if del || cmdoff {
 			sx := sxmd
-			if ex < sx { t := ex; bx = sx; sx = t }
+			if ex < sx { t := ex; ex = sx; sx = t }		// swap if end smaller than start
 			sy := symd
 			if ey < sy { t := ey; ey = sy; sy = t }
 		 for my := sx; my <= ex; my++ {
@@ -612,7 +612,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 			if edkey == 214 { repl = ebuf[xy{mx, my}] }		// just placeholder until new repl done
 			}
 		  }}
-			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
+//			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}}
 		ed_maze()
 	}
