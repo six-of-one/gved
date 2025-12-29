@@ -188,10 +188,21 @@ func typedRune(r rune) {
 				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
 				statlin(cmdhin,"off")
 			}
+		case 'c':
+			if anum > 0 && anum < 65 {
+				cycl = anum - 1
+				anum = 0
+			} else { cycl-- }
+			fallthrough
 			case 67:		// C
 				cycl++
 				fmt.Printf("cyc %d \n",cycl)
 				if cycl > 64 { cycl = 0 }
+				if G1 {
+					g1edit_keymap[cycloc] = cycl
+				} else {
+					g2edit_keymap[cycloc] = cycl
+				}
 				stu := fmt.Sprintf("cyc: %d",cycl)
 				statlin(cmdhin,stu)
 				edkey = 99						// pre set store cycl when cycling
@@ -551,7 +562,8 @@ func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 
 
 var repl int		// replace will be by ctrl-h in select area or entire maze, by match
-var cycl int		// cyclical set - C cycles, c sets
+var cycl int		// cyclical set - C cycles, c sets - using c loc in keymap
+var cycloc = 99
 
 // edkey 'locks' on when pressed
 
@@ -595,15 +607,6 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 // looped now
 			if del { undo_buf(mx, my); ebuf[xy{mx, my}] = 0 } else {	// delete anything for now makes a floor
 			if setcode > 0 { undo_buf(mx, my); ebuf[xy{mx, my}] = setcode }
-			if edkey == 99 {					// c
-				if anum > 0 && anum < 65 {
-					cycl = anum
-					anum = 0
-				} else {
-					undo_buf(mx, my);
-					ebuf[xy{mx, my}] = cycl
-				}
-			}
 			if edkey == 182 { ebuf[xy{mx, my}] = repl }		//
 			if edkey == 214 { repl = ebuf[xy{mx, my}] }		// just placeholder until new repl done
 			}
