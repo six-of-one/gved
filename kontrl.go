@@ -534,16 +534,14 @@ func newHoldableButton() *holdableButton {
 }
 
 // store x & y when mouse button goes down - to start rubberband area
-var sxmd float32
-var symd float32
+var sxmd float64
+var symd float64
 
 // &{{{387 545} {379 509.92188}} 4 0}
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	ax := 0.0	// absolute x & y
 	ay := 0.0
-	ix := 0.0	// rel x & y interm float32
-	iy := 0.0
 	mb := 0		// mb 1 = left, 2 = right, 4 = middle
 	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
 	pos := fmt.Sprintf("%v",mm)
@@ -592,8 +590,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if del || cmdoff {
 			if ex < sx { t := ex; ex = sx; sx = t }		// swap if end smaller than start
 			if ey < sy { t := ey; ey = sy; sy = t }
-		 for my := sx; my <= ex; my++ {
-		   for mx := sy; mx <= ey; mx++ {
+		 for my := sy; my <= ey; my++ {
+		   for mx := sx; mx <= ex; mx++ {
 // looped now
 			if del { undo_buf(mx, my); ebuf[xy{mx, my}] = 0 } else {	// delete anything for now makes a floor
 			if setcode > 0 { undo_buf(mx, my); ebuf[xy{mx, my}] = setcode }
