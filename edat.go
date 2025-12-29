@@ -29,9 +29,9 @@ var tflg [14]int	// transfer flags - because they dont pass as a parm?
 // deleted elements buffer
 
 type Deletebuf struct {
-	mx     [1000]int
-	my     [1000]int
-	elem   [1000]int
+	mx     [5000]int
+	my     [5000]int
+	elem   [5001]int
 }
 
 var delbuf = &Deletebuf{}
@@ -194,6 +194,15 @@ func ed_maze() {
 // replaceing or deleting - store for ctrl-z / ctrl-y
 
 func undo_buf(sx int, sy int) {
+	maxdel := 5000
+	if delstak >= maxdel {		//	we hit max, shift back 1, losing the start of undo
+		for i := 0; i <=maxdel; i++ {
+			delbuf.mx[i] = delbuf.mx[i+1]
+			delbuf.my[i] = delbuf.my[i+1]
+			delbuf.elem[i] = delbuf.elem[i+1]
+		}
+		delstak--
+	}
 	delbuf.mx[delstak] = sx
 	delbuf.my[delstak] = sy
 	delbuf.elem[delstak] = ebuf[xy{sx, sy}]
