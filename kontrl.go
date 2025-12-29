@@ -571,8 +571,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		pos := fmt.Sprintf("%v",mm)
 		fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&ix,&iy,&mb,&mk)
 		fmt.Printf("%d up: %.2f x %.2f \n",mb,ix,iy)
-		mx := int(ix / opts.dtec)
-		my := int(iy / opts.dtec)
+		ex := int(ix / opts.dtec)
+		ey := int(iy / opts.dtec)
 		var setcode int			// code to store given edit hotkey
 		if G1 {
 			setcode = g1edit_keymap[edkey]
@@ -581,34 +581,37 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		}
 
 // no access, keys: ? Q, A #a, dD, L, S
-		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,mx,my,ebuf[xy{mx, my}])
+		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,bx,by,ebuf[xy{bx, by}])
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			if G1 {
-				g1edit_keymap[edkey] = ebuf[xy{mx, my}]
+				g1edit_keymap[edkey] = ebuf[xy{bx, by}]
 			} else {
-				g2edit_keymap[edkey] = ebuf[xy{mx, my}]
+				g2edit_keymap[edkey] = ebuf[xy{bx, by}]
 			}
 		} else {
 		if del || cmdoff {
-			delbuf.mx[delstak] = mx
-			delbuf.my[delstak] = my
-			delbuf.elem[delstak] = ebuf[xy{mx, my}]
-			fmt.Printf(" del elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
-			delstak++
-			delbuf.elem[delstak] = -1 	// when undeleting this is the end
-			if del { ebuf[xy{mx, my}] = 0 } else {	// delete anything for now makes a floor
-			if setcode > 0 { ebuf[xy{mx, my}] = setcode }
+			sx := sxmd
+			if ex < sx { t := ex; bx = sx; sx = t }
+			sy := symd
+			if ey < sy { t := ey; ey = sy; sy = t }
+		 for my := sx; my <= ex; my++ {
+		   for mx := sy; mx <= ey; mx++ {
+// looped now
+			if del { undo_buf(mx, my); ebuf[xy{mx, my}] = 0 } else {	// delete anything for now makes a floor
+			if setcode > 0 { undo_buf(mx, my); ebuf[xy{mx, my}] = setcode }
 			if edkey == 99 {					// c
 				if anum > 0 && anum < 65 {
 					cycl = anum
 					anum = 0
 				} else {
+					undo_buf(mx, my);
 					ebuf[xy{mx, my}] = cycl
 				}
 			}
 			if edkey == 182 { ebuf[xy{mx, my}] = repl }		//
 			if edkey == 214 { repl = ebuf[xy{mx, my}] }		// just placeholder until new repl done
 			}
+		  }}
 			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}}
 		ed_maze()

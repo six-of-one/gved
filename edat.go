@@ -191,6 +191,17 @@ func ed_maze() {
 	upwin(Ovimg)
 }
 
+// replaceing or deleting - store for ctrl-z / ctrl-y
+
+func undo_buf(sx int, sy int) {
+	delbuf.mx[delstak] = sx
+	delbuf.my[delstak] = sy
+	delbuf.elem[delstak] = ebuf[xy{sx, sy}]
+	fmt.Printf(" del elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
+	delstak++
+	delbuf.elem[delstak] = -1 	// when undeleting this is the end
+}
+
 // reload maze while editing & update window - generates output.png
 
 func remaze(mazn int) {
