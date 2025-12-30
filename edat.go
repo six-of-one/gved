@@ -214,6 +214,7 @@ func undo_buf(sx int, sy int) {
 
 func remaze(mazn int) {
 fmt.Printf("in remaze\n")
+	sdb = -1
 	edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 	mazeloop(edmaze)
 	Ovimg := genpfimage(edmaze, mazn)
