@@ -167,13 +167,15 @@ func typedRune(r rune) {
 		case 76:		// L
 // with anum != 0, this becomes load s[1] buffer into ebuf, if in edit
 			if opts.edat > 0 && anum > 0 && anum < 100000 {
+fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				if sdb == -1 {
 					fil := fmt.Sprintf(".ed/ebuf.ed")				// save ebuf for relod
 					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
 				}
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
-				cnd = lod_maz(fil, ebuf, false)
-				if cnd >= 0 { sdb = anum; ed_maze() }
+				cnd := lod_maz(fil, ebuf, false)
+				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze() }
+				anum = 0
 			} else { opts.Nogtop = !opts.Nogtop }
 		case 'd':
 			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
@@ -218,6 +220,7 @@ func typedRune(r rune) {
 				if anum > 0 && anum < 100000 {
 					fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
+					anum = 0
 				} else {
 // with no anum, rotate curr ebuf thru s[1] - s[27], store eb in s[0]
 					cnd := -1
@@ -229,12 +232,13 @@ func typedRune(r rune) {
 					for cnd < 0 && ldb < 100000 {
 						fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
 						cnd = lod_maz(fil, ebuf, false)
-						if cnd <0 { ldb++ } else { sdb = ldb; ed_maze() }
+						if cnd <0 { ldb++ } else { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze() }
 					}
 					if cnd < 0 {
 						sdb = -1
 						fil := fmt.Sprintf(".ed/ebuf.ed")				// cycle back out
-						lod_maz(fil, ebuf, true)
+						cnd = lod_maz(fil, ebuf, true)
+						if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
 					}
 				}
 		default:
@@ -409,9 +413,9 @@ func menu_lodit(y bool) {
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
 	if y {
 		Ovwallpat = -1
-		lod_maz(fil, ebuf, true)
+		cnd := lod_maz(fil, ebuf, true)
 		sdb = -1
-		for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }
+		if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
 		remaze(opts.mnum)
 	}
 }
