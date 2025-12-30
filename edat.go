@@ -19,9 +19,7 @@ var edmaze *Maze
 var ebuf MazeData
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 
-var sd [27]MazeData	// save data buffers - save off maze copies
-var sdfl [27][14]int
-var sdmax = 27
+var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf
 var eflg [11]int
 var tflg [14]int	// transfer flags - because they dont pass as a parm?

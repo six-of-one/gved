@@ -166,7 +166,7 @@ func typedRune(r rune) {
 			}
 		case 76:		// L
 // with anum != 0, this becomes load s[1] buffer into ebuf, if in edit
-			if opts.edat > 0 && anum > 0 && anum < 100000 {
+			if opts.edat > 0 && anum > 0 && anum < sdmax {
 fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				if sdb == -1 {
 					fil := fmt.Sprintf(".ed/ebuf.ed")				// save ebuf for relod
@@ -217,28 +217,31 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				relod = true
 		case 83:		// S
 // have anum !=0, save that buffer
-				if anum > 0 && anum < 100000 {
+				if anum > 0 && anum < sdmax && opts.edat > 0 {
 					fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
 					anum = 0
 				} else {
 // with no anum, rotate curr ebuf thru s[1] - s[27], store eb in s[0]
 					cnd := -1
-					ldb := 0
+					ldb := sdb
 					if sdb == -1 {
 						fil := fmt.Sprintf(".ed/ebuf.ed")				// save ebuf for relod
 						sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
 					}
-					for cnd < 0 && ldb < 100000 {
+					for cnd < 0 && ldb < sdmax {
+						ldb++
 						fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
 						cnd = lod_maz(fil, ebuf, false)
-						if cnd <0 { ldb++ } else { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze() }
+						if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze() }
 					}
 					if cnd < 0 {
 						sdb = -1
-						fil := fmt.Sprintf(".ed/ebuf.ed")				// cycle back out
-						cnd = lod_maz(fil, ebuf, true)
+						if opts.edat > 0 {
+							fil := fmt.Sprintf(".ed/ebuf.ed")			// cycle back out
+							cnd = lod_maz(fil, ebuf, true)
 						if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
+						} else { remaze(opts.mnum) }
 					}
 				}
 		default:
@@ -528,6 +531,7 @@ func aw_init() {
 	delstak = 0
 	sdb = -1
 	cycl = 0
+	edmaze = mazeDecompress(slapsticReadMaze(1), false)
 
 // get default win size
 
