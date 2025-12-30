@@ -115,6 +115,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		fmt.Print(err)
 		fmt.Printf("\n")
 		fmt.Printf("Note: 'no such file' if maze is not being edited and the maze is viewed when editor is on\n")
+		edp = -1
 	}
 	return edp
 }

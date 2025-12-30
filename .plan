@@ -28,7 +28,7 @@ a basic "playable" mode to test mazes
 
 multiple save buffers to store vars maze edits, page thru all wiht 'S', store with #'S', load with #'L'
 - have to be in edit mode to load
-- can always store & page
+- can always store & page -- g1 & g2 have sep buffers
 - save to disk on set, load up on launch  for all sd files found
 * modify lod_maz to pass mazedata & bool for ubuf
 - dirty flag so quit, z, x know unsaved changes are there and give warning dialog
