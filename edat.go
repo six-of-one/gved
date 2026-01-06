@@ -219,6 +219,7 @@ fmt.Printf("in remaze\n")
 		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(edmaze)
 	}
+	opts.dntr = false
 	Ovimg := genpfimage(edmaze, mazn)
 	upwin(Ovimg)
 }
