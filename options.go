@@ -12,6 +12,7 @@ var opts struct {
 	edat	int    `default:"0" description:"maze: edit active"`
 	dtec float64   `default:"16.0" description:"edit: tile size detector for click"`
 	edip	int    `default:"0" description:"maze: last load from file"`
+	dntr	bool   `description:"dont reload maze ebuf on a refresh"`
 // cli options to mirror & rotate mazes
 	MV		bool   `long:"mv" description:"maze: mirror vertical"`
 	MH		bool   `long:"mh" description:"maze: mirror horizontal ( --mv --mh will rotate 180 )"`

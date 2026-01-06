@@ -202,7 +202,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				anum = 0
 			} else { cycl-- }
 			fallthrough
-			case 67:		// C
+		case 67:		// C
 				cycl++
 				fmt.Printf("cyc %d \n",cycl)
 				if cycl > 64 { cycl = 0 }
@@ -214,7 +214,8 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				stu := fmt.Sprintf("cyc: %d",cycl)
 				statlin(cmdhin,stu)
 				edkey = 99						// pre set store cycl when cycling
-				relod = true
+				relod = true					// needed to refresh indicate text
+				opts.dntr = true				// ... but dont kill the ebuf
 		case 83:		// S
 // have anum !=0, save that buffer
 				if anum > 0 && anum < sdmax && opts.edat > 0 {
