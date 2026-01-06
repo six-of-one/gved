@@ -13,6 +13,8 @@ drag mouse while key held - do line of setcode
 rubber-band ops - click and drag will expand to set region of place / del / edit
 - some modes will auto operate
 - idea: show rubber band with visible indicator smh
+- ctrl-click should only outline
+- cut & paste rubber-band contents
 
 replace mode - either over entire maze, rubber band region, select y/n on each find, or click item replace
 
@@ -30,12 +32,12 @@ multiple save buffers to store vars maze edits, page thru all wiht 'S', store wi
 - have to be in edit mode to load
 - can always store & page -- g1 & g2 have sep buffers
 - save to disk on set, load up on launch  for all sd files found
+- use a certain buffer (1 ?) to store the main edit pallete for middl-clicks
 * modify lod_maz to pass mazedata & bool for ubuf
 - dirty flag so quit, z, x know unsaved changes are there and give warning dialog
 
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 
 issues needing fixed
-- #c,c,C (incr cycl clears edits)
 - ctrl-z on area edits only works one at a time
   (hint: shft ctrl-z will one at, norm to do all)
