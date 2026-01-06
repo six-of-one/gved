@@ -4,7 +4,6 @@ G¹G²ved
 - visual editor for gauntlet, gauntlet 2 mazes
     (and eventually sanctuary...)
 - gauntlet roms required: G¹ in ./ROMs-g1 and G² in ./ROMs (MUST be unzipped! see slapstic.go for details)
-- fyne window module - had issues with gotilengine.TLN_DrawFrame(0) only wanting to draw 2 or 3 mazes
 
 command line suggestions:
 * gved -i maze115
@@ -29,13 +28,14 @@ interactive mode:
 * 'w' 'e' 'f' 'g' - can all be proceded by #, just like #a, and shifted W,E,F,G reverse ops
 * 'd' 'D' - turn edit mode on/ off
 * writes output.png as each maze is viewed
+- a special edit mode ('\' toggles) now exists with its own hint set on the edit menu
 
 Notes
 =====
 - some features are for research only...
 - address override was used to verify gauntlet maze reads vs. link table at 0x38032
 - rotate 90° is only used in sanctuary, NOT in gauntlet or g2
-- the vars visual ops are view ONLY and do not yet allow editing
+- eventually want to add a 'playtest feature', which requires sprites coded in
 
 Research
 ========
@@ -44,7 +44,7 @@ Research
 
 Issues
 ======
-* editing is very rudimentary
+* editing is progressing, but is still clunky
 * G¹ floor and wall colors are still being rendered with G² color palette
 
 Attributions
