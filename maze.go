@@ -16,14 +16,23 @@ func mazeMetaPrint(maze *Maze) {
 	fmt.Printf("  Wall pattern: %02d, Wall color: %02d     Floor pattern: %02d, Floor color: %02d\n",
 		maze.wallpattern, maze.wallcolor, maze.floorpattern, maze.floorcolor)
 	fmt.Printf("  Flags: ")
+	g1flg := false
+	g1mask := 0xB3			// see constants.go, g1 only has these flags type elements, yet I dont think they are controlled by flags
 	for k, v := range mazeFlagStrings {
 		if (maze.flags & k) != 0 {
-			fmt.Printf("%s ", v)
+			if G1 {
+				if k & g1mask != 0 { fmt.Printf("%s ", v); g1flg = true }
+			} else {
+				fmt.Printf("%s ", v)
+			}
 		}
 	}
 	if G2 {
 		fmt.Printf("\n  Random food adds: %d\n", (maze.flags&LFLAG3_RANDOMFOOD_MASK)>>8)
 		fmt.Printf("  Secret trick: %2d - %s\n", maze.secret, mazeSecretStrings[maze.secret])
+	} else {
+		if g1flg { fmt.Printf("\n  ╚══> while gauntlet has these elements, these flags probably do not operate") }
+		fmt.Printf("\n")
 	}
 }
 
@@ -92,7 +101,7 @@ func domaze(arg string) {
 		wizecon()
 	}()
 
-// only run Show once, here - a second time relocates the win to 0,0
+// only run Show once, here - show() a second time relocates the win to 0,0
 // yes... even though fyne can NOT reposition windows, must be a bug
 	w.ShowAndRun()
 
