@@ -76,6 +76,8 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 	edp := 0
 	if err == nil {
 		esc := 0
+// setup for rejecting the load because of dirty buffer flag
+		for y := 0; y < 11; y++ { tflg[y] = eflg[y] }
 		dscan := fmt.Sprintf("%s",data)
 // may not be the optimal way, but it works for now
 	    scanr := bufio.NewScanner(strings.NewReader(dscan))
