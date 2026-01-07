@@ -215,6 +215,14 @@ func undo_buf(sx int, sy int) {
 	delbuf.elem[delstak] = -1 	// when undeleting this is the end
 }
 
+// same as mazeloop, but called by Rr, h, m while cmd keys active in edit mode
+
+func rotmirbuf(mdat MazeData, op int) {
+
+	fmt.Printf("in rotmirbuf\n")
+
+}
+
 // reload maze while editing & update window - generates output.png
 
 func remaze(mazn int) {

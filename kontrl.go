@@ -331,26 +331,25 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			opts.MRP = true
 			opts.MRM = false
 			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
-			opts.dntr = true
+//			opts.dntr = true
 		case 82:		// R
 			opts.MRP = false
 			opts.MRM = true
 			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
-			relod = true
-			opts.dntr = true
+//			opts.dntr = true
 		case 't':
 			opts.MRP = false
 			opts.MRM = false
 			spau = fmt.Sprintf("cmd: t - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
-			opts.dntr = true
+//			opts.dntr = true
 		case 'm':
 			opts.MV = !opts.MV
 			spau = fmt.Sprintf("cmd: m - mv: %t\n",opts.MV)
-			opts.dntr = true
+//			opts.dntr = true
 		case 'h':
 			opts.MH = !opts.MH
 			spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)
-			opts.dntr = true
+//			opts.dntr = true
 		case 'i':
 			opts.Gtp = 1
 			opts.R14 = false
@@ -358,6 +357,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			G2 = false
 			maxmaze = 126
 			spau = "G¹ "
+			needsav()
 		case 'l':
 			opts.Gtp = 1
 			opts.R14 = !opts.R14
@@ -365,6 +365,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			G2 = false
 			maxmaze = 126
 			spau = "G¹ "
+			needsav()
 		case 'p':
 			nothing = nothing ^ NOFLOOR
 			spau = fmt.Sprintf("no floors: %d\n",nothing & NOFLOOR)
@@ -388,6 +389,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			G2 = true
 			maxmaze = 116
 			spau = "G² mazes"
+			needsav()
 		case 'v':
 			lx := 116
 			if G1 { lx = 126 }
