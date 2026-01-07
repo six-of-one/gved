@@ -281,67 +281,76 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			if Ovwallpat > 7 { Ovwallpat = 0 }
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
 			opts.bufdrt = true
+			opts.dntr = true
 		case 87:		// W
 			Ovwallpat -= 1
 			if Ovwallpat < 0 { Ovwallpat = 7 }
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
 			opts.bufdrt = true
-			relod = true
+			opts.dntr = true
 		case 'e':
 			Ovwallcol += 1
 			if anum > 0 { Ovwallcol = anum - 1; anum = 0 }
 			if Ovwallcol > 16 { Ovwallcol = 0 }
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
 			opts.bufdrt = true
+			opts.dntr = true
 		case 69:		// E
 			Ovwallcol -= 1
 			if Ovwallcol < 0 { Ovwallcol = 16 }
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
 			opts.bufdrt = true
-			relod = true
+			opts.dntr = true
 		case 'f':
 			Ovflorpat += 1
 			if anum > 0 { Ovflorpat = anum - 1; anum = 0 }
 			if Ovflorpat > 8 { Ovflorpat = 0 }
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
 			opts.bufdrt = true
+			opts.dntr = true
 		case 70:		// F
 			Ovflorpat -= 1
 			if Ovflorpat < 0 { Ovflorpat = 8 }
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
 			opts.bufdrt = true
-			relod = true
+			opts.dntr = true
 		case 'g':
 			Ovflorcol += 1
 			if anum > 0 { Ovflorcol = anum - 1; anum = 0 }
 			if Ovflorcol > 15 { Ovflorcol = 0 }
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
 			opts.bufdrt = true
+			opts.dntr = true
 		case 71:		// G
 			Ovflorcol -= 1
 			if Ovflorcol < 0 { Ovflorcol = 15 }
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
 			opts.bufdrt = true
-			relod = true
+			opts.dntr = true
 		case 'r':
 			opts.MRP = true
 			opts.MRM = false
 			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
+			opts.dntr = true
 		case 82:		// R
 			opts.MRP = false
 			opts.MRM = true
 			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
 			relod = true
+			opts.dntr = true
 		case 't':
 			opts.MRP = false
 			opts.MRM = false
 			spau = fmt.Sprintf("cmd: t - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
+			opts.dntr = true
 		case 'm':
 			opts.MV = !opts.MV
 			spau = fmt.Sprintf("cmd: m - mv: %t\n",opts.MV)
+			opts.dntr = true
 		case 'h':
 			opts.MH = !opts.MH
 			spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)
+			opts.dntr = true
 		case 'i':
 			opts.Gtp = 1
 			opts.R14 = false
@@ -359,16 +368,20 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'p':
 			nothing = nothing ^ NOFLOOR
 			spau = fmt.Sprintf("no floors: %d\n",nothing & NOFLOOR)
-		case 80:
+			opts.dntr = true
+		case 80:		// P
 			nothing = nothing ^ NOWALL
 			spau = fmt.Sprintf("no walls: %d\n",nothing & NOWALL)
-		case 84:
+			opts.dntr = true
+		case 84:		// T
 			nt := (nothing & 511) + 1
 			nothing = (nothing & 1536) + (nt & 511)
 			if anum > 0 { nothing = (nothing & 1536) + anum; anum = 0 }		// set lower 9 bits of no-thing mask [ but not walls or floors ]
 			spau = fmt.Sprintf("no things: %d\n",nothing & 511)				// display no things mask
+			opts.dntr = true
 		case 's':
 			opts.SP = !opts.SP
+			opts.dntr = true
 		case 'u':
 			opts.Gtp = 2
 			G1 = false
@@ -386,6 +399,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			}
 			fmt.Printf("\n")
 			dialog.ShowInformation("G¹G²ved", "Gauntlet / Gauntlet 2 valid maze address list\nplease check terminal where gved command was issued\n\ngithub.com/six-of-one/", w)
+			opts.dntr = true
 		default:
 			relodsub = false
 		}
