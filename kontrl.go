@@ -72,6 +72,7 @@ func typedRune(r rune) {
 // clear these when load new maze
 			Ovwallpat = -1
 			relod = true
+			needsav()
 		}
 	}
 
@@ -171,7 +172,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				if sdb == -1 {
 					fil := fmt.Sprintf(".ed/ebuf.ed")				// save ebuf for relod
 					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
-				}
+				} else { needsav() }
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 				cnd := lod_maz(fil, ebuf, false)
 				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze() }
@@ -253,6 +254,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		relodsub = true
 		switch r {
 		case 'z':
+			needsav()
 			Ovwallpat = -1
 // allow step parse through valid address
 			if Aov > 0 {
@@ -263,6 +265,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			}
 			if opts.mnum < 0 { opts.mnum = maxmaze }
 		case 'x':
+			needsav()
 			Ovwallpat = -1
 			if Aov > 0 {
 				nav := addrver(Aov, 1)
