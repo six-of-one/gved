@@ -414,10 +414,18 @@ func menu_savit(y bool) {
 	}
 }
 
+func needsav() {
+	if opts.bufdrt {
+		dia := fmt.Sprintf("Save buffer for maze %d in .ed/g%dmaze%03d.ed ?",opts.mnum+1,opts.Gtp,opts.mnum+1)
+		if sdb >= 0 { dia = fmt.Sprintf("Save store buffer .ed/sd%05d_g%d.ed",sdb,opts.Gtp) }
+		dialog.ShowConfirm("Saving",dia, menu_savit, w)
+	}
+}
+
 func menu_sav() {
 	if opts.edat == 1 {
 		dia := fmt.Sprintf("Save buffer for maze %d in .ed/g%dmaze%03d.ed ?",opts.mnum+1,opts.Gtp,opts.mnum+1)
-		if sdb >= 0 { dia = fmt.Sprintf(".ed/sd%05d_g%d.ed",sdb,opts.Gtp) }
+		if sdb >= 0 { dia = fmt.Sprintf("Save store buffer .ed/sd%05d_g%d.ed",sdb,opts.Gtp) }
 		dialog.ShowConfirm("Saving",dia, menu_savit, w)
 	} else { dialog.ShowInformation("Save Fail","edit mode is not active!",w) }
 }
