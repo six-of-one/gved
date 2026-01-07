@@ -158,6 +158,7 @@ func typedRune(r rune) {
 			}
 			fmt.Printf("hint: %s\n", cmdhin)
 			statlin(cmdhin,ska)
+			opts.dntr = true
 			relod = true
 		case 63:		// ?
 			keyhints()
