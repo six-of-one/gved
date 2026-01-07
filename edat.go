@@ -65,6 +65,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 		fmt.Printf("saving maze %s, %d x %d, error:\n",fil,mx,my)
 		fmt.Print(err)
 	}
+	opts.bufdrt = false
 }
 
 // load stored maze data into ebuf / eflg or other data stores
@@ -218,6 +219,7 @@ fmt.Printf("in remaze\n")
 	if !opts.dntr {
 		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(edmaze)
+		opts.bufdrt = false
 	}
 	opts.dntr = false
 	Ovimg := genpfimage(edmaze, mazn)
