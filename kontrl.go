@@ -403,6 +403,19 @@ func cpad(st string, d int) string {
 	return string(spout[:d])
 }
 
+func menu_disc(y bool) {
+	if y {
+		opts.bufdrt = false
+	}
+}
+
+func dumpbuf() {
+	if opts.bufdrt {
+		dia := fmt.Sprintf("Unsaved changes for previous maze\nDiscard them to load new maze?\n\n(rejecting discard exits load)")
+		dialog.ShowConfirm("Discard?",dia, menu_disc, w)
+	}
+}
+
 func menu_savit(y bool) {
 	if y {
 		if sdb < 0 {
@@ -416,9 +429,9 @@ func menu_savit(y bool) {
 
 func needsav() {
 	if opts.bufdrt {
-		dia := fmt.Sprintf("Save buffer for maze %d in .ed/g%dmaze%03d.ed ?",opts.mnum+1,opts.Gtp,opts.mnum+1)
-		if sdb >= 0 { dia = fmt.Sprintf("Save store buffer .ed/sd%05d_g%d.ed",sdb,opts.Gtp) }
-		dialog.ShowConfirm("Saving",dia, menu_savit, w)
+		dia := fmt.Sprintf("Unsaved changes for maze %d in .ed/g%dmaze%03d.ed ?",opts.mnum+1,opts.Gtp,opts.mnum+1)
+		if sdb >= 0 { dia = fmt.Sprintf("Unsaved changes buffer .ed/sd%05d_g%d.ed",sdb,opts.Gtp) }
+		dialog.ShowConfirm("Save?",dia, menu_savit, w)
 	}
 }
 
