@@ -467,7 +467,7 @@ func redo() {
 		delstak++
 		ed_maze()
 	}
-	ed_maze()
+//	ed_maze()
 }
 
 func uswap() {
@@ -645,9 +645,9 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		 for my := sy; my <= ey; my++ {
 		   for mx := sx; mx <= ex; mx++ {
 // looped now
-			if del { undo_buf(mx, my); ebuf[xy{mx, my}] = 0 } else {	// delete anything for now makes a floor
-			if setcode > 0 { undo_buf(mx, my); ebuf[xy{mx, my}] = setcode }
-			if edkey == 182 { ebuf[xy{mx, my}] = repl }		//
+			if del { undo_buf(mx, my); ebuf[xy{mx, my}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
+			if setcode > 0 { undo_buf(mx, my); ebuf[xy{mx, my}] = setcode; opts.bufdrt = true }
+			if edkey == 182 { ebuf[xy{mx, my}] = repl; opts.bufdrt = true }		//
 			if edkey == 214 { repl = ebuf[xy{mx, my}] }		// just placeholder until new repl done
 			}
 		  }}
