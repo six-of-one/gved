@@ -223,7 +223,7 @@ if opts.Verbose {
 			for x := sx; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}
 // TEMP maze dmp
-/*		fmt.Printf("dun\n")
+		fmt.Printf("dun\n")
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
@@ -231,7 +231,7 @@ if opts.Verbose {
 		}
 		fmt.Printf("\n")
 	}
-		fmt.Printf("\n") */
+		fmt.Printf("\n")
 // REM TEMP
 
 	}

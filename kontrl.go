@@ -54,7 +54,10 @@ func typedRune(r rune) {
 
 //	fmt.Printf("in keys event - %x\n",r)
 // <ESC> also exits
-	if r == 81 { os.Exit(0) }
+	if r == 81 {
+		needsav()
+		os.Exit(0)
+	}
 
 // new maze
 	if r == 'a' {
@@ -536,6 +539,7 @@ func uswap() {
 func st_menu() {
 // quit menu option does not exit to term!
 	menuItemExit := fyne.NewMenuItem("Exit", func() {
+		needsav()
 		os.Exit(0)
 	})
 	menuExit := fyne.NewMenu("Exit ", menuItemExit)
