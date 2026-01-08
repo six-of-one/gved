@@ -223,13 +223,14 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				relod = true					// needed to refresh indicate text
 				opts.dntr = true				// ... but dont kill the ebuf
 		case 72:		// H	- horiz wrap
-				eflg[4] = eflg[4] ^ eflg[4] & LFLAG4_WRAP_H
+				eflg[4] = eflg[4] ^ LFLAG4_WRAP_H
 				opts.dntr = true
 				relod = true
 		case 86:		// V	- vert wrap
-				eflg[4] = eflg[4] ^ eflg[4] & LFLAG4_WRAP_V
+				eflg[4] = eflg[4] ^ LFLAG4_WRAP_V
 				opts.dntr = true
 				relod = true
+//	fmt.Printf("4 flag: %d\n",eflg[4])
 		case 83:		// S
 // have anum !=0, save that buffer
 				if anum > 0 && anum < sdmax && opts.edat > 0 {
