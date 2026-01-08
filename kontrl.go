@@ -190,6 +190,11 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 					opts.edat = 1
 					stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
 					statlin(cmdhin,"on")
+// these all deactivate as override during edit
+					opts.MRM = false
+					opts.MRP = false
+					opts.MV = false
+					opts.MH = false
 				}
 				relod = true
 			}
@@ -349,28 +354,49 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
 		case 'r':
-			opts.MRP = true
-			opts.MRM = false
-			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
-//			opts.dntr = true
+			if opts.edat > 0 {
+				opts.MRP = true
+
+				opts.dntr = true
+			} else {
+				opts.MRP = true
+				opts.MRM = false
+				spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
+			}
 		case 82:		// R
-			opts.MRP = false
-			opts.MRM = true
-			spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
-//			opts.dntr = true
+			if opts.edat > 0 {
+				opts.MRM = true
+
+				opts.dntr = true
+			} else {
+				opts.MRP = false
+				opts.MRM = true
+				spau = fmt.Sprintf("cmd: r - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
+			}
 		case 't':
-			opts.MRP = false
-			opts.MRM = false
-			spau = fmt.Sprintf("cmd: t - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
-//			opts.dntr = true
+			if opts.edat == 0 {
+				opts.MRP = false
+				opts.MRM = false
+				spau = fmt.Sprintf("cmd: t - mr+: %t mr-: %t\n",opts.MRP,opts.MRM)
+			}
 		case 'm':
-			opts.MV = !opts.MV
-			spau = fmt.Sprintf("cmd: m - mv: %t\n",opts.MV)
-//			opts.dntr = true
+			if opts.edat > 0 {
+				opts.MV = true
+
+				opts.dntr = true
+			} else {
+				opts.MV = !opts.MV
+				spau = fmt.Sprintf("cmd: m - mv: %t\n",opts.MV)
+			}
 		case 'h':
-			opts.MH = !opts.MH
-			spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)
-//			opts.dntr = true
+			if opts.edat > 0 {
+				opts.MH = true
+
+				opts.dntr = true
+			} else {
+				opts.MH = !opts.MH
+				spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)
+			}
 		case 'i':
 			opts.Gtp = 1
 			opts.R14 = false
@@ -471,8 +497,8 @@ func menu_savit(y bool) {
 
 func needsav() {
 	if opts.bufdrt {
-		dia := fmt.Sprintf("Unsaved changes for maze %d in .ed/g%dmaze%03d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",opts.mnum+1,opts.Gtp,opts.mnum+1)
-		if sdb >= 0 { dia = fmt.Sprintf("Unsaved changes in buffer .ed/sd%05d_g%d.ed\n\nWARNING:\nif not saved, changes will be discarded",sdb,opts.Gtp) }
+		dia := fmt.Sprintf("Save changes for maze %d in .ed/g%dmaze%03d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",opts.mnum+1,opts.Gtp,opts.mnum+1)
+		if sdb >= 0 { dia = fmt.Sprintf("Save changes in buffer .ed/sd%05d_g%d.ed\n\nWARNING:\nif not saved, changes will be discarded",sdb,opts.Gtp) }
 		dialog.ShowConfirm("Save?",dia, menu_savit, w)
 		opts.bufdrt = false;		// save clears this, clear here in case discard is selected
 	}

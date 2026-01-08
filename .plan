@@ -34,7 +34,7 @@ multiple save buffers to store vars maze edits, page thru all wiht 'S', store wi
 - save to disk on set, load up on launch  for all sd files found
 - use a certain buffer (1 ?) to store the main edit pallete for middl-clicks
 * modify lod_maz to pass mazedata & bool for ubuf
-- dirty flag so quit, z, x know unsaved changes are there and give warning dialog
+* dirty flag so quit, z, x know unsaved changes are there and give warning dialog
 
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 
