@@ -479,6 +479,47 @@ func cpad(st string, d int) string {
 	return string(spout[:d])
 }
 
+// data needing preserved by needsav - all this could be changed by the next op while dialog waits on user
+var nsxd int
+var nsyd int
+var nsgg int
+var nsmz int
+var nssb int
+
+func menu_ndsav(y bool) {
+	if y {
+		if sdb < 0 {
+			fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",nsgg,nsmz)
+			sav_maz(fil, ebuf, eflg, nsxd, nsyd)
+		} else {
+			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nssb,nsgg)
+			sav_maz(fil, ebuf, eflg, nsxd, nsyd)
+		}
+	}
+}
+
+// because the dialog doesnt hold back transition away from buffer, this has to immediatley save *everything*
+func needsav() {
+	if opts.bufdrt {
+		nsxd = opts.DimX
+		nsyd = opts.DimY
+		nsgg = opts.Gtp
+		nsmz = opts.mnum+1
+		nssb = sdb
+		for y := 0; y <= nsxd; y++ {
+		for x := 0; x <= nsyd; x++ {
+			nsbuf[xy{x, y}] = ebuf[xy{x, y}]
+		}}
+		for y := 0; y < 11; y++ {
+			nsflg[y] = eflg[y]
+		}
+		dia := fmt.Sprintf("Save changes for maze %d in .ed/g%dmaze%03d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",nsmz,nsgg,nsmz)
+		if nssb >= 0 { dia = fmt.Sprintf("Save changes in buffer %d to .ed/sd%05d_g%d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",nssb,nssb,nsgg) }
+		dialog.ShowConfirm("Save?",dia, menu_ndsav, w)
+		opts.bufdrt = false;		// save clears this, clear here in case discard is selected
+	}
+}
+
 func menu_savit(y bool) {
 	if y {
 		if sdb < 0 {
@@ -487,15 +528,6 @@ func menu_savit(y bool) {
 			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",sdb,opts.Gtp)
 			sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
 		}
-	}
-}
-
-func needsav() {
-	if opts.bufdrt {
-		dia := fmt.Sprintf("Save changes for maze %d in .ed/g%dmaze%03d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",opts.mnum+1,opts.Gtp,opts.mnum+1)
-		if sdb >= 0 { dia = fmt.Sprintf("Save changes in buffer %d to .ed/sd%05d_g%d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",sdb,sdb,opts.Gtp) }
-		dialog.ShowConfirm("Save?",dia, menu_savit, w)
-		opts.bufdrt = false;		// save clears this, clear here in case discard is selected
 	}
 }
 
