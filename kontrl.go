@@ -490,15 +490,14 @@ func menu_ndsav(y bool) {
 	if y {
 		if sdb < 0 {
 			fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",nsgg,nsmz)
-			sav_maz(fil, ebuf, eflg, nsxd, nsyd)
+			sav_maz(fil, nsbuf, nsflg, nsxd, nsyd)
 		} else {
 			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nssb,nsgg)
-			sav_maz(fil, ebuf, eflg, nsxd, nsyd)
+			sav_maz(fil, nsbuf, nsflg, nsxd, nsyd)
 		}
 	}
 }
 
-// because the dialog doesnt hold back transition away from buffer, this has to immediatley save *everything*
 func needsav() {
 	if opts.bufdrt {
 		nsxd = opts.DimX
@@ -506,6 +505,7 @@ func needsav() {
 		nsgg = opts.Gtp
 		nsmz = opts.mnum+1
 		nssb = sdb
+// because the dialog doesnt hold back transition away from buffer, this has to immediatley save *everything*
 		for y := 0; y <= nsxd; y++ {
 		for x := 0; x <= nsyd; x++ {
 			nsbuf[xy{x, y}] = ebuf[xy{x, y}]
