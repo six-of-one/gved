@@ -209,6 +209,13 @@ if opts.Verbose {
 			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{tx, lasty - ty}] = maze.data[xy{tx, ty}]
 			}}
+			if maze.flags&LFLAG4_WRAP_V > 0 {	// fix wall not allowed being at bottom for arcade gauntlet
+				for ty := lasty - 1; ty >= sy ; ty-- {
+				for tx := sx; tx <= lastx; tx++ {
+					xform[xy{tx, ty + 1}] = xform[xy{tx, ty}]
+				}}
+				for tx := sx; tx <= lastx; tx++ { xform[xy{tx, 0}] = G1OBJ_WALL_REGULAR }
+			}
 		}
 
 // copy back
