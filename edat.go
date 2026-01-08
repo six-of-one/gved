@@ -263,7 +263,7 @@ func rotmirbuf(rmmaze *Maze) {
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
-			fmt.Printf(" %02d", maze.data[xy{x, y}])
+			fmt.Printf(" %02d", rmmaze.data[xy{x, y}])
 		}
 		fmt.Printf("\n")
 	}
