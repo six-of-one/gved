@@ -359,6 +359,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				upd_edmaze()
 				rotmirbuf(edmaze)
 				opts.dntr = true
+				opts.bufdrt = true
 			} else {
 				opts.MRP = true
 				opts.MRM = false
@@ -370,6 +371,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				upd_edmaze()
 				rotmirbuf(edmaze)
 				opts.dntr = true
+				opts.bufdrt = true
 			} else {
 				opts.MRP = false
 				opts.MRM = true
@@ -387,6 +389,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				upd_edmaze()
 				rotmirbuf(edmaze)
 				opts.dntr = true
+				opts.bufdrt = true
 			} else {
 				opts.MV = !opts.MV
 				spau = fmt.Sprintf("cmd: m - mv: %t\n",opts.MV)
@@ -397,6 +400,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				upd_edmaze()
 				rotmirbuf(edmaze)
 				opts.dntr = true
+				opts.bufdrt = true
 			} else {
 				opts.MH = !opts.MH
 				spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)
