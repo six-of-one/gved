@@ -233,10 +233,120 @@ func undo_buf(sx int, sy int) {
 
 // same as mazeloop, but called by Rr, h, m while cmd keys active in edit mode
 
-func rotmirbuf(mdat MazeData, op int) {
+func rotmirbuf(rmmaze *Maze) {
 
 	fmt.Printf("in rotmirbuf\n")
 
+// to transform maze, array copy
+	xform := make(map[xy]int)
+// manual mirror, flip
+	if opts.MH || opts.MV || opts.MRP || opts.MRM {
+
+		sx := 1
+		lastx := 32
+		if rmmaze.flags&LFLAG4_WRAP_H > 0 {
+			sx = 0
+			lastx = 31
+		}
+
+		sy := 1
+		lasty := 32
+		if rmmaze.flags&LFLAG4_WRAP_V > 0 {
+			sy = 0		// otherwise it wont MV correct
+			lasty = 31
+		}
+
+	fmt.Printf("wraps -- hw: %d vw: %d\n", rmmaze.flags&LFLAG4_WRAP_H,rmmaze.flags&LFLAG4_WRAP_V)
+	fmt.Printf(" fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
+
+
+// note it
+/*		fmt.Printf("init\n")
+	for y := 0; y <= lasty; y++ {
+		for x := 0; x <= lastx; x++ {
+
+			fmt.Printf(" %02d", maze.data[xy{x, y}])
+		}
+		fmt.Printf("\n")
+	}
+		fmt.Printf("\n")
+*/
+// transform																										 - rotating sq. wall mazes will always work
+// rotate +90 degrees				-- * there is the issue of gauntlet arcade NEEDING the y = 0 wall *always* intact, rotating looper mazes wont work
+		if opts.MRP {
+			for ty := sy; ty <= lasty; ty++ {
+			for tx := sx; tx <= lastx; tx++ {
+				xform[xy{lastx - tx, ty}] = rmmaze.data[xy{ty, tx}]
+// g1 - must transform all dors on a rotat since they have horiz & vert dependent
+				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_HORIZ { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_VERT } else {
+				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_VERT { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_HORIZ } }
+// g2
+				if xform[xy{lastx - tx, ty}] == MAZEOBJ_DOOR_HORIZ { xform[xy{lastx - tx, ty}] = MAZEOBJ_DOOR_VERT } else {
+				if xform[xy{lastx - tx, ty}] == MAZEOBJ_DOOR_VERT { xform[xy{lastx - tx, ty}] = MAZEOBJ_DOOR_HORIZ } }
+			}}
+		} else {
+		if opts.MRM {
+			for ty := sy; ty <= lasty; ty++ {
+			for tx := sx; tx <= lastx; tx++ {
+				xform[xy{tx, lasty - ty}] = rmmaze.data[xy{ty, tx}]
+// g1
+				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_HORIZ { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_VERT } else {
+				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_VERT { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_HORIZ } }
+// g2
+				if xform[xy{tx, lasty - ty}] == MAZEOBJ_DOOR_HORIZ { xform[xy{tx, lasty - ty}] = MAZEOBJ_DOOR_VERT } else {
+				if xform[xy{tx, lasty - ty}] == MAZEOBJ_DOOR_VERT { xform[xy{tx, lasty - ty}] = MAZEOBJ_DOOR_HORIZ } }
+			}}
+		}
+		}
+
+// mirror x
+		if opts.MH {
+			for ty := sy; ty <= lasty; ty++ {
+			for tx := sx; tx <= lastx; tx++ {
+				xform[xy{lastx - tx, ty}] = rmmaze.data[xy{tx, ty}]
+			}}
+		}
+
+// mirror y: flip
+		if opts.MV {
+			for ty := sy; ty <= lasty; ty++ {
+			for tx := sx; tx <= lastx; tx++ {
+				xform[xy{tx, lasty - ty}] = rmmaze.data[xy{tx, ty}]
+			}}
+			if rmmaze.flags&LFLAG4_WRAP_V > 0 {	// fix wall not allowed being at bottom for arcade gauntlet
+				for ty := lasty - 1; ty >= sy ; ty-- {
+				for tx := sx; tx <= lastx; tx++ {
+					xform[xy{tx, ty + 1}] = xform[xy{tx, ty}]
+				}}
+				for tx := sx; tx <= lastx; tx++ { xform[xy{tx, 0}] = G1OBJ_WALL_REGULAR }
+			}
+		}
+
+// copy back
+		for y := sy; y <= lasty; y++ {
+			for x := sx; x <= lastx; x++ {
+				rmmaze.data[xy{x, y}] = xform[xy{x, y}]
+				ebuf[xy{x, y}] = xform[xy{x, y}]
+			}
+		}
+// TEMP maze dmp
+		fmt.Printf("dun\n")
+	for y := 0; y <= lasty; y++ {
+		for x := 0; x <= lastx; x++ {
+
+			fmt.Printf(" %02d", rmmaze.data[xy{x, y}])
+		}
+		fmt.Printf("\n")
+	}
+		fmt.Printf("\n")
+// REM TEMP
+
+	}
+// clear all in edit mode
+	opts.MRP = false
+	opts.MRM = false
+	opts.MV = false
+	opts.MH = false
 }
 
 // reload maze while editing & update window - generates output.png

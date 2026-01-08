@@ -356,7 +356,8 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'r':
 			if opts.edat > 0 {
 				opts.MRP = true
-
+				upd_edmaze()
+				rotmirbuf(edmaze)
 				opts.dntr = true
 			} else {
 				opts.MRP = true
@@ -366,7 +367,8 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		case 82:		// R
 			if opts.edat > 0 {
 				opts.MRM = true
-
+				upd_edmaze()
+				rotmirbuf(edmaze)
 				opts.dntr = true
 			} else {
 				opts.MRP = false
@@ -382,7 +384,8 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'm':
 			if opts.edat > 0 {
 				opts.MV = true
-
+				upd_edmaze()
+				rotmirbuf(edmaze)
 				opts.dntr = true
 			} else {
 				opts.MV = !opts.MV
@@ -391,7 +394,8 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'h':
 			if opts.edat > 0 {
 				opts.MH = true
-
+				upd_edmaze()
+				rotmirbuf(edmaze)
 				opts.dntr = true
 			} else {
 				opts.MH = !opts.MH
