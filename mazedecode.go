@@ -197,18 +197,29 @@ if opts.Verbose {
 	}
 
 // g1 likely has nothing like g2 stuff, and might not use flags at all
-	flagsv := maze.flags // save so we can print in meta
 	if G1 {
-		maze.flags = 0 //maze.flags & 0x3f;
+// g1 wrap data is still not known, just making this manual for now
+		horz := true		// check horz first
+		for i := 0; i < 70; i++ {
+
+			if g1wrp[i] < 0 { i = 70 } else {
+
+			if opts.mnum == g1wrp[i] {
+				if horz { maze.flags = maze.flags | LFLAG4_WRAP_H } else {
+					maze.flags = maze.flags | LFLAG4_WRAP_V
+				}
+			}
+			if g1wrp[i] == 200 { horz = false }		// check vert
+			}
+		}
 // testing - this could be g1 codes, hard to tell with out the g1 gfx roms loaded
 		if maze.wallpattern > 5 {
 			maze.wallpattern = rand.Intn(4)
 			fmt.Printf("maze.wallpattern = rand.Intn(4)\n")
 		}
 	}
-
+fmt.Printf("wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_H,maze.flags&LFLAG4_WRAP_V)
 	if metaonly {
-		maze.flags = flagsv
 		return maze
 	}
 
@@ -312,9 +323,6 @@ if opts.Verbose {
 	if len(compressed) != 1 || compressed[0] != 0 {
 		fmt.Printf("WARNING: Incomplete maze decode? (%d bytes remaining)\n", len(compressed))
 	}
-
-// six - restore this for meta
-	maze.flags = flagsv
 
 // editor override
 	if opts.edat > 0 && opts.edip != 0 {

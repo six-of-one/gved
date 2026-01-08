@@ -128,10 +128,11 @@ func mazeloop(maze *Maze) {
 			lasty = 31
 		}
 //if opts.Verbose { 
-	fmt.Printf(" fx: %d lx %d fy %d ly %d", sx,lastx,sy,lasty)
+	fmt.Printf(" fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
+fmt.Printf("wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_H,maze.flags&LFLAG4_WRAP_V)
 // }
 // TEMP maze dmp
-		fmt.Printf("init\n")
+/*		fmt.Printf("init\n")
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
@@ -139,7 +140,7 @@ func mazeloop(maze *Maze) {
 		}
 		fmt.Printf("\n")
 	}
-		fmt.Printf("\n")
+		fmt.Printf("\n") */
 // REM TEMP
 
 // note it
@@ -219,7 +220,7 @@ func mazeloop(maze *Maze) {
 			}}
 		}
 // TEMP maze dmp
-		fmt.Printf("mirr\n")
+/*		fmt.Printf("mirr\n")
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
@@ -227,7 +228,7 @@ func mazeloop(maze *Maze) {
 		}
 		fmt.Printf("\n")
 	}
-		fmt.Printf("\n")
+		fmt.Printf("\n") */
 // REM TEMP
 
 // copy back
@@ -235,7 +236,7 @@ func mazeloop(maze *Maze) {
 			for x := sx; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}
 // TEMP maze dmp
-		fmt.Printf("dun\n")
+/*		fmt.Printf("dun\n")
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
@@ -243,7 +244,7 @@ func mazeloop(maze *Maze) {
 		}
 		fmt.Printf("\n")
 	}
-		fmt.Printf("\n")
+		fmt.Printf("\n") */
 // REM TEMP
 
 	}
