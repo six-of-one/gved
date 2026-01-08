@@ -240,28 +240,26 @@ func rotmirbuf(rmmaze *Maze) {
 // to transform maze, array copy
 	xform := make(map[xy]int)
 // manual mirror, flip
-	if opts.MH || opts.MV || opts.MRP || opts.MRM {
+	sx := 1
+	lastx := 32
+	if rmmaze.flags&LFLAG4_WRAP_H > 0 {
+		sx = 0
+		lastx = 31
+	}
 
-		sx := 1
-		lastx := 32
-		if rmmaze.flags&LFLAG4_WRAP_H > 0 {
-			sx = 0
-			lastx = 31
-		}
-
-		sy := 1
-		lasty := 32
-		if rmmaze.flags&LFLAG4_WRAP_V > 0 {
-			sy = 0		// otherwise it wont MV correct
-			lasty = 31
-		}
+	sy := 1
+	lasty := 32
+	if rmmaze.flags&LFLAG4_WRAP_V > 0 {
+		sy = 0		// otherwise it wont MV correct
+		lasty = 31
+	}
 
 	fmt.Printf("wraps -- hw: %d vw: %d\n", rmmaze.flags&LFLAG4_WRAP_H,rmmaze.flags&LFLAG4_WRAP_V)
 	fmt.Printf(" fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
 
 
 // note it
-/*		fmt.Printf("init\n")
+		fmt.Printf("init\n")
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
@@ -270,7 +268,7 @@ func rotmirbuf(rmmaze *Maze) {
 		fmt.Printf("\n")
 	}
 		fmt.Printf("\n")
-*/
+
 // transform																										 - rotating sq. wall mazes will always work
 // rotate +90 degrees				-- * there is the issue of gauntlet arcade NEEDING the y = 0 wall *always* intact, rotating looper mazes wont work
 		if opts.MRP {
@@ -330,7 +328,7 @@ func rotmirbuf(rmmaze *Maze) {
 			}
 		}
 // TEMP maze dmp
-		fmt.Printf("dun\n")
+		fmt.Printf("rm dun\n")
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
@@ -341,7 +339,6 @@ func rotmirbuf(rmmaze *Maze) {
 		fmt.Printf("\n")
 // REM TEMP
 
-	}
 // clear all in edit mode
 	opts.MRP = false
 	opts.MRM = false
