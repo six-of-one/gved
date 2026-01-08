@@ -178,8 +178,9 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 		if g1wrp[i] < 0 { i = 70 } else {
 
 		if mazenum == g1wrp[i] {
-			if horz { lastx = 31 } else {
+			if horz { lastx = 31; maze.flags = maze.flags | LFLAG4_WRAP_H } else {
 				lasty = 31
+				maze.flags = maze.flags | LFLAG4_WRAP_V
 			}
 		}
 		if g1wrp[i] == 200 { horz = false }		// check vert
