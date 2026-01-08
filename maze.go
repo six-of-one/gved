@@ -125,13 +125,15 @@ func mazeloop(maze *Maze) {
 		sy := 1
 		lasty := 32
 		if maze.flags&LFLAG4_WRAP_V > 0 {
+			sy = 0		// otherwise it wont MV correct
 			lasty = 31
 		}
 if opts.Verbose {
 	fmt.Printf("wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_H,maze.flags&LFLAG4_WRAP_V)
 	fmt.Printf(" fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
 }
-// TEMP maze dmp
+
+// note it
 /*		fmt.Printf("init\n")
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
@@ -140,18 +142,7 @@ if opts.Verbose {
 		}
 		fmt.Printf("\n")
 	}
-		fmt.Printf("\n") */
-// REM TEMP
-
-// note it
-/*
-	for y := 0; y <= lasty; y++ {
-		for x := 0; x <= lastx; x++ {
-
-			fmt.Printf(" %02d", maze.data[xy{x, y}])
-		}
 		fmt.Printf("\n")
-	}
 */
 // transform																										 - rotating sq. wall mazes will always work
 // rotate +90 degrees				-- * there is the issue of gauntlet arcade NEEDING the y = 0 wall *always* intact, rotating looper mazes wont work
@@ -219,17 +210,6 @@ if opts.Verbose {
 				xform[xy{tx, lasty - ty}] = maze.data[xy{tx, ty}]
 			}}
 		}
-// TEMP maze dmp
-/*		fmt.Printf("mirr\n")
-	for y := 0; y <= lasty; y++ {
-		for x := 0; x <= lastx; x++ {
-
-			fmt.Printf(" %02d", xform[xy{x, y}])
-		}
-		fmt.Printf("\n")
-	}
-		fmt.Printf("\n") */
-// REM TEMP
 
 // copy back
 		for y := sy; y <= lasty; y++ {
