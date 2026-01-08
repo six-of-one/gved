@@ -19,11 +19,13 @@ more complexity will be required for:
 var edmaze *Maze
 var ebuf MazeData
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
+var nsbuf MazeData	// needsav needs to make a quick buffer copy while the user decideds
 
 var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf
 var eflg [11]int
 var tflg [14]int	// transfer flags - because they dont pass as a parm?
+var nsflg [11]int
 
 // deleted elements buffer
 
@@ -47,7 +49,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 	file, err := os.Create(fil)
 	if err == nil {
 //	wfs := fmt.Sprintf("%d\n%d %d %d %d\n%0x\n%#b\n%d %d\n",1,Ovwallpat,Ovflorpat,Ovwallcol,Ovflorcol,maze.secret,maze.flags,lastx,lasty)
-		wfs := fmt.Sprintf("%d %d %d\n",opts.edat,mx,my)
+		wfs := fmt.Sprintf("%d %d %d\n",1,mx,my)
 
 		for y := 0; y < 11; y++ {
 			wfs += fmt.Sprintf(" %02X", fdat[y])
@@ -101,6 +103,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 
 		if mdat == nil { mdat = make(map[xy]int) }
 		if ubuf == nil { ubuf = make(map[xy]int) }
+		if nsbuf == nil { nsbuf = make(map[xy]int) }
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
 				l = "02"
