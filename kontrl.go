@@ -222,6 +222,14 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				edkey = 99						// pre set store cycl when cycling
 				relod = true					// needed to refresh indicate text
 				opts.dntr = true				// ... but dont kill the ebuf
+		case 72:		// H	- horiz wrap
+				elfg[4] = elfg[4] ^ elfg[4] & LFLAG4_WRAP_H
+				opts.dntr = true
+				relod = true
+		case 86:		// V	- vert wrap
+				elfg[4] = elfg[4] ^ elfg[4] & LFLAG4_WRAP_V
+				opts.dntr = true
+				relod = true
 		case 83:		// S
 // have anum !=0, save that buffer
 				if anum > 0 && anum < sdmax && opts.edat > 0 {
@@ -418,6 +426,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			relodsub = false
 		}
 	  }
+	  upd_edmaze()		// store vars view changes like floors or walls
 		if spau == "G¹ " {
 			if opts.R14 { spau += "rv14" } else { spau += "rv1-9" }
 		}
@@ -561,6 +570,7 @@ func st_menu() {
 		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nd: turn editor on, init maze store in .ed/\n"+
 			"D: turn editor off, saves edits to file\ndel, backspace - set floor *\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
+			"H: toggle horiz wrap, V: toggle vert wrap\n"+
 			"b - horiz door, B - vert door, w - wall *\nk - key, t - transporter *\n"+
 			"edit keys lock when pressed, hit 'b' and place doors\nLogo/ Super key - click to reassing current key\n"+
 			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)

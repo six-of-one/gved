@@ -6,6 +6,7 @@ import (
 	"os"
 	"io/ioutil"
 	"bufio"
+	"encoding/binary"
 )
 
 /*
@@ -183,12 +184,29 @@ func ed_sav(mazn int) {
 	sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
 }
 
-// udpate maze from edits
-func ed_maze() {
+func upd_edmaze() {
 	for y := 0; y <= opts.DimX; y++ {
 		for x := 0; x <= opts.DimY; x++ {
 		edmaze.data[xy{x, y}] = ebuf[xy{x, y}]
 	}}
+	for y := 0; y < 11; y++ {
+		edmaze.optbyts[y] = eflg[y]
+	}
+	flagbytes := make([]byte, 4)
+	flagbytes[0] = byte(eflg[1])
+	flagbytes[1] = byte(eflg[2])
+	flagbytes[2] = byte(eflg[3])
+	flagbytes[3] = byte(eflg[4])
+	edmaze.flags = int(binary.BigEndian.Uint32(flagbytes))
+	edmaze.wallpattern = Ovwallpat
+	edmaze.floorpattern = Ovflorpat
+	edmaze.wallcolor = Ovwallcol
+	edmaze.floorcolor = Ovflorcol
+
+}
+// udpate maze from edits
+func ed_maze() {
+	upd_edmaze()
 	Ovimg := genpfimage(edmaze, opts.mnum)
 	upwin(Ovimg)
 }
