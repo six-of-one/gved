@@ -240,14 +240,14 @@ func rotmirbuf(rmmaze *Maze) {
 // to transform maze, array copy
 	xform := make(map[xy]int)
 // manual mirror, flip
-	sx := 1
+	sx := 0
 	lastx := 32
 	if rmmaze.flags&LFLAG4_WRAP_H > 0 {
 		sx = 0
 		lastx = 31
 	}
 
-	sy := 1
+	sy := 0
 	lasty := 32
 	if rmmaze.flags&LFLAG4_WRAP_V > 0 {
 		sy = 0		// otherwise it wont MV correct
