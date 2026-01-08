@@ -198,7 +198,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				smod = "View mode: "
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 				opts.edat = 0
-				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
+				if opts.bufdrt { ed_sav(opts.mnum+1) }		// this deactivates edit mode on this buffer
 				statlin(cmdhin,"on")
 				relod = true
 			}
@@ -283,54 +283,62 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			Ovwallpat += 1
 			if anum > 0 { Ovwallpat = anum - 1; anum = 0 }
 			if Ovwallpat > 7 { Ovwallpat = 0 }
+			eflg[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
-			opts.bufdrt = true
-			opts.dntr = true
+			opts.bufdrt = (opts.edat > 0)
+			opts.dntr = (opts.edat > 0)
 		case 87:		// W
 			Ovwallpat -= 1
 			if Ovwallpat < 0 { Ovwallpat = 7 }
+			eflg[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
-			opts.bufdrt = true
-			opts.dntr = true
+			opts.bufdrt = (opts.edat > 0)
+			opts.dntr = (opts.edat > 0)
 		case 'e':
 			Ovwallcol += 1
 			if anum > 0 { Ovwallcol = anum - 1; anum = 0 }
 			if Ovwallcol > 16 { Ovwallcol = 0 }
+			eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
-			opts.bufdrt = true
-			opts.dntr = true
+			opts.bufdrt = (opts.edat > 0)
+			opts.dntr = (opts.edat > 0)
 		case 69:		// E
 			Ovwallcol -= 1
 			if Ovwallcol < 0 { Ovwallcol = 16 }
+			eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
-			opts.bufdrt = true
-			opts.dntr = true
+			opts.bufdrt = (opts.edat > 0)
+			opts.dntr = (opts.edat > 0)
 		case 'f':
 			Ovflorpat += 1
 			if anum > 0 { Ovflorpat = anum - 1; anum = 0 }
 			if Ovflorpat > 8 { Ovflorpat = 0 }
+			eflg[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
-			opts.bufdrt = true
-			opts.dntr = true
+			opts.bufdrt = (opts.edat > 0)
+			opts.dntr = (opts.edat > 0)
 		case 70:		// F
 			Ovflorpat -= 1
 			if Ovflorpat < 0 { Ovflorpat = 8 }
+			eflg[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
-			opts.bufdrt = true
-			opts.dntr = true
+			opts.bufdrt = (opts.edat > 0)
+			opts.dntr = (opts.edat > 0)
 		case 'g':
 			Ovflorcol += 1
 			if anum > 0 { Ovflorcol = anum - 1; anum = 0 }
 			if Ovflorcol > 15 { Ovflorcol = 0 }
+			eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
-			opts.bufdrt = true
-			opts.dntr = true
+			opts.bufdrt = (opts.edat > 0)
+			opts.dntr = (opts.edat > 0)
 		case 71:		// G
 			Ovflorcol -= 1
 			if Ovflorcol < 0 { Ovflorcol = 15 }
+			eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
-			opts.bufdrt = true
-			opts.dntr = true
+			opts.bufdrt = (opts.edat > 0)
+			opts.dntr = (opts.edat > 0)
 		case 'r':
 			opts.MRP = true
 			opts.MRM = false
@@ -456,6 +464,7 @@ func needsav() {
 		dia := fmt.Sprintf("Unsaved changes for maze %d in .ed/g%dmaze%03d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",opts.mnum+1,opts.Gtp,opts.mnum+1)
 		if sdb >= 0 { dia = fmt.Sprintf("Unsaved changes in buffer .ed/sd%05d_g%d.ed\n\nWARNING:\nif not saved, changes will be discarded",sdb,opts.Gtp) }
 		dialog.ShowConfirm("Save?",dia, menu_savit, w)
+		opts.bufdrt = false;		// save clears this, clear here in case discard is selected
 	}
 }
 
