@@ -199,7 +199,8 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 				opts.edat = 0
 				ed_sav(opts.mnum+1)		// this deactivates edit mode on this buffer
-				statlin(cmdhin,"off")
+				statlin(cmdhin,"on")
+				relod = true
 			}
 		case 'c':
 			if anum > 0 && anum < 65 {
@@ -452,8 +453,8 @@ func menu_savit(y bool) {
 
 func needsav() {
 	if opts.bufdrt {
-		dia := fmt.Sprintf("Unsaved changes for maze %d in .ed/g%dmaze%03d.ed ?",opts.mnum+1,opts.Gtp,opts.mnum+1)
-		if sdb >= 0 { dia = fmt.Sprintf("Unsaved changes buffer .ed/sd%05d_g%d.ed",sdb,opts.Gtp) }
+		dia := fmt.Sprintf("Unsaved changes for maze %d in .ed/g%dmaze%03d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",opts.mnum+1,opts.Gtp,opts.mnum+1)
+		if sdb >= 0 { dia = fmt.Sprintf("Unsaved changes in buffer .ed/sd%05d_g%d.ed\n\nWARNING:\nif not saved, changes will be discarded",sdb,opts.Gtp) }
 		dialog.ShowConfirm("Save?",dia, menu_savit, w)
 	}
 }
