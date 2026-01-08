@@ -115,15 +115,21 @@ func mazeloop(maze *Maze) {
 // manual mirror, flip
 	if opts.MH || opts.MV || opts.MRP || opts.MRM {
 
+		sx := 1
 		lastx := 32
 		if maze.flags&LFLAG4_WRAP_H > 0 {
+			sx = 0
 			lastx = 31
 		}
 
+		sy := 1
 		lasty := 32
 		if maze.flags&LFLAG4_WRAP_V > 0 {
 			lasty = 31
 		}
+//if opts.Verbose { 
+	fmt.Printf(" fx: %d lx %d fy %d ly %d", sx,lastx,sy,lasty)
+// }
 // TEMP maze dmp
 		fmt.Printf("init\n")
 	for y := 0; y <= lasty; y++ {
@@ -149,8 +155,8 @@ func mazeloop(maze *Maze) {
 // transform																										 - rotating sq. wall mazes will always work
 // rotate +90 degrees				-- * there is the issue of gauntlet arcade NEEDING the y = 0 wall *always* intact, rotating looper mazes wont work
 		if opts.MRP {
-			for ty := 0; ty <= lasty; ty++ {
-			for tx := 0; tx <= lastx; tx++ {
+			for ty := sy; ty <= lasty; ty++ {
+			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{lastx - tx, ty}] = maze.data[xy{ty, tx}]
 // g1 - must transform all dors on a rotat since they have horiz & vert dependent
 				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_HORIZ { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_VERT } else {
@@ -161,8 +167,8 @@ func mazeloop(maze *Maze) {
 			}}
 		} else {
 		if opts.MRM {
-			for ty := 0; ty <= lasty; ty++ {
-			for tx := 0; tx <= lastx; tx++ {
+			for ty := sy; ty <= lasty; ty++ {
+			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{tx, lasty - ty}] = maze.data[xy{ty, tx}]
 // g1
 				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_HORIZ { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_VERT } else {
@@ -174,41 +180,41 @@ func mazeloop(maze *Maze) {
 		}
 		}
 // TEMP maze dmp
-		fmt.Printf("rots\n")
+/*		fmt.Printf("rots\n")
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
-			fmt.Printf(" %02d", maze.data[xy{x, y}])
+			fmt.Printf(" %02d",xform[xy{x, y}])
 		}
 		fmt.Printf("\n")
 	}
-		fmt.Printf("\n")
+		fmt.Printf("\n") */
 // REM TEMP
 
 // have to copy back if doing rot with any mirror cmd
 		if opts.MRP || opts.MRM {
 		if opts.MH || opts.MV {
-		for y := 0; y <= lasty; y++ {
-			for x := 0; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
+		for y := sy; y <= lasty; y++ {
+			for x := sx; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}}}
 
 // mirror x
 		if opts.MH {
-			for ty := 1; ty <= lasty; ty++ {
-			for tx := 0; tx <= lastx; tx++ {
+			for ty := sy; ty <= lasty; ty++ {
+			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{lastx - tx, ty}] = maze.data[xy{tx, ty}]
 			}}
 		}
 // have to copy back if doing both together
 		if opts.MH && opts.MV {
-		for y := 1; y <= lasty; y++ {
-			for x := 0; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
+		for y := sy; y <= lasty; y++ {
+			for x := sx; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}}
 
 // mirror y: flip
 		if opts.MV {
-			for ty := 1; ty <= lasty; ty++ {
-			for tx := 0; tx <= lastx; tx++ {
+			for ty := sy; ty <= lasty; ty++ {
+			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{tx, lasty - ty}] = maze.data[xy{tx, ty}]
 			}}
 		}
@@ -217,7 +223,7 @@ func mazeloop(maze *Maze) {
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
-			fmt.Printf(" %02d", maze.data[xy{x, y}])
+			fmt.Printf(" %02d", xform[xy{x, y}])
 		}
 		fmt.Printf("\n")
 	}
@@ -225,8 +231,8 @@ func mazeloop(maze *Maze) {
 // REM TEMP
 
 // copy back
-		for y := 0; y <= lasty; y++ {
-			for x := 0; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
+		for y := sy; y <= lasty; y++ {
+			for x := sx; x <= lastx; x++ { maze.data[xy{x, y}] = xform[xy{x, y}] }
 		}
 // TEMP maze dmp
 		fmt.Printf("dun\n")
