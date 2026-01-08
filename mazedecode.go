@@ -205,6 +205,7 @@ if opts.Verbose {
 			if g1wrp[i] < 0 { i = 70 } else {
 
 			if opts.mnum == g1wrp[i] {
+// shoe horn these in for all the checks in render, edit & elsewehre
 				if horz { maze.flags = maze.flags | LFLAG4_WRAP_H } else {
 					maze.flags = maze.flags | LFLAG4_WRAP_V
 				}
@@ -218,7 +219,7 @@ if opts.Verbose {
 			fmt.Printf("maze.wallpattern = rand.Intn(4)\n")
 		}
 	}
-fmt.Printf("wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_H,maze.flags&LFLAG4_WRAP_V)
+if opts.Verbose { fmt.Printf("wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_H,maze.flags&LFLAG4_WRAP_V) }
 	if metaonly {
 		return maze
 	}

@@ -127,10 +127,10 @@ func mazeloop(maze *Maze) {
 		if maze.flags&LFLAG4_WRAP_V > 0 {
 			lasty = 31
 		}
-//if opts.Verbose { 
+if opts.Verbose {
+	fmt.Printf("wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_H,maze.flags&LFLAG4_WRAP_V)
 	fmt.Printf(" fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
-fmt.Printf("wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_H,maze.flags&LFLAG4_WRAP_V)
-// }
+}
 // TEMP maze dmp
 /*		fmt.Printf("init\n")
 	for y := 0; y <= lasty; y++ {
