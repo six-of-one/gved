@@ -180,6 +180,7 @@ func stor_maz(mazn int) {
 
 func ed_sav(mazn int) {
 
+	upd_edmaze()
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,mazn)
 	sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
 }
