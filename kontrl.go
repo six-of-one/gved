@@ -254,14 +254,14 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 						ldb++
 						fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
 						cnd = lod_maz(fil, ebuf, false)
-						if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
+						if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spau = fmt.Sprintf("cmd: S - sdbuf: %d\n",sdb) }
 					}
 					if cnd < 0 {
 						sdb = -1
 						if opts.edat > 0 {
 							fil := fmt.Sprintf(".ed/ebuf.ed")			// cycle back out
 							cnd = lod_maz(fil, ebuf, true)
-						if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
+						if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spau = fmt.Sprintf("cmd: S - maze %d\n",opts.mnum+1) }
 						} else { remaze(opts.mnum) }
 					}
 				}
@@ -467,8 +467,8 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		}
 	if (relod || relodsub) {
 		remaze(opts.mnum)
-		uptitl(opts.mnum, spau)
 	}
+	uptitl(opts.mnum, spau)
 }
 
 // pad for dialog page
