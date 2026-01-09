@@ -364,6 +364,7 @@ func remaze(mazn int) {
 fmt.Printf("in remaze\n")
 	sdb = -1
 	if !opts.dntr {
+		Ovwallpat = -1
 		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(edmaze)
 		opts.bufdrt = false
