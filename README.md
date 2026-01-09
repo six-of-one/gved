@@ -28,7 +28,7 @@ interactive mode:
 * 'w' 'q' 'f' 'g' - can all be proceded by #, just like #a, and shifted W,E,F,G reverse ops
 * 'e' 'E' - turn edit mode on/ off
 * writes output.png as each maze is viewed
-- a special edit mode ('\' toggles) now exists with its own hint set on the edit menu
+- a special edit mode ('\\' toggles) now exists with its own hint set on the edit menu
 see [ops.txt](https://github.com/six-of-one/gved/blob/master/ops.txt) for full details
 
 Notes

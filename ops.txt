@@ -137,7 +137,7 @@ key held with Left-click
 delete			both place a floor at cursor
 backspace		  "
 
-control			when draggin mouse, box will fill / delete an outline only
+control			when dragging mouse, box will fill / delete an outline only
 
 ** EDIT KEYS **
 ---------------
@@ -181,4 +181,4 @@ any key in this grid without an * is an edit key
  120 = x  y  z  {  |  }  ~
 
 these are system reserved keys and can NOT be reassigned
-?, \ C, aA, eE, L, S, H, V
+?, \, C, aA, eE, L, S, H, V
