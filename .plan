@@ -42,4 +42,4 @@ issues needing fixed
 - ctrl-z on area edits only works one at a time
   (hint: shft ctrl-z will one at, norm to do all)
 - m,h, Rr all fail upper left in view mode
-- wall, floor fail in view mode
+- exit before needsav done

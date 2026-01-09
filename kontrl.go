@@ -138,6 +138,7 @@ func typedRune(r rune) {
 			if key.Name == "Q" && ctrl  { needsav(); os.Exit(0) }
        })
     }
+
 	fmt.Printf("r %v shift %v\n",r,shift)
 		edkey = int(r)
 		if cmdoff {
@@ -145,20 +146,21 @@ func typedRune(r rune) {
 //				if g1edit_keymap[edkey] < 0 { keyst := fmt.Sprintf("locked key: %s not usable",map_keymap[edkey]) }
 				if g1edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G¹ free key: %s middle mouse click to set",map_keymap[edkey]); statlin(cmdhin,keyst) }
 				if g1edit_keymap[edkey] > 0 {
-					keyst := fmt.Sprintf("G¹ ed key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],g1mapid[edkey])
+					kys := g1mapid[g1edit_keymap[edkey]]
+					keyst := fmt.Sprintf("G¹ ed key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
 					statlin(cmdhin,keyst)
+fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 				}
 			} else {
 //				if g2edit_keymap[edkey] < 0 { keyst := fmt.Sprintf("locked key: %s not usable",map_keymap[edkey]) }
 				if g2edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G² free key: %s middle mouse click to set",map_keymap[edkey]); statlin(cmdhin,keyst) }
 				if g2edit_keymap[edkey] > 0 {
-					keyst := fmt.Sprintf("G² ed key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],g2mapid[edkey])
+					kys := g2mapid[g2edit_keymap[edkey]]
+					keyst := fmt.Sprintf("G² ed key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
 					statlin(cmdhin,keyst)
 				}
 			}
 		}
-		cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
-		if cmdoff && opts.edat > 0 { cmdhin = "cmds: ? '\\' - edit keys, #c C, HV, A #a, eE, L, S" }
 // keys that '\' doesnt block, no maze reloads
 		relodsub = false
 		switch r {
@@ -171,6 +173,8 @@ func typedRune(r rune) {
 				opts.dntr = true
 				relod = true
 			}
+			cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
+			if cmdoff && opts.edat > 0 { cmdhin = "cmds: ? '\\' - edit keys, #c C, HV, A #a, eE, L, S" }
 			fmt.Printf("hint: %s\n", cmdhin)
 			statlin(cmdhin,ska)
 		case 63:		// ?
@@ -199,7 +203,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 					fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
 					opts.edat = 1
 					stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
-					statlin(cmdhin,"on")
+					statlin(cmdhin,"")
 // these all deactivate as override during edit
 					opts.MRM = false
 					opts.MRP = false
@@ -216,7 +220,8 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				opts.edat = 0
 				opts.dntr = false
 				needsav()
-				statlin(cmdhin,"on")
+				cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
+				statlin(cmdhin,"")
 				relod = true
 			}
 		case 'c':
@@ -227,14 +232,17 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			fallthrough
 		case 67:		// C
 				cycl++
-				fmt.Printf("cyc %d \n",cycl)
 				if cycl > 64 { cycl = 0 }
+				kys := "n/a"
 				if G1 {
 					g1edit_keymap[cycloc] = cycl
+					kys = g1mapid[cycl]
 				} else {
 					g2edit_keymap[cycloc] = cycl
+					kys = g2mapid[cycl]
 				}
-				stu := fmt.Sprintf("cyc key: %s = %03d",map_keymap[cycloc],cycl)
+				fmt.Printf("cyc %d - %s\n",cycl,kys)
+				stu := fmt.Sprintf("cyc key: %s = %03d, %s",map_keymap[cycloc],cycl,kys)
 				statlin(cmdhin,stu)
 				edkey = 99						// pre set store cycl when cycling
 				relod = true					// needed to refresh indicate text
@@ -676,6 +684,7 @@ func aw_init() {
 	sdb = -1
 	cycl = 0
 	edmaze = mazeDecompress(slapsticReadMaze(1), false)
+	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 
 // get default win size
 
@@ -890,7 +899,7 @@ func keyhints() {
 	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
 //		strp += cpad("\n\n? - this list",52)
 	strp += cpad("\nctrl-q - quit program",40)
-	strp += cpad("\nd - editor mode ╗",40)
+	strp += cpad("\ne - editor mode ╗",40)
 	strp += cpad("\n\\ - toggle cmd keys*",40)
 	strp += cpad("\nf - floor pattern+",43)
 	strp += cpad("\ng - floor color+",45)
