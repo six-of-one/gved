@@ -149,14 +149,14 @@ func typedRune(r rune) {
 		if cmdoff {
 			if G1 {
 //				if g1edit_keymap[edkey] < 0 { keyst := fmt.Sprintf("locked key: %s not usable",map_keymap[edkey]) }
-				if g1edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G¹ free key: %s middle mouse click to set",map_keymap[edkey]) }
+				if g1edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G¹ free key: %s middle mouse click to set",map_keymap[edkey]); statlin(cmdhin,keyst) }
 				if g1edit_keymap[edkey] > 0 {
 					keyst := fmt.Sprintf("G¹ ed key: %s = %03d",map_keymap[edkey],g1edit_keymap[edkey])
 					statlin(cmdhin,keyst)
 				}
 			} else {
 //				if g2edit_keymap[edkey] < 0 { keyst := fmt.Sprintf("locked key: %s not usable",map_keymap[edkey]) }
-				if g2edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G² free key: %s middle mouse click to set",map_keymap[edkey]) }
+				if g2edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G² free key: %s middle mouse click to set",map_keymap[edkey]); statlin(cmdhin,keyst) }
 				if g2edit_keymap[edkey] > 0 {
 					keyst := fmt.Sprintf("G² ed key: %s = %03d",map_keymap[edkey],g2edit_keymap[edkey])
 					statlin(cmdhin,keyst)
