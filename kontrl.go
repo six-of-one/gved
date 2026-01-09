@@ -145,20 +145,20 @@ func typedRune(r rune) {
 //				if g1edit_keymap[edkey] < 0 { keyst := fmt.Sprintf("locked key: %s not usable",map_keymap[edkey]) }
 				if g1edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G¹ free key: %s middle mouse click to set",map_keymap[edkey]); statlin(cmdhin,keyst) }
 				if g1edit_keymap[edkey] > 0 {
-					keyst := fmt.Sprintf("G¹ ed key: %s = %03d",map_keymap[edkey],g1edit_keymap[edkey])
+					keyst := fmt.Sprintf("G¹ ed key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],g1mapid[edkey])
 					statlin(cmdhin,keyst)
 				}
 			} else {
 //				if g2edit_keymap[edkey] < 0 { keyst := fmt.Sprintf("locked key: %s not usable",map_keymap[edkey]) }
 				if g2edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G² free key: %s middle mouse click to set",map_keymap[edkey]); statlin(cmdhin,keyst) }
 				if g2edit_keymap[edkey] > 0 {
-					keyst := fmt.Sprintf("G² ed key: %s = %03d",map_keymap[edkey],g2edit_keymap[edkey])
+					keyst := fmt.Sprintf("G² ed key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],g2mapid[edkey])
 					statlin(cmdhin,keyst)
 				}
 			}
 		}
 		cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
-
+		if cmdoff && opts.edat > 0 { cmdhin = "cmds: ? '\\' - edit keys, #c C, HV, A #a, eE, L, S" }
 // keys that '\' doesnt block, no maze reloads
 		relodsub = false
 		switch r {
@@ -166,11 +166,8 @@ func typedRune(r rune) {
 			ska := "cmd keys mode"
 			if opts.edat > 0 {			// have to be in editor to turn on edit keys
 				cmdoff = !cmdoff
-// a,d only lower case not avail for edit hotkey
-				if cmdoff && opts.edat > 0 {
-					cmdhin = "cmds: ? '\\' - edit keys, #c C, HV, A #a, eE, L, S"
-					ska = "edit keys mode"
-				}
+// a,e only lower case not avail for edit hotkey
+				if cmdoff && opts.edat > 0 { ska = "edit keys mode" }
 				opts.dntr = true
 				relod = true
 			}
@@ -639,7 +636,7 @@ func st_menu() {
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\ne: turn editor on, init maze store in .ed/\n"+
-			"E: turn editor off\ndel, backspace - set floor *\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
+			"E: turn editor off, check unsaved buf\ndel, backspace - set floor *\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
 			"H: toggle horiz wrap, V: toggle vert wrap\n"+
 			"d - horiz door, D - vert door, w, W - walls *\nf, F - foods, k - key, t - treasure *\np, P - potions, T - teleporter\n"+
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n"+
