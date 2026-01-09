@@ -13,7 +13,7 @@ drag mouse while key held - do line of setcode
 rubber-band ops - click and drag will expand to set region of place / del / edit
 - some modes will auto operate
 - idea: show rubber band with visible indicator smh
-- ctrl-click should only outline
+* ctrl-click should only outline
 - cut & paste rubber-band contents
 
 replace mode - either over entire maze, rubber band region, select y/n on each find, or click item replace

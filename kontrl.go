@@ -715,8 +715,11 @@ func newHoldableButton() *holdableButton {
 }
 
 // store x & y when mouse button goes down - to start rubberband area
+// 		and when released for other ops like cup & paste
 var sxmd float64
 var symd float64
+var exmd float64
+var eymd float64
 
 // &{{{387 545} {379 509.92188}} 4 0}
 
@@ -742,15 +745,15 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	if opts.edat > 0 {
 		ax := 0.0	// absolute x & y
 		ay := 0.0
-		ix := 0.0	// rel x & y interm float32
-		iy := 0.0
+		exmd = 0.0	// rel x & y interm float32
+		eymd = 0.0
 		mb := 0		// mb 1 = left, 2 = right, 4 = middle
 		mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
 		pos := fmt.Sprintf("%v",mm)
-		fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&ix,&iy,&mb,&mk)
-		fmt.Printf("%d up: %.2f x %.2f \n",mb,ix,iy)
-		ex := int(ix / opts.dtec)
-		ey := int(iy / opts.dtec)
+		fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&exmd,&eymd,&mb,&mk)
+		fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
+		ex := int(exmd / opts.dtec)
+		ey := int(eymd / opts.dtec)
 		sx := int(sxmd / opts.dtec)
 		sy := int(symd / opts.dtec)
 		var setcode int			// code to store given edit hotkey
