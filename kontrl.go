@@ -179,7 +179,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				} else { needsav() }
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 				cnd := lod_maz(fil, ebuf, false)
-				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze() }
+				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
 				anum = 0
 			} else { opts.Nogtop = !opts.Nogtop; relod = true }
 		case 'd':
@@ -254,14 +254,14 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 						ldb++
 						fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
 						cnd = lod_maz(fil, ebuf, false)
-						if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze() }
+						if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
 					}
 					if cnd < 0 {
 						sdb = -1
 						if opts.edat > 0 {
 							fil := fmt.Sprintf(".ed/ebuf.ed")			// cycle back out
 							cnd = lod_maz(fil, ebuf, true)
-						if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
+						if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
 						} else { remaze(opts.mnum) }
 					}
 				}
@@ -356,7 +356,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'r':
 			if opts.edat > 0 {
 				opts.MRP = true
-				upd_edmaze()
+				upd_edmaze(false)
 				rotmirbuf(edmaze)
 				opts.dntr = true
 				opts.bufdrt = true
@@ -368,7 +368,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		case 82:		// R
 			if opts.edat > 0 {
 				opts.MRM = true
-				upd_edmaze()
+				upd_edmaze(false)
 				rotmirbuf(edmaze)
 				opts.dntr = true
 				opts.bufdrt = true
@@ -386,7 +386,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'm':
 			if opts.edat > 0 {
 				opts.MV = true
-				upd_edmaze()
+				upd_edmaze(false)
 				rotmirbuf(edmaze)
 				opts.dntr = true
 				opts.bufdrt = true
@@ -397,7 +397,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'h':
 			if opts.edat > 0 {
 				opts.MH = true
-				upd_edmaze()
+				upd_edmaze(false)
 				rotmirbuf(edmaze)
 				opts.dntr = true
 				opts.bufdrt = true
@@ -461,7 +461,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			relodsub = false
 		}
 	  }
-	  upd_edmaze()		// store vars view changes like floors or walls
+	  upd_edmaze(false)		// store vars view changes like floors or walls
 		if spau == "G¹ " {
 			if opts.R14 { spau += "rv14" } else { spau += "rv1-9" }
 		}
@@ -581,7 +581,7 @@ func undo() {
 		ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}] = delbuf.elem[delstak]
 		delbuf.elem[delstak] = sw
 		opts.bufdrt = true
-		ed_maze()
+		ed_maze(false)
 	}
 }
 
@@ -592,7 +592,7 @@ func redo() {
 		delbuf.elem[delstak] = sw
 		delstak++
 		opts.bufdrt = true
-		ed_maze()
+		ed_maze(false)
 	}
 //	ed_maze()
 }
@@ -604,7 +604,8 @@ func uswap() {
 			ebuf[xy{x,y}] = ubuf[xy{x,y}]
 			ubuf[xy{x,y}] = sw
 	}}
-	ed_maze()
+	for y := 0; y < 11; y++ { sw := eflg[y]; eflg[y] = uflg[y]; uflg[y] = sw }
+	ed_maze(true)
 }
 
 // set menus
@@ -790,7 +791,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		  }}
 //			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}}
-		ed_maze()
+		ed_maze(false)
 	}
 
 }

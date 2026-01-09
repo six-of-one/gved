@@ -24,6 +24,7 @@ var nsbuf MazeData	// needsav needs to make a quick buffer copy while the user d
 var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf
 var eflg [11]int
+var uflg [11]int
 var tflg [14]int	// transfer flags - because they dont pass as a parm?
 var nsflg [11]int
 
@@ -96,6 +97,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		l = " 00 00 00 00 00 00 00 0B 5A 5B 49"
 		if scanr.Scan() { l = scanr.Text() }
 		fmt.Sscanf(l," %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", &tflg[0], &tflg[1], &tflg[2], &tflg[3], &tflg[4], &tflg[5], &tflg[6], &tflg[7], &tflg[8], &tflg[9], &tflg[10])
+		for y := 0; y < 11; y++ { uflg[y] = tflg[y] }
 	if opts.Verbose {
 			for y := 0; y < 11; y++ { fmt.Printf(" %02X", tflg[y]) }
 			fmt.Printf("\n")
@@ -183,12 +185,12 @@ func stor_maz(mazn int) {
 
 func ed_sav(mazn int) {
 
-	upd_edmaze()
+	upd_edmaze(false)
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,mazn)
 	sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
 }
 
-func upd_edmaze() {
+func upd_edmaze(ovrm bool) {
 	for y := 0; y <= opts.DimX; y++ {
 		for x := 0; x <= opts.DimY; x++ {
 		edmaze.data[xy{x, y}] = ebuf[xy{x, y}]
@@ -202,15 +204,21 @@ func upd_edmaze() {
 	flagbytes[2] = byte(eflg[3])
 	flagbytes[3] = byte(eflg[4])
 	edmaze.flags = int(binary.BigEndian.Uint32(flagbytes))
-	edmaze.wallpattern = Ovwallpat
-	edmaze.floorpattern = Ovflorpat
-	edmaze.wallcolor = Ovwallcol
-	edmaze.floorcolor = Ovflorcol
-
+	if ovrm {
+		edmaze.wallpattern = eflg[5] & 0x0f
+		edmaze.floorpattern = (eflg[5] & 0xf0) >> 4
+		edmaze.wallcolor = eflg[6] & 0x0f
+		edmaze.floorcolor = (eflg[6] & 0xf0) >> 4
+	} else {
+		edmaze.wallpattern = Ovwallpat
+		edmaze.floorpattern = Ovflorpat
+		edmaze.wallcolor = Ovwallcol
+		edmaze.floorcolor = Ovflorcol
+	}
 }
-// udpate maze from edits
-func ed_maze() {
-	upd_edmaze()
+// udpate maze from edits - rld false to keep colors / pats
+func ed_maze(rld bool) {
+	upd_edmaze(rld)
 	Ovimg := genpfimage(edmaze, opts.mnum)
 	upwin(Ovimg)
 }
