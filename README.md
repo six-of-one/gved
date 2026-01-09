@@ -25,10 +25,11 @@ interactive mode:
 * 'L' - toggle generator monster indicator
 * 'p', 'P' - floor and wall invisible in output.png
 * 'T' - cycle bitmask to hide vars items (ref constants.go), can be set by #'T'
-* 'w' 'e' 'f' 'g' - can all be proceded by #, just like #a, and shifted W,E,F,G reverse ops
-* 'd' 'D' - turn edit mode on/ off
+* 'w' 'q' 'f' 'g' - can all be proceded by #, just like #a, and shifted W,E,F,G reverse ops
+* 'e' 'E' - turn edit mode on/ off
 * writes output.png as each maze is viewed
 - a special edit mode ('\' toggles) now exists with its own hint set on the edit menu
+see ops.txt for full details
 
 Notes
 =====
