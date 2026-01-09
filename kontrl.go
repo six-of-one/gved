@@ -168,16 +168,18 @@ func typedRune(r rune) {
 		switch r {
 		case 92:		// \
 			ska := "cmd keys mode"
-			cmdoff = !cmdoff
+			if opts.edat > 0			// have to be in editor to turn on edit keys
+				cmdoff = !cmdoff
 // a,d only lower case not avail for edit hotkey
-			if cmdoff && opts.edat > 0 {
-				cmdhin = "cmds: ? '\\' - enable cmds, Q, #c C, HV, A #a, dD, L, S"
-				ska = "edit keys mode"
+				if cmdoff && opts.edat > 0 {
+					cmdhin = "cmds: ? '\\' - enable cmds, Q, #c C, HV, A #a, dD, L, S"
+					ska = "edit keys mode"
+				}
+				opts.dntr = true
+				relod = true
 			}
 			fmt.Printf("hint: %s\n", cmdhin)
 			statlin(cmdhin,ska)
-			opts.dntr = true
-			relod = true
 		case 63:		// ?
 			keyhints()
 		case 65:		// A
@@ -643,7 +645,7 @@ func st_menu() {
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nd: turn editor on, init maze store in .ed/\n"+
 			"D: turn editor off, saves edits to file\ndel, backspace - set floor *\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
 			"H: toggle horiz wrap, V: toggle vert wrap\n"+
-			"b - horiz door, B - vert door, w - wall *\nk - key, t - transporter *\n"+
+			"b - horiz door, B - vert door, w, W - walls *\nf, F - foods, k - key, t - treasure *\np, P - potions, T - teleporter\n"+
 			"edit keys lock when pressed, hit 'b' and place doors\nLogo/ Super key - click to reassing current key\n"+
 			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
