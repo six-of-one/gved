@@ -146,7 +146,23 @@ func typedRune(r rune) {
     }
 	fmt.Printf("r %v shift %v\n",r,shift)
 		edkey = int(r)
-
+		if cmdoff {
+			if G1 {
+//				if g1edit_keymap[edkey] < 0 { keyst := fmt.Sprintf("locked key: %s not usable",map_keymap[edkey]) }
+				if g1edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G¹ free key: %s middle mouse click to set",map_keymap[edkey]) }
+				if g1edit_keymap[edkey] > 0 {
+					keyst := fmt.Sprintf("G¹ ed key: %s = %03d",map_keymap[edkey],g1edit_keymap[edkey])
+					statlin(cmdhin,keyst)
+				}
+			} else {
+//				if g2edit_keymap[edkey] < 0 { keyst := fmt.Sprintf("locked key: %s not usable",map_keymap[edkey]) }
+				if g2edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G² free key: %s middle mouse click to set",map_keymap[edkey]) }
+				if g2edit_keymap[edkey] > 0 {
+					keyst := fmt.Sprintf("G² ed key: %s = %03d",map_keymap[edkey],g2edit_keymap[edkey])
+					statlin(cmdhin,keyst)
+				}
+			}
+		}
 		cmdhin = "cmds: ?\\, Q, dD, fFgG, wWeE, rRt, hm, pPT, sL, S, il, u, v, A #a"
 
 // keys that '\' doesnt block, no maze reloads
@@ -223,7 +239,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				} else {
 					g2edit_keymap[cycloc] = cycl
 				}
-				stu := fmt.Sprintf("cyc key: %s = %03d\n",map_keymap[cycloc],cycl)
+				stu := fmt.Sprintf("cyc key: %s = %03d",map_keymap[cycloc],cycl)
 				statlin(cmdhin,stu)
 				edkey = 99						// pre set store cycl when cycling
 				relod = true					// needed to refresh indicate text
@@ -760,16 +776,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		var setcode int			// code to store given edit hotkey
 		if G1 {
 			setcode = g1edit_keymap[edkey]
-			if mb == 1 && cmdoff {
-				keyst := fmt.Sprintf("ed key: %s = %03d\n",map_keymap[edkey],g1edit_keymap[edkey])
-				statlin(cmdhin,keyst)
-			}
 		} else {
 			setcode = g2edit_keymap[edkey]
-			if mb == 1 && cmdoff {
-				keyst := fmt.Sprintf("ed key: %s = %03d\n",map_keymap[edkey],g2edit_keymap[edkey])
-				statlin(cmdhin,keyst)
-			}
 		}
 
 // no access, keys: ? Q, A #a, dD, L, S
@@ -777,11 +785,11 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			if G1 {
 				g1edit_keymap[edkey] = ebuf[xy{ex, ey}]
-				keyst := fmt.Sprintf("assn key: %s = %03d\n",map_keymap[edkey],g1edit_keymap[edkey])
+				keyst := fmt.Sprintf("G¹ assn key: %s = %03d",map_keymap[edkey],g1edit_keymap[edkey])
 				statlin(cmdhin,keyst)
 			} else {
 				g2edit_keymap[edkey] = ebuf[xy{ex, ey}]
-				keyst := fmt.Sprintf("assn key: %s = %03d\n",map_keymap[edkey],g2edit_keymap[edkey])
+				keyst := fmt.Sprintf("G² assn key: %s = %03d",map_keymap[edkey],g2edit_keymap[edkey])
 				statlin(cmdhin,keyst)
 			}
 		} else {
