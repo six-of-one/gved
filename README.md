@@ -29,7 +29,7 @@ interactive mode:
 * 'e' 'E' - turn edit mode on/ off
 * writes output.png as each maze is viewed
 - a special edit mode ('\' toggles) now exists with its own hint set on the edit menu
-see ops.txt for full details
+see [ops.txt](https://github.com/six-of-one/gved/blob/master/ops.txt) for full details
 
 Notes
 =====
