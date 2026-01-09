@@ -773,12 +773,20 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 			if ey < sy { t := ey; ey = sy; sy = t }
 		 for my := sy; my <= ey; my++ {
 		   for mx := sx; mx <= ex; mx++ {
-// looped now
-			if del { undo_buf(mx, my); ebuf[xy{mx, my}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
-			if setcode > 0 { undo_buf(mx, my); ebuf[xy{mx, my}] = setcode; opts.bufdrt = true }
-			if edkey == 182 { ebuf[xy{mx, my}] = repl; opts.bufdrt = true }		//
-			if edkey == 214 { repl = ebuf[xy{mx, my}] }		// just placeholder until new repl done
+			rop := true		// run ops
+			if ctrl {		// with ctrl held on drag op, only do outline
+				rop = false
+				if my == sy || my == ey { rop = true }
+				if mx == sx || mx == ex { rop = true }
 			}
+// looped now, with ctrl op
+			if rop {
+				if del { undo_buf(mx, my); ebuf[xy{mx, my}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
+				if setcode > 0 { undo_buf(mx, my); ebuf[xy{mx, my}] = setcode; opts.bufdrt = true }
+				if edkey == 182 { ebuf[xy{mx, my}] = repl; opts.bufdrt = true }		//
+				}
+			}
+			if edkey == 214 { repl = ebuf[xy{mx, my}] }		// just placeholder until new repl done -- yes, NOT being used
 		  }}
 //			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}}
