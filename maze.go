@@ -130,7 +130,7 @@ func mazeloop(maze *Maze) {
 		}
 if opts.Verbose {
 	fmt.Printf("wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_H,maze.flags&LFLAG4_WRAP_V)
-	fmt.Printf(" fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
+	fmt.Printf("mazeloop fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
 }
 
 // note it

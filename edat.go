@@ -268,7 +268,7 @@ func rotmirbuf(rmmaze *Maze) {
 	}
 
 	fmt.Printf("wraps -- hw: %d vw: %d\n", rmmaze.flags&LFLAG4_WRAP_H,rmmaze.flags&LFLAG4_WRAP_V)
-	fmt.Printf(" fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
+	fmt.Printf("rotmirbuf fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
 
 
 // note it
@@ -370,5 +370,8 @@ fmt.Printf("in remaze dntr: %t edat:%d\n",opts.dntr,opts.edat)
 		opts.bufdrt = false
 	}
 	opts.dntr = false
-	ed_maze(opts.edat > 0)
+	if opts.edat > 0 { ed_maze(true) } else {
+		Ovimg := genpfimage(edmaze, mazn)
+		upwin(Ovimg)
+	}
 }
