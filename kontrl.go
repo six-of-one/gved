@@ -218,6 +218,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				smod = "View mode: "
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 				opts.edat = 0
+				opts.dntr = false
 				if opts.bufdrt { ed_sav(opts.mnum+1) }		// this deactivates edit mode on this buffer
 				statlin(cmdhin,"on")
 				relod = true
@@ -258,7 +259,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
 					anum = 0
 				} else {
-// with no anum, rotate curr ebuf thru s[1] - s[27], store eb in s[0]
+// with no anum, rotate curr ebuf thru s[1] - s[?], store eb in s[0]
 					cnd := -1
 					ldb := sdb
 					if sdb == -1 {

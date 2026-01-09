@@ -361,14 +361,13 @@ func rotmirbuf(rmmaze *Maze) {
 // reload maze while editing & update window - generates output.png
 
 func remaze(mazn int) {
-fmt.Printf("in remaze\n")
+fmt.Printf("in remaze dntr: %t edat:%d\n",opts.dntr,opts.edat)
 	sdb = -1
 	if !opts.dntr {
-		Ovwallpat = -1
 		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(edmaze)
 		opts.bufdrt = false
 	}
 	opts.dntr = false
-	ed_maze(true)
+	ed_maze(opts.edat > 0)
 }
