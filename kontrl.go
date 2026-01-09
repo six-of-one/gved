@@ -43,6 +43,7 @@ var ctrl bool
 var del bool
 var logo bool		// other wise labeld "win" key
 var edkey int		// for passing edit keys to clicker
+var cmdhin string
 
 func typedRune(r rune) {
 
@@ -146,7 +147,7 @@ func typedRune(r rune) {
 	fmt.Printf("r %v shift %v\n",r,shift)
 		edkey = int(r)
 
-		cmdhin := "cmds: ?\\, Q, dD, fFgG, wWeE, rRt, hm, pPT, sL, S, il, u, v, A #a"
+		cmdhin = "cmds: ?\\, Q, dD, fFgG, wWeE, rRt, hm, pPT, sL, S, il, u, v, A #a"
 
 // keys that '\' doesnt block, no maze reloads
 		relodsub = false
@@ -222,7 +223,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				} else {
 					g2edit_keymap[cycloc] = cycl
 				}
-				stu := fmt.Sprintf("cyc: %d",cycl)
+				stu := fmt.Sprintf("cyc key: %s = %03d\n",map_keymap[cycloc],cycl)
 				statlin(cmdhin,stu)
 				edkey = 99						// pre set store cycl when cycling
 				relod = true					// needed to refresh indicate text
@@ -759,8 +760,16 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		var setcode int			// code to store given edit hotkey
 		if G1 {
 			setcode = g1edit_keymap[edkey]
+			if mb == 1 && cmdoff {
+				keyst := fmt.Sprintf("ed key: %s = %03d\n",map_keymap[edkey],g1edit_keymap[edkey])
+				statlin(cmdhin,keyst)
+			}
 		} else {
 			setcode = g2edit_keymap[edkey]
+			if mb == 1 && cmdoff {
+				keyst := fmt.Sprintf("ed key: %s = %03d\n",map_keymap[edkey],g2edit_keymap[edkey])
+				statlin(cmdhin,keyst)
+			}
 		}
 
 // no access, keys: ? Q, A #a, dD, L, S
@@ -768,8 +777,12 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			if G1 {
 				g1edit_keymap[edkey] = ebuf[xy{ex, ey}]
+				keyst := fmt.Sprintf("assn key: %s = %03d\n",map_keymap[edkey],g1edit_keymap[edkey])
+				statlin(cmdhin,keyst)
 			} else {
 				g2edit_keymap[edkey] = ebuf[xy{ex, ey}]
+				keyst := fmt.Sprintf("assn key: %s = %03d\n",map_keymap[edkey],g2edit_keymap[edkey])
+				statlin(cmdhin,keyst)
 			}
 		} else {
 		if del || cmdoff {
