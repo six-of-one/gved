@@ -29,13 +29,13 @@ A	enable address mode (experimental, likely to never work with arcade emu)
 
 two op modes exist, view only and edit
 
-e	turn edit mode on - saves current maze to disk in .ed
+e	turn edit mode on - initializes current maze to disk in .ed if not present
 E	turn edit off/ view back on and check for unsaved data
 
 S	cycle through all save data buffers in .ed/sd#####_g?.ed	(where g? is g1 or g2)
 	- while cycling any edits to current maze are saved temporary as .ed/ebuf.ed
-#S	load buffer #####
-#L	save current visible maze as buffer #####
+#L	load buffer #####											(current limit 999 bufs)
+#S	save current visible maze as buffer #####
 	- while sd buffers are available in view mode, no view mode changes (fgwqhmrR) will be saved
 
 View mazes only:		( and cmd keys in edit )
@@ -57,14 +57,15 @@ f,F	 + or - floor pattern in cycle of all patterns
 g,G	 + or - floor colors in cycle of all colors
 w,W	 + or - wall pattern in cycle
 q,Q	 + or - wall colors in cycle
-#	any of f,g,w,q - set valid pattern / color #, with invalid going to 0
+#	and #f, #g, #w, #q - set valid pattern / color #, with invalid going to 0
 
 h	horizontally mirror the maze (G¹ does this after many levels, G² from maze 1)
 m	vertically mirror "flip" the maze (same G¹ / G² note)
 	- doing both rotates maze 180°
 r	[ sanctuary only! ] rotate maze +90°
 R	[ sanctuary only! ] rotate maze -90°
-	- gauntlet arcade does NOT do this - this is a feature of the sanctuary port only
+	- gauntlet arcade does NOT do this
+	- this is a feature of the sanctuary port only
 t	set rotate to 0°	(not available in edit mode!)
 
 following keys are visible effect only, no edit changes are made
@@ -103,8 +104,16 @@ there is as yet no way, *with gved*, to recompress and store mazes in rom...
 <CTRL>-R	reset buffer for current maze # from rom
 			- these are also on the edit menu
 
+<CTRL>-L	load current buffer for maze # from disk
+
+<CTRL>-Z	undo last op - currently holds 10000 units (single maze cell) of undo
+<CTRL>-Y	redo last undo up to last change entered
+			-undo back 5 or 10 and place a new item and the forward chain is lost
+<CTRL>-U	when the maze is loaded from disk an ulternate buffer is stored and ctrl-U swaps them
+			- both can be edited, but both can not yet be saved
+
 certain ops will check for unsaved changes and launch a dialog to save
-(z, x, a, #L, E)
+(z, x, a, #L, E, i, l, u)
 
 \	toggle cmd keys and edit keys		(only while in edit mode)
 

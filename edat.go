@@ -17,7 +17,7 @@ more complexity will be required for:
 */
 
 var edmaze *Maze
-var ebuf MazeData
+var ebuf MazeData	// main edit buffer and corresponding flags
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var nsbuf MazeData	// needsav needs to make a quick buffer copy while the user decideds
 
@@ -25,10 +25,11 @@ var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf
 var eflg [11]int
 var uflg [11]int
-var tflg [14]int	// transfer flags - because they dont pass as a parm?
+var tflg [14]int	// transfer flags - because they dont pass as a parm for scan from file?
+					//					so after a file load, these have to be copied to the appropriate flags
 var nsflg [11]int
 
-// deleted elements buffer
+// deleted elements / undo storage
 
 type Deletebuf struct {
 	mx     [10001]int
