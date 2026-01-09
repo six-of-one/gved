@@ -312,7 +312,7 @@ var g2edit_keymap = []int{
 }
 
 var map_keymap = []string{
-// all key indicator
+// all key indicator for edit mode
 //    0    1    2    3    4    5    6    7    8    9
 	" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", 	//  units 0 - 9
 	" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", 	//  unit start 10			valid 33 - 126

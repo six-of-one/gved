@@ -54,11 +54,6 @@ func typedRune(r rune) {
 	relodsub := false
 
 //	fmt.Printf("in keys event - %x\n",r)
-// <ESC> also exits
-	if r == 81 {
-		needsav()
-		os.Exit(0)
-	}
 
 // new maze
 	if r == 'a' {
@@ -126,7 +121,7 @@ func typedRune(r rune) {
         })
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
 //            fmt.Printf("Desktop key up: %v\n", key)
-			if key.Name == "Escape" { os.Exit(0) }
+//			if key.Name == "Escape" { os.Exit(0) }
 			if key.Name == "Delete" { del = false }
 			if key.Name == "BackSpace" { del = false }
 			if key.Name == "LeftSuper" { logo = false }
@@ -140,6 +135,7 @@ func typedRune(r rune) {
 			if key.Name == "U" && ctrl  { uswap() }
 			if key.Name == "Z" && ctrl  { undo() }
 			if key.Name == "Y" && ctrl  { redo() }
+			if key.Name == "Q" && ctrl  { needsav(); os.Exit(0) }
        })
     }
 	fmt.Printf("r %v shift %v\n",r,shift)
@@ -161,18 +157,18 @@ func typedRune(r rune) {
 				}
 			}
 		}
-		cmdhin = "cmds: ?\\, Q, dD, fFgG, wWeE, rRt, hm, pPT, sL, S, il, u, v, A #a"
+		cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 
 // keys that '\' doesnt block, no maze reloads
 		relodsub = false
 		switch r {
 		case 92:		// \
 			ska := "cmd keys mode"
-			if opts.edat > 0			// have to be in editor to turn on edit keys
+			if opts.edat > 0 {			// have to be in editor to turn on edit keys
 				cmdoff = !cmdoff
 // a,d only lower case not avail for edit hotkey
 				if cmdoff && opts.edat > 0 {
-					cmdhin = "cmds: ? '\\' - enable cmds, Q, #c C, HV, A #a, dD, L, S"
+					cmdhin = "cmds: ? '\\' - edit keys, #c C, HV, A #a, eE, L, S"
 					ska = "edit keys mode"
 				}
 				opts.dntr = true
@@ -199,7 +195,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
 				anum = 0
 			} else { opts.Nogtop = !opts.Nogtop; relod = true }
-		case 'd':
+		case 'e':
 			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 				if opts.edat != 1 {
 					smod = "Edit mode: "
@@ -215,7 +211,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				}
 				relod = true
 			}
-		case 68:		// D
+		case 69:		// E
 			if opts.edat != 0 {
 				smod = "View mode: "
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
@@ -327,7 +323,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
-		case 'e':
+		case 'q':
 			Ovwallcol += 1
 			if anum > 0 { Ovwallcol = anum - 1; anum = 0 }
 			if Ovwallcol > 16 { Ovwallcol = 0 }
@@ -335,7 +331,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
-		case 69:		// E
+		case 81:		// Q
 			Ovwallcol -= 1
 			if Ovwallcol < 0 { Ovwallcol = 16 }
 			eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
@@ -642,11 +638,11 @@ func st_menu() {
 	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-r", menu_res)
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
-			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nd: turn editor on, init maze store in .ed/\n"+
-			"D: turn editor off, saves edits to file\ndel, backspace - set floor *\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
+			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\ne: turn editor on, init maze store in .ed/\n"+
+			"E: turn editor off\ndel, backspace - set floor *\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
 			"H: toggle horiz wrap, V: toggle vert wrap\n"+
-			"b - horiz door, B - vert door, w, W - walls *\nf, F - foods, k - key, t - treasure *\np, P - potions, T - teleporter\n"+
-			"edit keys lock when pressed, hit 'b' and place doors\nLogo/ Super key - click to reassing current key\n"+
+			"d - horiz door, D - vert door, w, W - walls *\nf, F - foods, k - key, t - treasure *\np, P - potions, T - teleporter\n"+
+			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n"+
 			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
 	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin)
@@ -660,7 +656,7 @@ func st_menu() {
 	})
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
 
-	hintup = fyne.NewMenu("cmds: ?\\, Q, dD, fFgG, wWeE, rRt, hm, pPT, sL, S, il, u, v, A #a")
+	hintup = fyne.NewMenu("cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a")
 
 	statup = fyne.NewMenu("view mode:")
 
@@ -896,9 +892,9 @@ func keyhints() {
 	strp := cpad("single letter commands",36)
 	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
 //		strp += cpad("\n\n? - this list",52)
-	strp += cpad("\nQ - quit program",42)
-	strp += cpad("\n\\ - toggle cmd keys",41)
-	strp += cpad("\nd - editor mode",43)
+	strp += cpad("\nctrl-q - quit program",40)
+	strp += cpad("\nd - editor mode ╗",40)
+	strp += cpad("\n\\ - toggle cmd keys*",40)
 	strp += cpad("\nf - floor pattern+",43)
 	strp += cpad("\ng - floor color+",45)
 	strp += cpad("\nw - wall pattern+",43)
