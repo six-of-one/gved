@@ -370,6 +370,5 @@ fmt.Printf("in remaze\n")
 		opts.bufdrt = false
 	}
 	opts.dntr = false
-	Ovimg := genpfimage(edmaze, mazn)
-	upwin(Ovimg)
+	ed_maze(true)
 }
