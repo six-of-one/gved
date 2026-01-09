@@ -217,9 +217,10 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat != 0 {
 				smod = "View mode: "
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
+				cmdoff = false
 				opts.edat = 0
 				opts.dntr = false
-				if opts.bufdrt { ed_sav(opts.mnum+1) }		// this deactivates edit mode on this buffer
+				needsav()
 				statlin(cmdhin,"on")
 				relod = true
 			}

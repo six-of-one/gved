@@ -244,6 +244,7 @@ func undo_buf(sx int, sy int) {
 }
 
 // same as mazeloop, but called by Rr, h, m while cmd keys active in edit mode
+// 	╚══> except in this buffer is changed by ops
 
 func rotmirbuf(rmmaze *Maze) {
 
