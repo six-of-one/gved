@@ -106,8 +106,7 @@ func typedRune(r rune) {
 		anum = 0
 	}
 	if r >= '0' && r <= '9' || r == '`' {
-		til := fmt.Sprintf("numeric: %d", anum)
-		uptitl(opts.mnum, til)
+		spau = fmt.Sprintf("numeric: %d", anum)
 	}
 
 	if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
@@ -115,8 +114,7 @@ func typedRune(r rune) {
 //            fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "BackSpace" {
 				anum = (anum / 10);
-				til := fmt.Sprintf("numeric: %d", anum)
-				uptitl(opts.mnum, til)
+				spau = fmt.Sprintf("numeric: %d", anum)
 			}
 			if key.Name == "Delete" { del = true }
 			if key.Name == "BackSpace" { del = true }
@@ -815,7 +813,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		  }}
 //			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}}
-		ed_maze(false)
+		ed_maze(true)
 	}
 
 }

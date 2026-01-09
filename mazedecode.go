@@ -145,6 +145,26 @@ if opts.Verbose {
 // Six end maze dumper
 }
 
+// have to do this before buffers are set
+// g1 likely has nothing like g2 stuff, and might not use flags at all
+	if G1 {
+// g1 wrap data is still not known, just making this manual for now
+		horz := true		// check horz first
+		for i := 0; i < 70; i++ {
+
+			if g1wrp[i] < 0 { i = 70 } else {
+
+			if opts.mnum == g1wrp[i] {
+// shoe horn these in for all the checks in render, edit & elsewehre
+				if horz { compressed[4] = compressed[4] | LFLAG4_WRAP_H } else {
+					compressed[4] = compressed[4] | LFLAG4_WRAP_V
+				}
+			}
+			if g1wrp[i] == 200 { horz = false }		// check vert
+			}
+		}
+	}
+
 	opts.edip = 0		// this is now file loaded, does not replace edat mode
 	if opts.edat > 0 {
 		sdb = -1
@@ -196,24 +216,8 @@ if opts.Verbose {
 		maze.floorcolor = Ovflorcol
 	}
 
-// g1 likely has nothing like g2 stuff, and might not use flags at all
-	if G1 {
-// g1 wrap data is still not known, just making this manual for now
-		horz := true		// check horz first
-		for i := 0; i < 70; i++ {
-
-			if g1wrp[i] < 0 { i = 70 } else {
-
-			if opts.mnum == g1wrp[i] {
-// shoe horn these in for all the checks in render, edit & elsewehre
-				if horz { maze.flags = maze.flags | LFLAG4_WRAP_H } else {
-					maze.flags = maze.flags | LFLAG4_WRAP_V
-				}
-			}
-			if g1wrp[i] == 200 { horz = false }		// check vert
-			}
-		}
 // testing - this could be g1 codes, hard to tell with out the g1 gfx roms loaded
+	if G1 {
 		if maze.wallpattern > 5 {
 			maze.wallpattern = rand.Intn(4)
 			fmt.Printf("maze.wallpattern = rand.Intn(4)\n")
