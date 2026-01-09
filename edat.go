@@ -271,7 +271,7 @@ func rotmirbuf(rmmaze *Maze) {
 
 
 // note it
-		fmt.Printf("init\n")
+/*		fmt.Printf("init\n")
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
@@ -280,7 +280,7 @@ func rotmirbuf(rmmaze *Maze) {
 		fmt.Printf("\n")
 	}
 		fmt.Printf("\n")
-
+*/
 // transform																										 - rotating sq. wall mazes will always work
 // rotate +90 degrees				-- * there is the issue of gauntlet arcade NEEDING the y = 0 wall *always* intact, rotating looper mazes wont work
 		if opts.MRP {
@@ -340,7 +340,7 @@ func rotmirbuf(rmmaze *Maze) {
 			}
 		}
 // TEMP maze dmp
-		fmt.Printf("rm dun\n")
+/*		fmt.Printf("rm dun\n")
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 
@@ -348,7 +348,7 @@ func rotmirbuf(rmmaze *Maze) {
 		}
 		fmt.Printf("\n")
 	}
-		fmt.Printf("\n")
+		fmt.Printf("\n")*/
 // REM TEMP
 
 // clear all in edit mode
@@ -362,13 +362,15 @@ func rotmirbuf(rmmaze *Maze) {
 
 func remaze(mazn int) {
 fmt.Printf("in remaze\n")
+	rebl := true
 	sdb = -1
 	if !opts.dntr {
 		Ovwallpat = -1
 		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(edmaze)
 		opts.bufdrt = false
+		rebl = false
 	}
 	opts.dntr = false
-	ed_maze(true)
+	ed_maze(rebl)
 }

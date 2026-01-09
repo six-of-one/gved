@@ -41,3 +41,4 @@ think about retooling buffer file read to work like rom reader in roms.go instea
 issues needing fixed
 - ctrl-z on area edits only works one at a time
   (hint: shft ctrl-z will one at, norm to do all)
+- m,h, Rr all fail upper left
