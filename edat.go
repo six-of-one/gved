@@ -362,15 +362,13 @@ func rotmirbuf(rmmaze *Maze) {
 
 func remaze(mazn int) {
 fmt.Printf("in remaze\n")
-	rebl := true
 	sdb = -1
 	if !opts.dntr {
 		Ovwallpat = -1
 		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(edmaze)
 		opts.bufdrt = false
-		rebl = false
 	}
 	opts.dntr = false
-	ed_maze(rebl)
+	ed_maze(true)
 }
