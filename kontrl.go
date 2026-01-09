@@ -789,11 +789,13 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			if G1 {
 				g1edit_keymap[edkey] = ebuf[xy{ex, ey}]
-				keyst := fmt.Sprintf("G¹ assn key: %s = %03d",map_keymap[edkey],g1edit_keymap[edkey])
+				kys := g1mapid[g1edit_keymap[edkey]]
+				keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
 				statlin(cmdhin,keyst)
 			} else {
 				g2edit_keymap[edkey] = ebuf[xy{ex, ey}]
-				keyst := fmt.Sprintf("G² assn key: %s = %03d",map_keymap[edkey],g2edit_keymap[edkey])
+				kys := g2mapid[g2edit_keymap[edkey]]
+				keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
 				statlin(cmdhin,keyst)
 			}
 		} else {
