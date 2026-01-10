@@ -803,6 +803,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if del || cmdoff {
 			if ex < sx { t := ex; ex = sx; sx = t }		// swap if end smaller than start
 			if ey < sy { t := ey; ey = sy; sy = t }
+			rcl := 1		// loop count for undoing multi ops
 		 for my := sy; my <= ey; my++ {
 		   for mx := sx; mx <= ex; mx++ {
 			rop := true		// run ops
@@ -813,12 +814,13 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 			}
 // looped now, with ctrl op
 			if rop {
-				if del { undo_buf(mx, my); ebuf[xy{mx, my}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
-				if setcode > 0 { undo_buf(mx, my); ebuf[xy{mx, my}] = setcode; opts.bufdrt = true }
-				if edkey == 182 { ebuf[xy{mx, my}] = repl; opts.bufdrt = true }		//
+				if del { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
+				if setcode > 0 { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = setcode; opts.bufdrt = true }
 				}
+				rcl++
 			}
-			if edkey == 214 { repl = ebuf[xy{mx, my}] }		// just placeholder until new repl done -- yes, NOT being used
+			if edkey == 314 { repl = ebuf[xy{mx, my}] }		// just placeholder until new repl done -- yes, NOT being used
+//			if edkey == 182 { ebuf[xy{mx, my}] = repl; opts.bufdrt = true }		//
 		  }}
 //			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}}

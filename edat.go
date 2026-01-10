@@ -234,7 +234,7 @@ func undo_buf(sx int, sy int, rc int) {
 //	delbuf.elem = append(delbuf.elem,ebuf[xy{sx, sy}])		// this is already added by the -1 pointer below and in aw_init
 	delbuf.elem[delstak] = ebuf[xy{sx, sy}]
 
-	fmt.Printf(" del elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
+	fmt.Printf(" del elem: %d maze: %d x %d - rloop: %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],rc)
 	delstak++
 //	delbuf.elem[delstak] = -1 	// when undeleting this is the end
 	delbuf.elem = append(delbuf.elem,-1)
