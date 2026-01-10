@@ -465,6 +465,13 @@ var map_keymap = []string{
 
 }
 
+// some key ops
+const (
+	NOP		= 0
+	COPY	= 1
+	cut		= 2
+	paste	= 4
+)
 // sanctuary converter values
 var sanct_vrt = []int{
 
