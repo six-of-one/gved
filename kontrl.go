@@ -658,6 +658,7 @@ func st_menu() {
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
 	menuItemUndo := fyne.NewMenuItem("Undo <ctrl>-z", undo)
 	menuItemRedo := fyne.NewMenuItem("Redo <ctrl>-y", redo)
+	menuItemUswp := fyne.NewMenuItem("Redo <ctrl>-u", uswap)
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\ne: turn editor on, init maze store in .ed/\n"+
@@ -667,7 +668,7 @@ func st_menu() {
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n"+
 			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
-	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemLin1, menuItemUndo, menuItemRedo, menuItemEdhin)
+	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemLin1, menuItemUndo, menuItemRedo, menuItemUswp, menuItemEdhin)
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
 	menuItemAbout := fyne.NewMenuItem("About", func() {

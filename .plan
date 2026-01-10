@@ -39,6 +39,11 @@ multiple save buffers to store vars maze edits, page thru all wiht 'S', store wi
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 
 issues needing fixed
-- ctrl-z on area edits only works one at a time
+* ctrl-z on area edits only works one at a time
   (hint: shft ctrl-z will one at, norm to do all)
 - exit before needsav done
+
+perhaps needs rewrite:
+- cleanup kontrol
+- might move stuff
+  some sd buf ops to edat
