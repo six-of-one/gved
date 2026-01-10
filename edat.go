@@ -59,13 +59,18 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 			wfs += fmt.Sprintf(" %02X", fdat[y])
 		}
 		wfs += "\n"
+		parse := 32
 		for y := 0; y <= my; y++ {
 			for x := 0; x <= mx; x++ {
-
-				wfs += fmt.Sprintf("%02d\n", mdat[xy{x, y}])
+//				wfs += fmt.Sprintf("%02d\n", mdat[xy{x, y}])
+				wfs += fmt.Sprintf(" %03d", mdat[xy{x, y}])
+				if parse < 1 { wfs += "\n"; parse = 32 } else {
+					parse--
+				}
 			}
-//			wfs += "\n"
 		}
+		for y := 0; y < parse; y++ { wfs += " 999" }
+		wfs += "\n"
 		file.WriteString(wfs)
 		file.Close()
 	} else {
@@ -110,10 +115,10 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		if ubuf == nil { ubuf = make(map[xy]int) }
 		if nsbuf == nil { nsbuf = make(map[xy]int) }
 // loop to load - note issue with scans of formatted data
-		parse := 0
+//		parse := 0
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
-
+/*
 // new method to parse line of 33 units
 				if parse < 1 {
 						l = " 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02"
@@ -128,7 +133,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 	if opts.Verbose { fmt.Printf("%02s ",l) }
 				}
 				parse--
-
+*/
 				l = "02"
 				if scanr.Scan() { l = scanr.Text() }
 	if opts.Verbose { fmt.Printf("%02s ",l) }
