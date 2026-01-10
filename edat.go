@@ -228,16 +228,24 @@ func ed_maze(rld bool) {
 // replaceing or deleting - store for ctrl-z / ctrl-y
 
 func undo_buf(sx int, sy int, rc int) {
-	delbuf.mx = append(delbuf.mx,sx)
-	delbuf.my = append(delbuf.my,sy)
-	delbuf.revc = append(delbuf.revc,rc)					// revoke count for the loop
-//	delbuf.elem = append(delbuf.elem,ebuf[xy{sx, sy}])		// this is already added by the -1 pointer below and in aw_init
-	delbuf.elem[delstak] = ebuf[xy{sx, sy}]
-
-	fmt.Printf(" del elem: %d maze: %d x %d - rloop: %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],rc)
+	fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
+	if delbuf.elem[delstak] == -1 {
+		delbuf.mx = append(delbuf.mx,sx)
+		delbuf.my = append(delbuf.my,sy)
+		delbuf.revc[delstak] = rc					// revoke count for the loop
+	//	delbuf.elem = append(delbuf.elem,ebuf[xy{sx, sy}])
+		delbuf.elem[delstak] = ebuf[xy{sx, sy}]					// this is already added by the -1 pointer below and in aw_init
+		delbuf.elem = append(delbuf.elem,-1)
+		delbuf.elem = append(delbuf.revc,1)						// here cause redo can test this unit
+	} else {		// undo moved pointer down (we hope)
+		delbuf.mx[delstak] = sx
+		delbuf.my[delstak] = sy
+		delbuf.revc[delstak] = rc					// revoke count for the loop
+		delbuf.elem[delstak] = ebuf[xy{sx, sy}]
+	}
+	fmt.Printf(" del %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],rc)
 	delstak++
-//	delbuf.elem[delstak] = -1 	// when undeleting this is the end
-	delbuf.elem = append(delbuf.elem,-1)
+	fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 }
 
 // same as mazeloop, but called by Rr, h, m while cmd keys active in edit mode

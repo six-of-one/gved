@@ -597,9 +597,15 @@ func menu_res() {
 func undo() {
 	if delstak > 0 {
 		delstak--
-		sw := ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}]
-		ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}] = delbuf.elem[delstak]
-		delbuf.elem[delstak] = sw
+		revk := delbuf.revc[delstak]	// revoke count - items in loops can undo/redo all at once
+		for revk > 0 && delstak >= 0 {
+			sw := ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}]
+			ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}] = delbuf.elem[delstak]
+fmt.Printf(" undo %d sw: %d elem: %d maze: %d x %d - rloop: %d\n",delstak,sw,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],delbuf.revc[delstak])
+			delbuf.elem[delstak] = sw
+			revk--
+			if revk > 0 && delstak > 0 { delstak-- }
+		}
 		opts.bufdrt = true
 		ed_maze(false)
 	}
@@ -607,10 +613,16 @@ func undo() {
 
 func redo() {
 	if delbuf.elem[delstak] != -1 {
-		sw := ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}]
-		ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}] = delbuf.elem[delstak]
-		delbuf.elem[delstak] = sw
-		delstak++
+		revk := delbuf.revc[delstak]	// revoke count - items in loops can undo/redo all at once
+		for revk > 0 && delstak > 0 {
+			sw := ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}]
+			ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}] = delbuf.elem[delstak]
+fmt.Printf(" undo %d sw: %d elem: %d maze: %d x %d - rloop: %d\n",delstak,sw,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],delbuf.revc[delstak])
+			delbuf.elem[delstak] = sw
+			revk++
+			delstak++
+			if delbuf.elem[delstak] == -1 || delbuf.revc[delstak] == 1 { revk = 0}
+		}
 		opts.bufdrt = true
 		ed_maze(false)
 	}
@@ -680,12 +692,13 @@ func aw_init() {
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
 // ed stuff, consider moving
-	delstak = 0
 	sdb = -1
 	cycl = 0
 	edmaze = mazeDecompress(slapsticReadMaze(1), false)
 	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
+	delstak = 0
 	delbuf.elem = append(delbuf.elem,-1)
+	delbuf.elem = append(delbuf.revc,1)
 
 // get default win size
 
