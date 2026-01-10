@@ -69,7 +69,8 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 				}
 			}
 		}
-		for y := 0; y < parse; y++ { wfs += " 999" }
+// /fmt.Printf("parse: %02d \n",parse)
+		if parse != 32 { for y := 0; y <= parse; y++ { wfs += " 999" }}
 		wfs += "\n"
 		file.WriteString(wfs)
 		file.Close()
@@ -115,30 +116,31 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		if ubuf == nil { ubuf = make(map[xy]int) }
 		if nsbuf == nil { nsbuf = make(map[xy]int) }
 // loop to load - note issue with scans of formatted data
-//		parse := 0
+		parse := 33
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
-/*
+
 // new method to parse line of 33 units
-				if parse < 1 {
-						l = " 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02 02"
+				if parse > 32 { //  1				5					A					F					0					5					A	
+						l = " 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002"
 						if scanr.Scan() { l = scanr.Text() }
+						//        0    1                        6                            12                       17                                 24                       29             32
 				fmt.Sscanf(l," %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d\n",
 					&din[0], &din[1], &din[2], &din[3], &din[4], &din[5], &din[6], &din[7], &din[8], &din[9], &din[10], &din[11], &din[12], &din[13], &din[14], &din[15], &din[16], &din[17], &din[18],
 					&din[19], &din[20], &din[21], &din[22], &din[23], &din[24], &din[25], &din[26], &din[27], &din[28], &din[29], &din[30], &din[31], &din[32])
-					parse = 32
+					parse = 0
 				}
 				if din[parse] < 999 {				// max value is end of buffer fill
 					mdat[xy{x, y}] = din[parse]
-	if opts.Verbose { fmt.Printf("%02s ",l) }
+	if opts.Verbose { f mt.Printf("%03d ",din[parse]) }
 				}
-				parse--
-*/
+				parse++
+/*/
 				l = "02"
 				if scanr.Scan() { l = scanr.Text() }
 	if opts.Verbose { fmt.Printf("%02s ",l) }
 				fmt.Sscanf(l,"%02d", &esc)
-				mdat[xy{x, y}] = esc
+				mdat[xy{x, y}] = esc */
 // to here
 				if ud { ubuf[xy{x, y}] = esc }		// store ubuf data on flag
 				edp = 1		// tell sender we loaded some maze part
