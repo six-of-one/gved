@@ -685,6 +685,7 @@ func aw_init() {
 	cycl = 0
 	edmaze = mazeDecompress(slapsticReadMaze(1), false)
 	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
+	delbuf.elem = append(delbuf.elem,-1)
 
 // get default win size
 

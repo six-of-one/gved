@@ -32,9 +32,10 @@ var nsflg [11]int
 // deleted elements / undo storage
 
 type Deletebuf struct {
-	mx     [10001]int
-	my     [10001]int
-	elem   [10002]int
+	mx     []int
+	my     []int
+	elem   []int
+	revc   []int		// this maze element is part of a multiplace, allow one click removal/ restore
 }
 
 var delbuf = &Deletebuf{}
@@ -226,22 +227,17 @@ func ed_maze(rld bool) {
 
 // replaceing or deleting - store for ctrl-z / ctrl-y
 
-func undo_buf(sx int, sy int) {
-	maxdel := 10000
-	if delstak >= maxdel {		//	we hit max, shift back 1, losing the start of undo
-		for i := 0; i < maxdel; i++ {
-			delbuf.mx[i] = delbuf.mx[i+1]
-			delbuf.my[i] = delbuf.my[i+1]
-			delbuf.elem[i] = delbuf.elem[i+1]
-		}
-		delstak--
-	}
-	delbuf.mx[delstak] = sx
-	delbuf.my[delstak] = sy
+func undo_buf(sx int, sy int, rc int) {
+	delbuf.mx = append(delbuf.mx,sx)
+	delbuf.my = append(delbuf.my,sy)
+	delbuf.revc = append(delbuf.revc,rc)					// revoke count for the loop
+//	delbuf.elem = append(delbuf.elem,ebuf[xy{sx, sy}])		// this is already added by the -1 pointer below and in aw_init
 	delbuf.elem[delstak] = ebuf[xy{sx, sy}]
+
 	fmt.Printf(" del elem: %d maze: %d x %d\n",delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak])
 	delstak++
-	delbuf.elem[delstak] = -1 	// when undeleting this is the end
+//	delbuf.elem[delstak] = -1 	// when undeleting this is the end
+	delbuf.elem = append(delbuf.elem,-1)
 }
 
 // same as mazeloop, but called by Rr, h, m while cmd keys active in edit mode
