@@ -700,6 +700,7 @@ func aw_init() {
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
 // ed stuff, consider moving
+	ccp = NOP
 	sdb = -1
 	cycl = 0
 	edmaze = mazeDecompress(slapsticReadMaze(1), false)
