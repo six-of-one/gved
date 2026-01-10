@@ -123,8 +123,10 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 					&din[19], &din[20], &din[21], &din[22], &din[23], &din[24], &din[25], &din[26], &din[27], &din[28], &din[29], &din[30], &din[31], &din[32])
 					parse = 32
 				}
-				mdat[xy{x, y}] = din[parse]
+				if din[parse] < 999 {				// max value is end of buffer fill
+					mdat[xy{x, y}] = din[parse]
 	if opts.Verbose { fmt.Printf("%02s ",l) }
+				}
 				parse--
 
 				l = "02"
