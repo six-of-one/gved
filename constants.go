@@ -423,7 +423,7 @@ var g1edit_keymap = []int{
 	  0,   0,  44,   0,   0,   0,  40,   0,   0,   2,	//  unit     110 = n  o  p  q  r  s  t  u  v  w
 	  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,	//  unit     120 = x  y  z  {  |  }  ~
 	 													// * - not currently reassignable, they are edit mode ctrl keys
-														// ?, Q, #c C, A #a, dD, L, S
+														// ?, \, C, A #a, eE, L, S, H, V
 }
 
 var g2edit_keymap = []int{
@@ -443,7 +443,7 @@ var g2edit_keymap = []int{
 		  0,   0,  51,   0,   0,   0,  46,   0,   0,   2,	//  unit     110 = n  o  p  q  r  s  t  u  v  w
 		  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,	//  unit     120 = x  y  z  {  |  }  ~
 															 // * - not currently reassignable, they are edit mode ctrl keys
-															// ?, \ #c C, A #a, eE, L, S, H, V
+															// ?, \, C, A #a, eE, L, S, H, V
 }
 
 var map_keymap = []string{
@@ -469,8 +469,8 @@ var map_keymap = []string{
 const (
 	NOP		= 0
 	COPY	= 1
-	cut		= 2
-	paste	= 4
+	CUT		= 2
+	PASTE	= 4
 )
 // sanctuary converter values
 var sanct_vrt = []int{

@@ -136,6 +136,9 @@ func typedRune(r rune) {
 			if key.Name == "U" && ctrl  { uswap() }
 			if key.Name == "Z" && ctrl  { undo() }
 			if key.Name == "Y" && ctrl  { redo() }
+			if key.Name == "C" && ctrl  { if opts.edat > 0 { ccp = COPY }}
+			if key.Name == "X" && ctrl  { if opts.edat > 0 { ccp = CUT }}
+			if key.Name == "P" && ctrl  { if opts.edat > 0 { ccp = PASTE }}
 			if key.Name == "Q" && ctrl  { needsav(); os.Exit(0) }
        })
     }
@@ -220,6 +223,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				cmdoff = false
 				opts.edat = 0
 				opts.dntr = false
+				ccp = NOP
 				needsav()
 				cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 				statlin(cmdhin,"")
@@ -806,8 +810,15 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		} else {
 			setcode = g2edit_keymap[edkey]
 		}
+// a cut / copy / paste is active
+		if ccp != NOP {
+		if mb != 1 { ccp = NOP }
+		if sx == ex && sy == ey { ccp = NOP }
+		if ccp != NOP {
 
-// no access, keys: ? Q, A #a, dD, L, S
+
+		}}
+// no access for keys: ?, \, C, A #a, eE, L, S, H, V
 		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,ebuf[xy{ex, ey}])
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			if G1 {
