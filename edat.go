@@ -116,12 +116,13 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		if ubuf == nil { ubuf = make(map[xy]int) }
 		if nsbuf == nil { nsbuf = make(map[xy]int) }
 // loop to load - note issue with scans of formatted data
-		parse := 33
+//		parse := 33
 		for y := 0; y <= opts.DimX; y++ {
 			for x := 0; x <= opts.DimY; x++ {
 
+// seems working, now to read all the old and rewrite
 // new method to parse line of 33 units
-				if parse > 32 { //  1				5					A					F					0					5					A	
+/*				if parse > 32 { //  1				5					A					F					0					5					A
 						l = " 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002"
 						if scanr.Scan() { l = scanr.Text() }
 						//        0    1                        6                            12                       17                                 24                       29             32
@@ -135,7 +136,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 	if opts.Verbose { fmt.Printf("%03d ",din[parse]) }
 				}
 				parse++
-/*/
+*/
 				l = "02"
 				if scanr.Scan() { l = scanr.Text() }
 	if opts.Verbose { fmt.Printf("%02s ",l) }
