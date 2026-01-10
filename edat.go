@@ -228,7 +228,7 @@ func ed_maze(rld bool) {
 // replaceing or deleting - store for ctrl-z / ctrl-y
 
 func undo_buf(sx int, sy int, rc int) {
-	fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
+//	fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 	if delbuf.elem[delstak] == -1 {
 		delbuf.mx = append(delbuf.mx,sx)
 		delbuf.my = append(delbuf.my,sy)
