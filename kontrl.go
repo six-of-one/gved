@@ -598,7 +598,7 @@ func undo() {
 	if delstak > 0 {
 		delstak--
 		revk := delbuf.revc[delstak]	// revoke count - items in loops can undo/redo all at once
-fmt.Printf(" undo %d sw: %d elem: %d maze: %d x %d - rloop: %d\n",delstak,sw,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],delbuf.revc[delstak])
+fmt.Printf(" undo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],delbuf.revc[delstak])
 		for revk > 0 && delstak >= 0 {
 			sw := ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}]
 			ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}] = delbuf.elem[delstak]
@@ -655,6 +655,9 @@ func st_menu() {
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
 	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-r", menu_res)
+	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
+	menuItemUndo := fyne.NewMenuItem("Undo <ctrl>-z", undo)
+	menuItemRedo := fyne.NewMenuItem("Redo <ctrl>-y", redo)
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\ne: turn editor on, init maze store in .ed/\n"+
@@ -664,7 +667,7 @@ func st_menu() {
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n"+
 			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
-	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin)
+	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemLin1, menuItemUndo, menuItemRedo, menuItemEdhin)
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
 	menuItemAbout := fyne.NewMenuItem("About", func() {
