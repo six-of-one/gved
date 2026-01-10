@@ -190,7 +190,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				cnd := lod_maz(fil, ebuf, false)
 				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
 				anum = 0
-			} else { opts.Nogtop = !opts.Nogtop; relod = true }
+			} else { opts.Nogtop = !opts.Nogtop; opts.dntr = (opts.edat > 0); relod = true }
 		case 'e':
 			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 				if opts.edat != 1 {
