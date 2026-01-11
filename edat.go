@@ -19,13 +19,11 @@ more complexity will be required for:
 var edmaze *Maze
 var ebuf MazeData	// main edit buffer and corresponding flags
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
-var nsbuf MazeData	// needsav needs to make a quick buffer copy while the user decideds
 
 var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf
 var eflg [11]int
 var uflg [11]int
-var nsflg [11]int
 var tflg [14]int	// transfer flags - because they dont pass as a parm for scan from file?
 					//					so after a file load, these have to be copied to the appropriate flags
 var din [33]int		// set to be 1 line per std gauntlet maze (gved encoding) of 0 - 32 elements [ with H wrap being 0 - 31 ]
@@ -41,6 +39,27 @@ type Deletebuf struct {
 
 var delbuf = &Deletebuf{}
 var delstak int
+
+var nsbuf MazeData	// needsav needs to make a quick buffer copy while the user decideds
+var nsflg [11]int
+var nsdb = &Deletebuf{}
+var nsdstak int
+
+// and the needsav copy of delbuf
+
+func nsdbck(ct int, t int){
+
+fmt.Printf("nsdb len %d, test: %d\n",len(nsdb.elem),t)
+
+	if len(nsdb.elem) < t {
+		for y := 0; y < ct; y++ {
+			nsdb.elem = append(nsdb.elem,-1)
+			nsdb.mx = append(nsdb.mx,0)
+			nsdb.my = append(nsdb.my,0)
+			nsdb.revc = append(nsdb.revc,1)
+		}
+	}
+}
 
 // set head of delbuf to u, add space if needed & init to -1
 
