@@ -517,6 +517,7 @@ func needsav() {
 			nsflg[y] = eflg[y]
 		}
 		nsdstak = delstak
+		ndrstak = restak
 		nsdbck(delstak+1,delstak)
 		for y := 0; y <= delstak; y++ {
 			nsdb.mx[y] = delbuf.mx[y]
@@ -544,6 +545,7 @@ fmt.Printf(" undo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[d
 			revk--
 			if revk > 0 && delstak > 0 { delstak-- }
 		}
+		restak = delstak		// keep track of position in stack for buffer save
 fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 		opts.bufdrt = true
 		ed_maze(false)
@@ -563,6 +565,7 @@ fmt.Printf(" redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[d
 			delstak++
 			if delbuf.elem[delstak] < 0 || delbuf.revc[delstak] == 1 { revk = 0}
 		}
+		restak = delstak
 		opts.bufdrt = true
 		ed_maze(false)
 	}

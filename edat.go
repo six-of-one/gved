@@ -39,11 +39,13 @@ type Deletebuf struct {
 
 var delbuf = &Deletebuf{}
 var delstak int
+var restak int
 
 var nsbuf MazeData	// needsav needs to make a quick buffer copy while the user decideds
 var nsflg [11]int
 var nsdb = &Deletebuf{}
 var nsdstak int
+var ndrstak int
 
 // and the needsav copy of delbuf
 
@@ -130,7 +132,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 fmt.Printf("need saving maze delete %s\n",dbf)
 		file, err := os.Create(dbf)
 		if err == nil {
-			wfs := fmt.Sprintf("%d\n",nsdstak)
+			wfs := fmt.Sprintf("%d %d\n",nsdstak,ndrstak)
 			for y := 0; y < nsdstak; y++ {
 				if nsdb.elem[y] < 0 { break }
 				wfs += fmt.Sprintf("%d %d %d %d\n", nsdb.elem[y],nsdb.mx[y],nsdb.my[y],nsdb.revc[y])
@@ -147,7 +149,7 @@ fmt.Printf("need saving maze delete %s\n",dbf)
 fmt.Printf("saving maze delete %s\n",dbf)
 		file, err := os.Create(dbf)
 		if err == nil {
-			wfs := fmt.Sprintf("%d\n",delstak)
+			wfs := fmt.Sprintf("%d %d\n",delstak, restak)
 
 			for y := 0; y < delstak; y++ {
 				if delbuf.elem[y] < 0 { break }
@@ -249,7 +251,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 	    scanr := bufio.NewScanner(strings.NewReader(dscan))
 		l := "0"	// the default on scan failure will produce a solid block of wall 32 x 32
 		if scanr.Scan() { l = scanr.Text() }
-		fmt.Sscanf(l,"%d",&delstak)
+		fmt.Sscanf(l,"%d %d",&delstak, &restak)
 
 		for y := 0; y < delstak; y++ {
 			l = "-1 0 0 1"
@@ -259,6 +261,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 			if delbuf.elem[y] < 0 { delstak = y; break }
 		}
 		delbset(delstak)
+		if restak < delstak { delstak = restak }	// restore pointer pos in redo chain
 
 	} else {
 		fmt.Printf("loading maze deleted %s, warning:\n",dbf)
@@ -372,6 +375,7 @@ func undo_buf(sx int, sy int, rc int) {
 // append the next unit blank if needed
 //fmt.Printf(" del %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],rc)
 	delstak++
+	restak = delstak
 	delbset(delstak)
 //fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 }
