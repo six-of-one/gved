@@ -24,17 +24,21 @@ some type of quick-key insert system, maybe shifted # or so
 
 a palette system similar to edit in sanctuary
 - and the edit options dialog
+- put palette into sd buffer 0, which isnt normally selectable
+- bring up on home key
+- the palette will be editable, but save will need to be diff
 
 a basic "playable" mode to test mazes
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
 
 multiple save buffers to store vars maze edits, page thru all wiht 'S', store with #'S', load with #'L'
-- have to be in edit mode to load
-- can always store & page -- g1 & g2 have sep buffers
+* have to be in edit mode to load
+* can always store & page -- g1 & g2 have sep buffers
 - save to disk on set, load up on launch  for all sd files found
-- use a certain buffer (1 ?) to store the main edit pallete for middl-clicks
+- use a certain buffer (0 ?) to store the main edit pallete for middl-clicks
 * modify lod_maz to pass mazedata & bool for ubuf
 * dirty flag so quit, z, x know unsaved changes are there and give warning dialog
+- list of delbuf contents somehow
 
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 
