@@ -188,6 +188,12 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		for y := 0; y < delstak; y++ {
 			l = "2 1 1 1"
 			if scanr.Scan() { l = scanr.Text() }
+			if delbuf.elem[y] == -1 {
+				delbuf.elem = append(delbuf.elem,-1)
+				delbuf.mx = append(delbuf.mx,0)
+				delbuf.my = append(delbuf.my,0)
+				delbuf.revc = append(delbuf.revc,1)
+			}
 			fmt.Sscanf(l, "%d %d %d %d\n", &delbuf.elem[y],&delbuf.mx[y],&delbuf.my[y],&delbuf.revc[y])
 		}
 		delbuf.elem[delstak] = -1
@@ -299,11 +305,14 @@ func ed_maze(rld bool) {
 func undo_buf(sx int, sy int, rc int) {
 //	fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 	if delbuf.elem[delstak] == -1 {
-		delbuf.mx = append(delbuf.mx,sx)
-		delbuf.my = append(delbuf.my,sy)
+		delbuf.mx[delstak] = sx
+		delbuf.my[delstak] = sy
 		delbuf.revc[delstak] = rc					// revoke count for the loop
-		delbuf.elem[delstak] = ebuf[xy{sx, sy}]					// this is already added by the -1 pointer below and in aw_init
+		delbuf.elem[delstak] = ebuf[xy{sx, sy}]
+// now append the next unit blank
 		delbuf.elem = append(delbuf.elem,-1)
+		delbuf.mx = append(delbuf.mx,0)
+		delbuf.my = append(delbuf.my,0)
 		delbuf.revc = append(delbuf.revc,1)						// here cause redo can test this unit
 	} else {		// undo moved pointer down (we hope)
 		delbuf.mx[delstak] = sx
