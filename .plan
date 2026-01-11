@@ -45,3 +45,4 @@ issues needing fixed
 perhaps needs rewrite:
 - cleanup kontrol
   some sd buf ops to edat
+- uswap has a serious delstak pointer issue

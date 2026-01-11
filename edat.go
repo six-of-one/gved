@@ -42,6 +42,33 @@ type Deletebuf struct {
 var delbuf = &Deletebuf{}
 var delstak int
 
+// set head of delbuf to u, add space if needed & init to -1
+
+func delbset(u int) {
+	delstak = u
+	delbck(3, u + 1)		// initialize with ? units if len < u + 1
+	delbuf.mx[delstak] = 0
+	delbuf.my[delstak] = 0
+	delbuf.revc[delstak] = 1
+	delbuf.elem[delstak] = -1
+}
+
+// if delbuf len < t, add ct units
+
+func delbck(ct int, t int){
+
+fmt.Printf("delbuf len %d, test: %d\n",len(delbuf.elem),t)
+
+	if len(delbuf.elem) < t {
+		for y := 0; y < ct; y++ {
+			delbuf.elem = append(delbuf.elem,-1)
+			delbuf.mx = append(delbuf.mx,0)
+			delbuf.my = append(delbuf.my,0)
+			delbuf.revc = append(delbuf.revc,1)
+		}
+	}
+}
+
 // save maze to file in .ed
 
 func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
@@ -81,11 +108,13 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 // now save deleted elements
 	if delstak > 0 {
 		dbf := fil[0:4]+".db_"+fil[4:len(fil)]
+fmt.Printf("saving maze delete %s\n",dbf)
 		file, err := os.Create(dbf)
 		if err == nil {
 			wfs := fmt.Sprintf("%d\n",delstak)
 
 			for y := 0; y < delstak; y++ {
+				if delbuf.elem[y] < 0 { break }
 				wfs += fmt.Sprintf("%d %d %d %d\n", delbuf.elem[y],delbuf.mx[y],delbuf.my[y],delbuf.revc[y])
 			}
 			wfs += "\n"
@@ -186,18 +215,13 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		fmt.Sscanf(l,"%d",&delstak)
 
 		for y := 0; y < delstak; y++ {
-			l = "2 1 1 1"
+			l = "-1 0 0 1"
 			if scanr.Scan() { l = scanr.Text() }
-			if delbuf.elem[y] == -1 {
-				delbuf.elem = append(delbuf.elem,-1)
-				delbuf.mx = append(delbuf.mx,0)
-				delbuf.my = append(delbuf.my,0)
-				delbuf.revc = append(delbuf.revc,1)
-			}
+			delbck(6, y)
 			fmt.Sscanf(l, "%d %d %d %d\n", &delbuf.elem[y],&delbuf.mx[y],&delbuf.my[y],&delbuf.revc[y])
+			if delbuf.elem[y] < 0 { delstak = y; break }
 		}
-		delbuf.elem[delstak] = -1
-		delbuf.revc[delstak] = 1
+		delbset(delstak)
 
 	} else {
 		fmt.Printf("loading maze deleted %s, warning:\n",dbf)
@@ -304,24 +328,15 @@ func ed_maze(rld bool) {
 
 func undo_buf(sx int, sy int, rc int) {
 //	fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
-	if delbuf.elem[delstak] == -1 {
-		delbuf.mx[delstak] = sx
-		delbuf.my[delstak] = sy
-		delbuf.revc[delstak] = rc					// revoke count for the loop
-		delbuf.elem[delstak] = ebuf[xy{sx, sy}]
-// now append the next unit blank
-		delbuf.elem = append(delbuf.elem,-1)
-		delbuf.mx = append(delbuf.mx,0)
-		delbuf.my = append(delbuf.my,0)
-		delbuf.revc = append(delbuf.revc,1)						// here cause redo can test this unit
-	} else {		// undo moved pointer down (we hope)
-		delbuf.mx[delstak] = sx
-		delbuf.my[delstak] = sy
-		delbuf.revc[delstak] = rc					// revoke count for the loop
-		delbuf.elem[delstak] = ebuf[xy{sx, sy}]
-	}
+	delbuf.mx[delstak] = sx
+	delbuf.my[delstak] = sy
+	delbuf.revc[delstak] = rc					// revoke count for the loop
+	delbuf.elem[delstak] = ebuf[xy{sx, sy}]
+// append the next unit blank if needed
 //fmt.Printf(" del %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],rc)
 	delstak++
+	delbck(5, delstak)
+	delbuf.elem[delstak] = -1
 //fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 }
 
@@ -450,6 +465,7 @@ fmt.Printf("in remaze dntr: %t edat:%d\n",opts.dntr,opts.edat)
 		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(edmaze)
 		opts.bufdrt = false
+		delstak = 0
 	}
 	opts.dntr = false
 	if opts.edat > 0 { ed_maze(true) } else {
