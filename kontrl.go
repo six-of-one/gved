@@ -13,6 +13,9 @@ import (
 
 // kontrol is for keyboard, mouse & input management
 
+// weirdo needsav exit condition
+
+var exitsel bool
 
 // input keys and keypress checks for canvas/ window
 // since this is all that is called without other handler / timers
@@ -125,7 +128,7 @@ func typedRune(r rune) {
 			if key.Name == "C" && ctrl  { if opts.edat > 0 { ccp = COPY }}
 			if key.Name == "X" && ctrl  { if opts.edat > 0 { ccp = CUT }}
 			if key.Name == "P" && ctrl  { if opts.edat > 0 { ccp = PASTE }}
-			if key.Name == "Q" && ctrl  { needsav(); if opts.bufdrt == false { os.Exit(0) } }
+			if key.Name == "Q" && ctrl  {  exitsel = true; needsav() }
        })
     }
 
@@ -498,7 +501,8 @@ func menu_ndsav(y bool) {
 			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nssb,nsgg)
 			sav_maz(fil, nsbuf, nsflg, nsxd, nsyd)
 		}
-	} else { opts.bufdrt = false }
+	}
+	if exitsel { os.Exit(0) }
 }
 
 func needsav() {
@@ -530,7 +534,7 @@ func needsav() {
 		if nssb >= 0 { dia = fmt.Sprintf("Save changes in buffer %d to .ed/sd%05d_g%d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",nssb,nssb,nsgg) }
 		dialog.ShowConfirm("Save?",dia, menu_ndsav, w)
 //		opts.bufdrt = false;		// save clears this, clear here in case discard is selected
-	}
+	} else { if exitsel { os.Exit(0) }}
 }
 
 func undo() {

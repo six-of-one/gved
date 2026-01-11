@@ -90,8 +90,8 @@ func menu_res() {
 func st_menu() {
 // quit menu option does not exit to term!
 	menuItemExit := fyne.NewMenuItem("Exit", func() {
+		exitsel = true
 		needsav()
-		 if opts.bufdrt == false { os.Exit(0) }
 	})
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
 	menuFile := fyne.NewMenu("File", menuItemLin1, menuItemExit)
