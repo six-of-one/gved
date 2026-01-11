@@ -30,6 +30,8 @@ var ccp int			// cut copy and paste - current op
 var edkey int		// for passing edit keys to clicker
 var cmdhin string
 
+// main keyboard handler
+
 func typedRune(r rune) {
 
 // special aux string - put ops in title after maze #
@@ -480,14 +482,6 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 	uptitl(opts.mnum, spau)
 }
 
-// pad for dialog page
-
-func cpad(st string, d int) string {
-
-	spout := st+"                                                                          " // jsut guess at a pad fill
-	return string(spout[:d])
-}
-
 // data needing preserved by needsav - all this could be changed by the next op while dialog waits on user
 var nsxd int
 var nsyd int
@@ -592,6 +586,8 @@ func newHoldableButton() *holdableButton {
     button.ExtendBaseWidget(button)
 	return button
 }
+
+// main mouse handler
 
 // store x & y when mouse button goes down - to start rubberband area
 // 		and when released for other ops like cup & paste

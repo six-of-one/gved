@@ -255,6 +255,14 @@ func wizecon() {
 	}
 }
 
+// pad for dialog page
+
+func cpad(st string, d int) string {
+
+	spout := st+"                                                                          " // jsut guess at a pad fill
+	return string(spout[:d])
+}
+
 // dialog called from kby or menu
 
 func keyhints() {
