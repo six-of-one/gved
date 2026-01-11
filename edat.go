@@ -335,8 +335,7 @@ func undo_buf(sx int, sy int, rc int) {
 // append the next unit blank if needed
 //fmt.Printf(" del %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],rc)
 	delstak++
-	delbck(5, delstak)
-	delbuf.elem[delstak] = -1
+	delbset(delstak)
 //fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 }
 
@@ -465,7 +464,7 @@ fmt.Printf("in remaze dntr: %t edat:%d\n",opts.dntr,opts.edat)
 		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(edmaze)
 		opts.bufdrt = false
-		delstak = 0
+		delbset(0)
 	}
 	opts.dntr = false
 	if opts.edat > 0 { ed_maze(true) } else {

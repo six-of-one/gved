@@ -542,7 +542,7 @@ fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 }
 
 func redo() {
-	if delbuf.elem[delstak] != -1 {
+	if delbuf.elem[delstak] >= 0 {
 fmt.Printf(" redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],delbuf.revc[delstak])
 		revk := delbuf.revc[delstak]	// revoke count - items in loops can undo/redo all at once
 		for revk > 0 && delstak >= 0 {
@@ -552,7 +552,7 @@ fmt.Printf(" redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[d
 			delbuf.elem[delstak] = sw
 			revk++
 			delstak++
-			if delbuf.elem[delstak] == -1 || delbuf.revc[delstak] == 1 { revk = 0}
+			if delbuf.elem[delstak] < 0 || delbuf.revc[delstak] == 1 { revk = 0}
 		}
 		opts.bufdrt = true
 		ed_maze(false)
