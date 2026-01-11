@@ -177,7 +177,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 // now load deleted elements
 	dbf := fil[0:4]+".db_"+fil[4:len(fil)]
 	data, err = ioutil.ReadFile(dbf)
-	delstak := 0
+	delstak = 0
 	if err == nil {
 		dscan := fmt.Sprintf("%s",data)
 	    scanr := bufio.NewScanner(strings.NewReader(dscan))
