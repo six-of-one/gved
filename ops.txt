@@ -12,7 +12,6 @@ general controls:			(general keys are always available in both modes)
 ----------------
 
 <CTRL>-Q	quit program
-- note: unsaved edits check fails
 
 ?			command key hints dialog
 
@@ -106,7 +105,9 @@ there is as yet no way, *with gved*, to recompress and store mazes in rom...
 <CTRL>-R	reset buffer for current maze # from rom
 			- these are also on the edit menu
 
-<CTRL>-L	load current buffer for maze # from disk
+<CTRL>-C	set for copy contents of next Left-click mouse drag
+<CTRL>-X	set for cut contents of next Left-click mouse drag - floor will be set
+<CTRL>-P	paste contents of c/c/p buffer at Left-click location
 
 <CTRL>-Z	undo last op - currently holds 10000 units (single maze cell) of undo
 <CTRL>-Y	redo last undo up to last change entered
@@ -115,7 +116,7 @@ there is as yet no way, *with gved*, to recompress and store mazes in rom...
 			- both can be edited, but both can not yet be saved
 
 certain ops will check for unsaved changes and launch a dialog to save
-(z, x, a, #L, E, i, l, u)
+(z, x, a, E, i, l, u, ctrl-q )
 
 \	toggle cmd keys and edit keys		(only while in edit mode)
 
@@ -123,8 +124,8 @@ c,C	cycle -,+ maze element on this edit key, looping over 1 - 64, and activate k
 	- 'c' can be still assigned any value, 'C' can not be assigned
 #c	assign cycle key to #, in range of 1 - 64
 
-H	toggle horizontal wrap - Y column = 32 will be removed (it will restore on toggle with contents intact until saved)
-M	toggle vertical wrap   - X row = 32 will likewise be removed
+H	toggle horizontal wrap - Y column = 32 will be removed/ restored (will restore on toggle with contents intact until saved)
+M	toggle vertical wrap   - X row = 32 will likewise be removed/ restored
 
 Mouse operation
 ---------------
