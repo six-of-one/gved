@@ -78,7 +78,7 @@ func delbck(ct int, t int){
 
 fmt.Printf("delbuf len %d, test: %d\n",len(delbuf.elem),t)
 
-	if len(delbuf.elem) < t {
+	if len(delbuf.elem) <= t {
 		for y := 0; y < ct; y++ {
 			delbuf.elem = append(delbuf.elem,-1)
 			delbuf.mx = append(delbuf.mx,0)
@@ -498,10 +498,10 @@ func remaze(mazn int) {
 fmt.Printf("in remaze dntr: %t edat:%d\n",opts.dntr,opts.edat)
 	sdb = -1
 	if !opts.dntr {
+		delbset(0)
 		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(edmaze)
 		opts.bufdrt = false
-		delbset(0)
 	}
 	opts.dntr = false
 	if opts.edat > 0 { ed_maze(true) } else {
