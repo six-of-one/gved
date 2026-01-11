@@ -257,7 +257,7 @@ fmt.Printf("L, autosave: %s\n",fil)
 				relod = true
 //	fmt.Printf("4 flag: %d\n",eflg[4])
 		case 83:		// S
-// have anum !=0, save that buffer
+// have anum !=0, save ebuf into that buffer
 				if anum > 0 && anum < sdmax && opts.edat > 0 {
 					fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)

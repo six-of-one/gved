@@ -113,7 +113,7 @@ fmt.Printf("delbuf st: %d len %d, test: %d\n",delstak,len(delbuf.elem),t)
 
 func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 // edit settings
-// 1. edit status (1|0) max_x max_y
+// 1. edit status (1) max_x max_y
 // 2. 11 bytes of compressed maze lead in - all stats
 // 3+ maze data
 
