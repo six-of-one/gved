@@ -534,38 +534,36 @@ func needsav() {
 }
 
 func undo() {
-	if delstak > 0 {
-		delstak--
-		revk := delbuf.revc[delstak]	// revoke count - items in loops can undo/redo all at once
-fmt.Printf(" undo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],delbuf.revc[delstak])
-		for revk > 0 && delstak >= 0 {
-			sw := ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}]
-			ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}] = delbuf.elem[delstak]
-			delbuf.elem[delstak] = sw
+	if restak > 0 {
+		restak--		// keep track of position in stack for buffer save
+		revk := delbuf.revc[restak]	// revoke count - items in loops can undo/redo all at once
+fmt.Printf(" stk %d undo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak,delbuf.elem[restak],delbuf.mx[restak],delbuf.my[restak],delbuf.revc[restak])
+		for revk > 0 && restak >= 0 {
+			sw := ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}]
+			ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}] = delbuf.elem[restak]
+			delbuf.elem[restak] = sw
 			revk--
-			if revk > 0 && delstak > 0 { delstak-- }
+			if revk > 0 && restak > 0 { restak-- }
 		}
-		restak = delstak		// keep track of position in stack for buffer save
-fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
+fmt.Printf(" del %d elem: %d\n",restak,delbuf.elem[restak])
 		opts.bufdrt = true
 		ed_maze(false)
 	}
 }
 
 func redo() {
-	if delbuf.elem[delstak] >= 0 {
-fmt.Printf(" redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],delbuf.revc[delstak])
-		revk := delbuf.revc[delstak]	// revoke count - items in loops can undo/redo all at once
-		for revk > 0 && delstak >= 0 {
-			sw := ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}]
-			ebuf[xy{delbuf.mx[delstak], delbuf.my[delstak]}] = delbuf.elem[delstak]
-//fmt.Printf(" redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],delbuf.revc[delstak])
-			delbuf.elem[delstak] = sw
+	if delbuf.elem[restak] >= 0 {
+fmt.Printf(" stk %d redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak,delbuf.elem[restak],delbuf.mx[restak],delbuf.my[restak],delbuf.revc[restak])
+		revk := delbuf.revc[restak]	// revoke count - items in loops can undo/redo all at once
+		for revk > 0 && restak >= 0 {
+			sw := ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}]
+			ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}] = delbuf.elem[restak]
+//fmt.Printf(" redo %d elem: %d maze: %d x %d - rloop: %d\n",restak,delbuf.elem[restak],delbuf.mx[restak],delbuf.my[restak],delbuf.revc[restak])
+			delbuf.elem[restak] = sw
 			revk++
-			delstak++
-			if delbuf.elem[delstak] < 0 || delbuf.revc[delstak] == 1 { revk = 0}
+			restak++
+			if delbuf.elem[restak] < 0 || delbuf.revc[restak] == 1 { revk = 0}
 		}
-		restak = delstak
 		opts.bufdrt = true
 		ed_maze(false)
 	}

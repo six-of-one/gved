@@ -53,7 +53,7 @@ func nsdbck(ct int, t int){
 
 fmt.Printf("nsdb len %d, test: %d\n",len(nsdb.elem),t)
 
-	if len(nsdb.elem) < t {
+	if len(nsdb.elem) <= t {
 		for y := 0; y < ct; y++ {
 			nsdb.elem = append(nsdb.elem,-1)
 			nsdb.mx = append(nsdb.mx,0)
@@ -261,7 +261,6 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 			if delbuf.elem[y] < 0 { delstak = y; break }
 		}
 		delbset(delstak)
-		if restak < delstak { delstak = restak }	// restore pointer pos in redo chain
 
 	} else {
 		fmt.Printf("loading maze deleted %s, warning:\n",dbf)
@@ -375,7 +374,7 @@ func undo_buf(sx int, sy int, rc int) {
 // append the next unit blank if needed
 //fmt.Printf(" del %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],rc)
 	delstak++
-	restak = delstak
+	restak = delstak		// placing or deleting one breaks restore chain
 	delbset(delstak)
 //fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 }
