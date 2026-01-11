@@ -80,7 +80,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 	}
 // now save deleted elements
 	if delstak > 0 {
-		dbf := ".db_"+fil
+		dbf := fil[0:4]+".db_"+fil[4:len(fil)]
 		file, err := os.Create(dbf)
 		if err == nil {
 			wfs := fmt.Sprintf("%d\n",delstak)
@@ -175,7 +175,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		edp = -1
 	}
 // now load deleted elements
-	dbf := ".db_"+fil
+	dbf := fil[0:4]+".db_"+fil[4:len(fil)]
 	data, err = ioutil.ReadFile(dbf)
 	delstak := 0
 	if err == nil {
