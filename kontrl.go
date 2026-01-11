@@ -1,18 +1,14 @@
 package main
 
 import (
-	"image"
 	"fmt"
-	"math"
 	"os"
 //		"image/color"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"
-    "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
-	"fyne.io/fyne/v2/container"
 )
 
 // kontrol is for fyne window ops & input management
@@ -698,41 +694,4 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		ed_maze(true)
 	}
 
-}
-
-// update contents
-
-func upwin(simg *image.NRGBA) {
-
-//								                 ┌» un-borded maze is 528 x 528 for a 33 x 33 cell maze
-	geow := int(math.Max(560,opts.Geow))	// 560 is min, maze doesnt seem to fit or shrink smaller
-	geoh := int(math.Max(586,opts.Geoh))	// 586 min
-	if opts.edat > 0 {
-//		geow = geow & 0xfe0	+ 13			// lock to multiples of 32
-		ngeoh := geow + 26					// square maze area + 26 for menu bar - window is still 4 wider than maze content
-		if ngeoh != geoh { dialog.ShowInformation("Edit mode","set window ratio to edit",w) }
-		geoh = ngeoh
-	}
-	opts.dtec = 16.0 * (float64(geow - 4) / 528.0)				// the size of a tile, odd window size may cause issues
-	fmt.Printf(" dtec: %f\n",opts.dtec)
-	bimg := canvas.NewRasterFromImage(simg)
-	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
-
-// turns display into clickable edit area
-	btn := newHoldableButton()
-	box := container.NewPadded(btn, bimg)		// key to seeing maze & having the click button will full mouse sense
-	w.SetContent(box)
-	fmt.Printf("btn sz %v\n",btn.Size())
-
-	uptitl(opts.mnum, "")
-}
-
-// title special info update
-
-func uptitl(mazeN int, spaux string) {
-
-	til := fmt.Sprintf("G¹G²ved Maze: %d addr: %X",mazeN + 1, slapsticMazeGetRealAddr(mazeN))
-	if Aov > 0 { til = fmt.Sprintf("G¹G²ved Override addr: %X - %d",Aov,Aov) }
-	if spaux != "" { til += " -- " + spaux }
-	w.SetTitle(til)
 }
