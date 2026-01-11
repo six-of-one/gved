@@ -184,7 +184,12 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				if sdb == -1 {
 					fil := fmt.Sprintf(".ed/ebuf.ed")				// save ebuf for relod
 					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
-				} else { needsav() }
+				} else {
+//					needsav()
+					fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",sdb,opts.Gtp)
+					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
+fmt.Printf("L, autosave: %s\n",fil)
+				}
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 				cnd := lod_maz(fil, ebuf, false)
 				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
@@ -264,6 +269,10 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 					if sdb == -1 {
 						fil := fmt.Sprintf(".ed/ebuf.ed")				// save ebuf for relod
 						sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
+					} else {
+						fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",sdb,opts.Gtp)
+						sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
+fmt.Printf("S, autosave: %s\n",fil)
 					}
 					for cnd < 0 && ldb < sdmax {
 						ldb++
@@ -502,10 +511,10 @@ func menu_ndsav(y bool) {
 	if y {
 		if sdb < 0 {
 			fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",nsgg,nsmz)
-			sav_maz(fil, nsbuf, nsflg, nsxd, nsyd)
+			sav_maz(fil, ebuf, eflg, nsxd, nsyd)
 		} else {
 			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nssb,nsgg)
-			sav_maz(fil, nsbuf, nsflg, nsxd, nsyd)
+			sav_maz(fil, ebuf, eflg, nsxd, nsyd)
 		}
 	}
 	if exitsel { os.Exit(0) }
@@ -519,7 +528,7 @@ func needsav() bool {
 		nsyd = opts.DimY
 		nsgg = opts.Gtp
 		nsmz = opts.mnum+1
-//		nssb = sdb
+		nssb = sdb
 // because the dialog doesnt hold back transition away from buffer, this has to immediatley save *everything*
 /*
 		for y := 0; y <= nsxd; y++ {

@@ -146,7 +146,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 		fmt.Print(err)
 	}
 // ack, needsav hack..ack...ack...ack
-	if nsdstak > 0 {
+/*	if nsdstak > 0 {
 		dbf := fil[0:4]+".db_"+fil[4:len(fil)]
 fmt.Printf("need saving maze delete %s\n",dbf)
 		file, err := os.Create(dbf)
@@ -161,7 +161,7 @@ fmt.Printf("need saving maze delete %s\n",dbf)
 			file.Close()
 			nsdstak = 0
 		}
-	} else {
+	} else { */
 // now save deleted elements
 	if delstak > 0 {
 		dbf := fil[0:4]+".db_"+fil[4:len(fil)]
@@ -182,7 +182,7 @@ fmt.Printf("saving maze delete %s\n",dbf)
 			fmt.Print(err)
 		}
 	}
-	}
+//	}
 	opts.bufdrt = false
 }
 
@@ -521,9 +521,9 @@ func rotmirbuf(rmmaze *Maze) {
 // reload maze while editing & update window - generates output.png
 
 func remaze(mazn int) {
-fmt.Printf("in remaze dntr: %t edat:%d delstk: %d\n",opts.dntr,opts.edat,delstak)
-	sdb = -1
+fmt.Printf("in remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.edat,sdb,delstak)
 	if !opts.dntr {
+		sdb = -1
 		delbset(0)
 		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(edmaze)
