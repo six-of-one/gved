@@ -11,10 +11,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-// kontrol is for fyne window ops & input management
-
-var w fyne.Window
-var a fyne.App
+// kontrol is for keyboard, mouse & input management
 
 
 // input keys and keypress checks for canvas/ window

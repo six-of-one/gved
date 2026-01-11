@@ -16,7 +16,10 @@ import (
 	"fyne.io/fyne/v2/container"
 )
 
-// menu & window system isolated from keyboard & control now
+// fyne menu & window system isolated from keyboard & control now
+
+var w fyne.Window
+var a fyne.App
 
 // status keeper - appears in spare menu item on mbar for now
 
