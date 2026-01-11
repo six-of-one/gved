@@ -70,13 +70,31 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 			}
 		}
 // /fmt.Printf("parse: %02d \n",parse)
-		if parse != 32 { for y := 0; y <= parse; y++ { wfs += " 999" }}
+		if parse != 32 { for y := 0; y <= parse; y++ { wfs += " 999" }}		// pad out to end of 33 unit, so read line back in wont cause crash
 		wfs += "\n"
 		file.WriteString(wfs)
 		file.Close()
 	} else {
 		fmt.Printf("saving maze %s, %d x %d, error:\n",fil,mx,my)
 		fmt.Print(err)
+	}
+// now save deleted elements
+	if delstak > 0 {
+		dbf := ".db_"+fil
+		file, err := os.Create(dbf)
+		if err == nil {
+			wfs := fmt.Sprintf("%d\n",delstak)
+
+			for y := 0; y < delstak; y++ {
+				wfs += fmt.Sprintf("%d %d %d %d\n", delbuf.elem[y],delbuf.mx[y],delbuf.my[y],delbuf.revc[y])
+			}
+			wfs += "\n"
+			file.WriteString(wfs)
+			file.Close()
+		} else {
+			fmt.Printf("saving maze deleted %s\n",dbf)
+			fmt.Print(err)
+		}
 	}
 	opts.bufdrt = false
 }
@@ -155,6 +173,29 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		fmt.Printf("\n")
 		fmt.Printf("Note: 'no such file' if maze is not being edited and the maze is viewed when editor is on\n")
 		edp = -1
+	}
+// now load deleted elements
+	dbf := ".db_"+fil
+	data, err = ioutil.ReadFile(dbf)
+	delstak := 0
+	if err == nil {
+		dscan := fmt.Sprintf("%s",data)
+	    scanr := bufio.NewScanner(strings.NewReader(dscan))
+		l := "0"	// the default on scan failure will produce a solid block of wall 32 x 32
+		if scanr.Scan() { l = scanr.Text() }
+		fmt.Sscanf(l,"%d",&delstak)
+
+		for y := 0; y < delstak; y++ {
+			l = "2 1 1 1"
+			if scanr.Scan() { l = scanr.Text() }
+			fmt.Sscanf(l, "%d %d %d %d\n", &delbuf.elem[y],&delbuf.mx[y],&delbuf.my[y],&delbuf.revc[y])
+		}
+		delbuf.elem[delstak] = -1
+		delbuf.revc[delstak] = 1
+
+	} else {
+		fmt.Printf("loading maze deleted %s, warning:\n",dbf)
+		fmt.Print(err)
 	}
 	return edp
 }
