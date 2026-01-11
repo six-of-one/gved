@@ -586,7 +586,7 @@ func uswap() {
 	su = urstak
 	urstak = restak
 	restak = su
-	for y := 0; y <= delstak; y++ {
+	for y := 0; y <= udstak; y++ {
 		su = udb.mx[y]; udb.mx[y] = delbuf.mx[y]; delbuf.mx[y] = su
 		su = udb.my[y]; udb.my[y] = delbuf.my[y]; delbuf.my[y] = su
 		su = udb.revc[y]; udb.revc[y] = delbuf.revc[y]; delbuf.revc[y] = su
