@@ -18,12 +18,10 @@ more complexity will be required for:
 
 var edmaze *Maze
 var ebuf MazeData	// main edit buffer and corresponding flags
-var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 
 var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf
 var eflg [11]int
-var uflg [11]int
 var tflg [14]int	// transfer flags - because they dont pass as a parm for scan from file?
 					//					so after a file load, these have to be copied to the appropriate flags
 var din [33]int		// set to be 1 line per std gauntlet maze (gved encoding) of 0 - 32 elements [ with H wrap being 0 - 31 ]
@@ -42,8 +40,8 @@ var delstak int
 var restak int		// keep track of redo chain
 
 var nsbuf MazeData	// needsav needs to make a quick buffer copy while the user decideds
-var nsflg [11]int
-var nsdb = &Deletebuf{}
+var nsflg [11]int	// du to go code continuing to run (and load a new maze) while the dialog is up
+var nsdb = &Deletebuf{}			// cannot find a way to block this behav without freezing prog
 var nsdstak int
 var ndrstak int
 
@@ -59,6 +57,27 @@ fmt.Printf("nsdb len %d, test: %d\n",len(nsdb.elem),t)
 			nsdb.mx = append(nsdb.mx,0)
 			nsdb.my = append(nsdb.my,0)
 			nsdb.revc = append(nsdb.revc,1)
+		}
+	}
+}
+
+// ulternate buffer - copy of maze from load
+var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
+var uflg [11]int
+var udb = &Deletebuf{}	// and with the way the delbuf operates now, ubuf must also swap that
+var udstak int
+var urstak int
+
+func udbck(ct int, t int){
+
+fmt.Printf("uddb len %d, test: %d\n",len(udb.elem),t)
+
+	if len(udb.elem) <= t {
+		for y := 0; y < ct; y++ {
+			udb.elem = append(udb.elem,-1)
+			udb.mx = append(udb.mx,0)
+			udb.my = append(udb.my,0)
+			udb.revc = append(udb.revc,1)
 		}
 	}
 }

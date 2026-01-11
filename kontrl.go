@@ -578,6 +578,19 @@ func uswap() {
 			ubuf[xy{x,y}] = sw
 	}}
 	for y := 0; y < 11; y++ { sw := eflg[y]; eflg[y] = uflg[y]; uflg[y] = sw }
+// also have to swap delete stak
+	su := udstak;			su = urstak
+	udstak = delstak;		urstak = restak
+	delstak = su;			restak = su
+
+	udbck(delstak+1,delstak)
+	for y := 0; y <= delstak; y++ {
+		nsdb.mx[y] = delbuf.mx[y]
+		nsdb.my[y] = delbuf.my[y]
+		nsdb.revc[y] = delbuf.revc[y]
+		nsdb.elem[y] = delbuf.elem[y]
+		if nsdb.elem[y] < 0 { nsdstak = y; break }
+	}
 	ed_maze(true)
 }
 
