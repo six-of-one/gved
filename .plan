@@ -8,13 +8,11 @@ shift-del toggle click-delete mode
 ctrl-h toggle clcik item replace modes
 rubber-band ops will also del
 
-drag mouse while key held - do line of setcode
-
 rubber-band ops - click and drag will expand to set region of place / del / edit
 - some modes will auto operate
-- idea: show rubber band with visible indicator smh
+- idea: show rubber band with visible indicator smh (sprites?)
 * ctrl-click should only outline
-- copy, cut & paste rubber-band contents
+- copy, cut & paste rubber-band contents, wip
 
 replace mode - either over entire maze, rubber band region, select y/n on each find, or click item replace
 
@@ -26,10 +24,12 @@ a palette system similar to edit in sanctuary
 - and the edit options dialog
 - put palette into sd buffer 0, which isnt normally selectable
 - bring up on home key
-- the palette will be editable, but save will need to be diff
+- the palette will be editable, but save will need to be diff (autosave when swap palette out?)
+  or a second window for palette, with edit opts
 
 a basic "playable" mode to test mazes
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
+- sprites needed (sprites have to replace gens, treasure, keys, pots, etc)
 
 multiple save buffers to store vars maze edits, page thru all wiht 'S', store with #'S', load with #'L'
 * have to be in edit mode to load
@@ -38,15 +38,13 @@ multiple save buffers to store vars maze edits, page thru all wiht 'S', store wi
 - use a certain buffer (0 ?) to store the main edit pallete for middl-clicks
 * modify lod_maz to pass mazedata & bool for ubuf
 * dirty flag so quit, z, x know unsaved changes are there and give warning dialog
-- list of delbuf contents somehow
+- list of delbuf overview, contents, etc somehow
 
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 
 issues needing fixed
-* ctrl-z on area edits only works one at a time
-- exit before needsav done
+- exit happens before needsav done -- real issue as go will not lock on dialogs like y/n
 
 perhaps needs rewrite:
 - cleanup kontrol
-  some sd buf ops to edat
-- uswap has a serious delstak pointer issue
+  move some sd buf ops to edat ?
