@@ -39,7 +39,7 @@ type Deletebuf struct {
 
 var delbuf = &Deletebuf{}
 var delstak int
-var restak int
+var restak int		// keep track of redo chain
 
 var nsbuf MazeData	// needsav needs to make a quick buffer copy while the user decideds
 var nsflg [11]int
@@ -126,7 +126,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 		fmt.Printf("saving maze %s, %d x %d, error:\n",fil,mx,my)
 		fmt.Print(err)
 	}
-// ack, needsav hack hack hack
+// ack, needsav hack..ack...ack...ack
 	if nsdstak > 0 {
 		dbf := fil[0:4]+".db_"+fil[4:len(fil)]
 fmt.Printf("need saving maze delete %s\n",dbf)
