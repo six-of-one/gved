@@ -13,9 +13,10 @@ import (
 
 // kontrol is for keyboard, mouse & input management
 
-// weirdo needsav exit condition
+// weirdo needsav exit condition and remaze, to allow dialog to block next action
 
 var exitsel bool
+var nsremaze bool
 
 // input keys and keypress checks for canvas/ window
 // since this is all that is called without other handler / timers
@@ -49,6 +50,8 @@ func typedRune(r rune) {
 	if r == 'a' {
 		if (anum > 0 && anum <= 127 || anum >= 229376 && anum < 262145) {
 
+			nsremaze = true
+			relod = needsav()
 			if anum <= 127 {
 				opts.mnum = anum - 1
 				Aov = 0
@@ -60,7 +63,6 @@ func typedRune(r rune) {
 			anum = 0
 // clear these when load new maze
 			Ovwallpat = -1
-			relod = needsav()
 		}
 	}
 
@@ -206,13 +208,14 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			}
 		case 69:		// E
 			if opts.edat != 0 {
+				nsremaze = true
+				relod = needsav()
 				smod = "View mode: "
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 				cmdoff = false
 				opts.edat = 0
 				opts.dntr = false
 				ccp = NOP
-				relod = needsav()
 				cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 				statlin(cmdhin,"")
 			}
@@ -285,7 +288,8 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		relodsub = true
 		switch r {
 		case 'z':
-			needsav()
+			nsremaze = true
+			relodsub = needsav()
 			Ovwallpat = -1
 // allow step parse through valid address
 			if Aov > 0 {
@@ -296,7 +300,8 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			}
 			if opts.mnum < 0 { opts.mnum = maxmaze }
 		case 'x':
-			needsav()
+			nsremaze = true
+			relodsub = needsav()
 			Ovwallpat = -1
 			if Aov > 0 {
 				nav := addrver(Aov, 1)
@@ -418,21 +423,23 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)
 			}
 		case 'i':
+			nsremaze = true
+			relodsub = needsav()
 			opts.Gtp = 1
 			opts.R14 = false
 			G1 = true
 			G2 = false
 			maxmaze = 126
 			spau = "G¹ "
-			needsav()
 		case 'l':
+			nsremaze = true
+			relodsub = needsav()
 			opts.Gtp = 1
 			opts.R14 = !opts.R14
 			G1 = true
 			G2 = false
 			maxmaze = 126
 			spau = "G¹ "
-			needsav()
 		case 'p':
 			nothing = nothing ^ NOFLOOR
 			spau = fmt.Sprintf("no floors: %d\n",nothing & NOFLOOR)
@@ -451,12 +458,13 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			opts.SP = !opts.SP
 			opts.dntr = true
 		case 'u':
+			nsremaze = true
+			relodsub = needsav()
 			opts.Gtp = 2
 			G1 = false
 			G2 = true
 			maxmaze = 116
 			spau = "G² mazes"
-			needsav()
 		case 'v':
 			lx := 116
 			if G1 { lx = 126 }
@@ -501,6 +509,7 @@ func menu_ndsav(y bool) {
 		}
 	}
 	if exitsel { os.Exit(0) }
+	if nsremaze { remaze(opts.mnum) }
 }
 
 func needsav() bool {
@@ -510,8 +519,9 @@ func needsav() bool {
 		nsyd = opts.DimY
 		nsgg = opts.Gtp
 		nsmz = opts.mnum+1
-		nssb = sdb
+//		nssb = sdb
 // because the dialog doesnt hold back transition away from buffer, this has to immediatley save *everything*
+/*
 		for y := 0; y <= nsxd; y++ {
 		for x := 0; x <= nsyd; x++ {
 			nsbuf[xy{x, y}] = ebuf[xy{x, y}]
@@ -529,6 +539,7 @@ func needsav() bool {
 			nsdb.elem[y] = delbuf.elem[y]
 			if nsdb.elem[y] < 0 { nsdstak = y; break }
 		}
+		*/
 		dia := fmt.Sprintf("Save changes for maze %d in .ed/g%dmaze%03d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",nsmz,nsgg,nsmz)
 		if nssb >= 0 { dia = fmt.Sprintf("Save changes in buffer %d to .ed/sd%05d_g%d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",nssb,nssb,nsgg) }
 		dialog.ShowConfirm("Save?",dia, menu_ndsav, w)

@@ -530,6 +530,7 @@ fmt.Printf("in remaze dntr: %t edat:%d delstk: %d\n",opts.dntr,opts.edat,delstak
 		opts.bufdrt = false
 	}
 	opts.dntr = false
+	nsremaze = false
 	if opts.edat > 0 { ed_maze(true) } else {
 		Ovimg := genpfimage(edmaze, mazn)
 		upwin(Ovimg)
