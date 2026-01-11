@@ -70,7 +70,7 @@ var urstak int
 
 func udbck(ct int, t int){
 
-fmt.Printf("uddb len %d, test: %d\n",len(udb.elem),t)
+fmt.Printf("udb len %d, test: %d\n",len(udb.elem),t)
 
 	if len(udb.elem) <= t {
 		for y := 0; y < ct; y++ {
@@ -97,7 +97,7 @@ func delbset(u int) {
 
 func delbck(ct int, t int){
 
-fmt.Printf("delbuf len %d, test: %d\n",len(delbuf.elem),t)
+fmt.Printf("delbuf st: %d len %d, test: %d\n",delstak,len(delbuf.elem),t)
 
 	if len(delbuf.elem) <= t {
 		for y := 0; y < ct; y++ {
@@ -193,7 +193,6 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 	data, err := ioutil.ReadFile(fil)
 	edp := 0
 	if err == nil {
-		esc := 0
 // setup for rejecting the load because of dirty buffer flag
 //		for y := 0; y < 11; y++ { tflg[y] = eflg[y] }
 //		dumpbuf()		// check buffer dirty flag for edits needing saved, only opt here is discard or dont load
@@ -211,7 +210,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		l = " 00 00 00 00 00 00 00 0B 5A 5B 49"
 		if scanr.Scan() { l = scanr.Text() }
 		fmt.Sscanf(l," %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", &tflg[0], &tflg[1], &tflg[2], &tflg[3], &tflg[4], &tflg[5], &tflg[6], &tflg[7], &tflg[8], &tflg[9], &tflg[10])
-		for y := 0; y < 11; y++ { uflg[y] = tflg[y] }
+		if ud { for y := 0; y < 11; y++ { uflg[y] = tflg[y] }}
 	if opts.Verbose {
 			for y := 0; y < 11; y++ { fmt.Printf(" %02X", tflg[y]) }
 			fmt.Printf("\n")
@@ -238,17 +237,10 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 				}
 				if din[parse] < 999 {				// max value is end of buffer fill
 					mdat[xy{x, y}] = din[parse]
+					if ud { ubuf[xy{x, y}] = din[parse] }		// store ubuf data on flag
 	if opts.Verbose { fmt.Printf("%03d ",din[parse]) }
 				}
 				parse++
-/*/
-				l = "02"
-				if scanr.Scan() { l = scanr.Text() }
-	if opts.Verbose { fmt.Printf("%02s ",l) }
-				fmt.Sscanf(l,"%02d", &esc)
-				mdat[xy{x, y}] = esc */
-// to here
-				if ud { ubuf[xy{x, y}] = esc }		// store ubuf data on flag
 				edp = 1		// tell sender we loaded some maze part
 			}
 	if opts.Verbose { fmt.Printf("\n") }
@@ -277,12 +269,24 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 			if scanr.Scan() { l = scanr.Text() }
 			delbck(6, y)
 			fmt.Sscanf(l, "%d %d %d %d\n", &delbuf.elem[y],&delbuf.mx[y],&delbuf.my[y],&delbuf.revc[y])
+			if ud {
+				udbck(6,y)
+				udb.mx[y] = delbuf.mx[y]
+				udb.my[y] = delbuf.my[y]
+				udb.revc[y] = delbuf.revc[y]
+				udb.elem[y] = delbuf.elem[y]
+			}
 			if delbuf.elem[y] < 0 { delstak = y; break }
 		}
 		delbset(delstak)
+		if ud {
+			udstak = delstak; urstak = restak
+			udbck(3,udstak)
+			udb.elem[udstak] = -1
+		}
 
 	} else {
-		fmt.Printf("loading maze deleted %s, warning:\n",dbf)
+		fmt.Printf("edp fails %d or loading maze deleted %s, warning:\n",edp,dbf)
 		fmt.Print(err)
 	}
 	return edp
@@ -517,7 +521,7 @@ func rotmirbuf(rmmaze *Maze) {
 // reload maze while editing & update window - generates output.png
 
 func remaze(mazn int) {
-fmt.Printf("in remaze dntr: %t edat:%d\n",opts.dntr,opts.edat)
+fmt.Printf("in remaze dntr: %t edat:%d delstk: %d\n",opts.dntr,opts.edat,delstak)
 	sdb = -1
 	if !opts.dntr {
 		delbset(0)
