@@ -60,8 +60,7 @@ func typedRune(r rune) {
 			anum = 0
 // clear these when load new maze
 			Ovwallpat = -1
-			relod = true
-			needsav()
+			relod = needsav()
 		}
 	}
 
@@ -213,10 +212,9 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				opts.edat = 0
 				opts.dntr = false
 				ccp = NOP
-				needsav()
+				relod = needsav()
 				cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 				statlin(cmdhin,"")
-				relod = true
 			}
 		case 'c':
 			if anum > 0 && anum < 65 {
@@ -505,7 +503,8 @@ func menu_ndsav(y bool) {
 	if exitsel { os.Exit(0) }
 }
 
-func needsav() {
+func needsav() bool {
+	ret := true
 	if opts.bufdrt {
 		nsxd = opts.DimX
 		nsyd = opts.DimY
@@ -534,7 +533,9 @@ func needsav() {
 		if nssb >= 0 { dia = fmt.Sprintf("Save changes in buffer %d to .ed/sd%05d_g%d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",nssb,nssb,nsgg) }
 		dialog.ShowConfirm("Save?",dia, menu_ndsav, w)
 //		opts.bufdrt = false;		// save clears this, clear here in case discard is selected
+		ret = false
 	} else { if exitsel { os.Exit(0) }}
+	return ret
 }
 
 func undo() {
