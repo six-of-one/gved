@@ -43,7 +43,6 @@ multiple save buffers to store vars maze edits, page thru all wiht 'S', store wi
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 
 issues needing fixed
-- exit happens before needsav done -- real issue as go will not lock on dialogs like y/n
 
 perhaps needs rewrite:
 - cleanup kontrol
