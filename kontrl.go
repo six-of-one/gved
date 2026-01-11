@@ -525,7 +525,6 @@ func needsav() {
 			nsdb.elem[y] = delbuf.elem[y]
 			if nsdb.elem[y] < 0 { nsdstak = y; break }
 		}
-		nsbuf_sav = true
 		dia := fmt.Sprintf("Save changes for maze %d in .ed/g%dmaze%03d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",nsmz,nsgg,nsmz)
 		if nssb >= 0 { dia = fmt.Sprintf("Save changes in buffer %d to .ed/sd%05d_g%d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",nssb,nssb,nsgg) }
 		dialog.ShowConfirm("Save?",dia, menu_ndsav, w)

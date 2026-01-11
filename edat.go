@@ -44,7 +44,6 @@ var nsbuf MazeData	// needsav needs to make a quick buffer copy while the user d
 var nsflg [11]int
 var nsdb = &Deletebuf{}
 var nsdstak int
-var nsbuf_sav bool
 
 // and the needsav copy of delbuf
 
@@ -126,23 +125,21 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 		fmt.Print(err)
 	}
 // ack, needsav hack hack hack
-	if nsbuf_sav {
 	if nsdstak > 0 {
 		dbf := fil[0:4]+".db_"+fil[4:len(fil)]
-fmt.Printf("saving maze delete %s\n",dbf)
+fmt.Printf("need saving maze delete %s\n",dbf)
 		file, err := os.Create(dbf)
 		if err == nil {
-			wfs := fmt.Sprintf("%d\n",nsdb)
-
-			for y := 0; y < delstak; y++ {
+			wfs := fmt.Sprintf("%d\n",nsdstak)
+			for y := 0; y < nsdstak; y++ {
 				if nsdb.elem[y] < 0 { break }
 				wfs += fmt.Sprintf("%d %d %d %d\n", nsdb.elem[y],nsdb.mx[y],nsdb.my[y],nsdb.revc[y])
 			}
 			wfs += "\n"
 			file.WriteString(wfs)
 			file.Close()
+			nsdstak = 0
 		}
-	}
 	} else {
 // now save deleted elements
 	if delstak > 0 {
