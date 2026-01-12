@@ -33,7 +33,7 @@ E	turn edit off/ view back on and check for unsaved data
 
 S	cycle through all save data buffers in .ed/sd#####_g?.ed	(where g? is g1 or g2)
 	- while cycling any edits to current maze are saved temporary as .ed/ebuf.ed
-	- buffer edits will also auto save
+	- buffer edits will also auto save (including std maze ones)
 	- limit is currently 999 buffers
 #L	load buffer #####											(current limit 999 bufs)
 #S	save current visible maze as buffer #####
