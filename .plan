@@ -49,6 +49,5 @@ issues needing fixed
 perhaps needs rewrite:
 - cleanup kontrol
   move some sd buf ops to edat ?
-- make cmds #T, T, pP function different edit mode
-- add #T mask to blank pr
 - # <ctrl-s> maze number (retool save & load)
+- expand # blank keep items
