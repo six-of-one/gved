@@ -87,6 +87,22 @@ fmt.Printf("delbuf st: %d len %d, test: %d\n",delstak,len(delbuf.elem),t)
 	}
 }
 
+// pre-pend .db_ to save filename for delete buffer save & load
+
+func prep(fn string) string {
+//	fil[0:4]+".db_"+fil[4:len(fil)]
+	fl := len(fn)
+	rfl := fn
+	lstb := 0
+// find last /, if any
+	for y := 0; y < fl; y++ {
+		if fn[y:1] == "/" { lstb = y }
+	}
+	rfl = fn[0:lstb]+".db_"+fn[lstb:fl]
+fmt.Printf("sv fil: %s last bld: %d",rfl, lstb)
+	return rfl
+}
+
 // save maze to file in .ed
 
 func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
@@ -122,11 +138,12 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 	} else {
 		fmt.Printf("saving maze %s, %d x %d, error:\n",fil,mx,my)
 		fmt.Print(err)
+		fmt.Printf("\n")
 	}
 
 // now save deleted elements
 	if delstak > 0 {
-		dbf := fil[0:4]+".db_"+fil[4:len(fil)]
+		dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
 fmt.Printf("saving maze delete %s\n",dbf)
 		file, err := os.Create(dbf)
 		if err == nil {
@@ -142,6 +159,7 @@ fmt.Printf("saving maze delete %s\n",dbf)
 		} else {
 			fmt.Printf("saving maze deleted %s\n",dbf)
 			fmt.Print(err)
+			fmt.Printf("\n")
 		}
 	}
 //	}
@@ -212,7 +230,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		edp = -1
 	}
 // now load deleted elements
-	dbf := fil[0:4]+".db_"+fil[4:len(fil)]
+	dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
 	data, err = ioutil.ReadFile(dbf)
 	delstak = 0
 	if err == nil {
@@ -297,6 +315,7 @@ func stor_maz(mazn int) {
 			sav_maz(fil, ebuf, eflg, lastx, lasty)
 		} else {
 			fmt.Print(err)
+			fmt.Printf("\n")
 		}
 		return
 	}
