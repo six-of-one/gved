@@ -26,6 +26,10 @@ var tflg [14]int	// transfer flags - because they dont pass as a parm for scan f
 					//					so after a file load, these have to be copied to the appropriate flags
 var din [33]int		// set to be 1 line per std gauntlet maze (gved encoding) of 0 - 32 elements [ with H wrap being 0 - 31 ]
 
+// arrays for item masks, set in pfrender.go
+var g1mask [65]int
+var g2mask [65]int
+
 // deleted elements / undo storage
 
 type Deletebuf struct {

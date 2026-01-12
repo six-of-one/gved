@@ -521,6 +521,8 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			default:
 				if opts.Verbose && false { fmt.Printf("G² WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
 			}
+// set mask flag in array
+			g2mask[whatis(maze, x, y)] = stamp.mask
 			}
 // g1 decodes
 			if G1 {
@@ -733,7 +735,10 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				}
 			default:
 				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
-			}}
+			}
+// set mask flag in array
+			g1mask[whatis(maze, x, y)] = stamp.mask
+		}
 // Six: end G1 decode
 			if stamp != nil {
 				writestamptoimage(img, stamp, x*16+xpad+stamp.nudgex, y*16+xpad+stamp.nudgey)
