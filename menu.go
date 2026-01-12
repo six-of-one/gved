@@ -139,7 +139,7 @@ func menu_paste() { if opts.edat > 0 { ccp = PASTE }}
 // set menus
 
 func st_menu() {
-// quit menu option does not exit to term!
+// default 'quit' menu option does not call needsav !
 	menuItemExit := fyne.NewMenuItem("Exit", func() {
 		exitsel = true
 		needsav()

@@ -123,10 +123,8 @@ func typedRune(r rune) {
 			if key.Name == "RightShift" { shift = false }
 			if key.Name == "LeftControl" { ctrl = false }
 			if key.Name == "RightControl" { ctrl = false }
-			if key.Name == "S" && ctrl && shift { menu_savas() }
-			if key.Name == "L" && ctrl && shift { menu_laodf() }
-			if key.Name == "S" && ctrl  { menu_sav() }
-			if key.Name == "L" && ctrl  { menu_lod() }
+			if key.Name == "S" && ctrl  { if shift { menu_savas() } else { menu_sav() }}
+			if key.Name == "L" && ctrl  { if shift { menu_laodf() } else { menu_lod() }}
 			if key.Name == "R" && ctrl  { menu_res() }
 			if key.Name == "U" && ctrl  { uswap() }
 			if key.Name == "Z" && ctrl  { undo() }
