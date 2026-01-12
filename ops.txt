@@ -101,10 +101,17 @@ there is as yet no way, *with gved*, to recompress and store mazes in rom...
 
 most of these have a corresponging item on edit or file menus
 
-<CTRL>-S	save current buffer for maze # to disk
+<SH-CTRL>-S	save current buffer for maze to disk as a generic buffer save
+			- typing a # first will pre-pend that as the mazes #
+			  (it does not cause it to load that # for now)
+<SH-CTRL>-L	load generic buffer save from disk into edit buffer
+			- these are NOT compatible with below, doing a <CTRL>-S after a 
+			  generic load WILL overwrite the buffer for current maze #
+
+<CTRL>-S	save edit buffer for maze # to disk as a maze edit buffer for maze#
 			- A (address) mode will NOT save edit buffer for address, it will save to current maze #
-<CTRL>-L	load current buffer for maze # from disk
-<CTRL>-R	reset buffer for current maze # from rom
+<CTRL>-L	load edit buffer from disk from buffer for maze#
+<CTRL>-R	reset edit buffer for current maze # from rom
 			- these are also on the edit menu
 
 <CTRL>-C	set for copy contents of next Left-click mouse drag
