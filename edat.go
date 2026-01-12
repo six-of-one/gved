@@ -246,6 +246,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 	} else {
 		fmt.Printf("edp fails %d or loading maze deleted %s, warning:\n",edp,dbf)
 		fmt.Print(err)
+		fmt.Printf("\n")
 	}
 	return edp
 }
@@ -277,6 +278,7 @@ func stor_maz(mazn int) {
 	if err != nil {
 		errs := fmt.Sprintf("%v",err)
 		fmt.Print(errs)
+		fmt.Printf("\n")
 // file does not exist yet
 		if strings.Contains(errs, "no such file") {
 // editor overs
