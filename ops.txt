@@ -99,6 +99,8 @@ in edit mode with cmd keys set, many of the view mode keys are still functional
 edit mode stores changes in buffer files in .ed
 there is as yet no way, *with gved*, to recompress and store mazes in rom...
 
+most of these have a corresponging item on edit or file menus
+
 <CTRL>-S	save current buffer for maze # to disk
 			- A (address) mode will NOT save edit buffer for address, it will save to current maze #
 <CTRL>-L	load current buffer for maze # from disk

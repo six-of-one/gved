@@ -107,6 +107,32 @@ func menu_savas() {
 	fileDialog.Show()
 }
 
+// load maze file
+func menu_laodf() {
+
+	fileDialog := dialog.NewFileOpen(func(reader fyne.URIReadCloser, err error) {
+        if err != nil {
+            fmt.Println("Save as Error:", err)
+            return
+        }
+        if reader == nil {
+            fmt.Println("No file selected")
+            return
+        }
+
+        fmt.Println("Selected:", reader.URI().Path())
+		fil := reader.URI().Path()
+
+		if opts.bufdrt { menu_savit(true) }
+		Ovwallpat = -1
+		cnd := lod_maz(fil, ebuf, true)
+		sdb = -1
+		if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
+		remaze(opts.mnum)
+    }, w)
+	fileDialog.Show()
+}
+
 func menu_copy() { if opts.edat > 0 { ccp = COPY }}
 func menu_cut() { if opts.edat > 0 { ccp = CUT }}
 func menu_paste() { if opts.edat > 0 { ccp = PASTE }}
@@ -118,9 +144,10 @@ func st_menu() {
 		exitsel = true
 		needsav()
 	})
+	menuItemLodf := fyne.NewMenuItem("Load maze from <shift-ctrl>-l",menu_laodf)
 	menuItemSava := fyne.NewMenuItem("Save maze as <shift-ctrl>-s",menu_savas)
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
-	menuFile := fyne.NewMenu("File", menuItemSava, menuItemLin1, menuItemExit)
+	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemLin1, menuItemExit)
 
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
