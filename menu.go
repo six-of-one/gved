@@ -147,6 +147,7 @@ func menu_blank() {
 		if tx == 0 || tx == opts.DimX { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
 		if ty == 0 || ty == opts.DimY { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
 	}}
+	opts.dntr = true
 	remaze(opts.mnum)
 }
 

@@ -497,14 +497,25 @@ func rotmirbuf(rmmaze *Maze) {
 }
 
 // bring up edit palette after saving
+var swsdb int		// palette on a sd edit
 
 func palete() {
 
 	if opts.bufdrt { menu_savit(true) }		// autosave
+// editing an sd, save & palette
+	if sdb > 0 { swsdb = sdb; sdb = 0 }
+	else {
+// palette up and we got back to sdb
+	if swsdb > 0 { sdb = swsdb } else {
+// palette maze swaps
 	if sdb == 0 {
-		menu_lodit(true)
+		menu_lodit(true)		// also also wik - sets sdb -1
 	} else {
-		nm := 0
+		sdb = 0
+	}}}
+
+	if sdb > -1 {
+		nm := sdb
 		fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nm,opts.Gtp)
 		cnd := lod_maz(fil, ebuf, false)
 		if cnd >= 0 { sdb = nm; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
