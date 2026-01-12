@@ -140,9 +140,9 @@ const (
 	NODOR = 32		// doors, keys
 	NOTRAP = 64		// trap & floor dots, stun, ff tiles
 	NOEXP = 128		// exit, push wall
-	NOTHN = 256		// anything else left
+	NOTHN = 256		// anything else left			511  - all the items
 	NOFLOOR = 512
-	NOWALL = 1024
+	NOWALL = 1024	//								1536 - floors & walls
 	NOG1W = 2048		// g1 std wall only
 )
 // G1 - list of "wrap levels"

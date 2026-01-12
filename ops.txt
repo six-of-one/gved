@@ -89,7 +89,7 @@ T	loop through a set of invisible flags or, *
 	NOFLOOR = 512
 	NOWALL = 1024
 	NOG1W = 2048		// g1 std wall only
-- these are hidden only and still present in maze (* no func in edit mode)
+- these are hidden only and still present in maze			(* disabled when edit keys active)
 
 Edit mazes:
 ----------

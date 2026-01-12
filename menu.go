@@ -149,6 +149,7 @@ func menu_blank(pr bool) {
 	for tx := 0; tx <= opts.DimX; tx++ {
 		clr := true
 		if pr {
+			flg := anum & 511			// item mask from #T
 			if G1 {
 				if ebuf[xy{tx, ty}] == G1OBJ_EXIT { clr = false }
 				if ebuf[xy{tx, ty}] == G1OBJ_EXIT4 { clr = false }
@@ -158,6 +159,11 @@ func menu_blank(pr bool) {
 				if ebuf[xy{tx, ty}] == MAZEOBJ_EXIT { clr = false }
 				if ebuf[xy{tx, ty}] == MAZEOBJ_EXITTO6 { clr = false }
 				if ebuf[xy{tx, ty}] == MAZEOBJ_PLAYERSTART { clr = false }
+			}
+			if G1 {
+				if g1mask[ebuf[xy{tx, ty}]] & flg > 0 { clr = false }
+			} else {
+				if g2mask[ebuf[xy{tx, ty}]] & flg > 0 { clr = false }
 			}
 		}
 		if clr {
