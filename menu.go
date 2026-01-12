@@ -105,6 +105,7 @@ func menu_savas() {
 
     }, w)
 	fileDialog.Show()
+	fileDialog.Resize(windowSize)
 }
 
 // load maze file
@@ -131,6 +132,7 @@ func menu_laodf() {
 		remaze(opts.mnum)
     }, w)
 	fileDialog.Show()
+	fileDialog.Resize(windowSize)
 }
 
 func menu_copy() { if opts.edat > 0 { ccp = COPY }}
