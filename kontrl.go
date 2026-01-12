@@ -185,7 +185,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 // with anum != 0, this becomes load s[1] buffer into ebuf, if in edit
 			if opts.edat > 0 && anum > 0 && anum < sdmax {
 fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
-				if opts.bufdrt { menu_savit(true) }
+				if opts.bufdrt { menu_savit(true) }		// autosave
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 				cnd := lod_maz(fil, ebuf, false)
 				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
@@ -263,7 +263,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 // with no anum, rotate curr ebuf thru s[1] - s[?]
 					cnd := -1
 					ldb := sdb
-					if opts.bufdrt { menu_savit(true) }
+					if opts.bufdrt { menu_savit(true) }		// autosave
 					for cnd < 0 && ldb < sdmax {
 						ldb++
 						if ldb == 0 { ldb = 1 }

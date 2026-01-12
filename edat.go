@@ -90,17 +90,15 @@ fmt.Printf("delbuf st: %d len %d, test: %d\n",delstak,len(delbuf.elem),t)
 // pre-pend .db_ to save filename for delete buffer save & load
 
 func prep(fn string) string {
-//	fil[0:4]+".db_"+fil[4:len(fil)]
 	fl := len(fn)
 	rfl := fn
-fmt.Printf("sv fil: %s siz: %d",rfl, fl)
 	lstb := 0
 // find last /, if any
 	for y := 0; y < fl; y++ {
-		if rfl[y:1] == "/" { lstb = y }
+		if rfl[y:y+1] == "/" { lstb = y+1 }
 	}
 	rfl = fn[0:lstb]+".db_"+fn[lstb:fl]
-fmt.Printf("sv fil: %s last bld: %d",rfl, lstb)
+fmt.Printf("sv fil: %s last bld: %d\n",rfl, lstb)
 	return rfl
 }
 
@@ -231,7 +229,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		edp = -1
 	}
 // now load deleted elements
-	dbf := fil[0:4]+".db_"+fil[4:len(fil)]
+	dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
 	data, err = ioutil.ReadFile(dbf)
 	delstak = 0
 	if err == nil {
@@ -502,7 +500,7 @@ func rotmirbuf(rmmaze *Maze) {
 
 func palete() {
 
-	if opts.bufdrt { menu_savit(true) }
+	if opts.bufdrt { menu_savit(true) }		// autosave
 	if sdb == 0 {
 		menu_lodit(true)
 	} else {

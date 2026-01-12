@@ -124,7 +124,7 @@ func menu_laodf() {
         fmt.Println("Selected:", reader.URI().Path())
 		fil := reader.URI().Path()
 
-		if opts.bufdrt { menu_savit(true) }
+		if opts.bufdrt { menu_savit(true) }		// autosave
 		Ovwallpat = -1
 		cnd := lod_maz(fil, ebuf, true)
 		sdb = -1
@@ -133,6 +133,21 @@ func menu_laodf() {
     }, w)
 	fileDialog.Show()
 	fileDialog.Resize(fyne.NewSize(float32(opts.Geow - 10), float32(opts.Geoh - 30)))
+}
+
+// insert blank maze into buffer
+func menu_blank() {
+	if opts.bufdrt { menu_savit(true) }		// autosave
+	eflg[4] = eflg[4] & 0xcf			// turn off H & V
+	eflg[5] = 0							// default floor & wall
+	eflg[6] = 0
+	for ty := 0; ty <= opts.DimY; ty++ {
+	for tx := 0; tx <= opts.DimX; tx++ {
+		ebuf[xy{tx, ty}] = 0
+		if tx == 0 || tx == opts.DimX { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
+		if ty == 0 || ty == opts.DimY { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
+	}}
+	remaze(opts.mnum)
 }
 
 func menu_copy() { if opts.edat > 0 { ccp = COPY }}
@@ -148,8 +163,9 @@ func st_menu() {
 	})
 	menuItemLodf := fyne.NewMenuItem("Load maze from <shift-ctrl>-l",menu_laodf)
 	menuItemSava := fyne.NewMenuItem("Save maze as <shift-ctrl>-s",menu_savas)
+	menuItemBlan := fyne.NewMenuItem("Blank maze",menu_blank)
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
-	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemLin1, menuItemExit)
+	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan,  menuItemLin1, menuItemExit)
 
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
