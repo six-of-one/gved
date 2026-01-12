@@ -476,6 +476,21 @@ func rotmirbuf(rmmaze *Maze) {
 	opts.MH = false
 }
 
+// bring up edit palette after saving
+
+func palete() {
+
+	if opts.bufdrt { menu_savit(true) }
+	if sdb == 0 {
+		menu_lodit(true)
+	} else {
+		nm := 0
+		fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nm,opts.Gtp)
+		cnd := lod_maz(fil, ebuf, false)
+		if cnd >= 0 { sdb = nm; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
+	}
+}
+
 // reload maze while editing & update window - generates output.png
 
 func remaze(mazn int) {

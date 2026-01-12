@@ -29,6 +29,7 @@ var anum int
 var shift bool
 var ctrl bool
 var del bool
+var home bool
 var logo bool		// other wise labeld "win" key
 var ccp int			// cut copy and paste - current op
 var edkey int		// for passing edit keys to clicker
@@ -97,13 +98,14 @@ func typedRune(r rune) {
 
 	if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
-//            fmt.Printf("Desktop key down: %h\n", key.Name)
+            fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "BackSpace" {
 				anum = (anum / 10);
 				spau = fmt.Sprintf("numeric: %d", anum)
 			}
 			if key.Name == "Delete" { del = true }
 			if key.Name == "BackSpace" { del = true }
+			if key.Name == "Home" { home = true; if opts.edat == 1 { palete() }}
 			if key.Name == "LeftSuper" { logo = true }
 			if key.Name == "LeftShift" { shift = true }
 			if key.Name == "RightShift" { shift = true }
@@ -115,6 +117,7 @@ func typedRune(r rune) {
 //			if key.Name == "Escape" { os.Exit(0) }
 			if key.Name == "Delete" { del = false }
 			if key.Name == "BackSpace" { del = false }
+			if key.Name == "Home" { home = false }
 			if key.Name == "LeftSuper" { logo = false }
 			if key.Name == "LeftShift" { shift = false }
 			if key.Name == "RightShift" { shift = false }
@@ -207,6 +210,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat != 0 {
 				nsremaze = true
 				relod = needsav()
+				if sdb == 0 { menu_lodit(true) }
 				smod = "View mode: "
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 				cmdoff = false
