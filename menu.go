@@ -85,6 +85,9 @@ func menu_res() {
 	} else { dialog.ShowInformation("Reset Fail","edit mode is not active!",w) }
 }
 
+func menu_copy() { if opts.edat > 0 { ccp = COPY }}
+func menu_cut() { if opts.edat > 0 { ccp = CUT }}
+func menu_paste() { if opts.edat > 0 { ccp = PASTE }}
 // set menus
 
 func st_menu() {
@@ -100,6 +103,9 @@ func st_menu() {
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
 	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-r", menu_res)
 	menuItemLin2 := fyne.NewMenuItem("═══════════════",nil)
+	menuItemCopy := fyne.NewMenuItem("Copy <ctrl>-c", menu_copy)
+	menuItemCut := fyne.NewMenuItem("Cut <ctrl>-x", menu_cut)
+	menuItemPaste := fyne.NewMenuItem("Paste <ctrl>-p", menu_paste)
 	menuItemUndo := fyne.NewMenuItem("Undo <ctrl>-z", undo)
 	menuItemRedo := fyne.NewMenuItem("Redo <ctrl>-y", redo)
 	menuItemUswp := fyne.NewMenuItem("Ult buf <ctrl>-u", uswap)
@@ -119,7 +125,7 @@ func st_menu() {
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n"+
 			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
-	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemLin2, menuItemUndo, menuItemRedo, menuItemUswp, menuItemEdhin)
+	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemLin2, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp, menuItemEdhin)
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
 	menuItemAbout := fyne.NewMenuItem("About", func() {
