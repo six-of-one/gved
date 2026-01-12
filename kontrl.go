@@ -17,6 +17,7 @@ import (
 
 var exitsel bool
 var nsremaze bool
+var swnothing int		// store nothing flag when cmd keys off
 
 // input keys and keypress checks for canvas/ window
 // since this is all that is called without other handler / timers
@@ -167,7 +168,12 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 			if opts.edat > 0 {			// have to be in editor to turn on edit keys
 				cmdoff = !cmdoff
 // a,e only lower case not avail for edit hotkey
-				if cmdoff && opts.edat > 0 { ska = "edit keys mode" }
+				if cmdoff {
+					ska = "edit keys mode"
+					if nothing > 0 { swnothing = nothing; nothing = 0 }
+				} else {
+					if swnothing > 0 { nothing = swnothing; swnothing = 0 }
+				}
 				opts.dntr = true
 				relod = true
 			}
@@ -216,6 +222,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				smod = "View mode: "
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 				cmdoff = false
+				if swnothing > 0 { nothing = swnothing; swnothing = 0 }
 				opts.edat = 0
 				opts.dntr = false
 				ccp = NOP
@@ -437,19 +444,25 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			maxmaze = 126
 			spau = "G¹ "
 		case 'p':
-			nothing = nothing ^ NOFLOOR
-			spau = fmt.Sprintf("no floors: %d\n",nothing & NOFLOOR)
-			opts.dntr = true
+			if !cmdoff {
+				nothing = nothing ^ NOFLOOR
+				spau = fmt.Sprintf("no floors: %d\n",nothing & NOFLOOR)
+				opts.dntr = true
+			}
 		case 80:		// P
-			nothing = nothing ^ NOWALL
-			spau = fmt.Sprintf("no walls: %d\n",nothing & NOWALL)
-			opts.dntr = true
+			if !cmdoff {
+				nothing = nothing ^ NOWALL
+				spau = fmt.Sprintf("no walls: %d\n",nothing & NOWALL)
+				opts.dntr = true
+			}
 		case 84:		// T
-			nt := (nothing & 511) + 1
-			nothing = (nothing & 1536) + (nt & 511)
-			if anum > 0 { nothing = (nothing & 1536) + anum; anum = 0 }		// set lower 9 bits of no-thing mask [ but not walls or floors ]
-			spau = fmt.Sprintf("no things: %d\n",nothing & 511)				// display no things mask
-			opts.dntr = true
+			if !cmdoff {
+				nt := (nothing & 511) + 1
+				nothing = (nothing & 1536) + (nt & 511)
+				if anum > 0 { nothing = (nothing & 1536) + anum; anum = 0 }		// set lower 9 bits of no-thing mask [ but not walls or floors ]
+				spau = fmt.Sprintf("no things: %d\n",nothing & 511)				// display no things mask
+				opts.dntr = true
+			}
 		case 's':
 			opts.SP = !opts.SP
 			opts.dntr = true
