@@ -39,28 +39,6 @@ var delbuf = &Deletebuf{}
 var delstak int
 var restak int		// keep track of redo chain
 
-var nsbuf MazeData	// needsav needs to make a quick buffer copy while the user decideds
-var nsflg [11]int	// du to go code continuing to run (and load a new maze) while the dialog is up
-var nsdb = &Deletebuf{}			// cannot find a way to block this behav without freezing prog
-var nsdstak int
-var ndrstak int
-
-// and the needsav copy of delbuf
-
-func nsdbck(ct int, t int){
-
-fmt.Printf("nsdb len %d, test: %d\n",len(nsdb.elem),t)
-
-	if len(nsdb.elem) <= t {
-		for y := 0; y < ct; y++ {
-			nsdb.elem = append(nsdb.elem,-1)
-			nsdb.mx = append(nsdb.mx,0)
-			nsdb.my = append(nsdb.my,0)
-			nsdb.revc = append(nsdb.revc,1)
-		}
-	}
-}
-
 // ulternate buffer - copy of maze from load
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var uflg [11]int
@@ -145,23 +123,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
 		fmt.Printf("saving maze %s, %d x %d, error:\n",fil,mx,my)
 		fmt.Print(err)
 	}
-// ack, needsav hack..ack...ack...ack
-/*	if nsdstak > 0 {
-		dbf := fil[0:4]+".db_"+fil[4:len(fil)]
-fmt.Printf("need saving maze delete %s\n",dbf)
-		file, err := os.Create(dbf)
-		if err == nil {
-			wfs := fmt.Sprintf("%d %d\n",nsdstak,ndrstak)
-			for y := 0; y < nsdstak; y++ {
-				if nsdb.elem[y] < 0 { break }
-				wfs += fmt.Sprintf("%d %d %d %d\n", nsdb.elem[y],nsdb.mx[y],nsdb.my[y],nsdb.revc[y])
-			}
-			wfs += "\n"
-			file.WriteString(wfs)
-			file.Close()
-			nsdstak = 0
-		}
-	} else { */
+
 // now save deleted elements
 	if delstak > 0 {
 		dbf := fil[0:4]+".db_"+fil[4:len(fil)]
@@ -218,7 +180,6 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 
 		if mdat == nil { mdat = make(map[xy]int) }		// init most bufs used by edit system, most come here anyway
 		if ubuf == nil { ubuf = make(map[xy]int) }
-		if nsbuf == nil { nsbuf = make(map[xy]int) }
 // loop to load - note issue with scans of formatted data
 		parse := 33
 		for y := 0; y <= opts.DimX; y++ {
