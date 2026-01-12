@@ -139,7 +139,7 @@ const (
 	NOPOT = 16		// pots & t.powers
 	NODOR = 32		// doors, keys
 	NOTRAP = 64		// trap & floor dots, stun, ff tiles
-	NOEXP = 128		// exit, push wall
+	NOEXP = 128		// exit, push wall, teleporter
 	NOTHN = 256		// anything else left			511  - all the items
 	NOFLOOR = 512
 	NOWALL = 1024	//								1536 - floors & walls
