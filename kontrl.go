@@ -171,6 +171,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 				relod = true
 			}
 			cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
+			if opts.edat > 0 { cmdhin = "cmds: ?, eE, '\\', fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a" }
 			if cmdoff && opts.edat > 0 { cmdhin = "cmds: ? '\\' - edit keys, #c C, HV, A #a, eE, L, S" }
 			fmt.Printf("hint: %s\n", cmdhin)
 			statlin(cmdhin,ska)
