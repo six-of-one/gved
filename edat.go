@@ -505,7 +505,7 @@ func palete() {
 // editing an sd, save & palette
 	if sdb > 0 { swsdb = sdb; sdb = 0 } else {
 // palette up and we got back to sdb
-	if swsdb > 0 { sdb = swsdb } else {
+	if swsdb > 0 { sdb = swsdb; swsdb = 0 } else {
 // palette maze swaps
 	if sdb == 0 {
 		menu_lodit(true)		// also also wik - sets sdb -1

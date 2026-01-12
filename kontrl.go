@@ -102,9 +102,10 @@ func typedRune(r rune) {
 			if key.Name == "BackSpace" {
 				anum = (anum / 10);
 				spau = fmt.Sprintf("numeric: %d", anum)
+				uptitl(opts.mnum, spau)
 			}
 			if key.Name == "Delete" { del = true }
-			if key.Name == "BackSpace" { del = true }
+//			if key.Name == "BackSpace" { del = true }
 			if key.Name == "Home" { home = true; if opts.edat == 1 { palete() }}
 			if key.Name == "LeftSuper" { logo = true }
 			if key.Name == "LeftShift" { shift = true }
@@ -116,7 +117,7 @@ func typedRune(r rune) {
 //	fmt.Printf("Desktop key up: %v\n", key)
 //			if key.Name == "Escape" { os.Exit(0) }
 			if key.Name == "Delete" { del = false }
-			if key.Name == "BackSpace" { del = false }
+//			if key.Name == "BackSpace" { del = false }
 			if key.Name == "Home" { home = false }
 			if key.Name == "LeftSuper" { logo = false }
 			if key.Name == "LeftShift" { shift = false }
