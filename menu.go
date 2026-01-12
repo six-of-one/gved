@@ -85,6 +85,36 @@ func menu_res() {
 	} else { dialog.ShowInformation("Reset Fail","edit mode is not active!",w) }
 }
 
+// save as
+func menu_savas() {
+
+	fileDialog := dialog.NewFileSave(func(writer fyne.URIWriteCloser, err error) {
+        if err != nil {
+            fmt.Println("Save as Error:", err)
+            return
+        }
+        if writer == nil {
+            fmt.Println("No file selected")
+            return
+        }
+
+        fmt.Println("Selected:", writer.URI().Path())
+
+        // Read file content
+//        data, err := io.ReadAll(reader)
+// /        defer reader.Close()
+
+        if err != nil {
+            fmt.Println("Error writing file:", err)
+            return
+        }
+
+//        fmt.Println("Content:", string(data))
+
+    }, w)
+	fileDialog.Show()
+}
+
 func menu_copy() { if opts.edat > 0 { ccp = COPY }}
 func menu_cut() { if opts.edat > 0 { ccp = CUT }}
 func menu_paste() { if opts.edat > 0 { ccp = PASTE }}
@@ -148,7 +178,7 @@ func st_menu() {
 
 func aw_init() {
 
-    a = app.New()
+    a = app.NewWithID("0777")
     w = a.NewWindow("G¹G²ved")
 
 	st_menu()
