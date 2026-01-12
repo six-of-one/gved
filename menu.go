@@ -104,7 +104,14 @@ func st_menu() {
 	menuItemRedo := fyne.NewMenuItem("Redo <ctrl>-y", redo)
 	menuItemUswp := fyne.NewMenuItem("Ult buf <ctrl>-u", uswap)
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
-		dialog.ShowInformation("Edit hints", "Save - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
+		strp := ""
+		if opts.edat == 1 {
+			strp = "Edit mode: "
+			if cmdoff { strp += "edit keys" } else { strp += "cmd keys" }
+		} else {
+			strp = "View mode: cmd keys only"
+		}
+		dialog.ShowInformation("Edit hints", strp+"\n══════════════════════════════\nSave - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\ne: turn editor on, init maze store in .ed/\n"+
 			"E: turn editor off, check unsaved buf\ndel, backspace - set floor *\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
 			"H: toggle horiz wrap, V: toggle vert wrap\n"+
@@ -265,43 +272,82 @@ func cpad(st string, d int) string {
 // dialog called from kby or menu
 
 func keyhints() {
-	strp := cpad("single letter commands",36)
+	strp := ""
+	kys := 1
+	dk := "Command Keys"
+	if opts.edat == 1 {
+		strp = "Edit mode: "
+		if cmdoff { strp += "edit keys"; kys = 2; dk = "Editor Keys" } else { strp += "cmd keys" }
+	} else {
+		strp = "View mode: cmd keys only"
+	}
+	strp += cpad("\nsingle letter commands",36)
 	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
 //		strp += cpad("\n\n? - this list",52)
 	strp += cpad("\nctrl-q - quit program",40)
-	strp += cpad("\ne - editor mode ╗",40)
-	strp += cpad("\n\\ - toggle cmd keys*",40)
-	strp += cpad("\nf - floor pattern+",43)
-	strp += cpad("\ng - floor color+",45)
-	strp += cpad("\nw - wall pattern+",43)
-	strp += cpad("\ne - wall color+",46)
-	strp += cpad("\nr - rotate maze +90°",41)
-	strp += cpad("\nR - rotate maze -90°",42)
-	strp += cpad("\nh - mirror maze horizontal toggle",31)
-	strp += "\nm - mirror maze vertical toggle"
-	strp += cpad("\np - toggle floor invis",41)
-	strp += cpad("\nP - toggle wall invis",42)
-	strp += cpad("\nT - loop invis things",42)
-	strp += cpad("\ns - toggle rnd special potion",34)
-	strp += cpad("\nL - generator indicate letter",35)
-	strp += cpad("\n{n}S save curr to buffer #",35)
-	strp += cpad("\ni - gauntlet mazes r1 - r9",38)
-	strp += cpad("\nl - use gauntlet rev 14",40)
-	strp += cpad("\nu - gauntlet 2 mazes",39)
+	if opts.edat == 1 {
+		strp += cpad("\nE - exit editor ╗",43)
+		strp += cpad("\n\\ - toggle cmd keys*",40)
+	} else { strp += cpad("\ne - editor mode",43) }
+	if kys == 1 {
+		strp += cpad("\nf - floor pattern+",44)
+		strp += cpad("\ng - floor color+",45)
+		strp += cpad("\nw - wall pattern+",43)
+		strp += cpad("\ne - wall color+",46)
+		strp += cpad("\nr - rotate maze +90°",41)
+		strp += cpad("\nR - rotate maze -90°",42)
+		strp += cpad("\nh - mirror maze horizontal toggle",31)
+		strp += "\nm - mirror maze vertical toggle"
+		strp += cpad("\np - toggle floor invis",41)
+		strp += cpad("\nP - toggle wall invis",42)
+		strp += cpad("\nT - loop invis things",42)
+		strp += cpad("\ns - toggle rnd special potion",34)
+	} else {
+		strp += cpad("\nH - toggle horiz maze wrap",35)
+		strp += cpad("\nV - toggle vert maze wrap",36)
+		strp += cpad("\nC - cycle item++, key c",40)
+		strp += cpad("\nc - cycle item--, key c",43)
+		strp += cpad("\n{n}c set item 1 - 64, key c",39)
+		strp += cpad("\nL - generator indicate letter",35)
+		strp += cpad("\nS - cycle sd buffers",42)
+		strp += cpad("\n{n}S save curr to buffer #",35)
+	}
+	if kys == 1 {
+		strp += cpad("\nL - generator indicate letter",35)
+		strp += cpad("\n{n}S save curr to buffer #",35)
+		strp += cpad("\ni - gauntlet mazes r1 - r9",38)
+		strp += cpad("\nl - use gauntlet rev 14",40)
+		strp += cpad("\nu - gauntlet 2 mazes",39)
 //		strp += cpad("\nv - valid address list",42)
-	strp += "\nv - all maze addr (in termninal)"
+		strp += "\nv - all maze addr (in termninal)"
+	}
 	strp += cpad("\nA - toggle a override",41)
 	strp += cpad("\n{n}a numeric of valid maze",35)
 	strp += cpad("\n - load maze 1 - 127 g1",42)
 	strp += cpad("\n - load maze 1 - 117 g2",42)
 	strp += "\n - load address 229376 - 262143 "
-//	strp += "\n * note some address will crash"
 	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
 	strb := fmt.Sprintf("\nG%d ",opts.Gtp)
 	if G1 {
 	if opts.R14 { strb += "(r14)"
 		} else { strb += "(r1-9)" }}
 	strp += cpad(strb,50)
+	if kys == 2 {
+		strp += "\n\ntypical: key selects item,\n L-click place, M-click assign"
+		strp += "\n–—–—–—–—–—–—–—"
+		strp += cpad("\n<DEL> (hold down) set floor",32)
+		strp += cpad("\nw - standard walls",42)
+		strp += cpad("\nW - shootable walls",41)
+		strp += cpad("\nd - horizontal door",41)
+		strp += cpad("\nD - vertical door",44)
+		strp += cpad("\nf - shootable food",42)
+		strp += cpad("\nF - indestructabl food",39)
+		strp += cpad("\np - shootable potion",39)
+		strp += cpad("\nP - indestructabl potion",37)
+		strp += cpad("\nt - treasure box",44)
+		strp += cpad("\nT - teleporter pad",42)
+	}
+//	strp += "\n * note some address will crash"
 
-	dialog.ShowInformation("Command Keys", strp, w)
+	dialog.ShowInformation(dk, strp, w)
 }
