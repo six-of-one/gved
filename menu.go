@@ -136,17 +136,37 @@ func menu_laodf() {
 }
 
 // insert blank maze into buffer
-func menu_blank() {
+// pr true == preserve decor, walls & floors, exit and start
+
+func menu_blank(pr bool) {
 	if opts.bufdrt { menu_savit(true) }		// autosave
-	eflg[4] = eflg[4] & 0xcf			// turn off H & V
-	eflg[5] = 0							// default floor & wall
-	eflg[6] = 0
+	if !pr {
+		eflg[4] = eflg[4] & 0xcf			// turn off H & V
+		eflg[5] = 0							// default floor & wall
+		eflg[6] = 0
+	}
 	for ty := 0; ty <= opts.DimY; ty++ {
 	for tx := 0; tx <= opts.DimX; tx++ {
-		ebuf[xy{tx, ty}] = 0
-		if tx == 0 || tx == opts.DimX { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
-		if ty == 0 || ty == opts.DimY { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
+		clr := true
+		if pr {
+			if G1 {
+				if ebuf[xy{tx, ty}] == G1OBJ_EXIT { clr = false }
+				if ebuf[xy{tx, ty}] == G1OBJ_EXIT4 { clr = false }
+				if ebuf[xy{tx, ty}] == G1OBJ_EXIT8 { clr = false }
+				if ebuf[xy{tx, ty}] == G1OBJ_PLAYERSTART { clr = false }
+			} else { // G2
+				if ebuf[xy{tx, ty}] == MAZEOBJ_EXIT { clr = false }
+				if ebuf[xy{tx, ty}] == MAZEOBJ_EXITTO6 { clr = false }
+				if ebuf[xy{tx, ty}] == MAZEOBJ_PLAYERSTART { clr = false }
+			}
+		}
+		if clr {
+			ebuf[xy{tx, ty}] = 0
+			if tx == 0 || tx == opts.DimX { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
+			if ty == 0 || ty == opts.DimY { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
+		}
 	}}
+	pr = false
 	opts.dntr = true
 	remaze(opts.mnum)
 }
@@ -164,9 +184,10 @@ func st_menu() {
 	})
 	menuItemLodf := fyne.NewMenuItem("Load maze from <shift-ctrl>-l",menu_laodf)
 	menuItemSava := fyne.NewMenuItem("Save maze as <shift-ctrl>-s",menu_savas)
-	menuItemBlan := fyne.NewMenuItem("Blank maze",menu_blank)
+	menuItemBlan := fyne.NewMenuItem("Blank maze",func() { menu_blank(false) })
+	menuItemBlnK := fyne.NewMenuItem("Blank maze, keep decor",func() { menu_blank(true) })
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
-	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan,  menuItemLin1, menuItemExit)
+	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemLin1, menuItemExit)
 
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
