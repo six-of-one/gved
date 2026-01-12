@@ -99,17 +99,9 @@ func menu_savas() {
         }
 
         fmt.Println("Selected:", writer.URI().Path())
+		fil := writer.URI().Path()
 
-        // Read file content
-//        data, err := io.ReadAll(reader)
-// /        defer reader.Close()
-
-        if err != nil {
-            fmt.Println("Error writing file:", err)
-            return
-        }
-
-//        fmt.Println("Content:", string(data))
+		sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
 
     }, w)
 	fileDialog.Show()
@@ -126,8 +118,9 @@ func st_menu() {
 		exitsel = true
 		needsav()
 	})
+	menuItemSava := fyne.NewMenuItem("Save maze as <shift-ctrl>-s",menu_savas)
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
-	menuFile := fyne.NewMenu("File", menuItemLin1, menuItemExit)
+	menuFile := fyne.NewMenu("File", menuItemSava, menuItemLin1, menuItemExit)
 
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
