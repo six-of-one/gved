@@ -529,26 +529,7 @@ func needsav() bool {
 		nsgg = opts.Gtp
 		nsmz = opts.mnum+1
 		nssb = sdb
-// because the dialog doesnt hold back transition away from buffer, this has to immediatley save *everything*
-/*
-		for y := 0; y <= nsxd; y++ {
-		for x := 0; x <= nsyd; x++ {
-			nsbuf[xy{x, y}] = ebuf[xy{x, y}]
-		}}
-		for y := 0; y < 11; y++ {
-			nsflg[y] = eflg[y]
-		}
-		nsdstak = delstak
-		ndrstak = restak
-		nsdbck(delstak+1,delstak)
-		for y := 0; y <= delstak; y++ {
-			nsdb.mx[y] = delbuf.mx[y]
-			nsdb.my[y] = delbuf.my[y]
-			nsdb.revc[y] = delbuf.revc[y]
-			nsdb.elem[y] = delbuf.elem[y]
-			if nsdb.elem[y] < 0 { nsdstak = y; break }
-		}
-		*/
+
 		dia := fmt.Sprintf("Save changes for maze %d in .ed/g%dmaze%03d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",nsmz,nsgg,nsmz)
 		if nssb >= 0 { dia = fmt.Sprintf("Save changes in buffer %d to .ed/sd%05d_g%d.ed ?\n\nWARNING:\nif not saved, changes will be discarded",nssb,nssb,nsgg) }
 		dialog.ShowConfirm("Save?",dia, menu_ndsav, w)
