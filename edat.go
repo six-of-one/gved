@@ -93,10 +93,11 @@ func prep(fn string) string {
 //	fil[0:4]+".db_"+fil[4:len(fil)]
 	fl := len(fn)
 	rfl := fn
+fmt.Printf("sv fil: %s siz: %d",rfl, fl)
 	lstb := 0
 // find last /, if any
 	for y := 0; y < fl; y++ {
-		if fn[y:1] == "/" { lstb = y }
+		if rfl[y:1] == "/" { lstb = y }
 	}
 	rfl = fn[0:lstb]+".db_"+fn[lstb:fl]
 fmt.Printf("sv fil: %s last bld: %d",rfl, lstb)
@@ -230,7 +231,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		edp = -1
 	}
 // now load deleted elements
-	dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
+	dbf := fil[0:4]+".db_"+fil[4:len(fil)]
 	data, err = ioutil.ReadFile(dbf)
 	delstak = 0
 	if err == nil {

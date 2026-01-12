@@ -98,7 +98,7 @@ func typedRune(r rune) {
 
 	if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
-            fmt.Printf("Desktop key down: %h\n", key.Name)
+//	fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "BackSpace" {
 				anum = (anum / 10);
 				spau = fmt.Sprintf("numeric: %d", anum)
@@ -113,7 +113,7 @@ func typedRune(r rune) {
 			if key.Name == "RightControl" { ctrl = true }
         })
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
-//            fmt.Printf("Desktop key up: %v\n", key)
+//	fmt.Printf("Desktop key up: %v\n", key)
 //			if key.Name == "Escape" { os.Exit(0) }
 			if key.Name == "Delete" { del = false }
 			if key.Name == "BackSpace" { del = false }
