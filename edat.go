@@ -503,8 +503,7 @@ func palete() {
 
 	if opts.bufdrt { menu_savit(true) }		// autosave
 // editing an sd, save & palette
-	if sdb > 0 { swsdb = sdb; sdb = 0 }
-	else {
+	if sdb > 0 { swsdb = sdb; sdb = 0 } else {
 // palette up and we got back to sdb
 	if swsdb > 0 { sdb = swsdb } else {
 // palette maze swaps
