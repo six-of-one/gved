@@ -181,15 +181,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 // with anum != 0, this becomes load s[1] buffer into ebuf, if in edit
 			if opts.edat > 0 && anum > 0 && anum < sdmax {
 fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
-				if sdb == -1 {
-					fil := fmt.Sprintf(".ed/ebuf.ed")				// save ebuf for relod
-					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
-				} else {
-//					needsav()
-					fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",sdb,opts.Gtp)
-					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
-fmt.Printf("L, autosave: %s\n",fil)
-				}
+				if opts.bufdrt { menu_savit(true) }
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 				cnd := lod_maz(fil, ebuf, false)
 				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
@@ -263,17 +255,10 @@ fmt.Printf("L, autosave: %s\n",fil)
 					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
 					anum = 0
 				} else {
-// with no anum, rotate curr ebuf thru s[1] - s[?], store eb in s[0]
+// with no anum, rotate curr ebuf thru s[1] - s[?]
 					cnd := -1
 					ldb := sdb
-					if sdb == -1 {
-						fil := fmt.Sprintf(".ed/ebuf.ed")				// save ebuf for relod
-						sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
-					} else {
-						fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",sdb,opts.Gtp)
-						sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
-fmt.Printf("S, autosave: %s\n",fil)
-					}
+					if opts.bufdrt { menu_savit(true) }
 					for cnd < 0 && ldb < sdmax {
 						ldb++
 						fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
@@ -281,12 +266,7 @@ fmt.Printf("S, autosave: %s\n",fil)
 						if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spau = fmt.Sprintf("cmd: S - sdbuf: %d\n",sdb) }
 					}
 					if cnd < 0 {
-						sdb = -1
-						if opts.edat > 0 {
-							fil := fmt.Sprintf(".ed/ebuf.ed")			// cycle back out
-							cnd = lod_maz(fil, ebuf, true)
-						if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spau = fmt.Sprintf("cmd: S - maze %d\n",opts.mnum+1) }
-						} else { remaze(opts.mnum) }
+						menu_lodit(true)
 					}
 				}
 		default:
