@@ -73,10 +73,10 @@ following keys are visible effect only, no edit changes are made
 
 s	display random "special potions" and gold bags on emply floor tiles
 L	toggle generator indicator letters [ DGLS ] showing what a box gen produces
-p	toggle floor invisible
-P	toggle walls invisible
-T	loop through a set of invisible flags or,
-#T	set invisible flag set - hide vars maze elements:
+p	toggle floor invisible *
+P	toggle walls invisible *
+T	loop through a set of invisible flags or, *
+#T	set invisible flag set - hide vars maze elements: *
 	NOGEN = 1		// all generators
 	NOMON = 2		// all monster, dragon
 	NOFUD = 4		// all food
@@ -89,6 +89,7 @@ T	loop through a set of invisible flags or,
 	NOFLOOR = 512
 	NOWALL = 1024
 	NOG1W = 2048		// g1 std wall only
+- these are hidden only and still present in maze (* no func in edit mode)
 
 Edit mazes:
 ----------
@@ -96,7 +97,7 @@ Edit mazes:
 in edit mode with cmd keys set, many of the view mode keys are still functional
 - fF, gG, wW, qQ, h, m, rR however, all cause edit buffer changes
 
-edit mode stores changes in buffer files in .ed
+edit mode stores changes in buffer files in subdir .ed
 there is as yet no way, *with gved*, to recompress and store mazes in rom...
 
 most of these have a corresponging item on edit or file menus
@@ -197,3 +198,19 @@ any key in this grid without an * is an edit key
 
 these are system reserved keys and can NOT be reassigned
 ?, \, C, aA, eE, L, S, H, V
+
+Menu operations
+---------------
+
+additional not covered above:
+
+Quit		- seems to be a default on 1st menu, and does NOT check for edit changes
+Exit		- use this, it does a buffer check and pops up a save dialog
+
+Load		- loads a maze from std file (not intended to be a buffer file from .ed)
+Save		- saves a maze to a std file, if # is set on title numeric: store that as maze #
+				(maze numbers in files not currently used)
+
+Blank		- fill buffer with blank maze, default floors & walls (must be in edit mode)
+Blank keep	- blank maze, but keep current floors, walls, exit, starts, and -
+			  if # is set on title numeric: use inversion of #T hide items mask to preserve those
