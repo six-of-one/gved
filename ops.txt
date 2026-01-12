@@ -115,6 +115,9 @@ there is as yet no way, *with gved*, to recompress and store mazes in rom...
 <CTRL>-U	when the maze is loaded from disk an ulternate buffer is stored and ctrl-U swaps them
 			- both can be edited, but both can not yet be saved
 
+<HOME>		toggle a complete item palette for G¹ / G²
+			- you can assign keys in the palette then toggle back to the edit buffer
+
 certain ops will check for unsaved changes and launch a dialog to save
 (z, x, a, E, i, l, u, ctrl-q )
 

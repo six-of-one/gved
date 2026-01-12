@@ -265,6 +265,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 					if opts.bufdrt { menu_savit(true) }
 					for cnd < 0 && ldb < sdmax {
 						ldb++
+						if ldb == 0 { ldb = 1 }
 						fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
 						cnd = lod_maz(fil, ebuf, false)
 						if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spau = fmt.Sprintf("cmd: S - sdbuf: %d\n",sdb) }
