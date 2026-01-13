@@ -40,7 +40,10 @@ multiple save buffers to store vars maze edits, page thru all wiht 'S', store wi
 * modify lod_maz to pass mazedata & bool for ubuf
 * dirty flag so quit, z, x know unsaved changes are there and give warning dialog
 - list of delbuf overview, contents, etc somehow
+
+copy / cut / paste
 - do same with ccp buffer - page thru and view them smh
+- for now these lock in
 
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 

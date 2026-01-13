@@ -173,6 +173,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 					if nothing > 0 { swnothing = nothing; nothing = 0 }
 				} else {
 					if swnothing > 0 { nothing = swnothing; swnothing = 0 }
+					ccp = NOP
 				}
 				opts.dntr = true
 				relod = true
@@ -671,6 +672,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 			setcode = g2edit_keymap[edkey]
 		}
 // a cut / copy / paste is active
+		pasty := ccp == PASTE
 		if ccp != NOP {
 		if mb != 1 { ccp = NOP }
 		if sx == ex && sy == ey { ccp = NOP }
@@ -689,9 +691,18 @@ fmt.Printf("%03d ",cpbuf[xy{px, py}])
 fmt.Printf("\n")
 			py++
 			}
+			cpx = px
+			cpy = py
 fmt.Printf("cc dun: px %d py %d\n",px,py)
 			}
+			del = false						// copy or paste should not have del on
 			if ccp == CUT { del = true }
+			if pasty {
+				ex = sx + cpx
+				ey = sy + cpy
+				if ex < 0 || ex > opts.DimX || cpx > opts.DimX { fmt.Printf("paste fail x\n"); return }
+				if ey < 0 || ey > opts.DimY || cpy > opts.DimY { fmt.Printf("paste fail y\n"); return }
+			}
 		}}
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V
 		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,ebuf[xy{ex, ey}])
@@ -708,7 +719,7 @@ fmt.Printf("cc dun: px %d py %d\n",px,py)
 				statlin(cmdhin,keyst)
 			}
 		} else {
-		if del || cmdoff {
+		if del || cmdoff || pasty {
 			rcl := 1		// loop count for undoing multi ops
 		 for my := sy; my <= ey; my++ {
 		   for mx := sx; mx <= ex; mx++ {
@@ -721,6 +732,7 @@ fmt.Printf("cc dun: px %d py %d\n",px,py)
 // looped now, with ctrl op
 			if rop {
 				if del { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
+				if pasty { setcode = cpbuf[xy{mx - sx, my - sy}]}
 				if setcode > 0 { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = setcode; opts.bufdrt = true }
 				}
 				rcl++

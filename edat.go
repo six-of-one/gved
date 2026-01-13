@@ -18,8 +18,6 @@ more complexity will be required for:
 
 var edmaze *Maze
 var ebuf MazeData	// main edit buffer and corresponding flags
-var cpbuf MazeData	// c/c/p buffer
-var pbcnt int		// count of c/c/p buffers saved
 
 var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf
@@ -27,6 +25,13 @@ var eflg [11]int
 var tflg [14]int	// transfer flags - because they dont pass as a parm for scan from file?
 					//					so after a file load, these have to be copied to the appropriate flags
 var din [33]int		// set to be 1 line per std gauntlet maze (gved encoding) of 0 - 32 elements [ with H wrap being 0 - 31 ]
+
+// cut / copy & paste
+
+var cpbuf MazeData	// c/c/p buffer
+var pbcnt int		// count of c/c/p buffers saved
+var cpx int			// max paste buf, start is always 0, 0
+var cpy int
 
 // deleted elements / undo storage
 
