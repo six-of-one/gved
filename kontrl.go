@@ -43,13 +43,13 @@ var cmdhin string
 func specialKey() {
 // handle keys down
 	if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
-		relod := false
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
 //	fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "BackSpace" {
 				anum = (anum / 10);
-				spau := fmt.Sprintf("| numeric: %d", anum)
-				uptitl(opts.mnum, spau)
+				spx := ""
+				if anum != 0 { spx = fmt.Sprintf("| numeric: %d", anum) }
+				uptitl(opts.mnum, spx)
 			}
 			if key.Name == "Delete" { del = true }
 //			if key.Name == "BackSpace" { del = true }
@@ -63,6 +63,7 @@ func specialKey() {
 // handle keys up
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
 	fmt.Printf("Desktop key up: %v\n", key)
+			srelod := false
 			if key.Name == "Escape" {		// now toggle editor on/ off
 				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 					if opts.edat == 0 {
@@ -76,10 +77,10 @@ func specialKey() {
 						opts.MRP = false
 						opts.MV = false
 						opts.MH = false
-						relod = true
+						srelod = true
 					} else {
 						nsremaze = true
-						relod = needsav()
+						srelod = needsav()
 						if sdb == 0 { menu_lodit(true) }
 						smod = "View mode: "
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
@@ -114,7 +115,7 @@ func specialKey() {
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
 			if key.Name == "Next" {
 				nsremaze = true
-				relod = needsav()
+				srelod = needsav()
 				Ovwallpat = -1
 				if Aov > 0 {
 					nav := addrver(Aov, 1)
@@ -127,7 +128,7 @@ func specialKey() {
 			}
 			if key.Name == "Prior" {
 				nsremaze = true
-				relod = needsav()
+				srelod = needsav()
 				Ovwallpat = -1
 // allow step parse through valid address
 				if Aov > 0 {
@@ -140,8 +141,8 @@ func specialKey() {
 	fmt.Printf("pr %d\n",opts.mnum)
 			}
 			upd_edmaze(false)
-fmt.Printf("cond relod: %t\n",relod)
-			if relod {
+fmt.Printf("sk cond relod: %t\n",srelod)
+			if srelod {
 				remaze(opts.mnum)
 			}
        })
@@ -317,7 +318,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 						if ldb == 0 { ldb = 1 }
 						fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
 						cnd = lod_maz(fil, ebuf, false)
-						if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spau = fmt.Sprintf("cmd: S - sdbuf: %d\n",sdb) }
+						if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spau = fmt.Sprintf("cmd: S - ") }
 					}
 					if cnd < 0 {
 						menu_lodit(true)
@@ -513,12 +514,14 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		if spau == "G¹ " {
 			if opts.R14 { spau += "rv14" } else { spau += "rv1-9" }
 		}
-fmt.Printf("cond relod: %t\n",relod || relodsub)
+fmt.Printf("kr cond relod: %t\n",relod || relodsub)
 	if (relod || relodsub) {
 		remaze(opts.mnum)
 	}
-	spx = spau + fmt.Sprintf("| numeric: %d", anum)
-	uptitl(opts.mnum, spx)
+	spx := ""
+	if sdb > 0 { spx = fmt.Sprintf("sdbuf: %d",sdb) }
+	if anum != 0 { spx += fmt.Sprintf("| numeric: %d", anum) }
+	uptitl(opts.mnum, spau + spx)
 }
 
 // data needing preserved by needsav - all this could be changed by the next op while dialog waits on user

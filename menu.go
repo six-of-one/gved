@@ -315,7 +315,10 @@ func upwin(simg *image.NRGBA) {
 	w.SetContent(box)
 	fmt.Printf("btn sz %v\n",btn.Size())
 
-	uptitl(opts.mnum, "")
+	spx := ""
+	if sdb > 0 { spx = fmt.Sprintf("sdbuf: %d",sdb) }
+	if anum != 0 { spx += fmt.Sprintf("| numeric: %d", anum) }
+	uptitl(opts.mnum, spx)
 }
 
 // title special info update
