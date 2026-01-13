@@ -767,6 +767,22 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 		}
 	}
 
+	g2mask[MAZEOBJ_WALL_REGULAR] = 2048
+	g2mask[MAZEOBJ_WALL_SECRET] = 1024
+	g2mask[MAZEOBJ_WALL_DESTRUCTABLE] = 1024
+	g2mask[MAZEOBJ_WALL_RANDOM] = 1024
+	g2mask[MAZEOBJ_WALL_TRAPCYC1] = 1024
+	g2mask[MAZEOBJ_WALL_TRAPCYC2] = 1024
+	g2mask[MAZEOBJ_WALL_TRAPCYC3] = 1024
+	g2mask[MAZEOBJ_TILE_TRAP1] = 64
+	g2mask[MAZEOBJ_TILE_TRAP2] = 64
+	g2mask[MAZEOBJ_TILE_TRAP3] = 64
+//	g2mask[] =
+	g1mask[G1OBJ_WALL_REGULAR] = 2048
+	g1mask[G1OBJ_WALL_DESTRUCTABLE] = 1024
+	g1mask[G1OBJ_WALL_TRAP1] = 1024
+	g1mask[G1OBJ_TILE_TRAP1] = 64
+//	g1mask[] =
 /// Six - individual tile dumper
 
 /*******************************************
