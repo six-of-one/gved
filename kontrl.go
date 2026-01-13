@@ -48,7 +48,7 @@ func specialKey() {
 //	fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "BackSpace" {
 				anum = (anum / 10);
-				spau := fmt.Sprintf("numeric: %d", anum)
+				spau := fmt.Sprintf("| numeric: %d", anum)
 				uptitl(opts.mnum, spau)
 			}
 			if key.Name == "Delete" { del = true }
@@ -88,8 +88,9 @@ func specialKey() {
 						opts.edat = 0
 						opts.dntr = false
 						ccp = NOP
-						cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
+						cmdhin = "cmds: ?, <ESC>, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 						statlin(cmdhin,"")
+						Ovwallpat = -1
 					}
 				}
 			}
@@ -204,9 +205,6 @@ func typedRune(r rune) {
 	case '`':
 		anum = 0
 	}
-	if r >= '0' && r <= '9' || r == '`' {
-		spau = fmt.Sprintf("numeric: %d", anum)
-	}
 
 	fmt.Printf("r %v shift %v\n",r,shift)
 		edkey = int(r)
@@ -248,9 +246,9 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 				opts.dntr = true
 				relod = true
 			}
-			cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
-			if opts.edat > 0 { cmdhin = "cmds: ?, eE, '\\', fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a" }
-			if cmdoff && opts.edat > 0 { cmdhin = "cmds: ? '\\' - edit keys, #c C, HV, A #a, eE, L, S" }
+			cmdhin = "cmds: ?, <ESC>, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
+			if opts.edat > 0 { cmdhin = "cmds: ?, <ESC>, '\\', fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a" }
+			if cmdoff && opts.edat > 0 { cmdhin = "cmds: ?, <ESC>, '\\' - edit keys, #c C, HV, A #a, L, S" }
 			fmt.Printf("hint: %s\n", cmdhin)
 			statlin(cmdhin,ska)
 		case 63:		// ?
@@ -519,7 +517,8 @@ fmt.Printf("cond relod: %t\n",relod || relodsub)
 	if (relod || relodsub) {
 		remaze(opts.mnum)
 	}
-	uptitl(opts.mnum, spau)
+	spx = spau + fmt.Sprintf("| numeric: %d", anum)
+	uptitl(opts.mnum, spx)
 }
 
 // data needing preserved by needsav - all this could be changed by the next op while dialog waits on user
