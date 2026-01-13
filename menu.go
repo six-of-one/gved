@@ -101,7 +101,9 @@ func menu_savas() {
         fmt.Println("Selected:", writer.URI().Path())
 		fil := writer.URI().Path()
 
-		sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, opts.mnum+1)
+		mazn := opts.mnum+1
+		if anum > 0 { mazn = anum }
+		sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, mazn)
 
     }, w)
 	fileDialog.Show()
