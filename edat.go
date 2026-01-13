@@ -103,8 +103,9 @@ fmt.Printf("sv fil: %s last bld: %d\n",rfl, lstb)
 }
 
 // save maze to file in .ed
+// add a maze # to saves
 
-func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int) {
+func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int, smazn int) {
 // edit settings
 // 1. edit status (1) max_x max_y
 // 2. 11 bytes of compressed maze lead in - all stats
@@ -166,6 +167,7 @@ fmt.Printf("saving maze delete %s\n",dbf)
 }
 
 // load stored maze data into ebuf / eflg or other data stores
+var mazln int		// maze load # stored
 
 func lod_maz(fil string, mdat MazeData, ud bool) int {
 
@@ -178,11 +180,11 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 	    scanr := bufio.NewScanner(strings.NewReader(dscan))
 		l := "0 32 32"	// the default on scan failure will produce a solid block of wall 32 x 32
 		if scanr.Scan() { l = scanr.Text() }
-		fmt.Sscanf(l,"%d %d %d",&edp,&opts.DimX,&opts.DimY)
+		fmt.Sscanf(l,"%d %d %d",&mazln,&opts.DimX,&opts.DimY)
 		tflg[12] = opts.DimX
 		tflg[13] = opts.DimY
 // keeping the verbose scan track for now
-	if opts.Verbose { fmt.Printf("\nscanned:\ned %d, %02d x %02d\n", edp,opts.DimX,opts.DimY) }
+	if opts.Verbose { fmt.Printf("\nscanned:\ned %d, %02d x %02d\n", mazln,opts.DimX,opts.DimY) }
 		l = " 00 00 00 00 00 00 00 0B 5A 5B 49"
 		if scanr.Scan() { l = scanr.Text() }
 		fmt.Sscanf(l," %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", &tflg[0], &tflg[1], &tflg[2], &tflg[3], &tflg[4], &tflg[5], &tflg[6], &tflg[7], &tflg[8], &tflg[9], &tflg[10])
@@ -311,7 +313,7 @@ func stor_maz(mazn int) {
 				for x := 0; x <= lastx; x++ {
 				ebuf[xy{x, y}] = maze.data[xy{x, y}]
 			}}
-			sav_maz(fil, ebuf, eflg, lastx, lasty)
+			sav_maz(fil, ebuf, eflg, lastx, lasty, mazn)
 		} else {
 			fmt.Print(err)
 			fmt.Printf("\n")
@@ -328,7 +330,7 @@ func ed_sav(mazn int) {
 
 	upd_edmaze(false)
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,mazn)
-	sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
+	sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, mazn)
 }
 
 func upd_edmaze(ovrm bool) {

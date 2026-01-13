@@ -265,7 +265,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 // have anum !=0, save ebuf into that buffer
 				if anum > 0 && anum < sdmax && opts.edat > 0 {
 					fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
-					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY)
+					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, 0 - anum)
 					anum = 0
 				} else {
 // with no anum, rotate curr ebuf thru s[1] - s[?]
@@ -509,12 +509,12 @@ var nssb int
 
 func menu_ndsav(y bool) {
 	if y {
-		if sdb < 0 {
+		if nssb < 0 {
 			fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",nsgg,nsmz)
-			sav_maz(fil, ebuf, eflg, nsxd, nsyd)
+			sav_maz(fil, ebuf, eflg, nsxd, nsyd, nsmz)
 		} else {
 			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nssb,nsgg)
-			sav_maz(fil, ebuf, eflg, nsxd, nsyd)
+			sav_maz(fil, ebuf, eflg, nsxd, nsyd, 0 - nssb)
 		}
 	}
 	if exitsel { os.Exit(0) }
