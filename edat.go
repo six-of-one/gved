@@ -19,6 +19,7 @@ more complexity will be required for:
 var edmaze *Maze
 var ebuf MazeData	// main edit buffer and corresponding flags
 var cpbuf MazeData	// c/c/p buffer
+var pbcnt int		// count of c/c/p buffers saved
 
 var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf

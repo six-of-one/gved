@@ -676,19 +676,22 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if sx == ex && sy == ey { ccp = NOP }
 		if ccp != NOP {
 			ctrl = false		// for now
+			px :=0
 			if ccp == COPY || ccp == CUT {
 				py :=0
 			for my := sy; my <= ey; my++ {
-				px :=0
+				px =0
 			for mx := sx; mx <= ex; mx++ {
-				cpbuf[xy{px, py}] == ebuf[xy{mx, my}]
+				cpbuf[xy{px, py}] = ebuf[xy{mx, my}]
+fmt.Printf("%03d ",cpbuf[xy{px, py}])
 				px++
 				}
+fmt.Printf("\n")
 			py++
 			}
 fmt.Printf("cc dun: px %d py %d\n",px,py)
 			}
-			if cpp == CUT { del = true }
+			if ccp == CUT { del = true }
 		}}
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V
 		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,ebuf[xy{ex, ey}])
