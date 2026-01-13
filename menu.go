@@ -394,9 +394,9 @@ func keyhints() {
 //		strp += cpad("\n\n? - this list",52)
 	strp += cpad("\nctrl-q - quit program",40)
 	if opts.edat == 1 {
-		strp += cpad("\nE - exit editor ╗",43)
+		strp += cpad("\nESC> exit editor ╗",40)
 		strp += cpad("\n\\ - toggle cmd keys*",40)
-	} else { strp += cpad("\ne - editor mode",43) }
+	} else { strp += cpad("\nESC> editor mode",40) }
 	if kys == 1 {
 		strp += cpad("\nf - floor pattern+",44)
 		strp += cpad("\ng - floor color+",45)

@@ -48,8 +48,8 @@ u	gauntlet 2 mazes G² all
 
 v	list G¹ or G² maze address set to terminal where gved was launched
 
-z 	previous maze
-x	next maze
+pgup 	previous maze
+pgdn	next maze
 
 
 these keys are temporary in view mode and edit the buffer in edit mode
@@ -129,7 +129,7 @@ most of these have a corresponging item on edit or file menus
 			- you can assign keys in the palette then toggle back to the edit buffer
 
 certain ops will check for unsaved changes and launch a dialog to save
-(z, x, a, E, i, l, u, ctrl-q )
+(pgup, pgdn, a, E, i, l, u, ctrl-q )
 
 \	toggle cmd keys and edit keys		(only while in edit mode)
 

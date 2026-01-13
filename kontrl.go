@@ -115,8 +115,37 @@ func typedRune(r rune) {
 			if key.Name == "RightControl" { ctrl = true }
         })
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
-//	fmt.Printf("Desktop key up: %v\n", key)
-//			if key.Name == "Escape" { os.Exit(0) }
+	fmt.Printf("Desktop key up: %v\n", key)
+			if key.Name == "Escape" {		// now toggle editor on/ off
+				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
+					if opts.edat == 0 {
+						smod = "Edit mode: "
+				fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
+						opts.edat = 1
+						stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
+						statlin(cmdhin,"")
+// these all deactivate as override during edit
+						opts.MRM = false
+						opts.MRP = false
+						opts.MV = false
+						opts.MH = false
+						relod = true
+					} else {
+						nsremaze = true
+						relod = needsav()
+						if sdb == 0 { menu_lodit(true) }
+						smod = "View mode: "
+				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
+						cmdoff = false
+						if swnothing > 0 { nothing = swnothing; swnothing = 0 }
+						opts.edat = 0
+						opts.dntr = false
+						ccp = NOP
+						cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
+						statlin(cmdhin,"")
+					}
+				}
+			}
 			if key.Name == "Delete" { del = false }
 //			if key.Name == "BackSpace" { del = false }
 			if key.Name == "Home" { home = false }
@@ -135,6 +164,33 @@ func typedRune(r rune) {
 			if key.Name == "X" && ctrl  { menu_cut() }
 			if key.Name == "P" && ctrl  { menu_paste() }
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
+			if key.Name == "Next" {
+				nsremaze = true
+				relod = needsav()
+				Ovwallpat = -1
+				if Aov > 0 {
+					nav := addrver(Aov, 1)
+					Aov = nav
+				} else {
+					opts.mnum += 1
+				}
+				if opts.mnum > maxmaze { opts.mnum = 0 }
+	fmt.Printf("nx %d\n",opts.mnum)
+			}
+			if key.Name == "Prior" {
+				nsremaze = true
+				relod = needsav()
+				Ovwallpat = -1
+// allow step parse through valid address
+				if Aov > 0 {
+					nav := addrver(Aov, -1)
+					Aov = nav
+				} else {
+					opts.mnum -= 1
+				}
+				if opts.mnum < 0 { opts.mnum = maxmaze }
+	fmt.Printf("pr %d\n",opts.mnum)
+			}
        })
     }
 
@@ -199,37 +255,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
 				anum = 0
 			} else { opts.Nogtop = !opts.Nogtop; opts.dntr = (opts.edat > 0); relod = true }
-		case 'e':
-			if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
-				if opts.edat != 1 {
-					smod = "Edit mode: "
-					fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
-					opts.edat = 1
-					stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
-					statlin(cmdhin,"")
-// these all deactivate as override during edit
-					opts.MRM = false
-					opts.MRP = false
-					opts.MV = false
-					opts.MH = false
-				}
-				relod = true
-			}
-		case 69:		// E
-			if opts.edat != 0 {
-				nsremaze = true
-				relod = needsav()
-				if sdb == 0 { menu_lodit(true) }
-				smod = "View mode: "
-				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
-				cmdoff = false
-				if swnothing > 0 { nothing = swnothing; swnothing = 0 }
-				opts.edat = 0
-				opts.dntr = false
-				ccp = NOP
-				cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
-				statlin(cmdhin,"")
-			}
+//		case 69:		// E
 		case 'c':
 			if anum > 0 && anum < 65 {
 				cycl = anum - 1
@@ -239,6 +265,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		case 67:		// C
 				cycl++
 				if cycl > 64 { cycl = 0 }
+				if cycl < 1 { cycl = 64 }		// cause 'c' falls thru here
 				kys := "n/a"
 				if G1 {
 					g1edit_keymap[cycloc] = cycl
@@ -291,29 +318,8 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 	  if !cmdoff || opts.edat < 1 {
 		relodsub = true
 		switch r {
-		case 'z':
-			nsremaze = true
-			relodsub = needsav()
-			Ovwallpat = -1
-// allow step parse through valid address
-			if Aov > 0 {
-				nav := addrver(Aov, -1)
-				Aov = nav
-			} else {
-				opts.mnum -= 1
-			}
-			if opts.mnum < 0 { opts.mnum = maxmaze }
-		case 'x':
-			nsremaze = true
-			relodsub = needsav()
-			Ovwallpat = -1
-			if Aov > 0 {
-				nav := addrver(Aov, 1)
-				Aov = nav
-			} else {
-				opts.mnum += 1
-			}
-			if opts.mnum > maxmaze { opts.mnum = 0 }
+//		case 'z':
+//		case 'x':
 		case 'w':
 			Ovwallpat += 1
 			if anum > 0 { Ovwallpat = anum - 1; anum = 0 }
@@ -495,6 +501,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 		if spau == "G¹ " {
 			if opts.R14 { spau += "rv14" } else { spau += "rv1-9" }
 		}
+fmt.Printf("cond relod: %t\n",relod || relodsub)
 	if (relod || relodsub) {
 		remaze(opts.mnum)
 	}
