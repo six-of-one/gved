@@ -662,6 +662,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		ey := int(eymd / opts.dtec)
 		sx := int(sxmd / opts.dtec)
 		sy := int(symd / opts.dtec)
+		if ex < sx { t := ex; ex = sx; sx = t }		// swap if end smaller than start
+		if ey < sy { t := ey; ey = sy; sy = t }
 		var setcode int			// code to store given edit hotkey
 		if G1 {
 			setcode = g1edit_keymap[edkey]
@@ -673,8 +675,20 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if mb != 1 { ccp = NOP }
 		if sx == ex && sy == ey { ccp = NOP }
 		if ccp != NOP {
-
-
+			ctrl = false		// for now
+			if ccp == COPY || ccp == CUT {
+				py :=0
+			for my := sy; my <= ey; my++ {
+				px :=0
+			for mx := sx; mx <= ex; mx++ {
+				cpbuf[xy{px, py}] == ebuf[xy{mx, my}]
+				px++
+				}
+			py++
+			}
+fmt.Printf("cc dun: px %d py %d\n",px,py)
+			}
+			if cpp == CUT { del = true }
 		}}
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V
 		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,ebuf[xy{ex, ey}])
@@ -692,8 +706,6 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 			}
 		} else {
 		if del || cmdoff {
-			if ex < sx { t := ex; ex = sx; sx = t }		// swap if end smaller than start
-			if ey < sy { t := ey; ey = sy; sy = t }
 			rcl := 1		// loop count for undoing multi ops
 		 for my := sy; my <= ey; my++ {
 		   for mx := sx; mx <= ex; mx++ {

@@ -18,6 +18,7 @@ more complexity will be required for:
 
 var edmaze *Maze
 var ebuf MazeData	// main edit buffer and corresponding flags
+var cpbuf MazeData	// c/c/p buffer
 
 var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf
@@ -196,6 +197,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 
 		if mdat == nil { mdat = make(map[xy]int) }		// init most bufs used by edit system, most come here anyway
 		if ubuf == nil { ubuf = make(map[xy]int) }
+		if cpbuf == nil { cpbuf = make(map[xy]int) }
 // loop to load - note issue with scans of formatted data
 		parse := 33
 		for y := 0; y <= opts.DimX; y++ {
