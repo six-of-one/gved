@@ -672,7 +672,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 			setcode = g2edit_keymap[edkey]
 		}
 // a cut / copy / paste is active
-		pasty := ccp == PASTE
+		pasty := false
+		if ccp == PASTE { pasty = true }
 		if ccp != NOP {
 		if mb != 1 { ccp = NOP }
 		if sx == ex && sy == ey { ccp = NOP }
@@ -697,6 +698,7 @@ fmt.Printf("cc dun: px %d py %d\n",px,py)
 			del = false						// copy or paste should not have del on
 			if ccp == CUT { del = true }
 			if pasty {
+fmt.Printf("in pasty\n")
 				ex = sx + cpx
 				ey = sy + cpy
 				if ex < 0 || ex > opts.DimX || cpx > opts.DimX { fmt.Printf("paste fail x\n"); return }
