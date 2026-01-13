@@ -121,7 +121,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int, smazn int)
 	file, err := os.Create(fil)
 	if err == nil {
 //	wfs := fmt.Sprintf("%d\n%d %d %d %d\n%0x\n%#b\n%d %d\n",1,Ovwallpat,Ovflorpat,Ovwallcol,Ovflorcol,maze.secret,maze.flags,lastx,lasty)
-		wfs := fmt.Sprintf("%d %d %d\n",smazn,mx,my)
+		wfs := fmt.Sprintf("%d %d %d %d\n",smazn,mx,my,opts.Gtp)
 
 		for y := 0; y < 11; y++ {
 			wfs += fmt.Sprintf(" %02X", fdat[y])
