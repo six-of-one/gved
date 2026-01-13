@@ -9,15 +9,23 @@ command line suggestions:
 * gved -i maze115
     (interactive system)
 * gved -v -g2 maze7
-    (view output.png)
+    (view output.png, verbose o/p in terminal)
 * gved floor0
     (view output.png)
 
 interactive mode:
-* '?' - calls up key hints dialog
+----------------
+title lists active maze / sd buffer, typed numeric entry, and some commands
+2nd last menu item - lists most active cmd keys
+last menu item - edit / view mode ops
+
+keys:
+----
+* '?' - calls up key hints dialog (shows default edit keys/ active keys)
 * 'v' - lists maze rom addresses to terminal gved was run from
-* 'z'. 'x' - previous & next maze - loops (address ov loops too)
+* 'pgup'. 'pgdn' - previous & next maze/ sdbuf - loops (address ov loops too)
 * #'a' - type a valid maze number (digits 0-9) followed by 'a' - address also 229376 - 262145
+* #'L' - load sdbuf # (#'S' will save to sd buffer as well)
 * 'A' - switch between maze # and address override with Aov = {curr maze addr}
 * visual ops should be straight forward
 * 'r', 'R' - rotate maze +/- 90° are NOT a feature of gauntlet or g2
@@ -45,7 +53,7 @@ Research
 
 Issues
 ======
-* editing is progressing, but is still clunky
+* editing is reasonable at this juncture if still missing some edit niceties
 * G¹ floor and wall colors are still being rendered with G² color palette
 
 Attributions

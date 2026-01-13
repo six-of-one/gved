@@ -130,6 +130,7 @@ most of these have a corresponging item on edit or file menus
 
 <HOME>		toggle a complete item palette for G¹ / G²
 			- you can assign keys in the palette then toggle back to the edit buffer
+			- the palette is also editable, and will auto save when swapped
 
 certain ops will check for unsaved changes and launch a dialog to save
 (pgup, pgdn, a, <ESC>, i, l, u, ctrl-q )
