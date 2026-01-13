@@ -36,73 +36,19 @@ var ccp int			// cut copy and paste - current op
 var edkey int		// for passing edit keys to clicker
 var cmdhin string
 
-// main keyboard handler
+// main keyboard handlers
 
-func typedRune(r rune) {
+// special keys not detected by keyrune handler
 
-// special aux string - put ops in title after maze #
-	spau := ""
-// relod
-	relod := false
-	relodsub := false
-
-//	fmt.Printf("in keys event - %x\n",r)
-
-// new maze
-	if r == 'a' {
-		if (anum > 0 && anum <= 127 || anum >= 229376 && anum < 262145) {
-
-			nsremaze = true
-			relod = needsav()
-			if anum <= 127 {
-				opts.mnum = anum - 1
-				Aov = 0
-			} else {
-				Aov = addrver(anum, 0)
-				opts.mnum = 0
-				spau = fmt.Sprintf("addr = %d",anum)
-			}
-			anum = 0
-// clear these when load new maze
-			Ovwallpat = -1
-		}
-	}
-
-// (almost) blind numeric input
-	switch r {
-	case '0':
-		anum = (anum * 10)
-	case '1':
-		anum = (anum * 10) + 1
-	case '2':
-		anum = (anum * 10) + 2
-	case '3':
-		anum = (anum * 10) + 3
-	case '4':
-		anum = (anum * 10) + 4
-	case '5':
-		anum = (anum * 10) + 5
-	case '6':
-		anum = (anum * 10) + 6
-	case '7':
-		anum = (anum * 10) + 7
-	case '8':
-		anum = (anum * 10) + 8
-	case '9':
-		anum = (anum * 10) + 9
-	case '`':
-		anum = 0
-	}
-	if r >= '0' && r <= '9' || r == '`' {
-		spau = fmt.Sprintf("numeric: %d", anum)
-	}
-
+func specialKey() {
+// handle keys down
 	if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
+		relod := false
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
 //	fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "BackSpace" {
 				anum = (anum / 10);
-				spau = fmt.Sprintf("numeric: %d", anum)
+				spau := fmt.Sprintf("numeric: %d", anum)
 				uptitl(opts.mnum, spau)
 			}
 			if key.Name == "Delete" { del = true }
@@ -114,6 +60,7 @@ func typedRune(r rune) {
 			if key.Name == "LeftControl" { ctrl = true }
 			if key.Name == "RightControl" { ctrl = true }
         })
+// handle keys up
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
 	fmt.Printf("Desktop key up: %v\n", key)
 			if key.Name == "Escape" {		// now toggle editor on/ off
@@ -191,8 +138,75 @@ func typedRune(r rune) {
 				if opts.mnum < 0 { opts.mnum = maxmaze }
 	fmt.Printf("pr %d\n",opts.mnum)
 			}
+			upd_edmaze(false)
+fmt.Printf("cond relod: %t\n",relod)
+			if relod {
+				remaze(opts.mnum)
+			}
        })
     }
+}
+
+// regular keys
+
+func typedRune(r rune) {
+
+// special aux string - put ops in title after maze #
+	spau := ""
+// relod
+	relod := false
+	relodsub := false
+
+//	fmt.Printf("in keys event - %x\n",r)
+
+// new maze
+	if r == 'a' {
+		if (anum > 0 && anum <= 127 || anum >= 229376 && anum < 262145) {
+
+			nsremaze = true
+			relod = needsav()
+			if anum <= 127 {
+				opts.mnum = anum - 1
+				Aov = 0
+			} else {
+				Aov = addrver(anum, 0)
+				opts.mnum = 0
+				spau = fmt.Sprintf("addr = %d",anum)
+			}
+			anum = 0
+// clear these when load new maze
+			Ovwallpat = -1
+		}
+	}
+
+// (almost) blind numeric input
+	switch r {
+	case '0':
+		anum = (anum * 10)
+	case '1':
+		anum = (anum * 10) + 1
+	case '2':
+		anum = (anum * 10) + 2
+	case '3':
+		anum = (anum * 10) + 3
+	case '4':
+		anum = (anum * 10) + 4
+	case '5':
+		anum = (anum * 10) + 5
+	case '6':
+		anum = (anum * 10) + 6
+	case '7':
+		anum = (anum * 10) + 7
+	case '8':
+		anum = (anum * 10) + 8
+	case '9':
+		anum = (anum * 10) + 9
+	case '`':
+		anum = 0
+	}
+	if r >= '0' && r <= '9' || r == '`' {
+		spau = fmt.Sprintf("numeric: %d", anum)
+	}
 
 	fmt.Printf("r %v shift %v\n",r,shift)
 		edkey = int(r)

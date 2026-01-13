@@ -264,6 +264,7 @@ func aw_init() {
 	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 	delbset(0)
 	restak = 0
+	specialKey()
 
 // get default win size
 
