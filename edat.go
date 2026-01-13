@@ -114,7 +114,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int, smazn int)
 	file, err := os.Create(fil)
 	if err == nil {
 //	wfs := fmt.Sprintf("%d\n%d %d %d %d\n%0x\n%#b\n%d %d\n",1,Ovwallpat,Ovflorpat,Ovwallcol,Ovflorcol,maze.secret,maze.flags,lastx,lasty)
-		wfs := fmt.Sprintf("%d %d %d\n",1,mx,my)
+		wfs := fmt.Sprintf("%d %d %d\n",smazn,mx,my)
 
 		for y := 0; y < 11; y++ {
 			wfs += fmt.Sprintf(" %02X", fdat[y])
@@ -263,7 +263,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		}
 
 	} else {
-		fmt.Printf("edp fails %d or loading maze deleted %s, warning:\n",edp,dbf)
+		fmt.Printf("edp %d failed < 0 or loading maze deleted %s, warning:\n",edp,dbf)
 		fmt.Print(err)
 		fmt.Printf("\n")
 	}
