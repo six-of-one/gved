@@ -677,7 +677,6 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if mb != 1 { ccp = NOP }
 		if sx == ex && sy == ey { ccp = NOP }
 		if ccp != NOP {
-			ctrl = false		// for now
 			px :=0
 			if ccp == COPY || ccp == CUT {
 				py :=0
