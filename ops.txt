@@ -28,8 +28,8 @@ A	enable address mode (experimental, likely to never work with arcade emu)
 
 two op modes exist, view only and edit
 
-e	turn edit mode on - initializes current maze to disk in .ed if not present
-E	turn edit off/ view back on and check for unsaved data
+<ESC>	turn edit mode on - initializes current maze to disk in .ed if not present
+<ESC>	turn edit off/ view back on and check for unsaved data
 
 S	cycle through all save data buffers in .ed/sd#####_g?.ed	(where g? is g1 or g2)
 	- while cycling any edits to current maze are saved temporary as .ed/ebuf.ed
@@ -39,6 +39,9 @@ S	cycle through all save data buffers in .ed/sd#####_g?.ed	(where g? is g1 or g2
 #S	save current visible maze as buffer #####
 	- while sd buffers are available in view mode, no view mode changes (fgwqhmrR) will be saved
 
+pgup 	previous maze
+pgdn	next maze
+
 View mazes only:		( and cmd keys in edit )
 ---------------
 
@@ -47,9 +50,6 @@ l	gauntlet mazes G¹ rev 14
 u	gauntlet 2 mazes G² all
 
 v	list G¹ or G² maze address set to terminal where gved was launched
-
-pgup 	previous maze
-pgdn	next maze
 
 
 these keys are temporary in view mode and edit the buffer in edit mode
@@ -129,7 +129,7 @@ most of these have a corresponging item on edit or file menus
 			- you can assign keys in the palette then toggle back to the edit buffer
 
 certain ops will check for unsaved changes and launch a dialog to save
-(pgup, pgdn, a, E, i, l, u, ctrl-q )
+(pgup, pgdn, a, <ESC>, i, l, u, ctrl-q )
 
 \	toggle cmd keys and edit keys		(only while in edit mode)
 
@@ -151,7 +151,6 @@ Left-click drag	- dragging to new location - fill / delete the encompassed recta
 key held with Left-click
 
 delete			both place a floor at cursor
-backspace		  "
 
 control			when dragging mouse, box will fill / delete an outline only
 
@@ -159,7 +158,7 @@ control			when dragging mouse, box will fill / delete an outline only
 ---------------
 edit keys are item placement reassignable keys
 
-hit 'e' to edit mazes
+hit <ESC> to edit mazes
 hit '\' to activate / deactivate edit keys		(when not in edit keys, cmd keys from view mode are active)
 
 press a key, the item assigned to that key will be placed in the maze with a Left-click mouse button
@@ -174,25 +173,48 @@ d	horiz door
 D	vert door
 w	normal walls
 W	shootable walls
+q	trap wall (needs trap tile)
+r	trap tile to release walls
 f	food, shootable
 F	food, non shootable
 p	potion, shootable
 P	potion, non shootable
 k	key
+i - invisible power
+x - exit
+z - Death
 t	treasure
 T	teleporter
 
+G¹ extra
+
+b	bag treasure
+g	lvl 3 ghost
+G	lvl 3 grunt
+l	lvl 2 grun gen
+l	lvl 2 lobber gen
+n	lvl 3 ghost gen
+m	lvl 2 demon gen
+
+G² extra
+
+b	forcefield hub
+m	pushable wall
+n	acid blob
+o	super sorceror
+R	random wall section
+s	stun tile
 
 any key in this grid without an * is an edit key
 
   30 =          !  "  #  $  %  &  '
   40 = (  )  *  +  ,  -  .  /  0  1
   50 = 2  3  4  5  6  7  8  9  :  ;
-  60 = <  =  >  ?* @  A* B  C* D  E*
+  60 = <  =  >  ?* @  A* B  C* D  E
   70 = F  G  H* I  J  K  L* M  N  O
   80 = P  Q  R  S* T  U  V* W  X  Y
   90 = Z  [  \* ]  ^  _  `  a* b  c
- 100 = d  e* f  g  h  i  j  k  l  m
+ 100 = d  e  f  g  h  i  j  k  l  m
  110 = n  o  p  q  r  s  t  u  v  w
  120 = x  y  z  {  |  }  ~
 
