@@ -596,6 +596,11 @@ func uswap() {
 	ed_maze(true)
 }
 
+// cut / copy / paste (c/c/p) controls
+
+func ccp_NOP() { ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
+func ccp_tog(op int) { if ccp == op { ccp = NOP; smod = "Edit mode: " } else { ccp = op }; }
+
 // page thru maze #s, sd buf
 // mb = 2 (right button) will call the active op with last dir
 // possible: wheel mouse these one day

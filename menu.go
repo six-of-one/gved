@@ -183,10 +183,9 @@ func menu_blank(pr bool) {
 	remaze(opts.mnum)
 }
 
-func menu_copy() { if opts.edat > 0 { ccp = COPY; smod = "Edit COPY: "; statlin(cmdhin,"") }}
-func menu_cut() { if opts.edat > 0 { ccp = CUT; smod = "Edit CUT: "; statlin(cmdhin,"") }}
-func menu_paste() { if opts.edat > 0 { ccp = PASTE; smod = "Edit PASTE: "; statlin(cmdhin,"") }}
-func ccp_NOP() { ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
+func menu_copy() { if opts.edat > 0 { ccp = ccp_tog(COPY); if ccp { smod = "Edit COPY: "; statlin(cmdhin,"") }}}
+func menu_cut() { if opts.edat > 0 { ccp = ccp_tog(CUT); if ccp { smod = "Edit CUT: "; statlin(cmdhin,"") }}}
+func menu_paste() { if opts.edat > 0 { ccp = ccp_tog(PASTE); if ccp { smod = "Edit PASTE: "; statlin(cmdhin,"") }}}
 
 // set menus
 
