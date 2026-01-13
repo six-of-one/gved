@@ -452,6 +452,9 @@ func keyhints() {
 		strp += cpad("\nF - indestructabl food",39)
 		strp += cpad("\np - shootable potion",39)
 		strp += cpad("\nP - indestructabl potion",37)
+		strp += cpad("\ni - invisible power",42)
+		strp += cpad("\nx - exit",51)
+		strp += cpad("\nz - Death",49)
 		strp += cpad("\nt - treasure box",44)
 		strp += cpad("\nT - teleporter pad",42)
 	}

@@ -416,12 +416,12 @@ var g1edit_keymap = []int{
 	  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,	//  unit      40 = (  )  *  +  ,  -  .  /  0  1
 	  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,	//  unit      50 = 2  3  4  5  6  7  8  9  :  ;
 	  0,   0,   0,  -1,   0,  -1,   0,  -1,   4,  -1,	//  unit      60 = <  =  >  ?* @  A* B  C* D  E*
-	 43,   0,  -1,   0,   0,   0,  -1,   0,   0,   0,	//  unit      70 = F  G  H* I  J  K  L* M  N  O
+	 43,  14,  -1,   0,   0,   0,  -1,  16,   0,  23,	//  unit      70 = F  G  H* I  J  K  L* M  N  O
 	 45,   0,   0,  -1,  59,   0,  -1,  56,   0,   0,	//  unit      80 = P  Q  R  S* T  U  V* W  X  Y
-	  0,   0,  -1,   0,   0,   0,   0,  -1,   0,   0,	//  unit      90 = Z  [  \* ]  ^  _  `  a* b  c*
-	  3,  -1,  42,   0,   0,   0,   0,  53,   0,   0,	//  unit     100 = d  e* f  g  h  i  j  k  l  m
-	  0,   0,  44,   0,   0,   0,  40,   0,   0,   2,	//  unit     110 = n  o  p  q  r  s  t  u  v  w
-	  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,	//  unit     120 = x  y  z  {  |  }  ~
+	  0,   0,  -1,   0,   0,   0,   0,  -1,  64,   0,	//  unit      90 = Z  [  \* ]  ^  _  `  a* b  c*
+	  3,  -1,  42,  11,  29,  46,   0,  53,  35,  32,	//  unit     100 = d  e* f  g  h  i  j  k  l  m
+	 27,  38,  44,  57,  58,   0,  40,   0,   0,   2,	//  unit     110 = n  o  p  q  r  s  t  u  v  w
+	  6,   0,  24,   0,   0,   0,   0,   0,   0,   0,	//  unit     120 = x  y  z  {  |  }  ~
 														// * - not currently reassignable, they are edit mode ops keys
 														// ?, \, C, A #a, eE, L, S, H, V
 }
@@ -437,11 +437,11 @@ var g2edit_keymap = []int{
 	  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,	//  unit      50 = 2  3  4  5  6  7  8  9  :  ;
 	  0,   0,   0,  -1,   0,  -1,   0,  -1,  14,  -1,	//  unit      60 = <  =  >  ?* @  A* B  C* D  E*
 	 50,   0,  -1,   0,   0,   0,  -1,   0,   0,   0,	//  unit      70 = F  G  H* I  J  K  L* M  N  O
-	 52,   0,   0,  -1,  57,   0,  -1,   5,   0,   0,	//  unit      80 = P  Q  R  S* T  U  V* W  X  Y
-	  0,   0,  -1,   0,   0,   0,   0,  -1,   0,   0,	//  unit      90 = Z  [  \* ]  ^  _  `  a* b  c*
-	 13,  -1,  49,   0,   0,   0,   0,  53,   0,   0,	//  unit     100 = d  e* f  g  h  i  j  k  l  m
-	  0,   0,  51,   0,   0,   0,  46,   0,   0,   2,	//  unit     110 = n  o  p  q  r  s  t  u  v  w
-	  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,	//  unit     120 = x  y  z  {  |  }  ~
+	 52,  10,   7,  -1,  57,   0,  -1,   5,   0,   0,	//  unit      80 = P  Q  R  S* T  U  V* W  X  Y
+	  0,   0,  -1,   0,   0,   0,   0,  -1,  63,   0,	//  unit      90 = Z  [  \* ]  ^  _  `  a* b  c*
+	 13,  -1,  49,  18,   0,  54,   0,  53,   0,   3,	//  unit     100 = d  e* f  g  h  i  j  k  l  m
+	 25,  26,  51,   0,   6,   1,  46,   0,   0,   2,	//  unit     110 = n  o  p  q  r  s  t  u  v  w
+	 16,   0,  24,   0,   0,   0,   0,   0,   0,   0,	//  unit     120 = x  y  z  {  |  }  ~
 														// * - not currently reassignable, they are edit mode ops keys
 														// ?, \, C, A #a, eE, L, S, H, V
 }
