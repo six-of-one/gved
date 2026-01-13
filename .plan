@@ -48,8 +48,8 @@ issues needing fixed
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
+- dialog for #T hide mask and #flg blank maze keep mask
 
 perhaps needs rewrite:
 - cleanup kontrol
   move some sd buf ops to edat ?
-- expand # blank keep items

@@ -164,11 +164,13 @@ func menu_blank(pr bool) {
 			}
 		}
 // anum as item hide flags, but keep those elements
-		flg := anum & 511			// item mask from #T
+		flg := anum & 4095			// item mask from #T
 		if G1 {
 			if g1mask[ebuf[xy{tx, ty}]] & flg > 0 { clr = false }
+//fmt.Printf(" flg %d elem: %d test: %d\n",flg,g1mask[ebuf[xy{tx, ty}]],g1mask[ebuf[xy{tx, ty}]] & flg)
 		} else {
 			if g2mask[ebuf[xy{tx, ty}]] & flg > 0 { clr = false }
+//fmt.Printf(" flg %d elem: %d test: %d\n",flg,g2mask[ebuf[xy{tx, ty}]],g2mask[ebuf[xy{tx, ty}]] & flg)
 		}
 		if clr {
 			ebuf[xy{tx, ty}] = 0
