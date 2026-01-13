@@ -597,6 +597,8 @@ func uswap() {
 }
 
 // page thru maze #s, sd buf
+// mb = 2 (right button) will call the active op with last dir
+// possible: wheel mouse these one day
 
 var pgdir int
 
@@ -635,6 +637,7 @@ func sdbit(dir int) string {
 		fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
 		cnd = lod_maz(fil, ebuf, false)
 		if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spar = fmt.Sprintf("cmd: S - ") }
+		if dir < 0 && cnd < 0 && ldb == 1 { cnd = 0; break }
 	}
 	if cnd < 0 {
 		menu_lodit(true)
