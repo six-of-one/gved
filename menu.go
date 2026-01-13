@@ -183,9 +183,9 @@ func menu_blank(pr bool) {
 	remaze(opts.mnum)
 }
 
-func menu_copy() { if opts.edat > 0 { ccp = COPY }}
-func menu_cut() { if opts.edat > 0 { ccp = CUT }}
-func menu_paste() { if opts.edat > 0 { ccp = PASTE }}
+func menu_copy() { if opts.edat > 0 { ccp = COPY; statlin(cmdhin,"copy") }}
+func menu_cut() { if opts.edat > 0 { ccp = CUT; statlin(cmdhin,"cut") }}
+func menu_paste() { if opts.edat > 0 { ccp = PASTE; statlin(cmdhin,"paste") }}
 // set menus
 
 func st_menu() {

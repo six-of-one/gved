@@ -131,10 +131,10 @@ func typedRune(r rune) {
 			if key.Name == "U" && ctrl  { uswap() }
 			if key.Name == "Z" && ctrl  { undo() }
 			if key.Name == "Y" && ctrl  { redo() }
-			if key.Name == "C" && ctrl  { if opts.edat > 0 { ccp = COPY }}
-			if key.Name == "X" && ctrl  { if opts.edat > 0 { ccp = CUT }}
-			if key.Name == "P" && ctrl  { if opts.edat > 0 { ccp = PASTE }}
-			if key.Name == "Q" && ctrl  {  exitsel = true; needsav() }
+			if key.Name == "C" && ctrl  { menu_copy() }
+			if key.Name == "X" && ctrl  { menu_cut() }
+			if key.Name == "P" && ctrl  { menu_paste() }
+			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
        })
     }
 
@@ -675,8 +675,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		pasty := false
 		if ccp == PASTE { pasty = true }
 		if ccp != NOP {
-		if mb != 1 { ccp = NOP }
-		if sx == ex && sy == ey { ccp = NOP }
+		if mb != 1 { ccp = NOP ; fmt.Printf("ccp to NOP\n") }
+//		if sx == ex && sy == ey { ccp = NOP }
 		if ccp != NOP {
 			px :=0
 			if ccp == COPY || ccp == CUT {
