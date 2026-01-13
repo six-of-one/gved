@@ -51,7 +51,7 @@ func specialKey() {
 				if anum != 0 { spx = fmt.Sprintf("| numeric: %d", anum) }
 				uptitl(opts.mnum, spx)
 			}
-			if key.Name == "Delete" { del = true }
+			if key.Name == "Delete" { del = true; ccp_NOP() }
 //			if key.Name == "BackSpace" { del = true }
 			if key.Name == "Home" { home = true; if opts.edat == 1 { palete() }}
 			if key.Name == "LeftSuper" { logo = true }
@@ -88,7 +88,7 @@ func specialKey() {
 						if swnothing > 0 { nothing = swnothing; swnothing = 0 }
 						opts.edat = 0
 						opts.dntr = false
-						ccp = NOP
+						ccp_NOP()
 						cmdhin = "cmds: ?, <ESC>, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 						statlin(cmdhin,"")
 						Ovwallpat = -1
@@ -225,7 +225,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 					if nothing > 0 { swnothing = nothing; nothing = 0 }
 				} else {
 					if swnothing > 0 { nothing = swnothing; swnothing = 0 }
-					ccp = NOP
+					ccp_NOP()
 				}
 				opts.dntr = true
 				relod = true
@@ -644,6 +644,7 @@ func sdbit(dir int) string {
 	}
 	return spar
 }
+
 // click area for edits
 
 // button we can detect click and release areas for rubberband area & fills
@@ -731,8 +732,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		pasty := false
 		if ccp == PASTE { pasty = true }
 		if ccp != NOP {
-		if mb != 1 { ccp = NOP ; fmt.Printf("ccp to NOP\n") }
-//		if sx == ex && sy == ey { ccp = NOP }
+		if mb != 1 { ccp_NOP(); fmt.Printf("ccp to NOP\n") }
+//		if sx == ex && sy == ey { ccp_NOP() }
 		if ccp != NOP {
 			px :=0
 			if ccp == COPY || ccp == CUT {

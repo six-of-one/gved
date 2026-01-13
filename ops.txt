@@ -121,6 +121,7 @@ most of these have a corresponging item on edit or file menus
 <CTRL>-C	set for copy contents of next Left-click mouse drag
 <CTRL>-X	set for cut contents of next Left-click mouse drag - floor will be set
 <CTRL>-P	paste contents of c/c/p buffer at Left-click location
+			- c/c/p are 'sticky', they stay on, select again to turn off, or select another edit action
 
 <CTRL>-Z	undo last op - currently holds 10000 units (single maze cell) of undo
 <CTRL>-Y	redo last undo up to last change entered
