@@ -39,8 +39,10 @@ S	cycle through all save data buffers in .ed/sd#####_g?.ed	(where g? is g1 or g2
 #S	save current visible maze as buffer #####
 	- while sd buffers are available in view mode, no view mode changes (fgwqhmrR) will be saved
 
-pgup 	previous maze
-pgdn	next maze
+pgup 	previous maze		or		previous sd buf
+pgdn	next maze					next sd buf
+									- when sd view is active, pgup stops at 1
+									- pgdn will exit to mazes on last buf
 
 View mazes only:		( and cmd keys in edit )
 ---------------
@@ -53,6 +55,7 @@ v	list G¹ or G² maze address set to terminal where gved was launched
 
 
 these keys are temporary in view mode and edit the buffer in edit mode
+- with edit off, these will not operate on sd buf mazes
 
 f,F	 + or - floor pattern in cycle of all patterns
 g,G	 + or - floor colors in cycle of all colors

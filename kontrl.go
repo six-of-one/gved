@@ -114,31 +114,14 @@ func specialKey() {
 			if key.Name == "P" && ctrl  { menu_paste() }
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
 			if key.Name == "Next" {
-				nsremaze = true
-				srelod = needsav()
-				Ovwallpat = -1
-				if Aov > 0 {
-					nav := addrver(Aov, 1)
-					Aov = nav
-				} else {
-					opts.mnum += 1
-				}
-				if opts.mnum > maxmaze { opts.mnum = 0 }
-	fmt.Printf("nx %d\n",opts.mnum)
+				if sdb > 0 {
+					sdbit(1)
+				} else { srelod = pagit(1) }
 			}
 			if key.Name == "Prior" {
-				nsremaze = true
-				srelod = needsav()
-				Ovwallpat = -1
-// allow step parse through valid address
-				if Aov > 0 {
-					nav := addrver(Aov, -1)
-					Aov = nav
-				} else {
-					opts.mnum -= 1
-				}
-				if opts.mnum < 0 { opts.mnum = maxmaze }
-	fmt.Printf("pr %d\n",opts.mnum)
+				if sdb > 0 {
+					sdbit(-1)
+				} else { srelod = pagit(-1) }
 			}
 			upd_edmaze(false)
 fmt.Printf("sk cond relod: %t\n",srelod)
@@ -309,20 +292,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, 0 - anum)
 					anum = 0
 				} else {
-// with no anum, rotate curr ebuf thru s[1] - s[?]
-					cnd := -1
-					ldb := sdb
-					if opts.bufdrt { menu_savit(true) }		// autosave
-					for cnd < 0 && ldb < sdmax {
-						ldb++
-						if ldb == 0 { ldb = 1 }
-						fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
-						cnd = lod_maz(fil, ebuf, false)
-						if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spau = fmt.Sprintf("cmd: S - ") }
-					}
-					if cnd < 0 {
-						menu_lodit(true)
-					}
+					spau = sdbit(1)
 				}
 		default:
 			relodsub = false
@@ -626,7 +596,51 @@ func uswap() {
 	ed_maze(true)
 }
 
+// page thru maze #s, sd buf
 
+var pgdir int
+
+func pagit(dir int) bool {
+
+	lrelod := false
+	nsremaze = true
+	lrelod = needsav()
+	Ovwallpat = -1
+	pgdir = dir
+	if Aov > 0 {
+		nav := addrver(Aov, dir)
+		Aov = nav
+	} else {
+		opts.mnum += dir
+	}
+	if dir > 0 {
+		if opts.mnum > maxmaze { opts.mnum = 0 }
+	} else {
+		if opts.mnum < 0 { opts.mnum = maxmaze }
+	}
+fmt.Printf("pg %d\n",opts.mnum)
+	return lrelod
+}
+
+func sdbit(dir int) string {
+// rotate curr ebuf thru s[1] - s[?]
+	cnd := -1
+	ldb := sdb
+	spar := ""
+	if opts.bufdrt { menu_savit(true) }		// autosave
+	for cnd < 0 && ldb < sdmax {
+		pgdir = dir
+		ldb += dir
+		if ldb == 0 { ldb = 1 }
+		fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
+		cnd = lod_maz(fil, ebuf, false)
+		if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spar = fmt.Sprintf("cmd: S - ") }
+	}
+	if cnd < 0 {
+		menu_lodit(true)
+	}
+	return spar
+}
 // click area for edits
 
 // button we can detect click and release areas for rubberband area & fills
@@ -671,16 +685,32 @@ var cycloc = 99
 // edkey 'locks' on when pressed
 
 func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
+
+	mb := 0		// mb 1 = left, 2 = right, 4 = middle
+	ax := 0.0	// absolute x & y
+	ay := 0.0
+	exmd = 0.0	// rel x & y interm float32
+	eymd = 0.0
+	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
+	pos := fmt.Sprintf("%v",mm)
+	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&exmd,&eymd,&mb,&mk)
+
+// right mb functions
+	if mb == 2 {
+		if pgdir != 0 {
+			if sdb > 0 {
+				sdbit(pgdir)
+			} else {
+				lrelod := pagit(pgdir)
+				upd_edmaze(false)
+				if lrelod { remaze(opts.mnum) }
+			}
+			return
+		}
+	}
+
  //   fmt.Printf("up %v\n",mm)
 	if opts.edat > 0 {
-		ax := 0.0	// absolute x & y
-		ay := 0.0
-		exmd = 0.0	// rel x & y interm float32
-		eymd = 0.0
-		mb := 0		// mb 1 = left, 2 = right, 4 = middle
-		mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
-		pos := fmt.Sprintf("%v",mm)
-		fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&exmd,&eymd,&mb,&mk)
 		fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
 		ex := int(exmd / opts.dtec)
 		ey := int(eymd / opts.dtec)
