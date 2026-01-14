@@ -9,6 +9,7 @@ import (
 	"image/draw"
 	"github.com/fogleman/gg"
 	"image/color"
+	"encoding/binary"
 )
 
 
