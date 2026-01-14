@@ -123,6 +123,9 @@ most of these have a corresponging item on edit or file menus
 <CTRL>-P	paste contents of c/c/p buffer at Left-click location
 			- c/c/p are 'sticky', they stay on, select again to turn off, or select another edit action
 
+<SH-CTRL>-P	roll thru session paste buffer, loading each one
+<SH-CTRL>-O	roll thru master paste buffer, loading each one
+
 <CTRL>-Z	undo last op - currently holds {all mem until its unworkable} units (single maze cell) of undo
 <CTRL>-Y	redo last undo up to last change entered
 			-undo back 5 or 10 and place a new item and the forward chain is lost

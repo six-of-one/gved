@@ -755,17 +755,17 @@ fmt.Printf("%03d ",cpbuf[xy{px, py}])
 fmt.Printf("\n")
 			py++
 			}
-			cpx = px - 1; if cpx < 0 { cpx = 0 }		// if these arent -1, the paste is 1 over
+			cpx = px - 1; if cpx < 0 { cpx = 0 }		// if these arent 0, the paste is 1 over
 			cpy = py - 1; if cpy < 0 { cpy = 0 }
 fmt.Printf("cc dun: px %d py %d\n",px,py)
 // saving paste buffer now
 			fil := fmt.Sprintf(".pb/pb%07d_g%d.ed",pbcnt,opts.Gtp)
 			pbcnt++
-			sav_maz(fil, cpbuf, eflg, px, py, 0)
+			sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
 // local for short range
 			fil = fmt.Sprintf(".pb/sespb%07d_g%d.ed",lpbcnt,opts.Gtp)
 			lpbcnt++
-			sav_maz(fil, cpbuf, eflg, px, py, 0)
+			sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
 
 // pb sort of doesnt end
 				file, err := os.Create(".pb/cnt")

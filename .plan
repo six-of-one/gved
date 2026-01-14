@@ -57,6 +57,7 @@ issues needing fixed
 possible:
 - down the line .ed stored maz# could be used to set maz num
 - dialog for setting / reading bits of #T hide mask and #flg blank maze keep mask
+- way using sprites or new window to view paste buffer contents
 
 perhaps needs rewrite:
 - cleanup all modules
