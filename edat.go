@@ -59,7 +59,7 @@ var urstak int
 
 func udbck(ct int, t int){
 
-fmt.Printf("udb len %d, test: %d\n",len(udb.elem),t)
+//fmt.Printf("udb len %d, test: %d\n",len(udb.elem),t)
 
 	if len(udb.elem) <= t {
 		for y := 0; y < ct; y++ {

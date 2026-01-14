@@ -608,8 +608,13 @@ func pbsess_cyc() {
 // clear old buf
 	for my := 0; my <= cpy; my++ {
 	for mx := 0; mx <= cpx; mx++ { cpbuf[xy{mx, my}] = 0 }}
+	pmx := opts.DimX; pmy := opts.DimY		// preserve these
 	fil := fmt.Sprintf(".pb/ses_%07d_g%d.ed",sesbcnt,opts.Gtp)
+fmt.Printf("pbsess %d - %s\n",sesbcnt,fil)
 	lod_maz(fil, cpbuf, false)
+	cpx = opts.DimX; cpy = opts.DimY
+fmt.Printf("sespb dun: px %d py %d\n",cpx,cpy)
+	opts.DimX = pmx; opts.DimY = pmy
 	sesbcnt++
 	if sesbcnt >= lpbcnt { sesbcnt = 0 }
 }
@@ -617,8 +622,13 @@ func pbsess_cyc() {
 func pbmas_cyc() {
 	for my := 0; my <= cpy; my++ {
 	for mx := 0; mx <= cpx; mx++ { cpbuf[xy{mx, my}] = 0 }}
+	pmx := opts.DimX; pmy := opts.DimY		// preserve these
 	fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",masbcnt,opts.Gtp)
+fmt.Printf("pbmas c: %d %d - %s\n",pbcnt,masbcnt,fil)
 	lod_maz(fil, cpbuf, false)
+	cpx = opts.DimX; cpy = opts.DimY
+fmt.Printf("maxpb dun: px %d py %d\n",cpx,cpy)
+	opts.DimX = pmx; opts.DimY = pmy
 	masbcnt++
 	if masbcnt >= pbcnt { masbcnt = 0 }
 }
