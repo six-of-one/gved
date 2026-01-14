@@ -224,7 +224,7 @@ any key in this grid without an * is an edit key
  120 = x  y  z  {  |  }  ~
 
 these are system reserved keys and can NOT be reassigned
-?, \, C, aA, eE, L, S, H, V
+?, \, C, aA, L, S, H, V
 
 Menu operations
 ---------------
@@ -238,6 +238,6 @@ Load		- loads a maze from std file (not intended to be a buffer file from .ed)
 Save		- saves a maze to a std file, if # is set on title numeric: store that as maze #
 				(maze numbers in files not currently used)
 
-Blank		- fill buffer with blank maze, default floors & walls (must be in edit mode)
+Blank		- fill buffer with blank maze, default floors & walls (must be in edit mode, can also use # keep)
 Blank keep	- blank maze, but keep current floors, walls, exit, starts, and -
 			  if # is set on title numeric: use inversion of #T hide items mask to preserve those
