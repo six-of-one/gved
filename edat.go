@@ -29,13 +29,13 @@ var din [33]int		// set to be 1 line per std gauntlet maze (gved encoding) of 0 
 // cut / copy & paste
 
 var cpbuf MazeData	// c/c/p buffer
-var pbcnt int		// count of c/c/p buffers saved
+var pbcnt int		// master count of c/c/p buffers saved
 var lpbcnt int		// sesssion count of c/c/p buffers - reset every
 var cpx int			// max paste buf, start is always 0, 0
 var cpy int
 // roll thru pb
 var skpbcnt int		// run thru master pb
-var sklbcnt int		// run thru local ses pb
+var sesbcnt int		// run thru local ses pb
 
 // deleted elements / undo storage
 

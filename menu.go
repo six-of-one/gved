@@ -292,6 +292,8 @@ func aw_init() {
 // get paste buf cnt
 	pbcnt = 0
 	lpbcnt = 0
+	skpbcnt = 0	// loop thru
+	sesbcnt = 0
 	data, err := ioutil.ReadFile(".pb/cnt")
 	if err == nil {
 		fmt.Sscanf(string(data),"%d", &pbcnt)

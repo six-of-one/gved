@@ -111,7 +111,8 @@ func specialKey() {
 			if key.Name == "Y" && ctrl  { redo() }
 			if key.Name == "C" && ctrl  { menu_copy() }
 			if key.Name == "X" && ctrl  { menu_cut() }
-			if key.Name == "P" && ctrl  { menu_paste() }
+			if key.Name == "P" && ctrl  { if shift { pbsess_cyc() } else { menu_paste() }}
+			if key.Name == "O" && ctrl  { if shift { pbmas_cyc() }}
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
 			if key.Name == "Next" {
 				if sdb > 0 {
@@ -603,6 +604,25 @@ func uswap() {
 func ccp_NOP() { ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
 func ccp_tog(op int) { if ccp == op { ccp = NOP; smod = "Edit mode: " } else { ccp = op }}
 
+func pbsess_cyc() {
+// clear old buf
+	for my := 0; my <= cpy; my++ {
+	for mx := 0; mx <= cpx; mx++ { cpbuf[xy{mx, my}] = 0 }}
+	fil := fmt.Sprintf(".pb/ses_%07d_g%d.ed",sesbcnt,opts.Gtp)
+	lod_maz(fil, cpbuf, false)
+	sesbcnt++
+	if sesbcnt > lpbcnt { sesbcnt = 0 }
+}
+
+func pbmas_cyc() {
+	for my := 0; my <= cpy; my++ {
+	for mx := 0; mx <= cpx; mx++ { cpbuf[xy{mx, my}] = 0 }}
+	fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",skpbcnt,opts.Gtp)
+	lod_maz(fil, cpbuf, false)
+	skpbcnt++
+	if skpbcnt > pbcnt { skpbcnt = 0 }
+}
+
 // page thru maze #s, sd buf
 // mb = 2 (right button) will call the active op with last dir
 // possible: wheel mouse these one day
@@ -759,11 +779,11 @@ fmt.Printf("\n")
 			cpy = py - 1; if cpy < 0 { cpy = 0 }
 fmt.Printf("cc dun: px %d py %d\n",px,py)
 // saving paste buffer now
-			fil := fmt.Sprintf(".pb/pb%07d_g%d.ed",pbcnt,opts.Gtp)
+			fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",pbcnt,opts.Gtp)
 			pbcnt++
 			sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
 // local for short range
-			fil = fmt.Sprintf(".pb/sespb%07d_g%d.ed",lpbcnt,opts.Gtp)
+			fil = fmt.Sprintf(".pb/ses_%07d_g%d.ed",lpbcnt,opts.Gtp)
 			lpbcnt++
 			sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
 
