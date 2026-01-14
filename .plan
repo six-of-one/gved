@@ -48,7 +48,10 @@ copy / cut / paste
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 
 issues needing fixed
-- if maze changes exist going into S buffers and then x,z,L, etc the changes are lost
+- if maze changes exist going into S buffers and then pgup,pgdn,L, etc the changes are lost
+\_is this not fixed with autosave before S ?
+
+- ctrl-z after a paste is messing floor & wall colors
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
