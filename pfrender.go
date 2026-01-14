@@ -1450,3 +1450,650 @@ func renderdots(img *image.NRGBA, xloc int, yloc int, count int) {
 		dotat(img, xloc+9, yloc+9)
 	}
 }
+
+// image from buffer segment
+
+func segimage(mdat MazeData, xs int, ys int) *image.NRGBA {
+
+// dummy maze for ops that require it
+	var maze = &Maze{}
+	maze.data = mdat //make(map[xy]int)
+
+	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
+	img := blankimage(8*2*xs, 8*2*ys)
+
+	// Map out where forcefield floor tiles are, so we can lay those down first
+	ffmap := ffMakeMap(maze)
+
+	// mazes will always be the same size, so just use constants
+	// maze := mazeDecompress(mazedata)
+//	copyedges(maze)
+	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
+
+	if G2 {
+// g2 checks
+	for y := 0; y < ys; y++ {
+		for x := 0; x < xs; x++ {
+			adj := 0
+			if maze.wallpattern < 11 {
+				if (nothing & NOWALL) == 0 {		// wall shadows here
+				adj = checkwalladj3(maze, x, y)
+				}
+			}
+
+			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
+			if ffmap[xy{x, y}] {
+				if nothing & NOTRAP == 0 {
+					stamp.ptype = "forcefield"
+					stamp.pnum = 0
+					writestamptoimage(img, stamp, x*16, y*16)
+				}
+			}
+			if (nothing & NOFLOOR) == 0 {
+				writestamptoimage(img, stamp, x*16, y*16)
+			}
+		}
+	}} else {
+// g1 checks
+	for y := 0; y < ys; y++ {
+		for x := 0; x < xs; x++ {
+			adj := 0
+			nwt := NOWALL | NOG1W
+			if whatis(maze, x, y) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
+			if whatis(maze, x, y) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
+			if maze.wallpattern < 11 {
+				if (nothing & nwt) == 0 {		// wall shadows here
+				adj = checkwalladj3g1(maze, x, y)
+				}
+			}
+
+			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
+			if (nothing & NOFLOOR) == 0 {
+				writestamptoimage(img, stamp, x*16, y*16)
+			}
+		}
+
+	}}
+
+// seperating walls from other ents so walls dont overwrite 24 x 24 ents
+// unless emu is wrong, this is the way g & g2 draw walls, see screens
+	for y := 0; y <= ys; y++ {
+		for x := 0; x <= ys; x++ {
+			var stamp *Stamp
+			var dots int // dot count
+
+			if G2 {
+				switch whatis(maze, x, y) {
+				case MAZEOBJ_WALL_DESTRUCTABLE:
+					adj := checkwalladj8(maze, x, y)
+				if (nothing & NOWALL) == 0 {
+					stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
+				}
+				case MAZEOBJ_WALL_SECRET:
+					adj := checkwalladj8(maze, x, y)
+				if (nothing & NOWALL) == 0 {
+					stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+					stamp.ptype = "secret"
+					stamp.pnum = 0
+				}
+				case MAZEOBJ_WALL_TRAPCYC1:
+					dots = 1
+					fallthrough
+				case MAZEOBJ_WALL_TRAPCYC2:
+					if dots == 0 {
+						dots = 2
+					}
+					fallthrough
+				case MAZEOBJ_WALL_TRAPCYC3:
+					if dots == 0 {
+						dots = 3
+					}
+					fallthrough
+				case MAZEOBJ_WALL_RANDOM:
+					if dots == 0 {
+						dots = 4
+					}
+					fallthrough
+				case MAZEOBJ_WALL_REGULAR:
+					adj := checkwalladj8(maze, x, y)
+					if (nothing & NOWALL) == 0 {
+						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+				}
+// test of some items not place in mazes
+				case MAZEOBJ_TILE_FLOOR:
+					if opts.SP {
+						ts := rand.Intn(470)
+						if ts == 2 { maze.data[xy{x, y}] = 	MAZEOBJ_TREASURE_BAG }
+						if ts == 111 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+						if ts == 311 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+					}
+			}}
+			if G1 {
+				nwt := NOWALL | NOG1W
+				switch whatis(maze, x, y) {
+				case G1OBJ_WALL_DESTRUCTABLE:
+					adj := checkwalladj8g1(maze, x, y)
+				if (nothing & NOWALL) == 0 {
+					stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
+				}
+
+				case G1OBJ_WALL_TRAP1:
+					dots = 1
+					nwt = NOWALL
+					fallthrough
+				case G1OBJ_WALL_REGULAR:
+					adj := checkwalladj8g1(maze, x, y)
+					if (nothing & nwt) == 0 {
+						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+				}
+// test of some items not place in mazes - place in empty floor tile @random
+				case MAZEOBJ_TILE_FLOOR:
+					if opts.SP {
+						ts := rand.Intn(470)
+						if ts == 2 { maze.data[xy{x, y}] = G1OBJ_TREASURE_BAG }
+						if ts == 11 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+						if ts == 311 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+					}
+				}}
+			if stamp != nil {
+				writestamptoimage(img, stamp, x*16+stamp.nudgex, y*16+stamp.nudgey)
+			}
+
+			if dots != 0 && nothing & NOWALL == 0 {
+				renderdots(img, x*16, y*16, dots)
+			}
+		}
+	}
+
+	for y := 0; y <= ys; y++ {
+		for x := 0; x <= ys; x++ {
+			var stamp *Stamp
+			var dots int // dot count
+// gen type op - letter to draw
+			gtopl := ""
+			gtopcol := false	// disable gen letter seperate colors
+// gen type op - the context to draw
+			gtop := gg.NewContext(12, 12)
+// gtop font
+			if err := gtop.LoadFontFace(".font/VrBd.ttf", 14); err != nil {
+				panic(err)
+				}
+// g2 decodes
+			if G2 {
+
+			// We should do better
+			switch whatis(maze, x, y) {
+// specials are jammed in somewhere in G2 code, we just do this
+// specials added after convert to se id'ed them on maze 115, score table block
+			case 70:
+				stamp = itemGetStamp("speedpotion")
+			case 71:
+				stamp = itemGetStamp("shotpowerpotion")
+			case 72:
+				stamp = itemGetStamp("shotspeedpotion")
+			case 73:
+				stamp = itemGetStamp("shieldpotion")
+			case 74:
+				stamp = itemGetStamp("fightpotion")
+			case 75:
+				stamp = itemGetStamp("magicpotion")
+			case 76:
+				stamp = itemGetStamp("goldbag")
+
+			case MAZEOBJ_TILE_FLOOR:
+			// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
+			// stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+			case MAZEOBJ_TILE_STUN:
+				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
+				if (nothing & NOTRAP) == 0 {
+					stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+					stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
+					stamp.pnum = 0
+				}
+
+				// Tried to simplify these a bit with a goto, but golang didn't
+				// like it ('jump into block'). I should figure out why.
+			case MAZEOBJ_TILE_TRAP1:
+				dots = 1
+				fallthrough
+			case MAZEOBJ_TILE_TRAP2:
+				if dots == 0 {
+					dots = 2
+				}
+				fallthrough
+			case MAZEOBJ_TILE_TRAP3:
+				if dots == 0 {
+					dots = 3
+				}
+				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
+				if (nothing & NOTRAP) == 0 {
+					stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+					stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
+					stamp.pnum = 0
+				} else { dots = 0 }
+			case MAZEOBJ_WALL_MOVABLE:
+				stamp = itemGetStamp("pushwall")
+			case MAZEOBJ_KEY:
+				stamp = itemGetStamp("key")
+
+			case MAZEOBJ_POWER_INVIS:
+				stamp = itemGetStamp("invis")
+			case MAZEOBJ_POWER_REPULSE:
+				stamp = itemGetStamp("repulse")
+			case MAZEOBJ_POWER_REFLECT:
+				stamp = itemGetStamp("reflect")
+			case MAZEOBJ_POWER_TRANSPORT:
+				stamp = itemGetStamp("transportability")
+			case MAZEOBJ_POWER_SUPERSHOT:
+				stamp = itemGetStamp("supershot")
+			case MAZEOBJ_POWER_INVULN:
+				stamp = itemGetStamp("invuln")
+
+			case MAZEOBJ_DOOR_HORIZ:
+				adj := checkdooradj4(maze, x, y)
+				stamp = doorGetStamp(DOOR_HORIZ, adj)
+			case MAZEOBJ_DOOR_VERT:
+				adj := checkdooradj4(maze, x, y)
+				stamp = doorGetStamp(DOOR_VERT, adj)
+
+			case MAZEOBJ_PLAYERSTART:
+				stamp = itemGetStamp("plus")
+			case MAZEOBJ_EXIT:
+				stamp = itemGetStamp("exit")
+			case MAZEOBJ_EXITTO6:
+				stamp = itemGetStamp("exit6")
+
+			case MAZEOBJ_MONST_GHOST:
+				stamp = itemGetStamp("ghost")
+			case MAZEOBJ_MONST_GRUNT:
+				stamp = itemGetStamp("grunt")
+			case MAZEOBJ_MONST_DEMON:
+				stamp = itemGetStamp("demon")
+			case MAZEOBJ_MONST_LOBBER:
+				stamp = itemGetStamp("lobber")
+			case MAZEOBJ_MONST_SORC:
+				stamp = itemGetStamp("sorcerer")
+			case MAZEOBJ_MONST_AUX_GRUNT:
+				stamp = itemGetStamp("auxgrunt")
+			case MAZEOBJ_MONST_DEATH:
+				stamp = itemGetStamp("death")
+			case MAZEOBJ_MONST_ACID:
+				stamp = itemGetStamp("acid")
+			case MAZEOBJ_MONST_SUPERSORC:
+				stamp = itemGetStamp("supersorc")
+			case MAZEOBJ_MONST_IT:
+				stamp = itemGetStamp("it")
+			case MAZEOBJ_MONST_DRAGON:
+				stamp = itemGetStamp("dragon")
+
+			case MAZEOBJ_GEN_GHOST1:
+				stamp = itemGetStamp("ghostgen1")
+			case MAZEOBJ_GEN_GHOST2:
+				stamp = itemGetStamp("ghostgen2")
+			case MAZEOBJ_GEN_GHOST3:
+				stamp = itemGetStamp("ghostgen3")
+
+			case MAZEOBJ_GEN_AUX_GRUNT1:
+				gtopl = "G`"
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+				stamp = itemGetStamp("generator1")
+			case MAZEOBJ_GEN_GRUNT1:
+				gtopl = "G"
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+				stamp = itemGetStamp("generator1")
+			case MAZEOBJ_GEN_DEMON1:
+				gtopl = "D"
+				if gtopcol { gtop.SetRGB(1, 0, 0) }
+				stamp = itemGetStamp("generator1")
+			case MAZEOBJ_GEN_LOBBER1:
+				gtopl = "L"
+				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+				stamp = itemGetStamp("generator1")
+			case MAZEOBJ_GEN_SORC1:
+				gtopl = "S"
+				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+				stamp = itemGetStamp("generator1")
+
+			case MAZEOBJ_GEN_AUX_GRUNT2:
+				gtopl = "G`"
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+				stamp = itemGetStamp("generator2")
+			case MAZEOBJ_GEN_GRUNT2:
+				gtopl = "G"
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+				stamp = itemGetStamp("generator2")
+			case MAZEOBJ_GEN_DEMON2:
+				gtopl = "D"
+				if gtopcol { gtop.SetRGB(1, 0, 0) }
+				stamp = itemGetStamp("generator2")
+			case MAZEOBJ_GEN_LOBBER2:
+				gtopl = "L"
+				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+				stamp = itemGetStamp("generator2")
+			case MAZEOBJ_GEN_SORC2:
+				gtopl = "S"
+				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+				stamp = itemGetStamp("generator2")
+
+			case MAZEOBJ_GEN_AUX_GRUNT3:
+				gtopl = "G`"
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+				stamp = itemGetStamp("generator3")
+			case MAZEOBJ_GEN_GRUNT3:
+				gtopl = "G"
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+				stamp = itemGetStamp("generator3")
+			case MAZEOBJ_GEN_DEMON3:
+				gtopl = "D"
+				if gtopcol { gtop.SetRGB(1, 0, 0) }
+				stamp = itemGetStamp("generator3")
+			case MAZEOBJ_GEN_LOBBER3:
+				gtopl = "L"
+				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+				stamp = itemGetStamp("generator3")
+			case MAZEOBJ_GEN_SORC3:
+				gtopl = "S"
+				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+				stamp = itemGetStamp("generator3")
+
+			case MAZEOBJ_TREASURE:
+				stamp = itemGetStamp("treasure")
+			case MAZEOBJ_TREASURE_LOCKED:
+				stamp = itemGetStamp("treasurelocked")
+			case MAZEOBJ_TREASURE_BAG:
+				stamp = itemGetStamp("goldbag")
+			case MAZEOBJ_FOOD_DESTRUCTABLE:
+				stamp = itemGetStamp("food")
+			case MAZEOBJ_FOOD_INVULN:
+				stamp = itemGetStamp(foods[rand.Intn(3)])
+			case MAZEOBJ_POT_DESTRUCTABLE:
+				stamp = itemGetStamp("potion")
+			case MAZEOBJ_POT_INVULN:
+				stamp = itemGetStamp("ipotion")
+
+			case MAZEOBJ_FORCEFIELDHUB:
+				adj := checkffadj4(maze, x, y)
+				if nothing & NOEXP == 0 { stamp = ffGetStamp(adj) }
+			case MAZEOBJ_TRANSPORTER:
+				stamp = itemGetStamp("tport")
+// testing special potions
+/*			case MAZEOBJ_HIDDENPOT:
+				if opts.SP {
+					ts := rand.Intn(6)
+					switch ts {
+					case 1:
+						stamp = itemGetStamp("speedpotion")
+					case 2:
+						stamp = itemGetStamp("shotpowerpotion")
+					case 3:
+						stamp = itemGetStamp("shotspeedpotion")
+					case 4:
+						stamp = itemGetStamp("shieldpotion")
+					case 5:
+						stamp = itemGetStamp("fightpotion")
+					case 6:
+						stamp = itemGetStamp("magicpotion")
+					}
+				} */
+			default:
+				if opts.Verbose && false { fmt.Printf("G² WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
+			}
+// set mask flag in array
+			if whatis(maze, x, y) > 0 && stamp != nil { g2mask[whatis(maze, x, y)] = stamp.mask }
+			}
+// g1 decodes
+			if G1 {
+// gen type op - put a letter on up left corner of every gen to indicate monsters
+//		brw G - grunts
+//		red D - demons
+//		yel L - lobbers
+//		pur S - sorceror
+				gtop.Clear()
+				gtopl = ""// make sure g2 code (if it runs with g1) doesnt set extra dots on non walls
+				dots = 0
+// /fmt.Printf("g1 dec: %x -- ", whatis(maze, x, y))
+			switch whatis(maze, x, y) {
+
+			case G1OBJ_TILE_FLOOR:
+			// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
+			// stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+// dont think g1 has stun tile
+			case G1OBJ_TILE_STUN:
+				adj := checkwalladj3g1(maze, x, y) + rand.Intn(4)
+				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+				stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
+				stamp.pnum = 0
+
+			case G1OBJ_TILE_TRAP1:
+				dots = 1
+//				fallthrough
+	/*
+			case G1OBJ_TILE_TRAP2:
+				if dots == 0 {
+					dots = 2
+				}
+				fallthrough
+			case G1OBJ_TILE_TRAP3:
+				if dots == 0 {
+					dots = 3
+				}
+	*/
+				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
+				if (nothing & NOTRAP) == 0 {
+					stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+					stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
+					stamp.pnum = 0
+				}
+			case G1OBJ_KEY:
+				stamp = itemGetStamp("key")
+
+			case G1OBJ_DOOR_HORIZ:
+				adj := checkdooradj4g1(maze, x, y)
+				stamp = doorGetStamp(DOOR_HORIZ, adj)
+			case G1OBJ_DOOR_VERT:
+				adj := checkdooradj4g1(maze, x, y)
+				stamp = doorGetStamp(DOOR_VERT, adj)
+
+			case G1OBJ_PLAYERSTART:
+				stamp = itemGetStamp("plusg1")
+			case G1OBJ_EXIT:
+				stamp = itemGetStamp("exit")
+			case G1OBJ_EXIT4:
+				stamp = itemGetStamp("exit4")
+			case G1OBJ_EXIT8:
+				stamp = itemGetStamp("exit8")
+
+			case G1OBJ_MONST_GHOST1:
+				stamp = itemGetStamp("ghost1")
+			case G1OBJ_MONST_GHOST2:
+				stamp = itemGetStamp("ghost2")
+			case G1OBJ_MONST_GHOST3:
+				stamp = itemGetStamp("ghost")
+			case G1OBJ_MONST_GRUNT1:
+				stamp = itemGetStamp("grunt1")
+			case G1OBJ_MONST_GRUNT2:
+				stamp = itemGetStamp("grunt2")
+			case G1OBJ_MONST_GRUNT3:
+				stamp = itemGetStamp("grunt")
+			case G1OBJ_MONST_DEMON1:
+				stamp = itemGetStamp("demon1")
+			case G1OBJ_MONST_DEMON2:
+				stamp = itemGetStamp("demon2")
+			case G1OBJ_MONST_DEMON3:
+				stamp = itemGetStamp("demon")
+			case G1OBJ_MONST_LOBBER1:
+				stamp = itemGetStamp("lobber1")
+			case G1OBJ_MONST_LOBBER2:
+				stamp = itemGetStamp("lobber2")
+			case G1OBJ_MONST_LOBBER3:
+				stamp = itemGetStamp("lobber")
+			case G1OBJ_MONST_SORC1:
+				stamp = itemGetStamp("sorcerer1")
+			case G1OBJ_MONST_SORC2:
+				stamp = itemGetStamp("sorcerer2")
+			case G1OBJ_MONST_SORC3:
+				stamp = itemGetStamp("sorcerer")
+			case G1OBJ_MONST_DEATH:
+				stamp = itemGetStamp("death")
+
+			case G1OBJ_MONST_THIEF:
+				stamp = itemGetStamp("thief")
+
+			case G1OBJ_GEN_GHOST1:
+				stamp = itemGetStamp("ghostgen1")
+			case G1OBJ_GEN_GHOST2:
+				stamp = itemGetStamp("ghostgen2")
+			case G1OBJ_GEN_GHOST3:
+				stamp = itemGetStamp("ghostgen3")
+
+// if a clear is done after, this SetRGB set bkg somehow
+			case G1OBJ_GEN_GRUNT1:
+				gtopl = "G"
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+				stamp = itemGetStamp("generator1")
+			case G1OBJ_GEN_DEMON1:
+				gtopl = "D"
+				if gtopcol { gtop.SetRGB(1, 0, 0) }
+				stamp = itemGetStamp("generator1")
+			case G1OBJ_GEN_LOBBER1:
+				gtopl = "L"
+				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+				stamp = itemGetStamp("generator1")
+			case G1OBJ_GEN_SORC1:
+				gtopl = "S"
+				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+				stamp = itemGetStamp("generator1")
+
+			case G1OBJ_GEN_GRUNT2:
+				gtopl = "G"
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+				stamp = itemGetStamp("generator2")
+			case G1OBJ_GEN_DEMON2:
+				gtopl = "D"
+				if gtopcol { gtop.SetRGB(1, 0, 0) }
+				stamp = itemGetStamp("generator2")
+			case G1OBJ_GEN_LOBBER2:
+				gtopl = "L"
+				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+				stamp = itemGetStamp("generator2")
+			case G1OBJ_GEN_SORC2:
+				gtopl = "S"
+				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+				stamp = itemGetStamp("generator2")
+
+			case G1OBJ_GEN_GRUNT3:
+				gtopl = "G"
+				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+				stamp = itemGetStamp("generator3")
+			case G1OBJ_GEN_DEMON3:
+				gtopl = "D"
+				if gtopcol { gtop.SetRGB(1, 0, 0) }
+				stamp = itemGetStamp("generator3")
+			case G1OBJ_GEN_LOBBER3:
+				gtopl = "L"
+				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+				stamp = itemGetStamp("generator3")
+			case G1OBJ_GEN_SORC3:
+				gtopl = "S"
+				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+				stamp = itemGetStamp("generator3")
+
+			case G1OBJ_TREASURE:
+				stamp = itemGetStamp("treasure")
+			case G1OBJ_TREASURE_BAG:
+				stamp = itemGetStamp("goldbag")
+			case G1OBJ_FOOD_DESTRUCTABLE:
+				stamp = itemGetStamp("food")
+			case G1OBJ_FOOD_INVULN:
+				stamp = itemGetStamp(foods[rand.Intn(3)])
+			case G1OBJ_POT_DESTRUCTABLE:
+				stamp = itemGetStamp("potion")
+			case G1OBJ_POT_INVULN:
+				stamp = itemGetStamp("ipotion")
+			case G1OBJ_INVISIBL:
+				stamp = itemGetStamp("invis")
+// specials added after convert to se id'ed them on maze 115, score table block
+			case G1OBJ_X_SPEED:
+				stamp = itemGetStamp("speedpotion")
+			case G1OBJ_X_SHOTPW:
+				stamp = itemGetStamp("shotpowerpotion")
+			case G1OBJ_X_SHTSPD:
+				stamp = itemGetStamp("shotspeedpotion")
+			case G1OBJ_X_ARMOR:
+				stamp = itemGetStamp("shieldpotion")
+			case G1OBJ_X_FIGHT:
+				stamp = itemGetStamp("fightpotion")
+			case G1OBJ_X_MAGIC:
+				stamp = itemGetStamp("magicpotion")
+
+			case G1OBJ_TRANSPORTER:
+				stamp = itemGetStamp("tportg1")
+// testing special potions - seperate from actual placed in maze above, this is the view tester option
+/*			case MAZEOBJ_HIDDENPOT:
+				if opts.SP {
+					ts := rand.Intn(6)
+					switch ts {
+					case 1:
+						stamp = itemGetStamp("speedpotion")
+					case 2:
+						stamp = itemGetStamp("shotpowerpotion")
+					case 3:
+						stamp = itemGetStamp("shotspeedpotion")
+					case 4:
+						stamp = itemGetStamp("shieldpotion")
+					case 5:
+						stamp = itemGetStamp("fightpotion")
+					case 6:
+						stamp = itemGetStamp("magicpotion")
+					}
+				} */
+			default:
+				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
+			}
+// set mask flag in array
+			if whatis(maze, x, y) > 0 && stamp != nil { g1mask[whatis(maze, x, y)] = stamp.mask }
+		}
+// Six: end G1 decode
+			if stamp != nil {
+				writestamptoimage(img, stamp, x*16+stamp.nudgex, y*16+stamp.nudgey)
+// generator monster type letter draw - only do when set
+				if gtopl != "" && !opts.Nogtop {
+// while each monsters gen has a letter color, some are hard to read - resetting to red
+					gtop.Clear()
+					if !gtopcol { gtop.SetRGB(1, 0, 0) }
+					if nothing & NOGEN == 0 {
+						gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
+					}
+					gtopim := gtop.Image()
+					offset := image.Pt(x*16+stamp.nudgex-4, y*16+stamp.nudgey-4)
+					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
+				}
+			}
+
+			if dots != 0 && nothing & NOWALL == 0 {
+				renderdots(img, x*16, y*16, dots)
+			}
+		}
+	}
+
+	g2mask[MAZEOBJ_WALL_REGULAR] = 2048
+	g2mask[MAZEOBJ_WALL_SECRET] = 1024
+	g2mask[MAZEOBJ_WALL_DESTRUCTABLE] = 1024
+	g2mask[MAZEOBJ_WALL_RANDOM] = 1024
+	g2mask[MAZEOBJ_WALL_TRAPCYC1] = 1024
+	g2mask[MAZEOBJ_WALL_TRAPCYC2] = 1024
+	g2mask[MAZEOBJ_WALL_TRAPCYC3] = 1024
+	g2mask[MAZEOBJ_TILE_TRAP1] = 64
+	g2mask[MAZEOBJ_TILE_TRAP2] = 64
+	g2mask[MAZEOBJ_TILE_TRAP3] = 64
+//	g2mask[] =
+	g1mask[G1OBJ_WALL_REGULAR] = 2048
+	g1mask[G1OBJ_WALL_DESTRUCTABLE] = 1024
+	g1mask[G1OBJ_WALL_TRAP1] = 1024
+	g1mask[G1OBJ_TILE_TRAP1] = 64
+//	g1mask[] =
+
+	savetopng(opts.Output, img)
+// for user select
+	return img
+}
