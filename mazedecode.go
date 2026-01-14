@@ -331,16 +331,16 @@ if opts.Verbose { fmt.Printf("wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_
 
 // editor override
 	if opts.edat > 0 && opts.edip != 0 {
-		for y := 0; y <= opts.DimX; y++ {
-			for x := 0; x <= opts.DimY; x++ {
+		for y := 0; y <= opts.DimY; y++ {
+			for x := 0; x <= opts.DimX; x++ {
 			maze.data[xy{x, y}] = ebuf[xy{x, y}]
 		}}
 	}
 	// resetting buffer
 	if opts.edat < 1 || opts.edip == 0 {
 		if ebuf == nil { ebuf = make(map[xy]int) }
-		for y := 0; y <= opts.DimX; y++ {
-			for x := 0; x <= opts.DimY; x++ {
+		for y := 0; y <= opts.DimY; y++ {
+			for x := 0; x <= opts.DimX; x++ {
 			ebuf[xy{x, y}] = maze.data[xy{x, y}]
 		}}
 	}

@@ -574,8 +574,8 @@ fmt.Printf(" stk %d redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 }
 
 func uswap() {
-	for y := 0; y <= opts.DimX; y++ {
-		for x := 0; x <= opts.DimY; x++ {
+	for y := 0; y <= opts.DimY; y++ {
+		for x := 0; x <= opts.DimX; x++ {
 			sw := ebuf[xy{x,y}]
 			ebuf[xy{x,y}] = ubuf[xy{x,y}]
 			ubuf[xy{x,y}] = sw
@@ -606,9 +606,9 @@ func ccp_tog(op int) { if ccp == op { ccp = NOP; smod = "Edit mode: " } else { c
 
 func pbsess_cyc() {
 // clear old buf
-	for my := 0; my <= cpy; my++ {
-	for mx := 0; mx <= cpx; mx++ { cpbuf[xy{mx, my}] = 0 }}
 	pmx := opts.DimX; pmy := opts.DimY		// preserve these
+	for my := 0; my <= pmy; my++ {
+	for mx := 0; mx <= pmx; mx++ { cpbuf[xy{mx, my}] = 0 }}
 	fil := fmt.Sprintf(".pb/ses_%07d_g%d.ed",sesbcnt,opts.Gtp)
 fmt.Printf("pbsess %d - %s\n",sesbcnt,fil)
 	lod_maz(fil, cpbuf, false)
@@ -620,9 +620,9 @@ fmt.Printf("sespb dun: px %d py %d\n",cpx,cpy)
 }
 
 func pbmas_cyc() {
-	for my := 0; my <= cpy; my++ {
-	for mx := 0; mx <= cpx; mx++ { cpbuf[xy{mx, my}] = 0 }}
 	pmx := opts.DimX; pmy := opts.DimY		// preserve these
+	for my := 0; my <= pmy; my++ {
+	for mx := 0; mx <= pmx; mx++ { cpbuf[xy{mx, my}] = 0 }}
 	fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",masbcnt,opts.Gtp)
 fmt.Printf("pbmas c: %d %d - %s\n",pbcnt,masbcnt,fil)
 	lod_maz(fil, cpbuf, false)

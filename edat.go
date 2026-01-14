@@ -210,8 +210,8 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		if cpbuf == nil { cpbuf = make(map[xy]int) }
 // loop to load - note issue with scans of formatted data
 		parse := 33
-		for y := 0; y <= opts.DimX; y++ {
-			for x := 0; x <= opts.DimY; x++ {
+		for y := 0; y <= opts.DimY; y++ {
+			for x := 0; x <= opts.DimX; x++ {
 
 // seems working, now to read all the old and rewrite
 // new method to parse line of 33 units
@@ -227,12 +227,12 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 				if din[parse] < 999 {				// max value is end of buffer fill
 					mdat[xy{x, y}] = din[parse]
 					if ud { ubuf[xy{x, y}] = din[parse] }		// store ubuf data on flag
-	if opts.Verbose { fmt.Printf("%03d ",din[parse]) }
+	if opts.Verbose || true { fmt.Printf("%03d ",din[parse]) }
 				}
 				parse++
 				edp = 1		// tell sender we loaded some maze part
 			}
-	if opts.Verbose { fmt.Printf("\n") }
+	if opts.Verbose || true { fmt.Printf("\n") }
 		}
 	} else {
 // this warning will issue if a maze buffer save (maze not being edited) has not happened because and the maze is viewed
@@ -346,8 +346,8 @@ func ed_sav(mazn int) {
 }
 
 func upd_edmaze(ovrm bool) {
-	for y := 0; y <= opts.DimX; y++ {
-		for x := 0; x <= opts.DimY; x++ {
+	for y := 0; y <= opts.DimY; y++ {
+		for x := 0; x <= opts.DimX; x++ {
 		edmaze.data[xy{x, y}] = ebuf[xy{x, y}]
 	}}
 	for y := 0; y < 11; y++ {
