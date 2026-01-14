@@ -30,6 +30,7 @@ var din [33]int		// set to be 1 line per std gauntlet maze (gved encoding) of 0 
 
 var cpbuf MazeData	// c/c/p buffer
 var pbcnt int		// count of c/c/p buffers saved
+var lpbcnt int		// sesssion count of c/c/p buffers - reset every time
 var cpx int			// max paste buf, start is always 0, 0
 var cpy int
 
@@ -148,8 +149,8 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int, smazn int)
 		fmt.Printf("\n")
 	}
 
-// now save deleted elements
-	if delstak > 0 {
+// now save deleted elements -- set mazn 0 for buffers like paste
+	if delstak > 0 && smazn != 0 {
 		dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
 fmt.Printf("saving maze delete %s\n",dbf)
 		file, err := os.Create(dbf)

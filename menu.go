@@ -272,15 +272,14 @@ func aw_init() {
 	if opts.Geow == 1024 && opts.Geoh == 1050 {		// defs set
 
 		data, err := ioutil.ReadFile(".wstats")
-		if err != nil {
-			return
-		}
-		var geow float64
-		var geoh float64
-		fmt.Sscanf(string(data),"%v %v", &geow, &geoh)
-		opts.Geow = math.Max(560,geow)
-		opts.Geoh = math.Max(586,geoh)
+		if err == nil {
+			var geow float64
+			var geoh float64
+			fmt.Sscanf(string(data),"%v %v", &geow, &geoh)
+			opts.Geow = math.Max(560,geow)
+			opts.Geoh = math.Max(586,geoh)
 	fmt.Printf("Load window size: %v x %v\n",geow,geoh)
+		}
 
 	} else {
 		file, err := os.Create(".wstats")
@@ -290,6 +289,15 @@ func aw_init() {
 			file.Close()
 		}
 	}
+// get paste buf cnt
+	pbcnt = 0
+	lpbcnt = 0
+	data, err := ioutil.ReadFile(".pb/cnt")
+	if err == nil {
+		fmt.Sscanf(string(data),"%d", &pbcnt)
+fmt.Printf("pbcnt: %d\n",pbcnt)
+	}
+
 }
 
 // update contents
