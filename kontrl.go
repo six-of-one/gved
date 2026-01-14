@@ -797,7 +797,7 @@ fmt.Printf("in pasty\n")
 // looped now, with ctrl op
 			if rop {
 				if del { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
-				if pasty { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }
+				if pasty { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }	// cant use setcode below, it wont set floors
 				if setcode > 0 { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = setcode; opts.bufdrt = true }
 fmt.Printf("%03d ",ebuf[xy{mx, my}])
 				}

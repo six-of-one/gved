@@ -123,7 +123,7 @@ most of these have a corresponging item on edit or file menus
 <CTRL>-P	paste contents of c/c/p buffer at Left-click location
 			- c/c/p are 'sticky', they stay on, select again to turn off, or select another edit action
 
-<CTRL>-Z	undo last op - currently holds 10000 units (single maze cell) of undo
+<CTRL>-Z	undo last op - currently holds {all mem until its unworkable} units (single maze cell) of undo
 <CTRL>-Y	redo last undo up to last change entered
 			-undo back 5 or 10 and place a new item and the forward chain is lost
 <CTRL>-U	when the maze is loaded from disk an ulternate buffer is stored and ctrl-U swaps them
