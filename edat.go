@@ -227,12 +227,12 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 				if din[parse] < 999 {				// max value is end of buffer fill
 					mdat[xy{x, y}] = din[parse]
 					if ud { ubuf[xy{x, y}] = din[parse] }		// store ubuf data on flag
-	if opts.Verbose || true { fmt.Printf("%03d ",din[parse]) }
+	if opts.Verbose { fmt.Printf("%03d ",din[parse]) }
 				}
 				parse++
 				edp = 1		// tell sender we loaded some maze part
 			}
-	if opts.Verbose || true { fmt.Printf("\n") }
+	if opts.Verbose { fmt.Printf("\n") }
 		}
 	} else {
 // this warning will issue if a maze buffer save (maze not being edited) has not happened because and the maze is viewed
