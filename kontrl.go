@@ -199,8 +199,8 @@ func typedRune(r rune) {
 				if g1edit_keymap[edkey] > 0 {
 					kys := g1mapid[g1edit_keymap[edkey]]
 					keyst := fmt.Sprintf("G¹ ed key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
-					statlin(cmdhin,keyst)
 					ccp_NOP()
+					statlin(cmdhin,keyst)
 fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 				}
 			} else {
@@ -209,8 +209,8 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 				if g2edit_keymap[edkey] > 0 {
 					kys := g2mapid[g2edit_keymap[edkey]]
 					keyst := fmt.Sprintf("G² ed key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
-					statlin(cmdhin,keyst)
 					ccp_NOP()
+					statlin(cmdhin,keyst)
 				}
 			}
 		}
