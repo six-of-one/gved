@@ -831,13 +831,15 @@ fmt.Printf("in pasty\n")
 				if !wpbop {
 					wpbop = true
 					wpb = a.NewWindow("")
+					wpb.SetCloseIntercept(func() {wpbop = false;wpb.Close()})
 					wpb.Show()
 				}
+				px := cpx+1; py := cpy+1
 				wt := fmt.Sprintf("pbf %d",pbcnt - 1)
-				nimg := segimage(cpbuf,eflg,cpx+1,cpy+1)
+				nimg := segimage(cpbuf,eflg,px,py)
 				wpb.SetTitle(wt)
 				bimg := canvas.NewRasterFromImage(nimg)
-				wpb.Resize(fyne.NewSize(float32((cpx*32), float32(cpy*32)))
+				wpb.Resize(fyne.NewSize(float32(px*32), float32(py*32)))
 				wpb.Canvas().SetContent(bimg)
 			}
 		}}
