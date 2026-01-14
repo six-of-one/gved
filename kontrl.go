@@ -755,8 +755,8 @@ fmt.Printf("%03d ",cpbuf[xy{px, py}])
 fmt.Printf("\n")
 			py++
 			}
-			cpx = px
-			cpy = py
+			cpx = px - 1; if cpx < 0 { cpx = 0 }		// if these arent -1, the paste is 1 over
+			cpy = py - 1; if cpy < 0 { cpy = 0 }
 fmt.Printf("cc dun: px %d py %d\n",px,py)
 			}
 			del = false						// copy or paste should not have del on
@@ -797,14 +797,17 @@ fmt.Printf("in pasty\n")
 // looped now, with ctrl op
 			if rop {
 				if del { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
-				if pasty { setcode = cpbuf[xy{mx - sx, my - sy}]}
+				if pasty { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }
 				if setcode > 0 { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = setcode; opts.bufdrt = true }
+fmt.Printf("%03d ",ebuf[xy{mx, my}])
 				}
 				rcl++
 			}
 			if edkey == 314 { repl = ebuf[xy{mx, my}] }		// just placeholder until new repl done -- yes, NOT being used
 //			if edkey == 182 { ebuf[xy{mx, my}] = repl; opts.bufdrt = true }		//
-		  }}
+		  }
+fmt.Printf("\n")
+		}
 //			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
 		}}
 		ed_maze(true)

@@ -82,7 +82,7 @@ func delbset(u int) {
 
 func delbck(ct int, t int){
 
-fmt.Printf("delbuf st: %d len %d, test: %d\n",delstak,len(delbuf.elem),t)
+//fmt.Printf("delbuf st: %d len %d, test: %d\n",delstak,len(delbuf.elem),t)
 
 	if len(delbuf.elem) <= t {
 		for y := 0; y < ct; y++ {
