@@ -303,6 +303,20 @@ fmt.Printf("pbcnt: %d\n",pbcnt)
 
 }
 
+// make clickable image in a window
+
+func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
+
+	bimg := canvas.NewRasterFromImage(wimg)
+	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
+
+// turns display into clickable edit area
+	btn := newHoldableButton()
+	box := container.NewPadded(btn, bimg)		// key to seeing maze & having the click button will full mouse sense
+	w.SetContent(box)
+fmt.Printf("btn sz %v\n",btn.Size())
+
+}
 // update contents
 
 func upwin(simg *image.NRGBA) {
@@ -317,15 +331,8 @@ func upwin(simg *image.NRGBA) {
 		geoh = ngeoh
 	}
 	opts.dtec = 16.0 * (float64(geow - 4) / 528.0)				// the size of a tile, odd window size may cause issues
-	fmt.Printf(" dtec: %f\n",opts.dtec)
-	bimg := canvas.NewRasterFromImage(simg)
-	w.Resize(fyne.NewSize(float32(geow), float32(geoh)))
-
-// turns display into clickable edit area
-	btn := newHoldableButton()
-	box := container.NewPadded(btn, bimg)		// key to seeing maze & having the click button will full mouse sense
-	w.SetContent(box)
-	fmt.Printf("btn sz %v\n",btn.Size())
+fmt.Printf(" dtec: %f\n",opts.dtec)
+	clikwin(w, simg, geow, geoh)
 
 	spx := ""
 	if sdb > 0 { spx = fmt.Sprintf("sdbuf: %d",sdb) }
