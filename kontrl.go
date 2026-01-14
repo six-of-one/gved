@@ -708,6 +708,19 @@ var eymd float64
 
 // &{{{387 545} {379 509.92188}} 4 0}
 
+func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
+       ax := 0.0       // absolute x & y
+       ay := 0.0
+       rx := 0.0
+       ry := 0.0
+       mb := 0         // mb 1 = left, 2 = right, 4 = middle
+       mk := 0         // mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
+       pos := fmt.Sprintf("%v",mm)
+       fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&rx,&ry,&mb,&mk)
+//     beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f",ax,ay,rx,ry)
+//     statlin(cmdhin,beef)
+}
+
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	ax := 0.0	// absolute x & y
 	ay := 0.0
