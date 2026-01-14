@@ -11,14 +11,15 @@ rubber-band ops will also del
 rubber-band ops - click and drag will expand to set region of place / del / edit
 - some modes will auto operate
 - idea: show rubber band with visible indicator smh (sprites?)
-* ctrl-click should only outline
+* ctrl-click should only operate with outer cells
 - copy, cut & paste rubber-band contents, wip
 
 replace mode - either over entire maze, rubber band region, select y/n on each find, or click item replace
+\_ possibly also use #T mask for allowing edits on elements, or disallow
 
 some type of quick-key insert system, maybe shifted # or so
 * possibly assignable hot-keys
-- more default hotkeys
+* more default hotkeys
 
 a palette system similar to edit in sanctuary
 - and the edit options dialog
@@ -38,12 +39,12 @@ multiple save buffers to store vars maze edits, page thru all wiht 'S', store wi
 - save to disk on set, load up on launch  for all sd files found
 - use a certain buffer (0 ?) to store the main edit pallete for middl-clicks
 * modify lod_maz to pass mazedata & bool for ubuf
-* dirty flag so quit, z, x know unsaved changes are there and give warning dialog
+* dirty flag so quit, pgup, pgdn know unsaved changes are there and give warning dialog
 - list of delbuf overview, contents, etc somehow
 
 copy / cut / paste
 - do same with ccp buffer - page thru and view them smh
-- for now these lock in
+- for now these lock in - this is a 'feature' (nudge, nudge, wink, wink) until proper cfg file & dialog allow selection
 
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 
@@ -55,8 +56,8 @@ issues needing fixed
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
-- dialog for #T hide mask and #flg blank maze keep mask
+- dialog for setting / reading bits of #T hide mask and #flg blank maze keep mask
 
 perhaps needs rewrite:
-- cleanup kontrol
-  move some sd buf ops to edat ?
+- cleanup all modules
+\_ look at more code that can be fn() calls to reduce heavy repeats
