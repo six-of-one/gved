@@ -62,3 +62,5 @@ possible:
 perhaps needs rewrite:
 - cleanup all modules
 \_ look at more code that can be fn() calls to reduce heavy repeats
+ \_ code around paste buf save & load
+  \_ all the buffer xfer code (main issue struct of slices doesnt parm pass easy)
