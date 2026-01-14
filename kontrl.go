@@ -611,16 +611,16 @@ func pbsess_cyc() {
 	fil := fmt.Sprintf(".pb/ses_%07d_g%d.ed",sesbcnt,opts.Gtp)
 	lod_maz(fil, cpbuf, false)
 	sesbcnt++
-	if sesbcnt > lpbcnt { sesbcnt = 0 }
+	if sesbcnt >= lpbcnt { sesbcnt = 0 }
 }
 
 func pbmas_cyc() {
 	for my := 0; my <= cpy; my++ {
 	for mx := 0; mx <= cpx; mx++ { cpbuf[xy{mx, my}] = 0 }}
-	fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",skpbcnt,opts.Gtp)
+	fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",masbcnt,opts.Gtp)
 	lod_maz(fil, cpbuf, false)
-	skpbcnt++
-	if skpbcnt > pbcnt { skpbcnt = 0 }
+	masbcnt++
+	if masbcnt >= pbcnt { masbcnt = 0 }
 }
 
 // page thru maze #s, sd buf

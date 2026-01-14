@@ -34,7 +34,7 @@ var lpbcnt int		// sesssion count of c/c/p buffers - reset every
 var cpx int			// max paste buf, start is always 0, 0
 var cpy int
 // roll thru pb
-var skpbcnt int		// run thru master pb
+var masbcnt int		// run thru master pb
 var sesbcnt int		// run thru local ses pb
 
 // deleted elements / undo storage
