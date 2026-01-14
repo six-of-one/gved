@@ -1453,11 +1453,24 @@ func renderdots(img *image.NRGBA, xloc int, yloc int, count int) {
 
 // image from buffer segment
 
-func segimage(mdat MazeData, xs int, ys int) *image.NRGBA {
+func segimage(mdat MazeData, fdat [11]int, xs int, ys int) *image.NRGBA {
 
 // dummy maze for ops that require it
 	var maze = &Maze{}
 	maze.data = mdat //make(map[xy]int)
+
+// get flags when passed
+	flagbytes := make([]byte, 4)
+	flagbytes[0] = byte(fdat[1])
+	flagbytes[1] = byte(fdat[2])
+	flagbytes[2] = byte(fdat[3])
+	flagbytes[3] = byte(fdat[4])
+	maze.flags = int(binary.BigEndian.Uint32(flagbytes))
+
+	maze.wallpattern = fdat[5] & 0x0f
+	maze.floorpattern = (fdat[5] & 0xf0) >> 4
+	maze.wallcolor = fdat[6] & 0x0f
+	maze.floorcolor = (fdat[6] & 0xf0) >> 4
 
 	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
 	img := blankimage(8*2*xs, 8*2*ys)

@@ -834,10 +834,10 @@ fmt.Printf("in pasty\n")
 					wpb.Show()
 				}
 				wt := fmt.Sprintf("pbf %d",pbcnt - 1)
-				nimg := segimage(cpbuf,cpx,cpy)
+				nimg := segimage(cpbuf,eflg,cpx+1,cpy+1)
 				wpb.SetTitle(wt)
 				bimg := canvas.NewRasterFromImage(nimg)
-				wpb.Resize(fyne.NewSize(float32(cpx*32), float32(cpy*32)))
+				wpb.Resize(fyne.NewSize(float32((cpx*32), float32(cpy*32)))
 				wpb.Canvas().SetContent(bimg)
 			}
 		}}
