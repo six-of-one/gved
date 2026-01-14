@@ -9,6 +9,7 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
+    "fyne.io/fyne/v2/canvas"
 )
 
 // kontrol is for keyboard, mouse & input management
@@ -826,6 +827,18 @@ fmt.Printf("in pasty\n")
 				ey = sy + cpy
 				if ex < 0 || ex > opts.DimX || cpx > opts.DimX { fmt.Printf("paste fail x\n"); return }
 				if ey < 0 || ey > opts.DimY || cpy > opts.DimY { fmt.Printf("paste fail y\n"); return }
+			} else {
+				if !wpbop {
+					wpbop = true
+					wpb = a.NewWindow("")
+					wpb.Show()
+				}
+				wt := fmt.Sprintf("pbf %d",pbcnt - 1)
+				nimg := segimage(cpbuf,cpx,cpy)
+				wpb.SetTitle(wt)
+				bimg := canvas.NewRasterFromImage(nimg)
+				wpb.Resize(fyne.NewSize(float32(cpx*32), float32(cpy*32)))
+				wpb.Canvas().SetContent(bimg)
 			}
 		}}
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V

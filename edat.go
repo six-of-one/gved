@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"bufio"
 	"encoding/binary"
+	"fyne.io/fyne/v2"
 )
 
 /*
@@ -36,6 +37,8 @@ var cpy int
 // roll thru pb
 var masbcnt int		// run thru master pb
 var sesbcnt int		// run thru local ses pb
+var wpb fyne.Window	// win to view pastbuf contents
+var wpbop bool		// is the win open?
 
 // deleted elements / undo storage
 

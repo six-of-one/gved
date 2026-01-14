@@ -259,6 +259,7 @@ func aw_init() {
 	anum = 0
 // ed stuff, consider moving
 	ccp = NOP
+	wpbop = false
 	sdb = -1
 	cycl = 0
 	edmaze = mazeDecompress(slapsticReadMaze(1), false)
