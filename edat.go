@@ -311,7 +311,6 @@ func stor_maz(mazn int) {
 			}
 			opts.DimX = lastx
 			opts.DimY = lasty
-			if ebuf == nil { ebuf = make(map[xy]int) }
 			for y := 0; y <= lasty; y++ {
 				for x := 0; x <= lastx; x++ {
 				ebuf[xy{x, y}] = maze.data[xy{x, y}]
