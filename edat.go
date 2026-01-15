@@ -598,8 +598,6 @@ func pbRune(r rune) {
 		case 'p': pbsess_cyc(1)
 		case 'q': fallthrough
 		case 'Q': if wpbop { wpbop = false; wpb.Close() }
-		case 'x': fallthrough
-		case 'X': if wpbop { wpbop = false; wpb.Close() }
 		default:
 	}
 }
@@ -611,8 +609,6 @@ func palRune(r rune) {
 	switch r {
 		case 'q': fallthrough
 		case 'Q': if wpalop { wpalop = false; wpal.Close() }
-		case 'x': fallthrough
-		case 'X': if wpalop { wpalop = false; wpal.Close() }
 		default:
 	}
 }

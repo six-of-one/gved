@@ -132,6 +132,7 @@ when pb window is selected:
 . or P		(.> key) master paste buffer ++
 o			session paste buffer --
 p			session paste buffer ++
+q,Q			close subwindow		(also pal window)
 
 <CTRL>-Z	undo last op - currently holds {all mem until its unworkable} units (single maze cell) of undo
 <CTRL>-Y	redo last undo up to last change entered
