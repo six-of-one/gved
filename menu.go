@@ -475,6 +475,8 @@ func keyhints() {
 		strp += cpad("\n<DEL> (hold down) set floor",32)
 		strp += cpad("\nw - standard walls",42)
 		strp += cpad("\nW - shootable walls",41)
+		strp += cpad("\nq - trap wall",48)
+		strp += cpad("\nr - trap tile",48)
 		strp += cpad("\nd - horizontal door",41)
 		strp += cpad("\nD - vertical door",44)
 		strp += cpad("\nf - shootable food",42)

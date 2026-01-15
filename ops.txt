@@ -208,7 +208,7 @@ G¹ extra
 b	bag treasure
 g	lvl 3 ghost
 G	lvl 3 grunt
-l	lvl 2 grun gen
+h	lvl 2 grun gen
 l	lvl 2 lobber gen
 n	lvl 3 ghost gen
 m	lvl 2 demon gen
