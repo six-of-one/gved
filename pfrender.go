@@ -1620,6 +1620,7 @@ func segimage(mdat MazeData, fdat [11]int, xs int, ys int) *image.NRGBA {
 	}
 
 	for y := 0; y <= ys; y++ {
+if opts.Verbose { fmt.Printf("\n") }
 		for x := 0; x <= ys; x++ {
 			var stamp *Stamp
 			var dots int // dot count
@@ -1632,6 +1633,8 @@ func segimage(mdat MazeData, fdat [11]int, xs int, ys int) *image.NRGBA {
 			if err := gtop.LoadFontFace(".font/VrBd.ttf", 14); err != nil {
 				panic(err)
 				}
+
+if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 // g2 decodes
 			if G2 {
 
