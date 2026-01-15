@@ -558,25 +558,25 @@ var cpy int
 var masbcnt int		// run thru master pb
 var sesbcnt int		// run thru local ses pb
 
-var wpb fyne.Window	// win to view pastbuf contents
 var wpbop bool		// is the win open?
 
-// display a paste buffer window with buffer contents - no edit
+// display a  buffer window with buffer contents - no edit
 // px, py - size of paste buffer from 0, 0
 // bn - buffer #
 
-func pbwin(px int, py int, bn int, mbuf MazeData, fdat [11]int) {
+func bwin(px int, py int, bn int, mbuf MazeData, fdat [11]int) {
 
+	var lw fyne.Window	// win to view buf contents
 	if !wpbop {
 		wpbop = true
-		wpb = a.NewWindow("")
-		wpb.SetCloseIntercept(func() {wpbop = false;wpb.Close()})
-		wpb.Show()
+		lw = a.NewWindow("")
+		lw.SetCloseIntercept(func() {wpbop = false;lw.Close()})
+		lw.Show()
 	}
 	wt := fmt.Sprintf("%d pbf",bn)
 	nimg := segimage(mbuf,fdat,px,py)
-	wpb.SetTitle(wt)
+	lw.SetTitle(wt)
 	bimg := canvas.NewRasterFromImage(nimg)
-	wpb.Resize(fyne.NewSize(float32(px*32), float32(py*32)))
-	wpb.Canvas().SetContent(bimg)
+	lw.Resize(fyne.NewSize(float32(px*32), float32(py*32)))
+	lw.Canvas().SetContent(bimg)
 }
