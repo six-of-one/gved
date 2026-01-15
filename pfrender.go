@@ -1452,9 +1452,9 @@ func renderdots(img *image.NRGBA, xloc int, yloc int, count int) {
 	}
 }
 
-// image from buffer segment
+// image from buffer segment			- stat: display stats if true
 
-func segimage(mdat MazeData, fdat [11]int, xs int, ys int) *image.NRGBA {
+func segimage(mdat MazeData, fdat [11]int, xs int, ys int, stat bool) *image.NRGBA {
 
 // dummy maze for ops that require it
 	var maze = &Maze{}
@@ -2023,6 +2023,22 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 // Six: end G1 decode
 			if stamp != nil {
 				writestamptoimage(img, stamp, x*16+stamp.nudgex, y*16+stamp.nudgey)
+// stats on palette
+				if stat {			// on palette screen, show stats for loaded maze
+					st := ""
+					if G1 { st = fmt.Sprintf("%d",g1stat[whatis(maze, x, y)]) }
+					if G2 { st = fmt.Sprintf("%d",g2stat[whatis(maze, x, y)]) }
+					if st != "" {
+						gtop.Clear()
+						gtop.SetRGB(0.5, 0.5, 0.5)
+						gtop.SetRGB(1, 0, 0)
+						gtop.DrawStringAnchored(st, 6, 6, 0.5, 0.5)
+						gtopim := gtop.Image()
+						offset := image.Pt(x*16+stamp.nudgex+16, y*16+stamp.nudgey-4)
+						draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
+						gtopl = ""
+					}
+				}
 // generator monster type letter draw - only do when set
 				if gtopl != "" && !opts.Nogtop {
 // while each monsters gen has a letter color, some are hard to read - resetting to red
