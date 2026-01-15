@@ -1532,7 +1532,7 @@ func segimage(mdat MazeData, fdat [11]int, xs int, ys int) *image.NRGBA {
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & g2 draw walls, see screens
 	for y := 0; y <= ys; y++ {
-		for x := 0; x <= ys; x++ {
+		for x := 0; x <= xs; x++ {
 			var stamp *Stamp
 			var dots int // dot count
 
@@ -1621,7 +1621,7 @@ func segimage(mdat MazeData, fdat [11]int, xs int, ys int) *image.NRGBA {
 
 	for y := 0; y <= ys; y++ {
 if opts.Verbose { fmt.Printf("\n") }
-		for x := 0; x <= ys; x++ {
+		for x := 0; x <= xs; x++ {
 			var stamp *Stamp
 			var dots int // dot count
 // gen type op - letter to draw
