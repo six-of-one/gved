@@ -620,7 +620,9 @@ func pb_upd(id string, nt string, vl int) {
 	cpx = opts.DimX; cpy = opts.DimY
 fmt.Printf("%spb dun: px %d py %d, %s\n",nt,cpx,cpy,fil)
 	opts.DimX = pmx; opts.DimY = pmy
-	bwin(cpx+1, cpy+1, vl, cpbuf, eflg)		// draw the buffer
+	bwin(cpx+1, cpy+1, vl, cpbuf, eflg)		// draw the buffer\
+	bl := fmt.Sprintf("paste buf: %d", vl)
+	statlin(cmdhin,bl)
 }
 
 func pbsess_cyc(dr int) {
@@ -695,6 +697,7 @@ func sdbit(dir int) string {
 // click area for edits
 
 // button we can detect click and release areas for rubberband area & fills
+// title tells us what window the button is on, assigned on btn creation if win is titled
 
 type holdableButton struct {
     widget.Button
