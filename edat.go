@@ -587,6 +587,18 @@ fmt.Printf("pbcnt: %d, ses cnt: %d\n",pbcnt,lpbcnt)
 
 // typer for pb win
 
+func pbRune(r rune) {
+
+	switch r {
+		case ',': pbmas_cyc(-1)
+		case '.': pbmas_cyc(1)
+		case 'O': pbmas_cyc(-1)
+		case 'P': pbmas_cyc(1)
+		case 'o': pbsess_cyc(-1)
+		case 'p': pbsess_cyc(1)
+		default:
+	}
+}
 
 // display a  buffer window with buffer contents - no edit
 // px, py - size of paste buffer from 0, 0
@@ -601,7 +613,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 	if !wpbop {
 		wpbop = true
 		wpb = a.NewWindow("")
-		wpb.Canvas().SetOnTypedRune(ptRune)
+		wpb.Canvas().SetOnTypedRune(pbRune)
 		wpb.SetCloseIntercept(func() {wpbop = false;wpb.Close()})
 		wpb.Resize(fyne.NewSize(float32(px*32), float32(py*32)))		// have to do this on new win
 		wpb.Show()
