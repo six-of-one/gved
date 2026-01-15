@@ -1458,7 +1458,7 @@ func segimage(mdat MazeData, fdat [11]int, xs int, ys int) *image.NRGBA {
 
 // dummy maze for ops that require it
 	var maze = &Maze{}
-	maze.data = mdat //make(map[xy]int)
+	maze.data = mdat
 
 // get flags when passed
 	flagbytes := make([]byte, 4)
@@ -1473,15 +1473,12 @@ func segimage(mdat MazeData, fdat [11]int, xs int, ys int) *image.NRGBA {
 	maze.wallcolor = fdat[6] & 0x0f
 	maze.floorcolor = (fdat[6] & 0xf0) >> 4
 
-	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
+	// 8 pixels * 2 tiles * x,y stamps, plus extra space on edges
 	img := blankimage(8*2*xs, 8*2*ys)
 
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
 
-	// mazes will always be the same size, so just use constants
-	// maze := mazeDecompress(mazedata)
-//	copyedges(maze)
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
 
 	if G2 {
@@ -1833,25 +1830,7 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 				if nothing & NOEXP == 0 { stamp = ffGetStamp(adj) }
 			case MAZEOBJ_TRANSPORTER:
 				stamp = itemGetStamp("tport")
-// testing special potions
-/*			case MAZEOBJ_HIDDENPOT:
-				if opts.SP {
-					ts := rand.Intn(6)
-					switch ts {
-					case 1:
-						stamp = itemGetStamp("speedpotion")
-					case 2:
-						stamp = itemGetStamp("shotpowerpotion")
-					case 3:
-						stamp = itemGetStamp("shotspeedpotion")
-					case 4:
-						stamp = itemGetStamp("shieldpotion")
-					case 5:
-						stamp = itemGetStamp("fightpotion")
-					case 6:
-						stamp = itemGetStamp("magicpotion")
-					}
-				} */
+
 			default:
 				if opts.Verbose && false { fmt.Printf("G² WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
 			}
@@ -1883,18 +1862,7 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 
 			case G1OBJ_TILE_TRAP1:
 				dots = 1
-//				fallthrough
-	/*
-			case G1OBJ_TILE_TRAP2:
-				if dots == 0 {
-					dots = 2
-				}
-				fallthrough
-			case G1OBJ_TILE_TRAP3:
-				if dots == 0 {
-					dots = 3
-				}
-	*/
+
 				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
 				if (nothing & NOTRAP) == 0 {
 					stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
@@ -2045,25 +2013,7 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 
 			case G1OBJ_TRANSPORTER:
 				stamp = itemGetStamp("tportg1")
-// testing special potions - seperate from actual placed in maze above, this is the view tester option
-/*			case MAZEOBJ_HIDDENPOT:
-				if opts.SP {
-					ts := rand.Intn(6)
-					switch ts {
-					case 1:
-						stamp = itemGetStamp("speedpotion")
-					case 2:
-						stamp = itemGetStamp("shotpowerpotion")
-					case 3:
-						stamp = itemGetStamp("shotspeedpotion")
-					case 4:
-						stamp = itemGetStamp("shieldpotion")
-					case 5:
-						stamp = itemGetStamp("fightpotion")
-					case 6:
-						stamp = itemGetStamp("magicpotion")
-					}
-				} */
+
 			default:
 				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
 			}
