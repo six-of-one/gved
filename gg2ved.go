@@ -69,7 +69,7 @@ func dotile(tile int) {
 }
 
 func main() {
-	args := gexinit()
+	args := gevinit()
 
 // new retool - G1 is gauntlet maze, G2 is gauntlet 2 maze
 	G1 = false

@@ -69,7 +69,7 @@ var reWall = regexp.MustCompile(`^(wall)`)
 var reItem = regexp.MustCompile(`^(item)`)
 var reMaze = regexp.MustCompile(`^(maze)`)
 
-func gexinit() []string {
+func gevinit() []string {
 	args, err := flags.Parse(&opts)
 	if err != nil {
 		os.Exit(1)

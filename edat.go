@@ -502,8 +502,31 @@ func rotmirbuf(rmmaze *Maze) {
 	opts.MH = false
 }
 
+// reload maze while editing & update window - generates output.png
+
+func remaze(mazn int) {
+fmt.Printf("in remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.edat,sdb,delstak)
+	if !opts.dntr {
+		sdb = -1
+		delbset(0)
+		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
+		mazeloop(edmaze)
+		opts.bufdrt = false
+	}
+	opts.dntr = false
+	nsremaze = false
+	if opts.edat > 0 { ed_maze(true) } else {
+		Ovimg := genpfimage(edmaze, mazn)
+		upwin(Ovimg)
+	}
+}
+
+// palette
+
 // bring up edit palette after saving
 var swsdb int		// palette on a sd edit
+var wpalop bool		// is the pb win open?
+var wpal fyne.Window // is the pal win open?
 
 func palete() {
 
@@ -527,26 +550,6 @@ func palete() {
 	}
 }
 
-// reload maze while editing & update window - generates output.png
-
-func remaze(mazn int) {
-fmt.Printf("in remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.edat,sdb,delstak)
-	if !opts.dntr {
-		sdb = -1
-		delbset(0)
-		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
-		mazeloop(edmaze)
-		opts.bufdrt = false
-	}
-	opts.dntr = false
-	nsremaze = false
-	if opts.edat > 0 { ed_maze(true) } else {
-		Ovimg := genpfimage(edmaze, mazn)
-		upwin(Ovimg)
-	}
-}
-
-// palette
 // cut / copy & paste
 
 var cpbuf MazeData	// c/c/p buffer
@@ -558,8 +561,9 @@ var cpy int
 var masbcnt int		// run thru master pb
 var sesbcnt int		// run thru local ses pb
 
-var wpbop bool		// is the win open?
-var wpb fyne.Window    // win to view pastbuf contents
+// i've discovered a 'local' in function version of these will crash, this prob needs to be a struct
+var wpbop bool		// is the pb win open?
+var wpb fyne.Window	// win to view pastbuf contents
 
 // display a  buffer window with buffer contents - no edit
 // px, py - size of paste buffer from 0, 0
@@ -568,14 +572,27 @@ var wpb fyne.Window    // win to view pastbuf contents
 func bwin(px int, py int, bn int, mbuf MazeData, fdat [11]int) {
 
 var lw fyne.Window	// local cpy win to view buf contents
+  wt := "palette selector"
+  if (bn > 0) {
 	if !wpbop {
 		wpbop = true
 		wpb = a.NewWindow("")
 		wpb.SetCloseIntercept(func() {wpbop = false;wpb.Close()})
+		wpb.Resize(fyne.NewSize(float32(px*32), float32(py*32)))		// have to do this on new win
 		wpb.Show()
 	}
 	lw = wpb
-	wt := fmt.Sprintf("%d pbf",bn)
+	wt = fmt.Sprintf("%d pbf",bn)
+  } else {	// palette or some other win
+	if !wpalop {
+		wpalop = true
+		wpal = a.NewWindow("")
+		wpal.SetCloseIntercept(func() {wpalop = false;wpal.Close()})
+		wpal.Resize(fyne.NewSize(float32(px*32), float32(py*32)))		// have to do this on new win
+		wpal.Show()
+	}
+	lw = wpal
+  }
 	nimg := segimage(mbuf,fdat,px,py)
 	lw.SetTitle(wt)
 	bimg := canvas.NewRasterFromImage(nimg)
