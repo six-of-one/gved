@@ -596,8 +596,25 @@ func pbRune(r rune) {
 		case 'P': pbmas_cyc(1)
 		case 'o': pbsess_cyc(-1)
 		case 'p': pbsess_cyc(1)
+		case 'q': if ctrlwon && wpalop { wpalop = false; wpal.Close() }
+		case 'x': if wpbop { wpbop = false; wpb.Close() }
+		case 'X': if wpbop { wpbop = false; wpb.Close() }
 		default:
 	}
+	ctrlwon = false
+}
+
+// typer for pal win
+
+func palRune(r rune) {
+
+	switch r {
+		case 'q': if ctrlwon && wpalop { wpalop = false; wpal.Close() }
+		case 'x': if wpalop { wpalop = false; wpal.Close() }
+		case 'X': if wpalop { wpalop = false; wpal.Close() }
+		default:
+	}
+	ctrlwon = false
 }
 
 // display a  buffer window with buffer contents - no edit
@@ -626,6 +643,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 	if !wpalop  && bn == 0 {
 		wpalop = true
 		wpal = a.NewWindow("palette selector")
+		wpal.Canvas().SetOnTypedRune(palRune)
 		wpal.SetCloseIntercept(func() {wpalop = false;wpal.Close()})
 		wpal.Resize(fyne.NewSize(float32(px*32), float32(py*32)))		// have to do this on new win
 		wpal.Show()

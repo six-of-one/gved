@@ -29,6 +29,7 @@ var cmdoff bool
 var anum int
 var shift bool
 var ctrl bool
+var ctrlwon bool	// ctrl was on for sub wins - the win has to turn it off on ops
 var del bool
 var home bool
 var logo bool		// other wise labeld "win" key
@@ -57,8 +58,8 @@ func specialKey() {
 			if key.Name == "LeftSuper" { logo = true }
 			if key.Name == "LeftShift" { shift = true }
 			if key.Name == "RightShift" { shift = true }
-			if key.Name == "LeftControl" { ctrl = true }
-			if key.Name == "RightControl" { ctrl = true }
+			if key.Name == "LeftControl" { ctrl = true; ctrlwon = true }
+			if key.Name == "RightControl" { ctrl = true; ctrlwon = true }
         })
 // handle keys up
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
