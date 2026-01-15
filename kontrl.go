@@ -615,9 +615,9 @@ fmt.Printf("pbsess %d - %s\n",sesbcnt,fil)
 	cpx = opts.DimX; cpy = opts.DimY
 fmt.Printf("sespb dun: px %d py %d\n",cpx,cpy)
 	opts.DimX = pmx; opts.DimY = pmy
+	bwin(cpx+1, cpy+1, sesbcnt, cpbuf, eflg)		// draw the buffer
 	sesbcnt++
-	if sesbcnt >= lpbcnt { sesbcnt = 0 }
-	bwin(pmx+1, pmy+1, sesbcnt - 1, cpbuf, eflg)		// draw the buffer
+	if sesbcnt >= lpbcnt { sesbcnt = 1 }
 }
 
 func pbmas_cyc() {
@@ -630,9 +630,9 @@ fmt.Printf("pbmas c: %d %d - %s\n",pbcnt,masbcnt,fil)
 	cpx = opts.DimX; cpy = opts.DimY
 fmt.Printf("maxpb dun: px %d py %d\n",cpx,cpy)
 	opts.DimX = pmx; opts.DimY = pmy
+	bwin(cpx+1, cpy+1, masbcnt, cpbuf, eflg)		// draw the buffer
 	masbcnt++
-	if masbcnt >= pbcnt { masbcnt = 0 }
-	bwin(pmx+1, pmy+1, masbcnt - 1, cpbuf, eflg)		// draw the buffer
+	if masbcnt >= pbcnt { masbcnt = 1 }
 }
 
 // page thru maze #s, sd buf
