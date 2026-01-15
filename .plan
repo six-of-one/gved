@@ -50,7 +50,6 @@ think about retooling buffer file read to work like rom reader in roms.go instea
 issues needing fixed
 - if maze changes exist going into S buffers and then pgup,pgdn,L, etc the changes are lost
 \_is this not fixed with autosave before S ?
-- sh-ctrl-o not opening pb win after g1-g2 swap (in edit mode?)
 
 - ctrl-z after a paste is messing floor & wall colors
 

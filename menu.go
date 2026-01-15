@@ -264,6 +264,7 @@ func aw_init() {
 // ed stuff, consider moving
 	ccp = NOP
 	wpbop = false
+	wpalop = false
 	sdb = -1
 	cycl = 0
 	edmaze = mazeDecompress(slapsticReadMaze(1), false)
@@ -301,8 +302,8 @@ func aw_init() {
 // sub win off
 
 func suboff() {
-	if wpbop { wpb.Close() }
-	if wpalop { wpal.Close() }
+	if wpbop { wpbop = false; wpb.Close() }
+	if wpalop { wpalop = false; wpal.Close() }
 }
 
 // make clickable image wimg in window cw with given size
