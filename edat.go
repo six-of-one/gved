@@ -349,9 +349,11 @@ func ed_sav(mazn int) {
 }
 
 func upd_edmaze(ovrm bool) {
+	zero_stat()
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
 		edmaze.data[xy{x, y}] = ebuf[xy{x, y}]
+		stats(ebuf[xy{x, y}])
 	}}
 	for y := 0; y < 11; y++ {
 		edmaze.optbyts[y] = eflg[y]
@@ -576,6 +578,7 @@ func zero_stat() {
 // count stuff
 
 func stats(elm int) {
+
 	if G1 { g1stat[elm]++ }
 	if G2 { g2stat[elm]++ }
 }
