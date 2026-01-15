@@ -9,7 +9,6 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
-    "fyne.io/fyne/v2/canvas"
 )
 
 // kontrol is for keyboard, mouse & input management
@@ -732,7 +731,6 @@ func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	fmt.Printf("%d down: %.2f x %.2f \n",mb,sxmd,symd)
 }
 
-
 var repl int		// replace will be by ctrl-h in select area or entire maze, by match
 var cycl int		// cyclical set - C cycles, c sets - using c loc in keymap
 var cycloc = 99
@@ -799,7 +797,7 @@ fmt.Printf("%03d ",cpbuf[xy{px, py}])
 fmt.Printf("\n")
 			py++
 			}
-			cpx = px - 1; if cpx < 0 { cpx = 0 }		// if these arent 0, the paste is 1 over
+			cpx = px - 1; if cpx < 0 { cpx = 0 }		// if these arent 1 less, the paste is 1 over
 			cpy = py - 1; if cpy < 0 { cpy = 0 }
 fmt.Printf("cc dun: px %d py %d\n",px,py)
 // saving paste buffer now
@@ -828,19 +826,7 @@ fmt.Printf("in pasty\n")
 				if ex < 0 || ex > opts.DimX || cpx > opts.DimX { fmt.Printf("paste fail x\n"); return }
 				if ey < 0 || ey > opts.DimY || cpy > opts.DimY { fmt.Printf("paste fail y\n"); return }
 			} else {
-				if !wpbop {
-					wpbop = true
-					wpb = a.NewWindow("")
-					wpb.SetCloseIntercept(func() {wpbop = false;wpb.Close()})
-					wpb.Show()
-				}
-				px := cpx+1; py := cpy+1
-				wt := fmt.Sprintf("pbf %d",pbcnt - 1)
-				nimg := segimage(cpbuf,eflg,px,py)
-				wpb.SetTitle(wt)
-				bimg := canvas.NewRasterFromImage(nimg)
-				wpb.Resize(fyne.NewSize(float32(px*32), float32(py*32)))
-				wpb.Canvas().SetContent(bimg)
+				pbwin(cpx+1, cpy+1, pbcnt - 1, cpbuf, eflg)
 			}
 		}}
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V

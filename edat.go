@@ -8,6 +8,8 @@ import (
 	"bufio"
 	"encoding/binary"
 	"fyne.io/fyne/v2"
+    "fyne.io/fyne/v2/canvas"
+
 )
 
 /*
@@ -26,19 +28,6 @@ var eflg [11]int
 var tflg [14]int	// transfer flags - because they dont pass as a parm for scan from file?
 					//					so after a file load, these have to be copied to the appropriate flags
 var din [33]int		// set to be 1 line per std gauntlet maze (gved encoding) of 0 - 32 elements [ with H wrap being 0 - 31 ]
-
-// cut / copy & paste
-
-var cpbuf MazeData	// c/c/p buffer
-var pbcnt int		// master count of c/c/p buffers saved
-var lpbcnt int		// sesssion count of c/c/p buffers - reset every
-var cpx int			// max paste buf, start is always 0, 0
-var cpy int
-// roll thru pb
-var masbcnt int		// run thru master pb
-var sesbcnt int		// run thru local ses pb
-var wpb fyne.Window	// win to view pastbuf contents
-var wpbop bool		// is the win open?
 
 // deleted elements / undo storage
 
@@ -555,4 +544,39 @@ fmt.Printf("in remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.eda
 		Ovimg := genpfimage(edmaze, mazn)
 		upwin(Ovimg)
 	}
+}
+
+
+// cut / copy & paste
+
+var cpbuf MazeData	// c/c/p buffer
+var pbcnt int		// master count of c/c/p buffers saved
+var lpbcnt int		// sesssion count of c/c/p buffers - reset every
+var cpx int			// max paste buf, start is always 0, 0
+var cpy int
+// roll thru pb
+var masbcnt int		// run thru master pb
+var sesbcnt int		// run thru local ses pb
+
+var wpb fyne.Window	// win to view pastbuf contents
+var wpbop bool		// is the win open?
+
+// display a paste buffer window with buffer contents - no edit
+// px, py - size of paste buffer from 0, 0
+// bn - buffer #
+
+func pbwin(px int, py int, bn int, mbuf MazeData, fdat [11]int) {
+
+	if !wpbop {
+		wpbop = true
+		wpb = a.NewWindow("")
+		wpb.SetCloseIntercept(func() {wpbop = false;wpb.Close()})
+		wpb.Show()
+	}
+	wt := fmt.Sprintf("%d pbf",bn)
+	nimg := segimage(mbuf,fdat,px,py)
+	wpb.SetTitle(wt)
+	bimg := canvas.NewRasterFromImage(nimg)
+	wpb.Resize(fyne.NewSize(float32(px*32), float32(py*32)))
+	wpb.Canvas().SetContent(bimg)
 }
