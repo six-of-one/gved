@@ -77,6 +77,7 @@ func domaze(arg string) {
 	Ovwallpat = -1
 	nothing = opts.Mask & 0xfff;
 
+	init_buf()	// need buffers, one gets loaded
 	maze := mazeDecompress(slapsticReadMaze(mazeNum), false)
 
 	if opts.Verbose || mazeMeta > 0 {

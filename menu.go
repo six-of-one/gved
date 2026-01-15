@@ -266,10 +266,6 @@ func aw_init() {
 	wpbop = false
 	sdb = -1
 	cycl = 0
-	if ebuf == nil { ebuf = make(map[xy]int) }
-	if ubuf == nil { ubuf = make(map[xy]int) }
-	if cpbuf == nil { cpbuf = make(map[xy]int) }
-	if plbuf == nil { plbuf = make(map[xy]int) }
 	edmaze = mazeDecompress(slapsticReadMaze(1), false)
 	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 	delbset(0)

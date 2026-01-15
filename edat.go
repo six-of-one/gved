@@ -105,6 +105,14 @@ fmt.Printf("sv fil: %s last bld: %d\n",rfl, lstb)
 	return rfl
 }
 
+// init vars buffers
+
+func init_buf() {
+	if ebuf == nil { ebuf = make(map[xy]int) }
+	if ubuf == nil { ubuf = make(map[xy]int) }
+	if cpbuf == nil { cpbuf = make(map[xy]int) }
+	if plbuf == nil { plbuf = make(map[xy]int) }
+}
 // save maze to file in .ed
 // add a maze # to saves
 
