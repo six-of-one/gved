@@ -247,7 +247,7 @@ func st_menu() {
 	w.SetMainMenu(mainMenu)
 }
 
-// init app and win
+// init app and main win
 
 func aw_init() {
 

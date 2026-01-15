@@ -546,7 +546,7 @@ fmt.Printf("in remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.eda
 	}
 }
 
-
+// palette
 // cut / copy & paste
 
 var cpbuf MazeData	// c/c/p buffer
