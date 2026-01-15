@@ -596,12 +596,12 @@ func pbRune(r rune) {
 		case 'P': pbmas_cyc(1)
 		case 'o': pbsess_cyc(-1)
 		case 'p': pbsess_cyc(1)
-		case 'q': if ctrlwon && wpalop { wpalop = false; wpal.Close() }
-		case 'x': if wpbop { wpbop = false; wpb.Close() }
+		case 'q': fallthrough
+		case 'Q': if wpbop { wpbop = false; wpb.Close() }
+		case 'x': fallthrough
 		case 'X': if wpbop { wpbop = false; wpb.Close() }
 		default:
 	}
-	ctrlwon = false
 }
 
 // typer for pal win
@@ -609,12 +609,12 @@ func pbRune(r rune) {
 func palRune(r rune) {
 
 	switch r {
-		case 'q': if ctrlwon && wpalop { wpalop = false; wpal.Close() }
-		case 'x': if wpalop { wpalop = false; wpal.Close() }
+		case 'q': fallthrough
+		case 'Q': if wpalop { wpalop = false; wpal.Close() }
+		case 'x': fallthrough
 		case 'X': if wpalop { wpalop = false; wpal.Close() }
 		default:
 	}
-	ctrlwon = false
 }
 
 // display a  buffer window with buffer contents - no edit
