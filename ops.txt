@@ -125,7 +125,13 @@ most of these have a corresponging item on edit or file menus
 
 <SH-CTRL>-P	roll thru session paste buffer, loading each one
 <SH-CTRL>-O	roll thru master paste buffer, loading each one
-			- auto turn off switching G¹ to G²
+			- auto switching G¹ to G²
+
+when pb window is selected:
+, or O		(,< key) master paste buffer --
+. or P		(.> key) master paste buffer ++
+o			session paste buffer --
+p			session paste buffer ++
 
 <CTRL>-Z	undo last op - currently holds {all mem until its unworkable} units (single maze cell) of undo
 <CTRL>-Y	redo last undo up to last change entered
@@ -134,8 +140,9 @@ most of these have a corresponging item on edit or file menus
 			- both can be edited, but both can not yet be saved
 
 <HOME>		toggle a complete item palette for G¹ / G²
+			- middle click on item with edit active, valid key selected
 			- palette for G¹ / G² in subwindow (position is not code controlled, you have to drag it)
-			- auto turn off switching G¹ to G²
+			- auto switching G¹ to G²
 
 certain ops will check for unsaved changes and launch a dialog to save
 (pgup, pgdn, a, <ESC>, i, l, u, ctrl-q )
