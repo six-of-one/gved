@@ -589,7 +589,7 @@ func bwin(px int, py int, bn int, mbuf MazeData, fdat [11]int) {
 var lw fyne.Window	// local cpy win to view buf contents
   wt := "palette selector"
   nimg := segimage(mbuf,fdat,px,py)
-  if (bn > 0) {
+	if (bn > 0) {L
 	if !wpbop {
 		wpbop = true
 		wpb = a.NewWindow("")

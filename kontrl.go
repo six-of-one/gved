@@ -424,10 +424,9 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			opts.Gtp = 1
 			opts.R14 = false
 			og2 := G2
-			if G2 { suboff() }
 			G1 = true
 			G2 = false
-			if og2 { get_pbcnt() }
+			if og2 { get_pbcnt(); subsw() }
 			maxmaze = 126
 			spau = "G¹ "
 		case 'l':
@@ -436,10 +435,9 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			opts.Gtp = 1
 			opts.R14 = !opts.R14
 			og2 := G2
-			if G2 { suboff() }
 			G1 = true
 			G2 = false
-			if og2 { get_pbcnt() }
+			if og2 { get_pbcnt(); subsw() }
 			maxmaze = 126
 			spau = "G¹ "
 		case 'p':
@@ -470,10 +468,9 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			relodsub = needsav()
 			opts.Gtp = 2
 			og1 := G1
-			if G1 { suboff() }
 			G1 = false
 			G2 = true
-			if og1 { get_pbcnt() }
+			if og1 { get_pbcnt(); subsw() }
 			maxmaze = 116
 			spau = "G² mazes"
 		case 'v':

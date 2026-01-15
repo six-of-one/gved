@@ -299,11 +299,11 @@ func aw_init() {
 
 }
 
-// sub win off
+// sub win switch G¹ / G²
 
-func suboff() {
-	if wpbop { wpbop = false; wpb.Close() }
-	if wpalop { wpalop = false; wpal.Close() }
+func subsw() {
+	if wpbop { pbmas_cyc() }
+	if wpalop { palete() }
 }
 
 // make clickable image wimg in window cw with given size
