@@ -198,8 +198,7 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		}
 
 		if mdat == nil { mdat = make(map[xy]int) }		// init most bufs used by edit system, most come here anyway
-		if ubuf == nil { ubuf = make(map[xy]int) }
-		if cpbuf == nil { cpbuf = make(map[xy]int) }
+
 // loop to load - note issue with scans of formatted data
 		parse := 33
 		for y := 0; y <= opts.DimY; y++ {
@@ -534,6 +533,8 @@ func palete() {
 
 	nm := 0
 	pmx := opts.DimX; pmy := opts.DimY
+	for my := 0; my <= pmy; my++ {
+	for mx := 0; mx <= pmx; mx++ { plbuf[xy{mx, my}] = 0 }}
 	fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nm,opts.Gtp)
 	cnd := lod_maz(fil, plbuf, false)
 	cpx = opts.DimX; cpy = opts.DimY
