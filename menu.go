@@ -307,6 +307,13 @@ fmt.Printf("pbcnt: %d\n",pbcnt)
 
 }
 
+// sub win off
+
+func suboff() {
+	if wpbop { wpb.Close() }
+	if wpalop { wpal.Close() }
+}
+
 // make clickable image wimg in window cw with given size
 
 func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {

@@ -545,12 +545,7 @@ func palete() {
 	fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nm,opts.Gtp)
 	cnd := lod_maz(fil, plbuf, false)
 	cpx = opts.DimX; cpy = opts.DimY
-for y := 0; y <= cpy; y++ {
-fmt.Printf("\n")
-	for x := 0; x <= cpx; x++ {
 
-fmt.Printf("%03d ",plbuf[xy{x, y}])
-			}}
 	if cnd >= 0 { for y := 0; y < 11; y++ { plflg[y] =  tflg[y] };
 		bwin(cpx+1, cpy+1, 0, plbuf, plflg) }
 	opts.DimX = pmx; opts.DimY = pmy

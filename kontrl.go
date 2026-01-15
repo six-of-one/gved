@@ -423,6 +423,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			relodsub = needsav()
 			opts.Gtp = 1
 			opts.R14 = false
+			if G2 { suboff() }
 			G1 = true
 			G2 = false
 			maxmaze = 126
@@ -432,6 +433,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			relodsub = needsav()
 			opts.Gtp = 1
 			opts.R14 = !opts.R14
+			if G2 { suboff() }
 			G1 = true
 			G2 = false
 			maxmaze = 126
@@ -463,6 +465,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			nsremaze = true
 			relodsub = needsav()
 			opts.Gtp = 2
+			if G1 { suboff() }
 			G1 = false
 			G2 = true
 			maxmaze = 116
