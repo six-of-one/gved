@@ -600,7 +600,6 @@ var lw fyne.Window	// local cpy win to view buf contents
 		wpal.Resize(fyne.NewSize(float32(px*32), float32(py*32)))		// have to do this on new win
 		wpal.Show()
 	}
-fmt.Printf("in bwin cw\n\n")
 	clikwin(wpal, nimg, px, py)
 	lw = wpal
   }

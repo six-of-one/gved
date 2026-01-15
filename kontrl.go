@@ -747,7 +747,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	exmd = 0.0	// rel x & y interm float32
 	eymd = 0.0
 	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
-	pos := fmt.Sprintf("%v",mm)
+	pos := fmt.Sprintf("%v",h)
+//fmt.Printf("click: %v\n",pos)
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&exmd,&eymd,&mb,&mk)
 
 // right mb functions
@@ -875,49 +876,4 @@ fmt.Printf("\n")
 		ed_maze(true)
 	}
 
-}
-
-// palette mouse handler
-
-// palette clicker
-type palholdableButton struct {
-    widget.Button
-}
-
-func palHoldableButton() *palholdableButton {
-
-    button := &palholdableButton{}
-    button.ExtendBaseWidget(button)
-	return button
-}
-
-func (h *palholdableButton) MouseUp(mm *desktop.MouseEvent){
-
-	mb := 0		// mb 1 = left, 2 = right, 4 = middle
-	ax := 0.0	// absolute x & y
-	ay := 0.0
-	exd := 0.0	// rel x & y interm float32
-	eyd := 0.0
-	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
-	pos := fmt.Sprintf("%v",mm)
-	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&exd,&eyd,&mb,&mk)
-
-	if opts.edat > 0 {
-fmt.Printf("%d up: %.2f x %.2f \n",mb,exd,eyd)
-		ex := int(exd / opts.dtec)
-		ey := int(eyd / opts.dtec)
-		if mb == 4 && cmdoff {		// middle mb, do a reassign
-			if G1 {
-				g1edit_keymap[edkey] = plbuf[xy{ex, ey}]
-				kys := g1mapid[g1edit_keymap[edkey]]
-				keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
-				statlin(cmdhin,keyst)
-			} else {
-				g2edit_keymap[edkey] = plbuf[xy{ex, ey}]
-				kys := g2mapid[g2edit_keymap[edkey]]
-				keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
-				statlin(cmdhin,keyst)
-			}
-		}
-	}
 }

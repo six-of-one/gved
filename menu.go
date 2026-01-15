@@ -310,24 +310,15 @@ fmt.Printf("pbcnt: %d\n",pbcnt)
 // make clickable image wimg in window cw with given size
 
 func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
-fmt.Printf("in clickwin\n\n")
 
 	bimg := canvas.NewRasterFromImage(wimg)
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
 
 // turns display into clickable edit area
-	if cw == wpal {
-		btn := palHoldableButton()
-		box := container.NewPadded(btn, bimg)		// key to seeing maze & having the click button will full mouse sense
-		cw.SetContent(box)
-fmt.Printf("pal box\n\n\n")
-	} else {
-		btn := newHoldableButton()
-		box := container.NewPadded(btn, bimg)		// key to seeing maze & having the click button will full mouse sense
-		cw.SetContent(box)
-fmt.Printf("main box\n\n\n")
-	}
-// /fmt.Printf("btn sz %v\n",btn.Size())
+	btn := newHoldableButton()
+	box := container.NewPadded(btn, bimg)		// key to seeing maze & having the click button will full mouse sense
+	cw.SetContent(box)
+fmt.Printf("btn sz %v\n",btn.Size())
 
 }
 // update contents of main edit window, includes title
