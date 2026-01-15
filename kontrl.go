@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 //		"image/color"
 
 	"fyne.io/fyne/v2"
@@ -114,15 +115,24 @@ func specialKey() {
 			if key.Name == "P" && ctrl  { if shift { pbsess_cyc(1) } else { menu_paste() }}
 			if key.Name == "O" && ctrl  { if shift { pbmas_cyc(1) }}
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
-			if key.Name == "Next" {
-				if sdb > 0 {
-					sdbit(1)
-				} else { srelod = pagit(1) }
-			}
 			if key.Name == "Prior" {
-				if sdb > 0 {
-					sdbit(-1)
-				} else { srelod = pagit(-1) }
+				if strings.Contains(cwt, "pbf") {
+					pbmas_cyc(-1)
+				} else {
+					if sdb > 0 {
+						sdbit(-1)
+					} else { srelod = pagit(-1) }
+				}
+			}
+			if key.Name == "Next" {
+fmt.Printf("cwt: %s\n",cwt)
+				if strings.Contains(cwt, "pbf") {
+					pbmas_cyc(1)
+				} else {
+					if sdb > 0 {
+						sdbit(1)
+					} else { srelod = pagit(1) }
+				}
 			}
 			upd_edmaze(false)
 fmt.Printf("sk cond relod: %t\n",srelod)
@@ -731,6 +741,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
        mk := 0         // mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
        pos := fmt.Sprintf("%v",mm)
        fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&rx,&ry,&mb,&mk)
+	   cwt = h.title	// current window title by btn establish
 //     beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f",ax,ay,rx,ry)
 //     statlin(cmdhin,beef)
 }

@@ -20,7 +20,7 @@ import (
 
 var w fyne.Window
 var a fyne.App
-
+var cwt string		// current window title if detected by mouse move
 // status keeper - appears in spare menu item on mbar for now
 
 var statup *fyne.Menu
@@ -262,18 +262,18 @@ func aw_init() {
 	w.Canvas().SetOnTypedRune(typedRune)
 	anum = 0
 // ed stuff, consider moving
-	ccp = NOP
+	wpalop = false		// pallete
+	ccp = NOP			// paste buffer
 	wpbop = false
-	wpalop = false
 	lg1cnt = 1
 	lg2cnt = 1
-	sdb = -1
-	cycl = 0
+	sdb = -1			// sd buffer
+	cycl = 0			// edit key 'c' cycle ops
 	edmaze = mazeDecompress(slapsticReadMaze(1), false)
 	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
-	delbset(0)
-	restak = 0
-	specialKey()
+	delbset(0)			// init undo (delbuf)
+	restak = 0			// restor position in delbuf
+	specialKey()		// key handlers for specials
 
 // get default win size
 
