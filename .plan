@@ -23,10 +23,9 @@ some type of quick-key insert system, maybe shifted # or so
 
 a palette system similar to edit in sanctuary
 - and the edit options dialog
-- put palette into sd buffer 0, which isnt normally selectable
-- bring up on home key
-- the palette will be editable, but save will need to be diff (autosave when swap palette out?)
-  or a second window for palette, with edit opts
+* put palette into sd buffer 0, which isnt normally selectable
+* bring up on home key
+* or a second window for palette, with edit opts
 
 a basic "playable" mode to test mazes
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
@@ -43,7 +42,7 @@ multiple save buffers to store vars maze edits, page thru all wiht 'S', store wi
 - list of delbuf overview, contents, etc somehow
 
 copy / cut / paste
-- do same with ccp buffer - page thru and view them smh
+* do same with ccp buffer - page thru and view them smh
 - for now these lock in - this is a 'feature' (nudge, nudge, wink, wink) until proper cfg file & dialog allow selection
 
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)

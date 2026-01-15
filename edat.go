@@ -527,27 +527,19 @@ fmt.Printf("in remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.eda
 var swsdb int		// palette on a sd edit
 var wpalop bool		// is the pb win open?
 var wpal fyne.Window // is the pal win open?
+var plbuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
+var plflg [11]int
 
 func palete() {
 
-	if opts.bufdrt { menu_savit(true) }		// autosave
-// editing an sd, save & palette
-	if sdb > 0 { swsdb = sdb; sdb = 0 } else {
-// palette up and we got back to sdb
-	if swsdb > 0 { sdb = swsdb; swsdb = 0 } else {
-// palette maze swaps
-	if sdb == 0 {
-		menu_lodit(true)		// also also wik - sets sdb -1
-	} else {
-		sdb = 0
-	}}}
-
-	if sdb > -1 {
-		nm := sdb
-		fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nm,opts.Gtp)
-		cnd := lod_maz(fil, ebuf, false)
-		if cnd >= 0 { sdb = nm; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
-	}
+	nm := 0
+	pmx := opts.DimX; pmy := opts.DimY
+	fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nm,opts.Gtp)
+	cnd := lod_maz(fil, plbuf, false)
+	cpx = opts.DimX; cpy = opts.DimY
+	if cnd >= 0 { for y := 0; y < 11; y++ { plflg[y] =  tflg[y] };
+		bwin(cpx+1, cpy+1, 0, plbuf, plflg) }
+	opts.DimX = pmx; opts.DimY = pmy
 }
 
 // cut / copy & paste
