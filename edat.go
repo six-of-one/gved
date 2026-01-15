@@ -29,11 +29,6 @@ var tflg [14]int	// transfer flags - because they dont pass as a parm for scan f
 					//					so after a file load, these have to be copied to the appropriate flags
 var din [33]int		// set to be 1 line per std gauntlet maze (gved encoding) of 0 - 32 elements [ with H wrap being 0 - 31 ]
 
-// statistics on mazes, already set for partial sanctuary expansion
-
-var g1stat [1000]int
-var g2stat [1000]int
-
 // deleted elements / undo storage
 
 type Deletebuf struct {
@@ -536,6 +531,12 @@ fmt.Printf("in remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.eda
 
 // palette
 
+// statistics on mazes, already set for partial sanctuary expansion
+
+var g1stat [1000]int
+var g2stat [1000]int
+var stonce [1000]int	// on;y display a stat once
+
 // bring up edit palette after saving
 var wpalop bool		// is the pb win open?
 var wpal fyne.Window // is the pal win open?
@@ -572,7 +573,7 @@ func palRune(r rune) {
 
 func zero_stat() {
 
-	for y := 0; y < 1000; y++ { g1stat[y] = 0; g2stat[y] = 0; }
+	for y := 0; y < 1000; y++ { g1stat[y] = 0; g2stat[y] = 0; stonce[y] = 1 }
 }
 
 // count stuff

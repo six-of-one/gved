@@ -2026,9 +2026,10 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 // stats on palette
 				if stat {			// on palette screen, show stats for loaded maze
 					st := ""
-					if G1 { st = fmt.Sprintf("%d",g1stat[whatis(maze, x, y)]) }
-					if G2 { st = fmt.Sprintf("%d",g2stat[whatis(maze, x, y)]) }
-					if st != "" {
+					mel := whatis(maze, x, y)
+					if G1 { st = fmt.Sprintf("%d",g1stat[mel]) }
+					if G2 { st = fmt.Sprintf("%d",g2stat[mel]) }
+					if st != "" && stonce[whatis(maze, x, y)] > 0 {
 						gtop.Clear()
 						gtop.SetRGB(0.5, 0.5, 0.5)
 						gtop.SetRGB(1, 0, 0)
@@ -2037,6 +2038,7 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 						offset := image.Pt(x*16+stamp.nudgex+16, y*16+stamp.nudgey-4)
 						draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 						gtopl = ""
+						stonce[mel] = 0
 					}
 				}
 // generator monster type letter draw - only do when set
