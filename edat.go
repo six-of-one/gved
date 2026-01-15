@@ -566,6 +566,20 @@ var sesbcnt int		// run thru local ses pb
 var wpbop bool		// is the pb win open?
 var wpb fyne.Window	// win to view pastbuf contents
 
+// get paste buffer cnt each init
+
+func get_pbcnt() {
+	pbcnt = 1
+	lpbcnt = 1
+	masbcnt = 1	// loop thru
+	sesbcnt = 1
+	fil := fmt.Sprintf(".pb/cnt_g%d",opts.Gtp)
+	data, err := ioutil.ReadFile(fil)
+	if err == nil {
+		fmt.Sscanf(string(data),"%d", &pbcnt)
+fmt.Printf("pbcnt: %d\n",pbcnt)
+	}
+}
 // display a  buffer window with buffer contents - no edit
 // px, py - size of paste buffer from 0, 0
 // bn - buffer #

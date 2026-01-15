@@ -423,9 +423,11 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			relodsub = needsav()
 			opts.Gtp = 1
 			opts.R14 = false
+			og2 := G2
 			if G2 { suboff() }
 			G1 = true
 			G2 = false
+			if og2 { get_pbcnt() }
 			maxmaze = 126
 			spau = "G¹ "
 		case 'l':
@@ -433,9 +435,11 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			relodsub = needsav()
 			opts.Gtp = 1
 			opts.R14 = !opts.R14
+			og2 := G2
 			if G2 { suboff() }
 			G1 = true
 			G2 = false
+			if og2 { get_pbcnt() }
 			maxmaze = 126
 			spau = "G¹ "
 		case 'p':
@@ -465,9 +469,11 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			nsremaze = true
 			relodsub = needsav()
 			opts.Gtp = 2
+			og1 := G2
 			if G1 { suboff() }
 			G1 = false
 			G2 = true
+			if og1 { get_pbcnt() }
 			maxmaze = 116
 			spau = "G² mazes"
 		case 'v':
@@ -833,7 +839,8 @@ fmt.Printf("cc dun: px %d py %d\n",px,py)
 			sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
 
 // pb sort of doesnt end
-				file, err := os.Create(".pb/cnt")
+				fil = fmt.Sprintf(".pb/cnt_g%d",opts.Gtp)
+				file, err := os.Create(fil)
 				if err == nil {
 					wfs := fmt.Sprintf("%d",pbcnt)
 					file.WriteString(wfs)

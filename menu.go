@@ -294,16 +294,7 @@ func aw_init() {
 			file.Close()
 		}
 	}
-// get paste buf cnt
-	pbcnt = 1
-	lpbcnt = 1
-	masbcnt = 1	// loop thru
-	sesbcnt = 1
-	data, err := ioutil.ReadFile(".pb/cnt")
-	if err == nil {
-		fmt.Sscanf(string(data),"%d", &pbcnt)
-fmt.Printf("pbcnt: %d\n",pbcnt)
-	}
+	get_pbcnt()
 
 }
 
