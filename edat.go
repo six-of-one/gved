@@ -573,13 +573,15 @@ var wpb fyne.Window	// win to view pastbuf contents
 func get_pbcnt() {
 	pbcnt = 1
 	lpbcnt = 1
+	if G1 { lpbcnt = lg1cnt}
+	if G2 { lpbcnt = lg2cnt}
 	masbcnt = 1	// loop thru
 	sesbcnt = 1
 	fil := fmt.Sprintf(".pb/cnt_g%d",opts.Gtp)
 	data, err := ioutil.ReadFile(fil)
 	if err == nil {
 		fmt.Sscanf(string(data),"%d", &pbcnt)
-fmt.Printf("pbcnt: %d\n",pbcnt)
+fmt.Printf("pbcnt: %d, ses cnt: %d\n",pbcnt,lpbcnt)
 	}
 }
 // display a  buffer window with buffer contents - no edit

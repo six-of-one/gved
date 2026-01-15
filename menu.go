@@ -265,6 +265,8 @@ func aw_init() {
 	ccp = NOP
 	wpbop = false
 	wpalop = false
+	lg1cnt = 1
+	lg2cnt = 1
 	sdb = -1
 	cycl = 0
 	edmaze = mazeDecompress(slapsticReadMaze(1), false)
