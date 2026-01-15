@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
 //		"image/color"
 
 	"fyne.io/fyne/v2"
@@ -116,23 +115,14 @@ func specialKey() {
 			if key.Name == "O" && ctrl  { if shift { pbmas_cyc(1) }}
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
 			if key.Name == "Prior" {
-				if strings.Contains(cwt, "pbf") {
-					pbmas_cyc(-1)
-				} else {
-					if sdb > 0 {
-						sdbit(-1)
-					} else { srelod = pagit(-1) }
-				}
+				if sdb > 0 {
+					sdbit(-1)
+				} else { srelod = pagit(-1) }
 			}
 			if key.Name == "Next" {
-fmt.Printf("cwt: %s\n",cwt)
-				if strings.Contains(cwt, "pbf") {
-					pbmas_cyc(1)
-				} else {
-					if sdb > 0 {
-						sdbit(1)
-					} else { srelod = pagit(1) }
-				}
+				if sdb > 0 {
+					sdbit(1)
+				} else { srelod = pagit(1) }
 			}
 			upd_edmaze(false)
 fmt.Printf("sk cond relod: %t\n",srelod)

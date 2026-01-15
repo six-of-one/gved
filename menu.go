@@ -260,7 +260,7 @@ func aw_init() {
 
 	st_menu()
 	w.Canvas().SetOnTypedRune(typedRune)
-	anum = 0
+	anum = 0			// vars numeric inputs
 // ed stuff, consider moving
 	wpalop = false		// pallete
 	ccp = NOP			// paste buffer

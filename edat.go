@@ -584,6 +584,10 @@ func get_pbcnt() {
 fmt.Printf("pbcnt: %d, ses cnt: %d\n",pbcnt,lpbcnt)
 	}
 }
+
+// typer for pb win
+
+
 // display a  buffer window with buffer contents - no edit
 // px, py - size of paste buffer from 0, 0
 // bn - buffer #
@@ -597,6 +601,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 	if !wpbop {
 		wpbop = true
 		wpb = a.NewWindow("")
+		wpb.Canvas().SetOnTypedRune(ptRune)
 		wpb.SetCloseIntercept(func() {wpbop = false;wpb.Close()})
 		wpb.Resize(fyne.NewSize(float32(px*32), float32(py*32)))		// have to do this on new win
 		wpb.Show()
