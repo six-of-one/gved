@@ -253,6 +253,7 @@ func aw_init() {
 
     a = app.NewWithID("0777")
     w = a.NewWindow("G¹G²ved")
+	w.SetCloseIntercept(func() {wpb.Close();wpal.Close()})
 
 	st_menu()
 	w.Canvas().SetOnTypedRune(typedRune)

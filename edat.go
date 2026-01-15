@@ -576,7 +576,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 	lw = wpb
 	wt = fmt.Sprintf("%d pbf",bn)
   } else {	// palette or some other win
-	if !wpalop {
+	if !wpalop  && bn == 0 {
 		wpalop = true
 		wpal = a.NewWindow("")
 		wpal.SetCloseIntercept(func() {wpalop = false;wpal.Close()})
