@@ -595,7 +595,7 @@ var lw fyne.Window	// local cpy win to view buf contents
   } else {	// palette or some other win
 	if !wpalop  && bn == 0 {
 		wpalop = true
-		wpal = a.NewWindow("")
+		wpal = a.NewWindow("palette selector")
 		wpal.SetCloseIntercept(func() {wpalop = false;wpal.Close()})
 		wpal.Resize(fyne.NewSize(float32(px*32), float32(py*32)))		// have to do this on new win
 		wpal.Show()

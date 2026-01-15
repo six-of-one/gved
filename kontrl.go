@@ -690,6 +690,7 @@ func sdbit(dir int) string {
 
 type holdableButton struct {
     widget.Button
+	title string
 }
 
 func newHoldableButton() *holdableButton {
@@ -747,10 +748,27 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	exmd = 0.0	// rel x & y interm float32
 	eymd = 0.0
 	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
-	pos := fmt.Sprintf("%v",h)
-//fmt.Printf("click: %v\n",pos)
+	pos := fmt.Sprintf("%v",mm)
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&exmd,&eymd,&mb,&mk)
+	ex := int(exmd / opts.dtec)
+	ey := int(eymd / opts.dtec)
 
+	if wpalop {
+	if h.title == wpal.Title() {
+		if mb == 4 && cmdoff {
+		if G1 {
+			g1edit_keymap[edkey] = plbuf[xy{ex, ey}]
+			kys := g1mapid[g1edit_keymap[edkey]]
+			keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
+			statlin(cmdhin,keyst)
+		} else {
+			g2edit_keymap[edkey] = plbuf[xy{ex, ey}]
+			kys := g2mapid[g2edit_keymap[edkey]]
+			keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
+			statlin(cmdhin,keyst)
+		}}
+		return
+	}}
 // right mb functions
 	if mb == 2 {
 		if pgdir != 0 {
@@ -768,8 +786,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
  //   fmt.Printf("up %v\n",mm)
 	if opts.edat > 0 {
 fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
-		ex := int(exmd / opts.dtec)
-		ey := int(eymd / opts.dtec)
+
 		sx := int(sxmd / opts.dtec)
 		sy := int(symd / opts.dtec)
 		if ex < sx { t := ex; ex = sx; sx = t }		// swap if end smaller than start
