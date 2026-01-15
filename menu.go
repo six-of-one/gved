@@ -317,7 +317,7 @@ func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 // turns display into clickable edit area
 	btn := newHoldableButton()
 	box := container.NewPadded(btn, bimg)		// key to seeing maze & having the click button will full mouse sense
-	w.SetContent(box)
+	cw.SetContent(box)
 fmt.Printf("btn sz %v\n",btn.Size())
 
 }

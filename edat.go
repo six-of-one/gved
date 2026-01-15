@@ -579,6 +579,7 @@ func bwin(px int, py int, bn int, mbuf MazeData, fdat [11]int) {
 
 var lw fyne.Window	// local cpy win to view buf contents
   wt := "palette selector"
+  nimg := segimage(mbuf,fdat,px,py)
   if (bn > 0) {
 	if !wpbop {
 		wpbop = true
@@ -589,6 +590,8 @@ var lw fyne.Window	// local cpy win to view buf contents
 	}
 	lw = wpb
 	wt = fmt.Sprintf("%d pbf",bn)
+	bimg := canvas.NewRasterFromImage(nimg)
+	lw.Canvas().SetContent(bimg)
   } else {	// palette or some other win
 	if !wpalop  && bn == 0 {
 		wpalop = true
@@ -597,11 +600,9 @@ var lw fyne.Window	// local cpy win to view buf contents
 		wpal.Resize(fyne.NewSize(float32(px*32), float32(py*32)))		// have to do this on new win
 		wpal.Show()
 	}
+	clikwin(wpal, nimg, px, py)
 	lw = wpal
   }
-	nimg := segimage(mbuf,fdat,px,py)
 	lw.SetTitle(wt)
-	bimg := canvas.NewRasterFromImage(nimg)
 	lw.Resize(fyne.NewSize(float32(px*32), float32(py*32)))
-	lw.Canvas().SetContent(bimg)
 }
