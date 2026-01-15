@@ -469,7 +469,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			nsremaze = true
 			relodsub = needsav()
 			opts.Gtp = 2
-			og1 := G2
+			og1 := G1
 			if G1 { suboff() }
 			G1 = false
 			G2 = true
