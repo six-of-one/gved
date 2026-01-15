@@ -303,7 +303,7 @@ fmt.Printf("pbcnt: %d\n",pbcnt)
 
 }
 
-// make clickable image in a window
+// make clickable image wimg in window cw with given size
 
 func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 
@@ -317,7 +317,7 @@ func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 fmt.Printf("btn sz %v\n",btn.Size())
 
 }
-// update contents
+// update contents of main edit window, includes title
 
 func upwin(simg *image.NRGBA) {
 
