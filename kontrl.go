@@ -766,7 +766,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 
  //   fmt.Printf("up %v\n",mm)
 	if opts.edat > 0 {
-		fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
+fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
 		ex := int(exmd / opts.dtec)
 		ey := int(eymd / opts.dtec)
 		sx := int(sxmd / opts.dtec)
@@ -903,6 +903,7 @@ func (h *palholdableButton) MouseUp(mm *desktop.MouseEvent){
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&exd,&eyd,&mb,&mk)
 
 	if opts.edat > 0 {
+fmt.Printf("%d up: %.2f x %.2f \n",mb,exd,eyd)
 		ex := int(exd / opts.dtec)
 		ey := int(eyd / opts.dtec)
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
