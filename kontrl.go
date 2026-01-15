@@ -557,7 +557,7 @@ fmt.Printf(" stk %d undo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 		}
 fmt.Printf(" del %d elem: %d\n",restak,delbuf.elem[restak])
 		opts.bufdrt = true
-		ed_maze(false)
+		ed_maze(true)
 	}
 }
 
@@ -575,7 +575,7 @@ fmt.Printf(" stk %d redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 			if delbuf.elem[restak] < 0 || delbuf.revc[restak] == 1 { revk = 0}
 		}
 		opts.bufdrt = true
-		ed_maze(false)
+		ed_maze(true)
 	}
 //	ed_maze()
 }
