@@ -561,6 +561,8 @@ var cpy int
 // roll thru pb
 var masbcnt int		// run thru master pb
 var sesbcnt int		// run thru local ses pb
+var lg1cnt int		// ses pb save for g1 maps
+var lg2cnt int		// ses pb save for g2 maps
 
 // i've discovered a 'local' in function version of these will crash, this prob needs to be a struct
 var wpbop bool		// is the pb win open?
@@ -589,7 +591,7 @@ func bwin(px int, py int, bn int, mbuf MazeData, fdat [11]int) {
 var lw fyne.Window	// local cpy win to view buf contents
   wt := "palette selector"
   nimg := segimage(mbuf,fdat,px,py)
-	if (bn > 0) {L
+	if (bn > 0) {
 	if !wpbop {
 		wpbop = true
 		wpb = a.NewWindow("")

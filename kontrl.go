@@ -53,7 +53,7 @@ func specialKey() {
 			}
 			if key.Name == "Delete" { del = true; ccp_NOP() }
 //			if key.Name == "BackSpace" { del = true }
-			if key.Name == "Home" { home = true; if opts.edat == 1 { palete() }}
+			if key.Name == "Home" { home = true; if !wpalop { palete() }}
 			if key.Name == "LeftSuper" { logo = true }
 			if key.Name == "LeftShift" { shift = true }
 			if key.Name == "RightShift" { shift = true }
@@ -111,8 +111,8 @@ func specialKey() {
 			if key.Name == "Y" && ctrl  { redo() }
 			if key.Name == "C" && ctrl  { menu_copy() }
 			if key.Name == "X" && ctrl  { menu_cut() }
-			if key.Name == "P" && ctrl  { if shift { pbsess_cyc() } else { menu_paste() }}
-			if key.Name == "O" && ctrl  { if shift { pbmas_cyc() }}
+			if key.Name == "P" && ctrl  { if shift { pbsess_cyc(1) } else { menu_paste() }}
+			if key.Name == "O" && ctrl  { if shift { pbmas_cyc(1) }}
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
 			if key.Name == "Next" {
 				if sdb > 0 {
@@ -610,35 +610,37 @@ func uswap() {
 func ccp_NOP() { ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
 func ccp_tog(op int) { if ccp == op { ccp = NOP; smod = "Edit mode: " } else { ccp = op }}
 
-func pbsess_cyc() {
+func pb_upd(id string, nt string, vl int) {
 // clear old buf
 	pmx := opts.DimX; pmy := opts.DimY		// preserve these
 	for my := 0; my <= pmy; my++ {
 	for mx := 0; mx <= pmx; mx++ { cpbuf[xy{mx, my}] = 0 }}
-	fil := fmt.Sprintf(".pb/ses_%07d_g%d.ed",sesbcnt,opts.Gtp)
-fmt.Printf("pbsess %d - %s\n",sesbcnt,fil)
+	fil := fmt.Sprintf(".pb/%s_%07d_g%d.ed",id,vl,opts.Gtp)
 	lod_maz(fil, cpbuf, false)
 	cpx = opts.DimX; cpy = opts.DimY
-fmt.Printf("sespb dun: px %d py %d\n",cpx,cpy)
+fmt.Printf("%spb dun: px %d py %d, %s\n",nt,cpx,cpy,fil)
 	opts.DimX = pmx; opts.DimY = pmy
-	bwin(cpx+1, cpy+1, sesbcnt, cpbuf, eflg)		// draw the buffer
-	sesbcnt++
-	if sesbcnt >= lpbcnt { sesbcnt = 1 }
+	bwin(cpx+1, cpy+1, vl, cpbuf, eflg)		// draw the buffer
 }
 
-func pbmas_cyc() {
-	pmx := opts.DimX; pmy := opts.DimY		// preserve these
-	for my := 0; my <= pmy; my++ {
-	for mx := 0; mx <= pmx; mx++ { cpbuf[xy{mx, my}] = 0 }}
-	fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",masbcnt,opts.Gtp)
-fmt.Printf("pbmas c: %d %d - %s\n",pbcnt,masbcnt,fil)
-	lod_maz(fil, cpbuf, false)
-	cpx = opts.DimX; cpy = opts.DimY
-fmt.Printf("maxpb dun: px %d py %d\n",cpx,cpy)
-	opts.DimX = pmx; opts.DimY = pmy
-	bwin(cpx+1, cpy+1, masbcnt, cpbuf, eflg)		// draw the buffer
-	masbcnt++
+func pbsess_cyc(dr int) {
+
+fmt.Printf("pbses c: %d %d\n",lpbcnt,sesbcnt)
+	pb_upd("ses", "ses", sesbcnt)
+	sesbcnt += dr
+	if sesbcnt >= lpbcnt { sesbcnt = 1 }
+	if sesbcnt < 1 { sesbcnt = lpbcnt - 1 }
+	if sesbcnt < 1 { sesbcnt = 1 }
+}
+
+func pbmas_cyc(dr int) {
+
+fmt.Printf("pbmas c: %d %d\n",pbcnt,masbcnt)
+	pb_upd("pb", "mas", masbcnt)
+	masbcnt += dr
 	if masbcnt >= pbcnt { masbcnt = 1 }
+	if masbcnt < 1 { masbcnt = pbcnt - 1 }
+	if masbcnt < 1 { masbcnt = 1 }
 }
 
 // page thru maze #s, sd buf
@@ -833,6 +835,8 @@ fmt.Printf("cc dun: px %d py %d\n",px,py)
 // local for short range
 			fil = fmt.Sprintf(".pb/ses_%07d_g%d.ed",lpbcnt,opts.Gtp)
 			lpbcnt++
+			if G1 { lg1cnt = lpbcnt}
+			if G2 { lg2cnt = lpbcnt}
 			sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
 
 // pb sort of doesnt end

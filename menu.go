@@ -302,7 +302,7 @@ func aw_init() {
 // sub win switch G¹ / G²
 
 func subsw() {
-	if wpbop { pbmas_cyc() }
+	if wpbop { pbmas_cyc(0) }
 	if wpalop { palete() }
 }
 
