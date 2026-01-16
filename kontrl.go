@@ -429,6 +429,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			G2 = false
 			if og2 { get_pbcnt(); subsw() }
 			maxmaze = 126
+			if opts.mnum > maxmaze { opts.mnum = 114 }
 			spau = "G¹ "
 		case 'l':
 			nsremaze = true
@@ -440,6 +441,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			G2 = false
 			if og2 { get_pbcnt(); subsw() }
 			maxmaze = 126
+			if opts.mnum > maxmaze { opts.mnum = 114 }
 			spau = "G¹ "
 		case 'p':
 			if !cmdoff {
@@ -473,6 +475,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			G2 = true
 			if og1 { get_pbcnt(); subsw() }
 			maxmaze = 116
+			if opts.mnum > maxmaze { opts.mnum = 102 }
 			spau = "G² mazes"
 		case 'v':
 			lx := 116
