@@ -10,6 +10,9 @@ import (
 	"github.com/fogleman/gg"
 	"image/color"
 	"encoding/binary"
+
+//	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
 )
 
 
@@ -1456,6 +1459,8 @@ func renderdots(img *image.NRGBA, xloc int, yloc int, count int) {
 
 func segimage(mdat MazeData, fdat [11]int, xs int, ys int, stat bool) *image.NRGBA {
 
+fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
+
 // dummy maze for ops that require it
 	var maze = &Maze{}
 	maze.data = mdat
@@ -2060,6 +2065,15 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 			}
 		}
 	}
+// test drawn maze
+if stat { canvas.NewRasterFromImage(img) }
+/*	ww := a.NewWindow("test img")
+	ww.Canvas().SetOnTypedRune(pbRune)
+	ww.Resize(fyne.NewSize(float32(xs*32), float32(ys*32)))		// have to do this on new win
+	ww.Show()
+	bimg := canvas.NewRasterFromImage(img)
+	ww.Canvas().SetContent(bimg)
+}*/
 
 	g2mask[MAZEOBJ_WALL_REGULAR] = 2048
 	g2mask[MAZEOBJ_WALL_SECRET] = 1024
