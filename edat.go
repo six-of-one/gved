@@ -530,6 +530,7 @@ fmt.Printf("in remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.eda
 	if wpalop {
 		nimg := segimage(plbuf,plflg,palxs,palys, false)
 		clikwin(wpal, nimg, palxs, palys)
+		wpal.Resize(fyne.NewSize(float32(palxs*32), float32(palys*32)))
 	}
 }
 

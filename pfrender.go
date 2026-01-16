@@ -2035,7 +2035,7 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 						gtop.SetRGB(1, 0, 0)
 						gtop.DrawStringAnchored(st, 6, 6, 0.5, 0.5)
 						gtopim := gtop.Image()
-						offset := image.Pt(x*16+stamp.nudgex+18, y*16+stamp.nudgey-8)
+						offset := image.Pt(x*16+stamp.nudgex+15, y*16+stamp.nudgey-5)
 						draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 						gtopl = ""
 						stonce[mel] = 0
