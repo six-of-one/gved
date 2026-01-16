@@ -535,7 +535,7 @@ fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts
 			stats(ebuf[xy{x, y}])
 		}}
 for y := 0; y <= 65; y++ { if g1stat[y] > 0 {fmt.Printf("stat %s: %d\n",g1mapid[y],g1stat[y])}}
-		bwin(palxs, palys, 0, plbuf, plflg)
+//		bwin(palxs, palys, 0, plbuf, plflg)
 	}
 }
 
