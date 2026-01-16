@@ -337,7 +337,7 @@ func upwin(simg *image.NRGBA) {
 		geoh = ngeoh
 	}
 	opts.dtec = 16.0 * (float64(geow - 4) / 528.0)				// the size of a tile, odd window size may cause issues
-fmt.Printf(" dtec: %f\n",opts.dtec)
+if opts.Verbose { fmt.Printf(" dtec: %f\n",opts.dtec) }
 	clikwin(w, simg, geow, geoh)
 
 	spx := ""

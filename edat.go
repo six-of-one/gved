@@ -345,6 +345,7 @@ func ed_sav(mazn int) {
 
 func upd_edmaze(ovrm bool) {
 	zero_stat()
+fmt.Printf("upd_edmaze\n")
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
 		edmaze.data[xy{x, y}] = ebuf[xy{x, y}]
@@ -513,7 +514,7 @@ func rotmirbuf(rmmaze *Maze) {
 // reload maze while editing & update window - generates output.png
 
 func remaze(mazn int) {
-fmt.Printf("in remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.edat,sdb,delstak)
+fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.edat,sdb,delstak)
 	if !opts.dntr {
 		sdb = -1
 		delbset(0)

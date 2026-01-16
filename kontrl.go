@@ -63,7 +63,7 @@ func specialKey() {
         })
 // handle keys up
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
-	fmt.Printf("Desktop key up: %v\n", key)
+//	fmt.Printf("Desktop key up: %v\n", key)
 			srelod := false
 			if key.Name == "Escape" {		// now toggle editor on/ off
 				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
@@ -126,7 +126,7 @@ func specialKey() {
 				} else { srelod = pagit(1) }
 			}
 			upd_edmaze(false)
-fmt.Printf("sk cond relod: %t\n",srelod)
+//fmt.Printf("sk cond relod: %t\n",srelod)
 			if srelod {
 				remaze(opts.mnum)
 			}
