@@ -2037,7 +2037,7 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 						gtopim := gtop.Image()
 						offset := image.Pt(x*16+stamp.nudgex+15, y*16+stamp.nudgey-5)
 						draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
-						gtopl = ""
+						gtopl = ""		// these seem to conflict and the palette id's box gens with monsters nearby
 						stonce[mel] = 0
 					}
 				}

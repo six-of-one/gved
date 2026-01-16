@@ -528,9 +528,10 @@ fmt.Printf("in remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.eda
 		upwin(Ovimg)
 	}
 	if wpalop {
-		nimg := segimage(plbuf,plflg,palxs,palys, false)
-		clikwin(wpal, nimg, palxs, palys)
-		wpal.Resize(fyne.NewSize(float32(palxs*32), float32(palys*32)))
+//		nimg := segimage(plbuf,plflg,palxs,palys, true)
+//		clikwin(wpal, nimg, palxs, palys)
+		bwin(palxs, palys, 0, plbuf, plflg)
+// /		wpal.Resize(fyne.NewSize(float32(palxs*32), float32(palys*32)))
 	}
 }
 
