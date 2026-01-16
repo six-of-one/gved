@@ -192,7 +192,7 @@ func typedRune(r rune) {
 		anum = 0
 	}
 
-	fmt.Printf("r %v shift %v\n",r,shift)
+//fmt.Printf("r %v shift %v\n",r,shift)
 		edkey = int(r)
 		if cmdoff {
 			if G1 {

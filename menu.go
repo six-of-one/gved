@@ -320,7 +320,6 @@ func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 	btn.title = cw.Title()
 	box := container.NewPadded(btn, bimg)		// key to seeing maze & having the click button will full mouse sense
 	cw.SetContent(box)
-	cw.Canvas().Refresh(box)
 fmt.Printf("btn sz %v\n",btn.Size())
 
 }
