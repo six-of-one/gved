@@ -331,22 +331,16 @@ if opts.Verbose { fmt.Printf("wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_
 
 // editor override
 	if opts.edat > 0 && opts.edip != 0 {
-		zero_stat()
-fmt.Printf("editor override\n")
 		for y := 0; y <= opts.DimY; y++ {
 			for x := 0; x <= opts.DimX; x++ {
 			maze.data[xy{x, y}] = ebuf[xy{x, y}]
-			stats(ebuf[xy{x, y}])
 		}}
 	}
 	// resetting buffer
 	if opts.edat < 1 || opts.edip == 0 {
-		zero_stat()
-fmt.Printf("resetting buffer\n")
 		for y := 0; y <= opts.DimY; y++ {
 			for x := 0; x <= opts.DimX; x++ {
 			ebuf[xy{x, y}] = maze.data[xy{x, y}]
-			stats(ebuf[xy{x, y}])
 		}}
 	}
 	return maze
