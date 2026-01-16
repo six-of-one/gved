@@ -1627,7 +1627,7 @@ if opts.Verbose { fmt.Printf("\n") }
 // gen type op - the context to draw
 			gtop := gg.NewContext(12, 12)
 // gtop font
-			if err := gtop.LoadFontFace(".font/VrBd.ttf", 14); err != nil {
+			if err := gtop.LoadFontFace(".font/VrBd.ttf", 10); err != nil {
 				panic(err)
 				}
 
@@ -2029,13 +2029,13 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 					mel := whatis(maze, x, y)
 					if G1 { st = fmt.Sprintf("%d",g1stat[mel]) }
 					if G2 { st = fmt.Sprintf("%d",g2stat[mel]) }
-					if st != "" && stonce[whatis(maze, x, y)] > 0 {
+					if st != "" && stonce[mel] > 0 {
 						gtop.Clear()
 						gtop.SetRGB(0.5, 0.5, 0.5)
 						gtop.SetRGB(1, 0, 0)
 						gtop.DrawStringAnchored(st, 6, 6, 0.5, 0.5)
 						gtopim := gtop.Image()
-						offset := image.Pt(x*16+stamp.nudgex+16, y*16+stamp.nudgey-4)
+						offset := image.Pt(x*16+stamp.nudgex+18, y*16+stamp.nudgey-8)
 						draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 						gtopl = ""
 						stonce[mel] = 0

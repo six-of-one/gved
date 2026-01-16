@@ -527,6 +527,10 @@ fmt.Printf("in remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.eda
 		Ovimg := genpfimage(edmaze, mazn)
 		upwin(Ovimg)
 	}
+	if wpalop {
+		nimg := segimage(plbuf,plflg,palxs,palys, false)
+		clikwin(wpal, nimg, palxs, palys)
+	}
 }
 
 // palette
@@ -542,6 +546,8 @@ var wpalop bool		// is the pb win open?
 var wpal fyne.Window // is the pal win open?
 var plbuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var plflg [11]int
+var palxs int
+var palys int
 
 func palete() {
 
@@ -666,6 +672,8 @@ var lw fyne.Window	// local cpy win to view buf contents
 		wpal.Resize(fyne.NewSize(float32(px*32), float32(py*32)))		// have to do this on new win
 		wpal.Show()
 	}
+	palxs = px
+	palys = py
 	clikwin(wpal, nimg, px, py)
 	lw = wpal
   }
