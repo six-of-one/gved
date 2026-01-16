@@ -321,8 +321,8 @@ func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 	box := container.NewPadded(btn, bimg)		// key to seeing maze & having the click button will full mouse sense
 	cw.SetContent(box)
 fmt.Printf("btn sz %v\n",btn.Size())
-
 }
+
 // update contents of main edit window, includes title
 
 func upwin(simg *image.NRGBA) {
