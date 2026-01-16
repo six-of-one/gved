@@ -530,7 +530,6 @@ fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts
 	}
 	if wpalop {
 		zero_stat()
-fmt.Printf("remaze stats\n")
 		for y := 0; y <= opts.DimY; y++ {
 			for x := 0; x <= opts.DimX; x++ {
 			stats(ebuf[xy{x, y}])

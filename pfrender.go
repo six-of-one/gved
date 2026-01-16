@@ -10,9 +10,6 @@ import (
 	"github.com/fogleman/gg"
 	"image/color"
 	"encoding/binary"
-
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/canvas"
 )
 
 
@@ -2065,15 +2062,6 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 			}
 		}
 	}
-// test drawn maze
-if stat {
-	ww := a.NewWindow("test img")
-	ww.Resize(fyne.NewSize(float32(xs*32), float32(ys*32)))		// have to do this on new win
-//	ww.Show()
-	bimg := canvas.NewRasterFromImage(img)
-	ww.Canvas().SetContent(bimg)
-	ww.Close()
-}
 
 	g2mask[MAZEOBJ_WALL_REGULAR] = 2048
 	g2mask[MAZEOBJ_WALL_SECRET] = 1024
