@@ -5,13 +5,14 @@ import (
 	"os"
 	"image"
 	"image/color"
+	"image/draw"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
     "fyne.io/fyne/v2/canvas"
-//	"fyne.io/fyne/v2/container"
+
 )
 
 // kontrol is for keyboard, mouse & input management
@@ -701,6 +702,62 @@ func sdbit(dir int) string {
 	return spar
 }
 
+// rubber banded
+
+type testWidget struct {
+	widget.BaseWidget
+	background *canvas.Rectangle
+	images     []*canvas.Image
+	objects    []fyne.CanvasObject
+}
+
+var bWid *holdableButton
+
+func NewTestWidget() *testWidget {
+	wid := &testWidget{}
+	wid.ExtendBaseWidget(wid)
+	wid.background = canvas.NewRectangle(color.Black)
+	img := image.NewNRGBA(image.Rect(0, 0, 5, 5))
+	draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 200}}, image.ZP, draw.Src)
+
+	wid.objects = []fyne.CanvasObject{wid.background}
+// #1 is cursor
+		cImg := canvas.NewImageFromImage(img)
+		cImg.Move(fyne.Position{float32(400), float32(300)})
+		cImg.Resize(fyne.Size{2, 2})
+		wid.images = append(wid.images, cImg)
+		wid.objects = append(wid.objects, cImg)
+// #2 is blot out
+		blot := canvas.NewImageFromImage(img)
+		blot.Move(fyne.Position{float32(400), float32(300)})
+		blot.Resize(fyne.Size{1, 1})	//}
+		wid.images = append(wid.images, blot)
+		wid.objects = append(wid.objects, blot)
+	return wid
+}
+
+func (wid *testWidget) CreateRenderer() fyne.WidgetRenderer { return wid }
+func (wid *testWidget) Layout(size fyne.Size)               { wid.background.Resize(size) }
+func (wid *testWidget) MinSize() fyne.Size                  { return fyne.Size{1060, 1086} }
+func (wid *testWidget) Refresh()                            {}
+func (wid *testWidget) Objects() []fyne.CanvasObject        { return wid.objects }
+func (wid *testWidget) Destroy()                            {}
+func (wid *testWidget) Dragged(event *fyne.DragEvent) {
+
+	dx, dy := event.Dragged.DX, event.Dragged.DY
+	op := 1
+	for _, img := range wid.images {
+		if op == 1 {
+			position := img.Position()
+			img.Move(fyne.Position{position.X + dx, position.Y + dy})
+		}
+		op++
+		// img.Refresh() // uncommenting this line makes animation junky
+	}
+	// wid.background.Refresh() // uncommenting this line seems to work, but seems hacky
+}
+func (wid *testWidget) DragEnd() {}
+
 // click area for edits
 
 // button we can detect click and release areas for rubberband area & fills
@@ -709,12 +766,26 @@ func sdbit(dir int) string {
 type holdableButton struct {
     widget.Button
 	title string
+	background *canvas.Rectangle
+	images     []*canvas.Image
+	objects    []fyne.CanvasObject
 }
 
 func newHoldableButton() *holdableButton {
 
-    button := &holdableButton{}
+    bWid = &holdableButton{}
+	button := bWid
     button.ExtendBaseWidget(button)
+// blotter
+	button.background = canvas.NewRectangle(color.Black)
+	img := image.NewNRGBA(image.Rect(0, 0, 5, 5))
+	draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
+	blot := canvas.NewImageFromImage(img)
+	blot.Move(fyne.Position{float32(100), float32(100)})
+	blot.Resize(fyne.Size{10, 10})	//}
+	button.images = append(button.images, blot)
+	button.objects = append(button.objects, blot)
+
 	return button
 }
 
@@ -726,8 +797,7 @@ var sxmd float64
 var symd float64
 var exmd float64
 var eymd float64
-var drect image.Rectangle
-var bx *fyne.Container
+var mbd bool
 
 // &{{{387 545} {379 509.92188}} 4 0}
 
@@ -743,21 +813,24 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	cwt = h.title	// current window title by btn establish
 //	beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f",ax,ay,rx,ry)
 //	statlin(cmdhin,beef)
-	sx := sxmd
-	sy := symd
-	if rx < sx { t := rx; rx = sx; sx = t }		// swap if end smaller than start
-	if ry < sy { t := ry; ry = sy; sy = t }
-//	drect = image.Rect(0, 0, int(sx-rx), int(sy-ry))
-//	drect = image.Rect(int(sx), int(sy), int(rx), int(ry))
-//	w.Canvas().SetContent(drect)
-//	i := canvas.NewRasterFromImage(image.NewNRGBA(image.Rect(int(sx), int(sy), int(rx), int(ry))))
-//	i.SetMinSize(fyne.NewSize(float32(width), float32(height)))
-	i := canvas.NewRectangle(color.Black)
-	i.Resize(fyne.NewSize(float32(sx-rx), float32(sy-ry)))
-	bx = fyne.NewContainer(i)
-//	bx.Size(fyne.Size(float32(rx-sx), float32(ry-sy)))
-	bx.Move(fyne.NewPos(float32(sx), float32(sy)))
-// /	w.SetContent(bx)
+	sx := float32(sxmd)
+	sy := float32(symd)
+	ex := float32(rx)
+	ey := float32(ry)
+
+	for _, img := range bWid.images {
+		if mbd {
+			if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
+			if ey < sy { t := sy; sy = ey; ey = t }
+			img.Move(fyne.Position{sx, sy})
+			img.Resize(fyne.Size{ex - sx, ey - sy})
+		} else {
+			img.Resize(fyne.Size{0, 0})
+		}
+//		img.Refresh() // uncommenting this line makes animation junky
+	}
+if mbd { fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey) }
+//	h.Refresh()
 }
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
@@ -768,6 +841,7 @@ func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	pos := fmt.Sprintf("%v",mm)
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&sxmd,&symd,&mb,&mk)
 	fmt.Printf("%d down: %.2f x %.2f \n",mb,sxmd,symd)
+	mbd = (mb == 1)
 }
 
 var repl int		// replace will be by ctrl-h in select area or entire maze, by match
@@ -779,6 +853,7 @@ var cycloc = 99
 func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 
 	mb := 0		// mb 1 = left, 2 = right, 4 = middle
+	mbd = false
 	ax := 0.0	// absolute x & y
 	ay := 0.0
 	exmd = 0.0	// rel x & y interm float32
