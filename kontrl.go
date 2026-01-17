@@ -782,13 +782,21 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
 	if ccp == PASTE {
+//		ex = float32(float32(rx) + dt)
+//		ey = float32(float32(ry) + dt)
+		sx := float32(rx)
+		sy := float32(ry)
 		lx := float32(cpx) * dt
 		ly := float32(cpy) * dt
 		if wpbop {
+beef := fmt.Sprintf("pb o: %.2f x %.2f s: %.2f x %.2f dt: %.2f",sx,sy,lx,ly,dt)
+statlin(cmdhin,beef)
 			blotter(wpbimg,sx,sy,lx,ly)
 		} else {
 			blot.Move(fyne.Position{sx, sy})
 			blot.Resize(fyne.Size{lx, ly})
+beef := fmt.Sprintf("rbd o: %.2f x %.2f s: %.2f x %.2f dt: %.2f",sx,sy,lx,ly,dt)
+statlin(cmdhin,beef)
 		}
 	} else {
 	if mbd {
