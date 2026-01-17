@@ -25,12 +25,12 @@ a palette system similar to edit in sanctuary
 * or a second window for palette, with edit opts
 
 a basic "playable" mode to test mazes
+- port rnd load profile sanctuary code, and use #T flags to remove certain elements, wip
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
 - sprites needed (sprites have to replace gens, treasure, keys, pots, etc)
-- port rnd load profile sanctuary code, and use #T flags to remove certain elements
 
 multiple save buffers to store vars maze edits, page thru all wiht 'S', store with #'S', load with #'L'
-* can always store & page -- g1 & g2 have sep buffers
+* can always store & page -- G¹ & G² have sep buffers
 * use a certain buffer (0 ?) to store the main edit pallete for middl-clicks
 * modify lod_maz to pass mazedata & bool for ubuf
 * dirty flag so quit, pgup, pgdn know unsaved changes are there and give warning dialog
@@ -40,11 +40,12 @@ copy / cut / paste
 * do same with ccp buffer - page thru and view them
 * for now these lock in - this is a 'feature' (nudge, nudge, wink, wink) until proper cfg file & dialog allow selection
 * using new window to view paste buffer contents
+- filter master paste buffer storage
 
 issues needing fixed
 - will the autosaves (around L, S, etc) become an issue?
 - undo after paste works weirdly sometimes
-- saw instanced where paste pasted wrong data, needs checked again
+- saw instanced where paste pasted wrong data, needs checked again - G¹ / G² switch
 
 possible:
 - down the line .ed stored maz# could be used to set maz num

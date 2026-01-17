@@ -9,7 +9,7 @@ import (
 	"encoding/binary"
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/canvas"
-
+	"fyne.io/fyne/v2/dialog"
 )
 
 /*
@@ -575,6 +575,11 @@ func palete() {
 func palRune(r rune) {
 
 	switch r {
+		case '?': dialog.ShowInformation("palette ops", "in gved main window:\n"+
+				"select maze\nhit 'e' - activate edit mode\nhit '\\' for edit keys\n"+
+				"hit a key to map: 'y'\nmove mouse to palette\nand middle click an element\n"+
+				"edit hint on menu bar give status"+
+				"\n\npal win keys:\nq,Q - quit\n\n(only when window active)\n", wpal)
 		case 'q': fallthrough
 		case 'Q': if wpalop { wpalop = false; wpal.Close() }
 		default:
@@ -635,6 +640,9 @@ fmt.Printf("pbcnt: %d, ses cnt: %d\n",pbcnt,lpbcnt)
 func pbRune(r rune) {
 
 	switch r {
+		case '?': dialog.ShowInformation("paste buffer viewer keys", "q,Q - quit\n"+
+				"o,p - cycle session pb - / +\nO,P - cycle master pb - / +\n"+
+				", . - cycle master pb - / +\n\n(only when window active)\n", w)			// showing in main win because pb win is usually too small
 		case ',': pbmas_cyc(-1)
 		case '.': pbmas_cyc(1)
 		case 'O': pbmas_cyc(-1)
