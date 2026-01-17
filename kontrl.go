@@ -3,12 +3,15 @@ package main
 import (
 	"fmt"
 	"os"
-//		"image/color"
+	"image"
+	"image/color"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
+    "fyne.io/fyne/v2/canvas"
+//	"fyne.io/fyne/v2/container"
 )
 
 // kontrol is for keyboard, mouse & input management
@@ -723,21 +726,38 @@ var sxmd float64
 var symd float64
 var exmd float64
 var eymd float64
+var drect image.Rectangle
+var bx *fyne.Container
 
 // &{{{387 545} {379 509.92188}} 4 0}
 
 func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
-       ax := 0.0       // absolute x & y
-       ay := 0.0
-       rx := 0.0
-       ry := 0.0
-       mb := 0         // mb 1 = left, 2 = right, 4 = middle
-       mk := 0         // mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
-       pos := fmt.Sprintf("%v",mm)
-       fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&rx,&ry,&mb,&mk)
-	   cwt = h.title	// current window title by btn establish
-//     beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f",ax,ay,rx,ry)
-//     statlin(cmdhin,beef)
+	ax := 0.0       // absolute x & y
+	ay := 0.0
+	rx := 0.0
+	ry := 0.0
+	mb := 0         // mb 1 = left, 2 = right, 4 = middle
+	mk := 0         // mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
+	pos := fmt.Sprintf("%v",mm)
+	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&rx,&ry,&mb,&mk)
+	cwt = h.title	// current window title by btn establish
+//	beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f",ax,ay,rx,ry)
+//	statlin(cmdhin,beef)
+	sx := sxmd
+	sy := symd
+	if rx < sx { t := rx; rx = sx; sx = t }		// swap if end smaller than start
+	if ry < sy { t := ry; ry = sy; sy = t }
+//	drect = image.Rect(0, 0, int(sx-rx), int(sy-ry))
+//	drect = image.Rect(int(sx), int(sy), int(rx), int(ry))
+//	w.Canvas().SetContent(drect)
+//	i := canvas.NewRasterFromImage(image.NewNRGBA(image.Rect(int(sx), int(sy), int(rx), int(ry))))
+//	i.SetMinSize(fyne.NewSize(float32(width), float32(height)))
+	i := canvas.NewRectangle(color.Black)
+	i.Resize(fyne.NewSize(float32(sx-rx), float32(sy-ry)))
+	bx = fyne.NewContainer(i)
+//	bx.Size(fyne.Size(float32(rx-sx), float32(ry-sy)))
+	bx.Move(fyne.NewPos(float32(sx), float32(sy)))
+	w.SetContent(bx)
 }
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
