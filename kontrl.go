@@ -757,7 +757,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	bx = fyne.NewContainer(i)
 //	bx.Size(fyne.Size(float32(rx-sx), float32(ry-sy)))
 	bx.Move(fyne.NewPos(float32(sx), float32(sy)))
-	w.SetContent(bx)
+// /	w.SetContent(bx)
 }
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
