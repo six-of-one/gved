@@ -320,8 +320,8 @@ func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 // turns display into clickable edit area
 	btn := newHoldableButton()
 	btn.title = cw.Title()
-	box := container.NewStack(btn, bimg, blot)		// key to seeing maze & having the click button will full mouse sense
-	cw.SetContent(box)
+	box := container.NewStack(btn, bimg, blot)		// key to seeing maze & having the click button with full mouse sense
+	cw.SetContent(box)								// and blot coming last is shown on top... huh?
 
 // call handle blot off after win chg
 	go func() {
