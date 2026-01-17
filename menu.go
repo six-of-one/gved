@@ -312,7 +312,7 @@ func subsw() {
 
 func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 
-	if blot == nil { blotter(nil) }
+	if blot == nil { blotter(nil,0,0,0,0) }
 	bimg := canvas.NewRasterFromImage(wimg)
 
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))

@@ -6,6 +6,7 @@ import (
 	"os"
 	"io/ioutil"
 	"bufio"
+	"image"
 	"encoding/binary"
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/canvas"
@@ -618,7 +619,7 @@ var lg2cnt int		// ses pb save for g2 maps
 // i've discovered a 'local' in function version of these will crash, this prob needs to be a struct
 var wpbop bool		// is the pb win open?
 var wpb fyne.Window	// win to view pastbuf contents
-
+var wpbimg *image.NRGBA
 // get paste buffer cnt each init
 
 func get_pbcnt() {
@@ -674,6 +675,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 		wpb.SetCloseIntercept(func() {wpbop = false;wpb.Close()})
 		wpb.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))		// have to do this on new win
 		wpb.Show()
+		wpbimg = nimg
 	}
 	lw = wpb
 	wt = fmt.Sprintf("%d pbf",bn)

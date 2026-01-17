@@ -706,15 +706,15 @@ func sdbit(dir int) string {
 
 var blot *canvas.Image
 
-func blotter(img *image.NRGBA) {
+func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 
 	if img == nil {
 		img = image.NewNRGBA(image.Rect(0, 0, 1, 1))
 		draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
 	}
 	blot = canvas.NewImageFromImage(img)
-	blot.Move(fyne.Position{0, 0})
-	blot.Resize(fyne.Size{0, 0})
+	blot.Move(fyne.Position{px, py})
+	blot.Resize(fyne.Size{sx, sy})
 }
 
 // turn off blotter after a window update
@@ -779,8 +779,14 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 //beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f dt: %.2f",sx,sy,ex,ey,dt)
 //statlin(cmdhin,beef)
 
+statlin(cmdhin,h.title)
+
 	if ccp == PASTE {
-		
+		if wpbop {
+			lx := float32(cpx) * dt
+			ly := float32(cpy) * dt
+			blotter(wpbimg,sx,sy,lx,ly)
+		}
 	} else {
 	if mbd {
 		sx = float32(int(sx / dt)) * dt - 3				// blotter selects tiles with original unit of 16 x 16
