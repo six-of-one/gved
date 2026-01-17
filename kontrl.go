@@ -704,59 +704,7 @@ func sdbit(dir int) string {
 
 // rubber banded
 
-type testWidget struct {
-	widget.BaseWidget
-	background *canvas.Rectangle
-	images     []*canvas.Image
-	objects    []fyne.CanvasObject
-}
-
 var bWid *holdableButton
-
-func NewTestWidget() *testWidget {
-	wid := &testWidget{}
-	wid.ExtendBaseWidget(wid)
-	wid.background = canvas.NewRectangle(color.Black)
-	img := image.NewNRGBA(image.Rect(0, 0, 5, 5))
-	draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 200}}, image.ZP, draw.Src)
-
-	wid.objects = []fyne.CanvasObject{wid.background}
-// #1 is cursor
-		cImg := canvas.NewImageFromImage(img)
-		cImg.Move(fyne.Position{float32(400), float32(300)})
-		cImg.Resize(fyne.Size{2, 2})
-		wid.images = append(wid.images, cImg)
-		wid.objects = append(wid.objects, cImg)
-// #2 is blot out
-		blot := canvas.NewImageFromImage(img)
-		blot.Move(fyne.Position{float32(400), float32(300)})
-		blot.Resize(fyne.Size{1, 1})	//}
-		wid.images = append(wid.images, blot)
-		wid.objects = append(wid.objects, blot)
-	return wid
-}
-
-func (wid *testWidget) CreateRenderer() fyne.WidgetRenderer { return wid }
-func (wid *testWidget) Layout(size fyne.Size)               { wid.background.Resize(size) }
-func (wid *testWidget) MinSize() fyne.Size                  { return fyne.Size{1060, 1086} }
-func (wid *testWidget) Refresh()                            {}
-func (wid *testWidget) Objects() []fyne.CanvasObject        { return wid.objects }
-func (wid *testWidget) Destroy()                            {}
-func (wid *testWidget) Dragged(event *fyne.DragEvent) {
-
-	dx, dy := event.Dragged.DX, event.Dragged.DY
-	op := 1
-	for _, img := range wid.images {
-		if op == 1 {
-			position := img.Position()
-			img.Move(fyne.Position{position.X + dx, position.Y + dy})
-		}
-		op++
-		// img.Refresh() // uncommenting this line makes animation junky
-	}
-	// wid.background.Refresh() // uncommenting this line seems to work, but seems hacky
-}
-func (wid *testWidget) DragEnd() {}
 
 // click area for edits
 
