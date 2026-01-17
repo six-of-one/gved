@@ -706,10 +706,12 @@ func sdbit(dir int) string {
 
 var blot *canvas.Image
 
-func blotter() {
+func blotter(img *image.NRGBA) {
 
-	img := image.NewNRGBA(image.Rect(0, 0, 1, 1))
-	draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
+	if img == nil {
+		img = image.NewNRGBA(image.Rect(0, 0, 1, 1))
+		draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
+	}
 	blot = canvas.NewImageFromImage(img)
 	blot.Move(fyne.Position{0, 0})
 	blot.Resize(fyne.Size{0, 0})
@@ -764,22 +766,33 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	pos := fmt.Sprintf("%v",mm)
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&rx,&ry,&mb,&mk)
 	cwt = h.title	// current window title by btn establish
-//	beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f",ax,ay,rx,ry)
-//	statlin(cmdhin,beef)
+//fmt.Printf("a: %f x %f rp: %f x %f\n",ax,ay,rx,ry)
+	dt := float32(opts.dtec)
 	sx := float32(sxmd)
 	sy := float32(symd)
 	ex := float32(rx)
 	ey := float32(ry)
+	if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
+	if ey < sy { t := sy; sy = ey; ey = t }
+	ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
+	ey = float32(float32(ey) + dt)
+//beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f dt: %.2f",sx,sy,ex,ey,dt)
+//statlin(cmdhin,beef)
 
+	if ccp == PASTE {
+		
+	} else {
 	if mbd {
-		if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
-		if ey < sy { t := sy; sy = ey; ey = t }
+		sx = float32(int(sx / dt)) * dt - 3				// blotter selects tiles with original unit of 16 x 16
+		sy = float32(int(sy / dt)) * dt - 4
+		ex = float32(int(ex / dt)) * dt - 1
+		ey = float32(int(ey / dt)) * dt - 2
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
 	} else {
 		blot.Resize(fyne.Size{0, 0})
-	}
+	}}
 }
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
@@ -791,6 +804,7 @@ func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&sxmd,&symd,&mb,&mk)
 	fmt.Printf("%d down: %.2f x %.2f \n",mb,sxmd,symd)
 	mbd = (mb == 1)
+	if mbd { h.MouseMoved(mm) }		// engage 1 tile click
 }
 
 var repl int		// replace will be by ctrl-h in select area or entire maze, by match
@@ -803,6 +817,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 
 	mb := 0		// mb 1 = left, 2 = right, 4 = middle
 	mbd = false
+	h.MouseMoved(mm)				// disengage blotter
 	ax := 0.0	// absolute x & y
 	ay := 0.0
 	exmd = 0.0	// rel x & y interm float32
