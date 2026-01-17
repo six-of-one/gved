@@ -7,6 +7,7 @@ import (
 	"image/color"
 	"image/draw"
 	"time"
+	"strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"
@@ -779,13 +780,15 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 //beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f dt: %.2f",sx,sy,ex,ey,dt)
 //statlin(cmdhin,beef)
 
-statlin(cmdhin,h.title)
-
+	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
 	if ccp == PASTE {
+		lx := float32(cpx) * dt
+		ly := float32(cpy) * dt
 		if wpbop {
-			lx := float32(cpx) * dt
-			ly := float32(cpy) * dt
 			blotter(wpbimg,sx,sy,lx,ly)
+		} else {
+			blot.Move(fyne.Position{sx, sy})
+			blot.Resize(fyne.Size{lx, ly})
 		}
 	} else {
 	if mbd {
@@ -798,7 +801,7 @@ statlin(cmdhin,h.title)
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
 	} else {
 		blot.Resize(fyne.Size{0, 0})
-	}}
+	}}}
 }
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
