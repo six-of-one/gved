@@ -7,8 +7,8 @@ edator ideas:
 ctrl-h toggle clcik item replace modes
 
 rubber-band ops - click and drag will expand to set region of place / del / edit
-- idea: show rubber band with visible indicator smh (sprites?)
-* ctrl-click should only operate with outer cells
+* idea: show rubber band with visible indicator smh
+* ctrl-click should only operate on outer cells of band
 * copy, cut & paste rubber-band contents
 
 replace mode - either over entire maze, rubber band region, select y/n on each find, or click item replace
@@ -40,7 +40,8 @@ copy / cut / paste
 * do same with ccp buffer - page thru and view them
 * for now these lock in - this is a 'feature' (nudge, nudge, wink, wink) until proper cfg file & dialog allow selection
 * using new window to view paste buffer contents
-- filter master paste buffer storage
+- filter master paste buffer storage (key on pb win to toggle/select)
+  - deselect all option
 
 issues needing fixed
 - will the autosaves (around L, S, etc) become an issue?
