@@ -12,7 +12,6 @@ import (
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
     "fyne.io/fyne/v2/canvas"
-
 )
 
 // kontrol is for keyboard, mouse & input management
@@ -704,8 +703,16 @@ func sdbit(dir int) string {
 
 // rubber banded
 
-var bWid *holdableButton
+var blot *canvas.Image
 
+func blotter() {
+
+	img := image.NewNRGBA(image.Rect(0, 0, 5, 5))
+	draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
+	blot = canvas.NewImageFromImage(img)
+	blot.Move(fyne.Position{float32(100), float32(100)})
+	blot.Resize(fyne.Size{10, 10})
+}
 // click area for edits
 
 // button we can detect click and release areas for rubberband area & fills
@@ -714,25 +721,12 @@ var bWid *holdableButton
 type holdableButton struct {
     widget.Button
 	title string
-	background *canvas.Rectangle
-	images     []*canvas.Image
-	objects    []fyne.CanvasObject
 }
 
 func newHoldableButton() *holdableButton {
 
-    bWid = &holdableButton{}
-	button := bWid
+    button := &holdableButton{}
     button.ExtendBaseWidget(button)
-// blotter
-	button.background = canvas.NewRectangle(color.Black)
-	img := image.NewNRGBA(image.Rect(0, 0, 5, 5))
-	draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
-	blot := canvas.NewImageFromImage(img)
-	blot.Move(fyne.Position{float32(100), float32(100)})
-	blot.Resize(fyne.Size{10, 10})	//}
-	button.images = append(button.images, blot)
-	button.objects = append(button.objects, blot)
 
 	return button
 }
@@ -766,18 +760,20 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	ex := float32(rx)
 	ey := float32(ry)
 
-	for _, img := range bWid.images {
-		if mbd {
-			if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
-			if ey < sy { t := sy; sy = ey; ey = t }
-			img.Move(fyne.Position{sx, sy})
-			img.Resize(fyne.Size{ex - sx, ey - sy})
-		} else {
-			img.Resize(fyne.Size{0, 0})
-		}
-//		img.Refresh() // uncommenting this line makes animation junky
+	if mbd {
+		if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
+		if ey < sy { t := sy; sy = ey; ey = t }
+		blot.Move(fyne.Position{sx, sy})
+		blot.Resize(fyne.Size{ex - sx, ey - sy})
+		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
+	} else {
+		blot.Resize(fyne.Size{0, 0})
 	}
-if mbd { fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey) }
+//	blot.Move(fyne.Position{200, 200})
+//	blot.Resize(fyne.Size{110, 110})
+//		blot.Refresh() // uncommenting this line makes animation junky
+
+//if mbd { fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey) }
 //	h.Refresh()
 }
 
