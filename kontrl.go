@@ -6,6 +6,7 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"
@@ -710,10 +711,19 @@ func blotter() {
 	img := image.NewNRGBA(image.Rect(0, 0, 1, 1))
 	draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
 	blot = canvas.NewImageFromImage(img)
-	blot.Move(fyne.Position{float32(0), float32(0)})
+	blot.Move(fyne.Position{0, 0})
 	blot.Resize(fyne.Size{0, 0})
 }
 
+// turn off blotter after a window update
+// because the window update...
+// a. turns it on full maze for no reason
+// b. refuses to turn it off, even with a delay in fn()
+
+func blotoff() {
+	time.Sleep(5 * time.Millisecond)
+	blot.Resize(fyne.Size{0, 0})
+}
 // click area for edits
 
 // button we can detect click and release areas for rubberband area & fills

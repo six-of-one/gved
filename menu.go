@@ -322,9 +322,11 @@ func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 	btn.title = cw.Title()
 	box := container.NewStack(btn, bimg, blot)		// key to seeing maze & having the click button will full mouse sense
 	cw.SetContent(box)
-	blot.Move(fyne.Position{float32(0), float32(0)})
-	blot.Resize(fyne.Size{1, 1})
 
+// call handle blot off after win chg
+	go func() {
+		blotoff()
+	}()
 fmt.Printf("btn sz %v\n",btn.Size())
 }
 

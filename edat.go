@@ -528,6 +528,7 @@ fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts
 		Ovimg := genpfimage(edmaze, mazn)
 		upwin(Ovimg)
 	}
+
 	if wpalop {
 		zero_stat()
 		for y := 0; y <= opts.DimY; y++ {
