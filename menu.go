@@ -312,15 +312,18 @@ func subsw() {
 
 func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 
+	if blot == nil { blotter() }
 	bimg := canvas.NewRasterFromImage(wimg)
+
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
 
 // turns display into clickable edit area
 	btn := newHoldableButton()
 	btn.title = cw.Title()
-	blotter()
 	box := container.NewStack(btn, bimg, blot)		// key to seeing maze & having the click button will full mouse sense
 	cw.SetContent(box)
+	blot.Move(fyne.Position{float32(0), float32(0)})
+	blot.Resize(fyne.Size{1, 1})
 
 fmt.Printf("btn sz %v\n",btn.Size())
 }

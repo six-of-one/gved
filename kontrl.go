@@ -707,12 +707,13 @@ var blot *canvas.Image
 
 func blotter() {
 
-	img := image.NewNRGBA(image.Rect(0, 0, 5, 5))
+	img := image.NewNRGBA(image.Rect(0, 0, 1, 1))
 	draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
 	blot = canvas.NewImageFromImage(img)
-	blot.Move(fyne.Position{float32(100), float32(100)})
-	blot.Resize(fyne.Size{10, 10})
+	blot.Move(fyne.Position{float32(0), float32(0)})
+	blot.Resize(fyne.Size{0, 0})
 }
+
 // click area for edits
 
 // button we can detect click and release areas for rubberband area & fills
@@ -765,16 +766,10 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		if ey < sy { t := sy; sy = ey; ey = t }
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
-		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
+//		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
 	} else {
 		blot.Resize(fyne.Size{0, 0})
 	}
-//	blot.Move(fyne.Position{200, 200})
-//	blot.Resize(fyne.Size{110, 110})
-//		blot.Refresh() // uncommenting this line makes animation junky
-
-//if mbd { fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey) }
-//	h.Refresh()
 }
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
