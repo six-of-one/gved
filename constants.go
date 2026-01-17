@@ -423,7 +423,7 @@ var g1edit_keymap = []int{
 	 27,  38,  44,  57,  58,   0,  40,   0,   0,   2,	//  unit     110 = n  o  p  q  r  s  t  u  v  w
 	  6,   0,  24,   0,   0,   0,   0,   0,   0,   0,	//  unit     120 = x  y  z  {  |  }  ~
 														// * - not currently reassignable, they are edit mode ops keys
-														// ?, \, C, A #a, eE, L, S, H, V
+														// ?, \, C, A #a, ESC, L, S, H, V
 }
 
 var g2edit_keymap = []int{
@@ -443,7 +443,7 @@ var g2edit_keymap = []int{
 	 25,  26,  51,  10,   7,   1,  46,   0,   0,   2,	//  unit     110 = n  o  p  q  r  s  t  u  v  w
 	 16,   0,  24,   0,   0,   0,   0,   0,   0,   0,	//  unit     120 = x  y  z  {  |  }  ~
 														// * - not currently reassignable, they are edit mode ops keys
-														// ?, \, C, A #a, eE, L, S, H, V
+														// ?, \, C, A #a, ESC, L, S, H, V
 }
 
 var map_keymap = []string{

@@ -13,7 +13,7 @@ general controls:			(general keys are always available in both modes)
 
 <CTRL>-Q	quit program
 
-?			command key hints dialog
+?			command key hints dialog - now in All windows
 
 #a	load maze #
 	(G¹ valid 1-127, G² valid 1-117)

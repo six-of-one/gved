@@ -576,7 +576,7 @@ func palRune(r rune) {
 
 	switch r {
 		case '?': dialog.ShowInformation("palette ops", "in gved main window:\n"+
-				"select maze\nhit 'e' - activate edit mode\nhit '\\' for edit keys\n"+
+				"select maze\nhit <ESC> - activate edit mode\nhit '\\' for edit keys\n"+
 				"hit a key to map: 'y'\nmove mouse to palette\nand middle click an element\n"+
 				"edit hint on menu bar give status"+
 				"\n\npal win keys:\nq,Q - quit\n\n(only when window active)\n", wpal)
