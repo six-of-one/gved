@@ -652,7 +652,7 @@ fmt.Printf("%03d ",cpbuf[xy{mx, my}])
 fmt.Printf("\n")
 }*/
 
-	bwin(cpx+1, cpy+1, vl, cpbuf, eflg)		// draw the buffer
+	bwin(cpx+1, cpy+1, vl, cpbuf, eflg, id)		// draw the buffer
 	bl := fmt.Sprintf("paste buf: %d", vl)
 	statlin(cmdhin,bl)
 }
@@ -982,7 +982,7 @@ fmt.Printf("in pasty\n")
 				if ex < 0 || ex > opts.DimX || cpx > opts.DimX { fmt.Printf("paste fail x\n"); return }
 				if ey < 0 || ey > opts.DimY || cpy > opts.DimY { fmt.Printf("paste fail y\n"); return }
 			} else {
-				bwin(cpx+1, cpy+1, pbcnt - 1, cpbuf, eflg)		// draw the buffer
+				bwin(cpx+1, cpy+1, pbcnt - 1, cpbuf, eflg, "ses")		// draw the buffer
 				if ccp == COPY { return }
 			}
 		}}

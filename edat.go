@@ -563,7 +563,7 @@ func palete() {
 	cpx = opts.DimX; cpy = opts.DimY
 
 	if cnd >= 0 { for y := 0; y < 11; y++ { plflg[y] =  tflg[y] };
-		bwin(cpx+1, cpy+1, 0, plbuf, plflg) }
+		bwin(cpx+1, cpy+1, 0, plbuf, plflg, "pal") }
 	opts.DimX = pmx; opts.DimY = pmy
 }
 
@@ -670,7 +670,7 @@ func pbRune(r rune) {
 // px, py - size of paste buffer from 0, 0
 // bn - buffer #
 
-func bwin(px int, py int, bn int, mbuf MazeData, fdat [11]int) {
+func bwin(px int, py int, bn int, mbuf MazeData, fdat [11]int, id string) {
 
 var lw fyne.Window	// local cpy win to view buf contents
   wt := "palette selector"
@@ -695,7 +695,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 		clikwsh(w, nimg, px, py)
 	}
 	lw = wpb
-	wt = fmt.Sprintf("%d pbf",bn)
+	wt = fmt.Sprintf("%d %sf",bn,id)
 //	bimg := canvas.NewRasterFromImage(nimg)
 //	lw.Canvas().SetContent(bimg)
   } else {	// palette or some other win
@@ -715,5 +715,5 @@ var lw fyne.Window	// local cpy win to view buf contents
 	clikwin(lw, nimg, px, py)
 	lw.SetTitle(wt)
 	lw.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
-fmt.Printf("clwin tl: %v\n",fyne.NewSize(float32(px)*dt, float32(py)*dt))
+fmt.Printf("clkwin sz: %v\n",fyne.NewSize(float32(px)*dt, float32(py)*dt))
 }
