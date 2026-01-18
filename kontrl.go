@@ -616,8 +616,8 @@ func uswap() {
 
 // cut / copy / paste (c/c/p) controls
 
-func ccp_NOP() { ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
-func ccp_tog(op int) { if ccp == op { ccp = NOP; smod = "Edit mode: " } else { ccp = op }}
+func ccp_NOP() { if ccp == PASTE { blotoff() }; ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
+func ccp_tog(op int) { if ccp == op { if ccp == PASTE { blotoff() }; ccp = NOP; smod = "Edit mode: " } else { ccp = op }}
 
 func pb_upd(id string, nt string, vl int) {
 // clear old buf
@@ -784,10 +784,10 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 //		ey = float32(float32(ry) + dt)
 		sx := float32(int(ex / dt)) * dt - 3
 		sy := float32(int(ey / dt)) * dt - 3
-		lx := float32(cpx) * dt
-		ly := float32(cpy) * dt
+		lx := float32(cpx) * dt + dt
+		ly := float32(cpy) * dt + dt
 		blot.Move(fyne.Position{sx, sy})
-		blot.Resize(fyne.Size{lx, ly})
+		if !wpbop { blot.Resize(fyne.Size{lx, ly}) }
 beef := fmt.Sprintf("rbd o: %.2f x %.2f s: %.2f x %.2f dt: %.2f",sx,sy,lx,ly,dt)
 statlin(cmdhin,beef)
 	} else {
