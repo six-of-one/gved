@@ -644,6 +644,14 @@ func pb_upd(id string, nt string, vl int) {
 	cpx = opts.DimX; cpy = opts.DimY
 fmt.Printf("%spb dun: px %d py %d, %s\n",nt,cpx,cpy,fil)
 	opts.DimX = pmx; opts.DimY = pmy
+/*
+for my := 0; my <= cpy; my++ {
+	for mx := 0; mx <= cpx; mx++ {
+fmt.Printf("%03d ",cpbuf[xy{mx, my}])
+	}
+fmt.Printf("\n")
+}*/
+
 	bwin(cpx+1, cpy+1, vl, cpbuf, eflg)		// draw the buffer
 	bl := fmt.Sprintf("paste buf: %d", vl)
 	statlin(cmdhin,bl)
