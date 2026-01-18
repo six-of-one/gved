@@ -662,7 +662,7 @@ fmt.Printf("\n")
 func pb_loced(cnt int) {
 	fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",cnt,opts.Gtp)
 	sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
-	pbmas_cyc(0)
+	pb_upd("pb", "mas", cnt)
 }
 
 func pbsess_cyc(dr int) {
