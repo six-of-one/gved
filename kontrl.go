@@ -729,7 +729,7 @@ func blotoff() {
 
 fmt.Printf("blotter offf\n")
 
-	blot.Hide()
+//	blot.Hide()
 	go func() {
 			time.Sleep(5 * time.Millisecond)
 			blot.Resize(fyne.Size{0, 0})
@@ -765,6 +765,16 @@ var mbd bool
 
 // &{{{387 545} {379 509.92188}} 4 0}
 
+func (h *holdableButton) OnMouseOut(mm *desktop.MouseEvent){
+fmt.Printf("maus out\n")
+	blot.Hide()
+}
+
+func (h *holdableButton) OnMouseIn(mm *desktop.MouseEvent){
+fmt.Printf("maus in\n")
+	blot.Show()
+}
+
 func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	ax := 0.0       // absolute x & y
 	ay := 0.0
@@ -794,7 +804,6 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		sy := float32(int(ey / dt)) * dt - 3
 		lx := float32(cpx) * dt + dt
 		ly := float32(cpy) * dt + dt
-		blot.Show()
 		blot.Move(fyne.Position{sx, sy})
 		if !wpbop { blot.Resize(fyne.Size{lx, ly}) }
 beef := fmt.Sprintf("rbd o: %.2f x %.2f s: %.2f x %.2f dt: %.2f",sx,sy,lx,ly,dt)
@@ -811,7 +820,6 @@ statlin(cmdhin,"mm - mbd = 1, blotting")
 		sy = float32(int(sy / dt)) * dt - 4
 		ex = float32(int(ex / dt)) * dt - 1
 		ey = float32(int(ey / dt)) * dt - 2
-		blot.Show()
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)

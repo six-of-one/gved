@@ -678,7 +678,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 		wpb = a.NewWindow("")
 		wpb.Canvas().SetOnTypedRune(pbRune)
 		wpb.SetCloseIntercept(func() {
-			if blot != ccblot { blotoff(); blot = ccblot };	// rb blotter back
+			if blot != ccblot { blot.Hide(); blot = ccblot };	// rb blotter back
 			wpbop = false;wpb.Close()})
 		wpb.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))		// have to do this on new win
 		wpb.Show()
