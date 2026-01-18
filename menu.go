@@ -324,9 +324,7 @@ func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 	cw.SetContent(box)								// and blot coming last is shown on top... huh?
 
 // call handle blot off after win chg
-	go func() {
-		blotoff()
-	}()
+	blotoff()
 fmt.Printf("btn sz %v\n",btn.Size())
 }
 

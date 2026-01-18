@@ -724,9 +724,11 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 // b. refuses to turn it off, even with a delay in fn()
 
 func blotoff() {
-// restor after pb uses
-	time.Sleep(5 * time.Millisecond)
-	blot.Resize(fyne.Size{0, 0})
+
+	go func() {
+		time.Sleep(5 * time.Millisecond)
+		blot.Resize(fyne.Size{0, 0})
+	}()
 }
 // click area for edits
 
