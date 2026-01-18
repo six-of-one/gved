@@ -17,6 +17,7 @@ replace mode - either over entire maze, rubber band region, select y/n on each f
 some type of quick-key insert system, maybe shifted # or so
 * possibly assignable hot-keys
 * more default hotkeys
+- show item when placing, if not ccp or other blotter ops
 
 a palette system similar to edit in sanctuary
 - and the edit options dialog
