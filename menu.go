@@ -265,6 +265,8 @@ func aw_init() {
 	wpalop = false		// pallete
 	ccp = NOP			// paste buffer
 	wpbop = false
+	blotter(nil,0,0,0,0)	// init blotter
+	ccblot = blot			// rubber band blot, saved so pb can display contents then return to rb
 	lg1cnt = 1
 	lg2cnt = 1
 	sdb = -1			// sd buffer
@@ -312,7 +314,7 @@ func subsw() {
 
 func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 
-	if blot == nil { blotter(nil,0,0,0,0) }
+	if blot == nil { blotter(nil,0,0,0,0) }		// blot already init, here as safety valve
 	bimg := canvas.NewRasterFromImage(wimg)
 
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))

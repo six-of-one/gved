@@ -6,8 +6,8 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
-	"time"
 	"strings"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"
@@ -706,6 +706,7 @@ func sdbit(dir int) string {
 // rubber banded
 
 var blot *canvas.Image
+var ccblot *canvas.Image
 
 func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 
@@ -727,9 +728,11 @@ fmt.Printf("blotter - %f x %f rp: %f x %f\n",px,py,sx,sy)
 func blotoff() {
 
 fmt.Printf("blotter offf\n")
+
+	blot.Hide()
 	go func() {
-		time.Sleep(5 * time.Millisecond)
-		blot.Resize(fyne.Size{0, 0})
+			time.Sleep(5 * time.Millisecond)
+			blot.Resize(fyne.Size{0, 0})
 	}()
 }
 // click area for edits
@@ -791,6 +794,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		sy := float32(int(ey / dt)) * dt - 3
 		lx := float32(cpx) * dt + dt
 		ly := float32(cpy) * dt + dt
+		blot.Show()
 		blot.Move(fyne.Position{sx, sy})
 		if !wpbop { blot.Resize(fyne.Size{lx, ly}) }
 beef := fmt.Sprintf("rbd o: %.2f x %.2f s: %.2f x %.2f dt: %.2f",sx,sy,lx,ly,dt)
@@ -807,6 +811,7 @@ statlin(cmdhin,"mm - mbd = 1, blotting")
 		sy = float32(int(sy / dt)) * dt - 4
 		ex = float32(int(ex / dt)) * dt - 1
 		ey = float32(int(ey / dt)) * dt - 2
+		blot.Show()
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
