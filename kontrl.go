@@ -911,7 +911,7 @@ fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
 		pasty := false
 		if ccp == PASTE { pasty = true }
 		if ccp != NOP {
-		if mb != 1 { ccp_NOP(); fmt.Printf("ccp to NOP\n") }
+		if mb != 1 { ccp_NOP(); fmt.Printf("mb: ccp to NOP\n") }
 //		if sx == ex && sy == ey { ccp_NOP() }
 		if ccp != NOP {
 			px :=0
@@ -960,6 +960,7 @@ fmt.Printf("in pasty\n")
 				if ey < 0 || ey > opts.DimY || cpy > opts.DimY { fmt.Printf("paste fail y\n"); return }
 			} else {
 				bwin(cpx+1, cpy+1, pbcnt - 1, cpbuf, eflg)		// draw the buffer
+				if ccp == COPY { return }
 			}
 		}}
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V
