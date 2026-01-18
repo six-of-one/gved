@@ -5,6 +5,7 @@ G¹G²ved ops
 edator ideas:
 
 ctrl-h toggle clcik item replace modes
+* ctrl-del turns on click-delete mode, del turns off
 
 rubber-band ops - click and drag will expand to set region of place / del / edit
 * idea: show rubber band with visible indicator smh
