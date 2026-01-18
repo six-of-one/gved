@@ -724,7 +724,11 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 // b. refuses to turn it off, even with a delay in fn()
 
 func blotoff() {
+// restor after pb uses
 	time.Sleep(5 * time.Millisecond)
+	img := image.NewNRGBA(image.Rect(0, 0, 1, 1))
+	draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
+	blot = canvas.NewImageFromImage(img)
 	blot.Resize(fyne.Size{0, 0})
 }
 // click area for edits
@@ -777,9 +781,9 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 //statlin(cmdhin,beef)
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
+	exmd = rx			// so bwin can locate pb changes if drawn
+	eymd = ry
 	if ccp == PASTE {
-		exmd = rx			// so bwin can locate pb changes if drawn
-		eymd = ry
 //		ex = float32(float32(rx) + dt)
 //		ey = float32(float32(ry) + dt)
 		sx := float32(int(ex / dt)) * dt - 3
