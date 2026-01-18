@@ -727,7 +727,7 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 
 	if img == nil {
 		img = image.NewNRGBA(image.Rect(0, 0, 1, 1))
-		draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
+		draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 205, G: 0, B: 205, A: 130}}, image.ZP, draw.Src)
 	}
 	blot = canvas.NewImageFromImage(img)
 	blot.Move(fyne.Position{px, py})

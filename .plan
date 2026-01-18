@@ -17,7 +17,8 @@ replace mode - either over entire maze, rubber band region, select y/n on each f
 some type of quick-key insert system, maybe shifted # or so
 * possibly assignable hot-keys
 * more default hotkeys
-- show item when placing, if not ccp or other blotter ops
+ӿ show item when placing, if not ccp or other blotter ops
+\_ sadly the blotter has serious issues repurposing to display images
 
 a palette system similar to edit in sanctuary
 - and the edit options dialog
@@ -41,7 +42,7 @@ copy / cut / paste
 * do same with ccp buffer - page thru and view them
 * for now these lock in - this is a 'feature' (nudge, nudge, wink, wink) until proper cfg file & dialog allow selection
 * using new window to view paste buffer contents
-- filter master paste buffer storage (key on pb win to toggle/select)
+- ctrl-f filter master paste buffer storage (key on pb win to toggle/select)
   - deselect all option
 
 issues needing fixed
