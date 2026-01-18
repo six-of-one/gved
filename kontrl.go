@@ -738,6 +738,10 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 // because the window update...
 // a. turns it on full maze for no reason
 // b. refuses to turn it off, even with a delay in fn()
+// and...
+// c. resize window also covers the maze in blotter, which needs a fix
+//		- blot.Hide() works, however blot.Show() flikers the entire maze with momentary blotter
+
 
 func blotoff() {
 
