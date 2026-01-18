@@ -541,6 +541,12 @@ for y := 0; y <= 65; y++ { if g1stat[y] > 0 {fmt.Printf("stat %s: %d\n",g1mapid[
 	}
 }
 
+// valid check, edit key
+
+func valid_keys(ek int) int {
+	if ek > maxkey || ek < minkey { return edkdef }		// 33 to 126, outside this return 121 'y'
+	return ek
+}
 // palette
 
 // statistics on mazes, already set for partial sanctuary expansion

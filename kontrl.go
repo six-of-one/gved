@@ -198,7 +198,7 @@ func typedRune(r rune) {
 	}
 
 //fmt.Printf("r %v shift %v\n",r,shift)
-		edkey = int(r)
+		edkey = valid_keys(int(r))
 		if cmdoff {
 			if G1 {
 //				if g1edit_keymap[edkey] < 0 { keyst := fmt.Sprintf("locked key: %s not usable",map_keymap[edkey]) }
@@ -282,7 +282,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				fmt.Printf("cyc %d - %s\n",cycl,kys)
 				stu := fmt.Sprintf("cyc key: %s = %03d, %s",map_keymap[cycloc],cycl,kys)
 				statlin(cmdhin,stu)
-				edkey = 99						// pre set store cycl when cycling
+				edkey = cyckey					// pre set store cycl when cycling
 				relod = true					// needed to refresh indicate text
 				opts.dntr = true				// ... but dont kill the ebuf
 		case 72:		// H	- horiz wrap
@@ -841,6 +841,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&exmd,&eymd,&mb,&mk)
 	ex := int(exmd / opts.dtec)
 	ey := int(eymd / opts.dtec)
+	edkey = valid_keys(edkey)
 
 	if wpalop {
 	if h.title == wpal.Title() {

@@ -406,6 +406,13 @@ var mazeSecretStrings = map[int]string{
 // edit key shortcut list - < 0 means not usable, not reassingable
 // most of these will need manually set (note: save to cfg file)
 
+const(
+	minkey = 33
+	cyckey = 99
+	edkdef = 121
+	maxkey = 126
+)
+
 var g1edit_keymap = []int{
 // all non key values
 //    0    1    2    3    4    5    6    7    8    9
