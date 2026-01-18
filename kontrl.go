@@ -657,6 +657,14 @@ fmt.Printf("\n")
 	statlin(cmdhin,bl)
 }
 
+// transforms on cpbuf in smol window
+
+func pb_loced(cnt int) {
+	fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",cnt,opts.Gtp)
+	sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
+	pbmas_cyc(0)
+}
+
 func pbsess_cyc(dr int) {
 
 fmt.Printf("pbses c: %d %d\n",lpbcnt,sesbcnt)

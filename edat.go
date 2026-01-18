@@ -396,51 +396,18 @@ func undo_buf(sx int, sy int, rc int) {
 //fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 }
 
-// same as mazeloop, but called by Rr, h, m while cmd keys active in edit mode
-// 	╚══> except in this buffer is changed by ops
+// the actual werker, so we can use it on cpbuf, etc
 
-func rotmirbuf(rmmaze *Maze) {
-
-	fmt.Printf("in rotmirbuf\n")
+func rotmirmov(mdat MazeData, sx int, sy int, lastx int, lasty int, flg int) {
 
 // to transform maze, array copy
 	xform := make(map[xy]int)
-// manual mirror, flip
-	sx := 0
-	lastx := 32
-	if rmmaze.flags&LFLAG4_WRAP_H > 0 {
-		sx = 0
-		lastx = 31
-	}
-
-	sy := 0
-	lasty := 32
-	if rmmaze.flags&LFLAG4_WRAP_V > 0 {
-		sy = 0		// otherwise it wont MV correct
-		lasty = 31
-	}
-
-	fmt.Printf("wraps -- hw: %d vw: %d\n", rmmaze.flags&LFLAG4_WRAP_H,rmmaze.flags&LFLAG4_WRAP_V)
-	fmt.Printf("rotmirbuf fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
-
-
-// note it
-/*		fmt.Printf("init\n")
-	for y := 0; y <= lasty; y++ {
-		for x := 0; x <= lastx; x++ {
-
-			fmt.Printf(" %02d", rmmaze.data[xy{x, y}])
-		}
-		fmt.Printf("\n")
-	}
-		fmt.Printf("\n")
-*/
 // transform																										 - rotating sq. wall mazes will always work
 // rotate +90 degrees				-- * there is the issue of gauntlet arcade NEEDING the y = 0 wall *always* intact, rotating looper mazes wont work
 		if opts.MRP {
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
-				xform[xy{lastx - tx, ty}] = rmmaze.data[xy{ty, tx}]
+				xform[xy{lastx - tx, ty}] = mdat[xy{ty, tx}]
 // g1 - must transform all dors on a rotat since they have horiz & vert dependent
 				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_HORIZ { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_VERT } else {
 				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_VERT { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_HORIZ } }
@@ -452,7 +419,7 @@ func rotmirbuf(rmmaze *Maze) {
 		if opts.MRM {
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
-				xform[xy{tx, lasty - ty}] = rmmaze.data[xy{ty, tx}]
+				xform[xy{tx, lasty - ty}] = mdat[xy{ty, tx}]
 // g1
 				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_HORIZ { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_VERT } else {
 				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_VERT { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_HORIZ } }
@@ -467,7 +434,7 @@ func rotmirbuf(rmmaze *Maze) {
 		if opts.MH {
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
-				xform[xy{lastx - tx, ty}] = rmmaze.data[xy{tx, ty}]
+				xform[xy{lastx - tx, ty}] = mdat[xy{tx, ty}]
 			}}
 		}
 
@@ -475,9 +442,9 @@ func rotmirbuf(rmmaze *Maze) {
 		if opts.MV {
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
-				xform[xy{tx, lasty - ty}] = rmmaze.data[xy{tx, ty}]
+				xform[xy{tx, lasty - ty}] = mdat[xy{tx, ty}]
 			}}
-			if rmmaze.flags&LFLAG4_WRAP_V > 0 {	// fix wall not allowed being at bottom for arcade gauntlet
+			if flg&LFLAG4_WRAP_V > 0 {	// fix wall not allowed being at bottom for arcade gauntlet
 				for ty := lasty - 1; ty >= sy ; ty-- {
 				for tx := sx; tx <= lastx; tx++ {
 					xform[xy{tx, ty + 1}] = xform[xy{tx, ty}]
@@ -489,27 +456,49 @@ func rotmirbuf(rmmaze *Maze) {
 // copy back
 		for y := sy; y <= lasty; y++ {
 			for x := sx; x <= lastx; x++ {
-				rmmaze.data[xy{x, y}] = xform[xy{x, y}]
-				ebuf[xy{x, y}] = xform[xy{x, y}]
+				mdat[xy{x, y}] = xform[xy{x, y}]
 			}
 		}
-// TEMP maze dmp
-/*		fmt.Printf("rm dun\n")
-	for y := 0; y <= lasty; y++ {
-		for x := 0; x <= lastx; x++ {
-
-			fmt.Printf(" %02d", rmmaze.data[xy{x, y}])
-		}
-		fmt.Printf("\n")
-	}
-		fmt.Printf("\n")*/
-// REM TEMP
 
 // clear all in edit mode
 	opts.MRP = false
 	opts.MRM = false
 	opts.MV = false
 	opts.MH = false
+}
+
+// same as mazeloop, but called by Rr, h, m while cmd keys active in edit mode
+// 	╚══> except in this buffer is changed by ops
+
+func rotmirbuf(rmmaze *Maze) {
+
+	fmt.Printf("in rotmirbuf\n")
+
+// manual mirror, flip
+	sx := 0
+	sy := 0
+
+	lastx := 32
+	if rmmaze.flags&LFLAG4_WRAP_H > 0 {
+		lastx = 31
+	}
+
+	lasty := 32
+	if rmmaze.flags&LFLAG4_WRAP_V > 0 {
+		lasty = 31
+	}
+
+	fmt.Printf("wraps -- hw: %d vw: %d\n", rmmaze.flags&LFLAG4_WRAP_H,rmmaze.flags&LFLAG4_WRAP_V)
+	fmt.Printf("rotmirbuf fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
+
+	rotmirmov(rmmaze.data,sx,sy,lastx,lasty,rmmaze.flags)
+
+	for y := sy; y <= lasty; y++ {
+		for x := sx; x <= lastx; x++ {
+			ebuf[xy{x, y}] = rmmaze.data[xy{x, y}]
+		}
+	}
+
 }
 
 // reload maze while editing & update window - generates output.png
@@ -658,6 +647,19 @@ func pbRune(r rune) {
 		case 'P': pbmas_cyc(1)
 		case 'o': pbsess_cyc(-1)
 		case 'p': pbsess_cyc(1)
+// some extras
+		case 'r': opts.MRP = true
+			rotmirmov(cpbuf,0,0,cpx,cpy,0)
+			pb_loced(masbcnt)
+		case 'R': opts.MRM = true
+			rotmirmov(cpbuf,0,0,cpx,cpy,0)
+			pb_loced(masbcnt)
+		case 'h': opts.MV = true
+			rotmirmov(cpbuf,0,0,cpx,cpy,0)
+			pb_loced(masbcnt)
+		case 'm': opts.MH = true
+			rotmirmov(cpbuf,0,0,cpx,cpy,0)
+			pb_loced(masbcnt)
 		case 'q': fallthrough
 		case 'Q': if wpbop { wpbop = false; wpb.Close() }
 		default:
