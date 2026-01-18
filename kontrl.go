@@ -889,8 +889,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 				upd_edmaze(false)
 				if lrelod { remaze(opts.mnum) }
 			}
+			return
 		}
-		return
 	}
 
  //   fmt.Printf("up %v\n",mm)
