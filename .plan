@@ -69,3 +69,7 @@ removed:
 ӿ add element totals to palette window      (doesnt work consistently on window update...)
 ӿ shift-del toggle click-delete mode
   (this is the same as sticky cut mode, except that saves cut areas in pastebuf)
+
+future:
+* with the success of the rubberband blotter implement, a glimmer of an idea starts
+  on how to actually code the sanctuary-go game screen
