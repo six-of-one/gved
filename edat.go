@@ -9,7 +9,7 @@ import (
 	"image"
 	"encoding/binary"
 	"fyne.io/fyne/v2"
-    "fyne.io/fyne/v2/canvas"
+//    "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/dialog"
 )
 
@@ -696,8 +696,8 @@ var lw fyne.Window	// local cpy win to view buf contents
 	}
 	lw = wpb
 	wt = fmt.Sprintf("%d pbf",bn)
-	bimg := canvas.NewRasterFromImage(nimg)
-	lw.Canvas().SetContent(bimg)
+//	bimg := canvas.NewRasterFromImage(nimg)
+//	lw.Canvas().SetContent(bimg)
   } else {	// palette or some other win
 	if !wpalop  && bn == 0 {
 		wpalop = true
@@ -709,9 +709,10 @@ var lw fyne.Window	// local cpy win to view buf contents
 	}
 	palxs = px
 	palys = py
-	clikwin(wpal, nimg, px, py)
+//	clikwin(wpal, nimg, px, py)
 	lw = wpal
   }
+	clikwin(lw, nimg, px, py)
 	lw.SetTitle(wt)
-	lw.Resize(fyne.NewSize(float32(px*32), float32(py*32)))
+	lw.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
 }
