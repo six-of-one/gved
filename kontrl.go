@@ -812,8 +812,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	sy := float32(symd)
 	ex := float32(rx)
 	ey := float32(ry)
-beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f dt: %.2f",sx,sy,ex,ey,dt)
-statlin(cmdhin,beef)
+//beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f dt: %.2f",sx,sy,ex,ey,dt)
+//statlin(cmdhin,beef)
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
 	exmd = rx			// so bwin can locate pb changes if drawn
