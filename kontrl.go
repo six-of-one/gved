@@ -629,7 +629,7 @@ func pb_upd(id string, nt string, vl int) {
 	cpx = opts.DimX; cpy = opts.DimY
 fmt.Printf("%spb dun: px %d py %d, %s\n",nt,cpx,cpy,fil)
 	opts.DimX = pmx; opts.DimY = pmy
-	bwin(cpx+1, cpy+1, vl, cpbuf, eflg)		// draw the buffer\
+	bwin(cpx+1, cpy+1, vl, cpbuf, eflg)		// draw the buffer
 	bl := fmt.Sprintf("paste buf: %d", vl)
 	statlin(cmdhin,bl)
 }
@@ -778,22 +778,18 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
 	if ccp == PASTE {
+		exmd = rx			// so bwin can locate pb changes if drawn
+		eymd = ry
 //		ex = float32(float32(rx) + dt)
 //		ey = float32(float32(ry) + dt)
 		sx := float32(int(ex / dt)) * dt - 3
 		sy := float32(int(ey / dt)) * dt - 3
 		lx := float32(cpx) * dt
 		ly := float32(cpy) * dt
-		if wpbop {
-beef := fmt.Sprintf("pb o: %.2f x %.2f s: %.2f x %.2f dt: %.2f",sx,sy,lx,ly,dt)
-statlin(cmdhin,beef)
-			blotter(wpbimg,sx,sy,lx,ly)
-		} else {
-			blot.Move(fyne.Position{sx, sy})
-			blot.Resize(fyne.Size{lx, ly})
+		blot.Move(fyne.Position{sx, sy})
+		blot.Resize(fyne.Size{lx, ly})
 beef := fmt.Sprintf("rbd o: %.2f x %.2f s: %.2f x %.2f dt: %.2f",sx,sy,lx,ly,dt)
 statlin(cmdhin,beef)
-		}
 	} else {
 	if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
 	if ey < sy { t := sy; sy = ey; ey = t }

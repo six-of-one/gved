@@ -672,11 +672,15 @@ var lw fyne.Window	// local cpy win to view buf contents
 		wpbop = true
 		wpb = a.NewWindow("")
 		wpb.Canvas().SetOnTypedRune(pbRune)
-		wpb.SetCloseIntercept(func() {wpbop = false;wpb.Close()})
+		wpb.SetCloseIntercept(func() { dt := float32(opts.dtec); if ccp == PASTE {
+			blotter(nil,float32(exmd),float32(eymd),float32(cpx) * dt,float32(cpy) * dt); }	// rb blotter back if active
+			wpbop = false;wpb.Close()})
 		wpb.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))		// have to do this on new win
 		wpb.Show()
 	}
+// change pb blotter if active
 	wpbimg = nimg		// for blotter overlay on ctrl-p
+	if wpbop && ccp == PASTE { blotter(wpbimg,float32(exmd),float32(eymd),float32(cpx) * dt,float32(cpy) * dt) }
 	lw = wpb
 	wt = fmt.Sprintf("%d pbf",bn)
 	bimg := canvas.NewRasterFromImage(nimg)
