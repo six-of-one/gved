@@ -616,8 +616,8 @@ func uswap() {
 
 // cut / copy / paste (c/c/p) controls
 
-func ccp_NOP() { if ccp == PASTE { blotoff() }; ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
-func ccp_tog(op int) { if ccp == op { if ccp == PASTE { blotoff() }; ccp = NOP; smod = "Edit mode: " } else { ccp = op }}
+func ccp_NOP() { if ccp == PASTE { blotter(nil,0,0,0,0); blotoff() }; ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
+func ccp_tog(op int) { ccp_NOP(); if ccp != op { ccp = op }}
 
 func pb_upd(id string, nt string, vl int) {
 // clear old buf
@@ -726,9 +726,6 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 func blotoff() {
 // restor after pb uses
 	time.Sleep(5 * time.Millisecond)
-	img := image.NewNRGBA(image.Rect(0, 0, 1, 1))
-	draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
-	blot = canvas.NewImageFromImage(img)
 	blot.Resize(fyne.Size{0, 0})
 }
 // click area for edits
