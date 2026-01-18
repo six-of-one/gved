@@ -101,7 +101,7 @@ func specialKey() {
 					}
 				}
 			}
-			if key.Name == "Delete" { del = false }
+			if key.Name == "Delete" { if !ctrl { del = false }; if opts.edat == 1 { smod = "Edit: "; if ctrl { smod = "Edit DEL: " }; statlin(cmdhin,"")}}
 //			if key.Name == "BackSpace" { del = false }
 			if key.Name == "Home" { home = false }
 			if key.Name == "LeftSuper" { logo = false }
