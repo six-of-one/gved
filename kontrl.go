@@ -765,16 +765,6 @@ var mbd bool
 
 // &{{{387 545} {379 509.92188}} 4 0}
 
-func (h *holdableButton) OnMouseOut(mm *desktop.MouseEvent){
-fmt.Printf("maus out\n")
-	blot.Hide()
-}
-
-func (h *holdableButton) OnMouseIn(mm *desktop.MouseEvent){
-fmt.Printf("maus in\n")
-	blot.Show()
-}
-
 func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	ax := 0.0       // absolute x & y
 	ay := 0.0
