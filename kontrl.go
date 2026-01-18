@@ -773,10 +773,6 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	sy := float32(symd)
 	ex := float32(rx)
 	ey := float32(ry)
-	if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
-	if ey < sy { t := sy; sy = ey; ey = t }
-	ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
-	ey = float32(float32(ey) + dt)
 //beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f dt: %.2f",sx,sy,ex,ey,dt)
 //statlin(cmdhin,beef)
 
@@ -784,8 +780,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	if ccp == PASTE {
 //		ex = float32(float32(rx) + dt)
 //		ey = float32(float32(ry) + dt)
-		sx := float32(rx)
-		sy := float32(ry)
+		sx := float32(int(ex / dt)) * dt - 3
+		sy := float32(int(ey / dt)) * dt - 3
 		lx := float32(cpx) * dt
 		ly := float32(cpy) * dt
 		if wpbop {
@@ -799,6 +795,10 @@ beef := fmt.Sprintf("rbd o: %.2f x %.2f s: %.2f x %.2f dt: %.2f",sx,sy,lx,ly,dt)
 statlin(cmdhin,beef)
 		}
 	} else {
+	if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
+	if ey < sy { t := sy; sy = ey; ey = t }
+	ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
+	ey = float32(float32(ey) + dt)
 	if mbd {
 		sx = float32(int(sx / dt)) * dt - 3				// blotter selects tiles with original unit of 16 x 16
 		sy = float32(int(sy / dt)) * dt - 4

@@ -676,7 +676,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 		wpb.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))		// have to do this on new win
 		wpb.Show()
 	}
-	wpbimg = nimg
+	wpbimg = nimg		// for blotter overlay on ctrl-p
 	lw = wpb
 	wt = fmt.Sprintf("%d pbf",bn)
 	bimg := canvas.NewRasterFromImage(nimg)
