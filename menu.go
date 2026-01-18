@@ -267,7 +267,7 @@ func aw_init() {
 	ccp = NOP			// paste buffer
 	wpbop = false
 	blotter(nil,0,0,0,0)	// init blotter
-//	ccblot = blot			// rubber band blot, saved so pb can display contents then return to rb
+	ccblot = blot			// rubber band blot, saved so pb can display contents then return to rb
 	lg1cnt = 1
 	lg2cnt = 1
 	sdb = -1			// sd buffer
@@ -313,27 +313,42 @@ func subsw() {
 
 // make clickable image wimg in window cw with given size
 
+var rbimg *canvas.Raster			// for the pb paste image dealy
+var rbtn *holdableButton
+
+// clik win short ver for pb image
+
+func clikwsh(cw fyne.Window, limg *image.NRGBA, px int, py int) {
+		t := cw.Title()
+		if strings.Contains(t, "G¹G²ved") {
+			blot = canvas.NewImageFromImage(limg)
+			box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
+			cw.SetContent(box)
+			blotoff()
+		}
+}
+
 func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 
-	bimg := canvas.NewRasterFromImage(wimg)
+	rbimg = canvas.NewRasterFromImage(wimg)
 
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
 
 // turns display into clickable edit area
-	btn := newHoldableButton()
-	btn.title = cw.Title()
-fmt.Printf("clwin tl: %s\n",btn.title)
-	if strings.Contains(btn.title, "G¹G²ved") {
-		box := container.NewStack(btn, bimg, blot)		// key to seeing maze & having the click button with full mouse sense
+	rbtn = newHoldableButton()
+	rbtn.title = cw.Title()
+fmt.Printf("clwin tl: %s\n",rbtn.title)
+	if strings.Contains(rbtn.title, "G¹G²ved") {
+		box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
 		cw.SetContent(box)								// and blot coming last is shown on top... huh?
 	} else {
-		box := container.NewStack(btn, bimg)
+		box := container.NewStack(rbtn, rbimg)
 		cw.SetContent(box)
 	}
 
 // call handle blot off after win chg
 	blotoff()
-fmt.Printf("btn sz %v\n",btn.Size())
+fmt.Printf("btn sz %v\n",rbtn.Size())
 }
 
 // update contents of main edit window, includes title

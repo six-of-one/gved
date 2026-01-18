@@ -6,7 +6,7 @@ import (
 	"os"
 	"io/ioutil"
 	"bufio"
-//	"image"
+	"image"
 	"encoding/binary"
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/canvas"
@@ -625,7 +625,7 @@ var lg2cnt int		// ses pb save for g2 maps
 // i've discovered a 'local' in function version of these will crash, this prob needs to be a struct
 var wpbop bool		// is the pb win open?
 var wpb fyne.Window	// win to view pastbuf contents
-//var wpbimg *image.NRGBA
+var wpbimg *image.NRGBA
 
 // get paste buffer cnt each init
 
@@ -680,18 +680,19 @@ var lw fyne.Window	// local cpy win to view buf contents
 		wpb = a.NewWindow("")
 		wpb.Canvas().SetOnTypedRune(pbRune)
 		wpb.SetCloseIntercept(func() {
-//			if blot != ccblot { blot.Hide(); blot = ccblot };	// rb blotter back
-			wpbop = false;wpb.Close()})
+			if blot != ccblot { blot.Hide(); blot = ccblot };	// rb blotter back
+			wpbop = false; wpb.Close()})
 		wpb.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))		// have to do this on new win
 		wpb.Show()
 	}
 // change pb blotter if active
-/*	wpbimg = nimg										// for blotter overlay on ctrl-p
+	wpbimg = nimg										// for blotter overlay on ctrl-p
 	if wpbop && ccp == PASTE {
 		fmt.Printf("pg img\n")
 		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
-		blot = canvas.NewImageFromImage(nimg)
-	} */
+//		blot = canvas.NewImageFromImage(nimg)
+		clikwsh(w, nimg, px, py)
+	}
 	lw = wpb
 	wt = fmt.Sprintf("%d pbf",bn)
 	bimg := canvas.NewRasterFromImage(nimg)

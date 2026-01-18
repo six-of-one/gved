@@ -617,9 +617,9 @@ func uswap() {
 // cut / copy / paste (c/c/p) controls
 
 func ccp_NOP() {
-/*	if ccp == PASTE {
+	if ccp == PASTE {
 		if blot != ccblot { blot.Hide(); blot = ccblot }
-	} */
+	}
 	ccp = NOP
 	if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }
 }
@@ -627,11 +627,12 @@ func ccp_tog(op int) {
 	wccp := ccp
 	ccp_NOP()
 	if wccp != op { ccp = op }
-/*	if wpbop && ccp == PASTE {
+	if wpbop && ccp == PASTE {
 		fmt.Printf("pg img 2\n")
 		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
-		blot = canvas.NewImageFromImage(wpbimg)
-	}*/
+//		blot = canvas.NewImageFromImage(wpbimg
+		clikwsh(w, wpbimg, cpx, cpy)
+	}
 }
 
 func pb_upd(id string, nt string, vl int) {
@@ -729,7 +730,7 @@ func sdbit(dir int) string {
 // rubber banded
 
 var blot *canvas.Image
-//var ccblot *canvas.Image
+var ccblot *canvas.Image
 
 func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 
