@@ -686,7 +686,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 	}
 // change pb blotter if active
 	wpbimg = nimg		// for blotter overlay on ctrl-p
-	if wpbop && ccp == PASTE { blotter(wpbimg,float32(exmd),float32(eymd),float32(cpx) * dt,float32(cpy) * dt) }
+	if wpbop && ccp == PASTE { blotter(wpbimg,float32(exmd),float32(eymd),float32(py) * dt,float32(px) * dt) }
 	lw = wpb
 	wt = fmt.Sprintf("%d pbf",bn)
 	bimg := canvas.NewRasterFromImage(nimg)

@@ -616,7 +616,7 @@ func uswap() {
 
 // cut / copy / paste (c/c/p) controls
 
-func ccp_NOP() { if ccp == PASTE { blotter(nil,0,0,0,0); blotoff() }; ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
+func ccp_NOP() { if ccp == PASTE { blotoff() }; ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
 func ccp_tog(op int) { wccp := ccp; ccp_NOP(); if wccp != op { ccp = op }}
 
 func pb_upd(id string, nt string, vl int) {
@@ -709,6 +709,7 @@ var blot *canvas.Image
 
 func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 
+fmt.Printf("blotter - %f x %f rp: %f x %f\n",px,py,sx,sy)
 	if img == nil {
 		img = image.NewNRGBA(image.Rect(0, 0, 1, 1))
 		draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 255, G: 0, B: 255, A: 180}}, image.ZP, draw.Src)
@@ -725,6 +726,7 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 
 func blotoff() {
 
+fmt.Printf("blotter offf\n")
 	go func() {
 		time.Sleep(5 * time.Millisecond)
 		blot.Resize(fyne.Size{0, 0})
@@ -794,11 +796,13 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 beef := fmt.Sprintf("rbd o: %.2f x %.2f s: %.2f x %.2f dt: %.2f",sx,sy,lx,ly,dt)
 statlin(cmdhin,beef)
 	} else {
+statlin(cmdhin,"mm - main")
 	if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
 	if ey < sy { t := sy; sy = ey; ey = t }
 	ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
 	ey = float32(float32(ey) + dt)
 	if mbd {
+statlin(cmdhin,"mm - mbd = 1, blotting")
 		sx = float32(int(sx / dt)) * dt - 3				// blotter selects tiles with original unit of 16 x 16
 		sy = float32(int(sy / dt)) * dt - 4
 		ex = float32(int(ex / dt)) * dt - 1
@@ -807,6 +811,7 @@ statlin(cmdhin,beef)
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
 	} else {
+statlin(cmdhin,"mm - blot 0,0")
 		blot.Resize(fyne.Size{0, 0})
 	}}}
 }
