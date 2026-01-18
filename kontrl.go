@@ -617,7 +617,7 @@ func uswap() {
 // cut / copy / paste (c/c/p) controls
 
 func ccp_NOP() { if ccp == PASTE { blotter(nil,0,0,0,0); blotoff() }; ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
-func ccp_tog(op int) { ccp_NOP(); if ccp != op { ccp = op }}
+func ccp_tog(op int) { wccp := ccp; ccp_NOP(); if wccp != op { ccp = op }}
 
 func pb_upd(id string, nt string, vl int) {
 // clear old buf
