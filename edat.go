@@ -688,7 +688,6 @@ var lw fyne.Window	// local cpy win to view buf contents
 // change pb blotter if active
 	wpbimg = nimg										// for blotter overlay on ctrl-p
 	if wpbop && ccp == PASTE {
-		fmt.Printf("pg img\n")
 		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
 //		blot = canvas.NewImageFromImage(nimg)
 		clikwsh(w, nimg, px, py)

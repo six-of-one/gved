@@ -627,10 +627,9 @@ func ccp_tog(op int) {
 	wccp := ccp
 	ccp_NOP()
 	if wccp != op { ccp = op }
-	if wpbop && ccp == PASTE {
-		fmt.Printf("pg img 2\n")
+	if ccp == PASTE {
 		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
-//		blot = canvas.NewImageFromImage(wpbimg
+		if !wpbop { wpbimg = segimage(cpbuf,eflg,cpx+1,cpy+1,false) }
 		clikwsh(w, wpbimg, cpx, cpy)
 	}
 }
