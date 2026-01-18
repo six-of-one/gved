@@ -911,7 +911,12 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 
  //   fmt.Printf("up %v\n",mm)
 	if opts.edat > 0 {
-fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
+		opbuf := ebuf
+		if strings.Contains(h.title, " pbf") {			// simple edit on pb win content
+			opbuf = cpbuf
+			ccp = NOP
+		}
+//fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
 
 		sx := int(sxmd / opts.dtec)
 		sy := int(symd / opts.dtec)
@@ -936,7 +941,7 @@ fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
 			for my := sy; my <= ey; my++ {
 				px =0
 			for mx := sx; mx <= ex; mx++ {
-				cpbuf[xy{px, py}] = ebuf[xy{mx, my}]
+				cpbuf[xy{px, py}] = opbuf[xy{mx, my}]
 fmt.Printf("%03d ",cpbuf[xy{px, py}])
 				px++
 				}
@@ -980,15 +985,15 @@ fmt.Printf("in pasty\n")
 			}
 		}}
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V
-		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,ebuf[xy{ex, ey}])
+		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,opbuf[xy{ex, ey}])
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			if G1 {
-				g1edit_keymap[edkey] = ebuf[xy{ex, ey}]
+				g1edit_keymap[edkey] = opbuf[xy{ex, ey}]
 				kys := g1mapid[g1edit_keymap[edkey]]
 				keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
 				statlin(cmdhin,keyst)
 			} else {
-				g2edit_keymap[edkey] = ebuf[xy{ex, ey}]
+				g2edit_keymap[edkey] = opbuf[xy{ex, ey}]
 				kys := g2mapid[g2edit_keymap[edkey]]
 				keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
 				statlin(cmdhin,keyst)
@@ -1006,19 +1011,19 @@ fmt.Printf("in pasty\n")
 			}
 // looped now, with ctrl op
 			if rop {
-				if del { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
-				if pasty { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }	// cant use setcode below, it wont set floors
-				if setcode > 0 { undo_buf(mx, my,rcl); ebuf[xy{mx, my}] = setcode; opts.bufdrt = true }
-fmt.Printf("%03d ",ebuf[xy{mx, my}])
+				if del { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
+				if pasty { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }	// cant use setcode below, it wont set floors
+				if setcode > 0 { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = setcode; opts.bufdrt = true }
+fmt.Printf("%03d ",opbuf[xy{mx, my}])
 				}
 				rcl++
 			}
-			if edkey == 314 { repl = ebuf[xy{mx, my}] }		// just placeholder until new repl done -- yes, NOT being used
-//			if edkey == 182 { ebuf[xy{mx, my}] = repl; opts.bufdrt = true }		//
+			if edkey == 314 { repl = opbuf[xy{mx, my}] }		// just placeholder until new repl done -- yes, NOT being used
+//			if edkey == 182 { opbuf[xy{mx, my}] = repl; opts.bufdrt = true }		//
 		  }
 fmt.Printf("\n")
 		}
-//			fmt.Printf(" chg elem: %d maze: %d x %d\n",ebuf[xy{mx, my}],mx,my)
+//			fmt.Printf(" chg elem: %d maze: %d x %d\n",opbuf[xy{mx, my}],mx,my)
 		}}
 		ed_maze(true)
 	}
