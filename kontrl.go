@@ -806,7 +806,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		lx := float32(cpx) * dt + dt
 		ly := float32(cpy) * dt + dt
 		blot.Move(fyne.Position{sx, sy})
-		if !wpbop { blot.Resize(fyne.Size{lx, ly}) }
+		blot.Resize(fyne.Size{lx, ly})
 	} else {
 	if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
 	if ey < sy { t := sy; sy = ey; ey = t }

@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"time"
 	"image"
+	"strings"
 //		"image/color"
 
 	"fyne.io/fyne/v2"
@@ -321,8 +322,14 @@ func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 // turns display into clickable edit area
 	btn := newHoldableButton()
 	btn.title = cw.Title()
-	box := container.NewStack(btn, bimg, blot)		// key to seeing maze & having the click button with full mouse sense
-	cw.SetContent(box)								// and blot coming last is shown on top... huh?
+fmt.Printf("clwin tl: %s\n",btn.title)
+	if strings.Contains(btn.title, "G¹G²ved") {
+		box := container.NewStack(btn, bimg, blot)		// key to seeing maze & having the click button with full mouse sense
+		cw.SetContent(box)								// and blot coming last is shown on top... huh?
+	} else {
+		box := container.NewStack(btn, bimg)
+		cw.SetContent(box)
+	}
 
 // call handle blot off after win chg
 	blotoff()
