@@ -616,7 +616,7 @@ func uswap() {
 
 // cut / copy / paste (c/c/p) controls
 
-func ccp_NOP() { if ccp == PASTE { blotoff() }; ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
+func ccp_NOP() { if ccp == PASTE { if blot != ccblot { blot.Hide(); blot = ccblot } }; ccp = NOP; if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }}
 func ccp_tog(op int) { wccp := ccp; ccp_NOP(); if wccp != op { ccp = op }}
 
 func pb_upd(id string, nt string, vl int) {
@@ -729,7 +729,6 @@ func blotoff() {
 
 fmt.Printf("blotter offf\n")
 
-//	blot.Hide()
 	go func() {
 			time.Sleep(5 * time.Millisecond)
 			blot.Resize(fyne.Size{0, 0})

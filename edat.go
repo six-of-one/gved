@@ -685,7 +685,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 	}
 // change pb blotter if active
 								// for blotter overlay on ctrl-p
-	if wpbop && ccp == PASTE { blot = canvas.NewImageFromImage(nimg) }
+	if wpbop && ccp == PASTE { blot = canvas.NewImageFromImage(nimg); blot.Show() }
 	lw = wpb
 	wt = fmt.Sprintf("%d pbf",bn)
 	bimg := canvas.NewRasterFromImage(nimg)
