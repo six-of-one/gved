@@ -668,21 +668,21 @@ func pb_loced(cnt int) {
 func pbsess_cyc(dr int) {
 
 fmt.Printf("pbses c: %d %d\n",lpbcnt,sesbcnt)
-	pb_upd("ses", "ses", sesbcnt)
 	sesbcnt += dr
 	if sesbcnt >= lpbcnt { sesbcnt = 1 }
 	if sesbcnt < 1 { sesbcnt = lpbcnt - 1 }
 	if sesbcnt < 1 { sesbcnt = 1 }
+	pb_upd("ses", "ses", sesbcnt)
 }
 
 func pbmas_cyc(dr int) {
 
 fmt.Printf("pbmas c: %d %d\n",pbcnt,masbcnt)
-	pb_upd("pb", "mas", masbcnt)
 	masbcnt += dr
 	if masbcnt >= pbcnt { masbcnt = 1 }
 	if masbcnt < 1 { masbcnt = pbcnt - 1 }
 	if masbcnt < 1 { masbcnt = 1 }
+	pb_upd("pb", "mas", masbcnt)
 }
 
 // page thru maze #s, sd buf
@@ -812,8 +812,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	sy := float32(symd)
 	ex := float32(rx)
 	ey := float32(ry)
-//beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f dt: %.2f",sx,sy,ex,ey,dt)
-//statlin(cmdhin,beef)
+beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f dt: %.2f",sx,sy,ex,ey,dt)
+statlin(cmdhin,beef)
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
 	exmd = rx			// so bwin can locate pb changes if drawn
