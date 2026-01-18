@@ -742,7 +742,6 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 // c. resize window also covers the maze in blotter, which needs a fix
 //		- blot.Hide() works, however blot.Show() flikers the entire maze with momentary blotter
 
-
 func blotoff() {
 
 	go func() {
@@ -750,6 +749,7 @@ func blotoff() {
 			blot.Resize(fyne.Size{0, 0})
 	}()
 }
+
 // click area for edits
 
 // button we can detect click and release areas for rubberband area & fills
@@ -863,7 +863,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	ey := int(eymd / opts.dtec)
 	edkey = valid_keys(edkey)
 
-	if wpalop {
+	if wpalop {						// palette element selector
 	if h.title == wpal.Title() {
 		if mb == 4 && cmdoff {
 		if G1 {
@@ -889,8 +889,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 				upd_edmaze(false)
 				if lrelod { remaze(opts.mnum) }
 			}
-			return
 		}
+		return
 	}
 
  //   fmt.Printf("up %v\n",mm)
