@@ -6,6 +6,7 @@ import (
 	"os"
 	"io/ioutil"
 	"bufio"
+	"image"
 	"encoding/binary"
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/canvas"
@@ -624,6 +625,7 @@ var lg2cnt int		// ses pb save for g2 maps
 // i've discovered a 'local' in function version of these will crash, this prob needs to be a struct
 var wpbop bool		// is the pb win open?
 var wpb fyne.Window	// win to view pastbuf contents
+var wpbimg *image.NRGBA
 
 // get paste buffer cnt each init
 
@@ -684,8 +686,12 @@ var lw fyne.Window	// local cpy win to view buf contents
 		wpb.Show()
 	}
 // change pb blotter if active
-								// for blotter overlay on ctrl-p
-	if wpbop && ccp == PASTE { blot = canvas.NewImageFromImage(nimg); blot.Show() }
+	wpbimg = nimg										// for blotter overlay on ctrl-p
+	if wpbop && ccp == PASTE {
+		fmt.Printf("pg img\n")
+		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
+		blot = canvas.NewImageFromImage(nimg)
+	}
 	lw = wpb
 	wt = fmt.Sprintf("%d pbf",bn)
 	bimg := canvas.NewRasterFromImage(nimg)
