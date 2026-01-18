@@ -912,9 +912,11 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
  //   fmt.Printf("up %v\n",mm)
 	if opts.edat > 0 {
 		opbuf := ebuf
+		pbe := false		// paste buf edit
 		if strings.Contains(h.title, " pbf") {			// simple edit on pb win content
 			opbuf = cpbuf
 			ccp = NOP
+			pbe = true
 		}
 //fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
 
@@ -1025,7 +1027,10 @@ fmt.Printf("\n")
 		}
 //			fmt.Printf(" chg elem: %d maze: %d x %d\n",opbuf[xy{mx, my}],mx,my)
 		}}
-		ed_maze(true)
+		if pbe && opts.bufdrt {			// paste buf edit
+			pb_loced(masbcnt)
+			opts.bufdrt = false
+		} else { ed_maze(true) }
 	}
 
 }
