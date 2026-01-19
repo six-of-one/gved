@@ -720,22 +720,29 @@ var reItemType = regexp.MustCompile(`^(key)$`)
 func doitem(arg string) {
 	split := strings.Split(arg, "-")
 
-	var itemType string
-
+	c := 0
+	maxh := 2
+	maxw := 0
 	// Still wonder if there's a cleaner way
 	for _, ss := range split {
-		switch {
-		case reItemType.MatchString(ss):
-			item := reItemType.FindStringSubmatch(ss)
-			itemType = item[1]
+		if ss != "item" { c++ }
+		stamp := itemGetStamp(ss)
+		height := len(stamp.numbers) / stamp.width
+		if height > maxh { maxh = height }
+		maxw += stamp.width
+	}
+	img := blankimage(16*maxw, 16*maxh)
+	pos := 8
+
+	for _, ss := range split {
+
+		if ss != "item" {
+			stamp := itemGetStamp(ss)
+			writestamptoimage(img, stamp, pos, 8)
+			pos += stamp.width*16
 		}
 	}
 
-	stamp := itemGetStamp(itemType)
-
-	height := len(stamp.numbers) / stamp.width
-	img := blankimage(16*stamp.width, 16*height)
-	writestamptoimage(img, stamp, 0, 0)
 	savetopng(opts.Output, img)
 }
 
