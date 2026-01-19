@@ -1,7 +1,6 @@
 package main
 
 import (
-	"regexp"
 	"strings"
 )
 
@@ -715,15 +714,13 @@ func tilerange(start int, count int) []int {
 // var reMonsterAction = regexp.MustCompile(`^(walk|fight|attack)`)
 // var reMonsterDir = regexp.MustCompile(`^(up|upright|right|downright|down|downleft|left|upleft)`)
 
-var reItemType = regexp.MustCompile(`^(key)$`)
-
 func doitem(arg string) {
 	split := strings.Split(arg, "-")
 
 	c := 0
 	maxh := 2
 	maxw := 0
-	// Still wonder if there's a cleaner way
+
 	for _, ss := range split {
 		if ss != "item" { c++ }
 		stamp := itemGetStamp(ss)
