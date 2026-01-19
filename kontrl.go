@@ -627,37 +627,6 @@ func ccp_tog(op int) {
 	}
 }
 
-func pb_upd(id string, nt string, vl int) {
-// clear old buf
-	pmx := opts.DimX; pmy := opts.DimY		// preserve these
-	for my := 0; my <= pmy; my++ {
-	for mx := 0; mx <= pmx; mx++ { cpbuf[xy{mx, my}] = 0 }}
-	fil := fmt.Sprintf(".pb/%s_%07d_g%d.ed",id,vl,opts.Gtp)
-	lod_maz(fil, cpbuf, false)
-	cpx = opts.DimX; cpy = opts.DimY
-fmt.Printf("%spb dun: px %d py %d, %s\n",nt,cpx,cpy,fil)
-	opts.DimX = pmx; opts.DimY = pmy
-/*
-for my := 0; my <= cpy; my++ {
-	for mx := 0; mx <= cpx; mx++ {
-fmt.Printf("%03d ",cpbuf[xy{mx, my}])
-	}
-fmt.Printf("\n")
-}*/
-
-	bwin(cpx+1, cpy+1, vl, cpbuf, eflg, id)		// draw the buffer
-	bl := fmt.Sprintf("paste buf: %d", vl)
-	statlin(cmdhin,bl)
-}
-
-// transforms on cpbuf in smol window
-
-func pb_loced(cnt int) {
-	fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",cnt,opts.Gtp)
-	sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
-	pb_upd("pb", "mas", cnt)
-}
-
 func pbsess_cyc(dr int) {
 
 fmt.Printf("pbses c: %d %d\n",lpbcnt,sesbcnt)
