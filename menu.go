@@ -22,6 +22,7 @@ import (
 var w fyne.Window
 var a fyne.App
 var cwt string		// current window title if detected by mouse move
+
 // status keeper - appears in spare menu item on mbar for now
 
 var statup *fyne.Menu

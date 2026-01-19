@@ -13,6 +13,9 @@ import (
 	"image/png"
 	"os"
 	"os/exec"
+
+	"git.kirsle.net/go/audio/sdl"			// audio package
+	"github.com/veandco/go-sdl2/mix"
 )
 
 type TileLinePlane []byte
@@ -22,6 +25,11 @@ type TileLinePlaneSet [][]byte
 type TileLineMerged []byte
 
 type TileData []TileLineMerged
+
+// sound system
+
+var sfx *sdl.Engine
+var aud bool		// true if audio loads
 
 // indicate which maze set to decode
 var G1 bool
@@ -64,6 +72,16 @@ func dotile(tile int) {
 
 func main() {
 	args := gevinit()
+
+// audio stuffs
+sfx, err := sdl.New(mix.INIT_MP3 | mix.INIT_OGG)
+    if err != nil {
+        fmt.Printf("Audio fail, Error %v\n",err)
+    } else {
+		aud = true
+		sfx.Setup()
+		defer sfx.Teardown()
+	}
 
 // new retool - G1 is gauntlet maze, G2 is gauntlet 2 maze
 	G1 = false
