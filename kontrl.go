@@ -874,9 +874,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 
 	if wpalop {						// palette element selector
 	if h.title == wpal.Title() {
-		if mb == 4 && cmdoff {
-			 key_asgn(plbuf, ex, ey)
-		}
+		if opts.edat == 0 && mb == 4 { edit_on(edkdef) }
+		if mb == 4 && cmdoff { key_asgn(plbuf, ex, ey) }
 		return
 	}}
 // right mb functions
@@ -894,9 +893,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	}
 
  //   fmt.Printf("up %v\n",mm)
-	if opts.edat == 0 && mb == 4 {
-		edit_on(edkdef)
-	}
+	if opts.edat == 0 && mb == 4 { edit_on(edkdef) }
 	if opts.edat > 0 {
 		opbuf := ebuf
 		pbe := false		// paste buf edit
