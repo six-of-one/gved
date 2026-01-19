@@ -202,7 +202,8 @@ func st_menu() {
 	menuItemBlan := fyne.NewMenuItem("Blank maze",func() { menu_blank(false) })
 	menuItemBlnK := fyne.NewMenuItem("Blank maze, keep decor",func() { menu_blank(true) })
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
-	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemLin1, menuItemExit)
+	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
+	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemLin1, menuItemMute, menuItemExit)
 
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
