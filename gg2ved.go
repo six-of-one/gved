@@ -111,7 +111,7 @@ sfx, err := sdl.New(mix.INIT_MP3 | mix.INIT_OGG)
 			fmt.Println("dotile \n")
 		} else {
 			if opts.Intr { domaze("maze1") } else {		// set interactive but left out maze# - do it by default
-				fmt.Println("nothing selected - more options required, try:\n./gved -i maze1\n./gved floor0\n./gved wall0\nnote: non-interactive generates output.png\n")
+				fmt.Println("nothing selected - more options required, try:\n./gved -i maze1\n./gved floor0\n./gved wall0\n./gved item-dragon-ipotion\nnote: non-interactive generates output.png\n")
 // do a 'help'
 				a := "./gved"
 				a0 := "-h"
