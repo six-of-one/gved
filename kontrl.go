@@ -872,11 +872,14 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	ey := int(eymd / opts.dtec)
 	edkey = valid_keys(edkey)
 
-	if wpalop {						// palette element selector
-	if h.title == wpal.Title() {
-		if opts.edat == 0 && mb == 4 { edit_on(edkdef) }
-		if mb == 4 && cmdoff { key_asgn(plbuf, ex, ey) }
-		return
+// middle mouse click anywhere activates edit mode & pulls up def key
+	if mb == 4 {
+		if opts.edat == 0 || !cmdoff { edit_on(edkdef) }
+		if wpalop {					// palette element selector
+		if h.title == wpal.Title() {
+				if cmdoff { key_asgn(plbuf, ex, ey) }
+				return
+			}
 	}}
 // right mb functions
 	if mb == 2 {
@@ -888,12 +891,11 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 				upd_edmaze(false)
 				if lrelod { remaze(opts.mnum) }
 			}
-			return
 		}
+		return
 	}
 
  //   fmt.Printf("up %v\n",mm)
-	if opts.edat == 0 && mb == 4 { edit_on(edkdef) }
 	if opts.edat > 0 {
 		opbuf := ebuf
 		pbe := false		// paste buf edit
