@@ -530,6 +530,27 @@ for y := 0; y <= 65; y++ { if g1stat[y] > 0 {fmt.Printf("stat %s: %d\n",g1mapid[
 	}
 }
 
+// turn on edit mode
+
+func edit_on(k int) {
+if opts.edat == 0 {
+		smod = "Edit mode: "
+fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
+		opts.edat = 1
+		stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
+		statlin(cmdhin,"")
+// these all deactivate as override during edit
+		opts.MRM = false
+		opts.MRP = false
+		opts.MV = false
+		opts.MH = false
+	}
+// activate keys & select k (edkdef from mb click)
+	if k > 0 {
+		if !cmdoff { typedRune('\\') }	// turn cmd keys off
+		typedRune(rune(k))
+	}
+}
 // valid check, edit key
 
 func valid_keys(ek int) int {
@@ -593,12 +614,14 @@ func key_asgn(buf MazeData, ax int, ay int) {
 		keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
 		statlin(cmdhin,keyst)
 		play_sfx(g1auds[g1edit_keymap[edkey]])
+		if edkey == cycloc { cycl = g1edit_keymap[cycloc] }		// when reassign 'c' key, set cycl as well
 	} else {
 		g2edit_keymap[edkey] = buf[xy{ax, ay}]
 		kys := g2mapid[g2edit_keymap[edkey]]
 		keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
 		statlin(cmdhin,keyst)
 		play_sfx(g2auds[g2edit_keymap[edkey]])
+		if edkey == cycloc { cycl = g1edit_keymap[cycloc] }
 	}
 }
 

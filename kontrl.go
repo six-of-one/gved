@@ -73,16 +73,7 @@ func specialKey() {
 			if key.Name == "Escape" {		// now toggle editor on/ off
 				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 					if opts.edat == 0 {
-						smod = "Edit mode: "
-				fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
-						opts.edat = 1
-						stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
-						statlin(cmdhin,"")
-// these all deactivate as override during edit
-						opts.MRM = false
-						opts.MRP = false
-						opts.MV = false
-						opts.MH = false
+						edit_on(0)
 						srelod = true
 					} else {
 						nsremaze = true
@@ -228,7 +219,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 			ska := "cmd keys mode"
 			if opts.edat > 0 {			// have to be in editor to turn on edit keys
 				cmdoff = !cmdoff
-// a,e only lower case not avail for edit hotkey
+// a  only lower case not avail for edit hotkey
 				if cmdoff {
 					ska = "edit keys mode"
 					if nothing > 0 { swnothing = nothing; nothing = 0 }
@@ -903,6 +894,9 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	}
 
  //   fmt.Printf("up %v\n",mm)
+	if opts.edat == 0 && mb == 4 {
+		edit_on(edkdef)
+	}
 	if opts.edat > 0 {
 		opbuf := ebuf
 		pbe := false		// paste buf edit

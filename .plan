@@ -62,6 +62,7 @@ config ideas:
 - blotter ops, solid, outline, color, transparency
 - master pb ctrl-f filter selections
 - sound of item on key assign
+- <ESC> activate, sets ed keys & picks a default, or just turns on edit mode with cmd keys
 
 perhaps needs rewrite:
 - cleanup all modules
