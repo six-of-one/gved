@@ -49,6 +49,7 @@ var opts struct {
 	Monster string `short:"m" long:"monster" description:"Monster to render"`
 	Floor   int    `short:"f" long:"floor" default:"-1" base:"16" description:"Floor stamp to render (in hex)"`
 	Wall    int    `short:"w" long:"wall" default:"-1" base:"16" description:"Wall stamp to render (in hex)"`
+	Mute    bool   `long:"mute" description:"Mute all Audio"`
 	Verbose bool   `short:"v" long:"verbose"`
 }
 

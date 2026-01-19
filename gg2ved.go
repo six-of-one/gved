@@ -31,6 +31,15 @@ type TileData []TileLineMerged
 var sfx *sdl.Engine
 var aud bool		// true if audio loads
 
+func play_sfx(snd string) {
+	if aud && !opts.Mute {
+		music, err := sfx.LoadMusic("sfx/music.g2.4sec.ogg")
+		if err == nil {
+				music.Play(0)
+		}
+	}
+}
+
 // indicate which maze set to decode
 var G1 bool
 var G2 bool
