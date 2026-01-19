@@ -2,6 +2,7 @@ package main
 
 import (
 	"strings"
+	"fmt"
 )
 
 // type Stamp struct {
@@ -720,6 +721,7 @@ func doitem(arg string) {
 	c := 0
 	maxh := 2
 	maxw := 0
+	all := false
 
 	for _, ss := range split {
 		if ss != "item" { c++ }
@@ -727,20 +729,31 @@ func doitem(arg string) {
 		height := len(stamp.numbers) / stamp.width
 		if height > maxh { maxh = height }
 		maxw += stamp.width
+		if ss == "all" { all = true }
 	}
-	img := blankimage(16*maxw, 16*maxh)
-	pos := 8
+	if all {
+		fmt.Printf("blank\nkey\nkeyring\nfood\nifood1\nifood2\nifood3\nmfood\npfood\npotion\nipotion\nppotion\n"+
+				   "shieldpotion\nspeedpotion\nmagicpotion\nshotpowerpotion\nshotspeedpotion\nfightpotion\ninvis\n"+
+				   "transportability\nreflect\nrepulse\ninvuln\nsupershot\npushwall\ntreasure\ntreasurelocked\ngoldbag\n"+
+				   "tport\ntportg1\nff\nexit\nexit4\nexit6\nexit8\nvdoor\nhdoor\nplus\nplusg1\ndragon\n"+
+				   "generator1\ngenerator2\ngenerator3\nghostgen1\nghostgen2\nghostgen3\nghost\nghost2\nghost1\n"+
+				   "grunt\ngrunt2\ngrunt1\ndemon\ndemon2\ndemon1\nlobber\nlobber2\nlobber1\nsorcerer\nsorcerer2\nsorcerer1\n"+
+				   "auxgrunt\ndeath\nthief\nacid\nsupersorc\nit\narrowleft\narrowright\narrowup\narrowdown\n\n")
+	} else {
+		img := blankimage(16*maxw, 16*maxh)
+		pos := 8
 
-	for _, ss := range split {
+		for _, ss := range split {
 
-		if ss != "item" {
-			stamp := itemGetStamp(ss)
-			writestamptoimage(img, stamp, pos, 8)
-			pos += stamp.width*16
+			if ss != "item" {
+				stamp := itemGetStamp(ss)
+				writestamptoimage(img, stamp, pos, 8)
+				pos += stamp.width*16
+			}
 		}
-	}
 
-	savetopng(opts.Output, img)
+		savetopng(opts.Output, img)
+	}
 }
 
 func itemGetStamp(itemType string) *Stamp {
