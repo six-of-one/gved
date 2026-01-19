@@ -33,9 +33,11 @@ var aud bool		// true if audio loads
 
 func play_sfx(snd string) {
 	if aud && !opts.Mute {
-		music, err := sfx.LoadMusic("sfx/music.g2.4sec.ogg")
+		music, err := sfx.LoadMusic(snd)
 		if err == nil {
 				music.Play(0)
+		} else {
+			if opts.Verbose { fmt.Printf("Audio failure\n%v\n",err) }
 		}
 	}
 }

@@ -592,27 +592,13 @@ func key_asgn(buf MazeData, ax int, ay int) {
 		kys := g1mapid[g1edit_keymap[edkey]]
 		keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
 		statlin(cmdhin,keyst)
-		if opts.Mute {
-			if aud {
-				music, err := sfx.LoadMusic(g1auds[g1edit_keymap[edkey]])
-				if err == nil {
-						music.Play(0)
-				}
-			}
-		}
+		play_sfx(g1auds[g1edit_keymap[edkey]])
 	} else {
 		g2edit_keymap[edkey] = buf[xy{ax, ay}]
 		kys := g2mapid[g2edit_keymap[edkey]]
 		keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
 		statlin(cmdhin,keyst)
-		if opts.Mute {
-			if aud {
-				music, err := sfx.LoadMusic(g2auds[g2edit_keymap[edkey]])
-				if err == nil {
-						music.Play(0)
-				}
-			}
-		}
+		play_sfx(g2auds[g2edit_keymap[edkey]])
 	}
 }
 

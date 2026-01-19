@@ -436,12 +436,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			maxmaze = 126
 			if opts.mnum > maxmaze { opts.mnum = 114 }
 			spau = "G¹ "
-			if aud {
-			    music, err := sfx.LoadMusic("sfx/music.4sec.ogg")			// Load a file from disk.
-				if err == nil {
-						music.Play(0)
-				}
-			}
+			play_sfx("sfx/music.4sec.ogg")
 		case 'l':
 			nsremaze = true
 			relodsub = needsav()
@@ -488,12 +483,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			maxmaze = 116
 			if opts.mnum > maxmaze { opts.mnum = 102 }
 			spau = "G² mazes"
-			if aud {
-				music, err := sfx.LoadMusic("sfx/music.g2.4sec.ogg")
-				if err == nil {
-						music.Play(0)
-				}
-			}
+			play_sfx("sfx/music.g2.4sec.ogg")
 		case 'v':
 			lx := 116
 			if G1 { lx = 126 }
