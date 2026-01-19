@@ -61,7 +61,7 @@ config ideas:
 - store assigned edit keys, including change defaults, allow defautls restore
 - blotter ops, solid, outline, color, transparency
 - master pb ctrl-f filter selections
-
+- sound of item on key assign
 
 perhaps needs rewrite:
 - cleanup all modules
