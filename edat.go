@@ -721,7 +721,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 	if (bn > 0) {
 	if !wpbop {
 		wpbop = true
-		wpb = a.NewWindow("")
+		wpb = a.NewWindow(" pbf")
 		wpb.Canvas().SetOnTypedRune(pbRune)
 		wpb.SetCloseIntercept(func() {
 			if blot != ccblot { blot.Hide(); blot = ccblot };	// rb blotter back
