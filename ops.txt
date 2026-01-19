@@ -161,7 +161,8 @@ Mouse operation
 ---------------
 
 Left-click		place current edit key item in maze at cursor
-Middle-click	assign item at cursor to current edit key (will NOT assign floor)
+Middle-click	assign item at cursor to current edit key (assigned floor will not place)
+				- turns on edit mode, cmdkeys off and sets def key if no edkey selected
 
 Left-click drag	- dragging to new location - fill / delete the encompassed rectangle
 

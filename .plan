@@ -18,8 +18,7 @@ replace mode - either over entire maze, rubber band region, select y/n on each f
 some type of quick-key insert system, maybe shifted # or so
 * possibly assignable hot-keys
 * more default hotkeys
-ӿ show item when placing, if not ccp or other blotter ops
-\_ sadly the blotter has serious issues repurposing to display images
+* show item when placing, if not ccp or other blotter ops
 
 a palette system similar to edit in sanctuary
 - and the edit options dialog
@@ -30,7 +29,7 @@ a palette system similar to edit in sanctuary
 a basic "playable" mode to test mazes
 - port rnd load profile sanctuary code, and use #T flags to remove certain elements, wip
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
-- sprites needed (sprites have to replace gens, treasure, keys, pots, etc)
+- sprite system needed (sprites have to replace gens, treasure, keys, pots, etc)
 
 multiple save buffers to store vars maze edits, page thru all wiht 'S', store with #'S', load with #'L'
 * can always store & page -- G¹ & G² have sep buffers
@@ -53,6 +52,8 @@ issues needing fixed
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
+- .ed files need sanctuary details - special floors, cust walls, special settings
+  - indicator for treasure rooms, secret rooms
 - dialog for setting / reading bits of #T hide mask and #flg blank maze keep mask
 - way using sprites to demo half transparent paste content over maze
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
@@ -62,7 +63,7 @@ config ideas:
 - blotter ops, solid, outline, color, transparency
 - master pb ctrl-f filter selections
 - sound of item on key assign
-- <ESC> activate, sets ed keys & picks a default, or just turns on edit mode with cmd keys
+- <ESC> edit activate, sets ed keys & picks a default, or just turns on edit mode with cmd keys on
 
 perhaps needs rewrite:
 - cleanup all modules
