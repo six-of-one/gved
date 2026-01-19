@@ -583,6 +583,23 @@ func palRune(r rune) {
 	}
 }
 
+// assign keys
+
+func key_asgn(buf MazeData, ax int, ay int) {
+
+	if G1 {
+		g1edit_keymap[edkey] = buf[xy{ax, ay}]
+		kys := g1mapid[g1edit_keymap[edkey]]
+		keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
+		statlin(cmdhin,keyst)
+	} else {
+		g2edit_keymap[edkey] = buf[xy{ax, ay}]
+		kys := g2mapid[g2edit_keymap[edkey]]
+		keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
+		statlin(cmdhin,keyst)
+	}
+}
+
 // stat package for palette win
 
 func zero_stat() {

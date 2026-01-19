@@ -894,17 +894,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	if wpalop {						// palette element selector
 	if h.title == wpal.Title() {
 		if mb == 4 && cmdoff {
-		if G1 {
-			g1edit_keymap[edkey] = plbuf[xy{ex, ey}]
-			kys := g1mapid[g1edit_keymap[edkey]]
-			keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
-			statlin(cmdhin,keyst)
-		} else {
-			g2edit_keymap[edkey] = plbuf[xy{ex, ey}]
-			kys := g2mapid[g2edit_keymap[edkey]]
-			keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
-			statlin(cmdhin,keyst)
-		}}
+			 key_asgn(plbuf, ex, ey)
+		}
 		return
 	}}
 // right mb functions
@@ -1001,17 +992,7 @@ fmt.Printf("in pasty\n")
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V
 		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,opbuf[xy{ex, ey}])
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
-			if G1 {
-				g1edit_keymap[edkey] = opbuf[xy{ex, ey}]
-				kys := g1mapid[g1edit_keymap[edkey]]
-				keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
-				statlin(cmdhin,keyst)
-			} else {
-				g2edit_keymap[edkey] = opbuf[xy{ex, ey}]
-				kys := g2mapid[g2edit_keymap[edkey]]
-				keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
-				statlin(cmdhin,keyst)
-			}
+			 key_asgn(opbuf, ex, ey)
 		} else {
 		if del || cmdoff || pasty {
 			rcl := 1		// loop count for undoing multi ops
