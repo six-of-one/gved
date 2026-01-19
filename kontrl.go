@@ -437,12 +437,10 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.mnum > maxmaze { opts.mnum = 114 }
 			spau = "G¹ "
 			if aud {
-fmt.Printf("aud g1: %t\n",aud)
-			    music, err := sfx.LoadMusic("music.4sec.ogg")			// Load a file from disk.
+			    music, err := sfx.LoadMusic("sfx/music.4sec.ogg")			// Load a file from disk.
 				if err == nil {
 						music.Play(0)
 				}
-fmt.Printf("menu g1: %t\n",sfx.Playing())
 			}
 		case 'l':
 			nsremaze = true
@@ -491,11 +489,10 @@ fmt.Printf("menu g1: %t\n",sfx.Playing())
 			if opts.mnum > maxmaze { opts.mnum = 102 }
 			spau = "G² mazes"
 			if aud {
-				music, err := sfx.LoadMusic("music.g2.4sec.ogg")
+				music, err := sfx.LoadMusic("sfx/music.g2.4sec.ogg")
 				if err == nil {
 						music.Play(0)
 				}
-fmt.Printf("menu g2: %t\n",sfx.Playing())
 			}
 		case 'v':
 			lx := 116
