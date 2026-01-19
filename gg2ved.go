@@ -81,7 +81,6 @@ sfx, err := sdl.New(mix.INIT_MP3 | mix.INIT_OGG)
 		aud = true
 		sfx.Setup()
 		defer sfx.Teardown()
-		fmt.Printf("Audio: %t\n",aud)
 	}
 
 // new retool - G1 is gauntlet maze, G2 is gauntlet 2 maze
@@ -100,6 +99,8 @@ sfx, err := sdl.New(mix.INIT_MP3 | mix.INIT_OGG)
 		fmt.Printf("\n")
 		G1 = true
 	}
+
+	fmt.Printf("Audio: %t\n\n",aud)
 
 	if opts.Addr > 0x37fff && opts.Addr < 0x40000 { Aov = opts.Addr }
 

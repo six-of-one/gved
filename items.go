@@ -734,7 +734,7 @@ func doitem(arg string) {
 	stamp := itemGetStamp(itemType)
 
 	height := len(stamp.numbers) / stamp.width
-	img := blankimage(8*stamp.width, 8*height)
+	img := blankimage(16*stamp.width, 16*height)
 	writestamptoimage(img, stamp, 0, 0)
 	savetopng(opts.Output, img)
 }
