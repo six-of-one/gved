@@ -451,6 +451,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				nothing = (nothing & 1536) + (nt & 511)
 				if anum > 0 { nothing = (nothing & 1536) + anum; anum = 0 }		// set lower 9 bits of no-thing mask [ but not walls or floors ]
 				spau = fmt.Sprintf("no things: %d\n",nothing & 511)				// display no things mask
+				if ctrl { nothing = 0 }
 				opts.dntr = true
 			}
 		case 's':

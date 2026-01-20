@@ -57,6 +57,7 @@ possible:
 - dialog for setting / reading bits of #T hide mask and #flg blank maze keep mask
 - way using sprites to demo half transparent paste content over maze
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
+- use blotter to show gauntlet 'maze view' following maus around
 
 config ideas:
 - store assigned edit keys, including change defaults, allow defautls restore
