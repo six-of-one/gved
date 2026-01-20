@@ -666,7 +666,6 @@ func pagit(dir int) bool {
 	} else {
 		if opts.mnum < 0 { opts.mnum = maxmaze }
 	}
-fmt.Printf("pg %d\n",opts.mnum)
 	return lrelod
 }
 

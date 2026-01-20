@@ -578,7 +578,8 @@ fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts
 			for x := 0; x <= opts.DimX; x++ {
 			stats(ebuf[xy{x, y}])
 		}}
-for y := 0; y <= 65; y++ { if g1stat[y] > 0 {fmt.Printf("stat %s: %d\n",g1mapid[y],g1stat[y])}}
+// stats during palette
+		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {fmt.Printf("stat %s: %d\n",g1mapid[y],g1stat[y])}}
 //		bwin(palxs, palys, 0, plbuf, plflg)
 	}
 }
@@ -744,7 +745,7 @@ func get_pbcnt() {
 	data, err := ioutil.ReadFile(fil)
 	if err == nil {
 		fmt.Sscanf(string(data),"%d", &pbcnt)
-fmt.Printf("pbcnt: %d, ses cnt: %d\n",pbcnt,lpbcnt)
+if opts.Verbose { fmt.Printf("pbcnt: %d, ses cnt: %d\n",pbcnt,lpbcnt) }
 	}
 }
 
