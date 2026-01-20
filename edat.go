@@ -643,7 +643,7 @@ func palRune(r rune) {
 				"select maze\nhit <ESC> - activate edit mode\nhit '\\' for edit keys\n"+
 				"hit a key to map: 'y'\nmove mouse to palette\nand middle click an element\n"+
 				"edit hint on menu bar give status"+
-				"\n\npal win keys:\nq,Q - quit\n\n(only when window active)\n", wpal)
+				"\n\npal win keys:\nq,Q - quit\nt,T - hide flags info\n\n(only when window active)\n", wpal)
 		case 't': fallthrough
 		case 'T': dialog.ShowInformation("T hide flags", "in gved main window:\n\n"+
 				"invisible flag set - hide vars maze elements:"+
