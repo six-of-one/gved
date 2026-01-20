@@ -418,7 +418,7 @@ actual rotate maths
 3	7	11		1
 2	6	10		2
 1	5	9		3
-
+		from  =	to
 			y = x		y = rx
 			x = ry		x = y
 
