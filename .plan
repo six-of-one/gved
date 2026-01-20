@@ -12,7 +12,7 @@ rubber-band ops - click and drag will expand to set region of place / del / edit
 * ctrl-click should only operate on outer cells of band
 * copy, cut & paste rubber-band contents
 * rubber band sizing of cells, single click contents
-
+* use blotter to show gauntlet 'maze view' following maus around
 
 replace mode - either over entire maze, rubber band region, select y/n on each find, or click item replace
 \_ possibly also use #T mask for allowing edits on elements, or disallow
@@ -51,6 +51,7 @@ issues needing fixed
 - will the autosaves (around L, S, etc) become an issue?
 - undo after paste works weirdly sometimes
 - saw instanced where paste pasted wrong data, needs checked again - G¹ / G² switch
+- changing pb with paste active bonks main win
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
@@ -59,7 +60,6 @@ possible:
 - dialog for setting / reading bits of #T hide mask and #flg blank maze keep mask
 - way using sprites to demo half transparent paste content over maze
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
-- use blotter to show gauntlet 'maze view' following maus around
 
 config ideas:
 - store assigned edit keys, including change defaults, allow defautls restore

@@ -21,6 +21,7 @@ import (
 
 var blot *canvas.Image
 var ccblot *canvas.Image
+var gvs bool			// use blotter to simulate view of gauntlet viewport
 
 func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 
@@ -109,6 +110,17 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 //statlin(cmdhin,beef)
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
+	if gvs {
+		sx := nong(float32(int(ex / dt)) * dt - 7.5 * dt)
+		sy := nong(float32(int(ey / dt)) * dt - 7.5 * dt)
+		lx := 15 * dt
+		ly := 15 * dt
+		whlim := float32(opts.Geoh - 30)
+		if sx + lx > whlim { sx = whlim - lx }
+		if sy + ly > whlim { sy = whlim - ly }
+		blot.Move(fyne.Position{sx, sy})
+		blot.Resize(fyne.Size{lx, ly})
+	} else {
 	if ccp == PASTE {
 //		ex = float32(float32(rx) + dt)
 //		ey = float32(float32(ry) + dt)
@@ -152,7 +164,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	} else {
 		statlin(tcmdhn,tsshn)
 		blot.Resize(fyne.Size{0, 0})
-	}}}
+	}}}}
 }
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
