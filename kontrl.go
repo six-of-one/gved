@@ -360,7 +360,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MRP = true
 				upd_edmaze(false)
-				rotmirbuf(edmaze)
+				opts.DimX, opts.DimY = rotmirbuf(edmaze)
 				opts.dntr = true
 				opts.bufdrt = true
 			} else {
@@ -372,7 +372,7 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MRM = true
 				upd_edmaze(false)
-				rotmirbuf(edmaze)
+				opts.DimX, opts.DimY = rotmirbuf(edmaze)
 				opts.dntr = true
 				opts.bufdrt = true
 			} else {

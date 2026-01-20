@@ -398,9 +398,49 @@ func undo_buf(sx int, sy int, rc int) {
 //fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 }
 
+/*
+actual rotate maths
+
+0	1	2	3
+
+1	2	3	4		0
+5	6	7	8		1
+9	10	11	12		2
+
+0	1	2
+
+9	5	1		0		+90
+10	6	2		1
+11	7	3		2
+12	8	4		3
+
+4	8	12		0		-90
+3	7	11		1
+2	6	10		2
+1	5	9		3
+
+			y = x		y = rx
+			x = ry		x = y
+
+0,0 -> 2,0	+90	-> 0,3  -90
+1,0 -> 2,1		-> 0,2
+2,0 -> 2,2		-> 0,1
+3,0 -> 2,3		-> 0,0
+
+0,1 -> 1,0		-> 1,3
+1,1 -> 1,1		-> 1,2
+2,1 -> 1,2		-> 1,1
+3,1 -> 1,3		-> 1,0
+
+0,2 -> 0,0		-> 2,3
+1,2 -> 0,1		-> 2,2
+2,2 -> 0,2		-> 2,1
+3,2 -> 0,3		-> 2,0
+
+*/
 // the actual werker, so we can use it on cpbuf, etc
 
-func rotmirmov(mdat MazeData, sx int, sy int, lastx int, lasty int, flg int) {
+func rotmirmov(mdat MazeData, sx int, sy int, lastx int, lasty int, flg int) (int, int) {
 
 // to transform maze, array copy
 	xform := make(map[xy]int)
@@ -409,26 +449,28 @@ func rotmirmov(mdat MazeData, sx int, sy int, lastx int, lasty int, flg int) {
 		if opts.MRP {
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
-				xform[xy{lastx - tx, ty}] = mdat[xy{ty, tx}]
+				xform[xy{lasty - ty, tx}] = mdat[xy{tx, ty}]
 // g1 - must transform all dors on a rotat since they have horiz & vert dependent
-				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_HORIZ { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_VERT } else {
-				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_VERT { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_HORIZ } }
+				if xform[xy{lasty - ty, tx}] == G1OBJ_DOOR_HORIZ { xform[xy{lasty - ty, tx}] = G1OBJ_DOOR_VERT } else {
+				if xform[xy{lasty - ty, tx}] == G1OBJ_DOOR_VERT { xform[xy{lasty - ty, tx}] = G1OBJ_DOOR_HORIZ } }
 // g2
-				if xform[xy{lastx - tx, ty}] == MAZEOBJ_DOOR_HORIZ { xform[xy{lastx - tx, ty}] = MAZEOBJ_DOOR_VERT } else {
-				if xform[xy{lastx - tx, ty}] == MAZEOBJ_DOOR_VERT { xform[xy{lastx - tx, ty}] = MAZEOBJ_DOOR_HORIZ } }
+				if xform[xy{lasty - ty, tx}] == MAZEOBJ_DOOR_HORIZ { xform[xy{lasty - ty, tx}] = MAZEOBJ_DOOR_VERT } else {
+				if xform[xy{lasty - ty, tx}] == MAZEOBJ_DOOR_VERT { xform[xy{lasty - ty, tx}] = MAZEOBJ_DOOR_HORIZ } }
 			}}
+			if lastx != lasty { sw := lastx; lastx = lasty; lasty = sw }		// on a rotate in edit when size x != size y, they must swap after the rot
 		} else {
 		if opts.MRM {
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
-				xform[xy{tx, lasty - ty}] = mdat[xy{ty, tx}]
+				xform[xy{ty, lastx - tx}] = mdat[xy{tx, ty}]
 // g1
-				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_HORIZ { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_VERT } else {
-				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_VERT { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_HORIZ } }
+				if xform[xy{ty, lastx - tx}] == G1OBJ_DOOR_HORIZ { xform[xy{ty, lastx - tx}] = G1OBJ_DOOR_VERT } else {
+				if xform[xy{ty, lastx - tx}] == G1OBJ_DOOR_VERT { xform[xy{ty, lastx - tx}] = G1OBJ_DOOR_HORIZ } }
 // g2
-				if xform[xy{tx, lasty - ty}] == MAZEOBJ_DOOR_HORIZ { xform[xy{tx, lasty - ty}] = MAZEOBJ_DOOR_VERT } else {
-				if xform[xy{tx, lasty - ty}] == MAZEOBJ_DOOR_VERT { xform[xy{tx, lasty - ty}] = MAZEOBJ_DOOR_HORIZ } }
+				if xform[xy{ty, lastx - tx}] == MAZEOBJ_DOOR_HORIZ { xform[xy{ty, lastx - tx}] = MAZEOBJ_DOOR_VERT } else {
+				if xform[xy{ty, lastx - tx}] == MAZEOBJ_DOOR_VERT { xform[xy{ty, lastx - tx}] = MAZEOBJ_DOOR_HORIZ } }
 			}}
+			if lastx != lasty { sw := lastx; lastx = lasty; lasty = sw }
 		}
 		}
 
@@ -467,12 +509,14 @@ func rotmirmov(mdat MazeData, sx int, sy int, lastx int, lasty int, flg int) {
 	opts.MRM = false
 	opts.MV = false
 	opts.MH = false
+
+	return lastx, lasty
 }
 
 // same as mazeloop, but called by Rr, h, m while cmd keys active in edit mode
 // 	╚══> except in this buffer is changed by ops
 
-func rotmirbuf(rmmaze *Maze) {
+func rotmirbuf(rmmaze *Maze) (int, int) {
 
 	fmt.Printf("in rotmirbuf\n")
 
@@ -493,14 +537,14 @@ func rotmirbuf(rmmaze *Maze) {
 	fmt.Printf("wraps -- hw: %d vw: %d\n", rmmaze.flags&LFLAG4_WRAP_H,rmmaze.flags&LFLAG4_WRAP_V)
 	fmt.Printf("rotmirbuf fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
 
-	rotmirmov(rmmaze.data,sx,sy,lastx,lasty,rmmaze.flags)
+	lastx, lasty = rotmirmov(rmmaze.data,sx,sy,lastx,lasty,rmmaze.flags)
 
 	for y := sy; y <= lasty; y++ {
 		for x := sx; x <= lastx; x++ {
 			ebuf[xy{x, y}] = rmmaze.data[xy{x, y}]
 		}
 	}
-
+	return lastx, lasty
 }
 
 // reload maze while editing & update window - generates output.png
@@ -724,10 +768,10 @@ func pbRune(r rune) {
 		case 'p': pbsess_cyc(1)
 // some extras
 		case 'r': opts.MRP = true
-			rotmirmov(cpbuf,0,0,cpx,cpy,0)
+			cpx,cpy = rotmirmov(cpbuf,0,0,cpx,cpy,0)
 			pb_loced(masbcnt)
 		case 'R': opts.MRM = true
-			rotmirmov(cpbuf,0,0,cpx,cpy,0)
+			cpx,cpy = rotmirmov(cpbuf,0,0,cpx,cpy,0)
 			pb_loced(masbcnt)
 		case 'h': opts.MV = true
 			rotmirmov(cpbuf,0,0,cpx,cpy,0)
