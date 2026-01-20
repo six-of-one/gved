@@ -235,9 +235,9 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 				Aov = addrver(slapsticMazeGetRealAddr(opts.mnum), 0)
 			}
 		case 76:		// L
-// with anum != 0, this becomes load s[1] buffer into ebuf, if in edit
-			if opts.edat > 0 && anum > 0 && anum < sdmax {
-fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
+// with anum != 0, this becomes load s[1] buffer into ebuf
+			if anum > 0 && anum < sdmax {
+fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				if opts.bufdrt { menu_savit(true) }		// autosave
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 				cnd := lod_maz(fil, ebuf, false)
@@ -279,8 +279,9 @@ fmt.Printf("L, anum: %05d, sdb: %d\n",anum, sdb)
 				relod = true
 //	fmt.Printf("4 flag: %d\n",eflg[4])
 		case 83:		// S
-// have anum !=0, save ebuf into that buffer
-				if anum > 0 && anum < sdmax && opts.edat > 0 {
+// have anum !=0, save ebuf into that sd buffer
+				if anum > 0 && anum < sdmax {		// save buf when not in edit, rand load can go into all mazes
+fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 					fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, 0 - anum)
 					anum = 0
