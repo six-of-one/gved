@@ -647,8 +647,8 @@ func palRune(r rune) {
 		case 't': fallthrough
 		case 'T': dialog.ShowInformation("T hide flags", "in gved main window:\n\n"+
 				"invisible flag set - hide vars maze elements:"+
-				" T - cycle through a flag set\n    (loop 0 - 511)\n"+
-				" #T - set flags = # ---- <ctrl>-T reset flags to 0\n"+
+				" T - cycle through a flag set (loop 0 - 511)\n"+
+				" #T - set flags = # ---- <ctrl>-T reset flags to 0\n\n"+
 
 				"NOGEN = 1		// all generators\n"+
 				"NOMON = 2		// all monster, dragon\n"+
