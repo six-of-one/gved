@@ -133,7 +133,8 @@ func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
 	pos := fmt.Sprintf("%v",mm)
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&sxmd,&symd,&mb,&mk)
-	fmt.Printf("%d down: %.2f x %.2f \n",mb,sxmd,symd)
+// if opts.Verbose {
+fmt.Printf("%d down: %.2f x %.2f \n",mb,sxmd,symd)
 	mbd = (mb == 1)
 	if mbd { h.MouseMoved(mm) }		// engage 1 tile click
 }
@@ -226,6 +227,7 @@ fmt.Printf("\n")
 			}
 			cpx = px - 1; if cpx < 0 { cpx = 0 }		// if these arent 1 less, the paste is 1 over
 			cpy = py - 1; if cpy < 0 { cpy = 0 }
+// if opts.Verbose {
 fmt.Printf("cc dun: px %d py %d\n",px,py)
 // saving paste buffer now
 			fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",pbcnt,opts.Gtp)
@@ -250,6 +252,7 @@ fmt.Printf("cc dun: px %d py %d\n",px,py)
 			del = false						// copy or paste should not have del on
 			if ccp == CUT { del = true }
 			if pasty {
+// if opts.Verbose {
 fmt.Printf("in pasty\n")
 				ex = sx + cpx
 				ey = sy + cpy
@@ -261,7 +264,8 @@ fmt.Printf("in pasty\n")
 			}
 		}}
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V
-		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,opbuf[xy{ex, ey}])
+// if opts.Verbose {
+fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,opbuf[xy{ex, ey}])
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			 key_asgn(opbuf, ex, ey)
 		} else {

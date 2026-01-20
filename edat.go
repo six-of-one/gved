@@ -579,7 +579,8 @@ fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts
 			stats(ebuf[xy{x, y}])
 		}}
 // stats during palette
-		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {fmt.Printf("stat %s: %d\n",g1mapid[y],g1stat[y])}}
+	fmt.Printf("stats:\n")
+		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y])}}
 //		bwin(palxs, palys, 0, plbuf, plflg)
 	}
 }
