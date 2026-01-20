@@ -322,17 +322,22 @@ var rbtn *holdableButton
 
 // clik win short ver for pb image
 
+var blotx int
+var bloty int
+
 func clikwsh(cw fyne.Window, limg *image.NRGBA, px int, py int) {
 		t := cw.Title()
 		if strings.Contains(t, "G¹G²ved") {
 			blot = canvas.NewImageFromImage(limg)
+			dt := float32(opts.dtec)
+			blot.Resize(fyne.NewSize(float32(blotx)*dt, float32(bloty)*dt))
 			box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
 			cw.SetContent(box)
-			blotoff()
+// /			blotoff()
 		}
 }
 
-func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
+func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int, blt bool) {
 
 	rbimg = canvas.NewRasterFromImage(wimg)
 
@@ -350,7 +355,7 @@ func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 	}
 
 // call handle blot off after win chg
-	blotoff()
+	if blt { blotoff() }
 //fmt.Printf("btn sz %v\n",rbtn.Size())
 }
 
@@ -369,7 +374,7 @@ func upwin(simg *image.NRGBA) {
 	}
 	opts.dtec = 16.0 * (float64(geow - 4) / 528.0)				// the size of a tile, odd window size may cause issues
 if opts.Verbose { fmt.Printf(" dtec: %f\n",opts.dtec) }
-	clikwin(w, simg, geow, geoh)
+	clikwin(w, simg, geow, geoh, true)
 
 	spx := ""
 	if sdb > 0 { spx = fmt.Sprintf("sdbuf: %d",sdb) }

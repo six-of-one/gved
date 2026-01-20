@@ -841,6 +841,8 @@ var lw fyne.Window	// local cpy win to view buf contents
 	if wpbop && ccp == PASTE {
 		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
 //		blot = canvas.NewImageFromImage(nimg)
+		blotx = px
+		bloty = py
 		clikwsh(w, nimg, px, py)
 	}
 	lw = wpb
@@ -858,12 +860,12 @@ var lw fyne.Window	// local cpy win to view buf contents
 	}
 	palxs = px
 	palys = py
-//	clikwin(wpal, nimg, px, py)
 	lw = wpal
   }
-	clikwin(lw, nimg, px, py)
+	clikwin(lw, nimg, px, py, false)
 	lw.SetTitle(wt)
 	lw.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
+
 // if opts.Verbose {
 fmt.Printf("clkwin sz: %v\n",fyne.NewSize(float32(px)*dt, float32(py)*dt))
 }
