@@ -3,6 +3,7 @@ package main
 import (
 	"math"
 	"math/rand"
+	"fmt"
 )
 
 var RLPROF = [][]int{
@@ -50,7 +51,7 @@ var RLPROF = [][]int{
 	{0x008106,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1},		//			// fake food bottle - G3
 }
 
-var RLOAD = []int{0}
+var RLOAD = []int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 // difficulty level for rnd load profile
 var diff_level = 1
@@ -75,8 +76,10 @@ rprof := rand.Intn(rlline-1)+1 // for now pick a random profile
 /*if troomtime > 0 {
 	rprof = rlline + 1
 }*/
+fmt.Printf("%d anum\n",anum)
 for f := 0; f <= rlloop; f++ {
 	RLOAD[f] = int(math.Ceil(float64(RLPROF[f][rprof] * ldiff))) // get item counts for a profile
+fmt.Printf("%d rlprof: %d\n",f,RLOAD[f])
 }
 for f := 0; f <= rlloop; f++ {
 	sft := 6000
