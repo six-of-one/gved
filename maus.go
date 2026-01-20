@@ -116,14 +116,15 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	tsshn := sshin
 	if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
 	if ey < sy { t := sy; sy = ey; ey = t }
+// blotter size hinter, before pushing 1 past
+		mxme := int(ex / dt)
+		myme := int(ey / dt)
 	ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
 	ey = float32(float32(ey) + dt)
 	if mbd {
 // blotter size hinter
 		mxmd = int(sx / dt) // redo as start / end can swap
 		mymd = int(sy / dt)
-		mxme := int(ex / dt)
-		myme := int(ey / dt)
 // optimize blotter to cover selected cells
 		sx = float32(int(sx / dt)) * dt - 3				// blotter selects tiles with original unit of 16 x 16
 		sy = float32(int(sy / dt)) * dt - 4
@@ -132,7 +133,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
 // blotter size hinter
-		pos = fmt.Sprintf("r: %fx%f - %fx%f mz: %dx%d - %dx%d",sx,sy,ex,ey,mxmd,mymd,mxme,myme)
+		pos = fmt.Sprintf("r: %.2fx%.2f - %.2fx%.2f mz: %dx%d - %dx%d",sx,sy,ex,ey,mxmd,mymd,mxme,myme)
 		statlin(pos,tsshn)
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
 	} else {
