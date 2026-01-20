@@ -773,10 +773,10 @@ func pbRune(r rune) {
 		case 'R': opts.MRM = true
 			cpx,cpy = rotmirmov(cpbuf,0,0,cpx,cpy,0)
 			pb_loced(masbcnt)
-		case 'h': opts.MV = true
+		case 'h': opts.MH = true
 			rotmirmov(cpbuf,0,0,cpx,cpy,0)
 			pb_loced(masbcnt)
-		case 'm': opts.MH = true
+		case 'm': opts.MV = true
 			rotmirmov(cpbuf,0,0,cpx,cpy,0)
 			pb_loced(masbcnt)
 		case 'q': fallthrough
