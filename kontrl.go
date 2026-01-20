@@ -9,7 +9,7 @@ import (
 	"fyne.io/fyne/v2/driver/desktop"
 )
 
-// kontrol is for keyboard, mouse & input management
+// kontrol is for keyboard input management
 
 // weirdo needsav exit condition and remaze, to allow dialog to block next action
 

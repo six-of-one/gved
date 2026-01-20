@@ -14,6 +14,8 @@ import (
 )
 
 /*
+edit and transfer system
+
 this is the start of a basic buffer editor
 more complexity will be required for:
  a. undo system
