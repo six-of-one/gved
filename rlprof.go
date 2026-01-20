@@ -40,12 +40,14 @@ var RLPROF = [][]int{
 	{14,  10, 0, 22,  0,  0,  0,  8,  0,  0,  0,  0,  0},		//		0x400020	// 	G1MP_MONST_GRUNT3: 14,
 	{23,  0,  0,  0, 20,  0,  0, 12,  0,  0,  0,  0,  0},		//		0x400030	// 	G1MP_MONST_SORC3: 23,
 	{20,  0,  0,  6,  0,  0,  0,  0, 15,  0,  0,  0,  0},		//		0x400050	// 	G1MP_MONST_LOBBER3: 20,
-	// line 10,  11 extras
+// col 10 is treasure room
+// col 11,  12 extras
 	{47,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1},		//		0x0080E3	// 	G1MP_X_ARMOR: 47,
 	{25,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1},		//		0x400120	// 	G2MP_MONST_ACID: 25,
 	{58,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1},		//		0x0080F4	// 	G2MP_POWER_SUPERSHOT: 58,
+// dont use, not in system yet
 	{0x008150,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1},		//			// Lava - G3
-	{0x008106,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1},		//			// fake food bottle
+	{0x008106,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1},		//			// fake food bottle - G3
 }
 
 var RLOAD = []int{0}
@@ -78,26 +80,29 @@ for f := 0; f <= rlloop; f++ {
 }
 for f := 0; f <= rlloop; f++ {
 	sft := 6000
-	for RLOAD[f] > 0 && sft > 0 {
-		fnd := false
-		for !fnd && sft > 0 {
+	if anum < 1 || g1mask[RLPROF[f][0]] & anum > 0 {				// mask inclusive, see #T vals
 
-			cx = rand.Intn(dx)
-			cy = rand.Intn(dy)
-			if mbuf[xy{cx, cy}] == 0 { fnd = true }
-			sft--
-		}
-		if fnd {
-			mbuf[xy{cx, cy}] = RLPROF[f][0]
+		for RLOAD[f] > 0 && sft > 0 {
+			fnd := false
+			for !fnd && sft > 0 {
+
+				cx = rand.Intn(dx)
+				cy = rand.Intn(dy)
+				if mbuf[xy{cx, cy}] == 0 { fnd = true }
+				sft--
+			}
+			if fnd {
+				mbuf[xy{cx, cy}] = RLPROF[f][0]
 //			vartxt.value += fmt.Sprintf("\tSVRLOAD[%d][3][%d] = \"0x%x\";   //  x: %d y:  %d, w: %d h: %d\n",
 //				svrcnt, (cell.tx + cell.ty*Mtw), RLPROF[f][0], cx, cy, Mtw, Mth)
-			RLOAD[f]--
-			// randomize the last 2
-			if RLOAD[f] == 2 && rand.Float64() < 0.1 {
 				RLOAD[f]--
-			}
-			if RLOAD[f] == 1 && rand.Float64() < 0.25 {
-				RLOAD[f]--
+				// randomize the last 2
+				if RLOAD[f] == 2 && rand.Float64() < 0.1 {
+					RLOAD[f]--
+				}
+				if RLOAD[f] == 1 && rand.Float64() < 0.25 {
+					RLOAD[f]--
+				}
 			}
 		}
 	}
