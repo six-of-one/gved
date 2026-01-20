@@ -490,7 +490,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 		if spau == "G¹ " {
 			if opts.R14 { spau += "rv14" } else { spau += "rv1-9" }
 		}
-fmt.Printf("kr cond relod: %t\n",relod || relodsub)
+//fmt.Printf("kr cond relod: %t\n",relod || relodsub)
 	if (relod || relodsub) {
 		remaze(opts.mnum)
 	}
@@ -624,7 +624,7 @@ func ccp_tog(op int) {
 
 func pbsess_cyc(dr int) {
 
-fmt.Printf("pbses c: %d %d\n",lpbcnt,sesbcnt)
+if opts.Verbose { fmt.Printf("pbses c: %d %d\n",lpbcnt,sesbcnt) }
 	sesbcnt += dr
 	if sesbcnt >= lpbcnt { sesbcnt = 1 }
 	if sesbcnt < 1 { sesbcnt = lpbcnt - 1 }
@@ -634,7 +634,7 @@ fmt.Printf("pbses c: %d %d\n",lpbcnt,sesbcnt)
 
 func pbmas_cyc(dr int) {
 
-fmt.Printf("pbmas c: %d %d\n",pbcnt,masbcnt)
+if opts.Verbose { fmt.Printf("pbmas c: %d %d\n",pbcnt,masbcnt) }
 	masbcnt += dr
 	if masbcnt >= pbcnt { masbcnt = 1 }
 	if masbcnt < 1 { masbcnt = pbcnt - 1 }

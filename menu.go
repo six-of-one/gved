@@ -338,7 +338,7 @@ func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 // turns display into clickable edit area
 	rbtn = newHoldableButton()
 	rbtn.title = cw.Title()
-fmt.Printf("clwin tl: %s\n",rbtn.title)
+//fmt.Printf("clwin tl: %s\n",rbtn.title)
 	if strings.Contains(rbtn.title, "G¹G²ved") {
 		cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
 		box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
@@ -350,7 +350,7 @@ fmt.Printf("clwin tl: %s\n",rbtn.title)
 
 // call handle blot off after win chg
 	blotoff()
-fmt.Printf("btn sz %v\n",rbtn.Size())
+//fmt.Printf("btn sz %v\n",rbtn.Size())
 }
 
 // update contents of main edit window, includes title

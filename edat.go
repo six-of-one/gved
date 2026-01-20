@@ -104,7 +104,7 @@ func prep(fn string) string {
 		if rfl[y:y+1] == "/" { lstb = y+1 }
 	}
 	rfl = fn[0:lstb]+".db_"+fn[lstb:fl]
-fmt.Printf("sv fil: %s last bld: %d\n",rfl, lstb)
+//fmt.Printf("sv fil: %s last bld: %d\n",rfl, lstb)
 	return rfl
 }
 
@@ -124,6 +124,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int, smazn int)
 // 1. edit status (1) max_x max_y
 // 2. 11 bytes of compressed maze lead in - all stats
 // 3+ maze data
+if opts.Verbose { fmt.Printf("saving maze %s\n",fil) }
 
 	file, err := os.Create(fil)
 	if err == nil {
@@ -158,7 +159,7 @@ func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int, smazn int)
 // now save deleted elements -- set mazn 0 for buffers like paste
 	if delstak > 0 && smazn != 0 {
 		dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
-fmt.Printf("saving maze delete %s\n",dbf)
+if opts.Verbose { fmt.Printf("saving maze delete %s\n",dbf) }
 		file, err := os.Create(dbf)
 		if err == nil {
 			wfs := fmt.Sprintf("%d %d\n",delstak, restak)
@@ -184,6 +185,8 @@ fmt.Printf("saving maze delete %s\n",dbf)
 var mazln int		// maze load # stored
 
 func lod_maz(fil string, mdat MazeData, ud bool) int {
+
+if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 
 	data, err := ioutil.ReadFile(fil)
 	edp := 0
@@ -238,10 +241,12 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		}
 	} else {
 // this warning will issue if a maze buffer save (maze not being edited) has not happened because and the maze is viewed
-		fmt.Printf("loading maze %s, warning:\n",fil)
-		fmt.Print(err)
-		fmt.Printf("\n")
-		fmt.Printf("Note: 'no such file' if maze is not being edited and the maze is viewed when editor is on\n")
+		if opts.Verbose {
+			fmt.Printf("loading maze %s, warning:\n",fil)
+			fmt.Print(err)
+			fmt.Printf("\n")
+			fmt.Printf("Note: 'no such file' if maze is not being edited and the maze is viewed when editor is on\n")
+		}
 		edp = -1
 	}
 // now load deleted elements
@@ -277,9 +282,11 @@ func lod_maz(fil string, mdat MazeData, ud bool) int {
 		}
 
 	} else {
-		fmt.Printf("edp %d failed < 0 or loading maze deleted %s, warning:\n",edp,dbf)
-		fmt.Print(err)
-		fmt.Printf("\n")
+		if opts.Verbose {
+			fmt.Printf("edp %d failed < 0 or loading maze deleted %s, warning:\n",edp,dbf)
+			fmt.Print(err)
+			fmt.Printf("\n")
+		}
 	}
 	return edp
 }
@@ -854,5 +861,6 @@ var lw fyne.Window	// local cpy win to view buf contents
 	clikwin(lw, nimg, px, py)
 	lw.SetTitle(wt)
 	lw.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
+// if opts.Verbose {
 fmt.Printf("clkwin sz: %v\n",fyne.NewSize(float32(px)*dt, float32(py)*dt))
 }

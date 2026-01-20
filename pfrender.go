@@ -1456,6 +1456,7 @@ func renderdots(img *image.NRGBA, xloc int, yloc int, count int) {
 
 func segimage(mdat MazeData, fdat [11]int, xs int, ys int, stat bool) *image.NRGBA {
 
+//if opts.Verbose {
 fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
 
 // dummy maze for ops that require it
