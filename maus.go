@@ -1,0 +1,300 @@
+package main
+
+import (
+	"fmt"
+	"os"
+	"image"
+	"image/color"
+	"image/draw"
+	"strings"
+	"time"
+
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/driver/desktop"
+	"fyne.io/fyne/v2/widget"
+    "fyne.io/fyne/v2/canvas"
+)
+
+// main mouse handler
+
+// rubber banded
+
+var blot *canvas.Image
+var ccblot *canvas.Image
+
+func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
+
+	if img == nil {
+		img = image.NewNRGBA(image.Rect(0, 0, 1, 1))
+		draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 205, G: 0, B: 205, A: 130}}, image.ZP, draw.Src)
+	}
+	blot = canvas.NewImageFromImage(img)
+	blot.Move(fyne.Position{px, py})
+	blot.Resize(fyne.Size{sx, sy})
+}
+
+// turn off blotter after a window update
+// because the window update...
+// a. turns it on full maze for no reason
+// b. refuses to turn it off, even with a delay in fn()
+// and...
+// c. resize window also covers the maze in blotter, which needs a fix
+//		- blot.Hide() works, however blot.Show() flikers the entire maze with momentary blotter
+
+func blotoff() {
+
+	go func() {
+			time.Sleep(5 * time.Millisecond)
+			blot.Resize(fyne.Size{0, 0})
+	}()
+}
+
+// click area for edits
+
+// button we can detect click and release areas for rubberband area & fills
+// title tells us what window the button is on, assigned on btn creation if win is titled
+
+type holdableButton struct {
+    widget.Button
+	title string
+}
+
+func newHoldableButton() *holdableButton {
+
+    button := &holdableButton{}
+    button.ExtendBaseWidget(button)
+
+	return button
+}
+
+// store x & y when mouse button goes down - to start rubberband area
+// 		and when released for other ops like cup & paste
+var sxmd float64
+var symd float64
+var exmd float64
+var eymd float64
+var mbd bool			// true when mouse button 1 is held down, false otherwise
+
+// &{{{387 545} {379 509.92188}} 4 0}
+
+func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
+	ax := 0.0       // absolute x & y
+	ay := 0.0
+	rx := 0.0
+	ry := 0.0
+	mb := 0         // mb 1 = left, 2 = right, 4 = middle
+	mk := 0         // mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
+	pos := fmt.Sprintf("%v",mm)
+	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&rx,&ry,&mb,&mk)
+	cwt = h.title	// current window title by btn establish
+//fmt.Printf("a: %f x %f rp: %f x %f\n",ax,ay,rx,ry)
+	dt := float32(opts.dtec)
+	sx := float32(sxmd)
+	sy := float32(symd)
+	ex := float32(rx)
+	ey := float32(ry)
+//beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f dt: %.2f",sx,sy,ex,ey,dt)
+//statlin(cmdhin,beef)
+
+	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
+	exmd = rx			// so bwin can locate pb changes if drawn
+	eymd = ry
+	if ccp == PASTE {
+//		ex = float32(float32(rx) + dt)
+//		ey = float32(float32(ry) + dt)
+		sx := float32(int(ex / dt)) * dt - 3
+		sy := float32(int(ey / dt)) * dt - 3
+		lx := float32(cpx) * dt + dt
+		ly := float32(cpy) * dt + dt
+		blot.Move(fyne.Position{sx, sy})
+		blot.Resize(fyne.Size{lx, ly})
+	} else {
+	if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
+	if ey < sy { t := sy; sy = ey; ey = t }
+	ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
+	ey = float32(float32(ey) + dt)
+	if mbd {
+		sx = float32(int(sx / dt)) * dt - 3				// blotter selects tiles with original unit of 16 x 16
+		sy = float32(int(sy / dt)) * dt - 4
+		ex = float32(int(ex / dt)) * dt - 1
+		ey = float32(int(ey / dt)) * dt - 2
+		blot.Move(fyne.Position{sx, sy})
+		blot.Resize(fyne.Size{ex - sx, ey - sy})
+//		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
+	} else {
+		blot.Resize(fyne.Size{0, 0})
+	}}}
+}
+
+func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
+	ax := 0.0	// absolute x & y
+	ay := 0.0
+	mb := 0		// mb 1 = left, 2 = right, 4 = middle
+	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
+	pos := fmt.Sprintf("%v",mm)
+	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&sxmd,&symd,&mb,&mk)
+	fmt.Printf("%d down: %.2f x %.2f \n",mb,sxmd,symd)
+	mbd = (mb == 1)
+	if mbd { h.MouseMoved(mm) }		// engage 1 tile click
+}
+
+var repl int		// replace will be by ctrl-h in select area or entire maze, by match
+var cycl int		// cyclical set - C cycles, c sets - using c loc in keymap
+var cycloc = 99
+
+// edkey 'locks' on when pressed
+
+func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
+
+	mb := 0		// mb 1 = left, 2 = right, 4 = middle
+	mbd = false
+	h.MouseMoved(mm)				// disengage blotter
+	ax := 0.0	// absolute x & y
+	ay := 0.0
+	exmd = 0.0	// rel x & y interm float32
+	eymd = 0.0
+	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
+	pos := fmt.Sprintf("%v",mm)
+	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&exmd,&eymd,&mb,&mk)
+	ex := int(exmd / opts.dtec)
+	ey := int(eymd / opts.dtec)
+	edkey = valid_keys(edkey)
+
+// middle mouse click anywhere activates edit mode & pulls up def key
+	if mb == 4 {
+		if opts.edat == 0 || !cmdoff { edit_on(edkdef) }
+		if wpalop {					// palette element selector
+		if h.title == wpal.Title() {
+				if cmdoff { key_asgn(plbuf, ex, ey) }
+				return
+			}
+	}}
+// right mb functions
+	if mb == 2 {
+		if pgdir != 0 {
+			if sdb > 0 {
+				sdbit(pgdir)
+			} else {
+				lrelod := pagit(pgdir)
+				upd_edmaze(false)
+				if lrelod { remaze(opts.mnum) }
+			}
+		}
+		return
+	}
+
+ //   fmt.Printf("up %v\n",mm)
+	if opts.edat > 0 {
+		opbuf := ebuf
+		pbe := false		// paste buf edit
+		if strings.Contains(h.title, " pbf") {			// simple edit on pb win content
+			opbuf = cpbuf
+			ccp = NOP
+			pbe = true
+		}
+//fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
+
+		sx := int(sxmd / opts.dtec)
+		sy := int(symd / opts.dtec)
+		if ex < sx { t := ex; ex = sx; sx = t }		// swap if end smaller than start
+		if ey < sy { t := ey; ey = sy; sy = t }
+		var setcode int			// code to store given edit hotkey
+		if G1 {
+			setcode = g1edit_keymap[edkey]
+		} else {
+			setcode = g2edit_keymap[edkey]
+		}
+// a cut / copy / paste is active
+		pasty := false
+		if ccp == PASTE { pasty = true }
+		if ccp != NOP {
+		if mb != 1 { ccp_NOP(); fmt.Printf("mb: ccp to NOP\n") }
+//		if sx == ex && sy == ey { ccp_NOP() }
+		if ccp != NOP {
+			px :=0
+			if ccp == COPY || ccp == CUT {
+				py :=0
+			for my := sy; my <= ey; my++ {
+				px =0
+			for mx := sx; mx <= ex; mx++ {
+				cpbuf[xy{px, py}] = opbuf[xy{mx, my}]
+fmt.Printf("%03d ",cpbuf[xy{px, py}])
+				px++
+				}
+fmt.Printf("\n")
+			py++
+			}
+			cpx = px - 1; if cpx < 0 { cpx = 0 }		// if these arent 1 less, the paste is 1 over
+			cpy = py - 1; if cpy < 0 { cpy = 0 }
+fmt.Printf("cc dun: px %d py %d\n",px,py)
+// saving paste buffer now
+			fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",pbcnt,opts.Gtp)
+			pbcnt++
+			sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
+// local for short range
+			fil = fmt.Sprintf(".pb/ses_%07d_g%d.ed",lpbcnt,opts.Gtp)
+			lpbcnt++
+			if G1 { lg1cnt = lpbcnt}
+			if G2 { lg2cnt = lpbcnt}
+			sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
+
+// pb sort of doesnt end
+				fil = fmt.Sprintf(".pb/cnt_g%d",opts.Gtp)
+				file, err := os.Create(fil)
+				if err == nil {
+					wfs := fmt.Sprintf("%d",pbcnt)
+					file.WriteString(wfs)
+					file.Close()
+				}
+			}
+			del = false						// copy or paste should not have del on
+			if ccp == CUT { del = true }
+			if pasty {
+fmt.Printf("in pasty\n")
+				ex = sx + cpx
+				ey = sy + cpy
+				if ex < 0 || ex > opts.DimX || cpx > opts.DimX { fmt.Printf("paste fail x\n"); return }
+				if ey < 0 || ey > opts.DimY || cpy > opts.DimY { fmt.Printf("paste fail y\n"); return }
+			} else {
+				bwin(cpx+1, cpy+1, pbcnt - 1, cpbuf, eflg, "ses")		// draw the buffer
+				if ccp == COPY { return }
+			}
+		}}
+// no access for keys: ?, \, C, A #a, eE, L, S, H, V
+		fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,opbuf[xy{ex, ey}])
+		if mb == 4 && cmdoff {		// middle mb, do a reassign
+			 key_asgn(opbuf, ex, ey)
+		} else {
+		if del || cmdoff || pasty {
+			rcl := 1		// loop count for undoing multi ops
+		 for my := sy; my <= ey; my++ {
+		   for mx := sx; mx <= ex; mx++ {
+			rop := true		// run ops
+			if ctrl {		// with ctrl held on drag op, only do outline
+				rop = false
+				if my == sy || my == ey { rop = true }
+				if mx == sx || mx == ex { rop = true }
+			}
+// looped now, with ctrl op
+			if rop {
+				if del { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
+				if pasty { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }	// cant use setcode below, it wont set floors
+				if setcode > 0 { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = setcode; opts.bufdrt = true }
+fmt.Printf("%03d ",opbuf[xy{mx, my}])
+				}
+				rcl++
+			}
+			if edkey == 314 { repl = opbuf[xy{mx, my}] }		// just placeholder until new repl done -- yes, NOT being used
+//			if edkey == 182 { opbuf[xy{mx, my}] = repl; opts.bufdrt = true }		//
+		  }
+fmt.Printf("\n")
+		}
+//			fmt.Printf(" chg elem: %d maze: %d x %d\n",opbuf[xy{mx, my}],mx,my)
+		}}
+		if pbe && opts.bufdrt {			// paste buf edit
+			pb_loced(masbcnt)
+			opts.bufdrt = false
+		} else { ed_maze(true) }
+	}
+
+}
