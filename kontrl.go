@@ -609,7 +609,7 @@ func ccp_NOP() {
 		if blot != ccblot { blot.Hide(); blot = ccblot }
 	}
 	ccp = NOP
-	if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }
+	if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,sshin) }
 }
 func ccp_tog(op int) {
 	wccp := ccp

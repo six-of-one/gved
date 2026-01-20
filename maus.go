@@ -120,10 +120,10 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	ey = float32(float32(ey) + dt)
 	if mbd {
 // blotter size hinter
-		mxmd = int(sx / opts.dtec) // redo as start / end can swap
-		mymd = int(sy / opts.dtec)
-		mxme = int(ex / opts.dtec)
-		myme = int(ey / opts.dtec)
+		mxmd = int(sx / dt) // redo as start / end can swap
+		mymd = int(sy / dt)
+		mxme := int(ex / dt)
+		myme := int(ey / dt)
 // optimize blotter to cover selected cells
 		sx = float32(int(sx / dt)) * dt - 3				// blotter selects tiles with original unit of 16 x 16
 		sy = float32(int(sy / dt)) * dt - 4
@@ -132,10 +132,11 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
 // blotter size hinter
-
+		pos = fmt.Sprintf("r: %fx%f - %fx%f mz: %dx%d - %dx%d",sx,sy,ex,ey,mxmd,mymd,mxme,myme)
+		statlin(pos,tsshn)
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
 	} else {
-		statlin(cmdhin,tsshn)
+		statlin(tcmdhn,tsshn)
 		blot.Resize(fyne.Size{0, 0})
 	}}}
 }
@@ -150,7 +151,11 @@ func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	mxmd = int(sxmd / opts.dtec)
 	mymd = int(symd / opts.dtec)
 // if opts.Verbose {
+if strings.Contains(h.title, "G¹G²ved") {
+fmt.Printf("%d down - rel: %.2f x %.2f maze cell: %d x %d: %d\n",mb,sxmd,symd,mxmd,mymd,ebuf[xy{mxmd, mymd}])
+} else {
 fmt.Printf("%d down - rel: %.2f x %.2f maze cell: %d x %d\n",mb,sxmd,symd,mxmd,mymd)
+}
 	mbd = (mb == 1)
 	if mbd { h.MouseMoved(mm) }		// engage 1 tile click
 }
