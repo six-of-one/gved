@@ -69,6 +69,13 @@ func newHoldableButton() *holdableButton {
 	return button
 }
 
+// no negative, because math.Min complained: cannot use float32() as float64 value in argument to math.Min
+func nong(tv float32) float32 {
+
+	v := tv
+	if tv < 0.0 { v = 0.0 }
+	return v
+}
 // store x & y when mouse button goes down - to start rubberband area
 // 		and when released for other ops like cup & paste
 var sxmd float64
@@ -105,8 +112,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	if ccp == PASTE {
 //		ex = float32(float32(rx) + dt)
 //		ey = float32(float32(ry) + dt)
-		sx := float32(int(ex / dt)) * dt - 3
-		sy := float32(int(ey / dt)) * dt - 3
+		sx := nong(float32(int(ex / dt)) * dt - 3)
+		sy := nong(float32(int(ey / dt)) * dt - 3)
 		lx := float32(cpx) * dt + dt
 		ly := float32(cpy) * dt + dt
 		blot.Move(fyne.Position{sx, sy})
@@ -126,8 +133,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		mxmd = int(sx / dt) // redo as start / end can swap
 		mymd = int(sy / dt)
 // optimize blotter to cover selected cells
-		sx = float32(int(sx / dt)) * dt - 3				// blotter selects tiles with original unit of 16 x 16
-		sy = float32(int(sy / dt)) * dt - 4
+		sx = nong(float32(int(sx / dt)) * dt - 3)				// blotter selects tiles with original unit of 16 x 16
+		sy = nong(float32(int(sy / dt)) * dt - 4)
 		ex = float32(int(ex / dt)) * dt - 1
 		ey = float32(int(ey / dt)) * dt - 2
 		blot.Move(fyne.Position{sx, sy})
