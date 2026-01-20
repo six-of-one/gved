@@ -55,9 +55,9 @@ var RLPROF = [][]int{
 var RLOAD = []int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 // difficulty level for rnd load profile
-var diff_level = 3
-var def_diff = 7
-var max_diff_level int
+var diff_level float64
+var def_diff float64
+var max_diff_level float64
 
 // put rnd load in mbuf (with the stuff already there)
 // anum is use mask, details on palette "T"
@@ -67,12 +67,14 @@ func rload(mbuf MazeData) {
 source := rand.NewSource(time.Now().UnixNano())
 rng := rand.New(source)
 
-dx :=  opts.DimX
+dx := opts.DimX
 dy := opts.DimY
 cx := 0
 cy := 0
 
-ldiff := math.Ceil(float64(diff_level / def_diff))
+diff_level = 10.0
+def_diff = 7.0
+ldiff := diff_level / def_diff
 
 rlloop := 33
 rlline := 9
@@ -80,7 +82,7 @@ rprof := rng.Intn(rlline-1)+1 // for now pick a random profile
 /*if troomtime > 0 {
 	rprof = rlline + 1
 }*/
-fmt.Printf("%d prof, %f diff \n",rprof,ldiff)
+fmt.Printf("%d prof, %f diff %f\n",rprof,float64(diff_level / def_diff),ldiff)
 for f := 0; f <= rlloop; f++ {
 	RLOAD[f] = int(math.Ceil(float64(RLPROF[f][rprof]) * ldiff)) // get item counts for a profile
 fmt.Printf("%d rlprof: %d\n",f,RLOAD[f])

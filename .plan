@@ -11,6 +11,7 @@ rubber-band ops - click and drag will expand to set region of place / del / edit
 * idea: show rubber band with visible indicator smh
 * ctrl-click should only operate on outer cells of band
 * copy, cut & paste rubber-band contents
+- rubber band sizing of cells
 
 replace mode - either over entire maze, rubber band region, select y/n on each find, or click item replace
 \_ possibly also use #T mask for allowing edits on elements, or disallow
