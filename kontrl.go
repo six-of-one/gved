@@ -80,12 +80,12 @@ func specialKey() {
 						opts.dntr = false
 						ccp_NOP()
 						cmdhin = "cmds: ?, <ESC>, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
-						statlin(cmdhin,"")
+						statlin(cmdhin,sshin)
 						Ovwallpat = -1
 					}
 				}
 			}
-			if key.Name == "Delete" { if !ctrl { del = false }; if opts.edat == 1 { smod = "Edit mode: "; if ctrl { smod = "Edit DEL: " }; statlin(cmdhin,"")}}
+			if key.Name == "Delete" { if !ctrl { del = false }; if opts.edat == 1 { smod = "Edit mode: "; if ctrl { smod = "Edit DEL: " }; statlin(cmdhin,sshin)}}
 //			if key.Name == "BackSpace" { del = false }
 			if key.Name == "Home" { home = false }
 			if key.Name == "LeftSuper" { logo = false }

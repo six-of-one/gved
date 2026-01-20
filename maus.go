@@ -73,6 +73,9 @@ var sxmd float64
 var symd float64
 var exmd float64
 var eymd float64
+// maze x & y mouse down
+var mxmd int
+var mymd int
 var mbd bool			// true when mouse button 1 is held down, false otherwise
 
 // &{{{387 545} {379 509.92188}} 4 0}
@@ -109,19 +112,30 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{lx, ly})
 	} else {
+	tcmdhn := cmdhin
+	tsshn := sshin
 	if ex < sx { t := sx; sx = ex; ex = t }		// swap if end smaller than start
 	if ey < sy { t := sy; sy = ey; ey = t }
 	ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
 	ey = float32(float32(ey) + dt)
 	if mbd {
+// blotter size hinter
+		mxmd = int(sx / opts.dtec) // redo as start / end can swap
+		mymd = int(sy / opts.dtec)
+		mxme = int(ex / opts.dtec)
+		myme = int(ey / opts.dtec)
+// optimize blotter to cover selected cells
 		sx = float32(int(sx / dt)) * dt - 3				// blotter selects tiles with original unit of 16 x 16
 		sy = float32(int(sy / dt)) * dt - 4
 		ex = float32(int(ex / dt)) * dt - 1
 		ey = float32(int(ey / dt)) * dt - 2
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
+// blotter size hinter
+
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
 	} else {
+		statlin(cmdhin,tsshn)
 		blot.Resize(fyne.Size{0, 0})
 	}}}
 }
@@ -133,8 +147,10 @@ func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
 	pos := fmt.Sprintf("%v",mm)
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&sxmd,&symd,&mb,&mk)
+	mxmd = int(sxmd / opts.dtec)
+	mymd = int(symd / opts.dtec)
 // if opts.Verbose {
-fmt.Printf("%d down: %.2f x %.2f \n",mb,sxmd,symd)
+fmt.Printf("%d down - rel: %.2f x %.2f maze cell: %d x %d\n",mb,sxmd,symd,mxmd,mymd)
 	mbd = (mb == 1)
 	if mbd { h.MouseMoved(mm) }		// engage 1 tile click
 }

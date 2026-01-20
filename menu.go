@@ -185,9 +185,9 @@ func menu_blank(pr bool) {
 	remaze(opts.mnum)
 }
 
-func menu_copy() { if opts.edat > 0 { ccp_tog(COPY); if ccp > 0 { smod = "Edit COPY: "}; statlin(cmdhin,"") }}
-func menu_cut() { if opts.edat > 0 { ccp_tog(CUT); if ccp > 0 { smod = "Edit CUT: "}; statlin(cmdhin,"") }}
-func menu_paste() { if opts.edat > 0 { ccp_tog(PASTE); if ccp > 0 { smod = "Edit PASTE: "}; statlin(cmdhin,"") }}
+func menu_copy() { if opts.edat > 0 { ccp_tog(COPY); if ccp > 0 { smod = "Edit COPY: "}; statlin(cmdhin,sshin) }}
+func menu_cut() { if opts.edat > 0 { ccp_tog(CUT); if ccp > 0 { smod = "Edit CUT: "}; statlin(cmdhin,sshin) }}
+func menu_paste() { if opts.edat > 0 { ccp_tog(PASTE); if ccp > 0 { smod = "Edit PASTE: "}; statlin(cmdhin,sshin) }}
 
 // set menus
 
@@ -388,9 +388,12 @@ func uptitl(mazeN int, spaux string) {
 
 // update stat line
 
+var sshin string
+
 func statlin(hs string,ss string) {
 
 	hintup.Label = hs
+	sshin = ss
 	statup.Label = smod + ss
 	mainMenu.Refresh()
 }
