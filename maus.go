@@ -45,7 +45,9 @@ func blotoff() {
 
 	go func() {
 			time.Sleep(5 * time.Millisecond)
+   fyne.Do(func() {
 			blot.Resize(fyne.Size{0, 0})
+   })
 	}()
 }
 
@@ -96,12 +98,10 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	sy := float32(symd)
 	ex := float32(rx)
 	ey := float32(ry)
-//beef := fmt.Sprintf("a: %.2f x %.2f r: %.2f x %.2f dt: %.2f",sx,sy,ex,ey,dt)
+//beef := fmt.Sprintf("a: %.0f x %.0f r: %.0f x %.0f dt: %.0f",sx,sy,ex,ey,dt)
 //statlin(cmdhin,beef)
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
-	exmd = rx			// so bwin can locate pb changes if drawn
-	eymd = ry
 	if ccp == PASTE {
 //		ex = float32(float32(rx) + dt)
 //		ey = float32(float32(ry) + dt)
@@ -133,7 +133,13 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
 // blotter size hinter
-		pos = fmt.Sprintf("r: %.2fx%.2f - %.2fx%.2f mz: %dx%d - %dx%d",sx,sy,ex,ey,mxmd,mymd,mxme,myme)
+		if mxmd == mxme && mymd == myme {
+			mid := g1mapid[ebuf[xy{mxmd, mymd}]]
+			if G2 { mid = g2mapid[ebuf[xy{mxmd, mymd}]] }
+			pos = fmt.Sprintf("r: %.0fx%.0f+ %.0f mz: %d x %d: %d %s",sx,sy,dt,mxmd,mymd,ebuf[xy{mxmd, mymd}],mid)
+		} else {
+			pos = fmt.Sprintf("r: %.0fx%.0f - %.0fx%.0f mz: %d x %d - %d x %d",sx,sy,ex,ey,mxmd,mymd,mxme,myme)
+		}
 		statlin(pos,tsshn)
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
 	} else {
@@ -151,12 +157,12 @@ func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&sxmd,&symd,&mb,&mk)
 	mxmd = int(sxmd / opts.dtec)
 	mymd = int(symd / opts.dtec)
-// if opts.Verbose {
+if opts.Verbose {
 if strings.Contains(h.title, "G¹G²ved") {
-fmt.Printf("%d down - rel: %.2f x %.2f maze cell: %d x %d: %d\n",mb,sxmd,symd,mxmd,mymd,ebuf[xy{mxmd, mymd}])
+fmt.Printf("%d down - rel: %.0f x %.0f maze cell: %d x %d: %d\n",mb,sxmd,symd,mxmd,mymd,ebuf[xy{mxmd, mymd}])
 } else {
-fmt.Printf("%d down - rel: %.2f x %.2f maze cell: %d x %d\n",mb,sxmd,symd,mxmd,mymd)
-}
+fmt.Printf("%d down - rel: %.0f x %.0f maze cell: %d x %d\n",mb,sxmd,symd,mxmd,mymd)
+}}
 	mbd = (mb == 1)
 	if mbd { h.MouseMoved(mm) }		// engage 1 tile click
 }
@@ -215,7 +221,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 			ccp = NOP
 			pbe = true
 		}
-//fmt.Printf("%d up: %.2f x %.2f \n",mb,exmd,eymd)
+//fmt.Printf("%d up: %.0f x %.0f \n",mb,exmd,eymd)
 
 		sx := int(sxmd / opts.dtec)
 		sy := int(symd / opts.dtec)
@@ -287,7 +293,9 @@ fmt.Printf("in pasty\n")
 		}}
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V
 // if opts.Verbose {
-fmt.Printf(" dtec: %f maze: %d x %d - element:%d\n",opts.dtec,ex,ey,opbuf[xy{ex, ey}])
+mid := g1mapid[opbuf[xy{mxmd, mymd}]]
+if G2 { mid = g2mapid[opbuf[xy{mxmd, mymd}]] }
+fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",opts.dtec,ex,ey,opbuf[xy{ex, ey}],mid)
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			 key_asgn(opbuf, ex, ey)
 		} else {
