@@ -666,7 +666,7 @@ func palRune(r rune) {
 				" s  - (show only) random 'special potions' &\n"+
 				"      gold bags on emply floor tiles (not EDIT)\n"+
 				" L  - toggle generator indicator letters [ DGLS ]\n"+
- 				"      showing box gen monster\n"+
+				"      showing box gen monster\n"+
 				" p  - toggle floor invisible *\n"+
 				" P  - toggle walls invisible *\n\nS"+
 				"NOGEN = 1	// all generators\n"+

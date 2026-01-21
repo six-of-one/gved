@@ -208,7 +208,7 @@ control			when dragging mouse, box will fill/ delete an outline only
 edit keys are item placement reassignable keys
 
 hit <ESC> to edit mazes
-hit '\' to activate / deactivate edit keys		
+hit '\' to activate / deactivate edit keys
 (when not in edit keys, cmd keys from view mode are active)
 
 press a key, the item assigned to that key will be placed in the maze with
@@ -284,7 +284,7 @@ Quit		- seems to be a default on 1st menu, currently blocks
 Exit		- use this, it does a buffer check and pops up a save dialog
 
 Load		- loads maze from std file (not for files in directory .ed/)
-Save		- saves maze to a std file, 
+Save		- saves maze to a std file,
               if # is set on title numeric: store that as maze #
 				(maze numbers in files not currently used)
 
