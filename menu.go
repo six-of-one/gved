@@ -247,13 +247,20 @@ func st_menu() {
 	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
+	menuItemOps := fyne.NewMenuItem("Operation", func() {
+		data, err := ioutil.ReadFile("ops.txt")
+		if err == nil {
+			txt := fmt.Sprintf("%s",data)
+			dboxtx("Operations", txt, 700, 1000) 
+		}
+	})
 	menuItemAbout := fyne.NewMenuItem("About", func() {
 		dialog.ShowInformation("About G¹G²ved", "Gauntlet / Gauntlet 2 visual editor\nAuthor: Six [a programmer]\n\ngithub.com/six-of-one/", w)
 	})
 	menuItemLIC := fyne.NewMenuItem("License", func() {
 		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor - gved\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
 	})
-	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemAbout, menuItemLIC)
+	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemOps, menuItemAbout, menuItemLIC)
 
 	hintup = fyne.NewMenu("cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a")
 

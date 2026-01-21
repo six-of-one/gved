@@ -148,6 +148,7 @@ most of these have a corresponging item on edit or file menus
 <CTRL>-U	when the maze is loaded from disk an ulternate buffer is
 			stored and ctrl-U swaps them
 			- both can be edited, but both can not yet be saved
+			- not working in view only mode
 
 <SH-CTRL>-P	roll thru session paste buffer, loading each one
 <SH-CTRL>-O	roll thru master paste buffer, loading each one
@@ -161,6 +162,7 @@ p			session paste buffer ++
 q,Q			close subwindow		(also pal window)
 r, R		rotate content +90°, -90°
 h, M		horiz, vert mirror
+			- pb changes autosave
 			see mouse ops too...
 
 <HOME>		toggle a complete item palette for G¹ / G²
@@ -297,7 +299,14 @@ Random Load - empty tiles (floor) will be load with a random select
 			  profile - uses #T filter if set as include filter
 
 View Sim	- blotter is set to default gauntlet view port to simulate
-			  what a player could see in any area
+			  what a player could see in any area (arcade)
 Palette map - default: palette walls / floor match level cols & pats
-			  toggle this on and off (1st click shows palette if hidden)
+			  toggles on and off (1st click shows palette if hidden)
 Mute audio	- toggle audio hint when selecting edit elements -middle click
+
+Paste buffer menu
+Show		- bring up a paste buffer window with current content
+Next Mas	- cycle master pb store fwd
+Prior Mas	- cycle master pb store back
+Next Ses	- cycle edit session pb store fwd 
+Prior Ses	- cycle edit session pb store back
