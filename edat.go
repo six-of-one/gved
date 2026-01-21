@@ -663,21 +663,27 @@ func palRune(r rune) {
 				"invisible flag set - hide vars maze elements:\n"+
 				" T - cycle through a flag set (loop 0 - 511)\n"+
 				" #T - set flags = # ---- <ctrl>-T reset flags to 0\n\n"+
-
-				"NOGEN = 1		// all generators\n"+
+				" s  - (show only) random 'special potions' &\n"+
+				"      gold bags on emply floor tiles (not EDIT)\n"+
+				" L  - toggle generator indicator letters [ DGLS ]\n"+
+ 				"      showing box gen monster\n"+
+				" p  - toggle floor invisible *\n"+
+				" P  - toggle walls invisible *\n\nS"+
+				"NOGEN = 1	// all generators\n"+
 				"NOMON = 2		// all monster, dragon\n"+
 				"NOFUD = 4		// all food\n"+
 				"NOTRS = 8		// treas, locked\n"+
 				"NOPOT = 16		// pots & t.powers\n"+
-				"NODOR = 32		// doors, keys\n"+
-				"NOTRAP = 64		// trap & floor dots, stun, ff tiles\n"+
-				"NOEXP = 128		// exit, push wall\n"+
-				"NOTHN = 256		// anything else left\n"+
+				"NODOR = 32	// doors, keys\n"+
+				"NOTRAP = 64	// trap & floor dots, stun, ff tiles\n"+
+				"NOEXP = 128	// exit, push wall\n"+
+				"NOTHN = 256	// anything else left\n"+
 				"NOFLOOR = 512\n"+
 				"NOWALL = 1024	// g2 *walls\n"+
 				"NOG1W = 2048	// g1 std wall only\n\n"+
 				"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
-				"Random profile load\n- only load items flags cover",440,540)
+				"Random profile load\n- only load items flags cover"+
+				"\n\n* hide items disabled when edit keys active",440,700)
 		case 'q': fallthrough
 		case 'Q': if wpalop { wpalop = false; wpal.Close() }
 		default:

@@ -164,7 +164,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 			if G2 { mid = g2mapid[ebuf[xy{mxmd, mymd}]] }
 			pos = fmt.Sprintf("r: %.0fx%.0f+ %.0f mz: %d x %d: %d %s",sx,sy,dt,mxmd,mymd,ebuf[xy{mxmd, mymd}],mid)
 		} else {
-			pos = fmt.Sprintf("r: %.0fx%.0f - %.0fx%.0f mz: %d x %d - %d x %d",sx,sy,ex,ey,mxmd,mymd,mxme,myme)
+			pos = fmt.Sprintf("r: %.0fx%.0f - %.0fx%.0f mz: %d x %d - %d x %d: %d by %d",sx,sy,ex,ey,mxmd,mymd,mxme,myme,mxme-mxmd+1,myme-mymd+1)
 		}
 		statlin(pos,tsshn)
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)

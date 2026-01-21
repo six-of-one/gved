@@ -1,14 +1,18 @@
+./gved -h
+- gives all command line parameters and a few examples
 
 interactive system:			(on command line enter:./gved -i)
 ------------------
 
 the menu bar lists key commands available, which mode is active
 and various edit status details
+- with mouse drag it measures pixels, cells and cell size
+- a single click gives cell content (must toggle edit 1 time)
 
-the program title shows maze #, maze address and buffer # when one is loaded
+the program title shows maze #, maze address and buffer # when loaded
 - when switching G¹ / G² it will also list that with G¹ revision
 
-general controls:			(general keys are always available in both modes)
+general controls:		(general keys are always available in both modes)
 ----------------
 
 <CTRL>-Q	quit program
@@ -17,10 +21,11 @@ general controls:			(general keys are always available in both modes)
 
 #a	load maze #
 	(G¹ valid 1-127, G² valid 1-117)
-A	enable address mode (experimental, likely to never work with arcade emu)
-	- load a maze from ANY address that will not crash the engine (address list at end of constants.go)
-	- when enabled #a will load any valid address in decimal 229376 - 262143
-	- z, x will also cycle -, + to the next *valid* address
+A	enable address mode (experimental, likely never work with arcade emu)
+	- load a maze from ANY address that will not crash the engine
+	  (address list at end of constants.go)
+	- when enabled #a will load any valid address in range 229376 - 262143
+	- pgup, pgdn will also cycle -, + to the next *valid* address
 
 - note: A mode was used to discover address that would decode G¹ mazes
 		the engine was never intended to read maze data this way
@@ -28,21 +33,22 @@ A	enable address mode (experimental, likely to never work with arcade emu)
 
 two op modes exist, view only and edit
 
-<ESC>	turn edit mode on - initializes current maze to disk in .ed if not present
+<ESC>	turn edit mode on - initializes current maze to disk in .ed/
 <ESC>	turn edit off/ view back on and check for unsaved data
 
-S	cycle through all save data buffers in .ed/sd#####_g?.ed	(where g? is g1 or g2)
-	- while cycling any edits to current maze are saved temporary as .ed/ebuf.ed
+S	cycle through all save data buffers in .ed/sd#####_g?.ed
+	- while cycling any edits to current maze are autosaved !
 	- buffer edits will also auto save (including std maze ones)
 	- limit is currently 999 buffers
-#L	load buffer #####											(current limit 999 bufs)
+#L	load buffer #####							(current limit 999 bufs)
 #S	save current visible maze as buffer #####
-	- while sd buffers are available in view mode, no view mode changes (fgwqhmrR) will be saved
+	- while sd buffers are available in view mode, no view mode changes
+	  (fgwqhmrR) will be saved
 
-pgup 	previous maze		or		previous sd buf
-pgdn	next maze					next sd buf
-									- when sd view is active, pgup stops at 1
-									- pgdn will exit to mazes on last buf
+pgup 	previous maze	or	previous sd buf
+pgdn	next maze			next sd buf
+							- when sd view is active, pgup stops at 1
+							- pgdn will exit to mazes on last buf
 
 View mazes only:		( and cmd keys in edit )
 ---------------
@@ -61,11 +67,13 @@ f,F	 + or - floor pattern in cycle of all patterns
 g,G	 + or - floor colors in cycle of all colors
 w,W	 + or - wall pattern in cycle
 q,Q	 + or - wall colors in cycle
-#	and #f, #g, #w, #q - set valid pattern / color #, with invalid going to 0
+#	and #f, #g, #w, #q - set valid pats / cols #, with invalid going to 0
 
-h	horizontally mirror the maze (G¹ does this after many levels, G² from maze 1)
+h	horizontally mirror the maze
+    (G¹ does h,m after many levels, G² from maze 1)
 m	vertically mirror "flip" the maze (same G¹ / G² note)
 	- doing both rotates maze 180°
+
 r	[ sanctuary only! ] rotate maze +90°
 R	[ sanctuary only! ] rotate maze -90°
 	- gauntlet arcade does NOT do this
@@ -73,9 +81,10 @@ R	[ sanctuary only! ] rotate maze -90°
 t	set rotate to 0°	(not available in edit mode!)
 
 following keys are visible effect only, no edit changes are made
+t,T in palette window gives this list in dialog
 
 s	display random "special potions" and gold bags on emply floor tiles
-L	toggle generator indicator letters [ DGLS ] showing what a box gen produces
+L	toggle generator indicator letters [ DGLS ] showing box gen monster
 p	toggle floor invisible *
 P	toggle walls invisible *
 T	loop through a set of invisible flags or, *
@@ -90,38 +99,55 @@ T	loop through a set of invisible flags or, *
 	NOEXP = 128		// exit, push wall
 	NOTHN = 256		// anything else left
 	NOFLOOR = 512
-	NOWALL = 1024
-	NOG1W = 2048		// g1 std wall only
-- these are hidden only and still present in maze			(* disabled when edit keys active)
+	NOWALL = 1024	// g2 *walls
+	NOG1W = 2048	// g1 std wall only
+- these are hidden only and still present in maze
+
+(* hide items will disable when edit keys active)
 
 Edit mazes:
 ----------
 
-in edit mode with cmd keys set, many of the view mode keys are still functional
+** when entering edit mode window size will be adjusted to provide A
+   "square" cell size representing 16 px by 16 px at default resolution
+   and scaling up for larger window sizes
+
+in edit mode with cmd keys set, many of the view mode keys still function
 - fF, gG, wW, qQ, h, m, rR however, all cause edit buffer changes
 
 edit mode stores changes in buffer files in subdir .ed
-there is as yet no way, *with gved*, to recompress and store mazes in rom...
+there is as yet no way, *with gved*, to recompress and store mazes in rom
 
 most of these have a corresponging item on edit or file menus
 
-<SH-CTRL>-S	save current buffer for maze to disk as a generic buffer save
+<SH-CTRL>-S	save current buffer for maze to disk as a generic file save
 			- typing a # first will pre-pend that as the mazes #
 			  (it does not cause it to load that # for now)
-<SH-CTRL>-L	load generic buffer save from disk into edit buffer
-			- these are NOT compatible with below, doing a <CTRL>-S after a 
-			  generic load WILL overwrite the buffer for current maze #
+<SH-CTRL>-L	load generic file save from disk into edit buffer
+			- these are NOT compatible with below, doing a <CTRL>-S after
+			  a generic load WILL overwrite the buffer for current maze #
 
-<CTRL>-S	save edit buffer for maze # to disk as a maze edit buffer for maze#
-			- A (address) mode will NOT save edit buffer for address, it will save to current maze #
+<CTRL>-S	save G? edit buffer for maze # to disk as .ed/g{?}maze{###}.ed
+			- A (address) mode will NOT save edit buffer for address,
+			  it will save to current maze #
 <CTRL>-L	load edit buffer from disk from buffer for maze#
 <CTRL>-R	reset edit buffer for current maze # from rom
 			- these are also on the edit menu
 
 <CTRL>-C	set for copy contents of next Left-click mouse drag
-<CTRL>-X	set for cut contents of next Left-click mouse drag - floor will be set
+<CTRL>-X	set for cut contents of next Left-click mouse drag - set floor
 <CTRL>-P	paste contents of c/c/p buffer at Left-click location
-			- c/c/p are 'sticky', they stay on, select again to turn off, or select another edit action
+			- c/c/p are 'sticky', they stay on, select again to turn off,
+			or select another edit action
+
+<CTRL>-Z	undo last op - currently holds {all mem until its unworkable}
+			units (single maze cell) of undo
+<CTRL>-Y	redo last undo up to last change entered
+			-undo back 5 or 10 and place a new item and the forward chain
+			is lost
+<CTRL>-U	when the maze is loaded from disk an ulternate buffer is
+			stored and ctrl-U swaps them
+			- both can be edited, but both can not yet be saved
 
 <SH-CTRL>-P	roll thru session paste buffer, loading each one
 <SH-CTRL>-O	roll thru master paste buffer, loading each one
@@ -133,16 +159,14 @@ when pb window is selected:
 o			session paste buffer --
 p			session paste buffer ++
 q,Q			close subwindow		(also pal window)
-
-<CTRL>-Z	undo last op - currently holds {all mem until its unworkable} units (single maze cell) of undo
-<CTRL>-Y	redo last undo up to last change entered
-			-undo back 5 or 10 and place a new item and the forward chain is lost
-<CTRL>-U	when the maze is loaded from disk an ulternate buffer is stored and ctrl-U swaps them
-			- both can be edited, but both can not yet be saved
+r, R		rotate content +90°, -90°
+h, M		horiz, vert mirror
+			see mouse ops too...
 
 <HOME>		toggle a complete item palette for G¹ / G²
 			- middle click on item with edit active, valid key selected
-			- palette for G¹ / G² in subwindow (position is not code controlled, you have to drag it)
+			- palette for G¹ / G² in subwindow (position is not code
+			  controlled, you have to drag it)
 			- auto switching G¹ to G²
 
 certain ops will check for unsaved changes and launch a dialog to save
@@ -150,39 +174,50 @@ certain ops will check for unsaved changes and launch a dialog to save
 
 \	toggle cmd keys and edit keys		(only while in edit mode)
 
-c,C	cycle -,+ maze element on this edit key, looping over 1 - 64, and activate key for placement
+c,C	cycle -,+ maze element on this edit key, looping over 1 - 64, and
+              activate key for placement
 	- 'c' can be still assigned any value, 'C' can not be assigned
 #c	assign cycle key to #, in range of 1 - 64
 
-H	toggle horizontal wrap - Y column = 32 will be removed/ restored (will restore on toggle with contents intact until saved)
+H	toggle horizontal wrap - Y column = 32 will be removed/ restored (will
+    restore on toggle with contents intact until saved)
 M	toggle vertical wrap   - X row = 32 will likewise be removed/ restored
 
 Mouse operation
 ---------------
 
 Left-click		place current edit key item in maze at cursor
-Middle-click	assign item at cursor to current edit key (assigned floor will not place)
-				- turns on edit mode, cmdkeys off and sets def key if no edkey selected
+Middle-click	assign item at cursor to current edit key (assigned floor
+				will not place)
+				- turns on edit mode, cmds off and sets def key if no edkey
+				  selected
+Right-click		continue last pgup/ pgdn op in window selected
+				* when paste buffer win selected these to the same op
 
-Left-click drag	- dragging to new location - fill / delete the encompassed rectangle
+Left-click drag	- dragging to new location - fill / delete the encompassed
+				  rectangle
 
 key held with Left-click
 
 delete			both place a floor at cursor
 
-control			when dragging mouse, box will fill / delete an outline only
+control			when dragging mouse, box will fill/ delete an outline only
 
 ** EDIT KEYS **
 ---------------
 edit keys are item placement reassignable keys
 
 hit <ESC> to edit mazes
-hit '\' to activate / deactivate edit keys		(when not in edit keys, cmd keys from view mode are active)
+hit '\' to activate / deactivate edit keys		
+(when not in edit keys, cmd keys from view mode are active)
 
-press a key, the item assigned to that key will be placed in the maze with a Left-click mouse button
-- while a key is active, middle-click mouse button on any maze item re-assigns that key to that item
+press a key, the item assigned to that key will be placed in the maze with
+a Left-click mouse button
+- while a key is active, middle-click mouse button on any maze item
+  re-assigns that key to that item
 
-- edit status will indicate when a key is selected or assigned, and what it places
+- edit status will indicate when a key is selected or assigned, and what
+  it places
 
 
 these are pre-defined for G¹ / G², and re-assignable:
@@ -244,13 +279,25 @@ Menu operations
 
 additional not covered above:
 
-Quit		- seems to be a default on 1st menu, and does NOT check for edit changes
+Quit		- seems to be a default on 1st menu, currently blocks
+			  (along with X close upper right window widget)
 Exit		- use this, it does a buffer check and pops up a save dialog
 
-Load		- loads a maze from std file (not intended to be a buffer file from .ed)
-Save		- saves a maze to a std file, if # is set on title numeric: store that as maze #
+Load		- loads maze from std file (not for files in directory .ed/)
+Save		- saves maze to a std file, 
+              if # is set on title numeric: store that as maze #
 				(maze numbers in files not currently used)
 
-Blank		- fill buffer with blank maze, default floors & walls (must be in edit mode, can also use # keep)
-Blank keep	- blank maze, but keep current floors, walls, exit, starts, and -
-			  if # is set on title numeric: use inversion of #T hide items mask to preserve those
+Blank		- fill buffer with blank maze, default floors & walls
+              (must be in edit mode, can also use # keep)
+Blank keep	- blank maze, but keep decor cols & pats, start, exits, and
+			  if # is set on title numeric: use inversion of #T hide items
+			  mask to preserve those
+Random Load - empty tiles (floor) will be load with a random select
+			  profile - uses #T filter if set as include filter
+
+View Sim	- blotter is set to default gauntlet view port to simulate
+			  what a player could see in any area
+Palette map - default: palette walls / floor match level cols & pats
+			  toggle this on and off (1st click shows palette if hidden)
+Mute audio	- toggle audio hint when selecting edit elements -middle click
