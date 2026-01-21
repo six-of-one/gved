@@ -9,8 +9,6 @@ import (
 	"image"
 	"encoding/binary"
 	"fyne.io/fyne/v2"
-//    "fyne.io/fyne/v2/canvas"
-	"fyne.io/fyne/v2/dialog"
 )
 
 /*
@@ -652,15 +650,17 @@ func palete() {
 func palRune(r rune) {
 
 	switch r {
-		case '?': dialog.ShowInformation("palette ops", "in gved main window:\n"+
+		case '?': dboxtx("palette ops", "in gved main window:\n"+
+				"middle click an element\n(click activates edit + default key)\n... or ...\n"+
 				"select maze\nhit <ESC> - activate edit mode\nhit '\\' for edit keys\n"+
-				"hit a key to map: 'y'\nmove mouse to palette\nand middle click an element\n"+
+				"hit a key to map: 'y'\nmove mouse to maze or palette\nand middle click an element\n"+
+				"\nin palette window:\nmiddle click an element\n\n"+
 				"edit hint on menu bar give status"+
 				"\n\npal win keys:\nq,Q - quit\nt,T - hide flags info\n\n(only when window active)\n"+
-				"*stats in terminal if palette open", wpal)
+				"*stats in terminal if palette open", 350,500)
 		case 't': fallthrough
-		case 'T': dialog.ShowInformation("T hide flags", "in gved main window:\n\n"+
-				"invisible flag set - hide vars maze elements:"+
+		case 'T': dboxtx("T hide flags", "in gved main window:\n\n"+
+				"invisible flag set - hide vars maze elements:\n"+
 				" T - cycle through a flag set (loop 0 - 511)\n"+
 				" #T - set flags = # ---- <ctrl>-T reset flags to 0\n\n"+
 
@@ -677,7 +677,7 @@ func palRune(r rune) {
 				"NOWALL = 1024	// g2 *walls\n"+
 				"NOG1W = 2048	// g1 std wall only\n\n"+
 				"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
-				"Random profile load\n- only load items flags cover",wpal)
+				"Random profile load\n- only load items flags cover",440,540)
 		case 'q': fallthrough
 		case 'Q': if wpalop { wpalop = false; wpal.Close() }
 		default:
@@ -791,9 +791,13 @@ func pb_loced(cnt int) {
 func pbRune(r rune) {
 
 	switch r {
-		case '?': dialog.ShowInformation("paste buffer viewer keys", "q,Q - quit\n"+
+		case '?': dboxtx("paste buffer viewer keys", "q,Q - quit\n"+
 				"o,p - cycle session pb - / +\nO,P - cycle master pb - / +\n"+
-				", . - cycle master pb - / +\n\n(only when window active)\n", w)			// showing in main win because pb win is usually too small
+				", . - cycle master pb - / +\n══════════════════"+
+				"\nr - rotate pb +90°\nR - rotate pb -90°\nh - horiz flip\nm - vert mirror"+
+				"\n══════════════════\nmiddle click selects element\n"+
+				"left click sets element\n(pb has basic edit support)\n"+
+				"- pb edit autosaves\n══════════════════\n(* only when window active)", 250,350)			// showing in main win because pb win is usually too small
 		case ',': pbmas_cyc(-1)
 		case '.': pbmas_cyc(1)
 		case 'O': pbmas_cyc(-1)
