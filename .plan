@@ -82,3 +82,12 @@ removed:
 future:
 * with the success of the rubberband blotter implement, a glimmer of an idea starts
   on how to actually code the sanctuary-go game screen
+
+game player:
+
+- save floor layer
+- build shadows & animate floor tiles on that
+- walls & stationary - when updating, changes have dirty flag & update 8 tiles around
+- mobs & gens - when things delete, 8 tiles around also need update
+
+- built in 3 layers (and button?) and load to win SetContent(box)

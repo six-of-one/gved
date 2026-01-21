@@ -616,11 +616,8 @@ func ccp_tog(op int) {
 	ccp_NOP()
 	if wccp != op { ccp = op }
 	if ccp == PASTE {
-		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
 		if !wpbop { wpbimg = segimage(cpbuf,eflg,cpx+1,cpy+1,false) }
-		blotx = cpx
-		bloty = cpy
-		clikwsh(w, wpbimg, cpx, cpy)
+		blotwup(w, wpbimg, cpx, cpy)
 	}
 }
 

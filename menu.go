@@ -9,7 +9,6 @@ import (
 	"image"
 	"strings"
 //		"image/color"
-
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
@@ -320,24 +319,46 @@ func subsw() {
 var rbimg *canvas.Raster			// for the pb paste image dealy
 var rbtn *holdableButton
 
-// clik win short ver for pb image
+// blot win short ver for pb image to set blotter
 
-var blotx int
-var bloty int
-
-func clikwsh(cw fyne.Window, limg *image.NRGBA, px int, py int) {
+func blotwup(cw fyne.Window, limg *image.NRGBA, px int, py int) {
 		t := cw.Title()
 		if strings.Contains(t, "G¹G²ved") {
-			blot = canvas.NewImageFromImage(limg)
+			if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
 			dt := float32(opts.dtec)
-			blot.Resize(fyne.NewSize(float32(blotx)*dt, float32(bloty)*dt))
+			blot = canvas.NewImageFromImage(limg)
+			blot.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
+			blot.Move(fyne.Position{bxm, bym})
 			box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
 			cw.SetContent(box)
 // /			blotoff()
 		}
 }
 
-func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int, blt bool) {
+// sub win upd
+
+func clikwins(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
+
+	bimg := canvas.NewRasterFromImage(wimg)
+
+// turns display into clickable edit area
+	btn := newHoldableButton()
+	btn.title = cw.Title()
+//fmt.Printf("clwin tl: %s\n",btn.title)
+	if strings.Contains(btn.title, "G¹G²ved") {
+		cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
+		box := container.NewStack(btn, bimg, blot)		// key to seeing maze & having the click button with full mouse sense
+		cw.SetContent(box)								// and blot coming last is shown on top... huh?
+	} else {
+		box := container.NewStack(btn, bimg)
+		cw.SetContent(box)
+	}
+
+}
+
+// main win updater - sets master rbimg for blot overlay
+
+func clikwinm(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 
 	rbimg = canvas.NewRasterFromImage(wimg)
 
@@ -345,17 +366,13 @@ func clikwin(cw fyne.Window, wimg *image.NRGBA, wx int, wy int, blt bool) {
 	rbtn = newHoldableButton()
 	rbtn.title = cw.Title()
 //fmt.Printf("clwin tl: %s\n",rbtn.title)
-	if strings.Contains(rbtn.title, "G¹G²ved") {
-		cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
-		box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
-		cw.SetContent(box)								// and blot coming last is shown on top... huh?
-	} else {
-		box := container.NewStack(rbtn, rbimg)
-		cw.SetContent(box)
-	}
+
+	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
+	box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
+	cw.SetContent(box)								// and blot coming last is shown on top... huh?
 
 // call handle blot off after win chg
-	if blt { blotoff() }
+	blotoff()
 //fmt.Printf("btn sz %v\n",rbtn.Size())
 }
 
@@ -374,7 +391,7 @@ func upwin(simg *image.NRGBA) {
 	}
 	opts.dtec = 16.0 * (float64(geow - 4) / 528.0)				// the size of a tile, odd window size may cause issues
 if opts.Verbose { fmt.Printf(" dtec: %f\n",opts.dtec) }
-	clikwin(w, simg, geow, geoh, true)
+	clikwinm(w, simg, geow, geoh)
 
 	spx := ""
 	if sdb > 0 { spx = fmt.Sprintf("sdbuf: %d",sdb) }

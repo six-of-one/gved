@@ -839,16 +839,11 @@ var lw fyne.Window	// local cpy win to view buf contents
 // change pb blotter if active
 	wpbimg = nimg										// for blotter overlay on ctrl-p
 	if wpbop && ccp == PASTE {
-		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
-//		blot = canvas.NewImageFromImage(nimg)
-		blotx = px
-		bloty = py
-		clikwsh(w, nimg, px, py)
+		blotwup(w, nimg, px, py)
 	}
 	lw = wpb
 	wt = fmt.Sprintf("%d %sf",bn,id)
-//	bimg := canvas.NewRasterFromImage(nimg)
-//	lw.Canvas().SetContent(bimg)
+
   } else {	// palette or some other win
 	if !wpalop  && bn == 0 {
 		wpalop = true
@@ -862,7 +857,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 	palys = py
 	lw = wpal
   }
-	clikwin(lw, nimg, px, py, false)
+	clikwins(lw, nimg, px, py)
 	lw.SetTitle(wt)
 	lw.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
 
