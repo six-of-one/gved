@@ -318,20 +318,19 @@ func subsw() {
 
 var rbimg *canvas.Raster			// for the pb paste image dealy
 var rbtn *holdableButton
+var blotup bool
 
 // blot win short ver for pb image to set blotter
 
-func blotwup(cw fyne.Window, limg *image.NRGBA, px int, py int) {
-		t := cw.Title()
-		if strings.Contains(t, "G¹G²ved") {
-			if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
-			dt := float32(opts.dtec)
-			blot = canvas.NewImageFromImage(limg)
-			blot.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
-			blot.Move(fyne.Position{bxm, bym})
-			box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
-			cw.SetContent(box)
-		}
+func blotwup(cw fyne.Window, limg *image.NRGBA) {
+	t := cw.Title()
+	if strings.Contains(t, "G¹G²ved") {
+		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
+		blot = canvas.NewImageFromImage(limg)
+		box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
+		cw.SetContent(box)
+		blotup = false
+	}
 }
 
 // sub win upd

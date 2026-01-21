@@ -87,9 +87,9 @@ var eymd float64
 var mxmd int
 var mymd int
 var mbd bool			// true when mouse button 1 is held down, false otherwise
-// blot mouse move pos
-var bxm float32
-var bym float32
+// mouse move pos
+var rxm float32
+var rym float32
 // &{{{387 545} {379 509.92188}} 4 0}
 
 func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
@@ -112,8 +112,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 //statlin(cmdhin,beef)
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
-		bxm = float32(rx)
-		bym = float32(ry)
+		rxm = float32(rx)
+		rym = float32(ry)
 	if gvs {
 		sx := nong(float32(int(ex / dt)) * dt - 7.5 * dt)
 		sy := nong(float32(int(ey / dt)) * dt - 7.5 * dt)
@@ -122,7 +122,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		whlim := float32(opts.Geoh - 30)
 		if sx + lx > whlim { sx = whlim - lx }
 		if sy + ly > whlim { sy = whlim - ly }
-		bxm = sx; bym = sy
+
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{lx, ly})
 	} else {
@@ -133,7 +133,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		sy := nong(float32(int(ey / dt)) * dt - 3)
 		lx := float32(cpx) * dt + dt
 		ly := float32(cpy) * dt + dt
-		bxm = sx; bym = sy
+
+		if blotup { blotwup(w, wpbimg) }
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{lx, ly})
 	} else {
