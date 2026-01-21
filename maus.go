@@ -226,6 +226,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	}}
 // right mb functions
 	if mb == 2 {
+		if strings.Contains(h.title, " pbf") { pbmas_cyc(1) } else {
 		if pgdir != 0 {
 			if sdb > 0 {
 				sdbit(pgdir)
@@ -234,7 +235,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 				upd_edmaze(false)
 				if lrelod { remaze(opts.mnum) }
 			}
-		}
+		}}
 		return
 	}
 

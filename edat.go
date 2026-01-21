@@ -364,6 +364,7 @@ func upd_edmaze(ovrm bool) {
 	for y := 0; y < 11; y++ {
 		edmaze.optbyts[y] = eflg[y]
 	}
+	if wpalop && palfol { palete() }
 	flagbytes := make([]byte, 4)
 	flagbytes[0] = byte(eflg[1])
 	flagbytes[1] = byte(eflg[2])
@@ -573,6 +574,7 @@ fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts
 	}
 
 	if wpalop {
+		if palfol { palete() }
 		zero_stat()
 		for y := 0; y <= opts.DimY; y++ {
 			for x := 0; x <= opts.DimX; x++ {
@@ -627,6 +629,7 @@ var plbuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var plflg [11]int
 var palxs int
 var palys int
+var palfol bool		// palette decor follows map chg
 
 func palete() {
 
