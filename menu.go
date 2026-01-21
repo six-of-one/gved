@@ -10,10 +10,10 @@ import (
 	"strings"
 //	"image/color"
 	"fyne.io/fyne/v2"
-    "fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
-    "fyne.io/fyne/v2/canvas"
-    "fyne.io/fyne/v2/widget"
+	"fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
 )
@@ -92,23 +92,23 @@ func menu_res() {
 func menu_savas() {
 
 	fileDialog := dialog.NewFileSave(func(writer fyne.URIWriteCloser, err error) {
-        if err != nil {
-            fmt.Println("Save as Error:", err)
-            return
-        }
-        if writer == nil {
-            fmt.Println("No file selected")
-            return
-        }
+		if err != nil {
+			fmt.Println("Save as Error:", err)
+			return
+		}
+		if writer == nil {
+			fmt.Println("No file selected")
+			return
+		}
 
-        fmt.Println("Selected:", writer.URI().Path())
+		fmt.Println("Selected:", writer.URI().Path())
 		fil := writer.URI().Path()
 
 		mazn := opts.mnum+1
 		if anum > 0 { mazn = anum }
 		sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, mazn)
 
-    }, w)
+	}, w)
 	fileDialog.Show()
 	fileDialog.Resize(fyne.NewSize(float32(opts.Geow - 10), float32(opts.Geoh - 30)))
 }
@@ -117,16 +117,16 @@ func menu_savas() {
 func menu_laodf() {
 
 	fileDialog := dialog.NewFileOpen(func(reader fyne.URIReadCloser, err error) {
-        if err != nil {
-            fmt.Println("Save as Error:", err)
-            return
-        }
-        if reader == nil {
-            fmt.Println("No file selected")
-            return
-        }
+		if err != nil {
+			fmt.Println("Save as Error:", err)
+			return
+		}
+		if reader == nil {
+			fmt.Println("No file selected")
+			return
+		}
 
-        fmt.Println("Selected:", reader.URI().Path())
+		fmt.Println("Selected:", reader.URI().Path())
 		fil := reader.URI().Path()
 
 		if opts.bufdrt { menu_savit(true) }		// autosave
@@ -135,7 +135,7 @@ func menu_laodf() {
 		sdb = -1
 		if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
 		remaze(opts.mnum)
-    }, w)
+	}, w)
 	fileDialog.Show()
 	fileDialog.Resize(fyne.NewSize(float32(opts.Geow - 10), float32(opts.Geoh - 30)))
 }
@@ -234,13 +234,13 @@ func st_menu() {
 		} else {
 			strp = "View mode: cmd keys only"
 		}
-		dialog.ShowInformation("Edit hints", strp+"\n══════════════════════════════\nSave - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
+		dboxtx("Edit hints", strp+"\n══════════════════════════════\nSave - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nESC: turn editor on, init maze store in .ed/\n"+
 			"ESC: turn editor off, check unsaved buf\ndel, backspace - set floor *\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
 			"H: toggle horiz wrap, V: toggle vert wrap\n"+
 			"d - horiz door, D - vert door, w, W - walls *\nf, F - foods, k - key, t - treasure *\np, P - potions, T - teleporter\n"+
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n(also activated edit mode, set default key 'y')\n"+
-			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
+			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", 400,600)
 	})
 	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
 
@@ -265,8 +265,8 @@ func st_menu() {
 
 func aw_init() {
 
-    a = app.NewWithID("0777")
-    w = a.NewWindow("G¹G²ved")
+	a = app.NewWithID("0777")
+	w = a.NewWindow("G¹G²ved")
 	w.SetCloseIntercept(func() {
 		if wpbop { wpb.Close() }
 		if wpalop { wpal.Close() }
@@ -390,7 +390,7 @@ func clikwinm(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 
 func upwin(simg *image.NRGBA) {
 
-//								                 ┌» un-borded maze is 528 x 528 for a 33 x 33 cell maze
+//												 ┌» un-borded maze is 528 x 528 for a 33 x 33 cell maze
 	geow := int(math.Max(560,opts.Geow))	// 560 is min, maze doesnt seem to fit or shrink smaller
 	geoh := int(math.Max(586,opts.Geoh))	// 586 min
 	if opts.edat > 0 {
@@ -572,15 +572,15 @@ func dboxtx(dt string, dbc string, w float32, h float32) {
 	ww := a.NewWindow(dt)
 
 	txtB := binding.NewString()
-    txtWid := widget.NewEntryWithData(txtB)
-    txtWid.MultiLine = true
+	txtWid := widget.NewEntryWithData(txtB)
+	txtWid.MultiLine = true
 
-    // we can disable the Entry field so the user can't modify the text:
-    txtWid.Disabled()
+	// we can disable the Entry field so the user can't modify the text:
+	txtWid.Disabled()
 	txtB.Set(dbc)
 	cn := container.NewBorder(nil, nil, nil, nil, txtWid)
 
-    ww.SetContent(cn)
+	ww.SetContent(cn)
 	ww.Resize(fyne.Size{w, h})
 	ww.Show()
 
