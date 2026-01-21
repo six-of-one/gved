@@ -203,7 +203,7 @@ func st_menu() {
 	menuItemRand := fyne.NewMenuItem("Random load",func() { rload(ebuf); ed_maze(true) })
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
 	menuItemGvs := fyne.NewMenuItem("Gaunlet view sim toggle",func() { gvs = !gvs })
-	menuItemPalf := fyne.NewMenuItem("Palette decore follows map",func() { palfol = !palfol; palete() })
+	menuItemPalf := fyne.NewMenuItem("Palette; map decore toggle",func() { palfol = !palfol; palete() })
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
 	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemRand, menuItemLin1,  menuItemGvs, menuItemPalf, menuItemMute, menuItemExit)
 
@@ -214,7 +214,7 @@ func st_menu() {
 	menuItemCopy := fyne.NewMenuItem("Copy <ctrl>-c", menu_copy)
 	menuItemCut := fyne.NewMenuItem("Cut <ctrl>-x", menu_cut)
 	menuItemPaste := fyne.NewMenuItem("Paste <ctrl>-p", menu_paste)
-	menuItemPb := fyne.NewMenuItem("Paste buffers", nil)
+	menuItemPb := fyne.NewMenuItem("Paste buffer window", nil)
 	menuItemPbshw := fyne.NewMenuItem("Show paste buffer", func() {pbmas_cyc(0)})
 	menuItemPbmnx := fyne.NewMenuItem("Next Master pb <ctrl-shft>-O", func() {pbmas_cyc(1)})
 	menuItemPbsnx := fyne.NewMenuItem("Next Session pb <ctrl-shft>-P", func() {pbsess_cyc(1)})
