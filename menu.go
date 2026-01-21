@@ -8,12 +8,14 @@ import (
 	"time"
 	"image"
 	"strings"
-//		"image/color"
+//	"image/color"
 	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
     "fyne.io/fyne/v2/canvas"
+    "fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/data/binding"
 )
 
 // fyne menu & window system isolated from keyboard & control now
@@ -203,7 +205,7 @@ func st_menu() {
 	menuItemRand := fyne.NewMenuItem("Random load",func() { rload(ebuf); ed_maze(true) })
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
 	menuItemGvs := fyne.NewMenuItem("Gaunlet view sim toggle",func() { gvs = !gvs })
-	menuItemPalf := fyne.NewMenuItem("Palette; map decore toggle",func() { palfol = !palfol; palete() })
+	menuItemPalf := fyne.NewMenuItem("Palette; map decore toggle",func() { if wpalop {palfol = !palfol}; palete() })
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
 	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemRand, menuItemLin1,  menuItemGvs, menuItemPalf, menuItemMute, menuItemExit)
 
@@ -466,8 +468,9 @@ func wizecon() {
 
 func cpad(st string, d int) string {
 
-	spout := st+"                                                                          " // jsut guess at a pad fill
-	return string(spout[:d])
+//	spout := st+"                                                                          " // jsut guess at a pad fill
+//	return string(spout[:d])
+return st
 }
 
 // dialog called from kby or menu
@@ -475,6 +478,7 @@ func cpad(st string, d int) string {
 func keyhints() {
 	strp := ""
 	kys := 1
+	var lenb float32
 	dk := "Command Keys"
 	if opts.edat == 1 {
 		strp = "Edit mode: "
@@ -534,6 +538,7 @@ func keyhints() {
 		} else { strb += "(r1-9)" }}
 	strp += cpad(strb,50)
 	if kys == 2 {
+		lenb = 110
 		strp += "\n\ntypical: key selects item,\n L-click place, M-click assign"
 		strp += "\n–—–—–—–—–—–—–—"
 		strp += cpad("\n<DEL> (hold down) set floor",32)
@@ -555,5 +560,28 @@ func keyhints() {
 	}
 //	strp += "\n * note some address will crash"
 
-	dialog.ShowInformation(dk, strp, w)
+//	dialog.ShowInformation(dk, strp, w)
+	dboxtx(dk, strp, 400, 700 + lenb)
+}
+
+// text dialog boxes for all hint sets
+// title, content, w, h
+
+func dboxtx(dt string, dbc string, w float32, h float32) {
+
+	ww := a.NewWindow(dt)
+
+	txtB := binding.NewString()
+    txtWid := widget.NewEntryWithData(txtB)
+    txtWid.MultiLine = true
+
+    // we can disable the Entry field so the user can't modify the text:
+    txtWid.Disabled()
+	txtB.Set(dbc)
+	cn := container.NewBorder(nil, nil, nil, nil, txtWid)
+
+    ww.SetContent(cn)
+	ww.Resize(fyne.Size{w, h})
+	ww.Show()
+
 }
