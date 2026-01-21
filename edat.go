@@ -839,7 +839,10 @@ var lw fyne.Window	// local cpy win to view buf contents
 // change pb blotter if active
 	wpbimg = nimg										// for blotter overlay on ctrl-p
 	if wpbop && ccp == PASTE {
-		blotwup(w, nimg, px, py)
+	go func() {
+			time.Sleep(5 * time.Millisecond)
+			blotwup(w, nimg, px, py)
+		}()
 	}
 	lw = wpb
 	wt = fmt.Sprintf("%d %sf",bn,id)

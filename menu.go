@@ -331,7 +331,6 @@ func blotwup(cw fyne.Window, limg *image.NRGBA, px int, py int) {
 			blot.Move(fyne.Position{bxm, bym})
 			box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
 			cw.SetContent(box)
-// /			blotoff()
 		}
 }
 
@@ -352,6 +351,7 @@ func clikwins(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 	} else {
 		box := container.NewStack(btn, bimg)
 		cw.SetContent(box)
+		blotoff()
 	}
 
 }
