@@ -196,14 +196,14 @@ func st_menu() {
 		exitsel = true
 		needsav()
 	})
-	menuItemLodf := fyne.NewMenuItem("Load maze from <shift-ctrl>-l",menu_laodf)
-	menuItemSava := fyne.NewMenuItem("Save maze as <shift-ctrl>-s",menu_savas)
+	menuItemLodf := fyne.NewMenuItem("Load maze from <ctrl-shift>-l",menu_laodf)
+	menuItemSava := fyne.NewMenuItem("Save maze as <ctrl-shift>-s",menu_savas)
 	menuItemBlan := fyne.NewMenuItem("Blank maze",func() { menu_blank(false) })
 	menuItemBlnK := fyne.NewMenuItem("Blank maze, keep decor",func() { menu_blank(true) })
 	menuItemRand := fyne.NewMenuItem("Random load",func() { rload(ebuf); ed_maze(true) })
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
 	menuItemGvs := fyne.NewMenuItem("Gaunlet view sim toggle",func() { gvs = !gvs })
-	menuItemPalf := fyne.NewMenuItem("Palette decore follows map",func() { palfol = !palfol })
+	menuItemPalf := fyne.NewMenuItem("Palette decore follows map",func() { palfol = !palfol; palete() })
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
 	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemRand, menuItemLin1,  menuItemGvs, menuItemPalf, menuItemMute, menuItemExit)
 
@@ -214,6 +214,13 @@ func st_menu() {
 	menuItemCopy := fyne.NewMenuItem("Copy <ctrl>-c", menu_copy)
 	menuItemCut := fyne.NewMenuItem("Cut <ctrl>-x", menu_cut)
 	menuItemPaste := fyne.NewMenuItem("Paste <ctrl>-p", menu_paste)
+	menuItemPb := fyne.NewMenuItem("Paste buffers", nil)
+	menuItemPbshw := fyne.NewMenuItem("Show paste buffer", func() {pbmas_cyc(0)})
+	menuItemPbmnx := fyne.NewMenuItem("Next Master pb <ctrl-shft>-O", func() {pbmas_cyc(1)})
+	menuItemPbsnx := fyne.NewMenuItem("Next Session pb <ctrl-shft>-P", func() {pbsess_cyc(1)})
+	menuItemPbmpr := fyne.NewMenuItem("Prior Master pb", func() {pbmas_cyc(-1)})
+	menuItemPbspr := fyne.NewMenuItem("Prior Session pb", func() {pbsess_cyc(-1)})
+	menuItemPb.ChildMenu = fyne.NewMenu("",menuItemPbshw,menuItemPbmnx,menuItemPbmpr,menuItemPbsnx,menuItemPbspr)
 	menuItemUndo := fyne.NewMenuItem("Undo <ctrl>-z", undo)
 	menuItemRedo := fyne.NewMenuItem("Redo <ctrl>-y", redo)
 	menuItemUswp := fyne.NewMenuItem("Ult buf <ctrl>-u", uswap)
@@ -233,7 +240,7 @@ func st_menu() {
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n(also activated edit mode, set default key 'y')\n"+
 			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", w)
 	})
-	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemLin2, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp, menuItemEdhin)
+	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
 	menuItemAbout := fyne.NewMenuItem("About", func() {
@@ -268,6 +275,7 @@ func aw_init() {
 	anum = 0			// vars numeric inputs
 // ed stuff, consider moving
 	wpalop = false		// pallete
+	palfol = true
 	ccp = NOP			// paste buffer
 	wpbop = false
 	blotter(nil,0,0,0,0)	// init blotter

@@ -642,6 +642,7 @@ func palete() {
 	cpx = opts.DimX; cpy = opts.DimY
 
 	if cnd >= 0 { for y := 0; y < 11; y++ { plflg[y] =  tflg[y] };
+		if palfol { for y := 0; y < 11; y++ { plflg[y] =  eflg[y] }}
 		bwin(cpx+1, cpy+1, 0, plbuf, plflg, "pal") }
 	opts.DimX = pmx; opts.DimY = pmy
 }
