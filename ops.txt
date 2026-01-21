@@ -1,8 +1,9 @@
 ./gved -h
 - gives all command line parameters and a few examples
 
-interactive system:			(on command line enter:./gved -i)
+interactive system:
 ------------------
+./gved -i
 
 the menu bar lists key commands available, which mode is active
 and various edit status details
@@ -308,5 +309,5 @@ Paste buffer menu
 Show		- bring up a paste buffer window with current content
 Next Mas	- cycle master pb store fwd
 Prior Mas	- cycle master pb store back
-Next Ses	- cycle edit session pb store fwd 
+Next Ses	- cycle edit session pb store fwd
 Prior Ses	- cycle edit session pb store back

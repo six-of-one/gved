@@ -251,7 +251,7 @@ func st_menu() {
 		data, err := ioutil.ReadFile("ops.txt")
 		if err == nil {
 			txt := fmt.Sprintf("%s",data)
-			dboxtx("Operations", txt, 700, 1000) 
+			dboxtx("Operations", txt, 700, 1000)
 		}
 	})
 	menuItemAbout := fyne.NewMenuItem("About", func() {

@@ -67,6 +67,7 @@ config ideas:
 - master pb ctrl-f filter selections
 - sound of item on key assign
 - <ESC> edit activate, sets ed keys & picks a default, or just turns on edit mode with cmd keys on
+- stats (in dialog win) when blotter selecting
 
 perhaps needs rewrite:
 - cleanup all modules
