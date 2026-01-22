@@ -97,6 +97,7 @@ func specialKey() {
 			if key.Name == "L" && ctrl  { if shift { menu_laodf() } else { menu_lod() }}
 			if key.Name == "R" && ctrl  { menu_res() }
 			if key.Name == "U" && ctrl  { uswap() }
+			if key.Name == "T" && ctrl  { if ! cmdoff { nothing = 0; srelod = true }}
 			if key.Name == "Z" && ctrl  { undo() }
 			if key.Name == "Y" && ctrl  { redo() }
 			if key.Name == "C" && ctrl  { menu_copy() }
@@ -452,7 +453,6 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				nothing = (nothing & 1536) + (nt & 511)
 				if anum > 0 { nothing = (nothing & 1536) + anum; anum = 0 }		// set lower 9 bits of no-thing mask [ but not walls or floors ]
 				spau = fmt.Sprintf("no things: %d\n",nothing & 511)				// display no things mask
-				if ctrl { nothing = 0 }
 				opts.dntr = true
 			}
 		case 's':
