@@ -9,6 +9,7 @@ import (
 	"image"
 	"encoding/binary"
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/data/binding"
 )
 
 /*
@@ -580,7 +581,12 @@ fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts
 		}}
 // stats during palette
 	fmt.Printf("stats:\n")
-		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y])}}
+		stl := ""
+		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
+			if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }
+			stl += fmt.Sprintf("  %s: %d\n",g1mapid[y],g1stat[y])
+		}}
+		if statsB != nil { statsB.Set(stl) }
 //		bwin(palxs, palys, 0, plbuf, plflg)
 	}
 }
@@ -643,9 +649,14 @@ func palete() {
 		if palfol { for y := 0; y < 11; y++ { plflg[y] =  eflg[y] }}
 		bwin(cpx+1, cpy+1, 0, plbuf, plflg, "pal") }
 	opts.DimX = pmx; opts.DimY = pmy
+	wpal.SetCloseIntercept(func() {
+		statsB = nil
+	})
 }
 
 // typer for pal win
+
+var statsB binding.Item[string]
 
 func palRune(r rune) {
 
@@ -657,7 +668,7 @@ func palRune(r rune) {
 				"\nin palette window:\nmiddle click an element\n\n"+
 				"edit hint on menu bar give status"+
 				"\n\npal win keys:\nq,Q - quit\nt,T - hide flags info\n\n(only when window active)\n"+
-				"*stats in terminal if palette open", 350,500)
+				"*stats in terminal if palette open\ns. S - stats window open, auto updates", 350,500)
 		case 't': fallthrough
 		case 'T': dboxtx("T hide flags", "in gved main window:\n\n"+
 				"invisible flag set - hide vars maze elements:\n"+
@@ -684,8 +695,10 @@ func palRune(r rune) {
 				"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
 				"Random profile load\n- only load items flags cover"+
 				"\n\n* hide items disabled when edit keys active",440,700)
+		case 's': fallthrough
+		case 'S': statsB = dboxtx("Maze stats","",300,700)
 		case 'q': fallthrough
-		case 'Q': if wpalop { wpalop = false; wpal.Close() }
+		case 'Q': if wpalop { statsB = nil; wpalop = false; wpal.Close() }
 		default:
 	}
 }

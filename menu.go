@@ -576,7 +576,7 @@ func keyhints() {
 // text dialog boxes for all hint sets
 // title, content, w, h
 
-func dboxtx(dt string, dbc string, w float32, h float32) {
+func dboxtx(dt string, dbc string, w float32, h float32) binding.Item[string] {
 
 	ww := a.NewWindow(dt)
 
@@ -593,4 +593,5 @@ func dboxtx(dt string, dbc string, w float32, h float32) {
 	ww.Resize(fyne.Size{w, h})
 	ww.Show()
 
+	return txtB
 }

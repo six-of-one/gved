@@ -248,7 +248,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 			ccp = NOP
 			pbe = true
 		}
-//fmt.Printf("%d up: %.0f x %.0f \n",mb,exmd,eymd)
+fmt.Printf("%d up: %.0f x %.0f \n",mb,exmd,eymd)
 
 		sx := int(sxmd / opts.dtec)
 		sy := int(symd / opts.dtec)
@@ -265,7 +265,6 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if ccp == PASTE { pasty = true }
 		if ccp != NOP {
 		if mb != 1 { ccp_NOP(); fmt.Printf("mb: ccp to NOP\n") }
-//		if sx == ex && sy == ey { ccp_NOP() }
 		if ccp != NOP {
 			px :=0
 			if ccp == COPY || ccp == CUT {

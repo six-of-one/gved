@@ -29,9 +29,12 @@ a palette system similar to edit in sanctuary
 * or a second window for palette, with edit opts
 
 a basic "playable" mode to test mazes
-- port rnd load profile sanctuary code, and use #T flags to remove certain elements, wip
+* port rnd load profile sanctuary code, and use #T flags to remove certain elements, wip
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
 - sprite system needed (sprites have to replace gens, treasure, keys, pots, etc)
+- sprite sheet organzied, prod
+- player controls (turn off cmd keys, special mode)
+
 
 multiple save buffers to store vars maze edits, page thru all wiht 'S', store with #'S', load with #'L'
 * can always store & page -- G¹ & G² have sep buffers
@@ -92,3 +95,17 @@ game player:
 - mobs & gens - when things delete, 8 tiles around also need update
 
 - built in 3 layers (and button?) and load to win SetContent(box)
+
+
+further research:
+
+1. put this with old txt research
+
+- killed by hurt player shots - 8 potions, leave 3 lvl ghost (m32 0.87 - mess lvl)
+
+- walls - exits
+  - trap walls      
+  - shootables      exits (even part shot)
+  - cycle walls g2  
+  - random walls g2 
+  - secret walls g2 
