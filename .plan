@@ -55,6 +55,7 @@ issues needing fixed
 - undo after paste works weirdly sometimes
 - saw instanced where paste pasted wrong data, needs checked again - G¹ / G² switch
 - changing pb with paste active bonks main win
+- sd buf edit, no stats?
 
 possible:
 - down the line .ed stored maz# could be used to set maz num

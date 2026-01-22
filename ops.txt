@@ -16,7 +16,8 @@ the program title shows maze #, maze address and buffer # when loaded
 general controls:		(general keys are always available in both modes)
 ----------------
 
-<CTRL>-Q	quit program
+<CTRL>-Q	quit program - use this or file->exit, need save dialog blocks
+			file->quit and window [X] (see menu ops - Quit)
 
 ?			command key hints dialog - now in All windows
 
@@ -282,8 +283,10 @@ Menu operations
 
 additional not covered above:
 
-Quit		- seems to be a default on 1st menu, currently blocks
-			  (along with X close upper right window widget)
+Quit		- seems to be a default on 1st menu, currently blocked
+			  (along with [X] close upper right window widget)
+			  - need to save dialog must run which blocks file-quit
+
 Exit		- use this, it does a buffer check and pops up a save dialog
 
 Load		- loads maze from std file (not for files in directory .ed/)
