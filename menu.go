@@ -237,12 +237,12 @@ func st_menu() {
 		dboxtx("Edit hints", strp+"\n══════════════════════════════\nSave - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nESC: turn editor on, init maze store in .ed/\n"+
 			"ESC: turn editor off, check unsaved buf\n\\ - toggle edit keys / command keys\n"+
-			"del - set floor *\nctrl-del - sticky delete\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
+			"del - set floor\nctrl-del - sticky delete\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
 			"H: toggle horiz wrap, V: toggle vert wrap\n–—–—–—–—–—–—–—\ntypical key assignment:\n\n"+
-			"d - horiz door, D - vert door, w, W - walls *\nf, F - foods, k - key, t - treasure *\np, P - potions, T - teleporter\n"+
-			"q - trap wall, r - trap tile\ni - invisible power\nx - exit, z - Death\n"+
+			"d, D - horiz, vert door, w, W - walls *\nf, F - foods, k - key, t - treasure *\np, P - potions, T - teleporter *\n"+
+			"q - trap wall, r - trap tile *\ni - invisible power *\nx - exit, z - Death *\n"+
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n(middle click also activates edit mode,\n and uses default key 'y' if not set)\n"+
-			"* most edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", 400,735)
+			"* these edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", 400,735)
 	})
 	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
 
@@ -504,10 +504,10 @@ func keyhints() {
 		strp += cpad("\n\\ - toggle cmd keys*",40)
 	} else { strp += cpad("\nESC> editor mode",40) }
 	if kys == 1 {
-		strp += cpad("\nf - floor pattern+",44)
-		strp += cpad("\ng - floor color+",45)
-		strp += cpad("\nw - wall pattern+",43)
-		strp += cpad("\ne - wall color+",46)
+		strp += cpad("\nf,F - floor pattern+,-",44)
+		strp += cpad("\ng,G - floor color+,-",45)
+		strp += cpad("\nw,W - wall pattern+,-",43)
+		strp += cpad("\ne,E - wall color+,-",46)
 		strp += cpad("\nr - rotate maze +90°",41)
 		strp += cpad("\nR - rotate maze -90°",42)
 		strp += cpad("\nh - mirror maze horizontal toggle",31)

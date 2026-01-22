@@ -312,7 +312,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
-		case 'q':
+		case 'e':
 			Ovwallcol += 1
 			if anum > 0 { Ovwallcol = anum - 1; anum = 0 }
 			if Ovwallcol > 16 { Ovwallcol = 0 }
@@ -320,7 +320,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
-		case 81:		// Q
+		case 'E':
 			Ovwallcol -= 1
 			if Ovwallcol < 0 { Ovwallcol = 16 }
 			eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
