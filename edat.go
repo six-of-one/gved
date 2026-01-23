@@ -252,6 +252,8 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 	dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
 	data, err = ioutil.ReadFile(dbf)
 	delstak = 0
+	restak = 0
+	delbset(0)
 	if err == nil {
 		dscan := fmt.Sprintf("%s",data)
 	    scanr := bufio.NewScanner(strings.NewReader(dscan))
@@ -333,6 +335,9 @@ func stor_maz(mazn int) {
 				ebuf[xy{x, y}] = maze.data[xy{x, y}]
 			}}
 			sav_maz(fil, ebuf, eflg, lastx, lasty, mazn)
+			delstak = 0
+			restak = 0
+			delbset(0)
 		} else {
 			fmt.Print(err)
 			fmt.Printf("\n")
