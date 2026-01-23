@@ -295,7 +295,7 @@ func aw_init() {
 	lg2cnt = 1
 	sdb = -1			// sd buffer
 	cycl = 0			// edit key 'c' cycle ops
-	edmaze = mazeDecompress(slapsticReadMaze(1), false)
+	edmaze = mazeDecompress(slapsticReadMaze(0), false)
 	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 	delbset(0)			// init undo (delbuf)
 	restak = 0			// restor position in delbuf

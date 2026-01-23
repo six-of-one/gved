@@ -189,6 +189,7 @@ if opts.Verbose {
 	if opts.edat < 1 || opts.edip == 0 {
 		for y := 0; y < 11; y++ {
 			eflg[y] = compressed[y]
+			tflg[y] = compressed[y]
 		}
 	}
 
