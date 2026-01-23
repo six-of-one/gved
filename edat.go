@@ -387,6 +387,7 @@ func ed_maze(rld bool) {
 	upd_edmaze(rld)
 	Ovimg := genpfimage(edmaze, opts.mnum)
 	upwin(Ovimg)
+	calc_stats()
 }
 
 // replaceing or deleting - store for ctrl-z / ctrl-y
@@ -570,25 +571,7 @@ fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts
 	if opts.edat > 0 { ed_maze(true) } else {
 		Ovimg := genpfimage(edmaze, mazn)
 		upwin(Ovimg)
-	}
-
-	if wpalop {
-		if palfol { palete() }
-		zero_stat()
-fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
-		for y := 0; y <= opts.DimY; y++ {
-			for x := 0; x <= opts.DimX; x++ {
-			stats(ebuf[xy{x, y}])
-		}}
-// stats during palette
-	fmt.Printf("stats:\n")
-		stl := ""
-		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
-			if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }
-			stl += fmt.Sprintf("  %s: %d\n",g1mapid[y],g1stat[y])
-		}}
-		if statsB != nil { statsB.Set(stl) }
-//		bwin(palxs, palys, 0, plbuf, plflg)
+		calc_stats()
 	}
 }
 
@@ -738,6 +721,29 @@ func stats(elm int) {
 
 	if G1 { g1stat[elm]++ }
 	if G2 { g2stat[elm]++ }
+}
+
+// and displate it
+
+func calc_stats() {
+	if wpalop {
+		if palfol { palete() }
+		zero_stat()
+fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
+		for y := 0; y <= opts.DimY; y++ {
+			for x := 0; x <= opts.DimX; x++ {
+			stats(ebuf[xy{x, y}])
+		}}
+// stats during palette
+	fmt.Printf("stats:\n")
+		stl := ""
+		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
+			if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }
+			stl += fmt.Sprintf("  %s: %d\n",g1mapid[y],g1stat[y])
+		}}
+		if statsB != nil { statsB.Set(stl) }
+//		bwin(palxs, palys, 0, plbuf, plflg)
+	}
 }
 
 // cut / copy & paste
