@@ -360,12 +360,10 @@ func ed_sav(mazn int) {
 }
 
 func upd_edmaze(ovrm bool) {
-//	zero_stat()
 //fmt.Printf("upd_edmaze\n")
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
 		edmaze.data[xy{x, y}] = ebuf[xy{x, y}]
-//		stats(ebuf[xy{x, y}])
 	}}
 	for y := 0; y < 11; y++ {
 		edmaze.optbyts[y] = eflg[y]
@@ -744,10 +742,16 @@ fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
 // stats during palette
 			if opts.Verbose { fmt.Printf("stats:\n") }
 		stl := ""
+		if G1 {
 		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
 			if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }
 			stl += fmt.Sprintf("  %s: %d\n",g1mapid[y],g1stat[y])
-		}}
+		}}}
+		if G2 {
+		for y := 0; y <= 65; y++ { if g2stat[y] > 0 {
+			if opts.Verbose { fmt.Printf("  %s: %d\n",g2mapid[y],g2stat[y]) }
+			stl += fmt.Sprintf("  %s: %d\n",g2mapid[y],g2stat[y])
+		}}}
 		if statsB != nil { statsB.Set(stl) }
 //		bwin(palxs, palys, 0, plbuf, plflg)
 	}
