@@ -735,7 +735,7 @@ fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
 			stats(ebuf[xy{x, y}])
 		}}
 // stats during palette
-	fmt.Printf("stats:\n")
+			if opts.Verbose { fmt.Printf("stats:\n") }
 		stl := ""
 		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
 			if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }
