@@ -15,11 +15,15 @@ func index2xy(index int) (x int, y int) {
 // g1 mazes generate index < 0 with some vexpand, just block them off seems ok
 	if index < 0 {
 		fmt.Printf("ERROR: Coordinates requested for index < 0: %d\n", index)
-		panic("Coordinates requested for index < 0")
+//		panic("Coordinates requested for index < 0")
+		index = 0		// give 0,0 - will make mazes weird
 	}
 
 	y = index / 32
 	x = index - (y * 32)
+// set master x,y
+	if x > opts.DimX { opts.DimX = x }
+	if y > opts.DimY { opts.DimY = y }
 
 	return
 }
@@ -144,6 +148,8 @@ if opts.Verbose {
 	}
 // Six end maze dumper
 }
+// master options x,y need set here for all rom loaded mazes
+	opts.DimX = 1; opts.DimY = 1
 
 // have to do this before buffers are set
 // g1 likely has nothing like g2 stuff, and might not use flags at all
