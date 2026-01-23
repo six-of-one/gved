@@ -248,7 +248,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 			ccp = NOP
 			pbe = true
 		}
-fmt.Printf("%d up: %.0f x %.0f \n",mb,exmd,eymd)
+//fmt.Printf("%d up: %.0f x %.0f \n",mb,exmd,eymd)
 
 		sx := int(sxmd / opts.dtec)
 		sy := int(symd / opts.dtec)
@@ -325,6 +325,7 @@ fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",opts.dtec,ex,ey,opbuf[x
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			 key_asgn(opbuf, ex, ey)
 		} else {
+		if h.title == wpal.Title() { return }		// L clicks on palete should not place on main
 		if del || cmdoff || pasty {
 			rcl := 1		// loop count for undoing multi ops
 		 for my := sy; my <= ey; my++ {

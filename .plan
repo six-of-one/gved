@@ -55,7 +55,6 @@ issues needing fixed
 - undo after paste works weirdly sometimes
 - saw instanced where paste pasted wrong data, needs checked again - G¹ / G² switch
 - issue where edit paste buf after palette active resizes a pb file (permanent change w/autosave too)
-- undo failed when palete open, not saving undo buf .db_*
 - placing on palette places on main edit win !
 
 
