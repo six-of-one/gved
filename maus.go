@@ -215,11 +215,14 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	ey := int(eymd / opts.dtec)
 	edkey = valid_keys(edkey)
 
+// pal win
+	inpal := false
+	if h.title == wpal.Title() { inpal = true }
 // middle mouse click anywhere activates edit mode & pulls up def key
 	if mb == 4 {
 		if opts.edat == 0 || !cmdoff { edit_on(edkdef) }
 		if wpalop {					// palette element selector
-		if h.title == wpal.Title() {
+		if inpal {
 				if cmdoff { key_asgn(plbuf, ex, ey) }
 				return
 			}
@@ -262,8 +265,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		}
 // a cut / copy / paste is active
 		pasty := false
+		if ccp != NOP && !inpal {
 		if ccp == PASTE { pasty = true }
-		if ccp != NOP {
 		if mb != 1 { ccp_NOP(); fmt.Printf("mb: ccp to NOP\n") }
 		if ccp != NOP {
 			px :=0
@@ -325,7 +328,7 @@ fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",opts.dtec,ex,ey,opbuf[x
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			 key_asgn(opbuf, ex, ey)
 		} else {
-		if h.title == wpal.Title() { return }		// L clicks on palete should not place on main
+		if inpal { return }		// L clicks on palete should not place on main
 		if del || cmdoff || pasty {
 			rcl := 1		// loop count for undoing multi ops
 		 for my := sy; my <= ey; my++ {
