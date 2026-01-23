@@ -398,17 +398,17 @@ func ed_maze(rld bool) {
 // replaceing or deleting - store for ctrl-z / ctrl-y
 
 func undo_buf(sx int, sy int, rc int) {
-//	fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
+	fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 	delbuf.mx[delstak] = sx
 	delbuf.my[delstak] = sy
 	delbuf.revc[delstak] = rc					// revoke count for the loop
 	delbuf.elem[delstak] = ebuf[xy{sx, sy}]
 // append the next unit blank if needed
-//fmt.Printf(" del %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],rc)
+fmt.Printf(" del %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],rc)
 	delstak++
 	restak = delstak		// placing or deleting one breaks restore chain
 	delbset(delstak)
-//fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
+fmt.Printf(" del %d elem: %d\n",delstak,delbuf.elem[delstak])
 }
 
 /*
