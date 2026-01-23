@@ -189,7 +189,7 @@ if opts.Verbose {
 	if opts.edat < 1 || opts.edip == 0 {
 		for y := 0; y < 11; y++ {
 			eflg[y] = compressed[y]
-			tflg[y] = compressed[y]
+			tflg[y] = compressed[y]			// prob isnt needed here, palette bug on default load was caused by aw_init shadow loading wrong maze
 		}
 	}
 
