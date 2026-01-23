@@ -241,7 +241,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				if opts.bufdrt { menu_savit(true) }		// autosave
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
-				cnd := lod_maz(fil, ebuf, false)
+				cnd := lod_maz(fil, ebuf, false, true)
 				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
 				anum = 0
 			} else { opts.Nogtop = !opts.Nogtop; opts.dntr = (opts.edat > 0); relod = true }
@@ -680,7 +680,7 @@ func sdbit(dir int) string {
 		ldb += dir
 		if ldb == 0 { ldb = 1 }
 		fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
-		cnd = lod_maz(fil, ebuf, false)
+		cnd = lod_maz(fil, ebuf, false, true)
 		if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spar = fmt.Sprintf("cmd: S - ") }
 		if dir < 0 && cnd < 0 && ldb == 1 { cnd = 0; break }
 	}

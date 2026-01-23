@@ -48,7 +48,7 @@ func menu_lodit(y bool) {
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
 	if y {
 		Ovwallpat = -1
-		cnd := lod_maz(fil, ebuf, true)
+		cnd := lod_maz(fil, ebuf, true, true)
 		sdb = -1
 		if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
 		remaze(opts.mnum)
@@ -131,7 +131,7 @@ func menu_laodf() {
 
 		if opts.bufdrt { menu_savit(true) }		// autosave
 		Ovwallpat = -1
-		cnd := lod_maz(fil, ebuf, true)
+		cnd := lod_maz(fil, ebuf, true, true)
 		sdb = -1
 		if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
 		remaze(opts.mnum)

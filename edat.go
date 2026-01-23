@@ -183,7 +183,7 @@ if opts.Verbose { fmt.Printf("saving maze delete %s\n",dbf) }
 // load stored maze data into ebuf / eflg or other data stores
 var mazln int		// maze load # stored
 
-func lod_maz(fil string, mdat MazeData, ud bool) int {
+func lod_maz(fil string, mdat MazeData, ud bool, ldb bool) int {
 
 if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 
@@ -248,7 +248,8 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 		}
 		edp = -1
 	}
-// now load deleted elements
+// now load deleted elements - but not for pb or pal
+  if ldb {
 	dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
 	data, err = ioutil.ReadFile(dbf)
 	delstak = 0
@@ -289,6 +290,7 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 			fmt.Printf("\n")
 		}
 	}
+  }
 	return edp
 }
 
@@ -631,7 +633,7 @@ func palete() {
 	for my := 0; my <= pmy; my++ {
 	for mx := 0; mx <= pmx; mx++ { plbuf[xy{mx, my}] = 0 }}
 	fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nm,opts.Gtp)
-	cnd := lod_maz(fil, plbuf, false)
+	cnd := lod_maz(fil, plbuf, false, false)
 	cpx = opts.DimX; cpy = opts.DimY
 
 	if cnd >= 0 { for y := 0; y < 11; y++ { plflg[y] =  tflg[y] };
@@ -792,7 +794,7 @@ func pb_upd(id string, nt string, vl int) {
 	for my := 0; my <= pmy; my++ {
 	for mx := 0; mx <= pmx; mx++ { cpbuf[xy{mx, my}] = 0 }}
 	fil := fmt.Sprintf(".pb/%s_%07d_g%d.ed",id,vl,opts.Gtp)
-	lod_maz(fil, cpbuf, false)
+	lod_maz(fil, cpbuf, false, false)
 	cpx = opts.DimX; cpy = opts.DimY
 fmt.Printf("%spb dun: px %d py %d, %s\n",nt,cpx,cpy,fil)
 	opts.DimX = pmx; opts.DimY = pmy
