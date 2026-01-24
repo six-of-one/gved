@@ -414,6 +414,10 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				stamp = itemGetStamp("it")
 			case MAZEOBJ_MONST_DRAGON:
 				stamp = itemGetStamp("dragon")
+			case MAZEOBJ_MONST_THIEF:
+				stamp = itemGetStamp("thief")
+			case MAZEOBJ_MONST_MUGGER:
+				stamp = itemGetStamp("mugger")
 
 			case MAZEOBJ_GEN_GHOST1:
 				stamp = itemGetStamp("ghostgen1")
@@ -1742,6 +1746,10 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 				stamp = itemGetStamp("it")
 			case MAZEOBJ_MONST_DRAGON:
 				stamp = itemGetStamp("dragon")
+			case MAZEOBJ_MONST_THIEF:
+				stamp = itemGetStamp("thief")
+			case MAZEOBJ_MONST_MUGGER:
+				stamp = itemGetStamp("mugger")
 
 			case MAZEOBJ_GEN_GHOST1:
 				stamp = itemGetStamp("ghostgen1")

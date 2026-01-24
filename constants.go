@@ -66,8 +66,8 @@ const (
 	MAZEOBJ_HIDDENPOT
 	MAZEOBJ_TRANSPORTER
 	MAZEOBJ_FORCEFIELDHUB
-	MAZEOBJ_NA					// 64
-	MAZEOBJ_MONST_THIEF
+	MAZEOBJ_MONST_MUGGER		// 64 - these 2 are add-ins to round out monsters
+	MAZEOBJ_MONST_THIEF			//		engine is not coded to place them in mazes
 	MAZEOBJ_EXTEND
 )
 
@@ -295,7 +295,7 @@ var g2mapid = map[int]string{
 	MAZEOBJ_HIDDENPOT:		"HIDDENPOT",
 	MAZEOBJ_TRANSPORTER:	"TRANSPORTER",
 	MAZEOBJ_FORCEFIELDHUB:	"FORCEFIELDHUB",
-	64: "n/a",
+	MAZEOBJ_MONST_MUGGER:	"MUGGER",
 	MAZEOBJ_MONST_THIEF:	"THIEF",
 	MAZEOBJ_EXTEND: 		"Extended",
 }
@@ -437,7 +437,7 @@ var g2auds = map[int]string{
 	MAZEOBJ_HIDDENPOT:		"",
 	MAZEOBJ_TRANSPORTER:	"sfx/g1_teleport.ogg",
 	MAZEOBJ_FORCEFIELDHUB:	"sfx/g2_ffield.ogg",
-	64: "",
+	MAZEOBJ_MONST_MUGGER:	"sfx/g2mug_appr.ogg",
 	MAZEOBJ_MONST_THIEF:	"sfx/g1thf_lau1.ogg",
 	MAZEOBJ_EXTEND: 		"",
 }

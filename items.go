@@ -609,6 +609,16 @@ var itemStamps = map[string]Stamp{
 		nudgey:  -4,
 		mask:    NOMON,
 	},
+	"mugger": Stamp{
+		width:   3,
+		numbers: tilerange(0x24ea, 9),
+		ptype:   "base",
+		pnum:    1,
+		trans0:  true,
+		nudgex:  -4,
+		nudgey:  -4,
+		mask:    NOMON,
+	},
 	"acid": Stamp{
 		width:   3,
 		numbers: tilerange(0x2300, 9),
