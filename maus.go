@@ -90,8 +90,11 @@ var mbd bool			// true when mouse button 1 is held down, false otherwise
 // mouse move pos global track
 var rxm float32
 var rym float32
-// painter counter on undo
+// painter counter on undo, x,y
 var prcl int
+var pmx int
+var pmy int
+
 // &{{{387 545} {379 509.92188}} 4 0}
 
 func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
@@ -181,8 +184,14 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 			mid := g1mapid[ebuf[xy{mxmd, mymd}]]
 			if G2 { mid = g2mapid[ebuf[xy{mxmd, mymd}]] }
 			pos = fmt.Sprintf("paint: %.0f,%.0f+ %.0f cell: %d, %d elem: %d %s",rx,ry,dt,mxmd,mymd,ebuf[xy{mxmd, mymd}],mid)
+			if pmx != mxmd && pmy != mymd {
+				sxmd = rx
+				symd = ry
+				h.MouseUp(mm)
+				prcl++
+				pmx = mxmd; pmy = mymd
+			}
 			statlin(pos,tsshn)
-
 		} else {				// no op on mouse move here
 			statlin(tcmdhn,tsshn)
 			blot.Resize(fyne.Size{0, 0})
