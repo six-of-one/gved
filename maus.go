@@ -108,14 +108,16 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	sy := float32(symd)
 	ex := float32(rx)
 	ey := float32(ry)
-//beef := fmt.Sprintf("a: %.0f x %.0f r: %.0f x %.0f dt: %.0f",sx,sy,ex,ey,dt)
+	if logo { mk = 8 }		// mod keys not picked up here ?
+//	mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
+//beef := fmt.Sprintf("a: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d",sx,sy,ex,ey,dt,mb,mbdi,mk)
 //statlin(cmdhin,beef)
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
 		rxm = float32(rx)
 		rym = float32(ry)
 	if gvs {
-		sx := nong(float32(int(ex / dt)) * dt - 7.5 * dt)
+		sx := nong(float32(int(ex / dt)) * dt - 7.5 * dt)		// somewhere here is why gvs is at half cell post when not near an edge
 		sy := nong(float32(int(ey / dt)) * dt - 7.5 * dt)
 		lx := 15 * dt
 		ly := 15 * dt
@@ -171,9 +173,18 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		statlin(pos,tsshn)
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
 	} else {
-		statlin(tcmdhn,tsshn)
-		blot.Resize(fyne.Size{0, 0})
-	}}}}
+		if mk == 8 {			// logo key = paint for any stored ops
+			mxmd = int(rxm / dt) // redo as start / end can swap
+			mymd = int(rym / dt)
+			mid := g1mapid[ebuf[xy{mxmd, mymd}]]
+			if G2 { mid = g2mapid[ebuf[xy{mxmd, mymd}]] }
+			pos = fmt.Sprintf("paint: %.0f,%.0f+ %.0f cell: %d, %d elem: %d %s",rx,ry,dt,mxmd,mymd,ebuf[xy{mxmd, mymd}],mid)
+			statlin(pos,tsshn)
+
+		} else {				// no op on mouse move here
+			statlin(tcmdhn,tsshn)
+			blot.Resize(fyne.Size{0, 0})
+	}}}}}
 }
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
