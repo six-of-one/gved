@@ -164,14 +164,21 @@ p			session paste buffer ++
 q,Q			close subwindow		(also pal window)
 r, R		rotate content +90°, -90°
 h, M		horiz, vert mirror
+a,s,d,W		expand or contract pb chunk
 			- pb changes autosave
 			see mouse ops too...
 
 <HOME>		toggle a complete item palette for G¹ / G²
-			- middle click on item with edit active, valid key selected
-			- palette for G¹ / G² in subwindow (position is not code
-			  controlled, you have to drag it)
+			- palette for G¹ / G² in subwindow
+			  (position can not be code controlled, you have to move it)
 			- auto switching G¹ to G²
+			palette hints:
+			- middle click on item (edit goes active, def key selects)
+			s - window that live updates with maze stats and flags
+			t - #T hide flags info sheet
+			f - gauntlet 2 maze flags sheet
+			x - gauntlet 2 secret room sheet
+			q - close palette window
 
 certain ops will check for unsaved changes and launch a dialog to save
 (pgup, pgdn, a, <ESC>, i, l, u, ctrl-q )
