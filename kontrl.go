@@ -287,7 +287,7 @@ fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				if anum > 0 && anum < sdmax {		// save buf when not in edit, rand load can go into all mazes
 fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 					fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
-					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, 0 - anum)
+					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, 0 - anum, true)
 					anum = 0
 				} else {
 					spau = sdbit(1)
@@ -514,10 +514,10 @@ func menu_ndsav(y bool) {
 	if y {
 		if nssb < 0 {
 			fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",nsgg,nsmz)
-			sav_maz(fil, ebuf, eflg, nsxd, nsyd, nsmz)
+			sav_maz(fil, ebuf, eflg, nsxd, nsyd, nsmz, true)
 		} else {
 			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nssb,nsgg)
-			sav_maz(fil, ebuf, eflg, nsxd, nsyd, 0 - nssb)
+			sav_maz(fil, ebuf, eflg, nsxd, nsyd, 0 - nssb, true)
 		}
 	}
 	if exitsel { os.Exit(0) }

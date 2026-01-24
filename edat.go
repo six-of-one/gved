@@ -117,8 +117,9 @@ func init_buf() {
 }
 // save maze to file in .ed
 // add a maze # to saves
+// svdb - save undo buf
 
-func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int, smazn int) {
+func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int, smazn int, svdb bool) {
 // edit settings
 // 1. edit status (1) max_x max_y
 // 2. 11 bytes of compressed maze lead in - all stats
@@ -156,7 +157,7 @@ if opts.Verbose { fmt.Printf("saving maze %s\n",fil) }
 	}
 
 // now save deleted elements -- set mazn 0 for buffers like paste
-	if delstak > 0 && smazn != 0 {
+	if delstak > 0 && svdb {
 		dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
 if opts.Verbose { fmt.Printf("saving maze delete %s\n",dbf) }
 		file, err := os.Create(dbf)
@@ -336,7 +337,7 @@ func stor_maz(mazn int) {
 				for x := 0; x <= lastx; x++ {
 				ebuf[xy{x, y}] = maze.data[xy{x, y}]
 			}}
-			sav_maz(fil, ebuf, eflg, lastx, lasty, mazn)
+			sav_maz(fil, ebuf, eflg, lastx, lasty, mazn, false)
 			delstak = 0
 			restak = 0
 			delbset(0)
@@ -356,7 +357,7 @@ func ed_sav(mazn int) {
 
 	upd_edmaze(false)
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,mazn)
-	sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, mazn)
+	sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, mazn, true)
 }
 
 func upd_edmaze(ovrm bool) {
@@ -819,7 +820,7 @@ fmt.Printf("\n")
 
 func pb_loced(cnt int) {
 	fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",cnt,opts.Gtp)
-	sav_maz(fil, cpbuf, eflg, cpx, cpy, 0)
+	sav_maz(fil, cpbuf, eflg, cpx, cpy, 0, false)
 	pb_upd("pb", "mas", cnt)
 }
 

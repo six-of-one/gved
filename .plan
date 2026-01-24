@@ -84,8 +84,6 @@ perhaps needs rewrite:
 
 removed:
 ӿ add element totals to palette window      (doesnt work consistently on window update...)
-ӿ shift-del toggle click-delete mode
-  (this is the same as sticky cut mode, except that saves cut areas in pastebuf)
 
 future:
 * with the success of the rubberband blotter implement, a glimmer of an idea starts
@@ -94,7 +92,7 @@ future:
 game player:
 
 - save floor layer
-- build shadows & animate floor tiles on that
+- build shadows & animate floor tiles on that to new img
 - walls & stationary - when updating, changes have dirty flag & update 8 tiles around
 - mobs & gens - when things delete, 8 tiles around also need update
 

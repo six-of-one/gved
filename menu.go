@@ -39,7 +39,7 @@ func menu_savit(y bool) {
 			ed_sav(opts.mnum+1)
 		} else {
 			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",sdb,opts.Gtp)
-			sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, 0 - sdb)
+			sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, 0 - sdb, true)
 		}
 	}
 }
@@ -106,7 +106,7 @@ func menu_savas() {
 
 		mazn := opts.mnum+1
 		if anum > 0 { mazn = anum }
-		sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, mazn)
+		sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, mazn, true)
 
 	}, w)
 	fileDialog.Show()
