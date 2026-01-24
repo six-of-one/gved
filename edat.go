@@ -688,7 +688,7 @@ func palRune(r rune) {
 				"Random profile load\n- only load items flags cover"+
 				"\n\n* hide items disabled when edit keys active",440,700)
 		case 's': fallthrough
-		case 'S': statsB = dboxtx("Maze stats","",300,700)
+		case 'S': statsB = dboxtx("Maze stats","",340,700)
 		case 'q': fallthrough
 		case 'Q': if wpalop { statsB = nil; wpalop = false; wpal.Close() }
 		default:
