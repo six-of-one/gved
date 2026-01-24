@@ -199,6 +199,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,sxmd,symd,mxmd,mymd,pmx,pmy)
 				prcl++
 				pmx = mxmd; pmy = mymd
+				ed_maze(true)
 			}
 			statlin(pos,tsshn)
 		} else {				// no op on mouse move here
