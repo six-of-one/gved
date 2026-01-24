@@ -55,7 +55,7 @@ const (
 	MAZEOBJ_FOOD_INVULN
 	MAZEOBJ_POT_DESTRUCTABLE
 	MAZEOBJ_POT_INVULN
-	MAZEOBJ_KEY
+	MAZEOBJ_KEY					// 53
 	MAZEOBJ_POWER_INVIS
 	MAZEOBJ_POWER_REPULSE
 	MAZEOBJ_POWER_REFLECT
@@ -66,6 +66,9 @@ const (
 	MAZEOBJ_HIDDENPOT
 	MAZEOBJ_TRANSPORTER
 	MAZEOBJ_FORCEFIELDHUB
+	MAZEOBJ_NA					// 64
+	MAZEOBJ_MONST_THIEF
+	MAZEOBJ_EXTEND
 )
 
 // Six: g1 objects
@@ -129,6 +132,7 @@ const (
 	G1OBJ_TRANSPORTER = 59
 	G1OBJ_TILE_STUN = 62
 	G1OBJ_TREASURE_BAG = 64
+	G1OBJ_EXTEND = 66
 )
 // contrl var nothing [ no-thing ] that blocks elements display
 const (
@@ -221,6 +225,7 @@ var g1mapid = map[int]string{
 	63:		"Nothing_63",
 	G1OBJ_TREASURE_BAG:	"TREASURE_BAG",
 	G1OBJ_MONST_THIEF:	"THIEF",
+	G1OBJ_EXTEND: "Extended",
 }
 
 var g2mapid = map[int]string{
@@ -288,6 +293,9 @@ var g2mapid = map[int]string{
 	MAZEOBJ_HIDDENPOT:		"HIDDENPOT",
 	MAZEOBJ_TRANSPORTER:	"TRANSPORTER",
 	MAZEOBJ_FORCEFIELDHUB:	"FORCEFIELDHUB",
+	64: "n/a",
+	MAZEOBJ_MONST_THIEF:	"THIEF",
+	MAZEOBJ_EXTEND: "Extended",
 }
 
 // single audio hint for an element
@@ -359,6 +367,7 @@ var g1auds = map[int]string{
 	63:		"",
 	G1OBJ_TREASURE_BAG:	"sfx/g1_treaspick.ogg",
 	G1OBJ_MONST_THIEF:	"sfx/g1thf_lau1.ogg",
+	G1OBJ_EXTEND: "",
 }
 
 var g2auds = map[int]string{
@@ -426,6 +435,9 @@ var g2auds = map[int]string{
 	MAZEOBJ_HIDDENPOT:		"",
 	MAZEOBJ_TRANSPORTER:	"sfx/g1_teleport.ogg",
 	MAZEOBJ_FORCEFIELDHUB:	"sfx/g2_ffield.ogg",
+	64: "",
+	MAZEOBJ_MONST_THIEF:	"sfx/g1thf_lau1.ogg",
+	MAZEOBJ_EXTEND: "",
 }
 
 // Flags for levels
