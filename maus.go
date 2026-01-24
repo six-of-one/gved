@@ -147,17 +147,17 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		myme := int(ey / dt)
 	ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
 	ey = float32(float32(ey) + dt)
-	if mbd {
 // blotter size hinter
-		mxmd = int(sx / dt) // redo as start / end can swap
-		mymd = int(sy / dt)
+	mxmd = int(sx / dt) // redo as start / end can swap
+	mymd = int(sy / dt)
 // optimize blotter to cover selected cells
-		sx = nong(float32(int(sx / dt)) * dt - 3)				// blotter selects tiles with original unit of 16 x 16
-		sy = nong(float32(int(sy / dt)) * dt - 4)
-		ex = float32(int(ex / dt)) * dt - 1
-		ey = float32(int(ey / dt)) * dt - 2
-		blot.Move(fyne.Position{sx, sy})
-		blot.Resize(fyne.Size{ex - sx, ey - sy})
+	sx = nong(float32(int(sx / dt)) * dt - 3)				// blotter selects tiles with original unit of 16 x 16
+	sy = nong(float32(int(sy / dt)) * dt - 4)
+	ex = float32(int(ex / dt)) * dt - 1
+	ey = float32(int(ey / dt)) * dt - 2
+	blot.Move(fyne.Position{sx, sy})
+	blot.Resize(fyne.Size{ex - sx, ey - sy})
+	if mbd {
 // blotter size hinter
 		if mxmd == mxme && mymd == myme {
 			mid := g1mapid[ebuf[xy{mxmd, mymd}]]
