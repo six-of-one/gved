@@ -8,6 +8,7 @@ import (
 	"bufio"
 	"image"
 	"encoding/binary"
+	"image/color"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/data/binding"
 )
@@ -23,6 +24,7 @@ more complexity will be required for:
 
 var edmaze *Maze
 var ebuf MazeData	// main edit buffer and corresponding flags
+var ecolor color.Color		// master color for maze elements
 
 var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf

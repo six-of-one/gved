@@ -8,7 +8,7 @@ import (
 	"time"
 	"image"
 	"strings"
-//	"image/color"
+	"image/color"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
@@ -190,6 +190,12 @@ func menu_copy() { if opts.edat > 0 { ccp_tog(COPY); if ccp > 0 { smod = "Edit C
 func menu_cut() { if opts.edat > 0 { ccp_tog(CUT); if ccp > 0 { smod = "Edit CUT: "}; statlin(cmdhin,sshin) }}
 func menu_paste() { if opts.edat > 0 { ccp_tog(PASTE); if ccp > 0 { smod = "Edit PASTE: "}; statlin(cmdhin,sshin) }}
 
+func menu_color() {
+	colorDialog := dialog.NewColorPicker("Choose Colors", "Select color for custom elements", func(c color.Color) {
+		ecolor = c
+	}, w)
+	colorDialog.Show()
+}
 // set menus
 
 func st_menu() {
@@ -209,6 +215,7 @@ func st_menu() {
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
 	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemRand, menuItemLin1,  menuItemGvs, menuItemPalf, menuItemMute, menuItemExit)
 
+	menuItemColr := fyne.NewMenuItem("Choose master color", menu_color)
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
 	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-r", menu_res)
@@ -244,7 +251,7 @@ func st_menu() {
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n(middle click also activates edit mode,\n and uses default key 'y' if not set)\n"+
 			"logo key* + mouse: paint curr key or ctrl-del\n* these edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", 400,755)
 	})
-	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
+	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemColr, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
 	menuItemOps := fyne.NewMenuItem("Operation", func() {
