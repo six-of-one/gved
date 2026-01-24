@@ -65,7 +65,6 @@ possible:
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 - more keys for dialog win to still operate main win (stats, etc)
 - ctrl-<arrows> to expand / shrink maze
-- TAB as 'paint' key, hold down, mouse move paints
 - save extent files for sanctuary stuff
   \_ underlay for maze floor & wall codes (std display & png load extras)
 

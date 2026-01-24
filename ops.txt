@@ -207,6 +207,13 @@ delete			both place a floor at cursor
 
 control			when dragging mouse, box will fill/ delete an outline only
 
+key held during mouse move (no click or other ops)
+
+logo (win key)	paint operation:
+				hold key down, move mouse
+				edit keys on - paint the selected item where mouse moves
+				ctrl-del lock - delete items where mouse moves
+
 ** EDIT KEYS **
 ---------------
 edit keys are item placement reassignable keys
@@ -314,3 +321,10 @@ Next Mas	- cycle master pb store fwd
 Prior Mas	- cycle master pb store back
 Next Ses	- cycle edit session pb store fwd
 Prior Ses	- cycle edit session pb store back
+
+---------------------------------------------
+
+Gauntlet / Gauntlet 2 visual editor
+Author: Six [a programmer]
+
+github.com/six-of-one/gved/
