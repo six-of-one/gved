@@ -162,11 +162,11 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		if mxmd == mxme && mymd == myme {
 			mid := g1mapid[ebuf[xy{mxmd, mymd}]]
 			if G2 { mid = g2mapid[ebuf[xy{mxmd, mymd}]] }
-			pos = fmt.Sprintf("r: %.0fx%.0f+ %.0f mz: %d x %d: %d %s",sx,sy,dt,mxmd,mymd,ebuf[xy{mxmd, mymd}],mid)
+			pos = fmt.Sprintf("r: %.0f,%.0f+ %.0f cell: %d, %d elem: %d %s",sx,sy,dt,mxmd,mymd,ebuf[xy{mxmd, mymd}],mid)
 		} else {
 			dx := mxme-mxmd+1
 			dy := myme-mymd+1
-			pos = fmt.Sprintf("r: %.0fx%.0f - %.0fx%.0f mz: %d x %d - %d x %d: %d by %d = %d",sx,sy,ex,ey,mxmd,mymd,mxme,myme,dx,dy,dy*dx)
+			pos = fmt.Sprintf("r: %.0f,%.0f - %.0f,%.0f mz: %d, %d to %d, %d... %d by %d = %d cells",sx,sy,ex,ey,mxmd,mymd,mxme,myme,dx,dy,dy*dx)
 		}
 		statlin(pos,tsshn)
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)

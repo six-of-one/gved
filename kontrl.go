@@ -30,6 +30,7 @@ var ctrl bool
 var ctrlwon bool	// ctrl was on for sub wins - the win has to turn it off on ops
 var del bool
 var home bool
+var tab bool
 var logo bool		// other wise labeld "win" key
 var ccp int			// cut copy and paste - current op
 var edkey int		// for passing edit keys to clicker
@@ -58,6 +59,7 @@ func specialKey() {
 			if key.Name == "RightShift" { shift = true }
 			if key.Name == "LeftControl" { ctrl = true; ctrlwon = true }
 			if key.Name == "RightControl" { ctrl = true; ctrlwon = true }
+			if key.Name == "Tab" { tab = true }
         })
 // handle keys up
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
@@ -93,6 +95,7 @@ func specialKey() {
 			if key.Name == "RightShift" { shift = false }
 			if key.Name == "LeftControl" { ctrl = false }
 			if key.Name == "RightControl" { ctrl = false }
+			if key.Name == "Tab" { tab = false }
 			if key.Name == "S" && ctrl  { if shift { menu_savas() } else { menu_sav() }}
 			if key.Name == "L" && ctrl  { if shift { menu_laodf() } else { menu_lod() }}
 			if key.Name == "R" && ctrl  { menu_res() }
