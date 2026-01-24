@@ -363,7 +363,7 @@ func ed_sav(mazn int) {
 }
 
 func upd_edmaze(ovrm bool) {
-//fmt.Printf("upd_edmaze\n")
+fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
 		edmaze.data[xy{x, y}] = ebuf[xy{x, y}]
@@ -390,7 +390,7 @@ func upd_edmaze(ovrm bool) {
 		edmaze.floorcolor = Ovflorcol
 	}
 }
-// udpate maze from edits - rld false to keep colors / pats
+// udpate maze from edits - rld false to keep overload colors / pats
 func ed_maze(rld bool) {
 	upd_edmaze(rld)
 	Ovimg := genpfimage(edmaze, opts.mnum)
