@@ -108,11 +108,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	sy := float32(symd)
 	ex := float32(rx)
 	ey := float32(ry)
-	mbdi := 0
-	if mbd { mbdi = 1 }
-	if logo { mk = 8 }		// mod keys not picked up here ?
-beef := fmt.Sprintf("a: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d",sx,sy,ex,ey,dt,mb,mbdi,mk)
-statlin(cmdhin,beef)
+//beef := fmt.Sprintf("a: %.0f x %.0f r: %.0f x %.0f dt: %.0f",sx,sy,ex,ey,dt)
+//statlin(cmdhin,beef)
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
 		rxm = float32(rx)
@@ -148,15 +145,15 @@ statlin(cmdhin,beef)
 // blotter size hinter, before pushing 1 past
 		mxme := int(ex / dt)
 		myme := int(ey / dt)
-		ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
-		ey = float32(float32(ey) + dt)
+	ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
+	ey = float32(float32(ey) + dt)
+	if mbd {
 // blotter size hinter
 		mxmd = int(sx / dt) // redo as start / end can swap
 		mymd = int(sy / dt)
 // optimize blotter to cover selected cells
 		sx = nong(float32(int(sx / dt)) * dt - 3)				// blotter selects tiles with original unit of 16 x 16
 		sy = nong(float32(int(sy / dt)) * dt - 4)
-	if mbd {
 		ex = float32(int(ex / dt)) * dt - 1
 		ey = float32(int(ey / dt)) * dt - 2
 		blot.Move(fyne.Position{sx, sy})
@@ -174,15 +171,9 @@ statlin(cmdhin,beef)
 		statlin(pos,tsshn)
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
 	} else {
-		if mk == 8 {			// logo key = paint for any stored ops
-			mid := g1mapid[ebuf[xy{mxmd, mymd}]]
-			if G2 { mid = g2mapid[ebuf[xy{mxmd, mymd}]] }
-			pos = fmt.Sprintf("paint: %.0f,%.0f+ %.0f cell: %d, %d elem: %d %s",sx,sy,dt,mxmd,mymd,ebuf[xy{mxmd, mymd}],mid)
-
-		} else {				// no op on mouse move here
-			statlin(tcmdhn,tsshn)
-			blot.Resize(fyne.Size{0, 0})
-	}}}}}
+		statlin(tcmdhn,tsshn)
+		blot.Resize(fyne.Size{0, 0})
+	}}}}
 }
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
