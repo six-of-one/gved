@@ -654,40 +654,40 @@ func palRune(r rune) {
 
 	switch r {
 		case '?': dboxtx("palette ops", "in gved main window:\n"+
-				"middle click an element\n(click activates edit + default key)\n... or ...\n"+
-				"select maze\nhit <ESC> - activate edit mode\nhit '\\' for edit keys\n"+
-				"hit a key to map: 'y'\nmove mouse to maze or palette\nand middle click an element\n"+
-				"\nin palette window:\nmiddle click an element\n\n"+
-				"edit hint on menu bar give status"+
-				"\n\npal win keys:\nq,Q - quit\nt,T - hide flags info\n\n(only when window active)\n"+
-				"*stats in terminal if palette open\ns, S - stats window open, auto updates\n"+
-				"f, F - gauntlet 2 maze flags list", 350,520)
+						"middle click an element\n(click activates edit + default key)\n... or ...\n"+
+						"select maze\nhit <ESC> - activate edit mode\nhit '\\' for edit keys\n"+
+						"hit a key to map: 'y'\nmove mouse to maze or palette\nand middle click an element\n"+
+						"\nin palette window:\nmiddle click an element\n\n"+
+						"edit hint on menu bar give status"+
+						"\n\npal win keys:\nq,Q - quit\nt,T - hide flags info\n\n(only when window active)\n"+
+						"*stats in terminal if palette open\ns, S - stats window open, auto updates\n"+
+						"f, F - gauntlet 2 maze flags list\nx, X - gauntlet 2 secret tricks", 350,540)
 		case 't': fallthrough
 		case 'T': dboxtx("T hide flags", "in gved main window:\n\n"+
-				"invisible flag set - hide vars maze elements:\n"+
-				" T - cycle through a flag set (loop 0 - 511)\n"+
-				" #T - set flags = # ---- <ctrl>-T reset flags to 0\n\n"+
-				" s  - (show only) random 'special potions' &\n"+
-				"      gold bags on emply floor tiles (not EDIT)\n"+
-				" L  - toggle generator indicator letters [ DGLS ]\n"+
-				"      showing box gen monster\n"+
-				" p  - toggle floor invisible *\n"+
-				" P  - toggle walls invisible *\n\nS"+
-				"NOGEN = 1	// all generators\n"+
-				"NOMON = 2		// all monster, dragon\n"+
-				"NOFUD = 4		// all food\n"+
-				"NOTRS = 8		// treas, locked\n"+
-				"NOPOT = 16		// pots & t.powers\n"+
-				"NODOR = 32	// doors, keys\n"+
-				"NOTRAP = 64	// trap & floor dots, stun, ff tiles\n"+
-				"NOEXP = 128	// exit, push wall\n"+
-				"NOTHN = 256	// anything else left\n"+
-				"NOFLOOR = 512\n"+
-				"NOWALL = 1024	// g2 *walls\n"+
-				"NOG1W = 2048	// g1 std wall only\n\n"+
-				"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
-				"Random profile load\n- only load items flags cover"+
-				"\n\n* hide items disabled when edit keys active",440,700)
+						"invisible flag set - hide vars maze elements:\n"+
+						" T - cycle through a flag set (loop 0 - 511)\n"+
+						" #T - set flags = # ---- <ctrl>-T reset flags to 0\n\n"+
+						" s  - (show only) random 'special potions' &\n"+
+						"      gold bags on emply floor tiles (not EDIT)\n"+
+						" L  - toggle generator indicator letters [ DGLS ]\n"+
+						"      showing box gen monster\n"+
+						" p  - toggle floor invisible *\n"+
+						" P  - toggle walls invisible *\n\n"+
+						"NOGEN = 1	// all generators\n"+
+						"NOMON = 2		// all monster, dragon\n"+
+						"NOFUD = 4		// all food\n"+
+						"NOTRS = 8		// treas, locked\n"+
+						"NOPOT = 16		// pots & t.powers\n"+
+						"NODOR = 32	// doors, keys\n"+
+						"NOTRAP = 64	// trap & floor dots, stun, ff tiles\n"+
+						"NOEXP = 128	// exit, push wall\n"+
+						"NOTHN = 256	// anything else left\n"+
+						"NOFLOOR = 512\n"+
+						"NOWALL = 1024	// g2 *walls\n"+
+						"NOG1W = 2048	// g1 std wall only\n\n"+
+						"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
+						"Random profile load\n- only load items flags cover"+
+						"\n\n* hide items disabled when edit keys active",440,700)
 		case 'f': fallthrough
 		case 'F': dboxtx("G2 maze flags","     Gauntlet 2 flags                hex value        bit pos\n"+
 						"ODDANGLE_GHOSTS	= 0x01000000 - 00000001\n"+
@@ -725,6 +725,26 @@ func palRune(r rune) {
 						"PLAYER_OFFSCREEN	= 0x80                - 10000000\n\n"+
 						"flag math is binary 'or' \"|\" together\n"+
 						"bit position is within byte of that flag portion",420,744)
+		case 'x': fallthrough
+		case 'X': dboxtx("G2 secret tricks","     Gauntlet 2 secret room tricks\n"+
+						"NONE 		= 0x00  \"No trick\"\n"+
+						"TRANSPORT1 	= 0x01  \"Try Transportability (onto death)\"\n"+
+						"TRANSPORT2	= 0x02  \"Try Transportability (onto death)\"\n"+
+						"TRANSPORT3	= 0x03  \"Try Transportability (into exit)\"\n"+
+						"TRANSPORT4	= 0x04  \"Try Transportability (onto secret wall)\"\n"+
+						"WATCHSHOOT1	= 0x05  \"Watch What You Shoot (shoot foods)\"\n"+
+						"WATCHSHOOT	= 0x06  \"Watch What You Shoot (shoot secret walls)\"\n"+
+						"SAVESUPERSHOTS = 0x07 \"Save Super Shots\"\n"+
+						"NOUSEINVUL	= 0x08  \"Don't Use Invulnerability\"\n"+
+						"NOGETHIT		= 0x09  \"Don't Get Hit (while killing a dragon)\"\n"+
+						"PUSHWALL		= 0x0a  \"Don't Be Fooled\"\n"+
+						"NOFOOLED		= 0x0b  \"Don't Be Fooled\"\n"+
+						"NOGREEDY1	= 0x0c  \"Don't Be Greedy (no keys or potions)\"\n"+
+						"NOGREEDY2	= 0x0d  \"Don't Be Greedy (no treasure)\"\n"+
+						"DIET			= 0x0e  \"Go On a Diet (no food)\"\n"+
+						"BEPUSHY		= 0x0f   \"Be Pushy\"\n"+
+						"IT 			= 0x10  \"IT Could Be Nice\"\n"+
+						"NOHURTFRIENDS	= 0x11  \"Don't Hurt Friends\"",535,435)
 		case 's': fallthrough
 		case 'S': statsB = dboxtx("Maze stats","",340,700)
 		case 'q': fallthrough
@@ -872,12 +892,12 @@ func pbRune(r rune) {
 
 	switch r {
 		case '?': dboxtx("paste buffer viewer keys", "q,Q - quit\n"+
-				"o,p - cycle session pb - / +\nO,P - cycle master pb - / +\n"+
-				", . - cycle master pb - / +\n══════════════════"+
-				"\nr - rotate pb +90°\nR - rotate pb -90°\nh - horiz flip\nm - vert mirror"+
-				"\n══════════════════\nmiddle click selects element\n"+
-				"left click sets element\n(pb has basic edit support)\n"+
-				"- pb edit autosaves\n══════════════════\n(* only when window active)", 250,350)			// showing in main win because pb win is usually too small
+						"o,p - cycle session pb - / +\nO,P - cycle master pb - / +\n"+
+						", . - cycle master pb - / +\n══════════════════"+
+						"\nr - rotate pb +90°\nR - rotate pb -90°\nh - horiz flip\nm - vert mirror"+
+						"\n══════════════════\nmiddle click selects element\n"+
+						"left click sets element\n(pb has basic edit support)\n"+
+						"- pb edit autosaves\n══════════════════\n(* only when window active)", 250,350)			// showing in main win because pb win is usually too small
 		case ',': pbmas_cyc(-1)
 		case '.': pbmas_cyc(1)
 		case 'O': pbmas_cyc(-1)
