@@ -59,10 +59,6 @@ func specialKey() {
 			if key.Name == "LeftControl" { ctrl = true; ctrlwon = true }
 			if key.Name == "RightControl" { ctrl = true; ctrlwon = true }
 //			if key.Name == "Tab" { tab = true }
-			if key.Name == "Left" && ctrl { opts.DimX--; if opts.DimX < 1 { opts.DimX = 1 }; }
-			if key.Name == "Right" && ctrl { opts.DimX++ }
-			if key.Name == "Up" && ctrl { opts.DimY--; if opts.DimY < 1 { opts.DimY = 1 }; }
-			if key.Name == "Down" && ctrl { opts.DimY++ }
         })
 // handle keys up
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
@@ -111,6 +107,10 @@ func specialKey() {
 			if key.Name == "P" && ctrl  { if shift { pbsess_cyc(1) } else { menu_paste() }}
 			if key.Name == "O" && ctrl  { if shift { pbmas_cyc(1) }}
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
+			if key.Name == "Left" && ctrl { opts.DimX--; if opts.DimX < 1 { opts.DimX = 1 }; srelod = true }
+			if key.Name == "Right" && ctrl { opts.DimX++; srelod = true }
+			if key.Name == "Up" && ctrl { opts.DimY--; if opts.DimY < 1 { opts.DimY = 1 }; srelod = true }
+			if key.Name == "Down" && ctrl { opts.DimY++; srelod = true }
 			if key.Name == "Prior" {
 				if sdb > 0 {
 					sdbit(-1)
