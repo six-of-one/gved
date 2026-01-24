@@ -196,7 +196,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 				if del { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
 				if setcode > 0 { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = setcode; opts.bufdrt = true }
 				}
-fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,sxmd,symd,mxmd,mymd,pmx,pmy)
+fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd,mymd,pmx,pmy)
 				prcl++
 				pmx = mxmd; pmy = mymd
 				ed_maze(true)
