@@ -288,6 +288,7 @@ func aw_init() {
 	wpalop = false		// pallete
 	palfol = true
 	ccp = NOP			// paste buffer
+	prcl = 1			// paint multi undo ops
 	wpbop = false
 	blotter(nil,0,0,0,0)	// init blotter
 	ccblot = blot			// rubber band blot, saved so pb can display contents then return to rb

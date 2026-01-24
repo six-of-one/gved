@@ -87,9 +87,11 @@ var eymd float64
 var mxmd int
 var mymd int
 var mbd bool			// true when mouse button 1 is held down, false otherwise
-// mouse move pos
+// mouse move pos global track
 var rxm float32
 var rym float32
+// painter counter on undo
+var prcl int
 // &{{{387 545} {379 509.92188}} 4 0}
 
 func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
@@ -184,6 +186,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		} else {				// no op on mouse move here
 			statlin(tcmdhn,tsshn)
 			blot.Resize(fyne.Size{0, 0})
+			prcl = 1
 	}}}}}
 }
 
@@ -192,6 +195,7 @@ func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	ay := 0.0
 	mb := 0		// mb 1 = left, 2 = right, 4 = middle
 	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
+	prcl = 1
 	pos := fmt.Sprintf("%v",mm)
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&sxmd,&symd,&mb,&mk)
 	mxmd = int(sxmd / opts.dtec)
@@ -343,7 +347,8 @@ fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",opts.dtec,ex,ey,opbuf[x
 		} else {
 		if inpal { return }		// L clicks on palete should not place on main
 		if del || cmdoff || pasty {
-			rcl := 1		// loop count for undoing multi ops
+			rcl := prcl		// loop count for undoing multi ops
+if prcl > 1 { fmt.Printf(">1 prcl %d\n",prcl) }
 		 for my := sy; my <= ey; my++ {
 		   for mx := sx; mx <= ex; mx++ {
 			rop := true		// run ops
