@@ -660,7 +660,8 @@ func palRune(r rune) {
 				"\nin palette window:\nmiddle click an element\n\n"+
 				"edit hint on menu bar give status"+
 				"\n\npal win keys:\nq,Q - quit\nt,T - hide flags info\n\n(only when window active)\n"+
-				"*stats in terminal if palette open\ns. S - stats window open, auto updates", 350,500)
+				"*stats in terminal if palette open\ns, S - stats window open, auto updates\n"+
+				"f, F - gauntlet 2 maze flags list", 350,520)
 		case 't': fallthrough
 		case 'T': dboxtx("T hide flags", "in gved main window:\n\n"+
 				"invisible flag set - hide vars maze elements:\n"+
@@ -687,6 +688,41 @@ func palRune(r rune) {
 				"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
 				"Random profile load\n- only load items flags cover"+
 				"\n\n* hide items disabled when edit keys active",440,700)
+		case 'f': fallthrough
+		case 'F': dboxtx("G2 maze flags","                     rep value     bit pos\n"+
+						"ODDANGLE_GHOSTS     = 0x01000000 - 00000001\n"+
+						"ODDANGLE_GRUNTS     = 0x02000000 - 00000010\n"+
+						"ODDANGLE_DEMONS     = 0x04000000 - 00000100\n"+
+						"ODDANGLE_LOBBERS    = 0x08000000 - 00001000\n"+
+						"ODDANGLE_SORCERERS  = 0x10000000 - 00010000\n"+
+						"ODDANGLE_AUX_GRUNTS = 0x20000000 - 00100000\n"+
+						"ODDANGLE_DEATHS     = 0x40000000 - 01000000\n"+
+						"INVIS_TRAPWALLS     = 0x80000000 - 10000000\n\n"+
+
+						"FAST_GHOSTS         = 0x010000   - 00000001\n"+
+						"FAST_GRUNTS         = 0x020000   - 00000010\n"+
+						"FAST_DEMONS         = 0x040000   - 00000100\n"+
+						"FAST_LOBBERS        = 0x080000   - 00001000\n"+
+						"FAST_SORCERERS      = 0x100000   - 00010000\n"+
+						"FAST_AUX_GRUNTS     = 0x200000   - 00100000\n"+
+						"FAST_DEATHS         = 0x400000   - 01000000\n"+
+						"INVIS_ALLWALLS      = 0x800000   - 10000000\n\n"+
+
+						"RANDOMFOOD_MASK     = 0x0700     - 00000111\n"+
+						"WALLS_CYCLIC        = 0x0800     - 00001000\n"+
+						"WALLS_DELETABLE1    = 0x1000     - 00010000\n"+
+						"WALLS_DELETABLE2    = 0x2000     - 00100000\n"+
+						"EXIT_MOVES          = 0x4000     - 01000000\n"+
+						"EXIT_CHOOSEONE      = 0x8000     - 10000000\n\n"+
+
+						"SHOTS_STUN          = 0x01       - 00000001\n"+
+						"SHOTS_HURT          = 0x02       - 00000010\n"+
+						"TRAPS_LOCAL         = 0x04       - 00000100\n"+
+						"TRAPS_RANDOM        = 0x08       - 00001000\n"+
+						"WRAP_V              = 0x10       - 00010000\n"+
+						"WRAP_H              = 0x20       - 00100000\n"+
+						"EXIT_FAKE           = 0x40       - 01000000\n"+
+						"PLAYER_OFFSCREEN    = 0x80       - 10000000\n",340,800)
 		case 's': fallthrough
 		case 'S': statsB = dboxtx("Maze stats","",340,700)
 		case 'q': fallthrough
