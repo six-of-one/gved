@@ -164,7 +164,9 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 			if G2 { mid = g2mapid[ebuf[xy{mxmd, mymd}]] }
 			pos = fmt.Sprintf("r: %.0fx%.0f+ %.0f mz: %d x %d: %d %s",sx,sy,dt,mxmd,mymd,ebuf[xy{mxmd, mymd}],mid)
 		} else {
-			pos = fmt.Sprintf("r: %.0fx%.0f - %.0fx%.0f mz: %d x %d - %d x %d: %d by %d",sx,sy,ex,ey,mxmd,mymd,mxme,myme,mxme-mxmd+1,myme-mymd+1)
+			dx := mxme-mxmd+1
+			dy := myme-mymd+1
+			pos = fmt.Sprintf("r: %.0fx%.0f - %.0fx%.0f mz: %d x %d - %d x %d: %d by %d = %d",sx,sy,ex,ey,mxmd,mymd,mxme,myme,dx,dy,dy*dx)
 		}
 		statlin(pos,tsshn)
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
@@ -217,7 +219,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 
 // pal win
 	inpal := false
-	if h.title == wpal.Title() { inpal = true }
+	if wpalop { if h.title == wpal.Title() { inpal = true }}
 // middle mouse click anywhere activates edit mode & pulls up def key
 	if mb == 4 {
 		if opts.edat == 0 || !cmdoff { edit_on(edkdef) }

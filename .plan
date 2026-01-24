@@ -63,6 +63,11 @@ possible:
 - dialog for setting / reading bits of #T hide mask and #flg blank maze keep mask
 - way using sprites to demo half transparent paste content over maze
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
+- more keys for dialog win to still operate main win (stats, etc)
+- ctrl-<arrows> to expand / shrink maze
+- TAB as 'paint' key, hold down, mouse move paints
+- save extent files for sanctuary stuff
+  \_ underlay for maze floor & wall codes (std display & png load extras)
 
 config ideas:
 - store assigned edit keys, including change defaults, allow defautls restore
