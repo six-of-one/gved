@@ -755,6 +755,8 @@ fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
 			if opts.Verbose { fmt.Printf("  %s: %d\n",g2mapid[y],g2stat[y]) }
 			stl += fmt.Sprintf("  %s: %d\n",g2mapid[y],g2stat[y])
 		}}}
+		stl += "══════════════════════\n"
+		stl += mazeMetaPrint(edmaze, true)
 		if statsB != nil { statsB.Set(stl) }
 //		bwin(palxs, palys, 0, plbuf, plflg)
 	}

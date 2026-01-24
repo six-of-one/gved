@@ -11,29 +11,43 @@ import (
 	"os"
 )
 
-func mazeMetaPrint(maze *Maze) {
-	fmt.Printf("  Encoded length: %3d bytes\n", maze.encodedbytes)
-	fmt.Printf("  Wall pattern: %02d, Wall color: %02d     Floor pattern: %02d, Floor color: %02d\n",
+// six: enhance to add flags & such to stats output panel from palette
+
+func mazeMetaPrint(maze *Maze, stp bool) string {
+
+	fmtsp := ""
+	if !stp { fmt.Printf("  Encoded length: %3d bytes\n", maze.encodedbytes) }
+	fmtsp = fmt.Sprintf(" Encoded length: %3d bytes\n", maze.encodedbytes)
+	if !stp { fmt.Printf("  Wall pattern: %02d, Wall color: %02d     Floor pattern: %02d, Floor color: %02d\n",
+		maze.wallpattern, maze.wallcolor, maze.floorpattern, maze.floorcolor) }
+	fmtsp += fmt.Sprintf(" Wall pattern: %02d, Wall color: %02d\n Floor pattern: %02d, Floor color: %02d\n",
 		maze.wallpattern, maze.wallcolor, maze.floorpattern, maze.floorcolor)
-	fmt.Printf("  Flags: ")
+	if !stp { fmt.Printf("  Flags: ") }
+	fmtsp += fmt.Sprintf("  Flags: ")
 	g1flg := false
 	g1mask := 0xB3			// see constants.go, g1 only has these flags type elements, yet I dont think they are controlled by flags
 	for k, v := range mazeFlagStrings {
 		if (maze.flags & k) != 0 {
 			if G1 {
-				if k & g1mask != 0 { fmt.Printf("%s ", v); g1flg = true }
+				if k & g1mask != 0 { if !stp { fmt.Printf("%s ", v) }; g1flg = true; fmtsp += fmt.Sprintf("%s ", v) }
 			} else {
-				fmt.Printf("%s ", v)
+				if !stp { fmt.Printf("%s ", v) }
+				fmtsp += fmt.Sprintf("%s ", v)
 			}
 		}
 	}
 	if G2 {
-		fmt.Printf("\n  Random food adds: %d\n", (maze.flags&LFLAG3_RANDOMFOOD_MASK)>>8)
-		fmt.Printf("  Secret trick: %2d - %s\n", maze.secret, mazeSecretStrings[maze.secret])
+		if !stp { fmt.Printf("\n  Random food adds: %d\n", (maze.flags&LFLAG3_RANDOMFOOD_MASK)>>8) }
+		fmtsp += fmt.Sprintf("\n  Random food adds: %d\n", (maze.flags&LFLAG3_RANDOMFOOD_MASK)>>8)
+		if !stp { fmt.Printf("  Secret trick: %2d - %s\n", maze.secret, mazeSecretStrings[maze.secret]) }
+		fmtsp += fmt.Sprintf("  Secret trick: %2d - %s\n", maze.secret, mazeSecretStrings[maze.secret])
 	} else {
-		if g1flg { fmt.Printf("\n  ╚══> while gauntlet has these elements, these flags probably do not operate") }
-		fmt.Printf("\n")
+		if g1flg {	if !stp { fmt.Printf("\n  ╚══> while gauntlet has these elements, these flags probably do not operate") }
+					fmtsp += fmt.Sprintf("\n  ╚══> while gauntlet has these elements,\n       these flags probably do not operate") }
+		if !stp { fmt.Printf("\n") }
+		fmtsp += fmt.Sprintf("\n")
 	}
+	return fmtsp
 }
 
 var reMazeNum = regexp.MustCompile(`^maze(\d+)`)
@@ -81,7 +95,7 @@ func domaze(arg string) {
 	maze := mazeDecompress(slapsticReadMaze(mazeNum), false)
 
 	if opts.Verbose || mazeMeta > 0 {
-		mazeMetaPrint(maze)
+		mazeMetaPrint(maze, false)
 		if mazeMeta > 0 { os.Exit(0) }
 	}
 
