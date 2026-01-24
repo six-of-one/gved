@@ -159,7 +159,7 @@ if opts.Verbose { fmt.Printf("saving maze %s\n",fil) }
 // now save deleted elements -- set mazn 0 for buffers like paste
 	if delstak > 0 && svdb {
 		dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
-if opts.Verbose { fmt.Printf("saving maze delete %s\n",dbf) }
+if opts.Verbose { fmt.Printf("saving maze undo %s\n",dbf) }
 		file, err := os.Create(dbf)
 		if err == nil {
 			wfs := fmt.Sprintf("%d %d\n",delstak, restak)
@@ -172,7 +172,7 @@ if opts.Verbose { fmt.Printf("saving maze delete %s\n",dbf) }
 			file.WriteString(wfs)
 			file.Close()
 		} else {
-			fmt.Printf("saving maze deleted %s\n",dbf)
+			fmt.Printf("saving maze undo %s, error:\n",dbf)
 			fmt.Print(err)
 			fmt.Printf("\n")
 		}
