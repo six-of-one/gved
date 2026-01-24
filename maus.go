@@ -113,7 +113,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	sy := float32(symd)
 	ex := float32(rx)
 	ey := float32(ry)
-	if logo { mk = 8 }		// mod keys not picked up here ?
+	if logo { mk = 8 } else { prcl = 1 }		// mod keys not picked up here ?
 //	mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
 //beef := fmt.Sprintf("a: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d",sx,sy,ex,ey,dt,mb,mbdi,mk)
 //statlin(cmdhin,beef)
@@ -185,10 +185,18 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 			if G2 { mid = g2mapid[ebuf[xy{mxmd, mymd}]] }
 			pos = fmt.Sprintf("paint: %.0f,%.0f+ %.0f cell: %d, %d elem: %d %s",rx,ry,dt,mxmd,mymd,ebuf[xy{mxmd, mymd}],mid)
 			if pmx != mxmd || pmy != mymd {
-				sxmd = rx
-				symd = ry
-//				h.MouseUp(mm)
-		fmt.Printf("r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",sxmd,symd,mxmd,mymd,pmx,pmy)
+
+				var setcode int			// code to store given edit hotkey
+				if cmdoff {
+				if G1 {
+					setcode = g1edit_keymap[edkey]
+				} else {
+					setcode = g2edit_keymap[edkey]
+				}}
+				if del { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
+				if setcode > 0 { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = setcode; opts.bufdrt = true }
+				}
+fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,sxmd,symd,mxmd,mymd,pmx,pmy)
 				prcl++
 				pmx = mxmd; pmy = mymd
 			}
@@ -196,7 +204,6 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		} else {				// no op on mouse move here
 			statlin(tcmdhn,tsshn)
 			blot.Resize(fyne.Size{0, 0})
-			prcl = 1
 	}}}}}
 }
 
@@ -357,8 +364,7 @@ fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",opts.dtec,ex,ey,opbuf[x
 		} else {
 		if inpal { return }		// L clicks on palete should not place on main
 		if del || cmdoff || pasty {
-			rcl := prcl		// loop count for undoing multi ops
-if prcl > 1 { fmt.Printf(">1 prcl %d\n",prcl) }
+			rcl := 1		// loop count for undoing multi ops
 		 for my := sy; my <= ey; my++ {
 		   for mx := sx; mx <= ex; mx++ {
 			rop := true		// run ops
