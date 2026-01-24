@@ -904,6 +904,11 @@ func pbRune(r rune) {
 		case 'P': pbmas_cyc(1)
 		case 'o': pbsess_cyc(-1)
 		case 'p': pbsess_cyc(1)
+// chunk size control
+		case 'a': cpx--; if cpx < 1 { cpx = 1 }; pb_loced(masbcnt)
+		case 'd': cpx++; pb_loced(masbcnt)
+		case 'w': cpy--; if cpy < 1 { cpy = 1 }; pb_loced(masbcnt)
+		case 's': cpy++; pb_loced(masbcnt)
 // some extras
 		case 'r': opts.MRP = true
 			cpx,cpy = rotmirmov(cpbuf,0,0,cpx,cpy,0)
