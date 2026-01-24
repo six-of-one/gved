@@ -193,6 +193,8 @@ func menu_paste() { if opts.edat > 0 { ccp_tog(PASTE); if ccp > 0 { smod = "Edit
 func menu_color() {
 	colorDialog := dialog.NewColorPicker("Choose Colors", "Select color for custom elements", func(c color.Color) {
 		ecolor = c
+fmt.Printf("Chose color: %v\n",ecolor)
+
 	}, w)
 	colorDialog.Show()
 }

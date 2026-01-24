@@ -111,7 +111,7 @@ sfx, err := sdl.New(mix.INIT_MP3 | mix.INIT_OGG)
 		G1 = true
 	}
 
-	fmt.Printf("Audio: %t\n\n",aud)
+	if opts.Intr { fmt.Printf("Audio: %t\n\n",aud) }
 
 	if opts.Addr > 0x37fff && opts.Addr < 0x40000 { Aov = opts.Addr }
 
