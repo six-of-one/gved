@@ -4,7 +4,7 @@ package main
 const (
 	MAZEOBJ_TILE_FLOOR = iota
 	MAZEOBJ_TILE_STUN
-	MAZEOBJ_WALL_REGULAR
+	MAZEOBJ_WALL_REGULAR	// 2
 	MAZEOBJ_WALL_MOVABLE
 	MAZEOBJ_WALL_SECRET
 	MAZEOBJ_WALL_DESTRUCTABLE
@@ -158,6 +158,8 @@ var g1wrp = []int{
 	32, 33, -1,
 }
 
+// text for edit key selection
+
 var g1mapid = map[int]string{
 	G1OBJ_TILE_FLOOR:	"TILE_FLOOR",
 	1:		"Nothing_1",
@@ -295,7 +297,7 @@ var g2mapid = map[int]string{
 	MAZEOBJ_FORCEFIELDHUB:	"FORCEFIELDHUB",
 	64: "n/a",
 	MAZEOBJ_MONST_THIEF:	"THIEF",
-	MAZEOBJ_EXTEND: "Extended",
+	MAZEOBJ_EXTEND: 		"Extended",
 }
 
 // single audio hint for an element
@@ -367,7 +369,7 @@ var g1auds = map[int]string{
 	63:		"",
 	G1OBJ_TREASURE_BAG:	"sfx/g1_treaspick.ogg",
 	G1OBJ_MONST_THIEF:	"sfx/g1thf_lau1.ogg",
-	G1OBJ_EXTEND: "",
+	G1OBJ_EXTEND: 		"",
 }
 
 var g2auds = map[int]string{
@@ -437,7 +439,7 @@ var g2auds = map[int]string{
 	MAZEOBJ_FORCEFIELDHUB:	"sfx/g2_ffield.ogg",
 	64: "",
 	MAZEOBJ_MONST_THIEF:	"sfx/g1thf_lau1.ogg",
-	MAZEOBJ_EXTEND: "",
+	MAZEOBJ_EXTEND: 		"",
 }
 
 // Flags for levels
