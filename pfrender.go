@@ -98,8 +98,8 @@ var nothing int
 
 func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	extrax, extray := 0, 0
-	if (maze.flags & LFLAG4_WRAP_H) == 0 {
-		extrax = 16
+	if (maze.flags & LFLAG4_WRAP_H) == 0 {		// this where old viewer drew passage 'arrows'
+		extrax = 16								// - of course inimical to edit system, so has to be off to edit
 	}
 	if (maze.flags & LFLAG4_WRAP_V) == 0 {
 		extray = 16
@@ -647,7 +647,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			case G1OBJ_GEN_GHOST3:
 				stamp = itemGetStamp("ghostgen3")
 
- // if a clear is done after, this SetRGB set bkg somehow 
+ // if a clear is done after, this SetRGB set bkg somehow
 			case G1OBJ_GEN_GRUNT1:
 				gtopl = "G"
 				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
@@ -1169,7 +1169,7 @@ if opts.Verbose || opts.Se {
 }
 // maze dumper ending
 
-	if xspc == 32 {
+	if xspc == 32 {		// write wrap dir arrows
 		if maze.flags&LFLAG4_WRAP_H > 0 {
 			l := itemGetStamp("arrowleft")
 			r := itemGetStamp("arrowright")
