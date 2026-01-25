@@ -290,26 +290,10 @@ func aw_init() {
 		if wpalop { wpal.Close() }
 	})
 
-	st_menu()
-	w.Canvas().SetOnTypedRune(typedRune)
-	anum = 0			// vars numeric inputs
-// ed stuff, consider moving
-	wpalop = false		// pallete
-	palfol = true
-	ccp = NOP			// paste buffer
-	prcl = 1			// paint multi undo ops
-	wpbop = false
-	blotter(nil,0,0,0,0)	// init blotter
-	ccblot = blot			// rubber band blot, saved so pb can display contents then return to rb
-	lg1cnt = 1
-	lg2cnt = 1
-	sdb = -1			// sd buffer
-	cycl = 0			// edit key 'c' cycle ops
-//	edmaze = mazeDecompress(slapsticReadMaze(0), false)
-	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
-	delbset(0)			// init undo (delbuf)
-	restak = 0			// restor position in delbuf
+	st_menu()			// start the menu
+	w.Canvas().SetOnTypedRune(typedRune)	// enable plain key handler for main win
 	specialKey()		// key handlers for specials
+	ed_init()			// initialized the editor package
 
 // get default win size
 

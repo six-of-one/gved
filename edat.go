@@ -53,6 +53,26 @@ var udb = &Deletebuf{}	// and with the way the delbuf operates now, ubuf must al
 var udstak int
 var urstak int
 
+// initialize edit control
+
+func ed_init() {
+	anum = 0			// vars numeric inputs
+	wpalop = false		// pallete, win active
+	palfol = true		// - follows maze wall & floor decor
+	ccp = NOP			// paste buffer
+	prcl = 1			// paint multi undo ops
+	wpbop = false		// window for pb active
+	blotter(nil,0,0,0,0)	// init blotter
+	ccblot = blot			// rubber band blot, saved so pb can display contents then return to rb
+	lg1cnt = 1
+	lg2cnt = 1
+	sdb = -1			// sd buffer
+	cycl = 0			// edit key 'c' cycle ops
+	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
+	delbset(0)			// init undo (delbuf)
+	restak = 0			// restor position in delbuf
+}
+
 func udbck(ct int, t int){
 
 //fmt.Printf("udb len %d, test: %d\n",len(udb.elem),t)
