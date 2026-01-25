@@ -56,10 +56,8 @@ issues needing fixed
 - saw instanced where paste pasted wrong data, needs checked again - G¹ / G² switch
 - encoded len in stats when not from rom
 viewport
-- ffmap
-- floor draw
-- skew as move down & right
-- rubber band ops adjust (add vpx, vpy to calc when vp on)
+- floor draw (floor gets redrawn with rnd shift every move)
+- rest rubber band ops adjust (add vpx, vpy to calc when vp on)
 
 possible:
 - down the line .ed stored maz# could be used to set maz num

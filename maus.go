@@ -248,13 +248,17 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
 	pos := fmt.Sprintf("%v",mm)
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&exmd,&eymd,&mb,&mk)
-	ex := int(exmd / opts.dtec)
-	ey := int(eymd / opts.dtec)
+	dt := opts.dtec
 	edkey = valid_keys(edkey)
 
 // pal win
 	inpal := false
-	if wpalop { if h.title == wpal.Title() { inpal = true }}
+	if wpalop { if h.title == wpal.Title() {
+		inpal = true
+		dt = 16.0 * float64(opts.Geow - 4) / 528.0		// palette dtec is locked at orig win size
+	}}
+	ex := int(exmd / dt)
+	ey := int(eymd / dt)
 // middle mouse click anywhere activates edit mode & pulls up def key
 	if mb == 4 {
 		if opts.edat == 0 || !cmdoff { edit_on(edkdef) }
@@ -290,8 +294,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		}
 //fmt.Printf("%d up: %.0f x %.0f \n",mb,exmd,eymd)
 
-		sx := int(sxmd / opts.dtec)
-		sy := int(symd / opts.dtec)
+		sx := int(sxmd / dt)
+		sy := int(symd / dt)
 		if ex < sx { t := ex; ex = sx; sx = t }		// swap if end smaller than start
 		if ey < sy { t := ey; ey = sy; sy = t }
 		var setcode int			// code to store given edit hotkey
@@ -361,7 +365,7 @@ fmt.Printf("in pasty\n")
 // if opts.Verbose {
 mid := g1mapid[opbuf[xy{mxmd, mymd}]]
 if G2 { mid = g2mapid[opbuf[xy{mxmd, mymd}]] }
-fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",opts.dtec,ex,ey,opbuf[xy{ex, ey}],mid)
+fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",dt,ex,ey,opbuf[xy{ex, ey}],mid)
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			 key_asgn(opbuf, ex, ey)
 		} else {

@@ -1004,6 +1004,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 	palxs = px
 	palys = py
 	lw = wpal
+	dt = 16.0 * float32(opts.Geow - 4) / 528.0
   }
 	clikwins(lw, nimg, px, py)
 	lw.SetTitle(wt)
