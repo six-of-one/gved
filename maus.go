@@ -181,8 +181,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)
 	} else {
 		if mk == 8 {			// logo key = paint for any stored ops
-			mxmd = int(rxm / dt) // redo as start / end can swap
-			mymd = int(rym / dt)
+			mxmd = int(rxm / dt)+lvpx // redo as start / end can swap
+			mymd = int(rym / dt)+lvpy
 			mid := g1mapid[ebuf[xy{mxmd, mymd}]]
 			if G2 { mid = g2mapid[ebuf[xy{mxmd, mymd}]] }
 			pos = fmt.Sprintf("paint: %.0f,%.0f+ %.0f cell: %d, %d elem: %d %s",rx,ry,dt,mxmd,mymd,ebuf[xy{mxmd, mymd}],mid)
