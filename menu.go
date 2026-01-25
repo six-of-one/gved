@@ -404,13 +404,15 @@ func upwin(simg *image.NRGBA) {
 //												 ┌» un-borded maze is 528 x 528 for a 33 x 33 cell maze
 	geow := int(math.Max(560,opts.Geow))	// 560 is min, maze doesnt seem to fit or shrink smaller
 	geoh := int(math.Max(586,opts.Geoh))	// 586 min
+	dtp := 528.0
 	if opts.edat > 0 {
 //		geow = geow & 0xfe0	+ 13			// lock to multiples of 32
 		ngeoh := geow + 26					// square maze area + 26 for menu bar - window is still 4 wider than maze content
 		if ngeoh != geoh { dialog.ShowInformation("Edit mode","set window ratio to edit",w) }
 		geoh = ngeoh
-	}										// having an edit viewport will change 528 - will have to be vport wid (same as high) * 16
-	opts.dtec = 16.0 * (float64(geow - 4) / (float64(viewp) * 16))				// the size of a tile, odd window size may cause issues
+		dtp = float64(viewp) * 16
+	}											// having an edit viewport will change 528 - will have to be vport wid (same as high) * 16
+	opts.dtec = 16.0 * (float64(geow - 4) / dtp)				// the size of a tile, odd window size may cause issues
 if opts.Verbose { fmt.Printf(" dtec: %f\n",opts.dtec) }			// detected size of a single maze tile in pixels, used for click id of cell x,y
 	clikwinm(w, simg, geow, geoh)
 
