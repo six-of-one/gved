@@ -447,9 +447,9 @@ func statlin(hs string,ss string) {
 func wizecon() {
 
 	time.Sleep(3 * time.Second)		// some hang time to allow win to display & size, otherwise w x h is 1 x 1
-	bgeow := int(opts.Geow)
-	bgeoh := int(opts.Geoh)
 	for {
+		bgeow := int(opts.Geow)
+		bgeoh := int(opts.Geoh)
 // why the +8, +36 needed, will it will ever vary ??
 // thus gathered: this is the edges around the main edit and the menu bar and title on top
 		width := int(w.Content().Size().Width) + 8
@@ -471,8 +471,6 @@ func wizecon() {
 //	fmt.Printf("saving .wstats file\n")
 			}
 		}
-		bgeow = int(opts.Geow)
-		bgeoh = int(opts.Geoh)
 		time.Sleep(2 * time.Second)
 	}
 }
