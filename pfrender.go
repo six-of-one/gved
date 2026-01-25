@@ -28,19 +28,23 @@ func copyedges(maze *Maze) {
 	for i := 0; i <= 32; i++ {
 		if (maze.flags & LFLAG4_WRAP_H) == 0 {
 			maze.data[xy{32, i}] = maze.data[xy{0, i}]
+		} else {
+			maze.data[xy{32, i}] = 0
+		}
 			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{32, i}] = maze.data[xy{32, i}] } else {
 				maze.data[xy{32, i}] = ebuf[xy{32, i}]
 			}	// have to do edit buffer as well
-		}
 	}
 
 	for i := 0; i <= 32; i++ {
 		if (maze.flags & LFLAG4_WRAP_V) == 0 {
 			maze.data[xy{i, 32}] = maze.data[xy{i, 0}]
+		} else {
+			maze.data[xy{i, 32}] = 0
+		}
 			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{i, 32}] = maze.data[xy{i, 32}] } else {
 				maze.data[xy{i, 32}] = ebuf[xy{i, 32}]
 			}
-		}
 	}
 }
 
@@ -172,11 +176,12 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	}}
 
 	lastx := 32
+	lasty := 32
+
 	if maze.flags&LFLAG4_WRAP_H > 0 {
 		lastx = 31
 	}
 
-	lasty := 32
 	if maze.flags&LFLAG4_WRAP_V > 0 {
 		lasty = 31
 	}

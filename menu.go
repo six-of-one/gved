@@ -413,6 +413,7 @@ func upwin(simg *image.NRGBA) {
 		dtp = float64(viewp) * 16
 	}											// having an edit viewport will change 528 - will have to be vport wid (same as high) * 16
 	opts.dtec = 16.0 * (float64(geow - 4) / dtp)				// the size of a tile, odd window size may cause issues
+fmt.Printf(" %d x %d dtec: %f geom: %d x %d\n",opts.DimX,opts.DimY,opts.dtec,geow,geoh)
 if opts.Verbose { fmt.Printf(" dtec: %f\n",opts.dtec) }			// detected size of a single maze tile in pixels, used for click id of cell x,y
 	clikwinm(w, simg, geow, geoh)
 
