@@ -102,11 +102,9 @@ var foods = []string{"ifood1", "ifood2", "ifood3"}
 var nothing int
 
 func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
-	extrax, extray := 0, 0
-	if (maze.flags & LFLAG4_WRAP_H) == 0 {		// this where old viewer drew passage 'arrows'
+	extrax, extray := 16, 16	// this is the space for copyedges walls...
+	if (maze.flags & LFLAG4_WRAP_V) == 0 {		// and this extra space is an issue to blotter & measure, it either always has to be or not
 		extrax = 16								// - of course inimical to edit system, so has to be off to edit
-	}
-	if (maze.flags & LFLAG4_WRAP_V) == 0 {
 		extray = 16
 	}
 
@@ -116,7 +114,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 // maybe make a cli switch?
 
 	// 8 pixels * 2 tiles * 32 stamps, plus extra space on edges
-	xspc := 32
+	xspc := 32		// this where old viewer drew passage 'arrows'
 	xpad := 16
 // dont draw the arrow space border
 	if !opts.Aob { xspc = 0; xpad = 0 }
