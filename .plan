@@ -58,6 +58,10 @@ issues needing fixed
 viewport
 - paletteMakeSpecial, check for var size
 - ffmap
+- gtopl wrong place
+- floor draw
+- skew as move down & right
+- rubber band ops adjust (add vpx, vpy to calc)
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
