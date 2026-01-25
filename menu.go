@@ -300,10 +300,12 @@ func aw_init() {
 // - based on a square pixel block (default here is 32x32 pix, and smallest is 16x16 pix)
 // - whats more, palette and paste buf will auto-readjust back to the size detected for the main win
 // - mainly because i only have one click detect routine, and i wanted a square to keep the math ops less ugly
+// - additionally the geometry captured in .wstats is the maze edit area, the total win is slightly larger
+// - the minimums set by the .Max() are based on no shrinkage below min edit size of 16x16 pixel cell
 // so a user can make the screen any rectangle they want, but going into edit mode will force sqaure cells!
 // - even more obtuse, going 'forced fullscreen' wont play nice (and go doesnt have prog adjustable win stuff...)
 
-	if opts.Geow == 1024 && opts.Geoh == 1050 {		// defs set
+	if opts.Geow == 1060 && opts.Geoh == 1086 {		// defs set
 
 		data, err := ioutil.ReadFile(".wstats")
 		if err == nil {
@@ -448,11 +450,13 @@ func wizecon() {
 	bgeow := int(opts.Geow)
 	bgeoh := int(opts.Geoh)
 	for {
-// dont know why the +8, +36 needed, dont know if it will ever vary ??
+// why the +8, +36 needed, will it will ever vary ??
+// thus gathered: this is the edges around the main edit and the menu bar and title on top
 		width := int(w.Content().Size().Width) + 8
 		height := int(w.Content().Size().Height) + 36
-//x					fmt.Printf("Window was resized! st: %d x %d n: %v x %v delta: %d, %d\n",bgeow,bgeoh,w.Content().Size().Width,w.Content().Size().Height,dw,dh)
+//					dw := bgeow - width; dh := bgeoh - height
 		if width != bgeow || height != bgeoh {
+//					fmt.Printf("Window was resized! st: %d x %d n: %v x %v delta: %d, %d\n",bgeow,bgeoh,w.Content().Size().Width,w.Content().Size().Height,dw,dh)
 				// window was resized
 // provide live resize so other vis ops dont bounce it back
 // for some reason maze updates resize the window down w -= 8 & h -= 36 to minimun
@@ -464,7 +468,7 @@ func wizecon() {
 				wfs := fmt.Sprintf("%d %d",width,height)
 				file.WriteString(wfs)
 				file.Close()
-//q	fmt.Printf("saving .wstats file\n")
+//	fmt.Printf("saving .wstats file\n")
 			}
 		}
 		bgeow = int(opts.Geow)
