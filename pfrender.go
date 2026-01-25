@@ -24,21 +24,21 @@ var g2mask [256]int
 // top walls, so that the maze will be enclosed.
 // six - note: this is only for appearance of viewer...
 // - and needs to be done in a way the editor 1. doesnt save, 2. no editing, 3. drawn differently
-func copyedges(maze *Maze, mx int, my int) {
-	for i := 0; i <= mx; i++ {
+func copyedges(maze *Maze) {
+	for i := 0; i <= 32; i++ {
 		if (maze.flags & LFLAG4_WRAP_H) == 0 {
-			maze.data[xy{mx, i}] = maze.data[xy{0, i}]
-			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{mx, i}] = maze.data[xy{mx, i}] } else {
-				maze.data[xy{mx, i}] = ebuf[xy{mx, i}]
-			}			// have to do edit buffer as well
+			maze.data[xy{32, i}] = maze.data[xy{0, i}]
+			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{32, i}] = maze.data[xy{32, i}] } else {
+				maze.data[xy{32, i}] = ebuf[xy{32, i}]
+			}	// have to do edit buffer as well
 		}
 	}
 
-	for i := 0; i <= my; i++ {
+	for i := 0; i <= 32; i++ {
 		if (maze.flags & LFLAG4_WRAP_V) == 0 {
-			maze.data[xy{i, my}] = maze.data[xy{i, 0}]
-			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{i, my}] = maze.data[xy{i, my}] } else {
-				maze.data[xy{i, my}] = ebuf[xy{i, my}]
+			maze.data[xy{i, 32}] = maze.data[xy{i, 0}]
+			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{i, 32}] = maze.data[xy{i, 32}] } else {
+				maze.data[xy{i, 32}] = ebuf[xy{i, 32}]
 			}
 		}
 	}
@@ -96,14 +96,10 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 var foods = []string{"ifood1", "ifood2", "ifood3"}
 var nothing int
 
-// zx and zy are nominal zeros, but have the change for full edit view port
-var zx int
-var zy int
-
-func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
+func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	extrax, extray := 0, 0
-	if (maze.flags & LFLAG4_WRAP_H) == 0 {	// this where old viewer drew passage 'arrows'
-		extrax = 16							// - of course inimical to edit system, so has to be off to edit
+	if (maze.flags & LFLAG4_WRAP_H) == 0 {
+		extrax = 16
 	}
 	if (maze.flags & LFLAG4_WRAP_V) == 0 {
 		extray = 16
@@ -119,20 +115,20 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 	xpad := 16
 // dont draw the arrow space border
 	if !opts.Aob { xspc = 0; xpad = 0 }
-	img := blankimage(8*2*mpx+xspc+extrax, 8*2*mpy+xspc+extray)
+	img := blankimage(8*2*32+xspc+extrax, 8*2*32+xspc+extray)
 
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
 
 	// mazes will always be the same size, so just use constants
 	// maze := mazeDecompress(mazedata)
-	copyedges(maze, mpx,mpy)
+	copyedges(maze)
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
 
 	if G2 {
 // g2 checks
-	for y := zy; y < mpy; y++ {
-		for x := zx; x < mpx; x++ {
+	for y := 0; y < 32; y++ {
+		for x := 0; x < 32; x++ {
 			adj := 0
 			if maze.wallpattern < 11 {
 				if (nothing & NOWALL) == 0 {		// wall shadows here
@@ -154,8 +150,8 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 		}
 	}} else {
 // g1 checks
-	for y := zy; y < mpy; y++ {
-		for x := zx; x < mpx; x++ {
+	for y := 0; y < 32; y++ {
+		for x := 0; x < 32; x++ {
 			adj := 0
 			nwt := NOWALL | NOG1W
 			if whatis(maze, x, y) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
@@ -174,20 +170,20 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 
 	}}
 
-	lastx := mpx
+	lastx := 32
 	if maze.flags&LFLAG4_WRAP_H > 0 {
-		lastx = mpx - 1
+		lastx = 31
 	}
 
-	lasty := mpy
+	lasty := 32
 	if maze.flags&LFLAG4_WRAP_V > 0 {
-		lasty = mpy - 1
+		lasty = 31
 	}
 
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & g2 draw walls, see screens
-	for y := zy; y <= lasty; y++ {
-		for x := zx; x <= lastx; x++ {
+	for y := 0; y <= lasty; y++ {
+		for x := 0; x <= lastx; x++ {
 			var stamp *Stamp
 			var dots int // dot count
 
@@ -276,8 +272,8 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 
 	opr := 3				// 3 sets of special potions
 // main maze decode loop - op over all maze cells
-	for y := zy; y <= lasty; y++ {
-		for x := zx; x <= lastx; x++ {
+	for y := 0; y <= lasty; y++ {
+		for x := 0; x <= lastx; x++ {
 			var stamp *Stamp
 			var dots int // dot count
 // gen type op - letter to draw
@@ -1124,7 +1120,7 @@ if false {
 if opts.Verbose || opts.Se {
 	i := 0
 	mz := mazenum + 1
-	wimg := blankimage(mpx+1, mpy+1)
+	wimg := blankimage(33, 33)
 	if opts.Se {
  // paste in sanctuary converter
 		if mz > 116 { mz = mz - 2 }	else {	// sanctuary does not have 115 as demo or 116 as score table
@@ -1135,8 +1131,8 @@ if opts.Verbose || opts.Se {
 		fmt.Printf("	SVRLOAD[1] = [ ];\n	SVRLOAD[1][1] = \"levels/glevel%d.png\"\n	SVRLOAD[1][2] = \"Level %d\";\n	SVRLOAD[1][3] = [ ];\n	SVRLOAD[1][4] =\"1089\";\n", mz, mz)
 	}
 
-	for y := zy; y <= lasty; y++ {
-		for x := zx; x <= lastx; x++ {
+	for y := 0; y <= lasty; y++ {
+		for x := 0; x <= lastx; x++ {
 
 			if opts.Verbose { fmt.Printf(" %02d", maze.data[xy{x, y}]) }
 			if opts.Se {
@@ -1173,29 +1169,25 @@ if opts.Verbose || opts.Se {
 }
 // maze dumper ending
 
-// write wrap dir arrows
 	if xspc == 32 {
 		if maze.flags&LFLAG4_WRAP_H > 0 {
 			l := itemGetStamp("arrowleft")
 			r := itemGetStamp("arrowright")
-			for i := 2; i <= mpy; i++ {
+			for i := 2; i <= 32; i++ {
 				writestamptoimage(img, l, 0, i*16)
-				writestamptoimage(img, r, mpx*16+16, i*16)
+				writestamptoimage(img, r, 32*16+16, i*16)
 			}
 		}
 
 		if maze.flags&LFLAG4_WRAP_V > 0 {
 			u := itemGetStamp("arrowup")
 			d := itemGetStamp("arrowdown")
-			for i := 1; i < mpx; i++ {
+			for i := 1; i < 32; i++ {
 				writestamptoimage(img, u, i*16+16, 0)
-				writestamptoimage(img, d, i*16+16, mpy*16+16)
+				writestamptoimage(img, d, i*16+16, 32*16+16)
 			}
 		}
 	}
-// reset for next entry
-	zx = 0
-	zy = 0
 	savetopng(opts.Output, img)
 // for user select
 	return img
