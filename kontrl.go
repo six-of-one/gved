@@ -112,28 +112,28 @@ func specialKey() {
 				if ctrl { opts.DimX--; if opts.DimX < 1 { opts.DimX = 1 }
 						  opts.bufdrt = true
 						} else {
-							opts.vpx--; if opts.vpx < 0 { opts.vpx = 0 }
+							vpx--; if vpx < 0 { vpx = 0 }
 						}}
 			if key.Name == "Right" {
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimX++; opts.bufdrt = true
 						} else {
-							//if opts.vpx + opts.viewp < opts.DimX { opts.vpx++ }
-							opts.vpx++
+							//if vpx + viewp < opts.DimX { vpx++ }
+							vpx++
 						}}
 			if key.Name == "Up" {
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimY--; if opts.DimY < 1 { opts.DimY = 1 };
 						  opts.bufdrt = true
 						} else {
-							opts.vpy--; if opts.vpy < 0 { opts.vpy = 0 }
+							vpy--; if vpy < 0 { vpy = 0 }
 						}}
 			if key.Name == "Down" {
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimY++; opts.bufdrt = true
 						} else {
-							//if opts.vpy + opts.viewp < opts.DimY { opts.vpy++ }
-							opts.vpy++
+							//if vpy + viewp < opts.DimY { vpy++ }
+							vpy++
 						}}
 			if key.Name == "Prior" {
 				if sdb > 0 {

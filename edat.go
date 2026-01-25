@@ -53,6 +53,11 @@ var udb = &Deletebuf{}	// and with the way the delbuf operates now, ubuf must al
 var udstak int
 var urstak int
 
+// viewport
+var viewp int
+var vpx int
+var vpy int
+
 // initialize edit control
 
 func ed_init() {
@@ -414,11 +419,12 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 func ed_maze(rld bool) {
 	upd_edmaze(rld)
 // viewport ops
-	fx := opts.vpx + opts.viewp
-	fy := opts.vpy + opts.viewp
-	if fx > opts.DimX { fx = opts.DimX - opts.viewp; opts.vpx = fx }
-	if fy > opts.DimY { fy = opts.DimY - opts.viewp; opts.vpy = fy }
-	Ovimg := segimage(ebuf, eflg, opts.vpx, opts.vpy, fx,fy, true)
+	fx := vpx + viewp
+	fy := vpy + viewp
+	if fx > opts.DimX { fx = opts.DimX - viewp; vpx = fx }
+	if fy > opts.DimY { fy = opts.DimY - viewp; vpy = fy }
+fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",viewp,vpx,vpy,fx,fy)
+	Ovimg := segimage(ebuf, eflg, vpx, vpy, fx,fy, true)
 	upwin(Ovimg)
 	calc_stats()
 }
