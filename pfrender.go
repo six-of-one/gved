@@ -96,6 +96,10 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 var foods = []string{"ifood1", "ifood2", "ifood3"}
 var nothing int
 
+// zx and zy are nominal zeros, but have the change for full edit view port
+var zx int
+var zy int
+
 func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 	extrax, extray := 0, 0
 	if (maze.flags & LFLAG4_WRAP_H) == 0 {	// this where old viewer drew passage 'arrows'
@@ -127,8 +131,8 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 
 	if G2 {
 // g2 checks
-	for y := 0; y < mpy; y++ {
-		for x := 0; x < mpx; x++ {
+	for y := zy; y < mpy; y++ {
+		for x := zx; x < mpx; x++ {
 			adj := 0
 			if maze.wallpattern < 11 {
 				if (nothing & NOWALL) == 0 {		// wall shadows here
@@ -150,8 +154,8 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 		}
 	}} else {
 // g1 checks
-	for y := 0; y < mpy; y++ {
-		for x := 0; x < mpx; x++ {
+	for y := zy; y < mpy; y++ {
+		for x := zx; x < mpx; x++ {
 			adj := 0
 			nwt := NOWALL | NOG1W
 			if whatis(maze, x, y) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
@@ -182,8 +186,8 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & g2 draw walls, see screens
-	for y := 0; y <= lasty; y++ {
-		for x := 0; x <= lastx; x++ {
+	for y := zy; y <= lasty; y++ {
+		for x := zx; x <= lastx; x++ {
 			var stamp *Stamp
 			var dots int // dot count
 
@@ -272,8 +276,8 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 
 	opr := 3				// 3 sets of special potions
 // main maze decode loop - op over all maze cells
-	for y := 0; y <= lasty; y++ {
-		for x := 0; x <= lastx; x++ {
+	for y := zy; y <= lasty; y++ {
+		for x := zx; x <= lastx; x++ {
 			var stamp *Stamp
 			var dots int // dot count
 // gen type op - letter to draw
@@ -1120,7 +1124,7 @@ if false {
 if opts.Verbose || opts.Se {
 	i := 0
 	mz := mazenum + 1
-	wimg := blankimage(33, 33)
+	wimg := blankimage(mpx+1, mpy+1)
 	if opts.Se {
  // paste in sanctuary converter
 		if mz > 116 { mz = mz - 2 }	else {	// sanctuary does not have 115 as demo or 116 as score table
@@ -1131,8 +1135,8 @@ if opts.Verbose || opts.Se {
 		fmt.Printf("	SVRLOAD[1] = [ ];\n	SVRLOAD[1][1] = \"levels/glevel%d.png\"\n	SVRLOAD[1][2] = \"Level %d\";\n	SVRLOAD[1][3] = [ ];\n	SVRLOAD[1][4] =\"1089\";\n", mz, mz)
 	}
 
-	for y := 0; y <= lasty; y++ {
-		for x := 0; x <= lastx; x++ {
+	for y := zy; y <= lasty; y++ {
+		for x := zx; x <= lastx; x++ {
 
 			if opts.Verbose { fmt.Printf(" %02d", maze.data[xy{x, y}]) }
 			if opts.Se {
@@ -1169,6 +1173,7 @@ if opts.Verbose || opts.Se {
 }
 // maze dumper ending
 
+// write wrap dir arrows
 	if xspc == 32 {
 		if maze.flags&LFLAG4_WRAP_H > 0 {
 			l := itemGetStamp("arrowleft")
@@ -1188,6 +1193,9 @@ if opts.Verbose || opts.Se {
 			}
 		}
 	}
+// reset for next entry
+	zx = 0
+	zy = 0
 	savetopng(opts.Output, img)
 // for user select
 	return img

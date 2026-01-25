@@ -71,6 +71,8 @@ func ed_init() {
 	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 	delbset(0)			// init undo (delbuf)
 	restak = 0			// restor position in delbuf
+	zx = 0				// start point of maze map in genpfimage
+	zy = 0
 }
 
 func udbck(ct int, t int){
