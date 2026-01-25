@@ -788,7 +788,11 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	g1mask[G1OBJ_WALL_TRAP1] = 1024
 	g1mask[G1OBJ_TILE_TRAP1] = 64
 //	g1mask[] =
+
+
+
 /// Six - individual tile dumper
+// - these can be used to make sprite sheets and the like
 
 /*******************************************
 TTT           ___  DDD                __
@@ -799,9 +803,11 @@ TTT           ___  DDD                __
  *******************************************/
 // lock out with this - set to true to run dump
 // run decode for maze116
-// written to .p[0-11]/tl_%05d_%04X.png
+// written to .p[0-31]/tl_%05d_%04X.png
 // where %d and %X are tile start addr
 
+// loops thru all palette nums for all valid tiles, that are known
+// atempts to correct for various 2x2, 3x3, 4x4 (dragon) and odd size doors
 if false {
 // counter for tiles - imprv - dont write dups
 	wcnt := 1
@@ -1063,7 +1069,7 @@ if false {
 // set true to run
 if false {
 // single tile, for all the issues
-// this is written to .8x8/c[0-11]/i%05d_%04X.png
+// this is written to .8x8/c[0-31]/i%05d_%04X.png
 		stamp = itemGetStamp("ghost")
 		tbaddr = 1
 		stamp.pnum = pnum
@@ -1090,11 +1096,21 @@ if false {
 		}
 // locked out
 }
+// the single 8x8 tile set end
+// this op is a beast to run and it takes a while
+
 		pnum++
 	}
 // Six - end of tile dumper
 }
+//
+// tile dumper ending
+
+
 // Six - maze dumper
+// - can be used to dump mazes in vars formats for clones and such
+// this bit is focused on sanctuary png encoded mazes, where the hex color 0xFFFFFF provides map data
+// and a possible SVRLOAD substitute encoded storage format in javascript
 if opts.Verbose || opts.Se {
 	i := 0
 	mz := mazenum + 1
@@ -1145,6 +1161,8 @@ if opts.Verbose || opts.Se {
 	}
 // Six end maze dumper
 }
+// maze dumper ending
+
 	if xspc == 32 {
 		if maze.flags&LFLAG4_WRAP_H > 0 {
 			l := itemGetStamp("arrowleft")
@@ -1274,7 +1292,7 @@ func checkwalladj8(maze *Maze, x int, y int) int {
 	return adj
 }
 
-// g1 version
+// g1 version -- g2 has more walls
 func checkwalladj8g1(maze *Maze, x int, y int) int {
 	adj := 0
 
