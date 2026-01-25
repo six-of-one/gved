@@ -413,7 +413,7 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 // udpate maze from edits - rld false to keep overload colors / pats
 func ed_maze(rld bool) {
 	upd_edmaze(rld)
-	Ovimg := genpfimage(edmaze, opts.mnum)
+	Ovimg := genpfimage(edmaze, opts.mnum, opts.DimX, opts.DimY)
 	upwin(Ovimg)
 	calc_stats()
 }
@@ -597,7 +597,7 @@ fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts
 	opts.dntr = false
 	nsremaze = false
 	if opts.edat > 0 { ed_maze(true) } else {
-		Ovimg := genpfimage(edmaze, mazn)
+		Ovimg := genpfimage(edmaze, mazn, 32, 32)
 		upwin(Ovimg)
 		calc_stats()
 	}
