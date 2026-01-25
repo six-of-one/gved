@@ -107,10 +107,34 @@ func specialKey() {
 			if key.Name == "P" && ctrl  { if shift { pbsess_cyc(1) } else { menu_paste() }}
 			if key.Name == "O" && ctrl  { if shift { pbmas_cyc(1) }}
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
-			if key.Name == "Left" && ctrl { opts.DimX--; if opts.DimX < 1 { opts.DimX = 1 }; opts.dntr = true; srelod = true; opts.bufdrt = true }
-			if key.Name == "Right" && ctrl { opts.DimX++; opts.dntr = true; srelod = true; opts.bufdrt = true }
-			if key.Name == "Up" && ctrl { opts.DimY--; if opts.DimY < 1 { opts.DimY = 1 }; opts.dntr = true; srelod = true; opts.bufdrt = true }
-			if key.Name == "Down" && ctrl { opts.DimY++; opts.dntr = true; srelod = true; opts.bufdrt = true }
+			if key.Name == "Left" {
+				opts.dntr = true; srelod = true
+				if ctrl { opts.DimX--; if opts.DimX < 1 { opts.DimX = 1 }
+						  opts.bufdrt = true
+						} else {
+							opts.vpx--; if opts.vpx < 0 { opts.vpx = 0 }
+						}}
+			if key.Name == "Right" {
+				opts.dntr = true; srelod = true
+				if ctrl { opts.DimX++; opts.bufdrt = true
+						} else {
+							//if opts.vpx + opts.viewp < opts.DimX { opts.vpx++ }
+							opts.vpx++
+						}}
+			if key.Name == "Up" {
+				opts.dntr = true; srelod = true
+				if ctrl { opts.DimY--; if opts.DimY < 1 { opts.DimY = 1 };
+						  opts.bufdrt = true
+						} else {
+							opts.vpy--; if opts.vpy < 0 { opts.vpy = 0 }
+						}}
+			if key.Name == "Down" {
+				opts.dntr = true; srelod = true
+				if ctrl { opts.DimY++; opts.bufdrt = true
+						} else {
+							//if opts.vpy + opts.viewp < opts.DimY { opts.vpy++ }
+							opts.vpy++
+						}}
 			if key.Name == "Prior" {
 				if sdb > 0 {
 					sdbit(-1)

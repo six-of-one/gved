@@ -413,7 +413,12 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 // udpate maze from edits - rld false to keep overload colors / pats
 func ed_maze(rld bool) {
 	upd_edmaze(rld)
-	Ovimg := segimage(ebuf, eflg, 0, 0, opts.DimX,opts.DimY, true)
+// viewport ops
+	fx := opts.vpx + opts.viewp
+	fy := opts.vpy + opts.viewp
+	if fx > opts.DimX { fx = opts.DimX - opts.viewp; opts.vpx = fx }
+	if fy > opts.DimY { fy = opts.DimY - opts.viewp; opts.vpy = fy }
+	Ovimg := segimage(ebuf, eflg, opts.vpx, opts.vpy, fx,fy, true)
 	upwin(Ovimg)
 	calc_stats()
 }

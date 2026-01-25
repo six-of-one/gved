@@ -12,6 +12,8 @@ var opts struct {
 	edat	int    `default:"0" description:"maze: edit active"`
 	dtec float64   `default:"16.0" description:"edit: tile size detector for click"`
 	viewp   int    `default:"21" description:"edit: viewport size for window"`
+	vpx     int    `default:"0" description:"edit: viewport x mod"`
+	vpy     int    `default:"0" description:"edit: viewport y mod"`
 	edip	int    `default:"0" description:"maze: last load from file"`
 	dntr	bool   `description:"dont reload maze ebuf on a refresh"`
 	bufdrt	bool   `description:"maze ebuf is unsaved"`
