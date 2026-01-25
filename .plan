@@ -55,6 +55,9 @@ issues needing fixed
 - undo after paste works weirdly sometimes
 - saw instanced where paste pasted wrong data, needs checked again - G¹ / G² switch
 - encoded len in stats when not from rom
+viewport
+- paletteMakeSpecial, check for var size
+- ffmap
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
@@ -75,6 +78,7 @@ config ideas:
 - sound of item on key assign
 - <ESC> edit activate, sets ed keys & picks a default, or just turns on edit mode with cmd keys on
 - stats (in dialog win) when blotter selecting
+- load and save viewp
 
 perhaps needs rewrite:
 - cleanup all modules

@@ -76,6 +76,7 @@ func ed_init() {
 	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 	delbset(0)			// init undo (delbuf)
 	restak = 0			// restor position in delbuf
+	viewp = 21			// viewport size, later load from config
 }
 
 func udbck(ct int, t int){

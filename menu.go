@@ -410,7 +410,7 @@ func upwin(simg *image.NRGBA) {
 		if ngeoh != geoh { dialog.ShowInformation("Edit mode","set window ratio to edit",w) }
 		geoh = ngeoh
 	}										// having an edit viewport will change 528 - will have to be vport wid (same as high) * 16
-	opts.dtec = 16.0 * (float64(geow - 4) / 528.0)				// the size of a tile, odd window size may cause issues
+	opts.dtec = 16.0 * (float64(geow - 4) / (viewp * 16))				// the size of a tile, odd window size may cause issues
 if opts.Verbose { fmt.Printf(" dtec: %f\n",opts.dtec) }			// detected size of a single maze tile in pixels, used for click id of cell x,y
 	clikwinm(w, simg, geow, geoh)
 

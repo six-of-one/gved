@@ -1529,11 +1529,11 @@ fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
 				if nothing & NOTRAP == 0 {
 					stamp.ptype = "forcefield"
 					stamp.pnum = 0
-					writestamptoimage(img, stamp, x*16, y*16)
+					writestamptoimage(img, stamp, (x-xb)*16, (y-yb)*16)
 				}
 			}
 			if (nothing & NOFLOOR) == 0 {
-				writestamptoimage(img, stamp, x*16, y*16)
+				writestamptoimage(img, stamp, (x-xb)*16, (y-yb)*16)
 			}
 		}
 	}} else {
@@ -1552,7 +1552,7 @@ fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
 
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
 			if (nothing & NOFLOOR) == 0 {
-				writestamptoimage(img, stamp, x*16, y*16)
+				writestamptoimage(img, stamp, (x-xb)*16, (y-yb)*16)
 			}
 		}
 
@@ -1639,7 +1639,7 @@ fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
 					}
 				}}
 			if stamp != nil {
-				writestamptoimage(img, stamp, x*16+stamp.nudgex, y*16+stamp.nudgey)
+				writestamptoimage(img, stamp, (x-xb)*16+stamp.nudgex, (y-yb)*16+stamp.nudgey)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
@@ -2058,7 +2058,7 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 		}
 // Six: end G1 decode
 			if stamp != nil {
-				writestamptoimage(img, stamp, x*16+stamp.nudgex, y*16+stamp.nudgey)
+				writestamptoimage(img, stamp, (x-xb)*16+stamp.nudgex, (y-yb)*16+stamp.nudgey)
 // stats on palette
 				if stat {			// on palette screen, show stats for loaded maze
 					st := ""
