@@ -1507,7 +1507,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	maze.floorcolor = (fdat[6] & 0xf0) >> 4
 
 	// 8 pixels * 2 tiles * x,y stamps, plus extra space on edges
-	img := blankimage(8*2*xs-xb, 8*2*ys-yb)
+	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
 
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
