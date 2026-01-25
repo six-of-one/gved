@@ -317,7 +317,8 @@ Random Load - empty tiles (floor) will be load with a random select
 			  profile - uses #T filter if set as include filter
 
 View Sim	- blotter is set to default gauntlet view port to simulate
-			  what a player could see in any area (arcade)
+			  what a player could see in any area (arcade)\
+Wall border	- stored mazes have no bottom or right wall - this simulates them
 Palette map - default: palette walls / floor match level cols & pats
 			  toggles on and off (1st click shows palette if hidden)
 Mute audio	- toggle audio hint when selecting edit elements -middle click

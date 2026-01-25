@@ -213,9 +213,10 @@ func st_menu() {
 	menuItemRand := fyne.NewMenuItem("Random load",func() { rload(ebuf); ed_maze(true) })
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
 	menuItemGvs := fyne.NewMenuItem("Gaunlet view sim toggle",func() { gvs = !gvs })
+	menuItemWob := fyne.NewMenuItem("Wall border right & bottom",func() { opts.Wob = !opts.Wob; remaze(opts.mnum) })
 	menuItemPalf := fyne.NewMenuItem("Palette; map decore toggle",func() { if wpalop {palfol = !palfol}; palete() })
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
-	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemRand, menuItemLin1,  menuItemGvs, menuItemPalf, menuItemMute, menuItemExit)
+	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemRand, menuItemLin1,  menuItemGvs, menuItemWob, menuItemPalf, menuItemMute, menuItemExit)
 
 	menuItemColr := fyne.NewMenuItem("Choose master color", menu_color)
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
@@ -404,7 +405,8 @@ func upwin(simg *image.NRGBA) {
 //												 ┌» un-borded maze is 528 x 528 for a 33 x 33 cell maze
 	geow := int(math.Max(560,opts.Geow))	// 560 is min, maze doesnt seem to fit or shrink smaller
 	geoh := int(math.Max(586,opts.Geoh))	// 586 min
-	dtp := 528.0
+	dtp := 512.0
+	if opts.Wob { dtp := 528.0 }
 	if opts.edat > 0 {
 //		geow = geow & 0xfe0	+ 13			// lock to multiples of 32
 		ngeoh := geow + 26					// square maze area + 26 for menu bar - window is still 4 wider than maze content

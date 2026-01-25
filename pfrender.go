@@ -102,10 +102,10 @@ var foods = []string{"ifood1", "ifood2", "ifood3"}
 var nothing int
 
 func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
-	extrax, extray := 16, 16	// this is the space for copyedges walls...
-	if (maze.flags & LFLAG4_WRAP_V) == 0 {		// and this extra space is an issue to blotter & measure, it either always has to be or not
-		extrax = 16								// - of course inimical to edit system, so has to be off to edit
-		extray = 16
+	extrax, extray := 0, 0	// this becomes the space for copyedges walls...
+	if opts.Wob {			// and this extra space is an issue to blotter & measure, it either always has to be or not
+		extrax = 16			// - of course inimical to edit system, so it has to be accounted
+		extray = 16			// - but now only in view mode
 	}
 
 // no {floor|wall} - only things

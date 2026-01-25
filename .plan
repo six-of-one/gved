@@ -57,7 +57,6 @@ issues needing fixed
 - encoded len in stats when not from rom
 viewport
 - floor draw (floor gets redrawn with rnd shift every move)
-- rest rubber band ops adjust (add vpx, vpy to calc when vp on)
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
