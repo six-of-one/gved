@@ -98,8 +98,8 @@ var nothing int
 
 func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 	extrax, extray := 0, 0
-	if (maze.flags & LFLAG4_WRAP_H) == 0 {
-		extrax = 16
+	if (maze.flags & LFLAG4_WRAP_H) == 0 {	// this where old viewer drew passage 'arrows'
+		extrax = 16							// - of course inimical to edit system, so has to be off to edit
 	}
 	if (maze.flags & LFLAG4_WRAP_V) == 0 {
 		extray = 16
@@ -115,7 +115,7 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 	xpad := 16
 // dont draw the arrow space border
 	if !opts.Aob { xspc = 0; xpad = 0 }
-	img := blankimage(8*2*32+xspc+extrax, 8*2*32+xspc+extray)
+	img := blankimage(8*2*mpx+xspc+extrax, 8*2*mpy+xspc+extray)
 
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
@@ -127,8 +127,8 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 
 	if G2 {
 // g2 checks
-	for y := 0; y < 32; y++ {
-		for x := 0; x < 32; x++ {
+	for y := 0; y < mpy; y++ {
+		for x := 0; x < mpx; x++ {
 			adj := 0
 			if maze.wallpattern < 11 {
 				if (nothing & NOWALL) == 0 {		// wall shadows here
@@ -150,8 +150,8 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 		}
 	}} else {
 // g1 checks
-	for y := 0; y < 32; y++ {
-		for x := 0; x < 32; x++ {
+	for y := 0; y < mpy; y++ {
+		for x := 0; x < mpx; x++ {
 			adj := 0
 			nwt := NOWALL | NOG1W
 			if whatis(maze, x, y) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
@@ -170,14 +170,14 @@ func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 
 	}}
 
-	lastx := 32
+	lastx := mpx
 	if maze.flags&LFLAG4_WRAP_H > 0 {
-		lastx = 31
+		lastx = mpx - 1
 	}
 
-	lasty := 32
+	lasty := mpy
 	if maze.flags&LFLAG4_WRAP_V > 0 {
-		lasty = 31
+		lasty = mpy - 1
 	}
 
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
@@ -1173,18 +1173,18 @@ if opts.Verbose || opts.Se {
 		if maze.flags&LFLAG4_WRAP_H > 0 {
 			l := itemGetStamp("arrowleft")
 			r := itemGetStamp("arrowright")
-			for i := 2; i <= 32; i++ {
+			for i := 2; i <= mpy; i++ {
 				writestamptoimage(img, l, 0, i*16)
-				writestamptoimage(img, r, 32*16+16, i*16)
+				writestamptoimage(img, r, mpx*16+16, i*16)
 			}
 		}
 
 		if maze.flags&LFLAG4_WRAP_V > 0 {
 			u := itemGetStamp("arrowup")
 			d := itemGetStamp("arrowdown")
-			for i := 1; i < 32; i++ {
+			for i := 1; i < mpx; i++ {
 				writestamptoimage(img, u, i*16+16, 0)
-				writestamptoimage(img, d, i*16+16, 32*16+16)
+				writestamptoimage(img, d, i*16+16, mpy*16+16)
 			}
 		}
 	}
