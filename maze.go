@@ -108,14 +108,14 @@ func domaze(arg string) {
 
 // interactive viewer not selected - gen maze, output png & exit
 	if !opts.Intr {
-		genpfimage(edmaze, mazeNum, 32, 32)		// added 32x32 for all rom mazes, H & V have 1 subbed of for non copy wall
+		genpfimage(edmaze, mazeNum)
 		os.Exit(0)
 	}
 
 // in interactive, start the window
 	aw_init()
 
-	Ovimg := genpfimage(edmaze, mazeNum, 32, 32)		// even here, edit can not be on
+	Ovimg := genpfimage(edmaze, mazeNum)
 	upwin(Ovimg)
 
 // call handle window resize lock

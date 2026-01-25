@@ -71,8 +71,6 @@ func ed_init() {
 	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 	delbset(0)			// init undo (delbuf)
 	restak = 0			// restor position in delbuf
-	zx = 0				// start point of maze map in genpfimage
-	zy = 0
 }
 
 func udbck(ct int, t int){
@@ -415,7 +413,7 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 // udpate maze from edits - rld false to keep overload colors / pats
 func ed_maze(rld bool) {
 	upd_edmaze(rld)
-	Ovimg := genpfimage(edmaze, opts.mnum, opts.DimX, opts.DimY)
+	Ovimg := genpfimage(edmaze, opts.mnum)
 	upwin(Ovimg)
 	calc_stats()
 }
@@ -599,7 +597,7 @@ fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts
 	opts.dntr = false
 	nsremaze = false
 	if opts.edat > 0 { ed_maze(true) } else {
-		Ovimg := genpfimage(edmaze, mazn, 32, 32)
+		Ovimg := genpfimage(edmaze, mazn)
 		upwin(Ovimg)
 		calc_stats()
 	}
