@@ -99,23 +99,23 @@ func domaze(arg string) {
 	nothing = opts.Mask & 0xfff;
 
 	init_buf()	// need buffers, one gets loaded
-	maze := mazeDecompress(slapsticReadMaze(mazeNum), false)
+	edmaze = mazeDecompress(slapsticReadMaze(mazeNum), false)
 
 	if opts.Verbose || mazeMeta > 0 {
-		mazeMetaPrint(maze, false)
+		mazeMetaPrint(edmaze, false)
 		if mazeMeta > 0 { os.Exit(0) }
 	}
 
 // interactive viewer not selected - gen maze, output png & exit
 	if !opts.Intr {
-		genpfimage(maze, mazeNum)
+		genpfimage(edmaze, mazeNum)
 		os.Exit(0)
 	}
 
 // in interactive, start the window
 	aw_init()
 
-	Ovimg := genpfimage(maze, mazeNum)
+	Ovimg := genpfimage(edmaze, mazeNum)
 	upwin(Ovimg)
 
 // call handle window resize lock
