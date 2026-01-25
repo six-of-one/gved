@@ -122,7 +122,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		rxm = float32(rx)
 		rym = float32(ry)
 		lvpx := 0; lvpy := 0
-		if opts.edat { lvpx := vpx; lvpy := vpy }
+		if opts.edat > 0 { lvpx = vpx; lvpy = vpy }
 	if gvs {
 		sx := nong(float32(int(ex / dt)) * dt - 7.5 * dt)		// somewhere here is why gvs is at half cell post when not near an edge
 		sy := nong(float32(int(ey / dt)) * dt - 7.5 * dt)
@@ -169,8 +169,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
 // blotter size hinter
 		if mxmd == mxme && mymd == myme {
-			mid := g1mapid[ebuf[xy{mxmd, mymd}]]
-			if G2 { mid = g2mapid[ebuf[xy{mxmd, mymd}]] }
+			mid := g1mapid[ebuf[xy{mxmd+lvpx, mymd+lvpy}]]
+			if G2 { mid = g2mapid[ebuf[xy{mxmd+lvpx, mymd+lvpy}]] }
 			pos = fmt.Sprintf("r: %.0f,%.0f+ %.0f cell: %d, %d elem: %d %s",sx,sy,dt,mxmd+lvpx,mymd+lvpy,ebuf[xy{mxmd+lvpx, mymd+lvpy}],mid)
 		} else {
 			dx := mxme-mxmd+1

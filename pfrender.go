@@ -63,27 +63,28 @@ func ParseHexColor(s string) (c color.RGBA, err error) {
     return
 }
 
+// six tile dumper fn
 func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 
-//	fmt.Printf("tbas pass %d\n",tbas)
-// exit tile is special build
+ //	fmt.Printf("tbas pass %d\n",tbas)
+ // exit tile is special build
 	if ada != 0x7f0 { stamp.numbers = tilerange(tbas, tbaddr) }
 	fillstamp(stamp)
 
-// file name with addr
+ // file name with addr
 	wnam := fmt.Sprintf(".p%d/tl_%05d_%04X.png",stamp.pnum,tbas + ada,tbas + ada)
-// -sz = use (s)pecial file designation
+ // -sz = use (s)pecial file designation
 	if sz < 0 {
 		sz = max(sz,-sz)
 		wnam = fmt.Sprintf(".p%d/tl_s%05d_%04X.png",stamp.pnum,tbas + ada,tbas + ada)
 	}
-// for 8x8 single tile, place is sub color dirs sep from .p*
+ // for 8x8 single tile, place is sub color dirs sep from .p*
 	if sz == 8 {
 		wnam = fmt.Sprintf(".8x8/c%d/i%05d_%04X.png",stamp.pnum,tbas + ada,tbas + ada)
 	}
-// 24 pixels * 24 pixels - temp write out of all tiles
-// impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
-// special 8 x 8 tiles for unit list
+ // 24 pixels * 24 pixels - temp write out of all tiles
+ // impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
+ // special 8 x 8 tiles for unit list
 	wimg := blankimage(sz, sz)
 	writestamptoimage(wimg, stamp, 0, 0)
 	wrfile, err := os.Create(wnam)
@@ -1486,7 +1487,7 @@ func renderdots(img *image.NRGBA, xloc int, yloc int, count int) {
 func segimage(mdat MazeData, fdat [11]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
 
 //if opts.Verbose {
-fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
+fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 
 // dummy maze for ops that require it
 	var maze = &Maze{}
@@ -1506,7 +1507,7 @@ fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
 	maze.floorcolor = (fdat[6] & 0xf0) >> 4
 
 	// 8 pixels * 2 tiles * x,y stamps, plus extra space on edges
-	img := blankimage(8*2*xs, 8*2*ys)
+	img := blankimage(8*2*xs-xb, 8*2*ys-yb)
 
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
@@ -1643,7 +1644,7 @@ fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
-				renderdots(img, x*16, y*16, dots)
+				renderdots(img, (x-xb)*16, (y-yb)*16, dots)
 			}
 		}
 	}
@@ -2071,7 +2072,7 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 						gtop.SetRGB(1, 0, 0)
 						gtop.DrawStringAnchored(st, 6, 6, 0.5, 0.5)
 						gtopim := gtop.Image()
-						offset := image.Pt(x*16+stamp.nudgex+15, y*16+stamp.nudgey-5)
+						offset := image.Pt((x-xb)*16+stamp.nudgex+15, (y-yb)*16+stamp.nudgey-5)
 						draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 						gtopl = ""		// these seem to conflict and the palette id's box gens with monsters nearby
 						stonce[mel] = 0
@@ -2086,13 +2087,13 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 						gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
 					}
 					gtopim := gtop.Image()
-					offset := image.Pt(x*16+stamp.nudgex-4, y*16+stamp.nudgey-4)
+					offset := image.Pt((x-xb)*16+stamp.nudgex-4, (y-yb)*16+stamp.nudgey-4)
 					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 				}
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
-				renderdots(img, x*16, y*16, dots)
+				renderdots(img, (x-xb)*16, (y-yb)*16, dots)
 			}
 		}
 	}

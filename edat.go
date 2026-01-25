@@ -422,8 +422,10 @@ func ed_maze(rld bool) {
 // viewport ops
 	fx := vpx + viewp
 	fy := vpy + viewp
-	if fx > opts.DimX { fx = opts.DimX - viewp; vpx = fx }
-	if fy > opts.DimY { fy = opts.DimY - viewp; vpy = fy }
+	if fx > opts.DimX { vpx = opts.DimX - viewp }		// test scroll over endpoint, dont pass end of maze
+	if fy > opts.DimY { vpy = opts.DimY - viewp }
+	fx = vpx + viewp
+	fy = vpy + viewp
 fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",viewp,vpx,vpy,fx,fy)
 	Ovimg := segimage(ebuf, eflg, vpx, vpy, fx,fy, true)
 	upwin(Ovimg)
