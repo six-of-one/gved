@@ -411,7 +411,7 @@ func upwin(simg *image.NRGBA) {
 		geoh = ngeoh
 	}
 	opts.dtec = 16.0 * (float64(geow - 4) / 528.0)				// the size of a tile, odd window size may cause issues
-if opts.Verbose { fmt.Printf(" dtec: %f\n",opts.dtec) }
+if opts.Verbose { fmt.Printf(" dtec: %f\n",opts.dtec) }			// detected size of a single maze tile in pixels, used for click id of cell x,y
 	clikwinm(w, simg, geow, geoh)
 
 	spx := ""
@@ -430,7 +430,7 @@ func uptitl(mazeN int, spaux string) {
 	w.SetTitle(til)
 }
 
-// update stat line
+// update trick menu items status line
 
 var sshin string
 
@@ -475,15 +475,6 @@ func wizecon() {
 	}
 }
 
-// pad for dialog page
-
-func cpad(st string, d int) string {
-
-//	spout := st+"                                                                          " // jsut guess at a pad fill
-//	return string(spout[:d])
-return st
-}
-
 // dialog called from kby or menu
 
 func keyhints() {
@@ -497,77 +488,69 @@ func keyhints() {
 	} else {
 		strp = "View mode: cmd keys only"
 	}
-	strp += cpad("\nsingle letter commands",36)
-	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
-//		strp += cpad("\n\n? - this list",52)
-	strp += cpad("\nctrl-q - quit program",40)
+	strp += "\nsingle letter commands\n–—–—–—–—–—–—–—–—–—–—–—"
+//		strp += "\n\n? - this list"
+	strp += "\nctrl-q - quit program"
 	if opts.edat == 1 {
-		strp += cpad("\nESC> exit editor ╗",40)
-		strp += cpad("\n\\ - toggle cmd keys*",40)
-	} else { strp += cpad("\nESC> editor mode",40) }
+		strp += "\nESC> exit editor ╗\n\\ - toggle cmd keys*"
+	} else { strp += "\nESC> editor mode" }
 	if kys == 1 {
-		strp += cpad("\nf,F - floor pattern+,-",44)
-		strp += cpad("\ng,G - floor color+,-",45)
-		strp += cpad("\nw,W - wall pattern+,-",43)
-		strp += cpad("\ne,E - wall color+,-",46)
-		strp += cpad("\nr - rotate maze +90°",41)
-		strp += cpad("\nR - rotate maze -90°",42)
-		strp += cpad("\nh - mirror maze horizontal toggle",31)
-		strp += "\nm - mirror maze vertical toggle"
-		strp += cpad("\np - toggle floor invis",41)
-		strp += cpad("\nP - toggle wall invis",42)
-		strp += cpad("\nT - loop invis things",42)
-		strp += cpad("\ns - toggle rnd special potion",34)
+		strp += "\nf,F - floor pattern+,-\ng,G - floor color+,-"+
+				"\nw,W - wall pattern+,-\ne,E - wall color+,-"+
+				"\nr - rotate maze +90°\nR - rotate maze -90°"+
+				"\nh - mirror maze horizontal toggle"+
+				"\nm - mirror maze vertical toggle"+
+				"\np - toggle floor invis\nP - toggle wall invis"+
+				"\nT - loop invis things"+
+				"\ns - toggle rnd special potion"
 	} else {
-		strp += cpad("\nH - toggle horiz maze wrap",35)
-		strp += cpad("\nV - toggle vert maze wrap",36)
-		strp += cpad("\nC - cycle item++, key c",40)
-		strp += cpad("\nc - cycle item--, key c",43)
-		strp += cpad("\n{n}c set item 1 - 64, key c",39)
-		strp += cpad("\nL - generator indicate letter",35)
-		strp += cpad("\nS - cycle sd buffers",42)
-		strp += cpad("\n{n}S save curr to buffer #",35)
+		strp += "\nH - toggle horiz maze wrap"+
+				"\nV - toggle vert maze wrap"+
+				"\nC - cycle item++, key c"+
+				"\nc - cycle item--, key c"+
+				"\n{n}c set item 1 - 64, key c"+
+				"\nL - generator indicate letter"+
+				"\nS - cycle sd buffers"+
+				"\n{n}S save curr to buffer #"
 	}
 	if kys == 1 {
-		strp += cpad("\nL - generator indicate letter",35)
-		strp += cpad("\n{n}S save curr to buffer #",35)
-		strp += cpad("\ni - gauntlet mazes r1 - r9",38)
-		strp += cpad("\nl - use gauntlet rev 14",40)
-		strp += cpad("\nu - gauntlet 2 mazes",39)
-//		strp += cpad("\nv - valid address list",42)
-		strp += "\nv - all maze addr (in termninal)"
+		strp += "\nL - generator indicate letter"+
+				"\n{n}S save curr to buffer #"+
+				"\ni - gauntlet mazes r1 - r9"+
+				"\nl - use gauntlet rev 14"+
+				"\nu - gauntlet 2 mazes"+
+//				"\nv - valid address list"+
+				"\nv - all maze addr (in termninal)"
 	}
-	strp += cpad("\nA - toggle a override",41)
-	strp += cpad("\n{n}a numeric of valid maze",35)
-	strp += cpad("\n - load maze 1 - 127 g1",42)
-	strp += cpad("\n - load maze 1 - 117 g2",42)
-	strp += "\n - load address 229376 - 262143 "
-	strp += "\n–—–—–—–—–—–—–—–—–—–—–—"
+	strp += "\nA - toggle a override"+
+			"\n{n}a numeric of valid maze"+
+			"\n - load maze 1 - 127 g1"+
+			"\n - load maze 1 - 117 g2"+
+			"\n - load address 229376 - 262143 "+
+			"\n–—–—–—–—–—–—–—–—–—–—–—"
 	strb := fmt.Sprintf("\nG%d ",opts.Gtp)
 	if G1 {
 	if opts.R14 { strb += "(r14)"
 		} else { strb += "(r1-9)" }}
-	strp += cpad(strb,50)
+	strp += strb
 	if kys == 2 {
 		lenb = 110
-		strp += "\n\ntypical: key selects item,\n L-click place, M-click assign"
-		strp += "\n–—–—–—–—–—–—–—"
-		strp += cpad("\n<DEL> (hold down) set floor",32)
-		strp += cpad("\nw - standard walls",42)
-		strp += cpad("\nW - shootable walls",41)
-		strp += cpad("\nq - trap wall",48)
-		strp += cpad("\nr - trap tile",48)
-		strp += cpad("\nd - horizontal door",41)
-		strp += cpad("\nD - vertical door",44)
-		strp += cpad("\nf - shootable food",42)
-		strp += cpad("\nF - indestructabl food",39)
-		strp += cpad("\np - shootable potion",39)
-		strp += cpad("\nP - indestructabl potion",37)
-		strp += cpad("\ni - invisible power",42)
-		strp += cpad("\nx - exit",51)
-		strp += cpad("\nz - Death",49)
-		strp += cpad("\nt - treasure box",44)
-		strp += cpad("\nT - teleporter pad",42)
+		strp += "\n\ntypical: key selects item,\n L-click place, M-click assign"+
+				"\n–—–—–—–—–—–—–—"+
+				"\n<DEL> (hold down) set floor"+
+				"\nw - standard walls"+
+				"\nW - shootable walls"+
+				"\nq - trap wall\nr - trap tile"+
+				"\nd - horizontal door"+
+				"\nD - vertical door"+
+				"\nf - shootable food"+
+				"\nF - indestructabl food"+
+				"\np - shootable potion"+
+				"\nP - indestructabl potion"+
+				"\ni - invisible power"+
+				"\nx - exit\nz - Death"+
+				"\nt - treasure box"+
+				"\nT - teleporter pad"
 	}
 //	strp += "\n * note some address will crash"
 
@@ -577,6 +560,7 @@ func keyhints() {
 
 // text dialog boxes for all hint sets
 // title, content, w, h
+// return text box point for updating contents live
 
 func dboxtx(dt string, dbc string, w float32, h float32) binding.Item[string] {
 
