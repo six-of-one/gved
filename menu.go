@@ -296,6 +296,12 @@ func aw_init() {
 	ed_init()			// initialized the editor package
 
 // get default win size
+// main win size is a bit tricky on user adjust as i cheaped out and made click detect of a cell
+// - based on a square pixel block (default here is 32x32 pix, and smallest is 16x16 pix)
+// - whats more, palette and paste buf will auto-readjust back to the size detected for the main win
+// - mainly because i only have one click detect routine, and i wanted a square to keep the math ops less ugly
+// so a user can make the screen any rectangle they want, but going into edit mode will force sqaure cells!
+// - even more obtuse, going 'forced fullscreen' wont play nice (and go doesnt have prog adjustable win stuff...)
 
 	if opts.Geow == 1024 && opts.Geoh == 1050 {		// defs set
 
