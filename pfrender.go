@@ -1481,8 +1481,9 @@ func renderdots(img *image.NRGBA, xloc int, yloc int, count int) {
 }
 
 // image from buffer segment			- stat: display stats if true
+// segment of buffer from xb,yb to xs,ys (begin to stop)
 
-func segimage(mdat MazeData, fdat [11]int, xs int, ys int, stat bool) *image.NRGBA {
+func segimage(mdat MazeData, fdat [11]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
 
 //if opts.Verbose {
 fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
@@ -1514,8 +1515,8 @@ fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
 
 	if G2 {
 // g2 checks
-	for y := 0; y < ys; y++ {
-		for x := 0; x < xs; x++ {
+	for y := yb; y < ys; y++ {
+		for x := xb; x < xs; x++ {
 			adj := 0
 			if maze.wallpattern < 11 {
 				if (nothing & NOWALL) == 0 {		// wall shadows here
@@ -1537,8 +1538,8 @@ fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
 		}
 	}} else {
 // g1 checks
-	for y := 0; y < ys; y++ {
-		for x := 0; x < xs; x++ {
+	for y := yb; y < ys; y++ {
+		for x := xb; x < xs; x++ {
 			adj := 0
 			nwt := NOWALL | NOG1W
 			if whatis(maze, x, y) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
@@ -1559,8 +1560,8 @@ fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
 
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & g2 draw walls, see screens
-	for y := 0; y <= ys; y++ {
-		for x := 0; x <= xs; x++ {
+	for y := yb; y <= ys; y++ {
+		for x := xb; x <= xs; x++ {
 			var stamp *Stamp
 			var dots int // dot count
 
@@ -1647,9 +1648,9 @@ fmt.Printf("segimage %dx%d: %t\n ",xs,ys,stat)
 		}
 	}
 
-	for y := 0; y <= ys; y++ {
+	for y := yb; y <= ys; y++ {
 if opts.Verbose { fmt.Printf("\n") }
-		for x := 0; x <= xs; x++ {
+		for x := xb; x <= xs; x++ {
 			var stamp *Stamp
 			var dots int // dot count
 // gen type op - letter to draw

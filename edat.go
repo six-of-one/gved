@@ -413,7 +413,7 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 // udpate maze from edits - rld false to keep overload colors / pats
 func ed_maze(rld bool) {
 	upd_edmaze(rld)
-	Ovimg := genpfimage(edmaze, opts.mnum)
+	Ovimg := segimage(ebuf, eflg, 0, 0, opts.DimX,opts.DimY, true)
 	upwin(Ovimg)
 	calc_stats()
 }
@@ -956,7 +956,7 @@ func bwin(px int, py int, bn int, mbuf MazeData, fdat [11]int, id string) {
 
 var lw fyne.Window	// local cpy win to view buf contents
   wt := "palette selector"
-  nimg := segimage(mbuf,fdat,px,py,false) // (bn == 0)) stats off for now
+  nimg := segimage(mbuf,fdat,0,0,px,py,false) // (bn == 0)) stats off for now
   dt := float32(opts.dtec)
 	if (bn > 0) {
 	if !wpbop {

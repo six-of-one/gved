@@ -54,7 +54,7 @@ issues needing fixed
 - will the autosaves (around L, S, etc) become an issue?    (see pb bug below)
 - undo after paste works weirdly sometimes
 - saw instanced where paste pasted wrong data, needs checked again - G¹ / G² switch
-
+- encoded len in stats when not from rom
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
