@@ -23,21 +23,22 @@ var g2mask [256]int
 // If we're not wrapping in a direction, we need to duplicate the left and
 // top walls, so that the maze will be enclosed.
 // six - note: this is only for appearance of viewer...
-func copyedges(maze *Maze) {
-	for i := 0; i <= 32; i++ {
+// - and needs to be done in a way the editor 1. doesnt save, 2. no editing, 3. drawn differently
+func copyedges(maze *Maze, mx int, my int) {
+	for i := 0; i <= mx; i++ {
 		if (maze.flags & LFLAG4_WRAP_H) == 0 {
-			maze.data[xy{32, i}] = maze.data[xy{0, i}]
-			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{32, i}] = maze.data[xy{32, i}] } else {
-				maze.data[xy{32, i}] = ebuf[xy{32, i}]
-			}	// have to do edit buffer as well
+			maze.data[xy{mx, i}] = maze.data[xy{0, i}]
+			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{mx, i}] = maze.data[xy{mx, i}] } else {
+				maze.data[xy{mx, i}] = ebuf[xy{mx, i}]
+			}			// have to do edit buffer as well
 		}
 	}
 
-	for i := 0; i <= 32; i++ {
+	for i := 0; i <= my; i++ {
 		if (maze.flags & LFLAG4_WRAP_V) == 0 {
-			maze.data[xy{i, 32}] = maze.data[xy{i, 0}]
-			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{i, 32}] = maze.data[xy{i, 32}] } else {
-				maze.data[xy{i, 32}] = ebuf[xy{i, 32}]
+			maze.data[xy{i, my}] = maze.data[xy{i, 0}]
+			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{i, my}] = maze.data[xy{i, my}] } else {
+				maze.data[xy{i, my}] = ebuf[xy{i, my}]
 			}
 		}
 	}
@@ -95,7 +96,7 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 var foods = []string{"ifood1", "ifood2", "ifood3"}
 var nothing int
 
-func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
+func genpfimage(maze *Maze, mazenum int, mpx int, mpy int) *image.NRGBA {
 	extrax, extray := 0, 0
 	if (maze.flags & LFLAG4_WRAP_H) == 0 {
 		extrax = 16
@@ -121,7 +122,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 	// mazes will always be the same size, so just use constants
 	// maze := mazeDecompress(mazedata)
-	copyedges(maze)
+	copyedges(maze, mpx,mpy)
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
 
 	if G2 {
