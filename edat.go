@@ -419,13 +419,17 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 // udpate maze from edits - rld false to keep overload colors / pats
 func ed_maze(rld bool) {
 	upd_edmaze(rld)
+	lviewp := viewp
+	if if opts.edat < 1 { lviewp = 32 }	// simulate view mode for sd bufs if not in edit
 // viewport ops
-	fx := vpx + viewp
-	fy := vpy + viewp
-	if fx > opts.DimX { vpx = opts.DimX - viewp }		// test scroll over endpoint, dont pass end of maze
-	if fy > opts.DimY { vpy = opts.DimY - viewp }
-	fx = vpx + viewp
-	fy = vpy + viewp
+	fx := vpx + lviewp
+	fy := vpy + lviewp
+	if fx > opts.DimX { vpx = opts.DimX - lviewp + 1 }		// test scroll over endpoint, dont pass end of maze
+	if fy > opts.DimY { vpy = opts.DimY - lviewp + 1 }
+	if vpx < 0 { vpx = 0 }
+	if vpy < 0 { vpy = 0 }
+	fx = vpx + lviewp
+	fy = vpy + lviewp
 fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",viewp,vpx,vpy,fx,fy)
 	Ovimg := segimage(ebuf, eflg, vpx, vpy, fx,fy, true)
 	upwin(Ovimg)

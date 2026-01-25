@@ -406,7 +406,7 @@ func upwin(simg *image.NRGBA) {
 	geow := int(math.Max(560,opts.Geow))	// 560 is min, maze doesnt seem to fit or shrink smaller
 	geoh := int(math.Max(586,opts.Geoh))	// 586 min
 	dtp := 512.0
-	if opts.Wob { dtp := 528.0 }
+	if opts.Wob { dtp = 528.0 }
 	if opts.edat > 0 {
 //		geow = geow & 0xfe0	+ 13			// lock to multiples of 32
 		ngeoh := geow + 26					// square maze area + 26 for menu bar - window is still 4 wider than maze content
