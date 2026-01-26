@@ -124,6 +124,7 @@ func specialKey() {
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimX++; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
+						  clr_buf(ebuf, px, py, 0, -1)
 						} else {
 							//if vpx + viewp < opts.DimX { vpx++ }
 							vpx++; px, py = vpx, vpy
@@ -143,6 +144,7 @@ func specialKey() {
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimY++; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
+						  clr_buf(ebuf, px, py, 0, -1)
 						} else {
 							//if vpy + viewp < opts.DimY { vpy++ }
 							vpy++; px, py = vpx, vpy
