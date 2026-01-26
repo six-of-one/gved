@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"math"
-	"os"
 	"io/ioutil"
 	"time"
 	"image"
@@ -300,38 +299,8 @@ func aw_init() {
 	w.Canvas().SetOnTypedRune(typedRune)	// enable plain key handler for main win
 	specialKey()		// key handlers for specials
 	ed_init()			// initialized the editor package
-
-// get default win size
-// main win size is a bit tricky on user adjust as i cheaped out and made click detect of a cell
-// - based on a square pixel block (default here is 32x32 pix, and smallest is 16x16 pix)
-// - whats more, palette and paste buf will auto-readjust back to the size detected for the main win
-// - mainly because i only have one click detect routine, and i wanted a square to keep the math ops less ugly
-// - additionally the geometry captured in .wstats is the maze edit area, the total win is slightly larger
-// - the minimums set by the .Max() are based on no shrinkage below min edit size of 16x16 pixel cell
-// so a user can make the screen any rectangle they want, but going into edit mode will force sqaure cells!
-// - even more obtuse, going 'forced fullscreen' wont play nice (and go doesnt have prog adjustable win stuff...)
-
-	if opts.Geow == 1060 && opts.Geoh == 1086 {		// defs set
-
-		data, err := ioutil.ReadFile(".wstats")
-		if err == nil {
-			var geow float64
-			var geoh float64
-			fmt.Sscanf(string(data),"%v %v", &geow, &geoh)
-			opts.Geow = math.Max(560,geow)
-			opts.Geoh = math.Max(586,geoh)
-	fmt.Printf("Load window size: %v x %v\n",geow,geoh)
-		}
-
-	} else {
-		file, err := os.Create(".wstats")
-		if err == nil {
-			wfs := fmt.Sprintf("%d %d",int(opts.Geow),int(opts.Geoh))
-			file.WriteString(wfs)
-			file.Close()
-		}
-	}
-	get_pbcnt()
+	ld_config()			// prog config stuff
+	get_pbcnt()			// paste buffer cnt (per gauntlet)
 
 }
 
@@ -472,14 +441,7 @@ func wizecon() {
 // for some reason maze updates resize the window down w -= 8 & h -= 36 to minimun
 			opts.Geow = float64(width)
 			opts.Geoh = float64(height)
-// save stat
-			file, err := os.Create(".wstats")
-			if err == nil {
-				wfs := fmt.Sprintf("%d %d",width,height)
-				file.WriteString(wfs)
-				file.Close()
-//	fmt.Printf("saving .wstats file\n")
-			}
+			sv_config()			// prog config stuff
 		}
 		time.Sleep(2 * time.Second)
 	}
