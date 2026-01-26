@@ -156,7 +156,7 @@ func clr_buf(buf MazeData, mx int, my int, z int, wh int) {
 	}
 	for y := 0; y <= my; y++ {
 		for x := 0; x <= mx; x++ {
-			if wh < 0 { buf[xy{x, y}] = z
+			if wh < -65 { buf[xy{x, y}] = z
 		} else {
 			if buf[xy{x, y}] == wh { buf[xy{x, y}] = z }
 		}
