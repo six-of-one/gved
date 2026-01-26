@@ -270,7 +270,9 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 // seems working, now to read all the old and rewrite
 // new method to parse line of 33 units
 				if parse > 32 { //  1				5					A					F					0					5					A
-						l = " 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002"
+						l = " 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002 002"	// if scan fails, defaults to empty maze 32x32
+						if y != 0 && y != opts.DimY { 
+						l = " 002 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 000 002" }
 						if scanr.Scan() { l = scanr.Text() }
 						//        0    1                        6                            12                       17                                 24                       29             32
 				fmt.Sscanf(l," %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d %03d\n",
