@@ -219,7 +219,14 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 	data, err := ioutil.ReadFile(fil)
 	edp := 0
 	if err == nil {
-
+// erase old data now
+		de := 33
+		if opts.DimY > de { de = opts.DimY }
+		if opts.DimX > de { de = opts.DimX }
+		for y := 0; y <= de; y++ {
+			for x := 0; x <= de; x++ {
+				mdat[xy{x, y}] = -1
+		}}
 		dscan := fmt.Sprintf("%s",data)
 // may not be the optimal way, but it works for now
 	    scanr := bufio.NewScanner(strings.NewReader(dscan))
@@ -420,7 +427,7 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 func ed_maze(rld bool) {
 	upd_edmaze(rld)
 	lviewp := viewp
-	if if opts.edat < 1 { lviewp = 32 }	// simulate view mode for sd bufs if not in edit
+	if opts.edat < 1 { lviewp = 32 }	// simulate view mode for sd bufs if not in edit
 // viewport ops
 	fx := vpx + lviewp
 	fy := vpy + lviewp
@@ -430,7 +437,7 @@ func ed_maze(rld bool) {
 	if vpy < 0 { vpy = 0 }
 	fx = vpx + lviewp
 	fy = vpy + lviewp
-fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",viewp,vpx,vpy,fx,fy)
+fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lviewp,vpx,vpy,fx,fy)
 	Ovimg := segimage(ebuf, eflg, vpx, vpy, fx,fy, true)
 	upwin(Ovimg)
 	calc_stats()
