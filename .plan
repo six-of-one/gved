@@ -74,7 +74,6 @@ config ideas:
 - blotter ops, solid, outline, color, transparency
 - master pb ctrl-f filter selections
 - sound of item on key assign
-- stats (in dialog win) when blotter selecting
 - load and save viewp
 
 perhaps needs rewrite:

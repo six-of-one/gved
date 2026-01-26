@@ -851,26 +851,34 @@ func stats(elm int) {
 // blotter select stats, or pb
 var stl_str string
 
-func mini_stat (buf MazeData, sx int, sy int, ex int, ey int) {
+func mini_stat (buf MazeData, sx int, sy int, ex int, ey int, hed string) {
 
 	if wpalop {
 		stl := stl_str
-		stl += "\n══════════════════════\n"
+		stl += "\n══════════════════════\n"+hed+"\n"
 		zero_stat()
 		for y := sy; y <= ey; y++ {
 			for x := sx; x <= ex; x++ {
 			stats(ebuf[xy{x, y}])
 		}}
+		tot := 0
+		totnf := 0
 		if G1 {
 		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
 			if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }
 			stl += fmt.Sprintf("  %s: %d\n",g1mapid[y],g1stat[y])
+			tot += g1stat[y]
+			if y > 0 { totnf += g1stat[y] }
 		}}}
 		if G2 {
 		for y := 0; y <= 65; y++ { if g2stat[y] > 0 {
 			if opts.Verbose { fmt.Printf("  %s: %d\n",g2mapid[y],g2stat[y]) }
 			stl += fmt.Sprintf("  %s: %d\n",g2mapid[y],g2stat[y])
+			tot += g2stat[y]
+			if y > 0 { totnf += g2stat[y] }
 		}}}
+		stl += "\n──────────────────────\n"
+		stl += fmt.Sprintf("Total: %d\nTot, no floor: %d",tot, totnf)
 		if statsB != nil { statsB.Set(stl) }
 	}
 }
