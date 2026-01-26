@@ -60,6 +60,7 @@ func (c HRGB) RGBA() (r, g, b, a uint32) {
 }
 
 // hue shift
+// had to insert this from imaging source, somehow the github include doesnt... include it?? idk. i only work here
 
 func AdjustHue(img image.Image, shift float64) *image.NRGBA {
 	if math.Mod(shift, 360) == 0 {

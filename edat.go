@@ -453,7 +453,8 @@ func ed_maze(rld bool) {
 	fy = vpy + lviewp
 fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lviewp,vpx,vpy,fx,fy)
 	Ovimg := segimage(ebuf, eflg, vpx, vpy, fx,fy, false)
-	upwin(Ovimg)
+	Ovimgb := hue(Ovimg,95.0)
+	upwin(Ovimgb)
 	calc_stats()
 }
 
