@@ -877,7 +877,7 @@ func mini_stat (buf MazeData, sx int, sy int, ex int, ey int, hed string) {
 			tot += g2stat[y]
 			if y > 0 { totnf += g2stat[y] }
 		}}}
-		stl += "\n──────────────────────\n"
+		stl += "──────────────────────\n"
 		stl += fmt.Sprintf("Total: %d\nTot, no floor: %d",tot, totnf)
 		if statsB != nil { statsB.Set(stl) }
 	}
