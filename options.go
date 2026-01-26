@@ -115,8 +115,22 @@ func ld_config() {
 		dscan := fmt.Sprintf("%s",data)
 		scanr := bufio.NewScanner(strings.NewReader(dscan))
 		l := "1060 1086 23"
-		if scanr.Scan() { l = scanr.Text() }
-		fmt.Sscanf(string(l),"%v %v %d", &geow, &geoh,&viewp)
+		if scanr.Scan() { l = scanr.Text()
+		fmt.Sscanf(string(l),"%v %v %d", &geow, &geoh,&viewp)  }
+		for i := 27; i < 107; i += 20 {
+			if scanr.Scan() { l = scanr.Text()
+				fmt.Sscanf(l,"%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d \n",&g1edit_keymap[i+0], &g1edit_keymap[i+1], &g1edit_keymap[i+2], &g1edit_keymap[i+3],
+						&g1edit_keymap[i+4], &g1edit_keymap[i+5], &g1edit_keymap[i+6], &g1edit_keymap[i+7], &g1edit_keymap[i+8], &g1edit_keymap[i+9], &g1edit_keymap[i+10],&g1edit_keymap[i+11],
+						&g1edit_keymap[i+12], &g1edit_keymap[i+13], &g1edit_keymap[i+14], &g1edit_keymap[i+15], &g1edit_keymap[i+16], &g1edit_keymap[i+17], &g1edit_keymap[i+18], &g1edit_keymap[i+19]) }
+		}
+		for i := 27; i < 107; i += 20 {
+			if scanr.Scan() { l = scanr.Text()
+						//        0    1                        6                            12                       17                                 24                       29             32
+				fmt.Sscanf(l,"%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d \n",&g2edit_keymap[i+0], &g2edit_keymap[i+1], &g2edit_keymap[i+2], &g2edit_keymap[i+3],
+						&g2edit_keymap[i+4], &g2edit_keymap[i+5], &g2edit_keymap[i+6], &g2edit_keymap[i+7], &g2edit_keymap[i+8], &g2edit_keymap[i+9], &g2edit_keymap[i+10],&g2edit_keymap[i+11],
+						&g2edit_keymap[i+12], &g2edit_keymap[i+13], &g2edit_keymap[i+14], &g2edit_keymap[i+15], &g2edit_keymap[i+16], &g2edit_keymap[i+17], &g2edit_keymap[i+18], &g2edit_keymap[i+19]) }
+		}
+
 	}
 // get default win size
 // main win size is a bit tricky on user adjust as i cheaped out and made click detect of a cell
@@ -155,6 +169,7 @@ func sv_config() {
 		}
 		k1 += "\n"; k2 += "\n"; k3 += "\n"; k4 += "\n"; k5 += "\n"
 		wfs += k1+k2+k3+k4+k5
+fmt.Print(k1+k2+k3+k4+k5)
 		k1, k2, k3, k4, k5 = "","","","",""
 		for i := 27; i < 46; i++ {
 			k1 += fmt.Sprintf("%d ",g2edit_keymap[i])
@@ -165,6 +180,7 @@ func sv_config() {
 		}
 		k1 += "\n"; k2 += "\n"; k3 += "\n"; k4 += "\n"; k5 += "\n"
 		wfs += k1+k2+k3+k4+k5
+fmt.Print(k1+k2+k3+k4+k5)
 
 		file.WriteString(wfs)
 		file.Close()
