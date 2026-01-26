@@ -17,7 +17,9 @@ func mazeMetaPrint(maze *Maze, stp bool) string {
 
 	fmtsp := ""
 	if !stp { fmt.Printf("  Encoded length: %3d bytes\n", maze.encodedbytes) }
-	fmtsp = fmt.Sprintf(" Encoded length: %3d bytes\n", maze.encodedbytes)
+	if sdb < 0 {
+		fmtsp = fmt.Sprintf(" Encoded length: %3d bytes\n", maze.encodedbytes)
+	}
 	if !stp { fmt.Printf("  Wall pattern: %02d, Wall color: %02d     Floor pattern: %02d, Floor color: %02d\n",
 		maze.wallpattern, maze.wallcolor, maze.floorpattern, maze.floorcolor) }
 	fmtsp += fmt.Sprintf(" Wall pattern: %02d, Wall color: %02d\n Floor pattern: %02d, Floor color: %02d\n",
