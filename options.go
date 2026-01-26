@@ -115,8 +115,8 @@ func ld_config() {
 		dscan := fmt.Sprintf("%s",data)
 		scanr := bufio.NewScanner(strings.NewReader(dscan))
 		l := "1060 1086 23"
-		if scanr.Scan() { l = scanr.Text()
-		fmt.Sscanf(string(l),"%v %v %d", &geow, &geoh,&viewp)  }
+		if scanr.Scan() { l = scanr.Text() }
+		fmt.Sscanf(string(l),"%v %v %d", &geow, &geoh,&viewp)
 		for i := 27; i < 107; i += 20 {
 			if scanr.Scan() { l = scanr.Text()
 				fmt.Sscanf(l,"%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d \n",&g1edit_keymap[i+0], &g1edit_keymap[i+1], &g1edit_keymap[i+2], &g1edit_keymap[i+3],
