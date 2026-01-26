@@ -47,11 +47,15 @@ func menu_savit(y bool) {
 func menu_lodit(y bool) {
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
 	if y {
-		Ovwallpat = -1
-		cnd := lod_maz(fil, ebuf, true, true)
-		sdb = -1
-		if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
-		remaze(opts.mnum)
+		if sdb < 0 {
+			Ovwallpat = -1
+			cnd := lod_maz(fil, ebuf, true, true)
+			if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
+			remaze(opts.mnum)
+		} else {
+			sdbit(0)
+			ed_maze(true)
+		}
 	}
 }
 
@@ -68,7 +72,7 @@ func menu_rst(y bool) {
 func menu_sav() {
 	if opts.edat == 1 {
 		dia := fmt.Sprintf("Save buffer for maze %d in .ed/g%dmaze%03d.ed ?",opts.mnum+1,opts.Gtp,opts.mnum+1)
-		if sdb >= 0 { dia = fmt.Sprintf("Save buffer %d to .ed/sd%05d_g%d.ed",sdb,sdb,opts.Gtp) }
+		if sdb >= 0 { dia = fmt.Sprintf("Save buffer sd(%d) to .ed/sd%05d_g%d.ed",sdb,sdb,opts.Gtp) }
 		dialog.ShowConfirm("Saving",dia, menu_savit, w)
 	} else { dialog.ShowInformation("Save Fail","edit mode is not active!",w) }
 }
@@ -77,6 +81,7 @@ func menu_sav() {
 func menu_lod() {
 	if opts.edat == 1 {
 		dia := fmt.Sprintf("Load buffer for maze %d from .ed/g%dmaze%03d.ed ?:",opts.mnum+1,opts.Gtp,opts.mnum+1)
+		if sdb >= 0 { dia = fmt.Sprintf("Load buffer sd(%d) from .ed/sd%05d_g%d.ed",sdb,sdb,opts.Gtp) }
 		dialog.ShowConfirm("Loading",dia, menu_lodit, w)
 	} else { dialog.ShowInformation("Load Fail","edit mode is not active!",w) }
 }
@@ -84,7 +89,7 @@ func menu_lod() {
 func menu_res() {
 	if opts.edat == 1 {
 		dia := fmt.Sprintf("Reset buffer for maze %d from G%d ROM ?\n - reset does not save to file",opts.mnum+1,opts.Gtp)
-		dialog.ShowConfirm("Loading",dia, menu_rst, w)
+		dialog.ShowConfirm("Reseting",dia, menu_rst, w)
 	} else { dialog.ShowInformation("Reset Fail","edit mode is not active!",w) }
 }
 
