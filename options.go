@@ -7,6 +7,8 @@ import (
 	"math"
 	"io/ioutil"
 	"github.com/jessevdk/go-flags"
+	"strings"
+	"bufio"
 )
 
 var opts struct {
@@ -110,8 +112,11 @@ func ld_config() {
 // load data attempt, leaves defaults loaded if fails
 	data, err := ioutil.ReadFile(".config")
 	if err == nil {
-		fmt.Sscanf(string(data),"%v %v", &geow, &geoh)
-		fmt.Sscanf(string(data),"%d",&viewp)
+		dscan := fmt.Sprintf("%s",data)
+		scanr := bufio.NewScanner(strings.NewReader(dscan))
+		l := "1060 1086 23"
+		if scanr.Scan() { l = scanr.Text() }
+		fmt.Sscanf(string(l),"%v %v %d", &geow, &geoh,&viewp)
 	}
 // get default win size
 // main win size is a bit tricky on user adjust as i cheaped out and made click detect of a cell
@@ -139,8 +144,7 @@ func sv_config() {
 // save stat
 	file, err := os.Create(".config")
 	if err == nil {
-		wfs := fmt.Sprintf("%d %d\n",int(opts.Geow),int(opts.Geoh))
-		wfs += fmt.Sprintf("%d\n",viewp)
+		wfs := fmt.Sprintf("%d %d %d\n",int(opts.Geow),int(opts.Geoh),viewp)
 		file.WriteString(wfs)
 		file.Close()
 //	fmt.Printf("saving .wstats file\n")
