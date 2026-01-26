@@ -31,6 +31,32 @@ func (c IRGB) RGBA() (r, g, b, a uint32) {
 	return
 }
 
+// hex color triple, w/ possible alpha
+// - and yes, you could just break down and insert color.RGBA{R: 205, G: 0, B: 205, A: 130}
+// but i like this
+
+type HColor interface {
+	HRGB() (hrgb uint32)
+}
+
+type HRGB struct {
+	hrgb uint32
+}
+
+func (c HRGB) RGBA() (r, g, b, a uint32) {
+	a = uint32(c.hrgb&0xff000000) >> 24
+	r = uint32(c.hrgb&0xff0000) >> 16
+	g = uint32(c.hrgb&0x00ff00) >> 8
+	b = uint32(c.hrgb&0x0000ff)
+
+	r = r << 8
+	g = g << 8
+	b = b << 8
+	a = a << 8
+
+	return
+}
+
 func gettiledatafromfile(file string, tilenum int) TileLinePlane {
 	f, err := os.Open(file)
 	check(err)

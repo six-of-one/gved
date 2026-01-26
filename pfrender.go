@@ -1484,12 +1484,17 @@ func renderdots(img *image.NRGBA, xloc int, yloc int, count int) {
 	}
 }
 
-func coltil(img *image.NRGBA, col uint16, xloc int, yloc int) {
-	c := IRGB{col}
+// write a 16x16 tile of any color onto img @x,y, can be fed hex tripl 0xrrggbb or 0xaarrggbb
+
+func coltil(img *image.NRGBA, col uint32, xloc int, yloc int) {
+	c := HRGB{col}
+	b := HRGB{0xffffff}
 
 	for y := 0; y < 16; y++ {
 		for x := 0; x < 16; x++ {
-			img.Set(xloc+x, yloc+y, c)
+			if y & 3 != 0 { img.Set(xloc+x, yloc+y, b) } else {
+				img.Set(xloc+x, yloc+y, c)
+			}
 		}
 	}
 }
