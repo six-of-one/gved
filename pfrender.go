@@ -1484,8 +1484,8 @@ func renderdots(img *image.NRGBA, xloc int, yloc int, count int) {
 	}
 }
 
-func blk(img *image.NRGBA, xloc int, yloc int) {
-	c := IRGB{0x0000}
+func coltil(img *image.NRGBA, col uint16, xloc int, yloc int) {
+	c := IRGB{col}
 
 	for y := 0; y < 16; y++ {
 		for x := 0; x < 16; x++ {
@@ -1546,7 +1546,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 				}
 			}
 			if whatis(maze, x, y) < 0 {		// dont floor a null area
-				blk(img,(x-xb)*16, (y-yb)*16)
+				coltil(img,0,(x-xb)*16, (y-yb)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
 				writestamptoimage(img, stamp, (x-xb)*16, (y-yb)*16)
@@ -1568,7 +1568,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
 			if whatis(maze, x, y) < 0 {
-				blk(img,(x-xb)*16, (y-yb)*16)
+				coltil(img,0,(x-xb)*16, (y-yb)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
 				writestamptoimage(img, stamp, (x-xb)*16, (y-yb)*16)
