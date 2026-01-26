@@ -146,15 +146,20 @@ func init_buf() {
 	if plbuf == nil { plbuf = make(map[xy]int) }
 }
 
-// clear mazedata buf, max size mx x my, fill with z
+// clear mazedata buf, max size mx x my, fill with z, unless wh is set, then only replace wh
 
-func clr_buf(buf MazeData, mx int, my int, z int) {
-	de := 33
-	if my > de { de = my }
-	if mx > de { de = mx }
-	for y := 0; y <= de; y++ {
-		for x := 0; x <= de; x++ {
-			buf[xy{x, y}] = -1
+func clr_buf(buf MazeData, mx int, my int, z int, wh int) {
+	if wh < 0 {		// if we dont have a when = wh, set min size for rom maze
+		de := 33
+		if mx < de { mx = de }
+		if my < de { my = de }
+	}
+	for y := 0; y <= my; y++ {
+		for x := 0; x <= mx; x++ {
+			if wh < 0 { buf[xy{x, y}] = z
+		} else {
+			if buf[xy{x, y}] == wh { buf[xy{x, y}] = z }
+		}
 	}}
 }
 
@@ -234,7 +239,7 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 	data, err := ioutil.ReadFile(fil)
 	edp := 0
 	if err == nil {
-		clr_buf(mdat, opts.DimX, opts.DimY, -1)		// erase old data now
+		clr_buf(mdat, opts.DimX, opts.DimY, -1, -1)		// erase old data now
 
 		dscan := fmt.Sprintf("%s",data)
 // may not be the optimal way, but it works for now
