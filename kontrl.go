@@ -136,15 +136,23 @@ func specialKey() {
 							vpy++
 						}}
 			if key.Name == "Prior" {
+				if ctrl {
+					viewp--; if viewp < minvp { viewp = minvp }
+					opts.dntr = true; srelod = true
+				} else {
 				if sdb > 0 {
 					sdbit(-1)
 				} else { srelod = pagit(-1) }
-			}
+			}}
 			if key.Name == "Next" {
+				if ctrl {
+					viewp++; if viewp > maxvp { viewp = maxvp }
+					opts.dntr = true; srelod = true
+				} else {
 				if sdb > 0 {
 					sdbit(1)
 				} else { srelod = pagit(1) }
-			}
+			}}
 			upd_edmaze(false)
 //fmt.Printf("sk cond relod: %t\n",srelod)
 			if srelod {

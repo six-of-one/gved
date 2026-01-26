@@ -57,6 +57,8 @@ var urstak int
 var viewp int
 var vpx int
 var vpy int
+var maxvp = 32
+var minvp = 12
 
 // initialize edit control
 
@@ -76,7 +78,7 @@ func ed_init() {
 	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 	delbset(0)			// init undo (delbuf)
 	restak = 0			// restor position in delbuf
-	viewp = 21			// viewport size, later load from config
+	viewp = 21			// viewport size, later save/load in config
 }
 
 func udbck(ct int, t int){
@@ -144,9 +146,9 @@ func init_buf() {
 	if plbuf == nil { plbuf = make(map[xy]int) }
 }
 
-// clear a buffer
+// clear mazedata buf, max size mx x my, fill with z
 
-func clr_buf(buf MazeData, mx int, my int, z int)
+func clr_buf(buf MazeData, mx int, my int, z int) {
 	de := 33
 	if my > de { de = my }
 	if mx > de { de = mx }
@@ -155,6 +157,7 @@ func clr_buf(buf MazeData, mx int, my int, z int)
 			buf[xy{x, y}] = -1
 	}}
 }
+
 // save maze to file in .ed
 // add a maze # to saves
 // svdb - save undo buf
