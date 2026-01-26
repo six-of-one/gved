@@ -1488,13 +1488,13 @@ func renderdots(img *image.NRGBA, xloc int, yloc int, count int) {
 
 func coltil(img *image.NRGBA, col uint32, xloc int, yloc int) {
 	c := HRGB{col}
-	b := HRGB{0xffffff}
+//	b := HRGB{0xffffff-col}
 
 	for y := 0; y < 16; y++ {
 		for x := 0; x < 16; x++ {
-			if y & 3 != 0 { img.Set(xloc+x, yloc+y, b) } else {
+//			if y & 3 == 0 && x & 3 == 0 { img.Set(xloc+x, yloc+y, b) } else { // this is a dot field
 				img.Set(xloc+x, yloc+y, c)
-			}
+//			}
 		}
 	}
 }

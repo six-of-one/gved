@@ -52,6 +52,7 @@ func (c HRGB) RGBA() (r, g, b, a uint32) {
 	r = r << 8
 	g = g << 8
 	b = b << 8
+	if a == 0 { a = 0xff }	// an alpha of 0 seems to produce gray mush
 	a = a << 8
 
 	return
