@@ -176,6 +176,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 			dx := mxme-mxmd+1
 			dy := myme-mymd+1
 			pos = fmt.Sprintf("r: %.0f,%.0f - %.0f,%.0f mz: %d, %d to %d, %d... %d by %d = %d cells",sx,sy,ex,ey,mxmd+lvpx,mymd+lvpy,mxme+lvpx,myme+lvpy,dx,dy,dy*dx)
+			mini_stat(ebuf, mxmd+lvpx,mymd+lvpy,mxme+lvpx,myme+lvpy)
 		}
 		statlin(pos,tsshn)
 //		fmt.Printf("st: %f x %f pos: %f x %f\n",sx,sy,ex,ey)

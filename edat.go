@@ -848,6 +848,33 @@ func stats(elm int) {
 	if G2 { g2stat[elm]++ }
 }
 
+// blotter select stats, or pb
+var stl_str string
+
+func mini_stat (buf MazeData, sx int, sy int, ex int, ey int) {
+
+	if wpalop {
+		stl := stl_str
+		stl += "\n══════════════════════\n"
+		zero_stat()
+		for y := sy; y <= ey; y++ {
+			for x := sx; x <= ex; x++ {
+			stats(ebuf[xy{x, y}])
+		}}
+		if G1 {
+		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
+			if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }
+			stl += fmt.Sprintf("  %s: %d\n",g1mapid[y],g1stat[y])
+		}}}
+		if G2 {
+		for y := 0; y <= 65; y++ { if g2stat[y] > 0 {
+			if opts.Verbose { fmt.Printf("  %s: %d\n",g2mapid[y],g2stat[y]) }
+			stl += fmt.Sprintf("  %s: %d\n",g2mapid[y],g2stat[y])
+		}}}
+		if statsB != nil { statsB.Set(stl) }
+	}
+}
+
 // and displate it
 
 func calc_stats() {
@@ -875,6 +902,7 @@ fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
 		stl += "══════════════════════\n"
 		stl += mazeMetaPrint(edmaze, true)
 		if statsB != nil { statsB.Set(stl) }
+		stl_str = stl	// for mini stat append
 //		bwin(palxs, palys, 0, plbuf, plflg)
 	}
 }
