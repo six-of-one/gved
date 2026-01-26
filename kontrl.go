@@ -64,10 +64,13 @@ func specialKey() {
         deskCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
 //	fmt.Printf("Desktop key up: %v\n", key)
 			srelod := false
+			sta := "vp ↦ %d x %d"
+			stu := ""
 			if key.Name == "Escape" {		// now toggle editor on/ off
 				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 					if opts.edat == 0 {
 						edit_on(0)
+						if sdb > 0 { opts.dntr = true }
 						srelod = true
 					} else {
 						nsremaze = true
@@ -108,37 +111,52 @@ func specialKey() {
 			if key.Name == "O" && ctrl  { if shift { pbmas_cyc(1) }}
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
 			if key.Name == "Left" {
+				px, py := 0, 0
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimX--; if opts.DimX < 1 { opts.DimX = 1 }
-						  opts.bufdrt = true
+						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						} else {
-							vpx--; if vpx < 0 { vpx = 0 }
-						}}
+							vpx--; if vpx < 0 { vpx = 0 }; px, py = vpx, vpy
+						}
+					stu = fmt.Sprintf(sta, px, py)
+					}
 			if key.Name == "Right" {
+				px, py := 0, 0
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimX++; opts.bufdrt = true
+						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						} else {
 							//if vpx + viewp < opts.DimX { vpx++ }
-							vpx++
-						}}
+							vpx++; px, py = vpx, vpy
+						}
+					stu = fmt.Sprintf(sta, px, py)
+					}
 			if key.Name == "Up" {
+				px, py := 0, 0
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimY--; if opts.DimY < 1 { opts.DimY = 1 };
-						  opts.bufdrt = true
+						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						} else {
-							vpy--; if vpy < 0 { vpy = 0 }
-						}}
+							vpy--; if vpy < 0 { vpy = 0 }; px, py = vpx, vpy
+						}
+					stu = fmt.Sprintf(sta, px, py)
+					}
 			if key.Name == "Down" {
+				px, py := 0, 0
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimY++; opts.bufdrt = true
+						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						} else {
 							//if vpy + viewp < opts.DimY { vpy++ }
-							vpy++
-						}}
+							vpy++; px, py = vpx, vpy
+						}
+					stu = fmt.Sprintf(sta, px, py)
+					}
 			if key.Name == "Prior" {
 				if ctrl {
 					viewp--; if viewp < minvp { viewp = minvp }
 					opts.dntr = true; srelod = true
+					stu = fmt.Sprintf("vp size %d x %d", viewp,viewp)
 				} else {
 				if sdb > 0 {
 					sdbit(-1)
@@ -148,11 +166,13 @@ func specialKey() {
 				if ctrl {
 					viewp++; if viewp > maxvp { viewp = maxvp }
 					opts.dntr = true; srelod = true
+					stu = fmt.Sprintf("vp size %d x %d",viewp,viewp)
 				} else {
 				if sdb > 0 {
 					sdbit(1)
 				} else { srelod = pagit(1) }
 			}}
+			if stu != "" { statlin(cmdhin,stu) }
 			upd_edmaze(false)
 //fmt.Printf("sk cond relod: %t\n",srelod)
 			if srelod {

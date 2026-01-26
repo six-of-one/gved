@@ -642,9 +642,9 @@ fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts
 func edit_on(k int) {
 if opts.edat == 0 {
 		smod = "Edit mode: "
-fmt.Printf("editor on, maze: %03d\n",opts.mnum+1)
+fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 		opts.edat = 1
-		stor_maz(opts.mnum+1)	// this does not auto store new edit mode to buffer save file, unless it creates the file
+		if sdb < 0 { stor_maz(opts.mnum+1) }	// this does not auto store new edit mode to buffer save file, unless it creates the file
 		statlin(cmdhin,"")
 // these all deactivate as override during edit
 		opts.MRM = false
