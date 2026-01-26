@@ -143,6 +143,18 @@ func init_buf() {
 	if cpbuf == nil { cpbuf = make(map[xy]int) }
 	if plbuf == nil { plbuf = make(map[xy]int) }
 }
+
+// clear a buffer
+
+func clr_buf(buf MazeData, mx int, my int, z int)
+	de := 33
+	if my > de { de = my }
+	if mx > de { de = mx }
+	for y := 0; y <= de; y++ {
+		for x := 0; x <= de; x++ {
+			buf[xy{x, y}] = -1
+	}}
+}
 // save maze to file in .ed
 // add a maze # to saves
 // svdb - save undo buf
@@ -219,14 +231,8 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 	data, err := ioutil.ReadFile(fil)
 	edp := 0
 	if err == nil {
-// erase old data now
-		de := 33
-		if opts.DimY > de { de = opts.DimY }
-		if opts.DimX > de { de = opts.DimX }
-		for y := 0; y <= de; y++ {
-			for x := 0; x <= de; x++ {
-				mdat[xy{x, y}] = -1
-		}}
+		clr_buf(mdat, opts.DimX, opts.DimY, -1)		// erase old data now
+
 		dscan := fmt.Sprintf("%s",data)
 // may not be the optimal way, but it works for now
 	    scanr := bufio.NewScanner(strings.NewReader(dscan))

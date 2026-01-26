@@ -177,8 +177,8 @@ func menu_blank(pr bool) {
 		}
 		if clr {
 			ebuf[xy{tx, ty}] = 0
-			if tx == 0 || tx == opts.DimX { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
-			if ty == 0 || ty == opts.DimY { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
+			if tx == 0 { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
+			if ty == 0 { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
 		}
 	}}
 	pr = false
