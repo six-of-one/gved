@@ -354,8 +354,9 @@ fmt.Printf("cc dun: px %d py %d\n",px,py)
 fmt.Printf("in pasty\n")
 				ex = sx + cpx
 				ey = sy + cpy
-				if ex < 0 || ex > opts.DimX || cpx > opts.DimX { fmt.Printf("paste fail x\n"); return }
-				if ey < 0 || ey > opts.DimY || cpy > opts.DimY { fmt.Printf("paste fail y\n"); return }
+				if ex < 0 || ey < 0 { fmt.Printf("paste fail x\n"); return }
+				if ex > opts.DimX { ex = opts.DimX }
+				if ey > opts.DimY { ey = opts.DimY }
 			} else {
 				bwin(cpx+1, cpy+1, pbcnt - 1, cpbuf, eflg, "ses")		// draw the buffer
 				if ccp == COPY { return }

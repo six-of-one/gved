@@ -52,8 +52,8 @@ copy / cut / paste
 
 issues needing fixed
 - will the autosaves (around L, S, etc) become an issue?    (see pb bug below)
-- undo after paste works weirdly sometimes
-- saw instanced where paste pasted wrong data, needs checked again - G¹ / G² switch
+- undo after paste works weirdly sometimes - usually with the next issue
+- saw instanced where paste pasted wrong data, not sure, was on G¹ only editing an sdb
 - encoded len in stats when not from rom
 viewport
 - floor draw (floor gets redrawn with rnd shift every move)
@@ -66,7 +66,6 @@ possible:
 - way using sprites to demo half transparent paste content over maze
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 - more keys for dialog win to still operate main win (stats, etc)
-- ctrl-<arrows> to expand / shrink maze
 - save extent files for sanctuary stuff
   \_ underlay for maze floor & wall codes (std display & png load extras)
 

@@ -59,6 +59,7 @@ var vpx int
 var vpy int
 var maxvp = 32
 var minvp = 12
+var huer = &RGBRotate{}
 
 // initialize edit control
 
@@ -453,6 +454,8 @@ func ed_maze(rld bool) {
 	fy = vpy + lviewp
 fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lviewp,vpx,vpy,fx,fy)
 	Ovimg := segimage(ebuf, eflg, vpx, vpy, fx,fy, false)
+	huer.SetHueRotation(95)
+	ir, ig, ib := huer.Apply(1.0, 0.0, 0.5)
 	upwin(Ovimg)
 	calc_stats()
 }

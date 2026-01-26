@@ -58,6 +58,53 @@ func (c HRGB) RGBA() (r, g, b, a uint32) {
 	return
 }
 
+// color shift hue by degrees
+
+func clamp(v float64) int {
+	if v < 0 {
+		return 0
+	}
+	if v > 255 {
+		return 255
+	}
+	return int(v + 0.5)
+}
+
+type RGBRotate struct {
+	matrix [3][3]float64
+}
+
+func NewRGBRotate() *RGBRotate {
+	return &RGBRotate{
+		matrix: [3][3]float64{
+			{1, 0, 0},
+			{0, 1, 0},
+			{0, 0, 1},
+		},
+	}
+}
+
+func (r *RGBRotate) SetHueRotation(degrees float64) {
+	cosA := math.Cos(degrees * math.Pi / 180)
+	sinA := math.Sin(degrees * math.Pi / 180)
+	r.matrix[0][0] = cosA + (1.0-cosA)/3.0
+	r.matrix[0][1] = 1.0/3.0*(1.0-cosA) - math.Sqrt(1.0/3.0)*sinA
+	r.matrix[0][2] = 1.0/3.0*(1.0-cosA) + math.Sqrt(1.0/3.0)*sinA
+	r.matrix[1][0] = 1.0/3.0*(1.0-cosA) + math.Sqrt(1.0/3.0)*sinA
+	r.matrix[1][1] = cosA + 1.0/3.0*(1.0-cosA)
+	r.matrix[1][2] = 1.0/3.0*(1.0-cosA) - math.Sqrt(1.0/3.0)*sinA
+	r.matrix[2][0] = 1.0/3.0*(1.0-cosA) - math.Sqrt(1.0/3.0)*sinA
+	r.matrix[2][1] = 1.0/3.0*(1.0-cosA) + math.Sqrt(1.0/3.0)*sinA
+	r.matrix[2][2] = cosA + 1.0/3.0*(1.0-cosA)
+}
+
+func (r *RGBRotate) Apply(red, green, blue float64) (int, int, int) {
+	rx := red*r.matrix[0][0] + green*r.matrix[0][1] + blue*r.matrix[0][2]
+	gx := red*r.matrix[1][0] + green*r.matrix[1][1] + blue*r.matrix[1][2]
+	bx := red*r.matrix[2][0] + green*r.matrix[2][1] + blue*r.matrix[2][2]
+	return clamp(rx), clamp(gx), clamp(bx)
+}
+
 func gettiledatafromfile(file string, tilenum int) TileLinePlane {
 	f, err := os.Open(file)
 	check(err)
