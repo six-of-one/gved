@@ -121,8 +121,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
 		rxm = float32(rx)
 		rym = float32(ry)
-		lvpx := 0; lvpy := 0
-		if opts.edat > 0 { lvpx = vpx; lvpy = vpy }
+		lvpx, lvpy := 0, 0
+		if opts.edat > 0 { lvpx, lvpy = vpx, vpy }
 	if gvs {
 		sx := nong(float32(int(ex / dt)) * dt - 7.5 * dt)		// somewhere here is why gvs is at half cell post when not near an edge
 		sy := nong(float32(int(ey / dt)) * dt - 7.5 * dt)
@@ -257,8 +257,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		inpal = true
 		dt = 16.0 * float64(opts.Geow - 4) / 528.0		// palette dtec is locked at orig win size
 	}}
-	ex := int(exmd / dt)
-	ey := int(eymd / dt)
+	ex := int(exmd / dt) + vpx
+	ey := int(eymd / dt) + vpy
 // middle mouse click anywhere activates edit mode & pulls up def key
 	if mb == 4 {
 		if opts.edat == 0 || !cmdoff { edit_on(edkdef) }
@@ -294,8 +294,8 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		}
 //fmt.Printf("%d up: %.0f x %.0f \n",mb,exmd,eymd)
 
-		sx := int(sxmd / dt)
-		sy := int(symd / dt)
+		sx := int(sxmd / dt) + vpx
+		sy := int(symd / dt) + vpy
 		if ex < sx { t := ex; ex = sx; sx = t }		// swap if end smaller than start
 		if ey < sy { t := ey; ey = sy; sy = t }
 		var setcode int			// code to store given edit hotkey
