@@ -110,6 +110,11 @@ T	loop through a set of invisible flags or, *
 Edit mazes:
 ----------
 
+because sanctuary has no maze size limit, editing is now in a view port,
+default to 21 x 21 cells, adjusted with ctrl-pgup/ ctrl-pgdn
+- when in view mode and looking at sd buf mazes the viewport is simulated
+  at 32 x 32, but if mazes are larger, ↑↓←→ keys still move view
+
 ** when entering edit mode window size will be adjusted to provide A
    "square" cell size representing 16 px by 16 px at default resolution
    and scaling up for larger window sizes
@@ -151,6 +156,15 @@ most of these have a corresponging item on edit or file menus
 			stored and ctrl-U swaps them
 			- both can be edited, but both can not yet be saved
 			- not working in view only mode
+
+<CTRL>-pgup	size up viewport (to max 32 x 32)
+<CTRL>-pgdn	size down viewport (to min 12 x 12)
+			- viewport will still fill edit window
+↑↓←→		(up/ dn/ lf/ rt keys)
+			- move maze in viewport
+<CTRL>↑↓←→	adjust size of maze, or pb chunk
+			- once you shrink/ save, and reload, exit, init, blank, etc
+			  the former cell contents you shrunk past will be gone
 
 <SH-CTRL>-P	roll thru session paste buffer, loading each one
 <SH-CTRL>-O	roll thru master paste buffer, loading each one
