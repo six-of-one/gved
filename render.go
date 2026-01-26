@@ -6,6 +6,7 @@ import (
 	"image/png"
 	"math"
 	"os"
+	"github.com/disintegration/imaging"
 //	"fmt"
 )
 
@@ -56,6 +57,33 @@ func (c HRGB) RGBA() (r, g, b, a uint32) {
 	a = a << 8
 
 	return
+}
+
+// hue shift
+
+func AdjustHue(img image.Image, shift float64) *image.NRGBA {
+	if math.Mod(shift, 360) == 0 {
+		return imaging.Clone(img)
+	}
+
+	summand := shift / 360
+
+	return imaging.AdjustFunc(img, func(c color.NRGBA) color.NRGBA {
+		h, s, l := rgbToHSL(c.R, c.G, c.B)
+		h += summand
+		h = math.Mod(h, 1)
+		//Adding 1 because Golang's Modulo function behaves differently to similar operators in most other languages.
+		if h < 0 {
+			h++
+		}
+		r, g, b := hslToRGB(h, s, l)
+		return color.NRGBA{r, g, b, c.A}
+	})
+}
+
+func hue(src *image.NRGBA, deg float64) *image.NRGBA {
+	dst := AdjustHue(src, deg)
+	return dst
 }
 
 func gettiledatafromfile(file string, tilenum int) TileLinePlane {
