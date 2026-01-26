@@ -66,6 +66,7 @@ func specialKey() {
 			srelod := false
 			sta := "vp ⊙ %d x %d"
 			stu := ""
+			px, py := 0, 0
 			if key.Name == "Escape" {		// now toggle editor on/ off
 				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 					if opts.edat == 0 {
@@ -111,7 +112,6 @@ func specialKey() {
 			if key.Name == "O" && ctrl  { if shift { pbmas_cyc(1) }}
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
 			if key.Name == "Left" {
-				px, py := 0, 0
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimX--; if opts.DimX < 1 { opts.DimX = 1 }
 						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
@@ -121,7 +121,6 @@ func specialKey() {
 					stu = fmt.Sprintf(sta, px, py)
 					}
 			if key.Name == "Right" {
-				px, py := 0, 0
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimX++; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
@@ -132,7 +131,6 @@ func specialKey() {
 					stu = fmt.Sprintf(sta, px, py)
 					}
 			if key.Name == "Up" {
-				px, py := 0, 0
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimY--; if opts.DimY < 1 { opts.DimY = 1 };
 						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
@@ -142,7 +140,6 @@ func specialKey() {
 					stu = fmt.Sprintf(sta, px, py)
 					}
 			if key.Name == "Down" {
-				px, py := 0, 0
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimY++; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY

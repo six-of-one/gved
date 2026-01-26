@@ -264,7 +264,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if opts.edat == 0 || !cmdoff { edit_on(edkdef) }
 		if wpalop {					// palette element selector
 		if inpal {
-				if cmdoff { key_asgn(plbuf, ex, ey) }
+				if cmdoff { key_asgn(plbuf, int(exmd / dt), int(eymd / dt)) }
 				return
 			}
 	}}
