@@ -145,6 +145,27 @@ func sv_config() {
 	file, err := os.Create(".config")
 	if err == nil {
 		wfs := fmt.Sprintf("%d %d %d\n",int(opts.Geow),int(opts.Geoh),viewp)
+		k1, k2, k3, k4, k5 := "","","","",""
+		for i := 27; i < 46; i++ {
+			k1 += fmt.Sprintf("%d ",g1edit_keymap[i])
+			k2 += fmt.Sprintf("%d ",g1edit_keymap[i+20])
+			k3 += fmt.Sprintf("%d ",g1edit_keymap[i+40])
+			k4 += fmt.Sprintf("%d ",g1edit_keymap[i+60])
+			k5 += fmt.Sprintf("%d ",g1edit_keymap[i+80])
+		}
+		k1 += "\n"; k2 += "\n"; k3 += "\n"; k4 += "\n"; k5 += "\n"
+		wfs += k1+k2+k3+k4+k5
+		k1, k2, k3, k4, k5 = "","","","",""
+		for i := 27; i < 46; i++ {
+			k1 += fmt.Sprintf("%d ",g2edit_keymap[i])
+			k2 += fmt.Sprintf("%d ",g2edit_keymap[i+20])
+			k3 += fmt.Sprintf("%d ",g2edit_keymap[i+40])
+			k4 += fmt.Sprintf("%d ",g2edit_keymap[i+60])
+			k5 += fmt.Sprintf("%d ",g2edit_keymap[i+80])
+		}
+		k1 += "\n"; k2 += "\n"; k3 += "\n"; k4 += "\n"; k5 += "\n"
+		wfs += k1+k2+k3+k4+k5
+
 		file.WriteString(wfs)
 		file.Close()
 //	fmt.Printf("saving .wstats file\n")

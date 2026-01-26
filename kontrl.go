@@ -156,6 +156,7 @@ func specialKey() {
 					viewp--; if viewp < minvp { viewp = minvp }
 					opts.dntr = true; srelod = true
 					stu = fmt.Sprintf("vp size %d x %d", viewp,viewp)
+					sv_config()
 				} else {
 				if sdb > 0 {
 					sdbit(-1)
@@ -166,6 +167,7 @@ func specialKey() {
 					viewp++; if viewp > maxvp { viewp = maxvp }
 					opts.dntr = true; srelod = true
 					stu = fmt.Sprintf("vp size %d x %d",viewp,viewp)
+					sv_config()
 				} else {
 				if sdb > 0 {
 					sdbit(1)
