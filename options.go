@@ -102,6 +102,17 @@ func gevinit() []string {
 
 func ld_config() {
 
+	var geow float64
+	var geoh float64
+	geow = 1060.0
+	geoh = 1086.0
+	viewp = 21
+// load data attempt, leaves defaults loaded if fails
+	data, err := ioutil.ReadFile(".config")
+	if err == nil {
+		fmt.Sscanf(string(data),"%v %v", &geow, &geoh)
+		fmt.Sscanf(string(data),"%d",&viewp)
+	}
 // get default win size
 // main win size is a bit tricky on user adjust as i cheaped out and made click detect of a cell
 // - based on a square pixel block (default here is 32x32 pix, and smallest is 16x16 pix)
@@ -112,28 +123,15 @@ func ld_config() {
 // so a user can make the screen any rectangle they want, but going into edit mode will force sqaure cells!
 // - even more obtuse, going 'forced fullscreen' wont play nice (and go doesnt have prog adjustable win stuff...)
 
-	if opts.Geow == 1060 && opts.Geoh == 1086 {		// defs set
+	if opts.Geow == 1060 && opts.Geoh == 1086 {		// defs on entry, load from cfg
 
-		data, err := ioutil.ReadFile(".config")
-		if err == nil {
-			var geow float64
-			var geoh float64
-			fmt.Sscanf(string(data),"%v %v", &geow, &geoh)
 			opts.Geow = math.Max(560,geow)
 			opts.Geoh = math.Max(586,geoh)
-	fmt.Printf("Load window size: %v x %v\n",geow,geoh)
-		}
-
-	} else {
-		file, err := os.Create(".config")
-		if err == nil {
-			wfs := fmt.Sprintf("%d %d",int(opts.Geow),int(opts.Geoh))
-			file.WriteString(wfs)
-			file.Close()
-		}
+fmt.Printf("Load window size: %v x %v\n",geow,geoh)
 	}
-// viewp size
 
+// do a save back
+	sv_config()
 }
 
 func sv_config() {
@@ -141,7 +139,8 @@ func sv_config() {
 // save stat
 	file, err := os.Create(".config")
 	if err == nil {
-		wfs := fmt.Sprintf("%d %d",opts.Geow,opts.Geoh)
+		wfs := fmt.Sprintf("%d %d\n",int(opts.Geow),int(opts.Geoh))
+		wfs += fmt.Sprintf("%d\n",viewp)
 		file.WriteString(wfs)
 		file.Close()
 //	fmt.Printf("saving .wstats file\n")
