@@ -1074,6 +1074,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 	clikwins(lw, nimg, px, py)
 	lw.SetTitle(wt)
 	lw.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
+	specialKey(lw)
 
 // if opts.Verbose {
 fmt.Printf("clkwin sz: %v\n",fyne.NewSize(float32(px)*dt, float32(py)*dt))

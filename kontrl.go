@@ -39,9 +39,9 @@ var cmdhin string
 
 // special keys not detected by keyrune handler
 
-func specialKey() {
+func specialKey(cw fyne.Window) {
 // handle keys down
-	if deskCanvas, ok := w.Canvas().(desktop.Canvas); ok {
+	if deskCanvas, ok := cw.Canvas().(desktop.Canvas); ok {
         deskCanvas.SetOnKeyDown(func(key *fyne.KeyEvent) {
 //	fmt.Printf("Desktop key down: %h\n", key.Name)
 			if key.Name == "BackSpace" {
@@ -67,6 +67,8 @@ func specialKey() {
 			sta := "vp ⊙ %d x %d"
 			stu := ""
 			px, py := 0, 0
+			va := 4
+			if shift { va = 1 }
 			if key.Name == "Escape" {		// now toggle editor on/ off
 				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 					if opts.edat == 0 {
@@ -116,7 +118,7 @@ func specialKey() {
 				if ctrl { opts.DimX--; if opts.DimX < 1 { opts.DimX = 1 }
 						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						} else {
-							vpx--; if vpx < 0 { vpx = 0 }; px, py = vpx, vpy
+							vpx -= va; if vpx < 0 { vpx = 0 }; px, py = vpx, vpy
 						}
 					stu = fmt.Sprintf(sta, px, py)
 					}
@@ -127,7 +129,7 @@ func specialKey() {
 						  clr_buf(ebuf, px, py, 0, -1)
 						} else {
 							//if vpx + viewp < opts.DimX { vpx++ }
-							vpx++; px, py = vpx, vpy
+							vpx += va; px, py = vpx, vpy
 						}
 					stu = fmt.Sprintf(sta, px, py)
 					}
@@ -136,7 +138,7 @@ func specialKey() {
 				if ctrl { opts.DimY--; if opts.DimY < 1 { opts.DimY = 1 };
 						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						} else {
-							vpy--; if vpy < 0 { vpy = 0 }; px, py = vpx, vpy
+							vpy -= va; if vpy < 0 { vpy = 0 }; px, py = vpx, vpy
 						}
 					stu = fmt.Sprintf(sta, px, py)
 					}
@@ -147,7 +149,7 @@ func specialKey() {
 						  clr_buf(ebuf, px, py, 0, -1)
 						} else {
 							//if vpy + viewp < opts.DimY { vpy++ }
-							vpy++; px, py = vpx, vpy
+							vpy += va; px, py = vpx, vpy
 						}
 					stu = fmt.Sprintf(sta, px, py)
 					}

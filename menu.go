@@ -298,7 +298,7 @@ func aw_init() {
 	ld_config()			// prog config stuff
 	st_menu()			// start the menu
 	w.Canvas().SetOnTypedRune(typedRune)	// enable plain key handler for main win
-	specialKey()		// key handlers for specials
+	specialKey(w)		// key handlers for specials
 	ed_init()			// initialized the editor package
 	get_pbcnt()			// paste buffer cnt (per gauntlet)
 
