@@ -41,6 +41,7 @@ var opts struct {
 // interactive mode for maze display, select wall & floors, rotates & mirrors, load new mazes, test addresses
 // only with maze{n}, if -i not given, prog just exits with maze in output.png
 	Intr	bool   `short:"i" description:"maze interactive cli mode and following parms"`
+	SDef    bool   `long:"def" description:"set config defaults on all interactive parms"`
 	Geow float64   `long:"xw" default:"1060" description:"window width in pixels"`
 	Geoh float64   `long:"xh" default:"1086" description:"window height in pixels, maze disp is 26 px less"`
 // orig options
@@ -110,7 +111,9 @@ func ld_config() {
 	geoh = 1086.0
 	viewp = 21
 // load data attempt, leaves defaults loaded if fails
-	data, err := ioutil.ReadFile(".config")
+	fil := ".config"
+	if opts.SDef { fil = ".config-def" }	// special config with default restore
+	data, err := ioutil.ReadFile(fil)
 	if err == nil {
 		dscan := fmt.Sprintf("%s",data)
 		scanr := bufio.NewScanner(strings.NewReader(dscan))
