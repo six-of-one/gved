@@ -29,7 +29,7 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 
 	if img == nil {
 		img = image.NewNRGBA(image.Rect(0, 0, 1, 1))
-		draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{0x82cd00cd}}, image.ZP, draw.Src)
+		draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{blotcol}}, image.ZP, draw.Src)
 	}
 // config override for default blotter with png image
 	if blotimg != "" {
