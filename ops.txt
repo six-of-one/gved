@@ -13,6 +13,10 @@ and various edit status details
 the program title shows maze #, maze address and buffer # when loaded
 - when switching G¹ / G² it will also list that with G¹ revision
 
+config options are now saved in .config
+- so far, win width x height, viewport size and assigned edit keys
+- launch with './gved -i --def' to restore ALL defaults
+
 general controls:		(general keys are always available in both modes)
 ----------------
 
