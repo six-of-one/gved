@@ -454,11 +454,12 @@ func keyhints() {
 	kys := 1
 	var lenb float32
 	dk := "Command Keys"
+	strp = eid+"\n\n"
 	if opts.edat == 1 {
-		strp = "Edit mode: "
+		strp += "Edit mode: "
 		if cmdoff { strp += "edit keys"; kys = 2; dk = "Editor Keys" } else { strp += "cmd keys" }
 	} else {
-		strp = "View mode: cmd keys only"
+		strp += "View mode: cmd keys only"
 	}
 	strp += "\nsingle letter commands\n–—–—–—–—–—–—–—–—–—–—–—"
 //		strp += "\n\n? - this list"
@@ -500,13 +501,13 @@ func keyhints() {
 			"\n - load maze 1 - 117 g2"+
 			"\n - load address 229376 - 262143 "+
 			"\n–—–—–—–—–—–—–—–—–—–—–—"
-	strb := fmt.Sprintf("\nG%d ",opts.Gtp)
+/*	strb := fmt.Sprintf("\nG%d ",opts.Gtp)
 	if G1 {
 	if opts.R14 { strb += "(r14)"
 		} else { strb += "(r1-9)" }}
-	strp += strb
+	strp += strb */
 	if kys == 2 {
-		lenb = 110
+		lenb = 142
 		strp += "\n\ntypical: key selects item,\n L-click place, M-click assign"+
 				"\n–—–—–—–—–—–—–—"+
 				"\n<DEL> (hold down) set floor"+

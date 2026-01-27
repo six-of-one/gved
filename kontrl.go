@@ -470,6 +470,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)
 			}
 		case 'i':
+			eid = "Gauntlet (rev 1-9)"
 			nsremaze = true
 			relodsub = needsav()
 			opts.Gtp = 1
@@ -483,6 +484,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = "G¹ "
 			play_sfx("sfx/music.4sec.ogg")
 		case 'l':
+			eid = "Gauntlet (rev 14)"
 			nsremaze = true
 			relodsub = needsav()
 			opts.Gtp = 1
@@ -518,6 +520,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			opts.SP = !opts.SP
 			opts.dntr = true
 		case 'u':
+			eid = "Gauntlet II"
 			nsremaze = true
 			relodsub = needsav()
 			opts.Gtp = 2

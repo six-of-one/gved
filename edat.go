@@ -23,8 +23,9 @@ more complexity will be required for:
 */
 
 var edmaze *Maze
-var ebuf MazeData	// main edit buffer and corresponding flags
-var ecolor color.Color		// master color for maze elements
+var ebuf MazeData		// main edit buffer and corresponding flags
+var ecolor color.Color	// master color for maze elements
+var eid string			// id string for titles
 
 var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf
@@ -891,14 +892,15 @@ func calc_stats() {
 	if wpalop {
 		if palfol { palete() }
 		zero_stat()
-fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
+//fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
 		for y := 0; y <= opts.DimY; y++ {
 			for x := 0; x <= opts.DimX; x++ {
 			stats(ebuf[xy{x, y}])
 		}}
 // stats during palette
-			if opts.Verbose { fmt.Printf("stats:\n") }
-		stl := ""
+		stl := fmt.Sprintf("%s\nmaze: %d x %d = %d cells\n",eid,opts.DimX+1,opts.DimY+1,(opts.DimX+1)*(opts.DimY+1))
+			if opts.Verbose { fmt.Printf("%s\nstats:\n",stl) }
+
 		if G1 {
 		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
 			if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }

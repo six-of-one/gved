@@ -101,15 +101,15 @@ sfx, err := sdl.New(mix.INIT_MP3 | mix.INIT_OGG)
 	Aov = 0
 
 	if opts.Gtp == 2 {
-		fmt.Printf("Gauntlet II\n")
+		eid = "Gauntlet II"
 		G2 = true
 	} else {
-		fmt.Printf("Gauntlet ")
-		if opts.R14 { fmt.Printf("(rev 14)")
-		} else { fmt.Printf("(rev 1 - 9)") }
-		fmt.Printf("\n")
+		eid = "Gauntlet "
+		if opts.R14 { eid += fmt.Sprintf("(rev 14)")
+		} else { eid += fmt.Sprintf("(rev 1 - 9)") }
 		G1 = true
 	}
+	fmt.Print(eid+"\n")
 
 	if opts.Intr { fmt.Printf("Audio: %t\n\n",aud) }
 
