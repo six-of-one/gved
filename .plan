@@ -54,7 +54,6 @@ issues needing fixed
 - will the autosaves (around L, S, etc) become an issue?    (see pb bug below)
 - undo after paste works weirdly sometimes - usually with the next issue
 - saw instanced where paste pasted wrong data, not sure, was on G¹ only editing an sdb
-- encoded len in stats when not from rom
 viewport
 - floor draw (floor gets redrawn with rnd shift every move)
 
@@ -70,11 +69,10 @@ think about retooling buffer file read to work like rom reader in roms.go instea
   \_ underlay for maze floor & wall codes (std display & png load extras)
 
 config ideas:
-- store assigned edit keys, including change defaults, allow defautls restore
+- allow defautls restore
 - blotter ops, solid, outline, color, transparency
 - master pb ctrl-f filter selections
-- sound of item on key assign
-- load and save viewp
+- sound off item on key assign
 
 perhaps needs rewrite:
 - cleanup all modules
