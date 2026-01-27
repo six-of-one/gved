@@ -133,7 +133,12 @@ func ld_config() {
 						&g2edit_keymap[i+4], &g2edit_keymap[i+5], &g2edit_keymap[i+6], &g2edit_keymap[i+7], &g2edit_keymap[i+8], &g2edit_keymap[i+9], &g2edit_keymap[i+10],&g2edit_keymap[i+11],
 						&g2edit_keymap[i+12], &g2edit_keymap[i+13], &g2edit_keymap[i+14], &g2edit_keymap[i+15], &g2edit_keymap[i+16], &g2edit_keymap[i+17], &g2edit_keymap[i+18], &g2edit_keymap[i+19]) }
 		}
-
+		l = "0x82cd00cd"
+		if scanr.Scan() { l = scanr.Text() }
+		fmt.Sscanf(l,"%08x",&blotcol)
+		l = ""
+		if scanr.Scan() { l = scanr.Text() }
+		fmt.Sscanf(l,"%s",&blotimg)
 	}
 // get default win size
 // main win size is a bit tricky on user adjust as i cheaped out and made click detect of a cell
@@ -184,7 +189,7 @@ func sv_config() {
 		wfs += k1+k2+k3+k4+k5
 fmt.Print(wfs)
 fmt.Printf("\n")
-
+		wfs += fmt.Sprintf("%08x\n%s\n",blotcol,blotimg)
 		file.WriteString(wfs)
 		file.Close()
 //	fmt.Printf("saving .wstats file\n")

@@ -69,8 +69,6 @@ think about retooling buffer file read to work like rom reader in roms.go instea
   \_ underlay for maze floor & wall codes (std display & png load extras)
 
 config ideas:
-- allow defautls restore
-- blotter ops, solid, outline, color, transparency
 - master pb ctrl-f filter selections
 - sound off item on key assign
 

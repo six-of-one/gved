@@ -295,11 +295,11 @@ func aw_init() {
 		if wpalop { wpal.Close() }
 	})
 
+	ld_config()			// prog config stuff
 	st_menu()			// start the menu
 	w.Canvas().SetOnTypedRune(typedRune)	// enable plain key handler for main win
 	specialKey()		// key handlers for specials
 	ed_init()			// initialized the editor package
-	ld_config()			// prog config stuff
 	get_pbcnt()			// paste buffer cnt (per gauntlet)
 
 }

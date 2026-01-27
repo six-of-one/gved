@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"image"
-	"image/color"
+//	"image/color"
 	"image/draw"
 	"strings"
 	"time"
@@ -21,15 +21,31 @@ import (
 
 var blot *canvas.Image
 var ccblot *canvas.Image
+var blotimg string		// replace blotter with png image - blotter is stretched, so design must be right for outlines
+var blotcol uint32		// with no image, this controls color & transparency in hex 0xAARRGGBB
 var gvs bool			// use blotter to simulate view of gauntlet viewport
 
 func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 
 	if img == nil {
 		img = image.NewNRGBA(image.Rect(0, 0, 1, 1))
-		draw.Draw(img, img.Bounds(), &image.Uniform{color.RGBA{R: 205, G: 0, B: 205, A: 130}}, image.ZP, draw.Src)
+		draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{0x82cd00cd}}, image.ZP, draw.Src)
 	}
-	blot = canvas.NewImageFromImage(img)
+// config override for default blotter with png image
+	if blotimg != "" {
+			inf, err := os.Open(blotimg)
+			if err == nil {
+				src, _, err := image.Decode(inf)
+				if err == nil {
+					blot = canvas.NewImageFromImage(src)
+				} else { blotimg = "" }
+			} else { blotimg = "" }
+			defer inf.Close()
+
+	}
+	if blotimg == "" {
+		blot = canvas.NewImageFromImage(img)
+	}
 	blot.Move(fyne.Position{px, py})
 	blot.Resize(fyne.Size{sx, sy})
 }
