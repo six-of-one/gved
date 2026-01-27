@@ -14,7 +14,7 @@ the program title shows maze #, maze address and buffer # when loaded
 - when switching G¹ / G² it will also list that with G¹ revision
 
 config options are now saved in .config
-- so far, win width x height, viewport size and assigned edit keys
+- so far: win width x height, viewport size and assigned edit keys
 - launch with './gved -i --def' to restore ALL defaults
 
 general controls:		(general keys are always available in both modes)
@@ -165,6 +165,7 @@ most of these have a corresponging item on edit or file menus
 <CTRL>-pgdn	size down viewport (to min 12 x 12)
 			- viewport will still fill edit window
 ↑↓←→		(up/ dn/ lf/ rt keys)
+='[]		 (up/ dn/ lf/ rt keys) alternate
 			- move maze in viewport
 <CTRL>↑↓←→	adjust size of maze, or pb chunk
 			- once you shrink/ save, and reload, exit, init, blank, etc

@@ -993,9 +993,10 @@ func pbRune(r rune) {
 						"o,p - cycle session pb - / +\nO,P - cycle master pb - / +\n"+
 						", . - cycle master pb - / +\n══════════════════"+
 						"\nr - rotate pb +90°\nR - rotate pb -90°\nh - horiz flip\nm - vert mirror"+
+						"\na,d - -/+ buffer horiz size\nw,s - -/+ buffer vert size"+
 						"\n══════════════════\nmiddle click selects element\n"+
 						"left click sets element\n(pb has basic edit support)\n"+
-						"- pb edit autosaves\n══════════════════\n(* only when window active)", 250,350)			// showing in main win because pb win is usually too small
+						"- pb edit autosaves\n══════════════════\n(* only when window active)", 250,380)			// showing in main win because pb win is usually too small
 		case ',': pbmas_cyc(-1)
 		case '.': pbmas_cyc(1)
 		case 'O': pbmas_cyc(-1)
