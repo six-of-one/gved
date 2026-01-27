@@ -266,7 +266,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if opts.edat == 0 || !cmdoff { edit_on(edkdef) }
 		if wpalop {					// palette element selector
 		if inpal {
-				if cmdoff { key_asgn(plbuf, int(exmd / dt), int(eymd / dt)) }
+				if cmdoff { key_asgn(plbuf, int(exmd / dt), int(eymd / dt)); sv_config() }
 				return
 			}
 	}}
@@ -370,7 +370,7 @@ mid := g1mapid[opbuf[xy{mxmd, mymd}]]
 if G2 { mid = g2mapid[opbuf[xy{mxmd, mymd}]] }
 fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",dt,ex,ey,opbuf[xy{ex, ey}],mid)
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
-			 key_asgn(opbuf, ex, ey)
+			 key_asgn(opbuf, ex, ey); sv_config()
 		} else {
 		if inpal { return }		// L clicks on palete should not place on main
 		if del || cmdoff || pasty {
