@@ -631,6 +631,7 @@ const (
 	COPY	= 1
 	CUT		= 2
 	PASTE	= 4
+	REPLACE	= 8
 )
 // sanctuary converter values
 var sanct_vrt = []int{

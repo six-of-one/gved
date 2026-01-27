@@ -15,7 +15,7 @@ rubber-band ops - click and drag will expand to set region of place / del / edit
 * use blotter to show gauntlet 'maze view' following maus around
 
 replace mode - either over entire maze, rubber band region, select y/n on each find, or click item replace
-\_ possibly also use #T mask for allowing edits on elements, or disallow
+\_ possibly also use #T mask, or item # list for allowing edits on elements, or disallow
 
 some type of quick-key insert system, maybe shifted # or so
 * possibly assignable hot-keys
