@@ -551,6 +551,7 @@ func dboxtx(dt string, dbc string, w float32, h float32) binding.Item[string] {
 	ww.SetContent(cn)
 	ww.Resize(fyne.Size{w, h})
 	ww.Show()
+	specialKey(ww)
 
 	return txtB
 }

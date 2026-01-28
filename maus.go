@@ -93,6 +93,7 @@ func nong(tv float32) float32 {
 	if tv < 0.0 { v = 0.0 }
 	return v
 }
+
 // store x & y when mouse button goes down - to start rubberband area
 // 		and when released for other ops like cup & paste
 var sxmd float64

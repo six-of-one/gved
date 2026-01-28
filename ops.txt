@@ -166,8 +166,10 @@ most of these have a corresponging item on edit or file menus
 			- viewport will still fill edit window
 ↑↓←→		(up/ dn/ lf/ rt keys)
 ='[]		 (up/ dn/ lf/ rt keys) alternate
-			- move maze in viewport
-<CTRL>↑↓←→	adjust size of maze, or pb chunk
+			- move maze in viewport 4 units
+			- move 1 unit if <SHIFT> key held
+<CTRL>↑↓←→	adjust size of maze, or pb chunk -,+ 1 unit in direction
+			- -,+ 4 units if <SHIFT> key held
 			- once you shrink/ save, and reload, exit, init, blank, etc
 			  the former cell contents you shrunk past will be gone
 

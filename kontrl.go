@@ -67,8 +67,8 @@ func specialKey(cw fyne.Window) {
 			sta := "vp ⊙ %d x %d"
 			stu := ""
 			px, py := 0, 0
-			va := 4
-			if shift { va = 1 }
+			va, da := 4, 1		// view port adjust, maze dimension adjust by ↑↓←→ and <CTRL>↑↓←→
+			if shift { va, da  = 1, 4 }
 			if key.Name == "Escape" {		// now toggle editor on/ off
 				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 					if opts.edat == 0 {
@@ -115,7 +115,7 @@ func specialKey(cw fyne.Window) {
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
 			if key.Name == "Left" {
 				opts.dntr = true; srelod = true
-				if ctrl { opts.DimX--; if opts.DimX < 1 { opts.DimX = 1 }
+				if ctrl { opts.DimX -= da; if opts.DimX < 1 { opts.DimX = 1 }
 						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						} else {
 							vpx -= va; if vpx < 0 { vpx = 0 }; px, py = vpx, vpy
@@ -124,7 +124,7 @@ func specialKey(cw fyne.Window) {
 					}
 			if key.Name == "Right" {
 				opts.dntr = true; srelod = true
-				if ctrl { opts.DimX++; opts.bufdrt = true
+				if ctrl { opts.DimX += da; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						  clr_buf(ebuf, px, py, 0, -1)
 						} else {
@@ -135,7 +135,7 @@ func specialKey(cw fyne.Window) {
 					}
 			if key.Name == "Up" {
 				opts.dntr = true; srelod = true
-				if ctrl { opts.DimY--; if opts.DimY < 1 { opts.DimY = 1 };
+				if ctrl { opts.DimY -= da; if opts.DimY < 1 { opts.DimY = 1 };
 						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						} else {
 							vpy -= va; if vpy < 0 { vpy = 0 }; px, py = vpx, vpy
@@ -144,7 +144,7 @@ func specialKey(cw fyne.Window) {
 					}
 			if key.Name == "Down" {
 				opts.dntr = true; srelod = true
-				if ctrl { opts.DimY++; opts.bufdrt = true
+				if ctrl { opts.DimY += da; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						  clr_buf(ebuf, px, py, 0, -1)
 						} else {
