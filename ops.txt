@@ -23,9 +23,9 @@ general controls:		(general keys are always available in both modes)
 <CTRL>-Q	quit program - use this or file->exit, need save dialog blocks
 			file->quit and window [X] (see menu ops - Quit)
 
-q, q		close all windows EXCEPT program main window
+q, q		close all dialogs/ windows EXCEPT program main window
 
-?			command key hints dialog - now in All windows
+?			command key hints dialog - now in all sub-windows
 
 #a	load maze #
 	(G¹ valid 1-127, G² valid 1-117)

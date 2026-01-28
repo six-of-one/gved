@@ -813,7 +813,7 @@ dboxtx("T hide flags", "in gved main window:\n\n"+
 		"NOG1W	= 2048	// g1 std wall only\n\n"+
 		"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
 		"Random profile load\n- only load items flags cover"+
-		"\n\n* hide items disabled when edit keys active",440,700,nil)
+		"\n\n* T hide items disabled when edit keys active",440,700,nil)
 }
 
 // when closing key lister panel, shut down updater
