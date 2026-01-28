@@ -799,18 +799,18 @@ dboxtx("T hide flags", "in gved main window:\n\n"+
 		"      showing box gen monster\n"+
 		" p 	┈ toggle floor invisible *\n"+
 		" P 	┈ toggle walls invisible *\n(use key in main window)\n\n"+
-		"NOGEN = 1	// all generators\n"+
-		"NOMON = 2		// all monster, dragon\n"+
-		"NOFUD = 4		// all food\n"+
-		"NOTRS = 8		// treas, locked\n"+
-		"NOPOT = 16		// pots & t.powers\n"+
-		"NODOR = 32	// doors, keys\n"+
-		"NOTRAP = 64	// trap & floor dots, stun, ff tiles\n"+
-		"NOEXP = 128	// exit, push wall\n"+
-		"NOTHN = 256	// anything else left\n"+
-		"NOFLOOR = 512\n"+
-		"NOWALL = 1024	// g2 *walls\n"+
-		"NOG1W = 2048	// g1 std wall only\n\n"+
+		"NOGEN	= 1			// all generators\n"+
+		"NOMON	= 2		// all monster, dragon\n"+
+		"NOFUD	= 4		// all food\n"+
+		"NOTRS	= 8		// treas, locked\n"+
+		"NOPOT	= 16		// pots & t.powers\n"+
+		"NODOR	= 32		// doors, keys\n"+
+		"NOTRAP	= 64		// trap & floor dots, stun, ff tiles\n"+
+		"NOEXP	= 128		// exit, push wall\n"+
+		"NOTHN	= 256		// anything else left\n"+
+		"NOFLOOR	= 512\n"+
+		"NOWALL	= 1024	// g2 *walls\n"+
+		"NOG1W	= 2048	// g1 std wall only\n\n"+
 		"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
 		"Random profile load\n- only load items flags cover"+
 		"\n\n* hide items disabled when edit keys active",440,700,nil)

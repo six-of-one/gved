@@ -74,7 +74,7 @@ these keys are temporary in view mode and edit the buffer in edit mode
 f,F	 + or - floor pattern in cycle of all patterns
 g,G	 + or - floor colors in cycle of all colors
 w,W	 + or - wall pattern in cycle
-q,Q	 + or - wall colors in cycle
+e,E	 + or - wall colors in cycle
 #	and #f, #g, #w, #q - set valid pats / cols #, with invalid going to 0
 
 h	horizontally mirror the maze
@@ -85,7 +85,7 @@ m	vertically mirror "flip" the maze (same G¹ / G² note)
 r	[ sanctuary only! ] rotate maze +90°
 R	[ sanctuary only! ] rotate maze -90°
 	- gauntlet arcade does NOT do this
-	- this is a feature of the sanctuary port only
+	- this is only a feature of the sanctuary port
 t	set rotate to 0°	(not available in edit mode!)
 
 following keys are visible effect only, no edit changes are made
@@ -119,7 +119,7 @@ Edit mazes:
 because sanctuary has no maze size limit, editing is now in a view port,
 default to 21 x 21 cells, adjusted with ctrl-pgup/ ctrl-pgdn
 - when in view mode and looking at sd buf mazes the viewport is simulated
-  at 32 x 32, but if mazes are larger, ↑↓←→ keys still move view
+  at 32 x 32, but if mazes are larger
 
 ** when entering edit mode window size will be adjusted to provide A
    "square" cell size representing 16 px by 16 px at default resolution
@@ -147,9 +147,10 @@ most of these have a corresponging item on edit or file menus
 <CTRL>-R	reset edit buffer for current maze # from rom
 			- these are also on the edit menu
 
-<CTRL>-C	set for copy contents of next Left-click mouse drag
-<CTRL>-X	set for cut contents of next Left-click mouse drag - set floor
+<CTRL>-C	do copy contents of next Left-click mouse drag
+<CTRL>-X	do cut contents of next Left-click mouse drag - put in floor
 <CTRL>-P	paste contents of c/c/p buffer at Left-click location
+			- on paste blotter is replaced with image of paste buffer
 			- c/c/p are 'sticky', they stay on, select again to turn off,
 			or select another edit action
 
@@ -170,7 +171,7 @@ most of these have a corresponging item on edit or file menus
 ='[]		 (up/ dn/ lf/ rt keys) alternate
 			- move maze in viewport 4 units
 			- move 1 unit if <SHIFT> key held
-<CTRL>↑↓←→	adjust size of maze, or pb chunk -,+ 1 unit in direction
+<CTRL>↑↓←→	adjust size of maze, -,+,-,+ 1 unit in direction
 			- -,+ 4 units if <SHIFT> key held
 			- once you shrink/ save, and reload, exit, init, blank, etc
 			  the former cell contents you shrunk past will be gone
@@ -224,22 +225,25 @@ M	toggle vertical wrap   - X row = 32 will likewise be removed/ restored
 Mouse operation
 ---------------
 
-Left-click		place current edit key item in maze at cursor
+Left-click		place current edit key item in maze at cursor in edit mode
 Middle-click	assign item at cursor to current edit key (assigned floor
 				will not place)
-				- turns on edit mode, cmds off and sets def key if no edkey
+				- edit mode on, cmds off and sets def key if no edkey
 				  selected
 Right-click		continue last pgup/ pgdn op in window selected
-				* when paste buffer win selected these to the same op
+				* when paste buffer win selected these do the same op
 
 Left-click drag	- dragging to new location - fill / delete the encompassed
-				  rectangle
+				  rectangle in edit mode with selectd edit key / floor
+				- CUT, COPY will do op with blotter rectangle
+				- no mode - rectangle displayed while mouse btn held down
+				  measurement in menu hint bar / stats in stat dialog
 
 key held with Left-click
 
-delete			both place a floor at cursor
+delete			place a floor at cursor
 
-control			when dragging mouse, box will fill/ delete an outline only
+control			when dragging edit, box will fill/ delete an outline only
 
 key held during mouse move (no click or other ops)
 
@@ -344,7 +348,7 @@ Random Load - empty tiles (floor) will be load with a random select
 			  profile - uses #T filter if set as include filter
 
 View Sim	- blotter is set to default gauntlet view port to simulate
-			  what a player could see in any area (arcade)\
+			  what a player could see in any area (arcade)
 Wall border	- stored mazes have no bottom or right wall - this simulates them
 Palette map - default: palette walls / floor match level cols & pats
 			  toggles on and off (1st click shows palette if hidden)
