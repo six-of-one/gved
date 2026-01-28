@@ -351,41 +351,6 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				} else {
 					spau = sdbit(1)
 				}
-// alternate viewport mover - used from any win
-		case '+':
-			vpy--; if vpy < 0 { vpy = 0 }
-			opts.dntr = true; relod = true
-			stu = fmt.Sprintf("vp ⊙ %d x %d",vpx,vpy)
-		case '"':
-			vpy++
-			opts.dntr = true; relod = true
-			stu = fmt.Sprintf("vp ⊙ %d x %d",vpx,vpy)
-		case '{':
-			vpx--; if vpx < 0 { vpx = 0 }
-			opts.dntr = true; relod = true
-			stu = fmt.Sprintf("vp ⊙ %d x %d",vpx,vpy)
-		case '}':
-			vpx++
-			opts.dntr = true; relod = true
-			stu = fmt.Sprintf("vp ⊙ %d x %d",vpx,vpy)
-// and shift for +4
-		case '=':
-			vpy -= 4; if vpy < 0 { vpy = 0 }
-			opts.dntr = true; relod = true
-			stu = fmt.Sprintf("vp ⊙ %d x %d",vpx,vpy)
-		case '\'':
-			vpy += 4
-			opts.dntr = true; relod = true
-			stu = fmt.Sprintf("vp ⊙ %d x %d",vpx,vpy)
-		case '[':
-			vpx -= 4; if vpx < 0 { vpx = 0 }
-			opts.dntr = true; relod = true
-			stu = fmt.Sprintf("vp ⊙ %d x %d",vpx,vpy)
-		case ']':
-			vpx += 4
-			opts.dntr = true; relod = true
-			stu = fmt.Sprintf("vp ⊙ %d x %d",vpx,vpy)
-
 		default:
 			relodsub = false
 		}
