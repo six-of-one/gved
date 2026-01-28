@@ -341,6 +341,7 @@ func clikwins(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 // turns display into clickable edit area
 	btn := newHoldableButton()
 	btn.title = cw.Title()
+	btn.bw = cw
 //fmt.Printf("clwin tl: %s\n",btn.title)
 	if strings.Contains(btn.title, "G¹G²ved") {
 		cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
@@ -363,6 +364,7 @@ func clikwinm(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 // turns display into clickable edit area
 	rbtn = newHoldableButton()
 	rbtn.title = cw.Title()
+	rbtn.bw = cw
 //fmt.Printf("clwin tl: %s\n",rbtn.title)
 
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))

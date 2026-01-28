@@ -76,6 +76,7 @@ func blotoff() {
 type holdableButton struct {
     widget.Button
 	title string
+	bw fyne.Window
 }
 
 func newHoldableButton() *holdableButton {
