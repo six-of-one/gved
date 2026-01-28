@@ -627,7 +627,7 @@ func rotmirbuf(rmmaze *Maze) (int, int) {
 // reload maze while editing & update window - generates output.png
 
 func remaze(mazn int) {
-fmt.Printf("\n\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.edat,sdb,delstak)
+fmt.Printf("\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.edat,sdb,delstak)
 	if !opts.dntr {
 		sdb = -1
 		delbset(0)

@@ -329,6 +329,7 @@ func blotwup(cw fyne.Window, limg *image.NRGBA) {
 		box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
 		cw.SetContent(box)
 		blotup = false
+fmt.Printf("blotwup\n")
 	}
 }
 
@@ -342,7 +343,7 @@ func clikwins(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 	btn := newHoldableButton()
 	btn.title = cw.Title()
 	btn.bw = cw
-//fmt.Printf("clwin tl: %s\n",btn.title)
+fmt.Printf("clwin-s tl: %s\n",btn.title)
 	if strings.Contains(btn.title, "G¹G²ved") {
 		cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
 		box := container.NewStack(btn, bimg, blot)		// key to seeing maze & having the click button with full mouse sense
@@ -365,7 +366,7 @@ func clikwinm(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 	rbtn = newHoldableButton()
 	rbtn.title = cw.Title()
 	rbtn.bw = cw
-//fmt.Printf("clwin tl: %s\n",rbtn.title)
+fmt.Printf("clwin-m tl: %s\n",rbtn.title)
 
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
 	box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
@@ -393,7 +394,7 @@ func upwin(simg *image.NRGBA) {
 		dtp = float64(viewp) * 16
 	}											// having an edit viewport will change 528 - will have to be vport wid (same as high) * 16
 	opts.dtec = 16.0 * (float64(geow - 4) / dtp)				// the size of a tile, odd window size may cause issues
-fmt.Printf(" %d x %d dtec: %f geom: %d x %d\n",opts.DimX,opts.DimY,opts.dtec,geow,geoh)
+fmt.Printf("upwin %d x %d dtec: %f geom: %d x %d\n",opts.DimX,opts.DimY,opts.dtec,geow,geoh)
 if opts.Verbose { fmt.Printf(" dtec: %f\n",opts.dtec) }			// detected size of a single maze tile in pixels, used for click id of cell x,y
 	clikwinm(w, simg, geow, geoh)
 

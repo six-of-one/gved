@@ -188,7 +188,7 @@ func sv_config() {
 		k1 += "\n"; k2 += "\n"; k3 += "\n"; k4 += "\n"; k5 += "\n"
 		wfs += k1+k2+k3+k4+k5
 //fmt.Print(wfs)
-//fmt.Printf("\n")
+fmt.Printf("sv_config\n")
 		wfs += fmt.Sprintf("%08x\n%s\n",blotcol,blotimg)
 		file.WriteString(wfs)
 		file.Close()
