@@ -665,12 +665,7 @@ fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 		typedRune(rune(k))
 	}
 }
-// valid check, edit key
 
-func valid_keys(ek int) int {
-	if ek > maxkey || ek < minkey { return edkdef }		// 33 to 126, outside this return 121 'y'
-	return ek
-}
 // palette
 
 // statistics on mazes, already set for partial sanctuary expansion
@@ -702,14 +697,12 @@ func palete() {
 		if palfol { for y := 0; y < 11; y++ { plflg[y] =  eflg[y] }}
 		bwin(cpx+1, cpy+1, 0, plbuf, plflg, "pal") }
 	opts.DimX = pmx; opts.DimY = pmy
-	wpal.SetCloseIntercept(func() {
-		statsB = nil
-	})
 }
 
 // typer for pal win
 
-var statsB binding.Item[string]
+var statsB binding.Item[string]		// statistics win update
+var listK binding.Item[string]		// editkey win update
 
 func palRune(r rune) {
 
@@ -720,9 +713,9 @@ func palRune(r rune) {
 						"hit a key to map: 'y'\nmove mouse to maze or palette\nand middle click an element\n"+
 						"\nin palette window:\nmiddle click an element\n\n"+
 						"edit hint on menu bar give status"+
-						"\n\npal win keys:\nq,Q - quit\nt,T - hide flags info\n\n(only when window active)\n"+
+						"\n\npal win keys:\nq,Q - quit\nl,L - list edit keys\nt,T - hide flags info\n\n(only when window active)\n"+
 						"*stats in terminal if palette open\ns, S - stats window open, auto updates\n"+
-						"f, F - gauntlet 2 maze flags list\nx, X - gauntlet 2 secret tricks", 350,540)
+						"f, F - gauntlet 2 maze flags list\nx, X - gauntlet 2 secret tricks", 350,540,nil)
 		case 't': fallthrough
 		case 'T': dboxtx("T hide flags", "in gved main window:\n\n"+
 						"invisible flag set - hide vars maze elements:\n"+
@@ -748,7 +741,7 @@ func palRune(r rune) {
 						"NOG1W = 2048	// g1 std wall only\n\n"+
 						"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
 						"Random profile load\n- only load items flags cover"+
-						"\n\n* hide items disabled when edit keys active",440,700)
+						"\n\n* hide items disabled when edit keys active",440,700,nil)
 		case 'f': fallthrough
 		case 'F': dboxtx("G2 maze flags","     Gauntlet 2 flags                hex value        bit pos\n"+
 						"ODDANGLE_GHOSTS	= 0x01000000 - 00000001\n"+
@@ -785,7 +778,7 @@ func palRune(r rune) {
 						"EXIT_FAKE			= 0x40                - 01000000\n"+
 						"PLAYER_OFFSCREEN	= 0x80                - 10000000\n\n"+
 						"flag math is binary 'or' \"|\" together\n"+
-						"bit position is within byte of that flag portion",420,744)
+						"bit position is within byte of that flag portion",420,744,nil)
 		case 'x': fallthrough
 		case 'X': dboxtx("G2 secret tricks","     Gauntlet 2 secret room tricks\n"+
 						"NONE 		= 0x00  \"No trick\"\n"+
@@ -805,13 +798,20 @@ func palRune(r rune) {
 						"DIET			= 0x0e  \"Go On a Diet (no food)\"\n"+
 						"BEPUSHY		= 0x0f   \"Be Pushy\"\n"+
 						"IT 			= 0x10  \"IT Could Be Nice\"\n"+
-						"NOHURTFRIENDS	= 0x11  \"Don't Hurt Friends\"",535,435)
+						"NOHURTFRIENDS	= 0x11  \"Don't Hurt Friends\"",535,435,nil)
+		case 'l': fallthrough
+		case 'L': listK = dboxtx("Edit key assignments","",340,700, close_keys); list_keys()
 		case 's': fallthrough
-		case 'S': statsB = dboxtx("Maze stats","",340,700)
+		case 'S': statsB = dboxtx("Maze stats","",340,700,close_stats); calc_stats()
 		case 'q': fallthrough
-		case 'Q': if wpalop { statsB = nil; wpalop = false; wpal.Close() }
+		case 'Q': if wpalop { wpalop = false; wpal.Close() }
 		default:
 	}
+}
+
+// when closing key lister panel, shut down updater
+func close_keys() {
+	listK = nil
 }
 
 // assign keys
@@ -833,6 +833,40 @@ func key_asgn(buf MazeData, ax int, ay int) {
 		play_sfx(g2auds[g2edit_keymap[edkey]])
 		if edkey == cycloc { cycl = g1edit_keymap[cycloc] }
 	}
+	if listK != nil { list_keys() }
+}
+
+// valid check, edit key
+
+func valid_keys(ek int) int {
+
+	if ek > maxkey || ek < minkey { return edkdef }		// 33 to 126, outside this return 121 'y'
+	if G1 && g1edit_keymap[ek] < 0 { return edkdef }
+	if G2 && g2edit_keymap[ek] < 0 { return edkdef }
+	return ek
+}
+
+// list assigned keys when dialog open
+
+func list_keys() {
+
+	kl := "assigned edit keys:\n══════════════════════\n"
+	for y := minkey; y <= maxkey; y++ {
+		kv := 0
+		if G1 { kv = g1edit_keymap[y] }
+		if G2 { kv = g2edit_keymap[y] }
+		sta := "key not assigned"
+		if kv < 0 { sta = "key not assignable" }
+		if kv > 0 && G1 { sta = g1mapid[kv] }
+		if kv > 0 && G2 { sta = g2mapid[kv] }
+		kl += fmt.Sprintf("%s = %d %s\n",map_keymap[y],kv,sta)
+	}
+	if listK != nil { listK.Set(kl) }
+}
+
+// when closing stats panel, shut down updater
+func close_stats() {
+	statsB = nil
 }
 
 // stat package for palette win
@@ -888,34 +922,34 @@ func mini_stat (buf MazeData, sx int, sy int, ex int, ey int, hed string) {
 // and displate it
 
 func calc_stats() {
-	if wpalop {
-		if palfol { palete() }
-		zero_stat()
-//fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
-		for y := 0; y <= opts.DimY; y++ {
-			for x := 0; x <= opts.DimX; x++ {
-			stats(ebuf[xy{x, y}])
-		}}
-// stats during palette
-		stl := fmt.Sprintf("%s\nmaze: %d x %d = %d cells\n",eid,opts.DimX+1,opts.DimY+1,(opts.DimX+1)*(opts.DimY+1))
-			if opts.Verbose { fmt.Printf("%s\nstats:\n",stl) }
 
-		if G1 {
-		for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
-			if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }
-			stl += fmt.Sprintf("  %s: %d\n",g1mapid[y],g1stat[y])
-		}}}
-		if G2 {
-		for y := 0; y <= 65; y++ { if g2stat[y] > 0 {
-			if opts.Verbose { fmt.Printf("  %s: %d\n",g2mapid[y],g2stat[y]) }
-			stl += fmt.Sprintf("  %s: %d\n",g2mapid[y],g2stat[y])
-		}}}
-		stl += "══════════════════════\n"
-		stl += mazeMetaPrint(edmaze, true)
-		if statsB != nil { statsB.Set(stl) }
-		stl_str = stl	// for mini stat append
-//		bwin(palxs, palys, 0, plbuf, plflg)
-	}
+	if wpalop { if palfol { palete() }}
+
+	zero_stat()
+//fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
+	for y := 0; y <= opts.DimY; y++ {
+		for x := 0; x <= opts.DimX; x++ {
+		stats(ebuf[xy{x, y}])
+	}}
+// stats during palette
+	stl := fmt.Sprintf("%s\nmaze: %d x %d = %d cells\n",eid,opts.DimX+1,opts.DimY+1,(opts.DimX+1)*(opts.DimY+1))
+		if opts.Verbose { fmt.Printf("%s\nstats:\n",stl) }
+
+	if G1 {
+	for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
+		if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }
+		stl += fmt.Sprintf("  %s: %d\n",g1mapid[y],g1stat[y])
+	}}}
+	if G2 {
+	for y := 0; y <= 65; y++ { if g2stat[y] > 0 {
+		if opts.Verbose { fmt.Printf("  %s: %d\n",g2mapid[y],g2stat[y]) }
+		stl += fmt.Sprintf("  %s: %d\n",g2mapid[y],g2stat[y])
+	}}}
+	stl += "══════════════════════\n"
+	stl += mazeMetaPrint(edmaze, true)
+	if statsB != nil { statsB.Set(stl) }
+	stl_str = stl	// for mini stat append
+//	bwin(palxs, palys, 0, plbuf, plflg)
 }
 
 // cut / copy & paste
@@ -990,17 +1024,15 @@ func pbRune(r rune) {
 
 	switch r {
 		case '?': dboxtx("paste buffer viewer keys", "q,Q - quit\n"+
-						"o,p - cycle session pb - / +\nO,P - cycle master pb - / +\n"+
-						", . - cycle master pb - / +\n══════════════════"+
+						"o,p - cycle session pb - / +\n[,] - cycle master pb - / +\n"+
+						"══════════════════"+
 						"\nr - rotate pb +90°\nR - rotate pb -90°\nh - horiz flip\nm - vert mirror"+
 						"\na,d - -/+ buffer horiz size\nw,s - -/+ buffer vert size"+
 						"\n══════════════════\nmiddle click selects element\n"+
 						"left click sets element\n(pb has basic edit support)\n"+
-						"- pb edit autosaves\n══════════════════\n(* only when window active)", 250,380)			// showing in main win because pb win is usually too small
-		case ',': pbmas_cyc(-1)
-		case '.': pbmas_cyc(1)
-		case 'O': pbmas_cyc(-1)
-		case 'P': pbmas_cyc(1)
+						"- pb edit autosaves\n══════════════════\n(* only when window active)", 250,380,nil)			// showing in main win because pb win is usually too small
+		case '[': pbmas_cyc(-1)
+		case ']': pbmas_cyc(1)
 		case 'o': pbsess_cyc(-1)
 		case 'p': pbsess_cyc(1)
 // chunk size control

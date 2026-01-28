@@ -240,6 +240,8 @@ func st_menu() {
 	menuItemUndo := fyne.NewMenuItem("Undo <ctrl>-z", undo)
 	menuItemRedo := fyne.NewMenuItem("Redo <ctrl>-y", redo)
 	menuItemUswp := fyne.NewMenuItem("Ult buf <ctrl>-u", uswap)
+	menuItemEdKey := fyne.NewMenuItem("Edit Key list", func() { listK = dboxtx("Edit key assignments","",340,700, close_keys); list_keys() })
+	menuItemStats := fyne.NewMenuItem("Maze statistics", func() { statsB = dboxtx("Maze stats","",340,700,close_stats); calc_stats() })
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		strp := ""
 		if opts.edat == 1 {
@@ -256,16 +258,16 @@ func st_menu() {
 			"d, D - horiz, vert door, w, W - walls *\nf, F - foods, k - key, t - treasure *\np, P - potions, T - teleporter *\n"+
 			"q - trap wall, r - trap tile *\ni - invisible power *\nx - exit, z - Death *\n"+
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n(middle click also activates edit mode,\n and uses default key 'y' if not set)\n"+
-			"logo key* + mouse: paint curr key or ctrl-del\n* these edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", 400,755)
+			"logo key* + mouse: paint curr key or ctrl-del\n* these edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", 400,755,nil)
 	})
-	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemColr, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
+	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemColr, menuItemStats, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
 	menuItemOps := fyne.NewMenuItem("Operation", func() {
 		data, err := ioutil.ReadFile("ops.txt")
 		if err == nil {
 			txt := fmt.Sprintf("%s",data)
-			dboxtx("Operations", txt, 700, 1000)
+			dboxtx("Operations", txt, 700, 1000,nil)
 		}
 	})
 	menuItemAbout := fyne.NewMenuItem("About", func() {
@@ -274,7 +276,7 @@ func st_menu() {
 	menuItemLIC := fyne.NewMenuItem("License", func() {
 		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor - gved\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
 	})
-	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemOps, menuItemAbout, menuItemLIC)
+	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemEdKey, menuItemOps, menuItemAbout, menuItemLIC)
 
 	hintup = fyne.NewMenu("cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a")
 
@@ -528,14 +530,14 @@ func keyhints() {
 //	strp += "\n * note some address will crash"
 
 //	dialog.ShowInformation(dk, strp, w)
-	dboxtx(dk, strp, 400, 700 + lenb)
+	dboxtx(dk, strp, 400, 700 + lenb,nil)
 }
 
 // text dialog boxes for all hint sets
 // title, content, w, h
 // return text box point for updating contents live
 
-func dboxtx(dt string, dbc string, w float32, h float32) binding.Item[string] {
+func dboxtx(dt string, dbc string, w float32, h float32, cf func()) binding.Item[string] {
 
 	ww := a.NewWindow(dt)
 
@@ -552,6 +554,11 @@ func dboxtx(dt string, dbc string, w float32, h float32) binding.Item[string] {
 	ww.Resize(fyne.Size{w, h})
 	ww.Show()
 	specialKey(ww)
-
+	if cf != nil {
+		ww.SetCloseIntercept(func() {			// if cf is passed, assign it to close intercept
+			cf()
+			ww.Close()
+		})
+	}
 	return txtB
 }
