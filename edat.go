@@ -794,12 +794,12 @@ dboxtx("T hide flags", "in gved main window:\n\n"+
 		" T	┈ cycle through a flag set (loop 0 - 511)\n"+
 		" #T	┈ set flags = # ---- <ctrl>-T reset flags to 0\n\n"+
 		" s 	┈ (show only) random 'special potions' &\n"+
-		"      gold bags on emply floor tiles (not EDIT)\n"+
+		"	   gold bags on emply floor tiles (not EDIT)\n"+
 		" L 	┈ toggle generator indicator letters [ DGLS ]\n"+
-		"      showing box gen monster\n"+
+		"	   showing box gen monster type\n"+
 		" p 	┈ toggle floor invisible *\n"+
 		" P 	┈ toggle walls invisible *\n(use key in main window)\n\n"+
-		"NOGEN	= 1			// all generators\n"+
+		"NOGEN	= 1		// all generators\n"+
 		"NOMON	= 2		// all monster, dragon\n"+
 		"NOFUD	= 4		// all food\n"+
 		"NOTRS	= 8		// treas, locked\n"+
