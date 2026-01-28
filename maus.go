@@ -274,7 +274,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 
 // pal win
 	inpal := false
-	if wpalop { if h.title == wpal.Title() {
+	if wpalop { if h.bw == wpal {
 		inpal = true
 		dt = 16.0 * float64(opts.Geow - 4) / 528.0		// palette dtec is locked at orig win size
 	}}
