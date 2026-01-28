@@ -800,7 +800,7 @@ func palRune(r rune) {
 						"IT 			= 0x10  \"IT Could Be Nice\"\n"+
 						"NOHURTFRIENDS	= 0x11  \"Don't Hurt Friends\"",535,435,nil)
 		case 'l': fallthrough
-		case 'L': listK = dboxtx("Edit key assignments","",340,700, close_keys); list_keys()
+		case 'L': listK = dboxtx("Edit key assignments","",400,800, close_keys); list_keys()
 		case 's': fallthrough
 		case 'S': statsB = dboxtx("Maze stats","",340,700,close_stats); calc_stats()
 		case 'q': fallthrough
@@ -855,12 +855,18 @@ func list_keys() {
 		kv := 0
 		if G1 { kv = g1edit_keymap[y] }
 		if G2 { kv = g2edit_keymap[y] }
-		sta := "key not assigned"
-		if kv < 0 { sta = "key not assignable" }
+		sta := "┈┈┈┈┈┈┈┈  ᵏᵉʸ ⁿᵒᵗ ᵃˢˢᶦᵍⁿᵉᵈ"		// .................... ᴀssɪɢɴ ᴛʜɪs ᴋᴇʏ
+														   //   ┈┈┈┈┈┈┈┈  ᵃˢˢᶦᵍⁿ ᵗʰᶦˢ ᵏᵉʸ
+		if kv < 0 { sta = " ┈┈┈┈┈┈┈┈  ɴᴏ ᴀᴄᴄᴇss" }	//   ┈┈┈┈┈┈┈┈┈  n̵o̵t̵ ̵a̵v̵a̵i̵l̵a̵b̵l̵e
+															// ɴᴏᴛ ᴀᴠᴀɪʟ		n̵o̵t̵ ̵a̵v̵a̵i̵l̵a̵b̵l̵e̵
 		if kv > 0 && G1 { sta = g1mapid[kv] }
 		if kv > 0 && G2 { sta = g2mapid[kv] }
-		kl += fmt.Sprintf("%s = %d %s\n",map_keymap[y],kv,sta)
+		kl += fmt.Sprintf("%s\t=\t(%03d)   %s\n",map_keymap[y],kv,sta)
 	}
+	kl += "──────────────────────\nall keys (000) may be assigned\n"+
+		  "with edit keys active, select the key\nand mouse middle click any maze item\n"+
+		  "\nno keys (-01) may be assigned,\nthese are reserved system keys\n"+
+		  "pressing a (-01) key will either:\n• select default key 'y'\n• operate the key function"
 	if listK != nil { listK.Set(kl) }
 }
 

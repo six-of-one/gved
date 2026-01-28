@@ -236,6 +236,7 @@ func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
 	mk := 0		// mod key 1 = sh, 2 = ctrl, 4 = alt, 8 = logo
 	prcl = 1
 	pos := fmt.Sprintf("%v",mm)
+fmt.Printf("%v\n",mm)
 	fmt.Sscanf(pos,"&{{{%f %f} {%f %f}} %d %d",&ax,&ay,&sxmd,&symd,&mb,&mk)
 	mxmd = int(sxmd / opts.dtec)
 	mymd = int(symd / opts.dtec)

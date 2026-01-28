@@ -240,7 +240,7 @@ func st_menu() {
 	menuItemUndo := fyne.NewMenuItem("Undo <ctrl>-z", undo)
 	menuItemRedo := fyne.NewMenuItem("Redo <ctrl>-y", redo)
 	menuItemUswp := fyne.NewMenuItem("Ult buf <ctrl>-u", uswap)
-	menuItemEdKey := fyne.NewMenuItem("Edit Key list", func() { listK = dboxtx("Edit key assignments","",340,700, close_keys); list_keys() })
+	menuItemEdKey := fyne.NewMenuItem("Edit Key list", func() { listK = dboxtx("Edit key assignments","",400,800, close_keys); list_keys() })
 	menuItemStats := fyne.NewMenuItem("Maze statistics", func() { statsB = dboxtx("Maze stats","",340,700,close_stats); calc_stats() })
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		strp := ""
