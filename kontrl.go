@@ -185,6 +185,89 @@ func specialKey(cw fyne.Window) {
     }
 }
 
+// generic keys, all dialogs, close seq of windows
+
+var wwa fyne.Window
+var wwb fyne.Window
+var wwc fyne.Window
+var wwd fyne.Window
+var wwe fyne.Window
+var wwf fyne.Window
+var wwg fyne.Window
+var wwh fyne.Window
+
+func generalRune1(r rune) {
+
+	switch r {
+		case 'q': fallthrough
+		case 'Q': wwa.Close()
+		default:
+	}
+}
+
+func generalRune2(r rune) {
+
+	switch r {
+		case 'q': fallthrough
+		case 'Q': wwb.Close()
+		default:
+	}
+}
+
+func generalRune3(r rune) {
+
+	switch r {
+		case 'q': fallthrough
+		case 'Q': wwc.Close()
+		default:
+	}
+}
+
+func generalRune4(r rune) {
+
+	switch r {
+		case 'q': fallthrough
+		case 'Q': wwd.Close()
+		default:
+	}
+}
+
+func generalRune5(r rune) {
+
+	switch r {
+		case 'q': fallthrough
+		case 'Q': wwe.Close()
+		default:
+	}
+}
+
+func generalRune6(r rune) {
+
+	switch r {
+		case 'q': fallthrough
+		case 'Q': wwf.Close()
+		default:
+	}
+}
+
+func generalRune7(r rune) {
+
+	switch r {
+		case 'q': fallthrough
+		case 'Q': wwg.Close()
+		default:
+	}
+}
+
+func generalRune8(r rune) {
+
+	switch r {
+		case 'q': fallthrough
+		case 'Q': wwh.Close()
+		default:
+	}
+}
+
 // regular keys
 
 func typedRune(r rune) {

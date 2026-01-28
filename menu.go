@@ -536,6 +536,7 @@ func keyhints() {
 // text dialog boxes for all hint sets
 // title, content, w, h
 // return text box point for updating contents live
+var wwlup int
 
 func dboxtx(dt string, dbc string, w float32, h float32, cf func()) binding.Item[string] {
 
@@ -554,6 +555,19 @@ func dboxtx(dt string, dbc string, w float32, h float32, cf func()) binding.Item
 	ww.Resize(fyne.Size{w, h})
 	ww.Show()
 	specialKey(ww)
+	wwlup++; if wwlup > 8 { wwlup = 1 }
+	switch wwlup {
+
+	case 1: wwa = ww; ww.Canvas().SetOnTypedRune(generalRune1)	// this is my mess to allow 'q' 'Q' to close any of these dialogs
+	case 2: wwb = ww; ww.Canvas().SetOnTypedRune(generalRune2)	// there may be some way to add-widget or use a struct to pass ww to generalRune
+	case 3: wwc = ww; ww.Canvas().SetOnTypedRune(generalRune3)	// i have other things to do instead of finding it - so... this
+	case 4: wwd = ww; ww.Canvas().SetOnTypedRune(generalRune4)
+	case 5: wwe = ww; ww.Canvas().SetOnTypedRune(generalRune5)
+	case 6: wwf = ww; ww.Canvas().SetOnTypedRune(generalRune6)
+	case 7: wwg = ww; ww.Canvas().SetOnTypedRune(generalRune7)
+	case 8: wwh = ww; ww.Canvas().SetOnTypedRune(generalRune8)
+	}
+
 	if cf != nil {
 		ww.SetCloseIntercept(func() {			// if cf is passed, assign it to close intercept
 			cf()
