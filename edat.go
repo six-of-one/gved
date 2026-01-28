@@ -717,31 +717,7 @@ func palRune(r rune) {
 						"*stats in terminal if palette open\ns, S - stats window open, auto updates\n"+
 						"f, F - gauntlet 2 maze flags list\nx, X - gauntlet 2 secret tricks", 350,540,nil)
 		case 't': fallthrough
-		case 'T': dboxtx("T hide flags", "in gved main window:\n\n"+
-						"invisible flag set - hide vars maze elements:\n"+
-						" T - cycle through a flag set (loop 0 - 511)\n"+
-						" #T - set flags = # ---- <ctrl>-T reset flags to 0\n\n"+
-						" s  - (show only) random 'special potions' &\n"+
-						"      gold bags on emply floor tiles (not EDIT)\n"+
-						" L  - toggle generator indicator letters [ DGLS ]\n"+
-						"      showing box gen monster\n"+
-						" p  - toggle floor invisible *\n"+
-						" P  - toggle walls invisible *\n\n"+
-						"NOGEN = 1	// all generators\n"+
-						"NOMON = 2		// all monster, dragon\n"+
-						"NOFUD = 4		// all food\n"+
-						"NOTRS = 8		// treas, locked\n"+
-						"NOPOT = 16		// pots & t.powers\n"+
-						"NODOR = 32	// doors, keys\n"+
-						"NOTRAP = 64	// trap & floor dots, stun, ff tiles\n"+
-						"NOEXP = 128	// exit, push wall\n"+
-						"NOTHN = 256	// anything else left\n"+
-						"NOFLOOR = 512\n"+
-						"NOWALL = 1024	// g2 *walls\n"+
-						"NOG1W = 2048	// g1 std wall only\n\n"+
-						"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
-						"Random profile load\n- only load items flags cover"+
-						"\n\n* hide items disabled when edit keys active",440,700,nil)
+		case 'T': hide_flags()
 		case 'f': fallthrough
 		case 'F': dboxtx("G2 maze flags","     Gauntlet 2 flags                hex value        bit pos\n"+
 						"ODDANGLE_GHOSTS	= 0x01000000 - 00000001\n"+
@@ -809,6 +785,37 @@ func palRune(r rune) {
 	}
 }
 
+// hide / select flags
+
+func hide_flags() {
+
+dboxtx("T hide flags", "in gved main window:\n\n"+
+		"invisible flag set - hide vars maze elements:\n"+
+		" T - cycle through a flag set (loop 0 - 511)\n"+
+		" #T - set flags = # ---- <ctrl>-T reset flags to 0\n\n"+
+		" s  - (show only) random 'special potions' &\n"+
+		"      gold bags on emply floor tiles (not EDIT)\n"+
+		" L  - toggle generator indicator letters [ DGLS ]\n"+
+		"      showing box gen monster\n"+
+		" p  - toggle floor invisible *\n"+
+		" P  - toggle walls invisible *\n\n"+
+		"NOGEN = 1	// all generators\n"+
+		"NOMON = 2		// all monster, dragon\n"+
+		"NOFUD = 4		// all food\n"+
+		"NOTRS = 8		// treas, locked\n"+
+		"NOPOT = 16		// pots & t.powers\n"+
+		"NODOR = 32	// doors, keys\n"+
+		"NOTRAP = 64	// trap & floor dots, stun, ff tiles\n"+
+		"NOEXP = 128	// exit, push wall\n"+
+		"NOTHN = 256	// anything else left\n"+
+		"NOFLOOR = 512\n"+
+		"NOWALL = 1024	// g2 *walls\n"+
+		"NOG1W = 2048	// g1 std wall only\n\n"+
+		"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
+		"Random profile load\n- only load items flags cover"+
+		"\n\n* hide items disabled when edit keys active",440,700,nil)
+}
+
 // when closing key lister panel, shut down updater
 func close_keys() {
 	listK = nil
@@ -865,6 +872,7 @@ func list_keys() {
 	}
 	kl += "──────────────────────\nall keys (000) may be assigned\n"+
 		  "with edit keys active, select the key\nand mouse middle click any maze item\n"+
+		  "de-assign to (000) middle click any floor tile\n"+
 		  "\nno keys (-01) may be assigned,\nthese are reserved system keys\n"+
 		  "pressing a (-01) key will either:\n• select default key 'y'\n• operate the key function"
 	if listK != nil { listK.Set(kl) }
@@ -1059,6 +1067,12 @@ func pbRune(r rune) {
 		case 'm': opts.MV = true
 			rotmirmov(cpbuf,0,0,cpx,cpy,0)
 			pb_loced(masbcnt)
+// std dialogs
+		case 'l': fallthrough
+		case 'L': listK = dboxtx("Edit key assignments","",400,800, close_keys); list_keys()
+		case 'S': statsB = dboxtx("Maze stats","",340,700,close_stats); calc_stats()
+		case 't': fallthrough
+		case 'T': hide_flags()
 		case 'q': fallthrough
 		case 'Q': if wpbop { wpbop = false; wpb.Close() }
 		default:

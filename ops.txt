@@ -23,6 +23,8 @@ general controls:		(general keys are always available in both modes)
 <CTRL>-Q	quit program - use this or file->exit, need save dialog blocks
 			file->quit and window [X] (see menu ops - Quit)
 
+q, q		close all windows EXCEPT program main window
+
 ?			command key hints dialog - now in All windows
 
 #a	load maze #
@@ -178,8 +180,8 @@ most of these have a corresponging item on edit or file menus
 			- auto switching G¹ to G²
 
 when pb window is selected:
-, or O		(,< key) master paste buffer --
-. or P		(.> key) master paste buffer ++
+[			master paste buffer --
+]			master paste buffer ++
 o			session paste buffer --
 p			session paste buffer ++
 q,Q			close subwindow		(also pal window)
@@ -187,19 +189,23 @@ r, R		rotate content +90°, -90°
 h, M		horiz, vert mirror
 a,s,d,W		expand or contract pb chunk
 			- pb changes autosave
+S			window that live updates with maze stats and flags
+l			window with live updates listing all edit keys
+t			#T hide flags info sheet
 			see mouse ops too...
 
 <HOME>		toggle a complete item palette for G¹ / G²
 			- palette for G¹ / G² in subwindow
 			  (position can not be code controlled, you have to move it)
 			- auto switching G¹ to G²
-			palette hints:
+palette keys:
 			- middle click on item (edit goes active, def key selects)
-			s - window that live updates with maze stats and flags
-			t - #T hide flags info sheet
-			f - gauntlet 2 maze flags sheet
-			x - gauntlet 2 secret room sheet
-			q - close palette window
+s			window that live updates with maze stats and flags
+l			window with live updates listing all edit keys
+t			#T hide flags info sheet
+f			gauntlet 2 maze flags sheet
+x			gauntlet 2 secret room sheet
+q			close palette window
 
 certain ops will check for unsaved changes and launch a dialog to save
 (pgup, pgdn, a, <ESC>, i, l, u, ctrl-q )
