@@ -252,11 +252,11 @@ func st_menu() {
 		}
 		dboxtx("Edit hints", strp+"\n══════════════════════════════\nSave - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nESC: turn editor on, init maze store in .ed/\n"+
-			"ESC: turn editor off, check unsaved buf\n\\ - toggle edit keys / command keys\n"+
-			"del - set floor\nctrl-del - sticky delete\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
+			"ESC:	turn editor off, check unsaved buf\n\\	┈ toggle edit keys / command keys\n"+
+			"del	┈ set floor\nctrl-del - sticky delete\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
 			"H: toggle horiz wrap, V: toggle vert wrap\n–—–—–—–—–—–—–—\ntypical key assignment:\n\n"+
-			"d, D - horiz, vert door, w, W - walls *\nf, F - foods, k - key, t - treasure *\np, P - potions, T - teleporter *\n"+
-			"q - trap wall, r - trap tile *\ni - invisible power *\nx - exit, z - Death *\n"+
+			"d, D	┈ horiz, vert door, w, W - walls *\nf, F	┈ foods, k - key, t - treasure *\np, P	┈ potions, T - teleporter *\n"+
+			"q	┈ trap wall, r - trap tile *\ni	┈ invisible power *\nx	┈ exit, z - Death *\n"+
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n(middle click also activates edit mode,\n and uses default key 'y' if not set)\n"+
 			"logo key* + mouse: paint curr key or ctrl-del\n* these edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", 400,755,nil)
 	})
@@ -464,41 +464,41 @@ func keyhints() {
 		strp += "View mode: cmd keys only"
 	}
 	strp += "\nsingle letter commands\n–—–—–—–—–—–—–—–—–—–—–—"
-//		strp += "\n\n? - this list"
-	strp += "\nctrl-q - quit program"
+//		strp += "\n\n?	┈ this list"
+	strp += "\nctrl-q	┈ quit program"
 	if opts.edat == 1 {
-		strp += "\nESC> exit editor ╗\n\\ - toggle cmd keys*"
-	} else { strp += "\nESC> editor mode" }
+		strp += "\nESC>	┈ exit editor ╗\n\\	┈ toggle cmd keys*"
+	} else { strp += "\nESC>	┈ editor mode" }
 	if kys == 1 {
-		strp += "\nf,F - floor pattern+,-\ng,G - floor color+,-"+
-				"\nw,W - wall pattern+,-\ne,E - wall color+,-"+
-				"\nr - rotate maze +90°\nR - rotate maze -90°"+
-				"\nh - mirror maze horizontal toggle"+
-				"\nm - mirror maze vertical toggle"+
-				"\np - toggle floor invis\nP - toggle wall invis"+
-				"\nT - loop invis things"+
-				"\ns - toggle rnd special potion"
+		strp += "\nf,F	┈ floor pattern+,-\ng,G	┈ floor color+,-"+
+				"\nw,W	┈ wall pattern+,-\ne,E	┈ wall color+,-"+
+				"\nr	┈ rotate maze +90°\nR	┈ rotate maze -90°"+
+				"\nh	┈ mirror maze horizontal toggle"+
+				"\nm	┈ mirror maze vertical toggle"+
+				"\np	┈ toggle floor invis\nP	┈ toggle wall invis"+
+				"\nT	┈ loop invis things"+
+				"\ns	┈ toggle rnd special potion"
 	} else {
-		strp += "\nH - toggle horiz maze wrap"+
-				"\nV - toggle vert maze wrap"+
-				"\nC - cycle item++, key c"+
-				"\nc - cycle item--, key c"+
-				"\n{n}c set item 1 - 64, key c"+
-				"\nL - generator indicate letter"+
-				"\nS - cycle sd buffers"+
-				"\n{n}S save curr to buffer #"
+		strp += "\nH	┈ toggle horiz maze wrap"+
+				"\nV	┈ toggle vert maze wrap"+
+				"\nC	┈ cycle item++, key c"+
+				"\nc	┈ cycle item--, key c"+
+				"\n{n}c	┈ set item 1 - 64, key c"+
+				"\nL	┈ generator indicate letter"+
+				"\nS	┈ cycle sd buffers"+
+				"\n{n}S	┈ save curr to buffer #"
 	}
 	if kys == 1 {
-		strp += "\nL - generator indicate letter"+
-				"\n{n}S save curr to buffer #"+
-				"\ni - gauntlet mazes r1 - r9"+
-				"\nl - use gauntlet rev 14"+
-				"\nu - gauntlet 2 mazes"+
-//				"\nv - valid address list"+
-				"\nv - all maze addr (in termninal)"
+		strp += "\nL	┈ generator indicate letter"+
+				"\n{n}S	┈ save curr to buffer #"+
+				"\ni	┈ gauntlet mazes r1 - r9"+
+				"\nl	┈ use gauntlet rev 14"+
+				"\nu	┈ gauntlet 2 mazes"+
+//				"\nv	┈ valid address list"+
+				"\nv	┈ all maze addr (in termninal)"
 	}
-	strp += "\nA - toggle a override"+
-			"\n{n}a numeric of valid maze"+
+	strp += "\nA	┈ toggle a override"+
+			"\n{n}a	┈ numeric of valid maze"+
 			"\n - load maze 1 - 127 g1"+
 			"\n - load maze 1 - 117 g2"+
 			"\n - load address 229376 - 262143 "+
@@ -512,20 +512,20 @@ func keyhints() {
 		lenb = 142
 		strp += "\n\ntypical: key selects item,\n L-click place, M-click assign"+
 				"\n–—–—–—–—–—–—–—"+
-				"\n<DEL> (hold down) set floor"+
-				"\nw - standard walls"+
-				"\nW - shootable walls"+
-				"\nq - trap wall\nr - trap tile"+
-				"\nd - horizontal door"+
-				"\nD - vertical door"+
-				"\nf - shootable food"+
-				"\nF - indestructabl food"+
-				"\np - shootable potion"+
-				"\nP - indestructabl potion"+
-				"\ni - invisible power"+
-				"\nx - exit\nz - Death"+
-				"\nt - treasure box"+
-				"\nT - teleporter pad"
+				"\nDEL>	┈ (hold down) set floor"+
+				"\nw	┈ standard walls"+
+				"\nW	┈ shootable walls"+
+				"\nq	┈ trap wall\nr	┈ trap tile"+
+				"\nd	┈ horizontal door"+
+				"\nD	┈ vertical door"+
+				"\nf	┈ shootable food"+
+				"\nF	┈ indestructabl food"+
+				"\np	┈ shootable potion"+
+				"\nP	┈ indestructabl potion"+
+				"\ni	┈ invisible power"+
+				"\nx	┈ exit\nz	┈ Death"+
+				"\nt	┈ treasure box"+
+				"\nT	┈ teleporter pad"
 	}
 //	strp += "\n * note some address will crash"
 

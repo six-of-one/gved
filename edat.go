@@ -713,9 +713,9 @@ func palRune(r rune) {
 						"hit a key to map: 'y'\nmove mouse to maze or palette\nand middle click an element\n"+
 						"\nin palette window:\nmiddle click an element\n\n"+
 						"edit hint on menu bar give status"+
-						"\n\npal win keys:\nq,Q - quit\nl,L - list edit keys\nt,T - hide flags info\n\n(only when window active)\n"+
-						"*stats in terminal if palette open\ns, S - stats window open, auto updates\n"+
-						"f, F - gauntlet 2 maze flags list\nx, X - gauntlet 2 secret tricks", 350,540,nil)
+						"\n\npal win keys:\nq,Q	┈ quit\nl,L	┈ list edit keys, auto updates\nt,T	┈ hide flags info\n"+
+						"s, S	┈ stats window open, auto updates\n"+
+						"f, F	┈ gauntlet 2 maze flags list\nx, X	┈ gauntlet 2 secret tricks", 350,540,nil)
 		case 't': fallthrough
 		case 'T': hide_flags()
 		case 'f': fallthrough
@@ -791,14 +791,14 @@ func hide_flags() {
 
 dboxtx("T hide flags", "in gved main window:\n\n"+
 		"invisible flag set - hide vars maze elements:\n"+
-		" T - cycle through a flag set (loop 0 - 511)\n"+
-		" #T - set flags = # ---- <ctrl>-T reset flags to 0\n\n"+
-		" s  - (show only) random 'special potions' &\n"+
+		" T	┈ cycle through a flag set (loop 0 - 511)\n"+
+		" #T	┈ set flags = # ---- <ctrl>-T reset flags to 0\n\n"+
+		" s 	┈ (show only) random 'special potions' &\n"+
 		"      gold bags on emply floor tiles (not EDIT)\n"+
-		" L  - toggle generator indicator letters [ DGLS ]\n"+
+		" L 	┈ toggle generator indicator letters [ DGLS ]\n"+
 		"      showing box gen monster\n"+
-		" p  - toggle floor invisible *\n"+
-		" P  - toggle walls invisible *\n\n"+
+		" p 	┈ toggle floor invisible *\n"+
+		" P 	┈ toggle walls invisible *\n(use key in main window)\n\n"+
 		"NOGEN = 1	// all generators\n"+
 		"NOMON = 2		// all monster, dragon\n"+
 		"NOFUD = 4		// all food\n"+
@@ -1037,14 +1037,16 @@ func pb_loced(cnt int) {
 func pbRune(r rune) {
 
 	switch r {
-		case '?': dboxtx("paste buffer viewer keys", "q,Q - quit\n"+
-						"o,p - cycle session pb - / +\n[,] - cycle master pb - / +\n"+
+		case '?': dboxtx("paste buffer viewer keys", "q,Q	┈ quit\n"+
+						"o,p	┈ cycle session pb	┈ / +\n[,]	┈ cycle master pb	┈ / +\n"+
+						"l,L	┈ list edit keys\nt,T	┈ hide flags info\n"+
+						"S  	┈ stats window open\n"+
 						"══════════════════"+
-						"\nr - rotate pb +90°\nR - rotate pb -90°\nh - horiz flip\nm - vert mirror"+
-						"\na,d - -/+ buffer horiz size\nw,s - -/+ buffer vert size"+
+						"\nr	┈ rotate pb +90°\nR	┈ rotate pb -90°\nh	┈ horiz flip\nm	┈ vert mirror"+
+						"\na,d	┈ -/+ buffer horiz size\nw,s	┈ -/+ buffer vert size"+
 						"\n══════════════════\nmiddle click selects element\n"+
 						"left click sets element\n(pb has basic edit support)\n"+
-						"- pb edit autosaves\n══════════════════\n(* only when window active)", 250,380,nil)			// showing in main win because pb win is usually too small
+						"- pb edit autosaves\n══════════════════\n(* only when window active)", 250,420,nil)			// showing in main win because pb win is usually too small
 		case '[': pbmas_cyc(-1)
 		case ']': pbmas_cyc(1)
 		case 'o': pbsess_cyc(-1)
