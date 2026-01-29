@@ -37,13 +37,14 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 	})
 
 	hexent := widget.NewEntry()
-	hexent.SetText("0077FFFF")
+	hexent.SetText("FF00AAFF")
 	var nc uint32
 	hexent.OnChanged = func(s string) {
 		fmt.Sscanf(s,"%08x",&nc)
 		bas_col = HRGB{nc}
 fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 		tappableDisplayColor.setColor(bas_col)
+		tappableDisplayColor.label.SetText(s)
 	}
 
 	return container.New(
@@ -94,5 +95,5 @@ func (c *tappableDisplayColor) setColor(clr color.Color) {
 
 func hexColorString(c color.Color) string {
 	rgba, _ := c.(color.NRGBA)
-	return fmt.Sprintf("#%.2X%.2X%.2X%.2X", rgba.R, rgba.G, rgba.B, rgba.A)
+	return fmt.Sprintf("#%.2X%.2X%.2X%.2X", rgba.A, rgba.R, rgba.G, rgba.B)
 }
