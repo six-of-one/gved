@@ -7,7 +7,7 @@ import (
 	"time"
 	"image"
 	"strings"
-	"image/color"
+// /	"image/color"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/dialog"
@@ -195,12 +195,12 @@ func menu_cut() { if opts.edat > 0 { ccp_tog(CUT); if ccp > 0 { smod = "Edit CUT
 func menu_paste() { if opts.edat > 0 { ccp_tog(PASTE); if ccp > 0 { smod = "Edit PASTE: "}; statlin(cmdhin,sshin) }}
 
 func menu_color() {
-	colorDialog := dialog.NewColorPicker("Choose Colors", "Select color for custom elements", func(c color.Color) {
-		ecolor = c
-fmt.Printf("Chose color: %v\n",ecolor)
 
-	}, w)
-	colorDialog.Show()
+	wc := a.NewWindow("Color selector")
+	wcolp = wc
+	wc.Resize(fyne.NewSize(400, 400))
+	wc.SetContent(colorCont(wc))
+	wc.Show()
 }
 // set menus
 
