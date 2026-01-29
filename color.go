@@ -18,17 +18,14 @@ var (
 )
 
 var wcolp fyne.Window
-var tapd *tappableDisplayColor
 
 func colorCont(wn fyne.Window) fyne.CanvasObject {
 	var bas_col color.Color
 	bas_col = HRGB{blotcol}
 
-	simpleDisplayColor := newSimpleDisplayColor()
 	tappableDisplayColor := newTappableDisplayColor(wn)
-
 	tappableDisplayColor.setColor(bas_col)
-	tappableDisplayColor.chex.Resize(fyne.NewSize(45, 10))
+	tappableDisplayColor.label.Resize(fyne.NewSize(45, 10))
 /*
 	var nc color.Color
 	tappableDisplayColor.chex.OnChanged = func(s string) {
@@ -38,6 +35,7 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 		tappableDisplayColor.setColor(bas_col)
 	} */
 
+	simpleDisplayColor := newSimpleDisplayColor()
 	picker := colorpicker.New(200, colorpicker.StyleHueCircle)
 	picker.SetOnChanged(func(c color.Color) {
 		bas_col = c
@@ -45,13 +43,11 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 		tappableDisplayColor.setColor(bas_col)
 	})
 	content := container.NewWithoutLayout(picker)
-	button := widget.NewButton("Set:", func() {
+	button := widget.NewButton("blotter color", func() {
 		picker.SetColor(bas_col)
 		dialog.ShowCustom("Select color", "OK", content, wn)
 	})
-//	simpleDisplayColor.setColor(bas_col)
-
-	tapd = tappableDisplayColor
+	simpleDisplayColor.setColor(bas_col)
 
 	return container.New(
 		layout.NewVBoxLayout(),
@@ -62,9 +58,8 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 			container.New(
 				layout.NewHBoxLayout(),
 				button,
-				container.NewVBox(tappableDisplayColor.chex),
+				tappableDisplayColor.label,
 				tappableDisplayColor.rect,
-				widget.NewLabel("blotter color"),
 			),
 			layout.NewSpacer(),
 		),
@@ -73,16 +68,16 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 }
 
 type simpleDisplayColor struct {
-	chex  *widget.Entry
+	label *widget.Label
 	rect  *canvas.Rectangle
 }
 
 func newSimpleDisplayColor() *simpleDisplayColor {
-	selectColorCode := widget.NewEntry() //WithStyle("", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	selectColorCode := widget.NewLabelWithStyle("", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 	selectColorRect := &canvas.Rectangle{}
 	selectColorRect.SetMinSize(fyne.NewSize(30, 20))
 	return &simpleDisplayColor{
-		chex:  selectColorCode,
+		label:  selectColorCode,
 		rect:  selectColorRect,
 	}
 }
@@ -93,15 +88,15 @@ func (c *simpleDisplayColor) setColor(clr color.Color) {
 }
 
 type tappableDisplayColor struct {
-	chex *widget.Entry
+	label *widget.Label
 	rect  colorpicker.PickerOpenWidget
 }
 
 func newTappableDisplayColor(w fyne.Window) *tappableDisplayColor {
-	selectColorCode := widget.NewEntry() //("", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	selectColorCode := widget.NewLabelWithStyle("", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 	selectColorRect := colorpicker.NewColorSelectModalRect(w, fyne.NewSize(30, 20), defaultColor)
 	d := &tappableDisplayColor{
-		chex:  selectColorCode,
+		label:  selectColorCode,
 		rect:  selectColorRect,
 	}
 	selectColorRect.SetOnChange(d.setColor)
@@ -111,7 +106,7 @@ func newTappableDisplayColor(w fyne.Window) *tappableDisplayColor {
 func (c *tappableDisplayColor) setColor(clr color.Color) {
 		til := fmt.Sprintf("Select: %02x",clr)
 		wcolp.SetTitle(til)
-	c.chex.SetText(hexColorString(clr))
+	c.label.SetText(hexColorString(clr))
 	c.rect.SetColor(clr)
 	c.rect.Refresh()
 	ecolor = clr
