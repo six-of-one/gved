@@ -757,7 +757,6 @@ func sdbit(dir int) string {
 }
 
 // generic keys, all dialogs, close seq of windows
-
 var wwa fyne.Window
 var wwb fyne.Window
 var wwc fyne.Window
@@ -767,74 +766,62 @@ var wwf fyne.Window
 var wwg fyne.Window
 var wwh fyne.Window
 
-func generalRune1(r rune) {
+var subra func(r rune)
+var subrb func(r rune)
+var subrc func(r rune)
+var subrd func(r rune)
+var subre func(r rune)
+var subrf func(r rune)
+var subrg func(r rune)
+var subrh func(r rune)
+
+func generalRuneOp(r rune, wcl fyne.Window, subrune func(r rune)) {
 
 	switch r {
 		case 'q': fallthrough
-		case 'Q': wwa.Close()
+		case 'Q': wcl.Close()
+				  if subrune != nil { subrune = nil }
 		default:
 	}
+	if subrune != nil { subrune(r) }
+}
+
+func generalRune1(r rune) {
+
+	generalRuneOp(r, wwa, subra)
 }
 
 func generalRune2(r rune) {
 
-	switch r {
-		case 'q': fallthrough
-		case 'Q': wwb.Close()
-		default:
-	}
+	generalRuneOp(r, wwb, subrb)
 }
 
 func generalRune3(r rune) {
 
-	switch r {
-		case 'q': fallthrough
-		case 'Q': wwc.Close()
-		default:
-	}
+	generalRuneOp(r, wwc, subrc)
 }
 
 func generalRune4(r rune) {
 
-	switch r {
-		case 'q': fallthrough
-		case 'Q': wwd.Close()
-		default:
-	}
+	generalRuneOp(r, wwd, subrd)
 }
 
 func generalRune5(r rune) {
 
-	switch r {
-		case 'q': fallthrough
-		case 'Q': wwe.Close()
-		default:
-	}
+	generalRuneOp(r, wwe, subre)
 }
 
 func generalRune6(r rune) {
 
-	switch r {
-		case 'q': fallthrough
-		case 'Q': wwf.Close()
-		default:
-	}
+	generalRuneOp(r, wwf, subrf)
 }
 
 func generalRune7(r rune) {
 
-	switch r {
-		case 'q': fallthrough
-		case 'Q': wwg.Close()
-		default:
-	}
+	generalRuneOp(r, wwg, subrg)
 }
 
 func generalRune8(r rune) {
 
-	switch r {
-		case 'q': fallthrough
-		case 'Q': wwh.Close()
-		default:
-	}
+	generalRuneOp(r, wwh, subrh)
 }

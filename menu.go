@@ -205,6 +205,9 @@ func menu_color() {
 // set menus
 
 func st_menu() {
+// sub rune calls
+	sr := func(r rune) {}
+	if wpalop { sr = palRune }
 // default 'quit' menu option does not call needsav !
 	menuItemExit := fyne.NewMenuItem("Exit", func() {
 		exitsel = true
@@ -240,8 +243,8 @@ func st_menu() {
 	menuItemUndo := fyne.NewMenuItem("Undo <ctrl>-z", undo)
 	menuItemRedo := fyne.NewMenuItem("Redo <ctrl>-y", redo)
 	menuItemUswp := fyne.NewMenuItem("Ult buf <ctrl>-u", uswap)
-	menuItemEdKey := fyne.NewMenuItem("Edit Key list", func() { listK = dboxtx("Edit key assignments","",400,800, close_keys); list_keys() })
-	menuItemStats := fyne.NewMenuItem("Maze statistics", func() { statsB = dboxtx("Maze stats","",340,700,close_stats); calc_stats() })
+	menuItemEdKey := fyne.NewMenuItem("Edit Key list", func() { listK = dboxtx("Edit key assignments","",400,800,close_keys,sr); list_keys() })
+	menuItemStats := fyne.NewMenuItem("Maze statistics", func() { statsB = dboxtx("Maze stats","",340,700,close_stats,sr); calc_stats() })
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		strp := ""
 		if opts.edat == 1 {
@@ -258,7 +261,7 @@ func st_menu() {
 			"d, D	┈ horiz, vert door, w, W - walls *\nf, F	┈ foods, k - key, t - treasure *\np, P	┈ potions, T - teleporter *\n"+
 			"q	┈ trap wall, r - trap tile *\ni	┈ invisible power *\nx	┈ exit, z - Death *\n"+
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n(middle click also activates edit mode,\n and uses default key 'y' if not set)\n"+
-			"logo key* + mouse: paint curr key or ctrl-del\n* these edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", 400,755,nil)
+			"logo key* + mouse: paint curr key or ctrl-del\n* these edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", 400,755,nil,typedRune)
 	})
 	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemColr, menuItemStats, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
 
@@ -267,7 +270,7 @@ func st_menu() {
 		data, err := ioutil.ReadFile("ops.txt")
 		if err == nil {
 			txt := fmt.Sprintf("%s",data)
-			dboxtx("Operations", txt, 700, 1000,nil)
+			dboxtx("Operations", txt, 700, 1000,nil,typedRune)
 		}
 	})
 	menuItemAbout := fyne.NewMenuItem("About", func() {
@@ -533,7 +536,7 @@ func keyhints() {
 //	strp += "\n * note some address will crash"
 
 //	dialog.ShowInformation(dk, strp, w)
-	dboxtx(dk, strp, 400, 700 + lenb,nil)
+	dboxtx(dk, strp, 400, 700 + lenb,nil,typedRune)
 }
 
 // text dialog boxes for all hint sets
@@ -541,7 +544,7 @@ func keyhints() {
 // return text box point for updating contents live
 var wwlup int
 
-func dboxtx(dt string, dbc string, w float32, h float32, cf func()) binding.Item[string] {
+func dboxtx(dt string, dbc string, w float32, h float32, cf func(), sbr func(r rune)) binding.Item[string] {
 
 	ww := a.NewWindow(dt)
 
@@ -561,14 +564,14 @@ func dboxtx(dt string, dbc string, w float32, h float32, cf func()) binding.Item
 	wwlup++; if wwlup > 8 { wwlup = 1 }
 	switch wwlup {
 
-	case 1: wwa = ww; ww.Canvas().SetOnTypedRune(generalRune1)	// this is my mess to allow 'q' 'Q' to close any of these dialogs
-	case 2: wwb = ww; ww.Canvas().SetOnTypedRune(generalRune2)	// there may be some way to add-widget or use a struct to pass ww to generalRune
-	case 3: wwc = ww; ww.Canvas().SetOnTypedRune(generalRune3)	// i have other things to do instead of finding it - so... this
-	case 4: wwd = ww; ww.Canvas().SetOnTypedRune(generalRune4)
-	case 5: wwe = ww; ww.Canvas().SetOnTypedRune(generalRune5)
-	case 6: wwf = ww; ww.Canvas().SetOnTypedRune(generalRune6)
-	case 7: wwg = ww; ww.Canvas().SetOnTypedRune(generalRune7)
-	case 8: wwh = ww; ww.Canvas().SetOnTypedRune(generalRune8)
+	case 1: wwa = ww; ww.Canvas().SetOnTypedRune(generalRune1); subra = sbr	// this is my mess to allow 'q' 'Q' to close any of these dialogs
+	case 2: wwb = ww; ww.Canvas().SetOnTypedRune(generalRune2); subrb = sbr	// there may be some way to add-widget or use a struct to pass ww to generalRune
+	case 3: wwc = ww; ww.Canvas().SetOnTypedRune(generalRune3); subrc = sbr	// i have other things to do instead of finding it - so... this
+	case 4: wwd = ww; ww.Canvas().SetOnTypedRune(generalRune4); subrd = sbr
+	case 5: wwe = ww; ww.Canvas().SetOnTypedRune(generalRune5); subre = sbr
+	case 6: wwf = ww; ww.Canvas().SetOnTypedRune(generalRune6); subrf = sbr
+	case 7: wwg = ww; ww.Canvas().SetOnTypedRune(generalRune7); subrg = sbr
+	case 8: wwh = ww; ww.Canvas().SetOnTypedRune(generalRune8); subrh = sbr
 	}
 
 	if cf != nil {

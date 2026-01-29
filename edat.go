@@ -715,9 +715,9 @@ func palRune(r rune) {
 						"edit hint on menu bar give status"+
 						"\n\npal win keys:\nq,Q	┈ quit\nl,L	┈ list edit keys, auto updates\nt,T	┈ hide flags info\n"+
 						"s, S	┈ stats window open, auto updates\n"+
-						"f, F	┈ gauntlet 2 maze flags list\nx, X	┈ gauntlet 2 secret tricks", 350,540,nil)
+						"f, F	┈ gauntlet 2 maze flags list\nx, X	┈ gauntlet 2 secret tricks", 350,540,nil,palRune)
 		case 't': fallthrough
-		case 'T': hide_flags()
+		case 'T': hide_flags(palRune)
 		case 'f': fallthrough
 		case 'F': dboxtx("G2 maze flags","     Gauntlet 2 flags                hex value        bit pos\n"+
 						"ODDANGLE_GHOSTS	= 0x01000000 - 00000001\n"+
@@ -754,7 +754,7 @@ func palRune(r rune) {
 						"EXIT_FAKE			= 0x40                - 01000000\n"+
 						"PLAYER_OFFSCREEN	= 0x80                - 10000000\n\n"+
 						"flag math is binary 'or' \"|\" together\n"+
-						"bit position is within byte of that flag portion",420,744,nil)
+						"bit position is within byte of that flag portion",420,744,nil,palRune)
 		case 'x': fallthrough
 		case 'X': dboxtx("G2 secret tricks","     Gauntlet 2 secret room tricks\n"+
 						"NONE 		= 0x00  \"No trick\"\n"+
@@ -774,11 +774,11 @@ func palRune(r rune) {
 						"DIET			= 0x0e  \"Go On a Diet (no food)\"\n"+
 						"BEPUSHY		= 0x0f   \"Be Pushy\"\n"+
 						"IT 			= 0x10  \"IT Could Be Nice\"\n"+
-						"NOHURTFRIENDS	= 0x11  \"Don't Hurt Friends\"",535,435,nil)
+						"NOHURTFRIENDS	= 0x11  \"Don't Hurt Friends\"",535,435,nil,palRune)
 		case 'l': fallthrough
-		case 'L': listK = dboxtx("Edit key assignments","",400,800, close_keys); list_keys()
+		case 'L': listK = dboxtx("Edit key assignments","",400,800, close_keys,palRune); list_keys()
 		case 's': fallthrough
-		case 'S': statsB = dboxtx("Maze stats","",340,700,close_stats); calc_stats()
+		case 'S': statsB = dboxtx("Maze stats","",340,700,close_stats,palRune); calc_stats()
 		case 'q': fallthrough
 		case 'Q': if wpalop { wpalop = false; wpal.Close() }
 		default:
@@ -787,7 +787,7 @@ func palRune(r rune) {
 
 // hide / select flags
 
-func hide_flags() {
+func hide_flags(sr func(r rune)) {
 
 dboxtx("T hide flags", "in gved main window:\n\n"+
 		"invisible flag set - hide vars maze elements:\n"+
@@ -813,7 +813,7 @@ dboxtx("T hide flags", "in gved main window:\n\n"+
 		"NOG1W	= 2048	// g1 std wall only\n\n"+
 		"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
 		"Random profile load\n- only load items flags cover"+
-		"\n\n* T hide items disabled when edit keys active",440,700,nil)
+		"\n\n* T hide items disabled when edit keys active",440,700,nil,sr)
 }
 
 // when closing key lister panel, shut down updater
@@ -1038,7 +1038,7 @@ func pbRune(r rune) {
 
 	switch r {
 		case '?': dboxtx("paste buffer viewer keys", "q,Q	┈ quit\n"+
-						"o,p	┈ cycle session pb	┈ / +\n[,]	┈ cycle master pb	┈ / +\n"+
+						"o,p	┈ cycle session pb - / +\n[,]	┈ cycle master pb - / +\n"+
 						"l,L	┈ list edit keys\nt,T	┈ hide flags info\n"+
 						"S  	┈ stats window open\n"+
 						"══════════════════"+
@@ -1046,7 +1046,7 @@ func pbRune(r rune) {
 						"\na,d	┈ -/+ buffer horiz size\nw,s	┈ -/+ buffer vert size"+
 						"\n══════════════════\nmiddle click selects element\n"+
 						"left click sets element\n(pb has basic edit support)\n"+
-						"- pb edit autosaves\n══════════════════\n(* only when window active)", 250,420,nil)			// showing in main win because pb win is usually too small
+						"- pb edit autosaves\n══════════════════\n(* only when window active)", 250,420,nil,pbRune)			// showing in main win because pb win is usually too small
 		case '[': pbmas_cyc(-1)
 		case ']': pbmas_cyc(1)
 		case 'o': pbsess_cyc(-1)
@@ -1071,10 +1071,10 @@ func pbRune(r rune) {
 			pb_loced(masbcnt)
 // std dialogs
 		case 'l': fallthrough
-		case 'L': listK = dboxtx("Edit key assignments","",400,800, close_keys); list_keys()
-		case 'S': statsB = dboxtx("Maze stats","",340,700,close_stats); calc_stats()
+		case 'L': listK = dboxtx("Edit key assignments","",400,800, close_keys,pbRune); list_keys()
+		case 'S': statsB = dboxtx("Maze stats","",340,700,close_stats,pbRune); calc_stats()
 		case 't': fallthrough
-		case 'T': hide_flags()
+		case 'T': hide_flags(pbRune)
 		case 'q': fallthrough
 		case 'Q': if wpbop { wpbop = false; wpb.Close() }
 		default:
