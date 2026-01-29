@@ -24,10 +24,20 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 	var bas_col color.Color
 	bas_col = HRGB{blotcol}
 
-	tappableDisplayColor := newTappableDisplayColor(wn)
-	tappableDisplayColor.setColor(bas_col)
-
 	simpleDisplayColor := newSimpleDisplayColor()
+	tappableDisplayColor := newTappableDisplayColor(wn)
+
+	tappableDisplayColor.setColor(bas_col)
+	tappableDisplayColor.chex.Resize(fyne.NewSize(45, 10))
+/*
+	var nc color.Color
+	tappableDisplayColor.chex.OnChanged = func(s string) {
+		fmt.Sscanf(s,"%08x",&nc)
+		bas_col = nc
+		simpleDisplayColor.setColor(bas_col)
+		tappableDisplayColor.setColor(bas_col)
+	} */
+
 	picker := colorpicker.New(200, colorpicker.StyleHueCircle)
 	picker.SetOnChanged(func(c color.Color) {
 		bas_col = c
@@ -52,7 +62,7 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 			container.New(
 				layout.NewHBoxLayout(),
 				button,
-				tappableDisplayColor.chex,
+				container.NewVBox(tappableDisplayColor.chex),
 				tappableDisplayColor.rect,
 				widget.NewLabel("blotter color"),
 			),
