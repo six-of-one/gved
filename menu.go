@@ -222,7 +222,7 @@ func st_menu() {
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
 	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemRand, menuItemLin1,  menuItemGvs, menuItemWob, menuItemPalf, menuItemMute, menuItemExit)
 
-	menuItemColr := fyne.NewMenuItem("Choose master color", menu_color)
+	menuItemColr := fyne.NewMenuItem("Set colors", menu_color)
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
 	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-r", menu_res)

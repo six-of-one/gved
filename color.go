@@ -22,7 +22,7 @@ var tapd *tappableDisplayColor
 
 func colorCont(wn fyne.Window) fyne.CanvasObject {
 	var bas_col color.Color
-	bas_col = ecolor
+	bas_col = HRGB{blotcol}
 
 	tappableDisplayColor := newTappableDisplayColor(wn)
 	tappableDisplayColor.setColor(bas_col)
@@ -63,8 +63,9 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 				layout.NewHBoxLayout(),
 				layout.NewSpacer(),
 				button,
-				tappableDisplayColor.label,
+				tappableDisplayColor.chex,
 				tappableDisplayColor.rect,
+				widget.NewLabel("blotter color"),
 				layout.NewSpacer(),
 			),
 			layout.NewSpacer(),
@@ -74,16 +75,16 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 }
 
 type simpleDisplayColor struct {
-	label *widget.Label
+	chex  *widget.Entry
 	rect  *canvas.Rectangle
 }
 
 func newSimpleDisplayColor() *simpleDisplayColor {
-	selectColorCode := widget.NewLabelWithStyle("", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	selectColorCode := widget.NewEntry() //WithStyle("", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 	selectColorRect := &canvas.Rectangle{}
 	selectColorRect.SetMinSize(fyne.NewSize(30, 20))
 	return &simpleDisplayColor{
-		label: selectColorCode,
+		chex:  selectColorCode,
 		rect:  selectColorRect,
 	}
 }
@@ -94,15 +95,15 @@ func (c *simpleDisplayColor) setColor(clr color.Color) {
 }
 
 type tappableDisplayColor struct {
-	label *widget.Label
+	chex *widget.Entry
 	rect  colorpicker.PickerOpenWidget
 }
 
 func newTappableDisplayColor(w fyne.Window) *tappableDisplayColor {
-	selectColorCode := widget.NewLabelWithStyle("", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	selectColorCode := widget.NewEntry() //("", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 	selectColorRect := colorpicker.NewColorSelectModalRect(w, fyne.NewSize(30, 20), defaultColor)
 	d := &tappableDisplayColor{
-		label: selectColorCode,
+		chex:  selectColorCode,
 		rect:  selectColorRect,
 	}
 	selectColorRect.SetOnChange(d.setColor)
@@ -112,7 +113,7 @@ func newTappableDisplayColor(w fyne.Window) *tappableDisplayColor {
 func (c *tappableDisplayColor) setColor(clr color.Color) {
 		til := fmt.Sprintf("Select: %02x",clr)
 		wcolp.SetTitle(til)
-	c.label.SetText(hexColorString(clr))
+	c.chex.SetText(hexColorString(clr))
 	c.rect.SetColor(clr)
 	c.rect.Refresh()
 	ecolor = clr
