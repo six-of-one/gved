@@ -17,13 +17,6 @@ config options are now saved in .config
 - so far: win width x height, viewport size and assigned edit keys
 - launch with './gved -i --def' to restore ALL defaults
 
-keys to operate a window, can be used from its dialogs
-so: <HOME> opens pallet, ? opens pallet help and l from the help dialog
-    will open edit key list and so on
-there are no limits right now, its possible to open all the dialogs
-you want - the caveat is that live track dialogs (edit keys, stats, etc)
-will lose focus when a second instance is opened. you were warned
-
 general controls:		(general keys are always available in both modes)
 ----------------
 
@@ -44,6 +37,13 @@ A	enable address mode (experimental, likely never work with arcade emu)
 
 - note: A mode was used to discover address that would decode G¹ mazes
 		the engine was never intended to read maze data this way
+
+	keys to operate a window, can be used from its dialogs
+	so: <HOME> opens pallet, ? opens pallet help, l from the help dialog
+		will open edit key list and so on
+	there are no limits right now, it is possible to open all the dialogs
+	you want - the caveat is live track dialogs (edit keys, stats, etc)
+	will lose focus when a second instance is opened. you were warned
 
 
 two op modes exist, view only and edit
