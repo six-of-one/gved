@@ -13,6 +13,8 @@ rubber-band ops - click and drag will expand to set region of place / del / edit
 * copy, cut & paste rubber-band contents
 * rubber band sizing of cells, single click contents
 * use blotter to show gauntlet 'maze view' following maus around
+- select in edit - edkeys off - set filter area sim. to paint same
+  \_ turned off by c/c/p, del, edit off, pgup/dn
 
 replace mode - either over entire maze, rubber band region, select y/n on each find, or click item replace
 \_ possibly also use #T mask, or item # list for allowing edits on elements, or disallow
@@ -43,12 +45,14 @@ multiple save buffers to store vars maze edits, page thru all wiht 'S', store wi
 * dirty flag so quit, pgup, pgdn know unsaved changes are there and give warning dialog
 - list of delbuf overview, contents, etc somehow
 
-copy / cut / paste
+copy / cut / paste / replace
 * do same with ccp buffer - page thru and view them
 * for now these lock in - this is a 'feature' (nudge, nudge, wink, wink) until proper cfg file & dialog allow selection
 * using new window to view paste buffer contents
 - ctrl-f filter master paste buffer storage (key on pb win to toggle/select)
   - deselect all option
+- filter done with paint in edit mode w/edkeys off - set cells that can edit
+  \_ turned off by c/c/p, del, edit off, pgup/dn
 
 issues needing fixed
 - will the autosaves (around L, S, etc) become an issue?    (see pb bug below)
