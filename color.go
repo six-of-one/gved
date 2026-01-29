@@ -5,7 +5,6 @@ import (
 	"image/color"
 
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
@@ -26,11 +25,9 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 	tappableDisplayColor := newTappableDisplayColor(wn)
 	tappableDisplayColor.setColor(bas_col)
 
-	simpleDisplayColor := newSimpleDisplayColor()
 	picker := colorpicker.New(200, colorpicker.StyleHueCircle)
 	picker.SetOnChanged(func(c color.Color) {
 		bas_col = c
-		simpleDisplayColor.setColor(bas_col)
 		tappableDisplayColor.setColor(bas_col)
 	})
 	content := container.NewWithoutLayout(picker)
@@ -66,26 +63,6 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 		),
 		layout.NewSpacer(),
 	)
-}
-
-type simpleDisplayColor struct {
-	label *widget.Label
-	rect  *canvas.Rectangle
-}
-
-func newSimpleDisplayColor() *simpleDisplayColor {
-	selectColorCode := widget.NewLabelWithStyle("", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
-	selectColorRect := &canvas.Rectangle{}
-	selectColorRect.SetMinSize(fyne.NewSize(30, 20))
-	return &simpleDisplayColor{
-		label:  selectColorCode,
-		rect:  selectColorRect,
-	}
-}
-
-func (c *simpleDisplayColor) setColor(clr color.Color) {
-	til := fmt.Sprintf("Select: %02X",clr)
-	wcolp.SetTitle(til)
 }
 
 type tappableDisplayColor struct {
