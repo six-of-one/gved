@@ -44,29 +44,17 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 	tapd = tappableDisplayColor
 
 	return container.New(
-		layout.NewHBoxLayout(),
-		layout.NewSpacer(),
+		layout.NewVBoxLayout(),
+//		layout.NewSpacer(),
 		container.New(
 			layout.NewVBoxLayout(),
 			layout.NewSpacer(),
-/*			button,
 			container.New(
 				layout.NewHBoxLayout(),
-				layout.NewSpacer(),
-				simpleDisplayColor.label,
-				simpleDisplayColor.rect,
-				layout.NewSpacer(),
-			),
-			layout.NewSpacer(), */
-//			widget.NewLabel("Or tap rectangle"),
-			container.New(
-				layout.NewHBoxLayout(),
-				layout.NewSpacer(),
 				button,
 				tappableDisplayColor.chex,
 				tappableDisplayColor.rect,
 				widget.NewLabel("blotter color"),
-				layout.NewSpacer(),
 			),
 			layout.NewSpacer(),
 		),
