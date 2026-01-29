@@ -25,15 +25,6 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 
 	tappableDisplayColor := newTappableDisplayColor(wn)
 	tappableDisplayColor.setColor(bas_col)
-	tappableDisplayColor.label.Resize(fyne.NewSize(45, 10))
-/*
-	var nc color.Color
-	tappableDisplayColor.chex.OnChanged = func(s string) {
-		fmt.Sscanf(s,"%08x",&nc)
-		bas_col = nc
-		simpleDisplayColor.setColor(bas_col)
-		tappableDisplayColor.setColor(bas_col)
-	} */
 
 	simpleDisplayColor := newSimpleDisplayColor()
 	picker := colorpicker.New(200, colorpicker.StyleHueCircle)
@@ -47,7 +38,16 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 		picker.SetColor(bas_col)
 		dialog.ShowCustom("Select color", "OK", content, wn)
 	})
-	simpleDisplayColor.setColor(bas_col)
+
+	hexent := widget.NewEntry()
+	hexent.SetText("0077FFFF")
+	var nc uint32
+	hexent.OnChanged = func(s string) {
+		fmt.Sscanf(s,"%08x",&nc)
+		bas_col = HRGB{nc}
+fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
+		tappableDisplayColor.setColor(bas_col)
+	}
 
 	return container.New(
 		layout.NewVBoxLayout(),
@@ -60,6 +60,7 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 				button,
 				tappableDisplayColor.label,
 				tappableDisplayColor.rect,
+				hexent,
 			),
 			layout.NewSpacer(),
 		),
@@ -83,8 +84,8 @@ func newSimpleDisplayColor() *simpleDisplayColor {
 }
 
 func (c *simpleDisplayColor) setColor(clr color.Color) {
-		til := fmt.Sprintf("Select: %02x",clr)
-		wcolp.SetTitle(til)
+	til := fmt.Sprintf("Select: %02X",clr)
+	wcolp.SetTitle(til)
 }
 
 type tappableDisplayColor struct {
@@ -104,13 +105,13 @@ func newTappableDisplayColor(w fyne.Window) *tappableDisplayColor {
 }
 
 func (c *tappableDisplayColor) setColor(clr color.Color) {
-		til := fmt.Sprintf("Select: %02x",clr)
+		til := fmt.Sprintf("Select: %02X",clr)
 		wcolp.SetTitle(til)
 	c.label.SetText(hexColorString(clr))
 	c.rect.SetColor(clr)
 	c.rect.Refresh()
 	ecolor = clr
-	newcl := fmt.Sprintf("Master Color: %02x",clr)
+	newcl := fmt.Sprintf("Blotter Color: %02X",clr)
 	statlin(cmdhin,newcl)
 }
 

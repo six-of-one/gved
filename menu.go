@@ -198,7 +198,7 @@ func menu_color() {
 
 	wc := a.NewWindow("Color selector")
 	wcolp = wc
-	wc.Resize(fyne.NewSize(300, 300))
+	wc.Resize(fyne.NewSize(350, 300))
 	wc.SetContent(colorCont(wc))
 	wc.Show()
 }
