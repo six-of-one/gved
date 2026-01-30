@@ -62,7 +62,7 @@ issues needing fixed
 viewport
 - floor draw (floor gets redrawn with rnd shift every move)
 - g1 palettes - idea to hunt & peck looking for correct palette when compared with mame dumps
-  \_ and a floor palette is 16 entries of IRGB, no idea how to do this
+  \_ after a couple stumbles, discover the palette values are viewed on <F4> palette with mouseover, woo
 
 possible:
 - down the line .ed stored maz# could be used to set maz num

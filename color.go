@@ -198,6 +198,21 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 		col2_tap.label.SetText(s)
 	}
 
+// palette color testing
+
+	cv1_label := widget.NewLabelWithStyle("0xFF00FF00", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	cv1_rect := colorpicker.NewColorSelectModalRect(w, fyne.NewSize(30, 20), defaultColor)
+
+	cv1_hexent := widget.NewEntry()
+	cv1_hexent.SetText("FF0000FF")
+	cv1_hexent.OnChanged = func(s string) {
+		fmt.Sscanf(s,"%08x",&nc)
+		hc := HRGB{nc}
+		cv1_rect.SetColor(hc)
+		ns := fmt.Sprintf("%04X",irgb(nc))
+		cv1_label.SetText(ns)
+	}
+
 	return container.New(
 		layout.NewVBoxLayout(),
 //		layout.NewSpacer(),
@@ -227,7 +242,15 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 				col2_tap.rect,
 				col2_hexent,
 			),
-			layout.NewSpacer(),		),
+			layout.NewSpacer(),
+			container.New(
+				layout.NewHBoxLayout(),
+				cv1_label,
+				cv1_rect,
+				cv1_hexent,
+			),
+			layout.NewSpacer(),
+		),
 		layout.NewSpacer(),
 	)
 }
