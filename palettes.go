@@ -1031,7 +1031,9 @@ var forcefieldPalette = [][]color.Color{
 var gauntletPalettes = map[string][][]color.Color{
 	"teleff":     teleFfPalettes,
 	"floor":      floorPalettes,
+	"gfloor":     g1floorPalettes,
 	"wall":       wallPalettes,
+	"gwall":      g1wallPalettes,
 	"base":       basePalettes,
 	"gbase":      g1basePalettes,
 	"warrior":    warriorPalettes,
