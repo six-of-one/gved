@@ -15,6 +15,7 @@ rubber-band ops - click and drag will expand to set region of place / del / edit
 * use blotter to show gauntlet 'maze view' following maus around
 - select in edit - edkeys off - set filter area sim. to paint same
   \_ turned off by c/c/p, del, edit off, pgup/dn
+- when setting color, it still needs assigned & saved
 
 replace mode - either over entire maze, rubber band region, select y/n on each find, or click item replace
 \_ possibly also use #T mask, or item # list for allowing edits on elements, or disallow
@@ -61,6 +62,7 @@ issues needing fixed
 viewport
 - floor draw (floor gets redrawn with rnd shift every move)
 - g1 palettes - idea to hunt & peck looking for correct palette when compared with mame dumps
+  \_ and a floor palette is 16 entries of IRGB, no idea how to do this
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
