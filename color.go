@@ -22,29 +22,29 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 	var bas_col color.Color
 	bas_col = HRGB{blotcol}
 
-	tappableDisplayColor := newTappableDisplayColor(wn)
-	tappableDisplayColor.setColor(bas_col)
+	blot_tap := newTappableDisplayColor(wn)
+	blot_tap.setColor(bas_col)
 
 	picker := colorpicker.New(200, colorpicker.StyleHueCircle)
 	picker.SetOnChanged(func(c color.Color) {
 		bas_col = c
-		tappableDisplayColor.setColor(bas_col)
+		blot_tap.setColor(bas_col)
 	})
 	content := container.NewWithoutLayout(picker)
-	button := widget.NewButton("blotter color", func() {
+	blot_btn := widget.NewButton("blotter color", func() {
 		picker.SetColor(bas_col)
 		dialog.ShowCustom("Select color", "OK", content, wn)
 	})
 
-	hexent := widget.NewEntry()
-	hexent.SetText("FF00AAFF")
+	blot_hexent := widget.NewEntry()
+	blot_hexent.SetText("FF00AAFF")
 	var nc uint32
-	hexent.OnChanged = func(s string) {
+	blot_hexent.OnChanged = func(s string) {
 		fmt.Sscanf(s,"%08x",&nc)
 		bas_col = HRGB{nc}
 fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
-		tappableDisplayColor.setColor(bas_col)
-		tappableDisplayColor.label.SetText(s)
+		blot_tap.setColor(bas_col)
+		blot_tap.label.SetText(s)
 	}
 
 	return container.New(
@@ -55,10 +55,10 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 			layout.NewSpacer(),
 			container.New(
 				layout.NewHBoxLayout(),
-				button,
-				tappableDisplayColor.label,
-				tappableDisplayColor.rect,
-				hexent,
+				blot_btn,
+				blot_tap.label,
+				blot_tap.rect,
+				blot_hexent,
 			),
 			layout.NewSpacer(),
 		),

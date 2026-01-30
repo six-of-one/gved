@@ -60,6 +60,7 @@ issues needing fixed
 - saw instanced where paste pasted wrong data, not sure, was on G¹ only editing an sdb
 viewport
 - floor draw (floor gets redrawn with rnd shift every move)
+- g1 palettes - idea to hunt & peck looking for correct palette when compared with mame dumps
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
