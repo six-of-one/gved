@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"image/color"
+	"image"
+	"math"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -10,7 +12,101 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 	"github.com/lusingander/colorpicker"
+	"github.com/disintegration/imaging"
 )
+
+// color fn() that were in render
+
+type Color interface {
+	IRGB() (irgb uint16)
+}
+
+type IRGB struct {
+	irgb uint16
+}
+
+func (c IRGB) RGBA() (r, g, b, a uint32) {
+	i := uint32(c.irgb&0xf000) >> 12
+	r = uint32(c.irgb&0x0f00) >> 8 * i
+	g = uint32(c.irgb&0x00f0) >> 4 * i
+	b = uint32(c.irgb&0x000f) * i
+
+	r = r << 8
+	g = g << 8
+	b = b << 8
+	a = 0xffff
+
+	return
+}
+
+// hex color triple, w/ possible alpha
+// - and yes, you could just break down and insert color.RGBA{R: 205, G: 0, B: 205, A: 130}
+// but i like this
+
+type HColor interface {
+	HRGB() (hrgb uint32)
+}
+
+type HRGB struct {
+	hrgb uint32
+}
+
+func (c HRGB) RGBA() (r, g, b, a uint32) {
+	a = uint32(c.hrgb&0xff000000) >> 24
+	r = uint32(c.hrgb&0xff0000) >> 16
+	g = uint32(c.hrgb&0x00ff00) >> 8
+	b = uint32(c.hrgb&0x0000ff)
+
+	r = r << 8
+	g = g << 8
+	b = b << 8
+	if a == 0 { a = 0xff }	// an alpha of 0 seems to produce gray mush
+	a = a << 8
+
+	return
+}
+
+func irgb(c uint32) uint16 {
+
+var ic uint16
+	ic = 0
+
+	a := (c & 0xff000000 >> 24) / 16
+	r := (c & 0xff0000 >> 16) / 16
+	g := (c & 0xff00 >> 8) / 16
+	b := (c & 0xff) / 16
+
+	ic = uint16(a * 0x1000 + r * 0x100 + g * 0x10 + b)
+	return ic
+}
+
+// hue shift
+// had to insert this from imaging source, somehow the github include doesnt... include it?? idk. i only work here
+
+func AdjustHue(img image.Image, shift float64) *image.NRGBA {
+	if math.Mod(shift, 360) == 0 {
+		return imaging.Clone(img)
+	}
+
+	summand := shift / 360
+
+	return imaging.AdjustFunc(img, func(c color.NRGBA) color.NRGBA {
+		h, s, l := rgbToHSL(c.R, c.G, c.B)
+		h += summand
+		h = math.Mod(h, 1)
+		//Adding 1 because Golang's Modulo function behaves differently to similar operators in most other languages.
+		if h < 0 {
+			h++
+		}
+		r, g, b := hslToRGB(h, s, l)
+		return color.NRGBA{r, g, b, c.A}
+	})
+}
+
+func hue(src *image.NRGBA, deg float64) *image.NRGBA {
+	dst := AdjustHue(src, deg)
+	return dst
+}
 
 var (
 	defaultColor = color.NRGBA{0xff, 0x00, 0xff, 0xff}
