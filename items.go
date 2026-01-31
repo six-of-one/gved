@@ -307,7 +307,7 @@ var itemStamps = map[string]Stamp{
 	},
 	"exitg1": Stamp{				// g1 exits wont take floor palette it seems
 		width:   2,
-		numbers: []int{0xbfc, 4},
+		numbers: tilerange(0xbfc, 4),
 		ptype:   "base",
 		pnum:    5,
 		trans0:  false,

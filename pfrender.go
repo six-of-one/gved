@@ -599,7 +599,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			case G1OBJ_PLAYERSTART:
 				stamp = itemGetStamp("plusg1")
 			case G1OBJ_EXIT:
-				stamp = itemGetStamp("exit")
+				stamp = itemGetStamp("exitg1")
 			case G1OBJ_EXIT4:
 				stamp = itemGetStamp("exit4")
 			case G1OBJ_EXIT8:
