@@ -59,10 +59,10 @@ issues needing fixed
 - will the autosaves (around L, S, etc) become an issue?    (see pb bug below)
 - undo after paste works weirdly sometimes - usually with the next issue
 - saw instanced where paste pasted wrong data, not sure, was on G¹ only editing an sdb
+  |    - every time this happens 1 element is set over x,y size of pb
+  \_ this still occasionally happens and it might be paste getting turned off or ignored somehow
 viewport
 - floor draw (floor gets redrawn with rnd shift every move)
-- g1 palettes - idea to hunt & peck looking for correct palette when compared with mame dumps
-  \_ after a couple stumbles, discover the palette values are viewed on <F4> palette with mouseover, woo
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
@@ -109,7 +109,7 @@ further research:
 
 - killed by hurt player shots - 8 potions, leave 3 lvl ghost (m32 0.87 - mess lvl)
 
-- walls - exits
+- walls -> exits
   - trap walls      
   - shootables      exits (even part shot)
   - cycle walls g2  
