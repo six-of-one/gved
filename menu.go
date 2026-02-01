@@ -312,6 +312,9 @@ func aw_init() {
 // sub win switch G¹ / G²
 
 func subsw() {
+
+	ccp = NOP
+	statlin(cmdhin,"")
 	if wpbop { pbmas_cyc(0) }
 	if wpalop { palete() }
 }
