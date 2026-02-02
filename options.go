@@ -9,6 +9,11 @@ import (
 	"github.com/jessevdk/go-flags"
 	"strings"
 	"bufio"
+
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/widget"
 )
 
 var opts struct {
@@ -194,4 +199,39 @@ fmt.Printf("sv_config\n")
 		file.Close()
 //	fmt.Printf("saving .wstats file\n")
 	}
+}
+
+// options dialog
+
+func optCont(wn fyne.Window) fyne.CanvasObject {
+
+// new control data
+//	var nc int
+
+	diff_label := widget.NewLabelWithStyle("Difficulty", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+
+	diff_entr := widget.NewEntry()
+	diff_entr.SetText("1")
+	diff_entr.OnChanged = func(s string) {
+		fmt.Sscanf(s,"%d",&diff_level)
+		ns := fmt.Sprintf("Difficulty: %d",diff_level)
+		statlin(cmdhin,ns)
+		diff_label.SetText(ns)
+	}
+
+	return container.New(
+		layout.NewVBoxLayout(),
+//		layout.NewSpacer(),
+		container.New(
+			layout.NewVBoxLayout(),
+			layout.NewSpacer(),
+			container.New(
+				layout.NewHBoxLayout(),
+				diff_label,
+				diff_entr,
+			),
+			layout.NewSpacer(),
+		),
+		layout.NewSpacer(),
+	)
 }

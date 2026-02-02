@@ -202,6 +202,16 @@ func menu_color() {
 	wc.SetContent(colorCont(wc))
 	wc.Show()
 }
+
+func menu_option() {
+
+	wc := a.NewWindow("Option controls")
+	wc.Resize(fyne.NewSize(350, 400))
+	wc.SetContent(optCont(wc))
+	wc.Show()
+}
+
+
 // set menus
 
 func st_menu() {
@@ -267,7 +277,7 @@ func st_menu() {
 	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemColr, menuItemStats, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
-	menuItemOpt := fyne.NewMenuItem("Options", menu_res)
+	menuItemOpt := fyne.NewMenuItem("Options", menu_option)
 	menuItemOps := fyne.NewMenuItem("Operation", func() {
 		data, err := ioutil.ReadFile("ops.txt")
 		if err == nil {
