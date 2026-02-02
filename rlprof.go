@@ -141,12 +141,11 @@ func _room(x1, y1, x2, y2, val int) {
 	}
 }
 
-func map_fargoal() {
+func map_fargoal(mbuf MazeData) {
 
 	type point struct{ x, y int }
 	rand.Seed(time.Now().UnixNano())
 
-	const SPOT_FLOOR = 0
 	MAP_H = opts.DimY - 1
 	MAP_W = opts.DimX - 1
 
@@ -169,7 +168,7 @@ func map_fargoal() {
 
 		room_center[i] = point{x + w/2, y + h/2}
 
-		_room(x, y, x+w, y+h, SPOT_FLOOR)
+		_room(x, y, x+w, y+h, G1OBJ_TILE_FLOOR)
 	}
 
 	// Corridors
@@ -206,7 +205,7 @@ func map_fargoal() {
 				m_x := x + dirs[dir].x
 				m_y := y + dirs[dir].y
 
-				if spots[m_y][m_x] != SPOT_FLOOR {
+				if spots[m_y][m_x] != G1OBJ_TILE_FLOOR {
 					stone = 2
 				}
 
@@ -214,12 +213,12 @@ func map_fargoal() {
 					break
 				}
 
-				if stone == 2 && spots[m_y][m_x] == SPOT_FLOOR {
+				if stone == 2 && spots[m_y][m_x] == G1OBJ_TILE_FLOOR {
 					stone = 0
 					break
 				}
 
-				spots[m_y][m_x] = SPOT_FLOOR
+				spots[m_y][m_x] = G1OBJ_TILE_FLOOR
 
 				x = m_x
 				y = m_y
