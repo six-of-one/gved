@@ -79,6 +79,7 @@ func ed_init() {
 	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 	delbset(0)			// init undo (delbuf)
 	restak = 0			// restor position in delbuf
+	diff_level = 1.0	// default diff, for now only rload uses
 }
 
 func udbck(ct int, t int){

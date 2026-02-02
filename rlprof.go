@@ -73,8 +73,8 @@ dy := opts.DimY
 cx := 0
 cy := 0
 
-diff_level = 10.0
 def_diff = 7.0
+
 ldiff := diff_level / def_diff
 
 rlloop := 33
@@ -148,7 +148,7 @@ func _room(x1, y1, x2, y2, val int) {
 
 func ray(lx, ly, mx, my, tx, ty, tv, rv int,tspot [100][100]int) int {
 
-	r := tspot[ty][tx]
+	r := -1
 	if tx >= lx && ty >= ly && tx <= mx && ty <= my {
 		if tspot[ty][tx] == tv { r = rv }
 	}
