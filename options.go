@@ -209,9 +209,6 @@ fmt.Printf("sv_config\n")
 
 func optCont(wn fyne.Window) fyne.CanvasObject {
 
-// new control data
-//	var nc int
-
 	diff_label := widget.NewLabelWithStyle("Difficulty:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 
 	diff_entr := widget.NewEntry()
