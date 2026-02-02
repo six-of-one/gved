@@ -222,6 +222,11 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		diff_label.SetText(ns)
 		sv_config()
 	}
+	sellvl := widget.NewSelect([]string{"Research", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7", "Level 8..."}, func(str string) {
+		fmt.Printf("Select level: %s\n", str)
+	})
+	sellvl.SetSelected("Level 1")
+
 	unpx := widget.NewCheck("Unpin X", func(upx bool) {
 		fmt.Printf("Unpin X set to %t\n", upx)
 	})
@@ -244,6 +249,11 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 			container.New(
 				layout.NewHBoxLayout(),
 				unpx, unpy,
+			),
+			layout.NewSpacer(),
+			container.New(
+				layout.NewHBoxLayout(),
+				sellvl,
 			),
 			layout.NewSpacer(),
 		),
