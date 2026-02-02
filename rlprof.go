@@ -143,6 +143,17 @@ func _room(x1, y1, x2, y2, val int) {
 	}
 }
 
+// 8 ray test from a cell
+// for bounds lx,ly - mx,my (low to max) check tspot at tx,ty for tv (test val) if so, return rv
+
+func ray(lx, ly, mx, my, tx, ty, tv, rv int,tspot [100][100]int) int {
+
+	r := tspot[ty][tx]
+	if tx >= lx && ty >= ly && tx <= mx && ty <= my {
+		if tspot[ty][tx] == tv { r = rv }
+	}
+	return r
+}
 func map_fargoal(mbuf MazeData) {
 
 	type point struct{ x, y int }
@@ -153,20 +164,13 @@ func map_fargoal(mbuf MazeData) {
 		mbuf[xy{x, y}] = G1OBJ_WALL_REGULAR
 	}}
 
-	MAP_H = opts.DimY - 1
-	MAP_W = opts.DimX - 1
+	MAP_H = opts.DimY
+	MAP_W = opts.DimX
 
 	for y := 1; y <= MAP_H; y++ {
 		for x := 1; x <= MAP_W; x++ {
 		spots[y][x] = -1
 	}}
-
-	for y := 1; y <= MAP_H; y++ {
-		for x := 1; x <= MAP_W; x++ {
-			fmt.Printf("%02d ",spots[y][x])
-		}
-	fmt.Printf("\n")
-	}
 
 	room_center := make([]point, 10)
 
@@ -175,6 +179,11 @@ func map_fargoal(mbuf MazeData) {
 		{0, 1},  // down
 		{0, -1}, // up
 		{-1, 0}, // left
+// expand orig 8 ray test around cell
+		{-1, -1},// up - lf
+		{-1, 1}, // dn - lf
+		{1, -1}, // up - rt
+		{1, 1},  // dn - rt
 	}
 
 	// Rooms
@@ -248,6 +257,16 @@ fmt.Printf("run %d, stone %d\n",run,stone)
 			}
 		}
 	}
+// wall off floor from null space
+	for y := 1; y <= MAP_H; y++ {
+		for x := 1; x <= MAP_W; x++ {
+		if spots[y][x] < 0 {
+		for i := 0; i < 8; i++ {
+			nv := ray(1, 1, MAP_W, MAP_H, x + dirs[i].x, y + dirs[i].y, G1OBJ_TILE_FLOOR, G1OBJ_WALL_REGULAR, spots)
+			if nv >= 0 { spots[y][x] = nv }
+		}
+		}
+	}}
 
 	for y := 1; y <= MAP_H; y++ {
 		for x := 1; x <= MAP_W; x++ {
