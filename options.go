@@ -144,6 +144,9 @@ func ld_config() {
 		l = ""
 		if scanr.Scan() { l = scanr.Text() }						// blotter replacement image
 		fmt.Sscanf(l,"%s",&blotimg)
+		l = "1.0"
+		if scanr.Scan() { l = scanr.Text() }						// difficulty skill - affects rnd loader
+		fmt.Sscanf(l,"%f",&diff_level)
 	}
 // get default win size
 // main win size is a bit tricky on user adjust as i cheaped out and made click detect of a cell
@@ -195,6 +198,7 @@ func sv_config() {
 //fmt.Print(wfs)
 fmt.Printf("sv_config\n")
 		wfs += fmt.Sprintf("%08x\n%s\n",blotcol,blotimg)
+		wfs += fmt.Sprintf("%.1f\n",diff_level)
 		file.WriteString(wfs)
 		file.Close()
 //	fmt.Printf("saving .wstats file\n")
@@ -219,6 +223,7 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		ns := fmt.Sprintf("Difficulty: %.1f",diff_level)
 		statlin(cmdhin,ns)
 		diff_label.SetText(ns)
+		sv_config()
 	}
 
 	return container.New(
