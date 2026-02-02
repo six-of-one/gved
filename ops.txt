@@ -85,7 +85,7 @@ e,E	 + or - wall colors in cycle
 #	and #f, #g, #w, #q - set valid pats / cols #, with invalid going to 0
 
 h	horizontally mirror the maze
-    (G¹ does h,m after many levels, G² from maze 1)
+	(G¹ does h,m after many levels, G² from maze 1)
 m	vertically mirror "flip" the maze (same G¹ / G² note)
 	- doing both rotates maze 180°
 
@@ -178,7 +178,8 @@ most of these have a corresponging item on edit or file menus
 ='[]		 (up/ dn/ lf/ rt keys) alternate
 			- move maze in viewport 4 units
 			- move 1 unit if <SHIFT> key held
-<CTRL>↑↓←→	adjust size of maze, -,+,-,+ 1 unit in direction
+<CTRL> +
+↑↓←→		adjust size of maze, -,+,-,+ 1 unit in direction
 			- -,+ 4 units if <SHIFT> key held
 			- once you shrink/ save, and reload, exit, init, blank, etc
 			  the former cell contents you shrunk past will be gone
