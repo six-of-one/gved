@@ -208,13 +208,15 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 // new control data
 //	var nc int
 
-	diff_label := widget.NewLabelWithStyle("Difficulty", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	diff_label := widget.NewLabelWithStyle("Difficulty:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 
 	diff_entr := widget.NewEntry()
-	diff_entr.SetText("1")
+	ns := fmt.Sprintf("%.1f",diff_level)
+	diff_entr.SetText(ns)
 	diff_entr.OnChanged = func(s string) {
-		fmt.Sscanf(s,"%d",&diff_level)
-		ns := fmt.Sprintf("Difficulty: %d",diff_level)
+		fmt.Sscanf(s,"%f",&diff_level)
+		if diff_level < 0 { diff_level = 1.0 }
+		ns := fmt.Sprintf("Difficulty: %.1f",diff_level)
 		statlin(cmdhin,ns)
 		diff_label.SetText(ns)
 	}
