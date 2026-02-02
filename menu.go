@@ -267,6 +267,7 @@ func st_menu() {
 	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemColr, menuItemStats, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
+	menuItemOpt := fyne.NewMenuItem("Options", menu_res)
 	menuItemOps := fyne.NewMenuItem("Operation", func() {
 		data, err := ioutil.ReadFile("ops.txt")
 		if err == nil {
@@ -280,7 +281,7 @@ func st_menu() {
 	menuItemLIC := fyne.NewMenuItem("License", func() {
 		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor - gved\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
 	})
-	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemEdKey, menuItemOps, menuItemAbout, menuItemLIC)
+	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemOpt, menuItemEdKey, menuItemOps, menuItemAbout, menuItemLIC)
 
 	hintup = fyne.NewMenu("cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a")
 

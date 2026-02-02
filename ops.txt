@@ -175,7 +175,6 @@ most of these have a corresponging item on edit or file menus
 <CTRL>-pgdn	size down viewport (to min 12 x 12)
 			- viewport will still fill edit window
 ↑↓←→		(up/ dn/ lf/ rt keys)
-='[]		 (up/ dn/ lf/ rt keys) alternate
 			- move maze in viewport 4 units
 			- move 1 unit if <SHIFT> key held
 <CTRL> +
