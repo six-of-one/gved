@@ -152,13 +152,21 @@ func map_fargoal(mbuf MazeData) {
 		for x := 0; x <= opts.DimX; x++ {
 		mbuf[xy{x, y}] = G1OBJ_WALL_REGULAR
 	}}
+
+	MAP_H = opts.DimY - 1
+	MAP_W = opts.DimX - 1
+
 	for y := 1; y <= MAP_H; y++ {
 		for x := 1; x <= MAP_W; x++ {
 		spots[y][x] = -1
 	}}
 
-	MAP_H = opts.DimY - 1
-	MAP_W = opts.DimX - 1
+	for y := 1; y <= MAP_H; y++ {
+		for x := 1; x <= MAP_W; x++ {
+			fmt.Printf("%02d ",spots[y][x])
+		}
+	fmt.Printf("\n")
+	}
 
 	room_center := make([]point, 10)
 
@@ -183,6 +191,7 @@ func map_fargoal(mbuf MazeData) {
 	}
 // testing
 cntr := 100
+kilknt := 6000
 	// Corridors
 	for i := 0; i < 10; i++ {
 		stone := 1 // 1 for initial, 2 for has hit stone, 0 for hit floor
@@ -205,6 +214,9 @@ if cntr < 1{
 	fmt.Printf("\n")
 	}
 }
+cntr--
+kilknt--
+if kilknt < 1 { break }
 			if skip == 0 {
 				if j > 1 {
 					last = dir

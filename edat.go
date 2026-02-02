@@ -894,8 +894,10 @@ func zero_stat() {
 
 func stats(elm int) {
 
-	if G1 { g1stat[elm]++ }
-	if G2 { g2stat[elm]++ }
+	if elm >= 0 {
+		if G1 { g1stat[elm]++ }
+		if G2 { g2stat[elm]++ }
+	}
 }
 
 // blotter select stats, or pb
