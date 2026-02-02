@@ -130,7 +130,9 @@ var (
 // random int range
 
 func rndr(min, max int) int {
-	return rand.Intn(max-min+1) + min
+	i := rand.Intn(max-min+1) + min
+fmt.Printf("rng %d - %d  sel: %d\n",min,max,i) 
+	return i
 }
 
 func _room(x1, y1, x2, y2, val int) {
@@ -145,6 +147,11 @@ func map_fargoal(mbuf MazeData) {
 
 	type point struct{ x, y int }
 	rand.Seed(time.Now().UnixNano())
+
+	for y := 0; y <= opts.DimY; y++ {
+		for x := 0; x <= opts.DimX; x++ {
+		mbuf[xy{x, y}] = G1OBJ_WALL_REGULAR
+	}}
 
 	MAP_H = opts.DimY - 1
 	MAP_W = opts.DimX - 1
@@ -227,4 +234,9 @@ func map_fargoal(mbuf MazeData) {
 			}
 		}
 	}
+
+	for y := 1; y <= MAP_H; y++ {
+		for x := 1; x <= MAP_W; x++ {
+		mbuf[xy{x, y}] = spots[y][x]
+	}}
 }
