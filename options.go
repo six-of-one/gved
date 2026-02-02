@@ -225,6 +225,12 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		diff_label.SetText(ns)
 		sv_config()
 	}
+	unpx := widget.NewCheck("Unpin X", func(upx bool) {
+		fmt.Printf("Unpin X set to %t\n", upx)
+	})
+	unpy := widget.NewCheck("Unpin Y", func(upy bool) {
+		fmt.Printf("Unpin Y set to %t\n", upy)
+	})
 
 	return container.New(
 		layout.NewVBoxLayout(),
@@ -236,6 +242,11 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 				layout.NewHBoxLayout(),
 				diff_label,
 				diff_entr,
+			),
+			layout.NewSpacer(),
+			container.New(
+				layout.NewHBoxLayout(),
+				unpx, unpy,
 			),
 			layout.NewSpacer(),
 		),
