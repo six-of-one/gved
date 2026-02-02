@@ -59,6 +59,7 @@ var diff_level float64
 var def_diff float64
 var max_diff_level float64
 
+// rload is sanctuary code port
 // put rnd load in mbuf (with the stuff already there)
 // anum is use mask, details on palette "T"
 
@@ -116,4 +117,115 @@ for f := 0; f <= rlloop; f++ {
 		}
 	}
 }
+}
+
+// far goal rnd mapper
+
+var (
+	MAP_H int
+	MAP_W int
+	spots [100][100]int
+)
+
+// random int range
+
+func rndr(min, max int) int {
+	return rand.Intn(max-min+1) + min
+}
+
+func _room(x1, y1, x2, y2, val int) {
+	for y := y1; y < y2; y++ {
+		for x := x1; x < x2; x++ {
+			spots[y][x] = val
+		}
+	}
+}
+
+func map_fargoal() {
+
+	type point struct{ x, y int }
+	rand.Seed(time.Now().UnixNano())
+
+	const SPOT_FLOOR = 0
+	MAP_H = opts.DimY - 1
+	MAP_W = opts.DimX - 1
+
+	room_center := make([]point, 10)
+
+	dirs := []point{
+		{1, 0},  // right
+		{0, 1},  // down
+		{0, -1}, // up
+		{-1, 0}, // left
+	}
+
+	// Rooms
+	for i := 0; i < 10; i++ {
+		w := rndr(3, 7)
+		h := rndr(3, 7)
+
+		x := rndr(1, MAP_W-2-w)
+		y := rndr(1, MAP_H-2-h)
+
+		room_center[i] = point{x + w/2, y + h/2}
+
+		_room(x, y, x+w, y+h, SPOT_FLOOR)
+	}
+
+	// Corridors
+	for i := 0; i < 10; i++ {
+		stone := 1 // 1 for initial, 2 for has hit stone, 0 for hit floor
+		x := room_center[i].x
+		y := room_center[i].y
+		j := 0
+
+		dir := rndr(0, 3)
+		last := -1
+		skip := 1
+
+		for stone != 0 {
+			if skip == 0 {
+				if j > 1 {
+					last = dir
+				}
+				for {
+					dir = rndr(0, 3)
+					if dir != 3-last {
+						break
+					}
+				}
+			} else {
+				skip = 0
+			}
+
+			stone = 1
+			run := rndr(0, 8) + 5
+			j = 1
+
+			for j != run {
+				m_x := x + dirs[dir].x
+				m_y := y + dirs[dir].y
+
+				if spots[m_y][m_x] != SPOT_FLOOR {
+					stone = 2
+				}
+
+				if m_x < 1 || m_x > MAP_W-2 || m_y < 1 || m_y > MAP_H-2 {
+					break
+				}
+
+				if stone == 2 && spots[m_y][m_x] == SPOT_FLOOR {
+					stone = 0
+					break
+				}
+
+				spots[m_y][m_x] = SPOT_FLOOR
+
+				x = m_x
+				y = m_y
+
+				j++
+			}
+		}
+	}
 }
