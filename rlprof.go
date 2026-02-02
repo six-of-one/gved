@@ -131,7 +131,7 @@ var (
 
 func rndr(min, max int) int {
 	i := rand.Intn(max-min+1) + min
-fmt.Printf("rng %d - %d  sel: %d\n",min,max,i) 
+//fmt.Printf("rng %d - %d  sel: %d\n",min,max,i)
 	return i
 }
 
@@ -151,6 +151,10 @@ func map_fargoal(mbuf MazeData) {
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
 		mbuf[xy{x, y}] = G1OBJ_WALL_REGULAR
+	}}
+	for y := 1; y <= MAP_H; y++ {
+		for x := 1; x <= MAP_W; x++ {
+		spots[y][x] = -1
 	}}
 
 	MAP_H = opts.DimY - 1
@@ -177,7 +181,8 @@ func map_fargoal(mbuf MazeData) {
 
 		_room(x, y, x+w, y+h, G1OBJ_TILE_FLOOR)
 	}
-
+// testing
+cntr := 100
 	// Corridors
 	for i := 0; i < 10; i++ {
 		stone := 1 // 1 for initial, 2 for has hit stone, 0 for hit floor
@@ -190,6 +195,16 @@ func map_fargoal(mbuf MazeData) {
 		skip := 1
 
 		for stone != 0 {
+//testing
+if cntr < 1{
+	cntr = 100
+	for y := 1; y <= MAP_H; y++ {
+		for x := 1; x <= MAP_W; x++ {
+			fmt.Printf("%02d ",spots[y][x])
+		}
+	fmt.Printf("\n")
+	}
+}
 			if skip == 0 {
 				if j > 1 {
 					last = dir
@@ -207,6 +222,7 @@ func map_fargoal(mbuf MazeData) {
 			stone = 1
 			run := rndr(0, 8) + 5
 			j = 1
+fmt.Printf("run %d, stone %d\n",run,stone)
 
 			for j != run {
 				m_x := x + dirs[dir].x
