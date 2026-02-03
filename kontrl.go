@@ -483,6 +483,22 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				opts.MH = !opts.MH
 				spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)
 			}
+		case 'j':
+		case 'k':
+		case 'u':
+			if zmod > 0 { break }
+			eid = "Gauntlet II"
+			nsremaze = true
+			relodsub = needsav()
+			opts.Gtp = 2
+			og1 := G1
+			G1 = false
+			G2 = true
+			if og1 { get_pbcnt(); subsw();
+					play_sfx("sfx/music.g2.4sec.ogg") }
+			maxmaze = 116
+			if opts.mnum > maxmaze { opts.mnum = 102 }
+			spau = "G² mazes"
 		case 'i':
 			eid = "Gauntlet (rev 1-9)"
 			nsremaze = true
@@ -533,20 +549,6 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 		case 's':
 			opts.SP = !opts.SP
 			opts.dntr = true
-		case 'u':
-			if zmod > 0 { break }
-			eid = "Gauntlet II"
-			nsremaze = true
-			relodsub = needsav()
-			opts.Gtp = 2
-			og1 := G1
-			G1 = false
-			G2 = true
-			if og1 { get_pbcnt(); subsw();
-					play_sfx("sfx/music.g2.4sec.ogg") }
-			maxmaze = 116
-			if opts.mnum > maxmaze { opts.mnum = 102 }
-			spau = "G² mazes"
 		case 'v':
 			lx := 116
 			if G1 { lx = 126 }
