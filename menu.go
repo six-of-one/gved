@@ -214,7 +214,7 @@ func menu_option() {
 func map_test() {
 	for i := 1; i < 6; i++ {
 	go func() {
-			time.Sleep(time.Duration(i * 100) * time.Millisecond)
+			time.Sleep(time.Duration(i * 240) * time.Millisecond)
    fyne.Do(func() {
 		opts.mnum++
 		remaze(opts.mnum)
