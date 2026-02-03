@@ -78,13 +78,16 @@ func specialKey(cw fyne.Window) {
 					} else {
 						nsremaze = true
 						srelod = needsav()
-						if sdb == 0 { menu_lodit(true) }
+						opts.edat = 0
+						if sdb == 0 { menu_lodit(true) } else {
+							sdbit(0)
+							srelod = false
+						}
 						smod = "View mode: "
 				fmt.Printf("editor off, maze: %03d\n",opts.mnum+1)
 						cmdoff = false
 						if swnothing > 0 { nothing = swnothing; swnothing = 0 }
-						opts.edat = 0
-						opts.dntr = false
+						opts.dntr = (sdb > 0)
 						ccp_NOP()
 						cmdhin = "cmds: ?, <ESC>, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 						statlin(cmdhin,"")
