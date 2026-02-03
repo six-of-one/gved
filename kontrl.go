@@ -17,6 +17,8 @@ var exitsel bool
 var nsremaze bool
 var swnothing int		// store nothing flag when cmd keys off
 
+var zmod int		// play test mode
+
 // input keys and keypress checks for canvas/ window
 // since this is all that is called without other handler / timers
 // - this is where maze update and edits will vector
@@ -274,6 +276,10 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 		relodsub = false
 		stu := ""
 		switch r {
+		case 'z':
+			zmod++
+			if zmod > 3 { zmod = 0 }
+			spau = fmt.Sprintf("Z mode: %d\n",zmod)
 		case 92:		// \
 			ska := "cmd keys mode"
 			if opts.edat > 0 {			// have to be in editor to turn on edit keys
@@ -466,6 +472,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				spau = fmt.Sprintf("cmd: m - mv: %t\n",opts.MV)
 			}
 		case 'h':
+			if zmod > 0 { break }
 			if opts.edat > 0 {
 				opts.MH = true
 				upd_edmaze(false)
@@ -485,11 +492,11 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			og2 := G2
 			G1 = true
 			G2 = false
-			if og2 { get_pbcnt(); subsw() }
+			if og2 { get_pbcnt(); subsw();
+					play_sfx("sfx/music.4sec.ogg") }
 			maxmaze = 126
 			if opts.mnum > maxmaze { opts.mnum = 114 }
 			spau = "G¹ "
-			play_sfx("sfx/music.4sec.ogg")
 		case 'l':
 			eid = "Gauntlet (rev 14)"
 			nsremaze = true
@@ -527,6 +534,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			opts.SP = !opts.SP
 			opts.dntr = true
 		case 'u':
+			if zmod > 0 { break }
 			eid = "Gauntlet II"
 			nsremaze = true
 			relodsub = needsav()
@@ -534,11 +542,11 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			og1 := G1
 			G1 = false
 			G2 = true
-			if og1 { get_pbcnt(); subsw() }
+			if og1 { get_pbcnt(); subsw();
+					play_sfx("sfx/music.g2.4sec.ogg") }
 			maxmaze = 116
 			if opts.mnum > maxmaze { opts.mnum = 102 }
 			spau = "G² mazes"
-			play_sfx("sfx/music.g2.4sec.ogg")
 		case 'v':
 			lx := 116
 			if G1 { lx = 126 }

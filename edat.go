@@ -86,7 +86,7 @@ func ed_init() {
 //	diff_level = 1.0	// default diff, for now only rload uses - in options now
 	source := rand.NewSource(time.Now().UnixNano()) // random #s
 	rng = rand.New(source)
-
+	zmod = 0			// play test mode
 }
 
 func udbck(ct int, t int){
