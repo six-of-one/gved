@@ -711,7 +711,7 @@ func tilerange(start int, count int) []int {
 	return r
 }
 
-type AFrames []Stamp
+//type AFrames []Stamp
 // type MobAnimFrames []int
 // type MobAnimsDir map[string]MobAnimFrames
 // type MobAnims map[string]MobAnimsDir
