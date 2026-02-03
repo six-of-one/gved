@@ -9,6 +9,8 @@ import (
 	"image"
 	"encoding/binary"
 	"image/color"
+	"math/rand"
+	"time"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/data/binding"
 )
@@ -61,6 +63,8 @@ var vpy int
 var maxvp = 32
 var minvp = 12
 
+var rng *rand.Rand
+
 // initialize edit control
 
 func ed_init() {
@@ -80,6 +84,9 @@ func ed_init() {
 	delbset(0)			// init undo (delbuf)
 	restak = 0			// restor position in delbuf
 //	diff_level = 1.0	// default diff, for now only rload uses - in options now
+	source := rand.NewSource(time.Now().UnixNano()) // random #s
+	rng = rand.New(source)
+
 }
 
 func udbck(ct int, t int){

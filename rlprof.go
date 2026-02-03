@@ -65,9 +65,6 @@ var max_diff_level float64
 
 func rload(mbuf MazeData) {
 
-source := rand.NewSource(time.Now().UnixNano())
-rng := rand.New(source)
-
 dx := opts.DimX
 dy := opts.DimY
 cx := 0
@@ -96,8 +93,8 @@ for f := 0; f <= rlloop; f++ {
 			fnd := false
 			for !fnd && sft > 0 {
 
-				cx = rand.Intn(dx)
-				cy = rand.Intn(dy)
+				cx = rng.Intn(dx)
+				cy = rng.Intn(dy)
 				if mbuf[xy{cx, cy}] == 0 { fnd = true }
 				sft--
 			}
@@ -131,7 +128,7 @@ var (
 // random int range
 
 func rndr(min, max int) int {
-	i := rand.Intn(max-min+1) + min
+	i := rng.Intn(max-min+1) + min
 //fmt.Printf("rng %d - %d  sel: %d\n",min,max,i)
 	return i
 }
@@ -144,13 +141,13 @@ func _room(x1, y1, x2, y2, val int) {
 	}
 }
 
-func map_put_spot(x, y int, spot int) {
+func grid_put(x, y int, val int) {
 	if x >= 0 && x < MAP_W && y >= 0 && y < MAP_H {
-		gridb[y][x] = spot
+		gridb[y][x] = val
 	}
 }
 
-func map_get_spot(x, y int) int {
+func grid_get(x, y int) int {
 	if x >= 0 && x < MAP_W && y >= 0 && y < MAP_H {
 		return gridb[y][x]
 	}
@@ -162,6 +159,18 @@ func map_get_spot(x, y int) int {
 
 type point struct{ x, y int }
 
+var dirs = []point{
+		{1, 0},  // right
+		{0, 1},  // down
+		{0, -1}, // up
+		{-1, 0}, // left
+// expand orig 8 ray test around cell
+		{-1, -1},// up - lf
+		{-1, 1}, // dn - lf
+		{1, -1}, // up - rt
+		{1, 1},  // dn - rt
+	}
+
 func ray(lx, ly, mx, my, tx, ty, tv, rv int,tspot [100][100]int) int {
 
 	r := -1
@@ -170,6 +179,9 @@ func ray(lx, ly, mx, my, tx, ty, tv, rv int,tspot [100][100]int) int {
 	}
 	return r
 }
+
+// mapper 1: std map rooms + corridors
+
 func map_fargoal(mbuf MazeData) {
 
 	rand.Seed(time.Now().UnixNano())
@@ -188,18 +200,6 @@ func map_fargoal(mbuf MazeData) {
 	}}
 
 	room_center := make([]point, 10)
-
-	dirs := []point{
-		{1, 0},  // right
-		{0, 1},  // down
-		{0, -1}, // up
-		{-1, 0}, // left
-// expand orig 8 ray test around cell
-		{-1, -1},// up - lf
-		{-1, 1}, // dn - lf
-		{1, -1}, // up - rt
-		{1, 1},  // dn - rt
-	}
 
 	// Rooms
 	for i := 0; i < 10; i++ {
@@ -282,6 +282,111 @@ fmt.Printf("run %d, stone %d\n",run,stone)
 		}
 		}
 	}}
+
+	for y := 1; y <= MAP_H; y++ {
+		for x := 1; x <= MAP_W; x++ {
+		mbuf[xy{x, y}] = gridb[y][x]
+	}}
+}
+
+// mapper 2: more complex
+
+func map_sword(mbuf MazeData) {
+
+var sword bool
+	SPOT_MARKER := 256
+
+	rand.Seed(time.Now().UnixNano())
+
+	opts.DimY = 25
+	opts.DimX = 40
+
+	for y := 0; y <= opts.DimY; y++ {
+		for x := 0; x <= opts.DimX; x++ {
+		mbuf[xy{x, y}] = G1OBJ_WALL_REGULAR
+	}}
+
+	MAP_H = opts.DimY
+	MAP_W = opts.DimX
+
+	for y := 1; y <= MAP_H; y++ {
+		for x := 1; x <= MAP_W; x++ {
+		gridb[y][x] = -1
+	}}
+
+	for y := 0; y < 25; y++ {
+		grid_put(39, y, G1OBJ_TILE_FLOOR)
+	}
+	for x := 0; x < 40; x++ {
+		grid_put(x, 24, G1OBJ_TILE_FLOOR)
+	}
+
+	x, y := 1, 2
+	_room(17, 10, 21, 14, G1OBJ_TILE_FLOOR)
+	grid_put(x, y, SPOT_MARKER+4)
+
+	for {
+		for {
+			dir := rndr(0, 3)
+			last := dir
+			for {
+				x2 := x + dirs[dir].x*2
+				y2 := y + dirs[dir].y*2
+
+				if x2 > 0 && y2 > 0 && x2 < MAP_W-1 && y2 < MAP_H-1 &&
+					grid_get(x2, y2) == G1OBJ_WALL_REGULAR {
+					grid_put(x2, y2, SPOT_MARKER+dir)
+					grid_put(x+dirs[dir].x, y+dirs[dir].y, G1OBJ_TILE_FLOOR)
+					x = x2
+					y = y2
+					break
+				}
+
+				dir++
+				if dir == 4 {
+					dir = 0
+				}
+				if dir == last {
+					goto breakbreak
+				}
+			}
+		}
+	breakbreak:
+		dir := int(grid_get(x, y))
+		grid_put(x, y, G1OBJ_TILE_FLOOR)
+		if dir >= SPOT_MARKER && dir <= SPOT_MARKER+3 {
+			dir -= SPOT_MARKER
+			x -= dirs[dir].x * 2
+			y -= dirs[dir].y * 2
+		} else {
+			break
+		}
+	}
+
+	dir := rndr(0, 3)
+	switch dir {
+	case 0:
+		grid_put(16, 12, G1OBJ_TREASURE_BAG)
+	case 1:
+		grid_put(22, 12, G1OBJ_TREASURE_BAG)
+	case 2:
+		grid_put(19, 9, G1OBJ_TREASURE_BAG)
+	case 3:
+		grid_put(19, 15, G1OBJ_TREASURE_BAG)
+	}
+
+	if !sword {
+		sw := rng.Intn(6) + G1OBJ_INVISIBL
+		grid_put(19, 12, sw)
+		sword = true
+	}
+
+	for y := 0; y < 25; y++ {
+		grid_put(39, y, G1OBJ_WALL_REGULAR)
+	}
+	for x := 0; x < 40; x++ {
+		grid_put(x, 24, G1OBJ_WALL_REGULAR)
+	}
 
 	for y := 1; y <= MAP_H; y++ {
 		for x := 1; x <= MAP_W; x++ {
