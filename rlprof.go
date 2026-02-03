@@ -298,20 +298,20 @@ var sword bool
 
 	rand.Seed(time.Now().UnixNano())
 
-	opts.DimY = 25
-	opts.DimX = 40
-
+	opts.DimY = 24
+	opts.DimX = 39
+/*
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
 		mbuf[xy{x, y}] = G1OBJ_WALL_REGULAR
-	}}
+	}}*/
 
 	MAP_H = opts.DimY
 	MAP_W = opts.DimX
 
 	for y := 1; y <= MAP_H; y++ {
 		for x := 1; x <= MAP_W; x++ {
-		gridb[y][x] = -1
+		gridb[y][x] = G1OBJ_WALL_REGULAR
 	}}
 
 	for y := 0; y < 25; y++ {
