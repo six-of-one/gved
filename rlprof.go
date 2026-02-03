@@ -124,9 +124,10 @@ for f := 0; f <= rlloop; f++ {
 var (
 	MAP_H int
 	MAP_W int
-	spots [100][100]int
+	gridb [100][100]int		// grid to build map
 )
 
+// ancillary fn()
 // random int range
 
 func rndr(min, max int) int {
@@ -138,13 +139,28 @@ func rndr(min, max int) int {
 func _room(x1, y1, x2, y2, val int) {
 	for y := y1; y < y2; y++ {
 		for x := x1; x < x2; x++ {
-			spots[y][x] = val
+			gridb[y][x] = val
 		}
 	}
 }
 
+func map_put_spot(x, y int, spot int) {
+	if x >= 0 && x < MAP_W && y >= 0 && y < MAP_H {
+		gridb[y][x] = spot
+	}
+}
+
+func map_get_spot(x, y int) int {
+	if x >= 0 && x < MAP_W && y >= 0 && y < MAP_H {
+		return gridb[y][x]
+	}
+	return G1OBJ_WALL_REGULAR
+}
+
 // 8 ray test from a cell
 // for bounds lx,ly - mx,my (low to max) check tspot at tx,ty for tv (test val) if so, return rv
+
+type point struct{ x, y int }
 
 func ray(lx, ly, mx, my, tx, ty, tv, rv int,tspot [100][100]int) int {
 
@@ -156,7 +172,6 @@ func ray(lx, ly, mx, my, tx, ty, tv, rv int,tspot [100][100]int) int {
 }
 func map_fargoal(mbuf MazeData) {
 
-	type point struct{ x, y int }
 	rand.Seed(time.Now().UnixNano())
 
 	for y := 0; y <= opts.DimY; y++ {
@@ -169,7 +184,7 @@ func map_fargoal(mbuf MazeData) {
 
 	for y := 1; y <= MAP_H; y++ {
 		for x := 1; x <= MAP_W; x++ {
-		spots[y][x] = -1
+		gridb[y][x] = -1
 	}}
 
 	room_center := make([]point, 10)
@@ -235,7 +250,7 @@ fmt.Printf("run %d, stone %d\n",run,stone)
 				m_x := x + dirs[dir].x
 				m_y := y + dirs[dir].y
 
-				if spots[m_y][m_x] != G1OBJ_TILE_FLOOR {
+				if gridb[m_y][m_x] != G1OBJ_TILE_FLOOR {
 					stone = 2
 				}
 
@@ -243,12 +258,12 @@ fmt.Printf("run %d, stone %d\n",run,stone)
 					break
 				}
 
-				if stone == 2 && spots[m_y][m_x] == G1OBJ_TILE_FLOOR {
+				if stone == 2 && gridb[m_y][m_x] == G1OBJ_TILE_FLOOR {
 					stone = 0
 					break
 				}
 
-				spots[m_y][m_x] = G1OBJ_TILE_FLOOR
+				gridb[m_y][m_x] = G1OBJ_TILE_FLOOR
 
 				x = m_x
 				y = m_y
@@ -260,16 +275,16 @@ fmt.Printf("run %d, stone %d\n",run,stone)
 // wall off floor from null space
 	for y := 1; y <= MAP_H; y++ {
 		for x := 1; x <= MAP_W; x++ {
-		if spots[y][x] < 0 {
+		if gridb[y][x] < 0 {
 		for i := 0; i < 8; i++ {
-			nv := ray(1, 1, MAP_W, MAP_H, x + dirs[i].x, y + dirs[i].y, G1OBJ_TILE_FLOOR, G1OBJ_WALL_REGULAR, spots)
-			if nv >= 0 { spots[y][x] = nv }
+			nv := ray(1, 1, MAP_W, MAP_H, x + dirs[i].x, y + dirs[i].y, G1OBJ_TILE_FLOOR, G1OBJ_WALL_REGULAR, gridb)
+			if nv >= 0 { gridb[y][x] = nv }
 		}
 		}
 	}}
 
 	for y := 1; y <= MAP_H; y++ {
 		for x := 1; x <= MAP_W; x++ {
-		mbuf[xy{x, y}] = spots[y][x]
+		mbuf[xy{x, y}] = gridb[y][x]
 	}}
 }
