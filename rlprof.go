@@ -116,7 +116,7 @@ for f := 0; f <= rlloop; f++ {
 }
 }
 
-// far goal rnd mapper
+// far goal rnd mapper(s) 1, 2, and 3
 
 var (
 	MAP_H int
@@ -135,10 +135,126 @@ func rndr(min, max int) int {
 
 func _room(x1, y1, x2, y2, val int) {
 	for y := y1; y < y2; y++ {
+		if y < 0 || y >= MAP_H { continue }
 		for x := x1; x < x2; x++ {
+			if x < 0 || x >= MAP_W { continue }
 			gridb[y][x] = val
 		}
 	}
+}
+
+func _attach(x1, y1, x2, y2 int, what int) (ax, ay int) {
+	x, y := x1, y1
+
+	for (x != x2 || y != y2) && gridb[y][x] != what {
+		dx, dy := 0, 0
+
+		if x < x2 {
+			dx = 1
+		}
+		if x > x2 {
+			dx = -1
+		}
+		if y < y2 {
+			dy = 1
+		}
+		if y > y2 {
+			dy = -1
+		}
+		if dx != 0 && dy != 0 {
+			f := rndr(0, 1)
+			if f != 0 {
+				dx = 0
+			} else {
+				dy = 0
+			}
+		}
+		x += dx
+		y += dy
+	}
+	return x, y
+}
+
+func _path(x1, y1, x2, y2 int, what int) {
+	x, y := x1, y1
+
+	for x != x2 || y != y2 {
+		l := rndr(1, 4)
+		dx, dy := 0, 0
+
+		if x < x2 {
+			dx = 1
+		}
+		if x > x2 {
+			dx = -1
+		}
+		if y < y2 {
+			dy = 1
+		}
+		if y > y2 {
+			dy = -1
+		}
+		if dx != 0 && dy != 0 {
+			f := rndr(0, 1)
+			if f != 0 {
+				dx = 0
+			} else {
+				dy = 0
+			}
+		}
+		for i := 0; i < l; i++ {
+			gridb[y][x] = what
+			x += dx
+			y += dy
+			if x == x2 && y == y2 {
+				break
+			}
+			if !(x > 0 && y > 0 && x < MAP_W-1 && y < MAP_H-1) {
+				x -= dx
+				y -= dy
+				break
+			}
+		}
+	}
+	gridb[y][x] = what
+}
+
+func _corridor(x, y int, where, what int) (ex, ey int) {
+	ddx := []int{0, 1, 0, -1}
+	ddy := []int{1, 0, -1, 0}
+	l := rndr(10, 70)
+	dx, dy := 0, 0
+	s := 0
+
+	for i := 0; i < l; i++ {
+		if s > 0 {
+			s--
+		} else {
+			d := rndr(0, 3)
+			dx = ddx[d]
+			dy = ddy[d]
+			s = rndr(2, 8)
+		}
+
+		gridb[y][x] = what
+
+		x += dx
+		y += dy
+
+		if x > 0 && y > 0 && x < MAP_W-1 && y < MAP_H-1 &&
+			gridb[y+dy][x+dx] == where &&
+			gridb[y+dy+dx][x+dx+dy] == where &&
+			gridb[y+dy-dx][x+dx-dy] == where &&
+			gridb[y+dx][x+dy] == where &&
+			gridb[y-dx][x-dy] == where {
+			// continue
+		} else {
+			x -= dx
+			y -= dy
+			s = 0
+		}
+	}
+	return x, y
 }
 
 func grid_put(x, y int, val int) {
@@ -289,7 +405,7 @@ fmt.Printf("run %d, stone %d\n",run,stone)
 	}}
 }
 
-// mapper 2: more complex
+// mapper 2: more complex maze
 
 func map_sword(mbuf MazeData) {
 
@@ -392,4 +508,81 @@ var sword bool
 		for x := 1; x <= MAP_W; x++ {
 		mbuf[xy{x, y}] = gridb[y][x]
 	}}
+}
+
+// mapper 3
+
+func map_wide(mbuf MazeData) {
+
+	var sx, sy [15]int
+	l, t := 2, 2
+	mx, my := MAP_W/2, MAP_H/2
+	r, b := MAP_W-3, MAP_H-3
+
+	// Random room positions.
+	sx[0], sy[0] = rndr(l, r), rndr(t, b)
+	sx[1], sy[1] = rndr(l, mx), rndr(t, my)
+	sx[2], sy[2] = rndr(mx, r), rndr(t, my)
+	sx[3], sy[3] = rndr(l, mx), rndr(my, b)
+	sx[4], sy[4] = rndr(mx, r), rndr(my, b)
+
+	n := rndr(2, 7)
+
+	for i := 5; i < n; i++ {
+		sx[i], sy[i] = rndr(l, r), rndr(t, b)
+	}
+
+	// Place rooms.
+	for i := 0; i < n; i++ {
+		_room(sx[i]-rndr(1, 4), sy[i]-rndr(1, 4), sx[i]+rndr(1, 4), sy[i]+rndr(1, 4), G1OBJ_TILE_FLOOR)
+	}
+
+	// Connect rooms.
+	for i := 0; i < n; i++ {
+		j := i
+		if i < n-1 {
+			j = i + 1
+		} else {
+			j = 0
+		}
+		ax, ay := _attach(sx[i], sy[i], sx[j], sy[j], G1OBJ_WALL_REGULAR)
+		gridb[ay][ax] = G1OBJ_EXIT4
+		ax2, ay2 := _attach(sx[j], sy[j], sx[i], sy[i], G1OBJ_WALL_REGULAR)
+		gridb[ay2][ax2] = G1OBJ_EXIT
+		_path(ax, ay, ax2, ay2, G1OBJ_TILE_FLOOR)
+	}
+
+	// Some random corridors
+	m := rndr(2, 7)
+	for i := 0; i < m; i++ {
+		var ex, ey, x, y int
+		f := rndr(0, 3)
+
+		for {
+			x = rndr(1, MAP_W-2)
+			y = rndr(4, MAP_H-2)
+			if gridb[y][x] == G1OBJ_WALL_REGULAR {
+				break
+			}
+		}
+
+		switch f {
+		case 0:
+			y = MAP_H - 2
+		case 1:
+			x = 1
+		case 2:
+			y = 4
+		case 3:
+			x = MAP_W - 2
+		}
+
+		ex, ey = _corridor(x, y, G1OBJ_WALL_REGULAR, G1OBJ_TILE_FLOOR)
+
+		// Avoid dead ends
+		j := rndr(0, n-1)
+		_path(ex, ey, sx[j], sy[j], G1OBJ_TILE_FLOOR)
+		j = rndr(0, n-1)
+		_path(x, y, sx[j], sy[j], G1OBJ_TILE_FLOOR)
+	}
 }
