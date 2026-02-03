@@ -422,8 +422,8 @@ var sword bool
 		mbuf[xy{x, y}] = G1OBJ_WALL_REGULAR
 	}}*/
 
-	MAP_H = opts.DimY
-	MAP_W = opts.DimX
+	MAP_H = opts.DimY + 1
+	MAP_W = opts.DimX + 1
 
 	for y := 1; y <= MAP_H; y++ {
 		for x := 1; x <= MAP_W; x++ {
@@ -514,6 +514,24 @@ var sword bool
 
 func map_wide(mbuf MazeData) {
 
+	opts.DimY = 24
+	opts.DimX = 39
+	MAP_H = opts.DimY + 1
+	MAP_W = opts.DimX + 1
+
+	for y := 0; y <= opts.DimY; y++ {
+		for x := 0; x <= opts.DimX; x++ {
+		mbuf[xy{x, y}] = G1OBJ_WALL_REGULAR
+	}}
+
+	MAP_H = opts.DimY
+	MAP_W = opts.DimX
+
+	for y := 1; y <= MAP_H; y++ {
+		for x := 1; x <= MAP_W; x++ {
+		gridb[y][x] = -1
+	}}
+
 	var sx, sy [15]int
 	l, t := 2, 2
 	mx, my := MAP_W/2, MAP_H/2
@@ -552,6 +570,7 @@ func map_wide(mbuf MazeData) {
 		_path(ax, ay, ax2, ay2, G1OBJ_TILE_FLOOR)
 	}
 
+fmt.Printf("random corridors\n")
 	// Some random corridors
 	m := rndr(2, 7)
 	for i := 0; i < m; i++ {
@@ -561,7 +580,7 @@ func map_wide(mbuf MazeData) {
 		for {
 			x = rndr(1, MAP_W-2)
 			y = rndr(4, MAP_H-2)
-			if gridb[y][x] == G1OBJ_WALL_REGULAR {
+			if gridb[y][x] == -1 {
 				break
 			}
 		}
@@ -585,4 +604,20 @@ func map_wide(mbuf MazeData) {
 		j = rndr(0, n-1)
 		_path(x, y, sx[j], sy[j], G1OBJ_TILE_FLOOR)
 	}
+
+// wall off floor from null space
+	for y := 1; y <= MAP_H; y++ {
+		for x := 1; x <= MAP_W; x++ {
+		if gridb[y][x] < 0 {
+		for i := 0; i < 8; i++ {
+			nv := ray(1, 1, MAP_W, MAP_H, x + dirs[i].x, y + dirs[i].y, G1OBJ_TILE_FLOOR, G1OBJ_WALL_REGULAR, gridb)
+			if nv >= 0 { gridb[y][x] = nv }
+		}
+		}
+	}}
+
+	for y := 1; y <= MAP_H; y++ {
+		for x := 1; x <= MAP_W; x++ {
+		mbuf[xy{x, y}] = gridb[y][x]
+	}}
 }
