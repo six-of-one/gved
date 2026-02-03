@@ -25,7 +25,8 @@ general controls:		(general keys are always available in both modes)
 
 q, q		close all dialogs/ windows EXCEPT program main window
 
-?			command key hints dialog - now in all sub-windows
+?			command key hints, most dialogs - sub-window specific
+			main win dialog will reconfigure based on edit mode & keys
 
 #a	load maze #
 	(G¹ valid 1-127, G² valid 1-117)
@@ -100,7 +101,7 @@ t,T in palette window gives this list in dialog
 
 s	display random "special potions" and gold bags on emply floor tiles
 L	toggle generator indicator letters [ DGLS ] showing box gen monster
-p	toggle floor invisible *
+p	toggle floor invisible * (renders transparent in output png)
 P	toggle walls invisible *
 T	loop through a set of invisible flags or, *
 #T	set invisible flag set - hide vars maze elements: *
@@ -117,6 +118,8 @@ T	loop through a set of invisible flags or, *
 	NOWALL = 1024	// g2 *walls
 	NOG1W = 2048	// g1 std wall only
 - these are hidden only and still present in maze
+
+<CTRL>-T reset invisible flags to 0
 
 (* hide items will disable when edit keys active)
 
@@ -352,6 +355,7 @@ Blank		- fill buffer with blank maze, default floors & walls
 Blank keep	- blank maze, but keep decor cols & pats, start, exits, and
 			  if # is set on title numeric: use inversion of #T hide items
 			  mask to preserve those
+Mapper test	- vars random map generate algorithms
 Random Load - empty tiles (floor) will be load with a random select
 			  profile - uses #T filter if set as include filter
 
@@ -368,6 +372,11 @@ Next Mas	- cycle master pb store fwd
 Prior Mas	- cycle master pb store back
 Next Ses	- cycle edit session pb store fwd
 Prior Ses	- cycle edit session pb store back
+
+Options		- set and save various system options
+Edit Keys	- live update list of edit key assignments in a dialog
+Operation	- open this text in a dialog
+License		- original gex code under GPL3, gved (new) code is GPL2
 
 ---------------------------------------------
 
