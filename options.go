@@ -226,6 +226,7 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		fmt.Printf("Select level: %s\n", str)
 	})
 	sellvl.SetSelected("Level 1")
+	sel_label := widget.NewLabelWithStyle("Start on:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 
 	unpx := widget.NewCheck("Unpin X", func(upx bool) {
 		fmt.Printf("Unpin X set to %t\n", upx)
@@ -253,6 +254,7 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 			layout.NewSpacer(),
 			container.New(
 				layout.NewHBoxLayout(),
+				sel_label,
 				sellvl,
 			),
 			layout.NewSpacer(),
