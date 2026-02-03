@@ -659,9 +659,9 @@ var itemStamps = map[string]Stamp{
 	},
 	"wizard": Stamp{
 		width:   3,
-		numbers: tilerange(0x1357, 9),
+		numbers: tilerange(0x135A, 9),
 		ptype:   "wizard",
-		pnum:    9,
+		pnum:    3,
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,

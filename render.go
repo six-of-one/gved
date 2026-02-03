@@ -168,6 +168,7 @@ func writestamptoimage(img *image.NRGBA, stamp *Stamp, xloc int, yloc int) {
 	if ptyp == "base" && G1 { ptyp = "gbase" }
 	if ptyp == "wall" && G1 { ptyp = "gwall" }
 	if ptyp == "floor" && G1 { ptyp = "gfloor" }
+//fmt.Printf("g palettes %s,%d\n", ptyp, stamp.pnum)
 	p := gauntletPalettes[ptyp][stamp.pnum]
 	for y := 0; y < len(stamp.data)/stamp.width; y++ {
 		for x := 0; x < stamp.width; x++ {

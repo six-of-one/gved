@@ -284,6 +284,8 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 			if zmod > 0 {
 				xs, ys := find(ebuf,G1OBJ_PLAYERSTART,0,0)
 				if xs > -1 { zm_x = xs; zm_y = ys }
+			} else {
+				zm_x, zm_y = -1, -1
 			}
 			spau = fmt.Sprintf("Z mode: %d\n",zmod)
 		case 92:		// \
@@ -479,6 +481,8 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			}
 		case 'h':
 			if zmod > 0 {
+				zm_x--
+				if zm_x < 0 { zm_x = opts.DimX }
 				break
 			}
 			if opts.edat > 0 {
@@ -492,9 +496,19 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)
 			}
 		case 'j':
+			if zmod > 0 {
+				zm_y++
+				if zm_y > opts.DimY { zm_y = 0 }
+			}
 		case 'k':
+			if zmod > 0 {
+				zm_x++
+				if zm_x > opts.DimX { zm_x = 0 }
+			}
 		case 'u':
 			if zmod > 0 {
+				zm_y--
+				if zm_y < 0 { zm_y = opts.DimY }
 				break
 			}
 			eid = "Gauntlet II"
