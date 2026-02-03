@@ -211,6 +211,8 @@ func menu_option() {
 	wc.Show()
 }
 
+/*
+// save test code for later
 func map_test() {
 	for i := 1; i < 6; i++ {
 	go func() {
@@ -223,6 +225,8 @@ func map_test() {
 	}
 
 }
+*/
+
 // set menus
 
 func st_menu() {
@@ -242,13 +246,13 @@ func st_menu() {
 	menuItemFmap := fyne.NewMenuItem("Mapper test",func() { map_fargoal(ebuf); ed_maze(true) })
 	menuItemFmapb := fyne.NewMenuItem("Mapper 2 test",func() { map_sword(ebuf); ed_maze(true) })
 	menuItemFmapc := fyne.NewMenuItem("Mapper 3 test",func() { map_wide(ebuf); ed_maze(true) })
-	menuItemTmap := fyne.NewMenuItem("Map++ test",func() { map_test() })
+//	menuItemTmap := fyne.NewMenuItem("Map++ test",func() { map_test() })
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
 	menuItemGvs := fyne.NewMenuItem("Gaunlet view sim toggle",func() { gvs = !gvs })
 	menuItemWob := fyne.NewMenuItem("Wall border right & bottom",func() { opts.Wob = !opts.Wob; remaze(opts.mnum) })
 	menuItemPalf := fyne.NewMenuItem("Palette; map decore toggle",func() { if wpalop {palfol = !palfol}; palete() })
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
-	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemTmap, menuItemFmap, menuItemFmapb, menuItemFmapc, menuItemRand, menuItemLin1,  menuItemGvs, menuItemWob, menuItemPalf, menuItemMute, menuItemExit)
+	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemFmap, menuItemFmapb, menuItemFmapc, menuItemRand, menuItemLin1,  menuItemGvs, menuItemWob, menuItemPalf, menuItemMute, menuItemExit)
 
 	menuItemColr := fyne.NewMenuItem("Set colors", menu_color)
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
