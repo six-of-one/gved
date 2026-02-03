@@ -33,7 +33,11 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 	}
 // config override for default blotter with png image
 	if blotimg != "" {
-			inf, err := os.Open(blotimg)
+			err, bll := itemGetPNG(blotimg)
+			if err == nil {
+				blot = bll
+			} else { blotimg = "" }
+/*			inf, err := os.Open(blotimg)
 			if err == nil {
 				src, _, err := image.Decode(inf)
 				if err == nil {
@@ -41,7 +45,7 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 				} else { blotimg = "" }
 			} else { blotimg = "" }
 			defer inf.Close()
-
+*/
 	}
 	if blotimg == "" {
 		blot = canvas.NewImageFromImage(img)

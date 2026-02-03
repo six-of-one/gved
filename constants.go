@@ -134,6 +134,7 @@ const (
 	G1OBJ_TREASURE_BAG = 64
 	G1OBJ_EXTEND = 66
 	G1OBJ_WIZARD = 67
+	GORO_TEST = 70
 )
 // contrl var nothing [ no-thing ] that blocks elements display
 const (

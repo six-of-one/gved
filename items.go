@@ -3,6 +3,9 @@ package main
 import (
 	"strings"
 	"fmt"
+	"fyne.io/fyne/v2/canvas"
+	"os"
+	"image"
 )
 
 // type Stamp struct {
@@ -801,4 +804,21 @@ func itemGetStamp(itemType string) *Stamp {
 		fillstamp(&stamp)
 	}
 	return &stamp
+}
+
+// expand for sanctuary gfx
+
+func itemGetPNG(fil string) (error, *canvas.Image) {
+	rimg := canvas.NewImageFromImage(blankimage(16, 16))
+
+	inf, err := os.Open(fil)
+	if err == nil {
+		src, _, err := image.Decode(inf)
+		if err == nil {
+			rimg = canvas.NewImageFromImage(src)
+		}
+	}
+	defer inf.Close()
+
+	return err, rimg
 }
