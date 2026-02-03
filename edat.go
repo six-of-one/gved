@@ -690,11 +690,15 @@ func loc(mdat MazeData, x, y int) int {
 	return -1
 }
 
-func find(mdat MazeData, wh int) (int, int) {
+// sx, sy allow re-entry to find element multiple times
+
+func find(mdat MazeData, wh int, sx, sy int) (int, int) {
 
 	rx, ry := -1, -1
-	for y := 0; y <= opts.DimY; y++ {
-		for x := 0; x <= opts.DimX; x++ {
+	if sx < 0 || sx > opts.DimX { sx = 0 }
+	if sy < 0 || sx > opts.DimY { sy = 0 }
+	for y := sx; y <= opts.DimY; y++ {
+		for x := sy; x <= opts.DimX; x++ {
 			if loc(mdat, x, y) == wh { rx = x; ry = y; break }
 	}}
 	return rx, ry

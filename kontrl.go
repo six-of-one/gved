@@ -281,6 +281,10 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 		case 'z':
 			zmod++
 			if zmod > 3 { zmod = 0 }
+			if zmod > 0 {
+				xs, ys := find(ebuf,G1OBJ_PLAYERSTART,0,0)
+				if xs > -1 { zm_x = xs; zm_y = ys }
+			}
 			spau = fmt.Sprintf("Z mode: %d\n",zmod)
 		case 92:		// \
 			ska := "cmd keys mode"
