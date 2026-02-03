@@ -3,6 +3,7 @@ package main
 import (
 	"image"
 	"image/color"
+//	"image/color/palette"
 	"image/png"
 	"math"
 	"os"
@@ -185,13 +186,18 @@ func savetopng(fn string, img *image.NRGBA) {
 	png.Encode(f, img)
 }
 
-// func genanim(animarray []int, xtiles int, ytiles int) []*image.Paletted {
-// 	var images []*image.Paletted
+/*
+// while this compiles, with opts.Animate in monsters.go it produces blak images
+func genanim(animarray []int, xtiles int, ytiles int) []*image.Paletted {
+	var images []*image.Paletted
 
-// 	for i := 0; i < len(animarray); i++ {
-// 		fmt.Printf("generating from tile %d\n", animarray[i])
-// 		images = append(images, genimage(animarray[i], xtiles, ytiles))
-// 	}
+	for i := 0; i < len(animarray); i++ {
+		fmt.Printf("generating from tile %d\n", animarray[i])
+		src := genimage(animarray[i], xtiles, ytiles)
+		apimg := image.NewPaletted(src.Bounds(), palette.Plan9)
+		images = append(images, apimg)
+	}
 
-// 	return images
-// }
+	return images
+}
+*/

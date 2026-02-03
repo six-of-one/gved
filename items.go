@@ -661,7 +661,7 @@ var itemStamps = map[string]Stamp{
 		width:   3,
 		numbers: tilerange(0x135A, 9),
 		ptype:   "wizard",
-		pnum:    3,
+		pnum:    2,
 		trans0:  true,
 		nudgex:  -4,
 		nudgey:  -4,
@@ -711,6 +711,7 @@ func tilerange(start int, count int) []int {
 	return r
 }
 
+type AFrames []Stamp
 // type MobAnimFrames []int
 // type MobAnimsDir map[string]MobAnimFrames
 // type MobAnims map[string]MobAnimsDir
