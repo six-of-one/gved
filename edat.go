@@ -451,7 +451,6 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 func ed_maze(rld bool) {
 	upd_edmaze(rld)
 	lviewp := viewp
-	if opts.edat < 1 { lviewp = 32 }	// simulate view mode for sd bufs if not in edit
 // viewport ops
 	fx := vpx + lviewp
 	fy := vpy + lviewp
@@ -462,6 +461,13 @@ func ed_maze(rld bool) {
 	fx = vpx + lviewp
 	fy = vpy + lviewp
 fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lviewp,vpx,vpy,fx,fy)
+	if opts.edat < 1 {	// simulate view mode for sd bufs if not in edit
+		vpx, vpy = 0, 0
+		fx = opts.DimX
+		if opts.DimY > fx { fx = opts.DimY }
+		if fx < 30 { fx = 30 }
+		fy = fx
+	}
 	Ovimg := segimage(ebuf, eflg, vpx, vpy, fx,fy, false)
 	upwin(Ovimg)
 	calc_stats()
