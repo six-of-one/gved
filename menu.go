@@ -212,11 +212,16 @@ func menu_option() {
 }
 
 func map_test() {
-	for i := 5; i < 10; i++ {
+	for i := 1; i < 6; i++ {
+	go func() {
+			time.Sleep(time.Duration(i * 300) * time.Millisecond)
+   fyne.Do(func() {
 		opts.mnum++
 		remaze(opts.mnum)
-		time.Sleep(1000 * time.Millisecond)
+   })
+	}()
 	}
+
 }
 // set menus
 
