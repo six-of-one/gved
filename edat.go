@@ -690,6 +690,16 @@ func loc(mdat MazeData, x, y int) int {
 	return -1
 }
 
+func find(mdat MazeData, wh int) (int, int) {
+
+	rx, ry := -1, -1
+	for y := 0; y <= opts.DimY; y++ {
+		for x := 0; x <= opts.DimX; x++ {
+			if loc(mdat, x, y) == wh { rx = x; ry = y; break }
+	}}
+	return rx, ry
+}
+
 // palette
 
 // statistics on mazes, already set for partial sanctuary expansion
