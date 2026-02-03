@@ -79,7 +79,7 @@ func specialKey(cw fyne.Window) {
 						nsremaze = true
 						srelod = needsav()
 						opts.edat = 0
-						if sdb == 0 { menu_lodit(true) } else {
+						if sdb <= 0 { menu_lodit(true) } else {
 							sdbit(0)
 							srelod = false
 						}
