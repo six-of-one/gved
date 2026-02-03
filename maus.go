@@ -33,7 +33,7 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 	}
 // config override for default blotter with png image
 	if blotimg != "" {
-			err, bll := itemGetPNG(blotimg)
+			err, bll, _ := itemGetPNG(blotimg)
 			if err == nil {
 				blot = bll
 			} else { blotimg = "" }

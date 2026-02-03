@@ -10,7 +10,6 @@ import (
 	"github.com/fogleman/gg"
 	"image/color"
 	"encoding/binary"
-	"fyne.io/fyne/v2/canvas"
 )
 
 
@@ -1512,7 +1511,8 @@ func segimage(mdat MazeData, fdat [11]int, xb int, yb int, xs int, ys int, stat 
 fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 
 	var err error
-	var ptamp *canvas.Image
+	var ptamp image.Image
+
 // dummy maze for ops that require it
 	var maze = &Maze{}
 	maze.data = mdat
@@ -1684,6 +1684,9 @@ if opts.Verbose { fmt.Printf("\n") }
 		for x := xb; x <= xs; x++ {
 			var stamp *Stamp
 			var dots int // dot count
+
+			ptamp = nil
+
 // gen type op - letter to draw
 			gtopl := ""
 			gtopcol := false	// disable gen letter seperate colors
@@ -2081,7 +2084,7 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 			case G1OBJ_TRANSPORTER:
 				stamp = itemGetStamp("tportg1")
 			case GORO_TEST:
-				err, ptamp = itemGetPNG("gfx/goro.png")
+				err, _, ptamp = itemGetPNG("gfx/goro.png")
 
 			default:
 				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
@@ -2125,12 +2128,9 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 			}
 // expand and sanctuary
 			if err == nil && ptamp != nil {
-				dtop := gg.NewContext(24, 24)
-				dtop.Clear()
-				
-				dtamp := dtop.Image()
+
 				offset := image.Pt((x-xb)*16, (y-yb)*16)
-				draw.Draw(img, dtamp.Bounds().Add(offset), dtamp, image.ZP, draw.Over)
+				draw.Draw(img, ptamp.Bounds().Add(offset), ptamp, image.ZP, draw.Over)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {

@@ -807,8 +807,9 @@ func itemGetStamp(itemType string) *Stamp {
 }
 
 // expand for sanctuary gfx
+// returns image.Image for draw onto maze o/p, and canvas for blotter type stuf
 
-func itemGetPNG(fil string) (error, *canvas.Image) {
+func itemGetPNG(fil string) (error, *canvas.Image, image.Image) {
 	rimg := canvas.NewImageFromImage(blankimage(16, 16))
 
 	inf, err := os.Open(fil)
@@ -816,9 +817,10 @@ func itemGetPNG(fil string) (error, *canvas.Image) {
 		src, _, err := image.Decode(inf)
 		if err == nil {
 			rimg = canvas.NewImageFromImage(src)
+	return err, rimg, src
 		}
 	}
 	defer inf.Close()
 
-	return err, rimg
+	return err, rimg, nil
 }
