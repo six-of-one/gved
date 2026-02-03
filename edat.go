@@ -157,8 +157,8 @@ func init_buf() {
 // clear mazedata buf, max size mx x my, fill with z, unless wh is set > -66, then only replace wh
 
 func clr_buf(buf MazeData, mx int, my int, z int, wh int) {
-	if wh < -65 {		// if we dont have a when = wh, set min size for rom maze
-		de := 33
+	if wh < -65 {		// if we dont have a when = wh, set size for possible larger edited mazes
+		de := 256
 		if mx < de { mx = de }
 		if my < de { my = de }
 	}
