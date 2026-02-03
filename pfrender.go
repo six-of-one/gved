@@ -2084,7 +2084,7 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 			case G1OBJ_TRANSPORTER:
 				stamp = itemGetStamp("tportg1")
 			case GORO_TEST:
-				err, _, ptamp = itemGetPNG("gfx/goro.png")
+				err, _, ptamp = itemGetPNG("gfx/goro.16.png")
 
 			default:
 				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
