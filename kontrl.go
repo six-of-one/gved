@@ -18,6 +18,8 @@ var nsremaze bool
 var swnothing int		// store nothing flag when cmd keys off
 
 var zmod int		// play test mode
+var zm_x int		// ptl position
+var zm_y int
 
 // input keys and keypress checks for canvas/ window
 // since this is all that is called without other handler / timers
@@ -472,7 +474,9 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				spau = fmt.Sprintf("cmd: m - mv: %t\n",opts.MV)
 			}
 		case 'h':
-			if zmod > 0 { break }
+			if zmod > 0 {
+				break
+			}
 			if opts.edat > 0 {
 				opts.MH = true
 				upd_edmaze(false)
@@ -486,7 +490,9 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'j':
 		case 'k':
 		case 'u':
-			if zmod > 0 { break }
+			if zmod > 0 {
+				break
+			}
 			eid = "Gauntlet II"
 			nsremaze = true
 			relodsub = needsav()

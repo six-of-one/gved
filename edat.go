@@ -681,6 +681,15 @@ fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 	}
 }
 
+// test location
+
+func loc(mdat MazeData, x, y int) int {
+	if x >= 0 && x <= opts.DimX && y >= 0 && y <= opts.DimY {
+		return mdat[xy{x, y}]
+	}
+	return -1
+}
+
 // palette
 
 // statistics on mazes, already set for partial sanctuary expansion
