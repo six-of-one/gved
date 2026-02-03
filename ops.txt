@@ -249,6 +249,7 @@ Left-click drag	- dragging to new location - fill / delete the encompassed
 key held with Left-click
 
 delete			place a floor at cursor
+shift-delete	nullify cell at cursor (display color 0, content = -1)
 
 control			when dragging edit, box will fill/ delete an outline only
 
