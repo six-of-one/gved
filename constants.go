@@ -133,6 +133,7 @@ const (
 	G1OBJ_TILE_STUN = 62
 	G1OBJ_TREASURE_BAG = 64
 	G1OBJ_EXTEND = 66
+	G1OBJ_WIZARD = 67
 )
 // contrl var nothing [ no-thing ] that blocks elements display
 const (

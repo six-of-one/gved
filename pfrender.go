@@ -554,7 +554,9 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				gtopl = ""// make sure g2 code (if it runs with g1) doesnt set extra dots on non walls
 				dots = 0
  // /fmt.Printf("g1 dec: %x -- ", whatis(maze, x, y))
-			switch whatis(maze, x, y) {
+			fn := whatis(maze, x, y)
+			if x == zm_x && y == zm_y { fn = G1OBJ_WIZARD }
+			switch fn {
 
 			case G1OBJ_TILE_FLOOR:
 			// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
@@ -752,6 +754,8 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 						stamp = itemGetStamp("magicpotion")
 					}
 				}
+			case G1OBJ_WIZARD:
+				stamp = itemGetStamp("wizard")
 			default:
 				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
 			}
