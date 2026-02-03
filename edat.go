@@ -466,6 +466,7 @@ fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lviewp,vpx,vpy,fx,fy)
 		fx = opts.DimX
 		if opts.DimY > fx { fx = opts.DimY }
 		if fx < 30 { fx = 30 }
+		fx++
 		fy = fx
 	}
 	Ovimg := segimage(ebuf, eflg, vpx, vpy, fx,fy, false)
