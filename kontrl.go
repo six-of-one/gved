@@ -221,6 +221,7 @@ func typedRune(r rune) {
 			anum = 0
 // clear these when load new maze
 			Ovwallpat = -1
+			opts.dntr = false
 		}
 	}
 
