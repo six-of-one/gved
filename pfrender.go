@@ -1572,7 +1572,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 // tesing Se, xpanded floor
 		stdfl := false
 		Se_cflr_cnt++
-		if Se_cflr_cnt > 10 { Se_cflr_cnt = 1 }
+		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 		err, _, ptamp = itemGetPNG(Se_cflr[Se_cflr_cnt])
 // resizing test
 		smol := image.NewRGBA(image.Rect(0, 0, ptamp.Bounds().Max.X/2, ptamp.Bounds().Max.Y/2))

@@ -337,6 +337,11 @@ func aw_init() {
 	ed_init()			// initialized the editor package
 	get_pbcnt()			// paste buffer cnt (per gauntlet)
 
+// testing string extract
+l := "FFAABBCCDDEE88779911006622334455"
+var x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13 int
+fmt.Sscanf(l,"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X", &x1,&x2,&x3,&x4,&x5,&x6,&x7,&x8,&x9,&x10,&x11,&x12,&x13)
+fmt.Printf("long scan test: %X, %X, %X, %X, %X, %X, %X, %X, %X, %X, %X, %X, %X \n",x1,x2,x3,x4,x5,x6,x7,x8,x9,x10,x11,x12,x13)
 }
 
 // sub win switch G¹ / G²

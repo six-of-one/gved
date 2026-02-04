@@ -26,6 +26,8 @@ more complexity will be required for:
 
 var edmaze *Maze
 var ebuf MazeData		// main edit buffer and corresponding flags
+type Xdat map[xy]string	// extra data store, need test
+var xbuf Xdat
 var ecolor color.Color	// master color for maze elements
 var eid string			// id string for titles
 
