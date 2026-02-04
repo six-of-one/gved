@@ -1581,15 +1581,11 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 		bnds := smol.Bounds()
 		iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
 
-//		gap := 256 / opts.dtec; //8; // with 256 x 256 tile, they have to map over TILE (32) x TILE (32) level grid ${gap} sections at a time
 		tw := int(opts.Geow - 4)
 		th := int(opts.Geoh - 30)
-//		if (iw != 256) gap = Math.floor(iw / opts.dtec);		// this will appear strangely if width not evenly divisible by TILE (32)
-//		if (gap < 1) gap = 1;
-//		if (gap > 60) gap = 60;		// size 1920 x 1920, prob too big anyway
+
 		for ty := 0; ty < th ; ty=ty+ih {
 			for tx := 0; tx < tw ; tx=tx+iw {
-//					ctx.drawImage(gbas, 0, 0, STILE * gap, STILE * gap, tx * TILE, ty * TILE, TILE * gap, TILE * gap);
 				offset := image.Pt(tx, ty)
 				draw.Draw(img, smol.Bounds().Add(offset), smol, image.ZP, draw.Over)
 			}}
