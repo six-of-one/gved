@@ -1566,6 +1566,12 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 			}}
 		}
 	}} else {
+// tesing Se, xpanded floor
+		stdfl := false
+		err, _, ptamp = itemGetPNG("gfx/floor017.jpg")
+		bnds := ptamp.Bounds()
+		iw, ih := bnds.Dx(), bnds.Dy()
+
 // g1 checks
 	for y := yb; y < ys; y++ {
 		for x := xb; x < xs; x++ {
@@ -1574,11 +1580,12 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 			if whatis(maze, x, y) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
 			if whatis(maze, x, y) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
 			if maze.wallpattern < 11 {
-				if (nothing & nwt) == 0 {		// wall shadows here
-				adj = checkwalladj3g1(maze, x, y)
+				if (nothing & nwt) == 0 {			// wall shadows here
+				adj = checkwalladj3g1(maze, x, y)	// this sets adjust for shadows, floorGetStamp sets shadows by darkening floor parts
 				}
 			}
 
+		  if stdfl {	// do std floor stamps
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
 			if whatis(maze, x, y) < 0 {
 				coltil(img,0,(x-xb)*16, (y-yb)*16)
@@ -1586,6 +1593,9 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 			if (nothing & NOFLOOR) == 0 {
 				writestamptoimage(img, stamp, (x-xb)*16, (y-yb)*16)
 			}}
+		  }
+// testing
+//			coltil(img,0x770077,(x-xb)*16, (y-yb)*16)
 		}
 
 	}}
