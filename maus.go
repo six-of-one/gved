@@ -37,15 +37,6 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 			if err == nil {
 				blot = bll
 			} else { blotimg = "" }
-/*			inf, err := os.Open(blotimg)
-			if err == nil {
-				src, _, err := image.Decode(inf)
-				if err == nil {
-					blot = canvas.NewImageFromImage(src)
-				} else { blotimg = "" }
-			} else { blotimg = "" }
-			defer inf.Close()
-*/
 	}
 	if blotimg == "" {
 		blot = canvas.NewImageFromImage(img)
