@@ -562,12 +562,6 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			case G1OBJ_TILE_FLOOR:
 			// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
 			// stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
- // dont think g1 has stun tile
-			case G1OBJ_TILE_STUN:
-				adj := checkwalladj3g1(maze, x, y) + rand.Intn(4)
-				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
-				stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
-				stamp.pnum = 0
 
 			case G1OBJ_TILE_TRAP1:
 				dots = 1
@@ -1575,10 +1569,10 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 		err, _, ptamp = itemGetPNG(Se_cflr[Se_cflr_cnt])
 // resizing test
-		smol := image.NewRGBA(image.Rect(0, 0, ptamp.Bounds().Max.X/2, ptamp.Bounds().Max.Y/2))
-		draw.BiLinear.Scale(smol, smol.Rect, ptamp, ptamp.Bounds(), draw.Over, nil)
+//		smol := image.NewRGBA(image.Rect(0, 0, ptamp.Bounds().Max.X/2, ptamp.Bounds().Max.Y/2))
+//		draw.BiLinear.Scale(smol, smol.Rect, ptamp, ptamp.Bounds(), draw.Over, nil)
 
-		bnds := smol.Bounds()
+		bnds := ptamp.Bounds()
 		iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
 
 		tw := int(opts.Geow - 4)
@@ -1587,7 +1581,8 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 		for ty := 0; ty < th ; ty=ty+ih {
 			for tx := 0; tx < tw ; tx=tx+iw {
 				offset := image.Pt(tx, ty)
-				draw.Draw(img, smol.Bounds().Add(offset), smol, image.ZP, draw.Over)
+//				draw.Draw(img, smol.Bounds().Add(offset), smol, image.ZP, draw.Over)
+				draw.Draw(img, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)
 			}}
 // g1 checks
 	for y := yb; y < ys; y++ {
