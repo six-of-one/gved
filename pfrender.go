@@ -565,18 +565,6 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 			case G1OBJ_TILE_TRAP1:
 				dots = 1
- //				fallthrough
-	/*
-			case G1OBJ_TILE_TRAP2:
-				if dots == 0 {
-					dots = 2
-				}
-				fallthrough
-			case G1OBJ_TILE_TRAP3:
-				if dots == 0 {
-					dots = 3
-				}
-	*/
 				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
 				if (nothing & NOTRAP) == 0 {
 					stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
@@ -1946,13 +1934,14 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 			case G1OBJ_TILE_FLOOR:
 			// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
 			// stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
+/*
 // dont think g1 has stun tile
 			case G1OBJ_TILE_STUN:
 				adj := checkwalladj3g1(maze, x, y) + rand.Intn(4)
 				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 				stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
-
+*/
 			case G1OBJ_TILE_TRAP1:
 				dots = 1
 
