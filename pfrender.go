@@ -2130,12 +2130,13 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 // expand and sanctuary
 			if err == nil && ptamp != nil {
 
-				r := image.Rect(0, 0, 10, 10)
-				dst := image.NewRGBA(image.Rect(0, 0, 10, 10))
-				draw.Copy(dst, image.Pt(-5,-5), ptamp, r, draw.Over, nil)
-//				ptamp.SubImage(r)
+//				r := image.Rect(0, 0, 11, 11)
+//				dst := image.NewRGBA(r)
+//				draw.Copy(dst, image.Pt(-4,-4), ptamp, r, draw.Over, nil)
+
 				offset := image.Pt((x-xb)*16, (y-yb)*16)
-				draw.Draw(img, dst.Bounds().Add(offset), dst, image.ZP, draw.Over)
+//				draw.Draw(img, dst.Bounds().Add(offset), dst, image.ZP, draw.Over)
+				draw.Draw(img, ptamp.Bounds().Add(offset), ptamp, image.ZP, draw.Over)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
