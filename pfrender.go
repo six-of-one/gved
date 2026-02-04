@@ -1506,6 +1506,9 @@ func coltil(img *image.NRGBA, col uint32, xloc int, yloc int) {
 // image from buffer segment			- stat: display stats if true
 // segment of buffer from xb,yb to xs,ys (begin to stop)
 
+// testing cust floor
+var Se_cflr_cnt int
+
 func segimage(mdat MazeData, fdat [11]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
 
 //if opts.Verbose {
@@ -1568,7 +1571,9 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	}} else {
 // tesing Se, xpanded floor
 		stdfl := false
-		err, _, ptamp = itemGetPNG("gfx/g1floor7.jpg")
+		Se_cflr_cnt++
+		if Se_cflr_cnt > 10 { Se_cflr_cnt = 1 }
+		err, _, ptamp = itemGetPNG(Se_cflr[Se_cflr_cnt])
 // resizing test
 		smol := image.NewRGBA(image.Rect(0, 0, ptamp.Bounds().Max.X/2, ptamp.Bounds().Max.Y/2))
 		draw.BiLinear.Scale(smol, smol.Rect, ptamp, ptamp.Bounds(), draw.Over, nil)

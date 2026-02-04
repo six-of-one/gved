@@ -790,6 +790,21 @@ var sanct_vrt2 = []int{
 
 }
 
+// sanctuary custom floor tests
+
+var Se_cflr = map[int]string{
+
+	1:		"gfx/d3floor_.jpg",
+	2:		"gfx/floor009.jpg",
+	3:		"gfx/floor011.jpg",
+	4:		"gfx/floor014b.jpg",
+	5:		"gfx/floor016.jpg",
+	6:		"gfx/floor018.jpg",
+	7:		"gfx/floor019.jpg",
+	8:		"gfx/floor025.jpg",
+	9:		"gfx/floor027.jpg",
+	10:		"gfx/g1floor7.jpg",
+}
 // the list of valid address in g1 / g2
 // this will allow parsing entire viewable maze space while avoiding crashes
 
