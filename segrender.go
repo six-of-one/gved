@@ -59,23 +59,22 @@ func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 	dx := absint(sx - tx)
 	dy := absint(sy - ty)
 //	if unpinx {
-		if sx == 0 && tx < 0 {
-		//	tx = Mtw - 1
-			tx = opts.DimX + 1 - dx
+		if tx < 0 {
+			tx = opts.DimX + tx
 		}
 	//	if sx >= (Mtw-1) && tx >= Mtw {
-		if sx >= opts.DimX && tx >= opts.DimX + 1 {
-			tx = -1 + dx
+		if tx > opts.DimX {
+			tx = tx - opts.DimX - 1
 		}
 //	}
 //	if unpiny {
-		if sy == 0 && ty < 0 {
-		//	ty = Mth - 1
-			ty = opts.DimY +1 - dy
+		if ty < 0 {
+			ty = opts.DimY + ty
 		}
 	//	if sy >= (Mth-1) && ty >= Mth {
-		if sy >= opts.DimY && ty >= opts.DimY + 1 {
+		if sy > opts.DimY {
 			ty = -1 + dy
+			ty = ty - opts.DimY - 1
 		}
 //	}
 		if tx < 0 { tx = 0 }
@@ -330,12 +329,13 @@ func coltil(img *image.NRGBA, col uint32, xloc int, yloc int) {
 }
 
 // viewport going neg for loops needs coord adjust to write stamps on canvas
+// coord, coord begin, bias adj
 
-func vcoord(m, ma, ba int) int {
+func vcoord(c, cb, ba int) int {
 
-	i := m-ma+ba
-	if ma > 0 { return i }		// main ajust > 0, do std
-	i = m+ba
+	i := c-cb+ba
+	if cb > 0 { return i }		// main ajust > 0, do std
+	i = c+ba
 	return i
 }
 //writestamptoimage(img, stamp, (x-xb+xba)*16, (y-yb+yba)*16)
@@ -375,8 +375,6 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	xba, yba := 0, 0
 	if xb < 0 { xba = absint(xb) }
 	if yb < 0 { yba = absint(yb) }
-	if xs  > opts.DimX + 1 { xba = 1 - (xs - opts.DimX) }
-	if ys > opts.DimY + 1 { yba = 1 - (ys - opts.DimY) }
 
 fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
 
