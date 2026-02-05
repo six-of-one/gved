@@ -180,7 +180,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 		lasty = 31
 		extray = 0
 	}
-fmt.Printf("\ngpf ent: %d x,y: %d x %d, ex %d x %d max: %d, DIMS: %d - %d\n",mazenum,lastx,lasty,extrax,extray,maxvp,opts.DimX,opts.DimY)
+//fmt.Printf("\ngpf ent: %d x,y: %d x %d, ex %d x %d max: %d, DIMS: %d - %d\n",mazenum,lastx,lasty,extrax,extray,maxvp,opts.DimX,opts.DimY)
 
 // no {floor|wall} - only things
 // option to generate image with no floors or walls (say for color correcting g1 mazes we dont have color codes for)
