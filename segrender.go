@@ -55,34 +55,31 @@ func whatis(maze *Maze, x, y int) int {
 func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 
 	i := 0
-	txe, tye := tx, ty
-	dx := absint(sx - tx)
-	dy := absint(sy - ty)
-//	if unpinx {
+	txe, tye := tx, ty		// for debug fmt so we know how test is adjusted
+
 		if tx < 0 {
 			tx = opts.DimX + tx
 		}
-	//	if sx >= (Mtw-1) && tx >= Mtw {
+
 		if tx > opts.DimX {
 			tx = tx - opts.DimX - 1
 		}
-//	}
-//	if unpiny {
+
 		if ty < 0 {
 			ty = opts.DimY + ty
 		}
-	//	if sy >= (Mth-1) && ty >= Mth {
+
 		if sy > opts.DimY {
-			ty = -1 + dy
 			ty = ty - opts.DimY - 1
 		}
-//	}
+
 		if tx < 0 { tx = 0 }
 		if ty < 0 { ty = 0 }
 
 		i = mdat[xy{tx, ty}]
+
 if false && vpx < 0 {
-fmt.Printf("scan: %d s-e: %d x %d, %d x %d dif: %d, %d test: %d x %d\n",i,sx,sy,txe,tye,dx,dy,tx,ty)
+fmt.Printf("scan: %d s-e: %d x %d, %d x %d test: %d x %d\n",i,sx,sy,txe,tye,tx,ty)
 }
 // the assigner, for when we need it
 //		if asgn > -2 { mdat[xy{tx, ty}] = asgn }
