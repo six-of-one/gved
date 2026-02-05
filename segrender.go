@@ -45,6 +45,8 @@ func whatis(maze *Maze, x int, y int) int {
 	return maze.data[xy{x, y}]
 }
 
+// scan buffer data same, 
+
 // door check
 
 func isdoor(t int) bool {
@@ -506,9 +508,9 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 				case MAZEOBJ_TILE_FLOOR:
 					if opts.SP {
 						ts := rand.Intn(470)
-						if ts == 2 { maze.data[xy{x, y}] = 	MAZEOBJ_TREASURE_BAG }
-						if ts == 111 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
-						if ts == 311 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+						if ts == 2 { mdat[xy{x, y}] = 	MAZEOBJ_TREASURE_BAG }		// do this with mdat
+						if ts == 111 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+						if ts == 311 {mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 					}
 			}}
 			if G1 {
@@ -533,9 +535,9 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 				case MAZEOBJ_TILE_FLOOR:
 					if opts.SP {
 						ts := rand.Intn(470)
-						if ts == 2 { maze.data[xy{x, y}] = G1OBJ_TREASURE_BAG }
-						if ts == 11 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
-						if ts == 311 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+						if ts == 2 { mdat[xy{x, y}] = G1OBJ_TREASURE_BAG }
+						if ts == 11 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+						if ts == 311 {mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 					}
 				}}
 			if stamp != nil {
