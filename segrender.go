@@ -55,7 +55,7 @@ func whatis(maze *Maze, x, y int) int {
 func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 
 	i := 0
-	txe, tye := tx, ty
+//	txe, tye := tx, ty
 	dx := absint(sx - tx)
 	dy := absint(sy - ty)
 //	if unpinx {
@@ -86,6 +86,16 @@ func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 //		if asgn > -2 { mdat[xy{tx, ty}] = asgn }
 	return i
 }
+/* scanbuf test out:
+scanbuf s-e: 0 x 31, 1 x 30 dif: 1, 1 test: 1 x 30
+scanbuf s-e: 0 x 31, -1 x 31 dif: 1, 0 test: 31 x 31
+scanbuf s-e: 0 x 31, 1 x 31 dif: 1, 0 test: 1 x 31
+scanbuf s-e: 0 x 31, -1 x 32 dif: 1, 1 test: 31 x 0
+scanbuf s-e: 0 x 31, 0 x 32 dif: 0, 1 test: 0 x 0
+
+scanbuf s-e: 29 x 31, 29 x 32 dif: 0, 1 test: 29 x 0
+scanbuf s-e: 29 x 31, 28 x 31 dif: 1, 0 test: 28 x 31
+*/
 
 // door check
 
