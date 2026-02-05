@@ -230,9 +230,11 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 
 	unpx := widget.NewCheck("Unpin X", func(upx bool) {
 		fmt.Printf("Unpin X set to %t\n", upx)
+		unpinx = upx
 	})
 	unpy := widget.NewCheck("Unpin Y", func(upy bool) {
 		fmt.Printf("Unpin Y set to %t\n", upy)
+		unpiny = upy
 	})
 
 	return container.New(

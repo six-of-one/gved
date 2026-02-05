@@ -65,6 +65,9 @@ var vpy int
 var maxvp = 32
 var minvp = 12
 
+var unpinx bool		// in gauntlet - whether you approach and edge wall, or stay in the center of screen
+var unpiny bool		//				 this doesnt happen until much later, somewhere after level 50, or 80 or so
+
 var rng *rand.Rand
 
 // initialize edit control

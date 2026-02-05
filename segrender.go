@@ -47,6 +47,13 @@ func whatis(maze *Maze, x int, y int) int {
 
 // scan buffer data same, 
 
+func scanbuf (mdat MazeData, x int, y int) int {
+
+	i := 0
+	
+	return i
+}
+
 // door check
 
 func isdoor(t int) bool {
