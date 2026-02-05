@@ -104,7 +104,7 @@ if opts.edat == 0 {
 fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 		opts.edat = 1
 		if sdb < 0 { stor_maz(opts.mnum+1) }	// this does not auto store new edit mode to buffer save file, unless it creates the file
-		statlin(cmdhin,"")
+		statlin(cmdhin,"viewport")
 // these all deactivate as override during edit
 		opts.MRM = false
 		opts.MRP = false
