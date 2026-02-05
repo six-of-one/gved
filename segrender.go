@@ -124,7 +124,8 @@ func isdoorg1(t int) bool {
 	}
 }
 
-// check to see if there's walls adjacent left, left/up, and up
+// check to see if there's walls adjacent left, left/down, and down
+// used to set wall shadows, g1 engine darkens floor pixels with palette shift
 // horizontal wall += 4
 // diagonal wall += 8
 // vertical wall += 16
