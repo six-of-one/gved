@@ -7,7 +7,7 @@ import (
 	"image/png"
 	"math"
 	"os"
-//	"fmt"
+	"fmt"
 )
 
 func gettiledatafromfile(file string, tilenum int) TileLinePlane {
@@ -178,6 +178,9 @@ func writestamptoimage(img *image.NRGBA, stamp *Stamp, xloc int, yloc int) {
 				stamp.trans0, xloc+(x*8), yloc+(y*8))
 		}
 	}
+if false {
+fmt.Printf("stamp (msk) %d @ %d x %d\n ",stamp.mask,xloc, yloc)
+}
 }
 
 func savetopng(fn string, img *image.NRGBA) {
