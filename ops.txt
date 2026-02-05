@@ -49,9 +49,10 @@ A	enable address mode (experimental, likely never work with arcade emu)
 
 two op modes exist, view only and edit
 
-<ESC>	turn edit mode on - initializes current maze to disk in .ed/
-<ESC>	(not in sd ed) edit mode 2 - full view of maze, edit ON
+<ESC>	edit mode on viewport - initializes current maze to disk in .ed/
+<ESC>	set mode 2 - edit full view of maze
 <ESC>	turn edit off/ view back on and check for unsaved data
+		- Escape key cycles these 3 options
 
 S	cycle through all save data buffers in .ed/sd#####_g?.ed
 	- while cycling any edits to current maze are autosaved !
