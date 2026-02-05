@@ -96,6 +96,28 @@ func ed_init() {
 	zm_y = -1
 }
 
+// turn on edit mode
+
+func edit_on(k int) {
+if opts.edat == 0 {
+		smod = "Edit mode: "
+fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
+		opts.edat = 1
+		if sdb < 0 { stor_maz(opts.mnum+1) }	// this does not auto store new edit mode to buffer save file, unless it creates the file
+		statlin(cmdhin,"")
+// these all deactivate as override during edit
+		opts.MRM = false
+		opts.MRP = false
+		opts.MV = false
+		opts.MH = false
+	}
+// activate keys & select k (edkdef from mb click)
+	if k > 0 {
+		if !cmdoff { typedRune('\\') }	// turn cmd keys off
+		typedRune(rune(k))
+	}
+}
+
 func udbck(ct int, t int){
 
 //fmt.Printf("udb len %d, test: %d\n",len(udb.elem),t)
@@ -666,28 +688,6 @@ fmt.Printf("\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.e
 		Ovimg := genpfimage(edmaze, mazn)
 		upwin(Ovimg, 0)
 		calc_stats()
-	}
-}
-
-// turn on edit mode
-
-func edit_on(k int) {
-if opts.edat == 0 {
-		smod = "Edit mode: "
-fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
-		opts.edat = 1
-		if sdb < 0 { stor_maz(opts.mnum+1) }	// this does not auto store new edit mode to buffer save file, unless it creates the file
-		statlin(cmdhin,"")
-// these all deactivate as override during edit
-		opts.MRM = false
-		opts.MRP = false
-		opts.MV = false
-		opts.MH = false
-	}
-// activate keys & select k (edkdef from mb click)
-	if k > 0 {
-		if !cmdoff { typedRune('\\') }	// turn cmd keys off
-		typedRune(rune(k))
 	}
 }
 
