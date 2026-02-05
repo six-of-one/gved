@@ -94,15 +94,15 @@ fmt.Printf("scan: %d s-e: %d x %d, %d x %d test: %d x %d\n",i,sx,sy,txe,tye,tx,t
 //		if asgn > -2 { mdat[xy{tx, ty}] = asgn }
 	return i
 }
-/* scanbuf test out:
-scanbuf s-e: 0 x 31, 1 x 30 dif: 1, 1 test: 1 x 30
-scanbuf s-e: 0 x 31, -1 x 31 dif: 1, 0 test: 31 x 31
-scanbuf s-e: 0 x 31, 1 x 31 dif: 1, 0 test: 1 x 31
-scanbuf s-e: 0 x 31, -1 x 32 dif: 1, 1 test: 31 x 0
-scanbuf s-e: 0 x 31, 0 x 32 dif: 0, 1 test: 0 x 0
+/* scnbuf test out:
+scnbuf s-e: 0 x 31, 1 x 30 dif: 1, 1 test: 1 x 30
+scnbuf s-e: 0 x 31, -1 x 31 dif: 1, 0 test: 31 x 31
+scnbuf s-e: 0 x 31, 1 x 31 dif: 1, 0 test: 1 x 31
+scnbuf s-e: 0 x 31, -1 x 32 dif: 1, 1 test: 31 x 0
+scnbuf s-e: 0 x 31, 0 x 32 dif: 0, 1 test: 0 x 0
 
-scanbuf s-e: 29 x 31, 29 x 32 dif: 0, 1 test: 29 x 0
-scanbuf s-e: 29 x 31, 28 x 31 dif: 1, 0 test: 28 x 31
+scnbuf s-e: 29 x 31, 29 x 32 dif: 0, 1 test: 29 x 0
+scnbuf s-e: 29 x 31, 28 x 31 dif: 1, 0 test: 28 x 31
 */
 
 // door check
