@@ -496,7 +496,7 @@ func ed_maze(rld bool) {
 	fy = vpy + lviewp
 fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lviewp,vpx,vpy,fx,fy)
 	if opts.edat < 1 || opts.edat == 2 {	// simulate view mode for sd bufs if not in edit
-		vpx, vpy = 0, 0
+		vpx, vpy = 0, 0						// & allow full view of edit regular mazes
 		fx = opts.DimX
 		if opts.DimY > fx { fx = opts.DimY }
 		if fx < 30 { fx = 30 }

@@ -54,29 +54,38 @@ func whatis(maze *Maze, x, y int) int {
 
 func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 
-	i := 0
+	i := -1
+	rf := true				// return over flows
 	txe, tye := tx, ty		// for debug fmt so we know how test is adjusted
 
 		if tx < 0 {
 			tx = opts.DimX + tx + 1
+			if !unpinx { rf = false }
+			if opts.edat != 1 { rf = false }
 		}
 
 		if tx > opts.DimX {
 			tx = tx - opts.DimX - 1
+			if !unpinx && tx > opts.DimX + 1 { rf = false }
+			if opts.edat != 1 { rf = false }
 		}
 
 		if ty < 0 {
 			ty = opts.DimY + ty + 1
+			if !unpiny { rf = false }
+			if opts.edat != 1 { rf = false }
 		}
 
 		if ty > opts.DimY {
 			ty = ty - opts.DimY - 1
+			if !unpiny && ty > opts.DimY + 1 { rf = false }
+			if opts.edat != 1 { rf = false }
 		}
 
 		if tx < 0 { tx = 0 }
 		if ty < 0 { ty = 0 }
 
-		i = mdat[xy{tx, ty}]
+		if rf { i = mdat[xy{tx, ty}] }
 
 if false && vpx < 0 {
 fmt.Printf("scan: %d s-e: %d x %d, %d x %d test: %d x %d\n",i,sx,sy,txe,tye,tx,ty)
