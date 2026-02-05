@@ -55,7 +55,7 @@ func whatis(maze *Maze, x, y int) int {
 func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 
 	i := 0
-//	txe, tye := tx, ty
+	txe, tye := tx, ty
 	dx := absint(sx - tx)
 	dy := absint(sy - ty)
 //	if unpinx {
@@ -80,8 +80,11 @@ func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 //	}
 		if tx < 0 { tx = 0 }
 		if ty < 0 { ty = 0 }
-//fmt.Printf("scanbuf s-e: %d x %d, %d x %d dif: %d, %d test: %d x %d\n",sx,sy,txe,tye,dx,dy,tx,ty)
+
 		i = mdat[xy{tx, ty}]
+if vpx < 0 {
+fmt.Printf("scan: %d s-e: %d x %d, %d x %d dif: %d, %d test: %d x %d\n",i,sx,sy,txe,tye,dx,dy,tx,ty)
+}
 // the assigner, for when we need it
 //		if asgn > -2 { mdat[xy{tx, ty}] = asgn }
 	return i
@@ -151,7 +154,7 @@ func checkwalladj3g1(maze *Maze, x int, y int) int {
 // g1 version -- g2 has more walls
 func checkwalladj8g1(maze *Maze, x int, y int) int {
 	adj := 0
-scanbuf(maze.data, x, y, x-1, y-1, -2)
+
 	if iswallg1(scanbuf(maze.data, x, y, x-1, y-1, -2)) {
 		adj += 0x01
 	}
@@ -356,8 +359,10 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	maze.wallcolor = fdat[6] & 0x0f
 	maze.floorcolor = (fdat[6] & 0xf0) >> 4
 
+	// unpin issue - - vals flummox canvas writes
+	xba, yba := 0, 0
 	// 8 pixels * 2 tiles * x,y stamps
-	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
+	img := blankimage(8*2*(xs-xb+xba), 8*2*(ys-yb+yba))
 
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
@@ -380,14 +385,14 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 				if nothing & NOTRAP == 0 {
 					stamp.ptype = "forcefield"
 					stamp.pnum = 0
-					writestamptoimage(img, stamp, (x-xb)*16, (y-yb)*16)
+					writestamptoimage(img, stamp, (x-xb+xba)*16, (y-yb+yba)*16)
 				}
 			}
 			if scanbuf(maze.data, x, y, x, y, -2) < 0 {		// dont floor a null area
-				coltil(img,0,(x-xb)*16, (y-yb)*16)
+				coltil(img,0,(x-xb+xba)*16, (y-yb+yba)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
-				writestamptoimage(img, stamp, (x-xb)*16, (y-yb)*16)
+				writestamptoimage(img, stamp, (x-xb+xba)*16, (y-yb+yba)*16)
 			}}
 		}
 	}} else {
@@ -431,7 +436,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 				coltil(img,0,(x-xb)*16, (y-yb)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
-				writestamptoimage(img, stamp, (x-xb)*16, (y-yb)*16)
+				writestamptoimage(img, stamp, (x-xb+xba)*16, (y-yb+yba)*16)
 			}}
 		  }
 // testing
@@ -521,7 +526,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 					}
 				}}
 			if stamp != nil {
-				writestamptoimage(img, stamp, (x-xb)*16+stamp.nudgex, (y-yb)*16+stamp.nudgey)
+				writestamptoimage(img, stamp, (x-xb+xba)*16+stamp.nudgex, (y-yb+yba)*16+stamp.nudgey)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
@@ -946,7 +951,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 		}
 // Six: end G1 decode
 			if stamp != nil {
-				writestamptoimage(img, stamp, (x-xb)*16+stamp.nudgex, (y-yb)*16+stamp.nudgey)
+				writestamptoimage(img, stamp, (x-xb+xba)*16+stamp.nudgex, (y-yb+yba)*16+stamp.nudgey)
 // stats on palette
 				if stat {			// on palette screen, show stats for loaded maze
 					st := ""

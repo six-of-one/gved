@@ -126,7 +126,7 @@ func specialKey(cw fyne.Window) {
 				if ctrl { opts.DimX -= da; if opts.DimX < 1 { opts.DimX = 1 }
 						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						} else {
-							vpx -= va; if vpx < 0 { vpx = 0 }; px, py = vpx, vpy
+							vpx -= va; px, py = vpx, vpy
 						}
 					stu = fmt.Sprintf(sta, px, py)
 					}
@@ -146,7 +146,7 @@ func specialKey(cw fyne.Window) {
 				if ctrl { opts.DimY -= da; if opts.DimY < 1 { opts.DimY = 1 };
 						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						} else {
-							vpy -= va; if vpy < 0 { vpy = 0 }; px, py = vpx, vpy
+							vpy -= va; px, py = vpx, vpy
 						}
 					stu = fmt.Sprintf(sta, px, py)
 					}
