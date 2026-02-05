@@ -17,7 +17,7 @@ import (
 var g1mask [256]int
 var g2mask [256]int
 
-// for maze output to se
+// for maze output to se -- outputter is in pfrender
 func ParseHexColor(s string) (c color.RGBA, err error) {
     c.A = 0xff
     switch len(s) {
@@ -39,15 +39,13 @@ func ParseHexColor(s string) (c color.RGBA, err error) {
 var foods = []string{"ifood1", "ifood2", "ifood3"}
 var nothing int
 
-// check to see if there's walls adjacent left, left/up, and up
-// FIXME: This might should be a different set of directions
-// horizontal wall += 4
-// diagonal wall += 8
-// vertical wall += 16
+// scan maze data - handle unpins & wraps
 
 func whatis(maze *Maze, x int, y int) int {
 	return maze.data[xy{x, y}]
 }
+
+// door check
 
 func isdoor(t int) bool {
 	if t == MAZEOBJ_DOOR_HORIZ || t == MAZEOBJ_DOOR_VERT {
@@ -65,6 +63,11 @@ func isdoorg1(t int) bool {
 		return false
 	}
 }
+
+// check to see if there's walls adjacent left, left/up, and up
+// horizontal wall += 4
+// diagonal wall += 8
+// vertical wall += 16
 
 // g2 version - wall shadow, etc
 func checkwalladj3(maze *Maze, x int, y int) int {
