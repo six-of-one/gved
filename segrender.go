@@ -61,13 +61,13 @@ func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 		if tx < 0 {
 			tx = opts.DimX + tx + 1
 			if !unpinx { rf = false }
-			if opts.edat == 0 { rf = false }
+			if opts.edat == 0 { rf = false }		// not entirely sure - border wall should always render correct
 		}
 
 		if tx > opts.DimX {
 			tx = tx - opts.DimX - 1
 			if !unpinx && tx > opts.DimX + 1 { rf = false }
-			if opts.edat == 0 { rf = false }
+			if opts.edat == 0 && tx > opts.DimX + 1 { rf = false }
 		}
 
 		if ty < 0 {
@@ -79,7 +79,7 @@ func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 		if ty > opts.DimY {
 			ty = ty - opts.DimY - 1
 			if !unpiny && ty > opts.DimY + 1 { rf = false }
-			if opts.edat == 0 { rf = false }
+			if opts.edat == 0 && ty > opts.DimY + 1 { rf = false }
 		}
 
 		if tx < 0 { tx = 0 }
