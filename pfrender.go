@@ -379,7 +379,6 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			// We should do better
 			switch whatis(maze, x, y) {
  // specials are jammed in somewhere in G2 code, we just do this
- // specials added after convert to se id'ed them on maze 115, score table block
 			case 70:
 				stamp = itemGetStamp("speedpotion")
 			case 71:
