@@ -147,6 +147,9 @@ func ld_config() {
 		l = "1.0"
 		if scanr.Scan() { l = scanr.Text() }						// difficulty skill - affects rnd loader
 		fmt.Sscanf(l,"%f",&diff_level)
+		l = "false, false"
+		if scanr.Scan() { l = scanr.Text() }						// difficulty skill - affects rnd loader
+		fmt.Sscanf(l,"%t, %t\n",&unpinx,&unpiny)
 	}
 // get default win size
 // main win size is a bit tricky on user adjust as i cheaped out and made click detect of a cell
@@ -199,6 +202,7 @@ func sv_config() {
 fmt.Printf("sv_config\n")
 		wfs += fmt.Sprintf("%08x\n%s\n",blotcol,blotimg)
 		wfs += fmt.Sprintf("%.1f\n",diff_level)
+		wfs += fmt.Sprintf("%t, %t\n",unpinx,unpiny)
 		file.WriteString(wfs)
 		file.Close()
 //	fmt.Printf("saving .wstats file\n")
@@ -231,10 +235,12 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 	unpx := widget.NewCheck("Unpin X", func(upx bool) {
 		fmt.Printf("Unpin X set to %t\n", upx)
 		unpinx = upx
+		sv_config()
 	})
 	unpy := widget.NewCheck("Unpin Y", func(upy bool) {
 		fmt.Printf("Unpin Y set to %t\n", upy)
 		unpiny = upy
+		sv_config()
 	})
 
 	return container.New(
