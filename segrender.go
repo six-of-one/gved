@@ -82,6 +82,8 @@ func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 		if ty < 0 { ty = 0 }
 fmt.Printf("scanbuf s-e: %d x %d, %d x %d dif: %d, %d test: %d x %d\n",sx,sy,txe,tye,dx,dy,tx,ty)
 		i = mdat[xy{tx, ty}]
+// the assigner, for when we need it
+//		if asgn > -2 { mdat[xy{tx, ty}] = asgn }
 	return i
 }
 
@@ -132,15 +134,15 @@ func checkwalladj3(maze *Maze, x int, y int) int {
 func checkwalladj3g1(maze *Maze, x int, y int) int {
 	adj := 0
 
-	if iswallg1(whatis(maze, x-1, y)) {
+	if iswallg1(scanbuf(maze.data, x, y, x-1, y, -2)) {
 		adj += 4
 	}
 
-	if iswallg1(whatis(maze, x, y+1)) {
+	if iswallg1(scanbuf(maze.data, x, y, x, y+1, -2)) {
 		adj += 16
 	}
 
-	if iswallg1(whatis(maze, x-1, y+1)) {
+	if iswallg1(scanbuf(maze.data, x, y, x-1, y+1, -2)) {
 		adj += 8
 	}
 
@@ -190,29 +192,29 @@ func checkwalladj8(maze *Maze, x int, y int) int {
 // g1 version -- g2 has more walls
 func checkwalladj8g1(maze *Maze, x int, y int) int {
 	adj := 0
-
-	if iswallg1(whatis(maze, x-1, y-1)) {
+scanbuf(maze.data, x, y, x-1, y-1, -2)
+	if iswallg1(wscanbuf(maze.data, x, y, x-1, y-1, -2)) {
 		adj += 0x01
 	}
-	if iswallg1(whatis(maze, x, y-1)) {
+	if iswallg1(wscanbuf(maze.data, x, y, x, y-1)) {
 		adj += 0x02
 	}
-	if iswallg1(whatis(maze, x+1, y-1)) {
+	if iswallg1(wscanbuf(maze.data, x, y, x+1, y-1)) {
 		adj += 0x04
 	}
-	if iswallg1(whatis(maze, x-1, y)) {
+	if iswallg1(wscanbuf(maze.data, x, y, x-1, y)) {
 		adj += 0x08
 	}
-	if iswallg1(whatis(maze, x+1, y)) {
+	if iswallg1(wscanbuf(maze.data, x, y, x+1, y)) {
 		adj += 0x010
 	}
-	if iswallg1(whatis(maze, x-1, y+1)) {
+	if iswallg1(wscanbuf(maze.data, x, y, x-1, y+1)) {
 		adj += 0x20
 	}
-	if iswallg1(whatis(maze, x, y+1)) {
+	if iswallg1(wscanbuf(maze.data, x, y, x, y+1)) {
 		adj += 0x40
 	}
-	if iswallg1(whatis(maze, x+1, y+1)) {
+	if iswallg1(wscanbuf(maze.data, x, y, x+1, y+1)) {
 		adj += 0x80
 	}
 
@@ -247,16 +249,16 @@ func checkdooradj4(maze *Maze, x int, y int) int {
 func checkdooradj4g1(maze *Maze, x int, y int) int {
 	adj := 0
 
-	if isdoorg1(whatis(maze, x, y-1)) {
+	if isdoorg1(wscanbuf(maze.data, x, y, x, y-1)) {
 		adj += 0x01
 	}
-	if isdoorg1(whatis(maze, x+1, y)) {
+	if isdoorg1(wscanbuf(maze.data, x, y, x+1, y)) {
 		adj += 0x02
 	}
-	if isdoorg1(whatis(maze, x, y+1)) {
+	if isdoorg1(wscanbuf(maze.data, x, y, x, y+1)) {
 		adj += 0x04
 	}
-	if isdoorg1(whatis(maze, x-1, y)) {
+	if isdoorg1(wscanbuf(maze.data, x, y, x-1, y)) {
 		adj += 0x08
 	}
 
@@ -278,7 +280,7 @@ func checkffadj4(maze *Maze, x int, y int) int {
 	adj := 0
 	for i := 0; i < 4; i++ {
 		for j := 1; j <= 15; j++ {
-			t := whatis(maze, x+(j*ffLoopDirs[i].x), y+(j*ffLoopDirs[i].y))
+			t := wscanbuf(maze.data, x, y, x+(j*ffLoopDirs[i].x), y+(j*ffLoopDirs[i].y))
 			if j > 1 && isforcefield(t) {
 				adj += adjvalues[i]
 				break
