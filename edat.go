@@ -688,7 +688,7 @@ fmt.Printf("\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.e
 	}
 	opts.dntr = false
 	nsremaze = false
-	if opts.edat > 0 { ed_maze(true) } else {
+	if opts.edat > 0 || sdb > 0 { ed_maze(true) } else {
 		Ovimg := genpfimage(edmaze, mazn)
 		upwin(Ovimg, 0)
 		calc_stats()
