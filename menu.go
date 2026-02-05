@@ -60,16 +60,17 @@ func menu_lodit(y bool) {
 
 func menu_rst(y bool) {
 	if y {
+		sv := opts.edat
 		opts.edat = -1	// code to tell maze decompress not to load buffer file
 		Ovwallpat = -1
 		remaze(opts.mnum)
-		opts.edat = 1
+		opts.edat = sv
 		//ed_sav(opts.mnum+1)	// reset does not overwrite file buffer, still need to save
 	}
 }
 
 func menu_sav() {
-	if opts.edat == 1 {
+	if opts.edat > 0 {
 		dia := fmt.Sprintf("Save buffer for maze %d in .ed/g%dmaze%03d.ed ?",opts.mnum+1,opts.Gtp,opts.mnum+1)
 		if sdb >= 0 { dia = fmt.Sprintf("Save buffer sd(%d) to .ed/sd%05d_g%d.ed",sdb,sdb,opts.Gtp) }
 		dialog.ShowConfirm("Saving",dia, menu_savit, w)
@@ -78,7 +79,7 @@ func menu_sav() {
 
 
 func menu_lod() {
-	if opts.edat == 1 {
+	if opts.edat > 0 {
 		dia := fmt.Sprintf("Load buffer for maze %d from .ed/g%dmaze%03d.ed ?:",opts.mnum+1,opts.Gtp,opts.mnum+1)
 		if sdb >= 0 { dia = fmt.Sprintf("Load buffer sd(%d) from .ed/sd%05d_g%d.ed",sdb,sdb,opts.Gtp) }
 		dialog.ShowConfirm("Loading",dia, menu_lodit, w)
@@ -86,7 +87,7 @@ func menu_lod() {
 }
 
 func menu_res() {
-	if opts.edat == 1 {
+	if opts.edat > 0 {
 		dia := fmt.Sprintf("Reset buffer for maze %d from G%d ROM ?\n - reset does not save to file",opts.mnum+1,opts.Gtp)
 		dialog.ShowConfirm("Reseting",dia, menu_rst, w)
 	} else { dialog.ShowInformation("Reset Fail","edit mode is not active!",w) }
@@ -276,7 +277,7 @@ func st_menu() {
 	menuItemStats := fyne.NewMenuItem("Maze statistics", func() { statsB = dboxtx("Maze stats","",340,700,close_stats,sr); calc_stats() })
 	menuItemEdhin := fyne.NewMenuItem("Edit hints", func() {
 		strp := ""
-		if opts.edat == 1 {
+		if opts.edat > 0 {
 			strp = "Edit mode: "
 			if cmdoff { strp += "edit keys" } else { strp += "cmd keys" }
 		} else {
@@ -497,7 +498,7 @@ func keyhints() {
 	var lenb float32
 	dk := "Command Keys"
 	strp = eid+"\n\n"
-	if opts.edat == 1 {
+	if opts.edat > 0 {
 		strp += "Edit mode: "
 		if cmdoff { strp += "edit keys"; kys = 2; dk = "Editor Keys" } else { strp += "cmd keys" }
 	} else {
@@ -506,7 +507,7 @@ func keyhints() {
 	strp += "\nsingle letter commands\n–—–—–—–—–—–—–—–—–—–—–—"
 //		strp += "\n\n?	┈ this list"
 	strp += "\nctrl-q	┈ quit program"
-	if opts.edat == 1 {
+	if opts.edat > 0 {
 		strp += "\nESC>	┈ exit editor ╗\n\\	┈ toggle cmd keys*"
 	} else { strp += "\nESC>	┈ editor mode" }
 	if kys == 1 {
