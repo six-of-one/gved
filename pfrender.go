@@ -82,18 +82,17 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 func checkwalladj3(maze *Maze, x int, y int) int {
 	adj := 0
 
-	if iswall(whatis(maze, x-1, y)) {
+	if iswall(scanbuf(maze.data, x, y, x-1, y, -2)) {
 		adj += 4
 	}
 
-	if iswall(whatis(maze, x, y+1)) {
+	if iswall(scanbuf(maze.data, x, y, x, y+1, -2)) {
 		adj += 16
 	}
 
-	if iswall(whatis(maze, x-1, y+1)) {
+	if iswall(scanbuf(maze.data, x, y, x-1, y+1, -2)) {
 		adj += 8
 	}
-
 	return adj
 }
 
@@ -108,28 +107,28 @@ func checkwalladj3(maze *Maze, x int, y int) int {
 func checkwalladj8(maze *Maze, x int, y int) int {
 	adj := 0
 
-	if iswall(whatis(maze, x-1, y-1)) {
+	if iswall(scanbuf(maze.data, x, y, x-1, y-1, -2)) {
 		adj += 0x01
 	}
-	if iswall(whatis(maze, x, y-1)) {
+	if iswall(scanbuf(maze.data, x, y, x, y-1, -2)) {
 		adj += 0x02
 	}
-	if iswall(whatis(maze, x+1, y-1)) {
+	if iswall(scanbuf(maze.data, x, y, x+1, y-1, -2)) {
 		adj += 0x04
 	}
-	if iswall(whatis(maze, x-1, y)) {
+	if iswall(scanbuf(maze.data, x, y, x-1, y, -2)) {
 		adj += 0x08
 	}
-	if iswall(whatis(maze, x+1, y)) {
+	if iswall(scanbuf(maze.data, x, y, x+1, y, -2)) {
 		adj += 0x010
 	}
-	if iswall(whatis(maze, x-1, y+1)) {
+	if iswall(scanbuf(maze.data, x, y, x-1, y+1, -2)) {
 		adj += 0x20
 	}
-	if iswall(whatis(maze, x, y+1)) {
+	if iswall(scanbuf(maze.data, x, y, x, y+1, -2)) {
 		adj += 0x40
 	}
-	if iswall(whatis(maze, x+1, y+1)) {
+	if iswall(scanbuf(maze.data, x, y, x+1, y+1, -2)) {
 		adj += 0x80
 	}
 
@@ -144,16 +143,16 @@ func checkwalladj8(maze *Maze, x int, y int) int {
 func checkdooradj4(maze *Maze, x int, y int) int {
 	adj := 0
 
-	if isdoor(whatis(maze, x, y-1)) {
+	if isdoor(scanbuf(maze.data, x, y, x, y-1, -2)) {
 		adj += 0x01
 	}
-	if isdoor(whatis(maze, x+1, y)) {
+	if isdoor(scanbuf(maze.data, x, y, x+1, y, -2)) {
 		adj += 0x02
 	}
-	if isdoor(whatis(maze, x, y+1)) {
+	if isdoor(scanbuf(maze.data, x, y, x, y+1, -2)) {
 		adj += 0x04
 	}
-	if isdoor(whatis(maze, x-1, y)) {
+	if isdoor(scanbuf(maze.data, x, y, x-1, y, -2)) {
 		adj += 0x08
 	}
 
@@ -217,8 +216,8 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 		for x := 0; x < maxvp; x++ {
 			adj := 0
 			nwt := NOWALL | NOG1W
-			if whatis(maze, x, y) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
-			if whatis(maze, x, y) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
+			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
+			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
 			if maze.wallpattern < 11 {
 				if (nothing & nwt) == 0 {		// wall shadows here
 				adj = checkwalladj3g1(maze, x, y)
@@ -252,7 +251,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			var dots int // dot count
 
 			if G2 {
-				switch whatis(maze, x, y) {
+				switch scanbuf(maze.data, x, y, x, y, -2) {
 				case MAZEOBJ_WALL_DESTRUCTABLE:
 					adj := checkwalladj8(maze, x, y)
 				if (nothing & NOWALL) == 0 {
