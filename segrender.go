@@ -59,27 +59,27 @@ func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 	txe, tye := tx, ty		// for debug fmt so we know how test is adjusted
 
 		if tx < 0 {
+			if !unpinx && tx != -1  { rf = false }
+			if opts.edat == 0 && tx != -1  { rf = false }		// not entirely sure - border wall should always render correct
 			tx = opts.DimX + tx + 1
-			if !unpinx { rf = false }
-			if opts.edat == 0 { rf = false }		// not entirely sure - border wall should always render correct
 		}
 
 		if tx > opts.DimX {
+			if !unpinx && tx != opts.DimX + 1 { rf = false }
+			if opts.edat == 0 && tx != opts.DimX + 1 { rf = false }
 			tx = tx - opts.DimX - 1
-			if !unpinx && tx > opts.DimX + 1 { rf = false }
-			if opts.edat == 0 && tx > opts.DimX + 1 { rf = false }
 		}
 
 		if ty < 0 {
+			if !unpiny && ty != -1 { rf = false }
+			if opts.edat == 0 && ty != -1  { rf = false }
 			ty = opts.DimY + ty + 1
-			if !unpiny { rf = false }
-			if opts.edat == 0 { rf = false }
 		}
 
 		if ty > opts.DimY {
+			if !unpiny && ty != opts.DimY + 1 { rf = false }
+			if opts.edat == 0 && ty != opts.DimY + 1 { rf = false }
 			ty = ty - opts.DimY - 1
-			if !unpiny && ty > opts.DimY + 1 { rf = false }
-			if opts.edat == 0 && ty > opts.DimY + 1 { rf = false }
 		}
 
 		if tx < 0 { tx = 0 }
