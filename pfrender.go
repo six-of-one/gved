@@ -161,9 +161,9 @@ func checkdooradj4(maze *Maze, x int, y int) int {
 
 func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
-	extrax, extray, maxvp := 0, 0, 32	// this becomes the space for copyedges walls...
-	if opts.Wob {			// and this extra space is an issue to blotter & measure, it either always has to be or not
-		extrax = 16			// - of course inimical to edit system, so it has to be accounted
+	extrax, extray, maxvp := 0, 0, 32	// this becomes the space for right & bottom convenience wall display
+	if opts.Wob {
+		extrax = 16
 		extray = 16			// - but now only in view mode
 		maxvp = 33
 	}
@@ -180,6 +180,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 		lasty = 31
 		extray = 0
 	}
+fmt.Printf("\ngpf ent: %d x,y: %d x %d, ex %d x %d max: %d, DIMS: %d - %d\n",mazenum,lastx,lasty,extrax,extray,maxvp,opts.DimX,opts.DimY)
 
 // no {floor|wall} - only things
 // option to generate image with no floors or walls (say for color correcting g1 mazes we dont have color codes for)

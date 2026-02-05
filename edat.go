@@ -656,7 +656,7 @@ func rotmirbuf(rmmaze *Maze) (int, int) {
 		lasty = 31
 	}
 
-	fmt.Printf("wraps -- hw: %d vw: %d\n", rmmaze.flags&LFLAG4_WRAP_H,rmmaze.flags&LFLAG4_WRAP_V)
+	fmt.Printf("rmb wraps -- hw: %d vw: %d\n", rmmaze.flags&LFLAG4_WRAP_H,rmmaze.flags&LFLAG4_WRAP_V)
 	fmt.Printf("rotmirbuf fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
 
 	lastx, lasty = rotmirmov(rmmaze.data,sx,sy,lastx,lasty,rmmaze.flags)
@@ -672,7 +672,7 @@ func rotmirbuf(rmmaze *Maze) (int, int) {
 // reload maze while editing & update window - generates output.png
 
 func remaze(mazn int) {
-fmt.Printf("\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.edat,sdb,delstak)
+fmt.Printf("\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d, DIMS: %d - %d\n",opts.dntr,opts.edat,sdb,delstak,opts.DimX,opts.DimY)
 	if !opts.dntr {
 		sdb = -1
 		delbset(0)

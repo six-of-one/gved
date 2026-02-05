@@ -149,7 +149,8 @@ if opts.Verbose {
 // Six end maze dumper
 }
 // master options x,y need set here for all rom loaded mazes
-	opts.DimX = 1; opts.DimY = 1
+// all G¹ & G² mazes are 0 - 31 both axis
+	opts.DimX = 31; opts.DimY = 31
 
 // have to do this before buffers are set
 // g1 likely has nothing like g2 stuff, and might not use flags at all
@@ -230,7 +231,7 @@ if opts.Verbose {
 			fmt.Printf("maze.wallpattern = rand.Intn(4)\n")
 		}
 	}
-if opts.Verbose { fmt.Printf("wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_H,maze.flags&LFLAG4_WRAP_V) }
+if opts.Verbose { fmt.Printf("mdcmp wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_H,maze.flags&LFLAG4_WRAP_V) }
 	if metaonly {
 		return maze
 	}
