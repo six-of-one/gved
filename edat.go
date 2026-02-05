@@ -394,14 +394,8 @@ func stor_maz(mazn int) {
 // g3 will be edit of sanctuary mazes
 	if opts.Gtp < 3 {
 		maze = mazeDecompress(slapsticReadMaze(mazn - 1), false)
-		lastx = 32
-		if maze.flags&LFLAG4_WRAP_H > 0 {
-			lastx = 31
-		}
-		lasty = 32
-		if maze.flags&LFLAG4_WRAP_V > 0 {
-			lasty = 31
-		}
+		lastx = 31
+		lasty = 31
 	}
 
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,mazn)
