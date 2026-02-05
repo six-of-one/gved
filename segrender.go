@@ -421,7 +421,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		}
 	}} else {
 // tesing Se, xpanded floor
-		stdfl := true
+		stdfl := false
 		Se_cflr_cnt++
 		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 		err, _, ptamp = itemGetPNG(Se_cflr[Se_cflr_cnt])
@@ -454,15 +454,15 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				}
 			}
 
-		  if stdfl {	// do std floor stamps
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
 			if scanbuf(maze.data, x, y, x, y, -2) < 0 {
 				coltil(img,0,(x-xb)*16, (y-yb)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
+		  if stdfl {	// do std floor stamps
 				writestamptoimage(img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
-			}}
 		  }
+			}}
 // testing
 //			coltil(img,0x770077,(x-xb)*16, (y-yb)*16)
 		}
