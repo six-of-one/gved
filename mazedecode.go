@@ -21,10 +21,6 @@ func index2xy(index int) (x int, y int) {
 
 	y = index / 32
 	x = index - (y * 32)
-// set master x,y
-	if x > opts.DimX { opts.DimX = x }
-	if y > opts.DimY { opts.DimY = y }
-
 	return
 }
 
@@ -150,6 +146,7 @@ if opts.Verbose {
 }
 // master options x,y need set here for all rom loaded mazes
 // all G¹ & G² mazes are 0 - 31 both axis
+// when these were being set to 1, and index2xy test was bumping them, 3 mazes failed x size
 	opts.DimX = 31; opts.DimY = 31
 
 // have to do this before buffers are set
