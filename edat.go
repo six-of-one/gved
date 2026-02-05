@@ -458,6 +458,7 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 func ed_maze(rld bool) {
 	upd_edmaze(rld)
 	lviewp := viewp
+	lvpp := 0		// local viewport pass thru to upwin, if sd sim view over blows vp
 // viewport ops
 	fx := vpx + lviewp
 	fy := vpy + lviewp
@@ -475,9 +476,11 @@ fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lviewp,vpx,vpy,fx,fy)
 		if fx < 30 { fx = 30 }
 		fx++
 		fy = fx
+		lvpp = fx
+fmt.Printf("lvpp: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lvpp,vpx,vpy,fx,fy)
 	}
 	Ovimg := segimage(ebuf, eflg, vpx, vpy, fx,fy, false)
-	upwin(Ovimg)
+	upwin(Ovimg, lvpp)
 	calc_stats()
 }
 
@@ -661,7 +664,7 @@ fmt.Printf("\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d\n",opts.dntr,opts.e
 	nsremaze = false
 	if opts.edat > 0 { ed_maze(true) } else {
 		Ovimg := genpfimage(edmaze, mazn)
-		upwin(Ovimg)
+		upwin(Ovimg, 0)
 		calc_stats()
 	}
 }
