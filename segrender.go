@@ -58,7 +58,7 @@ func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 	txe, tye := tx, ty		// for debug fmt so we know how test is adjusted
 
 		if tx < 0 {
-			tx = opts.DimX + tx
+			tx = opts.DimX + tx + 1
 		}
 
 		if tx > opts.DimX {
@@ -66,10 +66,10 @@ func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 		}
 
 		if ty < 0 {
-			ty = opts.DimY + ty
+			ty = opts.DimY + ty + 1
 		}
 
-		if sy > opts.DimY {
+		if ty > opts.DimY {
 			ty = ty - opts.DimY - 1
 		}
 
