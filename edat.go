@@ -482,10 +482,12 @@ func ed_maze(rld bool) {
 	lviewp := viewp
 	lvpp := 0		// local viewport pass thru to upwin, if sd sim view over blows vp
 // viewport ops
+	if unpinx && vpx >= opts.DimX { vpx = vpx - opts.DimX }
+	if unpiny && vpy >= opts.DimY { vpy = vpy - opts.DimY }
 	fx := vpx + lviewp
 	fy := vpy + lviewp
-	if fx > opts.DimX { vpx = opts.DimX - lviewp + 1 }		// test scroll over endpoint, dont pass end of maze
-	if fy > opts.DimY { vpy = opts.DimY - lviewp + 1 }
+	if fx > opts.DimX && !unpinx { vpx = opts.DimX - lviewp + 1 }		// test scroll over endpoint, dont pass end of maze
+	if fy > opts.DimY && !unpiny  { vpy = opts.DimY - lviewp + 1 }
 	if vpx < 0 { vpx = 0 }
 	if vpy < 0 { vpy = 0 }
 	fx = vpx + lviewp

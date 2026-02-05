@@ -383,7 +383,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 					writestamptoimage(img, stamp, (x-xb)*16, (y-yb)*16)
 				}
 			}
-			if whatis(maze, x, y) < 0 {		// dont floor a null area
+			if scanbuf(maze.data, x, y, x, y, -2) < 0 {		// dont floor a null area
 				coltil(img,0,(x-xb)*16, (y-yb)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
@@ -417,8 +417,8 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 		for x := xb; x < xs; x++ {
 			adj := 0
 			nwt := NOWALL | NOG1W
-			if whatis(maze, x, y) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
-			if whatis(maze, x, y) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
+			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
+			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
 			if maze.wallpattern < 11 {
 				if (nothing & nwt) == 0 {			// wall shadows here
 				adj = checkwalladj3g1(maze, x, y)	// this sets adjust for shadows, floorGetStamp sets shadows by darkening floor parts
@@ -427,7 +427,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 
 		  if stdfl {	// do std floor stamps
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
-			if whatis(maze, x, y) < 0 {
+			if scanbuf(maze.data, x, y, x, y, -2) < 0 {
 				coltil(img,0,(x-xb)*16, (y-yb)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
@@ -495,7 +495,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 			}}
 			if G1 {
 				nwt := NOWALL | NOG1W
-				switch whatis(maze, x, y) {
+				switch scanbuf(maze.data, x, y, x, y, -2) {
 				case G1OBJ_WALL_DESTRUCTABLE:
 					adj := checkwalladj8g1(maze, x, y)
 				if (nothing & NOWALL) == 0 {
@@ -548,7 +548,7 @@ if opts.Verbose { fmt.Printf("\n") }
 				panic(err)
 				}
 
-if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
+if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 // g2 decodes
 			if G2 {
 
@@ -753,10 +753,10 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 				stamp = itemGetStamp("tport")
 
 			default:
-				if opts.Verbose && false { fmt.Printf("G² WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
+				if opts.Verbose && false { fmt.Printf("G² WARNING: Unhandled obj id 0x%02x\n", scanbuf(maze.data, x, y, x, y, -2)) }
 			}
 // set mask flag in array
-			if whatis(maze, x, y) > 0 && stamp != nil { g2mask[whatis(maze, x, y)] = stamp.mask }
+			if scanbuf(maze.data, x, y, x, y, -2) > 0 && stamp != nil { g2mask[scanbuf(maze.data, x, y, x, y, -2)] = stamp.mask }
 			}
 // g1 decodes
 			if G1 {
@@ -768,8 +768,8 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 				gtop.Clear()
 				gtopl = ""// make sure g2 code (if it runs with g1) doesnt set extra dots on non walls
 				dots = 0
-// /fmt.Printf("g1 dec: %x -- ", whatis(maze, x, y))
-			switch whatis(maze, x, y) {
+// /fmt.Printf("g1 dec: %x -- ", scanbuf(maze.data, x, y, x, y, -2))
+			switch scanbuf(maze.data, x, y, x, y, -2) {
 
 			case G1OBJ_TILE_FLOOR:
 			// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
@@ -939,10 +939,10 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 				err, _, ptamp = itemGetPNG("gfx/goro.16.png")
 
 			default:
-				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", whatis(maze, x, y)) }
+				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", scanbuf(maze.data, x, y, x, y, -2)) }
 			}
 // set mask flag in array
-			if whatis(maze, x, y) > 0 && stamp != nil { g1mask[whatis(maze, x, y)] = stamp.mask }
+			if scanbuf(maze.data, x, y, x, y, -2) > 0 && stamp != nil { g1mask[scanbuf(maze.data, x, y, x, y, -2)] = stamp.mask }
 		}
 // Six: end G1 decode
 			if stamp != nil {
@@ -950,7 +950,7 @@ if opts.Verbose { fmt.Printf("%03d ",whatis(maze, x, y)) }
 // stats on palette
 				if stat {			// on palette screen, show stats for loaded maze
 					st := ""
-					mel := whatis(maze, x, y)
+					mel := scanbuf(maze.data, x, y, x, y, -2)
 					if G1 { st = fmt.Sprintf("%d",g1stat[mel]) }
 					if G2 { st = fmt.Sprintf("%d",g2stat[mel]) }
 					if st != "" && stonce[mel] > 0 {
