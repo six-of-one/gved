@@ -193,28 +193,28 @@ func checkwalladj8(maze *Maze, x int, y int) int {
 func checkwalladj8g1(maze *Maze, x int, y int) int {
 	adj := 0
 scanbuf(maze.data, x, y, x-1, y-1, -2)
-	if iswallg1(wscanbuf(maze.data, x, y, x-1, y-1, -2)) {
+	if iswallg1(scanbuf(maze.data, x, y, x-1, y-1, -2)) {
 		adj += 0x01
 	}
-	if iswallg1(wscanbuf(maze.data, x, y, x, y-1)) {
+	if iswallg1(scanbuf(maze.data, x, y, x, y-1, -2)) {
 		adj += 0x02
 	}
-	if iswallg1(wscanbuf(maze.data, x, y, x+1, y-1)) {
+	if iswallg1(scanbuf(maze.data, x, y, x+1, y-1, -2)) {
 		adj += 0x04
 	}
-	if iswallg1(wscanbuf(maze.data, x, y, x-1, y)) {
+	if iswallg1(scanbuf(maze.data, x, y, x-1, y, -2)) {
 		adj += 0x08
 	}
-	if iswallg1(wscanbuf(maze.data, x, y, x+1, y)) {
+	if iswallg1(scanbuf(maze.data, x, y, x+1, y, -2)) {
 		adj += 0x010
 	}
-	if iswallg1(wscanbuf(maze.data, x, y, x-1, y+1)) {
+	if iswallg1(scanbuf(maze.data, x, y, x-1, y+1, -2)) {
 		adj += 0x20
 	}
-	if iswallg1(wscanbuf(maze.data, x, y, x, y+1)) {
+	if iswallg1(scanbuf(maze.data, x, y, x, y+1, -2)) {
 		adj += 0x40
 	}
-	if iswallg1(wscanbuf(maze.data, x, y, x+1, y+1)) {
+	if iswallg1(scanbuf(maze.data, x, y, x+1, y+1, -2)) {
 		adj += 0x80
 	}
 
@@ -249,16 +249,16 @@ func checkdooradj4(maze *Maze, x int, y int) int {
 func checkdooradj4g1(maze *Maze, x int, y int) int {
 	adj := 0
 
-	if isdoorg1(wscanbuf(maze.data, x, y, x, y-1)) {
+	if isdoorg1(scanbuf(maze.data, x, y, x, y-1, -2)) {
 		adj += 0x01
 	}
-	if isdoorg1(wscanbuf(maze.data, x, y, x+1, y)) {
+	if isdoorg1(scanbuf(maze.data, x, y, x+1, y, -2)) {
 		adj += 0x02
 	}
-	if isdoorg1(wscanbuf(maze.data, x, y, x, y+1)) {
+	if isdoorg1(scanbuf(maze.data, x, y, x, y+1, -2)) {
 		adj += 0x04
 	}
-	if isdoorg1(wscanbuf(maze.data, x, y, x-1, y)) {
+	if isdoorg1(scanbuf(maze.data, x, y, x-1, y, -2)) {
 		adj += 0x08
 	}
 
@@ -280,7 +280,7 @@ func checkffadj4(maze *Maze, x int, y int) int {
 	adj := 0
 	for i := 0; i < 4; i++ {
 		for j := 1; j <= 15; j++ {
-			t := wscanbuf(maze.data, x, y, x+(j*ffLoopDirs[i].x), y+(j*ffLoopDirs[i].y))
+			t := scanbuf(maze.data, x, y, x+(j*ffLoopDirs[i].x), y+(j*ffLoopDirs[i].y), -2)
 			if j > 1 && isforcefield(t) {
 				adj += adjvalues[i]
 				break
