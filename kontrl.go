@@ -75,7 +75,7 @@ func specialKey(cw fyne.Window) {
 			if shift { va, da  = 1, 4 }
 			if key.Name == "Escape" {		// now toggle editor on/ off
 				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
-					if opts.edat == 1 && sdb < 0 { opts.edat++ } else {
+					if opts.edat == 1 && sdb < 0 { opts.edat++; srelod = true } else {
 					if opts.edat == 0 {
 						edit_on(0)
 						if sdb > 0 { opts.dntr = true }
