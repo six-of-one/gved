@@ -25,10 +25,10 @@ func copyedges(maze *Maze) {
 		} else {
 			maze.data[xy{32, i}] = 0
 		}
-			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{32, i}] = maze.data[xy{32, i}] } else {
+/*			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{32, i}] = maze.data[xy{32, i}] } else {
 				maze.data[xy{32, i}] = ebuf[xy{32, i}]
 			}	// have to do edit buffer as well
-	}
+*/	}
 
 	for i := 0; i <= 32; i++ {
 		if (maze.flags & LFLAG4_WRAP_V) == 0 {
@@ -36,10 +36,10 @@ func copyedges(maze *Maze) {
 		} else {
 			maze.data[xy{i, 32}] = 0
 		}
-			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{i, 32}] = maze.data[xy{i, 32}] } else {
+/*			if opts.edat < 1 || opts.edip == 0 { ebuf[xy{i, 32}] = maze.data[xy{i, 32}] } else {
 				maze.data[xy{i, 32}] = ebuf[xy{i, 32}]
 			}
-	}
+*/	}
 }
 
 // six tile dumper fn
