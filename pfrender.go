@@ -160,11 +160,25 @@ func checkdooradj4(maze *Maze, x int, y int) int {
 }
 
 func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
+
 	extrax, extray, maxvp := 0, 0, 32	// this becomes the space for copyedges walls...
 	if opts.Wob {			// and this extra space is an issue to blotter & measure, it either always has to be or not
 		extrax = 16			// - of course inimical to edit system, so it has to be accounted
 		extray = 16			// - but now only in view mode
 		maxvp = 33
+	}
+
+	lastx := maxvp
+	lasty := maxvp
+
+	if maze.flags&LFLAG4_WRAP_H > 0 {
+		lastx = 31
+		extrax = 0
+	}
+
+	if maze.flags&LFLAG4_WRAP_V > 0 {
+		lasty = 31
+		extray = 0
 	}
 
 // no {floor|wall} - only things
@@ -231,17 +245,6 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 		}
 
 	}}
-
-	lastx := maxvp
-	lasty := maxvp
-
-	if maze.flags&LFLAG4_WRAP_H > 0 {
-		lastx = 31
-	}
-
-	if maze.flags&LFLAG4_WRAP_V > 0 {
-		lasty = 31
-	}
 
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & g2 draw walls, see screens
