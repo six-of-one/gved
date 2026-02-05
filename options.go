@@ -237,11 +237,13 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		unpinx = upx
 		sv_config()
 	})
+	unpx.Checked = unpinx
 	unpy := widget.NewCheck("Unpin Y", func(upy bool) {
 		fmt.Printf("Unpin Y set to %t\n", upy)
 		unpiny = upy
 		sv_config()
 	})
+	unpy.Checked = unpiny
 
 	return container.New(
 		layout.NewVBoxLayout(),
