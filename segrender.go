@@ -80,7 +80,7 @@ func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 //	}
 		if tx < 0 { tx = 0 }
 		if ty < 0 { ty = 0 }
-fmt.Printf("scanbuf s-e: %d x %d, %d x %d dif: %d, %d test: %d x %d\n",sx,sy,txe,tye,dx,dy,tx,ty)
+//fmt.Printf("scanbuf s-e: %d x %d, %d x %d dif: %d, %d test: %d x %d\n",sx,sy,txe,tye,dx,dy,tx,ty)
 		i = mdat[xy{tx, ty}]
 // the assigner, for when we need it
 //		if asgn > -2 { mdat[xy{tx, ty}] = asgn }
