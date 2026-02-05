@@ -41,16 +41,37 @@ var nothing int
 
 // scan maze data - handle unpins & wraps
 
-func whatis(maze *Maze, x int, y int) int {
+func whatis(maze *Maze, x, y int) int {
 	return maze.data[xy{x, y}]
 }
 
 // scan buffer data same, 
+// sx,y - starting point
+// tx,y - test point
+//		  when testing shadows, etc, tells where we started
+//		  so slip calc (past maze edge to other side) math works
 
-func scanbuf (mdat MazeData, x int, y int) int {
+func scanbuf (mdat MazeData, sx, sy, tx, ty int) int {
+Mth, Mtw := 0,0
 
 	i := 0
-	
+//	if unpinx {
+		if sx == 0 && tx < 0 {
+			tx = Mtw - 1
+		}
+		if sx >= (Mtw-1) && tx >= Mtw {
+			tx = 0
+		}
+//	}
+//	if unpiny {
+		if sy == 0 && ty < 0 {
+			ty = Mth - 1
+		}
+		if sy >= (Mth-1) && ty >= Mth {
+			ty = 0
+		}
+//	}
+		i = mdat[xy{tx, ty}]
 	return i
 }
 
