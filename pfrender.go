@@ -73,6 +73,93 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 	wrfile.Close()
 }
 
+// check to see if there's walls adjacent left, left/up, and up
+// horizontal wall += 4
+// diagonal wall += 8
+// vertical wall += 16
+
+// g2 version - wall shadow, etc
+func checkwalladj3(maze *Maze, x int, y int) int {
+	adj := 0
+
+	if iswall(whatis(maze, x-1, y)) {
+		adj += 4
+	}
+
+	if iswall(whatis(maze, x, y+1)) {
+		adj += 16
+	}
+
+	if iswall(whatis(maze, x-1, y+1)) {
+		adj += 8
+	}
+
+	return adj
+}
+
+// check to see if there's walls on any side of location, for picking
+// which wall tile needs ot be used
+//
+// Values to use:
+//    up left:  0x01      up:         0x02      up right:  0x04
+//    left:     0x08      right:      0x10      down left: 0x20
+//    down:     0x40      down right: 0x80
+
+func checkwalladj8(maze *Maze, x int, y int) int {
+	adj := 0
+
+	if iswall(whatis(maze, x-1, y-1)) {
+		adj += 0x01
+	}
+	if iswall(whatis(maze, x, y-1)) {
+		adj += 0x02
+	}
+	if iswall(whatis(maze, x+1, y-1)) {
+		adj += 0x04
+	}
+	if iswall(whatis(maze, x-1, y)) {
+		adj += 0x08
+	}
+	if iswall(whatis(maze, x+1, y)) {
+		adj += 0x010
+	}
+	if iswall(whatis(maze, x-1, y+1)) {
+		adj += 0x20
+	}
+	if iswall(whatis(maze, x, y+1)) {
+		adj += 0x40
+	}
+	if iswall(whatis(maze, x+1, y+1)) {
+		adj += 0x80
+	}
+
+	return adj
+}
+
+// Look and see what doors are adjacent to this door
+//
+// Values to use:
+//    up:  0x01    right:  0x02    down:  0x04    left:  0x08
+
+func checkdooradj4(maze *Maze, x int, y int) int {
+	adj := 0
+
+	if isdoor(whatis(maze, x, y-1)) {
+		adj += 0x01
+	}
+	if isdoor(whatis(maze, x+1, y)) {
+		adj += 0x02
+	}
+	if isdoor(whatis(maze, x, y+1)) {
+		adj += 0x04
+	}
+	if isdoor(whatis(maze, x-1, y)) {
+		adj += 0x08
+	}
+
+	return adj
+}
+
 func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	extrax, extray := 0, 0	// this becomes the space for copyedges walls...
 	if opts.Wob {			// and this extra space is an issue to blotter & measure, it either always has to be or not
