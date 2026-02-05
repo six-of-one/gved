@@ -48,29 +48,39 @@ func whatis(maze *Maze, x, y int) int {
 // scan buffer data same, 
 // sx,y - starting point
 // tx,y - test point
+// asgn - if > -2, this is assign value
 //		  when testing shadows, etc, tells where we started
 //		  so slip calc (past maze edge to other side) math works
 
-func scanbuf (mdat MazeData, sx, sy, tx, ty int) int {
-Mth, Mtw := 0,0
+func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 
 	i := 0
+	txe, tye := tx, ty
+	dx := absint(sx - tx)
+	dy := absint(sy - ty)
 //	if unpinx {
 		if sx == 0 && tx < 0 {
-			tx = Mtw - 1
+		//	tx = Mtw - 1
+			tx = opts.DimX + 1 - dx
 		}
-		if sx >= (Mtw-1) && tx >= Mtw {
-			tx = 0
+	//	if sx >= (Mtw-1) && tx >= Mtw {
+		if sx >= opts.DimX && tx >= opts.DimX + 1 {
+			tx = -1 + dx
 		}
 //	}
 //	if unpiny {
 		if sy == 0 && ty < 0 {
-			ty = Mth - 1
+		//	ty = Mth - 1
+			ty = opts.DimY +1 - dy
 		}
-		if sy >= (Mth-1) && ty >= Mth {
-			ty = 0
+	//	if sy >= (Mth-1) && ty >= Mth {
+		if sy >= opts.DimY && ty >= opts.DimY + 1 {
+			ty = -1 + dy
 		}
 //	}
+		if tx < 0 { tx = 0 }
+		if ty < 0 { ty = 0 }
+fmt.Printf("scanbuf s-e: %d x %d, %d x %d dif: %d, %d test: %d x %d\n",sx,sy,txe,tye,dx,dy,tx,ty)
 		i = mdat[xy{tx, ty}]
 	return i
 }
@@ -440,7 +450,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 		}
 	}} else {
 // tesing Se, xpanded floor
-		stdfl := false
+		stdfl := true
 		Se_cflr_cnt++
 		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 		err, _, ptamp = itemGetPNG(Se_cflr[Se_cflr_cnt])
