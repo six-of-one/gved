@@ -161,10 +161,11 @@ func checkdooradj4(maze *Maze, x int, y int) int {
 }
 
 func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
-	extrax, extray := 0, 0	// this becomes the space for copyedges walls...
+	extrax, extray, maxvp := 0, 0, 32	// this becomes the space for copyedges walls...
 	if opts.Wob {			// and this extra space is an issue to blotter & measure, it either always has to be or not
 		extrax = 16			// - of course inimical to edit system, so it has to be accounted
 		extray = 16			// - but now only in view mode
+		maxvp = 33
 	}
 
 // no {floor|wall} - only things
@@ -184,13 +185,13 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 	// mazes will always be the same size, so just use constants
 	// maze := mazeDecompress(mazedata)
-	copyedges(maze)
+//	copyedges(maze)
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
 
 	if G2 {
 // g2 checks
-	for y := 0; y < 32; y++ {
-		for x := 0; x < 32; x++ {
+	for y := 0; y < maxvp; y++ {
+		for x := 0; x < maxvp; x++ {
 			adj := 0
 			if maze.wallpattern < 11 {
 				if (nothing & NOWALL) == 0 {		// wall shadows here
@@ -212,8 +213,8 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 		}
 	}} else {
 // g1 checks
-	for y := 0; y < 32; y++ {
-		for x := 0; x < 32; x++ {
+	for y := 0; y < maxvp; y++ {
+		for x := 0; x < maxvp; x++ {
 			adj := 0
 			nwt := NOWALL | NOG1W
 			if whatis(maze, x, y) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
@@ -232,8 +233,8 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 	}}
 
-	lastx := 32
-	lasty := 32
+	lastx := maxvp
+	lasty := maxvp
 
 	if maze.flags&LFLAG4_WRAP_H > 0 {
 		lastx = 31
@@ -298,7 +299,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			}}
 			if G1 {
 				nwt := NOWALL | NOG1W
-				switch whatis(maze, x, y) {
+				switch scanbuf(maze.data, x, y, x, y, -2) {
 				case G1OBJ_WALL_DESTRUCTABLE:
 					adj := checkwalladj8g1(maze, x, y)
 				if (nothing & NOWALL) == 0 {
@@ -612,7 +613,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				gtopl = ""// make sure g2 code (if it runs with g1) doesnt set extra dots on non walls
 				dots = 0
  // /fmt.Printf("g1 dec: %x -- ", whatis(maze, x, y))
-			fn := whatis(maze, x, y)
+			fn := scanbuf(maze.data, x, y, x, y, -2)
 			if x == zm_x && y == zm_y { fn = G1OBJ_WIZARD }
 			switch fn {
 
