@@ -453,12 +453,15 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				adj = checkwalladj3g1(maze, x, y)	// this sets adjust for shadows, floorGetStamp sets shadows by darkening floor parts
 				}
 			}
-
+// wall test
+		  if !stdfl {	// do exp walls
+		  }
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
 			if scanbuf(maze.data, x, y, x, y, -2) < 0 {
 				coltil(img,0,(x-xb)*16, (y-yb)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
+// exp floor test, turn this off for sd mazes/ edits
 		  if stdfl {	// do std floor stamps
 				writestamptoimage(img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 		  }
