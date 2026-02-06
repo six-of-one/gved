@@ -54,6 +54,7 @@ var restak int		// keep track of redo chain
 
 // ulternate buffer - copy of maze from load
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
+var xubf Xdat
 var uflg [11]int
 var udb = &Deletebuf{}	// and with the way the delbuf operates now, ubuf must also swap that
 var udstak int
@@ -184,6 +185,7 @@ func init_buf() {
 	if ebuf == nil { ebuf = make(map[xy]int) }
 	if xbuf == nil { xbuf = make(map[xy]string) }
 	if ubuf == nil { ubuf = make(map[xy]int) }
+	if xubf == nil { xubf = make(map[xy]string) }
 	if cpbuf == nil { cpbuf = make(map[xy]int) }
 	if xcpbuf == nil { xbuf = make(map[xy]string) }
 	if plbuf == nil { plbuf = make(map[xy]int) }
@@ -741,6 +743,7 @@ fmt.Printf("\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d, DIMS: %d - %d\n",o
 	if !opts.dntr {
 		sdb = -1
 		delbset(0)
+		clr_buf(ebuf, xbuf, 32, 32, -1, -66)
 		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(edmaze)
 		opts.bufdrt = false

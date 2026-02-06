@@ -668,6 +668,10 @@ fmt.Printf(" stk %d undo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 			sw := ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}]
 			ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}] = delbuf.elem[restak]
 			delbuf.elem[restak] = sw
+
+			ss := xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}]					// add xbuf in all these places
+			xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}] = delbuf.xbfd[restak]
+			delbuf.xbfd[restak] = ss
 			revk--
 			if revk > 0 && restak > 0 { restak-- }
 		}
@@ -686,6 +690,11 @@ fmt.Printf(" stk %d redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 			ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}] = delbuf.elem[restak]
 //fmt.Printf(" redo %d elem: %d maze: %d x %d - rloop: %d\n",restak,delbuf.elem[restak],delbuf.mx[restak],delbuf.my[restak],delbuf.revc[restak])
 			delbuf.elem[restak] = sw
+
+			ss := xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}]
+			xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}] = delbuf.xbfd[restak]
+			delbuf.xbfd[restak] = ss
+
 			revk++
 			restak++
 			if delbuf.elem[restak] < 0 || delbuf.revc[restak] == 1 { revk = 0}
@@ -702,6 +711,10 @@ func uswap() {
 			sw := ebuf[xy{x,y}]
 			ebuf[xy{x,y}] = ubuf[xy{x,y}]
 			ubuf[xy{x,y}] = sw
+
+			ss := xbuf[xy{x,y}]
+			xbuf[xy{x,y}] = xubf[xy{x,y}]
+			xubf[xy{x,y}] = ss
 	}}
 	for y := 0; y < 11; y++ { sw := eflg[y]; eflg[y] = uflg[y]; uflg[y] = sw }
 // also have to swap delete stak
