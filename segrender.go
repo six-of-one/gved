@@ -562,7 +562,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 // testing wall exp
 stdwl := false
 Se_cwal_cnt++
-if Se_cwal_cnt > 7 { Se_cflr_cnt = 1 }
+if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & g2 draw walls, see screens
 	for y := yb; y <= ys; y++ {
