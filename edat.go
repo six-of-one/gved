@@ -390,6 +390,7 @@ fmt.Printf("%s\n",fin)
 				if scanr.Scan() { l = scanr.Text() }
 				fmt.Sscanf(l,"%s",&fin)
 				xdat[xy{x, y}] = fin
+				if ud { xubf[xy{x, y}] = fin }
 fmt.Printf("%s ",fin)
 			}
 fmt.Printf("\n")
@@ -792,18 +793,16 @@ var stonce [1000]int	// on;y display a stat once
 var wpalop bool		// is the pb win open?
 var wpal fyne.Window // is the pal win open?
 var plbuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
+var xplb Xdat		// junk def, for parm blank
 var plflg [11]int
 var palxs int
 var palys int
 var palfol bool		// palette decor follows map chg
-// junk def, for parm blank
-var xplb Xdat
 
 func palete(p int) {
 
 	pmx := opts.DimX; pmy := opts.DimY
-	for my := 0; my <= pmy; my++ {
-	for mx := 0; mx <= pmx; mx++ { plbuf[xy{mx, my}] = 0 }}
+	clr_buf(plbuf, xplb, pmx, pmy, -1, -66)
 	fil := fmt.Sprintf(".ed/pal%03d_g%d.ed",p,opts.Gtp)
 	cnd := lod_maz(fil, xplb, plbuf, false, false)
 	cpx = opts.DimX; cpy = opts.DimY

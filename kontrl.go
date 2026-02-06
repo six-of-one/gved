@@ -730,6 +730,7 @@ func uswap() {
 		su = udb.my[y]; udb.my[y] = delbuf.my[y]; delbuf.my[y] = su
 		su = udb.revc[y]; udb.revc[y] = delbuf.revc[y]; delbuf.revc[y] = su
 		su = udb.elem[y]; udb.elem[y] = delbuf.elem[y]; delbuf.elem[y] = su
+	   ss := udb.xbfd[y]; udb.xbfd[y] = delbuf.xbfd[y]; delbuf.xbfd[y] = ss
 //		if udb.elem[y] < 0 { delstak = y; break }
 	}
 	ed_maze(true)
