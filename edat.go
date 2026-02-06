@@ -244,9 +244,23 @@ if opts.Verbose { fmt.Printf("saving maze %s\n",fil) }
 		fmt.Printf("\n")
 	}
 
+// save the xtra buffer sanctuary engine edit/perf data
 	xbf := prep(fil, "xb_")
 	file, err = os.Create(xbf)
+		if err == nil {
+			wfs := fmt.Sprintf("%d %d\nxwfdn\n",mx,my)	// size of buf
+// custom walls here, read until "xwfdn" or other code indic walls+floors done
+			for y := 0; y <= my; y++ {	// store one line per element due to ops
+			for x := 0; x <= mx; x++ {
+				wfs += fmt.Sprintf("%s\n", xdat[xy{x, y}])
+			}}
+			file.WriteString(wfs)
 			file.Close()
+		} else {
+			fmt.Printf("saving maze xtra buf %s, error:\n",xbf)
+			fmt.Print(err)
+			fmt.Printf("\n")
+		}
 
 // now save deleted elements -- set mazn 0 for buffers like paste
 	if delstak > 0 && svdb {
@@ -344,6 +358,45 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 		}
 		edp = -1
 	}
+// check for xtra buffer store
+	xbf := prep(fil, "xb_")
+	data, err = ioutil.ReadFile(xbf)
+	if err == nil {
+		dscan := fmt.Sprintf("%s",data)
+		scanr := bufio.NewScanner(strings.NewReader(dscan))
+		ix, iy := 0, 0
+		l := "0 0"
+		if scanr.Scan() { l = scanr.Text() }
+		fmt.Sscanf(l,"%d %d",&ix, &iy)		// buffer size
+fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
+		if ix > 0 && iy > 0 {
+			l, fin := "xwfdn", ""
+//			lsv := 20000
+//			for fin != "xwfdn" && lsv > 0 {
+				if scanr.Scan() { l = scanr.Text() }
+				fmt.Sscanf(l,"%s",&fin)		// this loop will read cust walls & floor pairs until xwfdn
+fmt.Printf("xwf %s\n",fin)
+//				lsv--
+//			}
+			for y := 0; y <= iy; y++ {	// read one line per element due to ops
+			for x := 0; x <= ix; x++ {
+				l = "00"
+				if scanr.Scan() { l = scanr.Text() }
+				fmt.Sscanf(l,"%s",&fin)
+				xdat[xy{x, y}] = fin
+fmt.Printf("%s ",fin)
+			}
+fmt.Printf("\n")
+		}
+		}
+	} else {
+		if opts.Verbose {
+			fmt.Printf("edp %d failed < 0 or loading maze xtra buffer %s, warning:\n",edp,xbf)
+			fmt.Print(err)
+			fmt.Printf("\n")
+		}
+	}
+
 // now load deleted elements - but not for pb or pal
   if ldb {
 	dbf := prep(fil, ".db_") //fil[0:4]+".db_"+fil[4:len(fil)]
