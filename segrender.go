@@ -442,16 +442,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 //				draw.Draw(img, smol.Bounds().Add(offset), smol, image.ZP, draw.Over)
 				draw.Draw(img, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)
 			}}
-for i := 1; i < 10; i++ {
-r := image.Rect((i - 1)*16, 0, i*16, 16)
-rr := image.Rect(0,0,256,16)
-shd := image.NewRGBA(rr)
-draw.Copy(shd, image.Pt(0,0), shtamp, r, draw.Over, nil)
-offset := image.Pt(3.5*16, (3+i)*18)
-//draw.Draw(img, shtamp.Bounds().Add(offset), shtamp, image.ZP, draw.Over)
-coltil(img,0xffff0000,3.5*16, (3+i)*18)
-draw.Draw(img, shd.Bounds().Add(offset), shd, image.ZP, draw.Over)
-}
+
 // g1 checks
 	for y := yb; y < ys; y++ {
 		for x := xb; x < xs; x++ {
@@ -466,7 +457,7 @@ draw.Draw(img, shd.Bounds().Add(offset), shd, image.ZP, draw.Over)
 				}
 			}
 // wall test
-		  if !stdfl {	// do exp walls
+		  if !stdfl {	// do exp walls shadows
 			// in this test, we already have the wall code in adj from gauntlet test - exp walls edit will need extra test if wall code is diff
 			na := (adj >> 2)		// div 4
 			if na > 0 {
