@@ -492,7 +492,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		}
 	}} else {
 // tesing Se, xpanded floor
-		stdfl := false
+		stdfl := true
 		Se_cflr_cnt++
 		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 		err, _, ptamp = itemGetPNG(Se_cflr[Se_cflr_cnt])
@@ -560,7 +560,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 	}}
 
 // testing wall exp
-stdwl := false
+stdwl := true
 Se_cwal_cnt++
 if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
