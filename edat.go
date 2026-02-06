@@ -636,6 +636,7 @@ func rotmirmov(mdat MazeData, xdat Xdat, sx int, sy int, lastx int, lasty int, f
 				xform[xy{lasty - ty, tx}] = mdat[xy{tx, ty}]
 				xbxf[xy{lasty - ty, tx}] = xdat[xy{tx, ty}]
 // g1 - must transform all dors on a rotat since they have horiz & vert dependent
+// xb doors will have to use g1 codes cause of this
 				if xform[xy{lasty - ty, tx}] == G1OBJ_DOOR_HORIZ { xform[xy{lasty - ty, tx}] = G1OBJ_DOOR_VERT } else {
 				if xform[xy{lasty - ty, tx}] == G1OBJ_DOOR_VERT { xform[xy{lasty - ty, tx}] = G1OBJ_DOOR_HORIZ } }
 // g2
@@ -648,6 +649,7 @@ func rotmirmov(mdat MazeData, xdat Xdat, sx int, sy int, lastx int, lasty int, f
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{ty, lastx - tx}] = mdat[xy{tx, ty}]
+				xbxf[xy{ty, lastx - tx}] = xdat[xy{tx, ty}]
 // g1
 				if xform[xy{ty, lastx - tx}] == G1OBJ_DOOR_HORIZ { xform[xy{ty, lastx - tx}] = G1OBJ_DOOR_VERT } else {
 				if xform[xy{ty, lastx - tx}] == G1OBJ_DOOR_VERT { xform[xy{ty, lastx - tx}] = G1OBJ_DOOR_HORIZ } }
@@ -664,6 +666,7 @@ func rotmirmov(mdat MazeData, xdat Xdat, sx int, sy int, lastx int, lasty int, f
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{lastx - tx, ty}] = mdat[xy{tx, ty}]
+				xbxf[xy{lastx - tx, ty}] = xdat[xy{tx, ty}]
 			}}
 		}
 
@@ -672,13 +675,15 @@ func rotmirmov(mdat MazeData, xdat Xdat, sx int, sy int, lastx int, lasty int, f
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{tx, lasty - ty}] = mdat[xy{tx, ty}]
+				xbxf[xy{tx, lasty - ty}] = xdat[xy{tx, ty}]
 			}}
 			if flg&LFLAG4_WRAP_V > 0 {	// fix wall not allowed being at bottom for arcade gauntlet
 				for ty := lasty - 1; ty >= sy ; ty-- {
 				for tx := sx; tx <= lastx; tx++ {
 					xform[xy{tx, ty + 1}] = xform[xy{tx, ty}]
+					xbxf[xy{tx, ty + 1}] = xbxf[xy{tx, ty}]
 				}}
-				for tx := sx; tx <= lastx; tx++ { xform[xy{tx, 0}] = G1OBJ_WALL_REGULAR }
+				for tx := sx; tx <= lastx; tx++ { xform[xy{tx, 0}] = G1OBJ_WALL_REGULAR; xbxf[xy{tx, 0}] = "00" }
 			}
 		}
 
@@ -686,6 +691,7 @@ func rotmirmov(mdat MazeData, xdat Xdat, sx int, sy int, lastx int, lasty int, f
 		for y := sy; y <= lasty; y++ {
 			for x := sx; x <= lastx; x++ {
 				mdat[xy{x, y}] = xform[xy{x, y}]
+				xdat[xy{x, y}] = xbxf[xy{x, y}]
 			}
 		}
 
