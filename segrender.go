@@ -347,6 +347,27 @@ func vcoord(c, cb, ba int) int {
 }
 //writestamptoimage(img, stamp, (x-xb+xba)*16, (y-yb+yba)*16)
 
+// write sqaure off png image grid to img
+// img - image to write on, if nil no write
+// xw, yw - x & y loc to write on img
+// ptamp - png image stamp
+// rx, ry - pixel size of rectaNGLE to copy
+// rw, cl - row & col tile of ptamp
+// also return extracted area
+
+func writepngtoimage(img *image.NRGBA, ptamp image.Image, rx,ry,rw,cl, xw, yw int) *image.NRGBA {
+
+	bnds := ptamp.Bounds()
+	iw, ih := bnds.Dx(), bnds.Dy()
+	rec := image.Rect((cl)*rx, (rw)*ry, (cl+1)*rx, (rw+1)*ry)			// this pegs the intended rect on sprite sheet
+	rrr := image.Rect(0,0,iw,ih)
+	cpy := image.NewNRGBA(rrr)
+	draw.Copy(cpy, image.Pt(0,0), ptamp, rec, draw.Over, nil)
+//fmt.Printf("shadow %d: %d x %d \n",na,(x-xb)*16, (y-yb)*16)
+	offset := image.Pt(xw, yw)
+	draw.Draw(img, cpy.Bounds().Add(offset), cpy, image.ZP, draw.Over)
+	return cpy
+}
 // image from buffer segment			- stat: display stats if true
 // segment of buffer from xb,yb to xs,ys (begin to stop)
 
@@ -461,13 +482,14 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			// in this test, we already have the wall code in adj from gauntlet test - exp walls edit will need extra test if wall code is diff
 			na := (adj >> 2)		// div 4
 			if na > 0 {
-				r := image.Rect((na)*16, 0, (na+1)*16, 16)
+				writepngtoimage(img, shtamp, 16,16,na,0, (x-xb)*16, (y-yb)*16)
+/*				r := image.Rect((na)*16, 0, (na+1)*16, 16)
 				rr := image.Rect(0,0,256,16)
 				shd := image.NewRGBA(rr)
 				draw.Copy(shd, image.Pt(0,0), shtamp, r, draw.Over, nil)
 //fmt.Printf("shadow %d: %d x %d \n",na,(x-xb)*16, (y-yb)*16)
 				offset := image.Pt((x-xb)*16, (y-yb)*16)
-				draw.Draw(img, shd.Bounds().Add(offset), shd, image.ZP, draw.Over)
+				draw.Draw(img, shd.Bounds().Add(offset), shd, image.ZP, draw.Over)	*/
 			}
 		  }
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
