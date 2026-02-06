@@ -701,23 +701,13 @@ func rotmirmov(mdat MazeData, xdat Xdat, sx int, sy int, lastx int, lasty int, f
 // same as mazeloop, but called by Rr, h, m while cmd keys active in edit mode
 // 	╚══> except in this buffer is changed by ops
 
-func rotmirbuf(rmmaze *Maze, rmxdat Xdat) (int, int) {
+func rotmirbuf(rmmaze *Maze, rmxdat Xdat, lastx,lasty int) (int, int) {
 
 	fmt.Printf("in rotmirbuf\n")
 
 // manual mirror, flip
 	sx := 0
 	sy := 0
-
-	lastx := 32
-	if rmmaze.flags&LFLAG4_WRAP_H > 0 {
-		lastx = 31
-	}
-
-	lasty := 32
-	if rmmaze.flags&LFLAG4_WRAP_V > 0 {
-		lasty = 31
-	}
 
 	fmt.Printf("rmb wraps -- hw: %d vw: %d\n", rmmaze.flags&LFLAG4_WRAP_H,rmmaze.flags&LFLAG4_WRAP_V)
 	fmt.Printf("rotmirbuf fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
