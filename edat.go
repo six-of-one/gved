@@ -44,6 +44,7 @@ type Deletebuf struct {
 	mx     []int
 	my     []int
 	elem   []int
+	xbfd   []string
 	revc   []int		// this maze element is part of a multiplace, allow one click removal/ restore
 }
 
@@ -125,6 +126,7 @@ func udbck(ct int, t int){
 	if len(udb.elem) <= t {
 		for y := 0; y < ct; y++ {
 			udb.elem = append(udb.elem,-1)
+			udb.xbfd = append(udb.xbfd,"00")
 			udb.mx = append(udb.mx,0)
 			udb.my = append(udb.my,0)
 			udb.revc = append(udb.revc,1)
@@ -140,6 +142,7 @@ func delbset(u int) {
 	delbuf.mx[delstak] = 0
 	delbuf.my[delstak] = 0
 	delbuf.revc[delstak] = 1
+	delbuf.xbfd[delstak] = "00"
 	delbuf.elem[delstak] = -1
 }
 
@@ -152,6 +155,7 @@ func delbck(ct int, t int){
 	if len(delbuf.elem) <= t {
 		for y := 0; y < ct; y++ {
 			delbuf.elem = append(delbuf.elem,-1)
+			delbuf.xbfd = append(delbuf.xbfd,"00")
 			delbuf.mx = append(delbuf.mx,0)
 			delbuf.my = append(delbuf.my,0)
 			delbuf.revc = append(delbuf.revc,1)
@@ -183,7 +187,7 @@ func init_buf() {
 	if cpbuf == nil { cpbuf = make(map[xy]int) }
 	if xcpbuf == nil { xbuf = make(map[xy]string) }
 	if plbuf == nil { plbuf = make(map[xy]int) }
-	if xplb == nil { xbuf = make(map[xy]string) }
+	if xplb == nil { xplb = make(map[xy]string) }
 }
 
 // clear mazedata buf, max size mx x my, fill with z, unless wh is set > -66, then only replace wh
@@ -272,7 +276,7 @@ if opts.Verbose { fmt.Printf("saving maze undo %s\n",dbf) }
 
 			for y := 0; y < delstak; y++ {
 				if delbuf.elem[y] < 0 { break }
-				wfs += fmt.Sprintf("%d %d %d %d\n", delbuf.elem[y],delbuf.mx[y],delbuf.my[y],delbuf.revc[y])
+				wfs += fmt.Sprintf("%d %d %d %d %s\n", delbuf.elem[y],delbuf.mx[y],delbuf.my[y],delbuf.revc[y],delbuf.xbfd[y])
 			}
 			wfs += "\n"
 			file.WriteString(wfs)
@@ -415,13 +419,14 @@ fmt.Printf("\n")
 			l = "-1 0 0 1"
 			if scanr.Scan() { l = scanr.Text() }
 			delbck(6, y)
-			fmt.Sscanf(l, "%d %d %d %d\n", &delbuf.elem[y],&delbuf.mx[y],&delbuf.my[y],&delbuf.revc[y])
+			fmt.Sscanf(l, "%d %d %d %d %s\n", &delbuf.elem[y],&delbuf.mx[y],&delbuf.my[y],&delbuf.revc[y],&delbuf.xbfd[y])
 			if ud {
 				udbck(6,y)
 				udb.mx[y] = delbuf.mx[y]
 				udb.my[y] = delbuf.my[y]
 				udb.revc[y] = delbuf.revc[y]
 				udb.elem[y] = delbuf.elem[y]
+				udb.xbfd[y] = delbuf.xbfd[y]
 			}
 			if delbuf.elem[y] < 0 { delstak = y; break }
 		}
@@ -573,6 +578,7 @@ func undo_buf(sx int, sy int, rc int) {
 	delbuf.my[delstak] = sy
 	delbuf.revc[delstak] = rc					// revoke count for the loop
 	delbuf.elem[delstak] = ebuf[xy{sx, sy}]
+	delbuf.xbfd[delstak] = xbuf[xy{sx, sy}]
 // append the next unit blank if needed
 //fmt.Printf(" del %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],rc)
 	delstak++
