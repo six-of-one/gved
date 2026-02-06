@@ -425,6 +425,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		Se_cflr_cnt++
 		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 		err, _, ptamp = itemGetPNG(Se_cflr[Se_cflr_cnt])
+		_, _, shtamp := itemGetPNG("gfx/shadows.16.png")		// note error block on this
 // resizing test
 //		smol := image.NewRGBA(image.Rect(0, 0, ptamp.Bounds().Max.X/2, ptamp.Bounds().Max.Y/2))
 //		draw.BiLinear.Scale(smol, smol.Rect, ptamp, ptamp.Bounds(), draw.Over, nil)
@@ -446,6 +447,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		for x := xb; x < xs; x++ {
 			adj := 0
 			nwt := NOWALL | NOG1W
+//			defshd := "gfx/shadows.16.png"		// default shadows for exp floors, custom wall load has to change this to walls png
 			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
 			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
 			if maze.wallpattern < 11 {
@@ -455,6 +457,16 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			}
 // wall test
 		  if !stdfl {	// do exp walls
+			// in this test, we already have the wall code in adj from gauntlet test - exp walls edit will need extra test if wall code is diff
+			na := adj >> 2		// div 4
+			if na > 0 {
+				r := image.Rect(0, 0, 16, 16)
+				shd := image.NewRGBA(r)
+				draw.Copy(shd, image.Pt(na * 16,0), shtamp, r, draw.Over, nil)
+
+				offset := image.Pt((x-xb)*16, (y-yb)*16)
+				draw.Draw(img, shd.Bounds().Add(offset), shd, image.ZP, draw.Over)
+			}
 		  }
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
 			if scanbuf(maze.data, x, y, x, y, -2) < 0 {

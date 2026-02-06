@@ -338,6 +338,12 @@ func aw_init() {
 	specialKey(w)		// key handlers for specials
 	ed_init()			// initialized the editor package
 	get_pbcnt()			// paste buffer cnt (per gauntlet)
+
+// test bit shift op
+p := 128 << 2	// 512
+q := 128 >> 2	// 32
+fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
+
 }
 
 // sub win switch G¹ / G²
