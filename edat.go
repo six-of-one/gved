@@ -269,7 +269,7 @@ if opts.Verbose { fmt.Printf("saving maze undo %s\n",dbf) }
 // load stored maze data into ebuf / eflg or other data stores
 var mazln int		// maze load # stored
 
-func lod_maz(fil string, mdat MazeData, ud bool, ldb bool) int {
+func lod_maz(fil string, xdat Xdat, mdat MazeData, ud bool, ldb bool) int {
 
 if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 
@@ -419,7 +419,7 @@ func stor_maz(mazn int) {
 				for x := 0; x <= lastx; x++ {
 				ebuf[xy{x, y}] = maze.data[xy{x, y}]
 			}}
-			sav_maz(fil, ebuf, eflg, lastx, lasty, mazn, false)
+			sav_maz(fil, xbuf, ebuf, eflg, lastx, lasty, mazn, false)
 			delstak = 0
 			restak = 0
 			delbset(0)
@@ -439,7 +439,7 @@ func ed_sav(mazn int) {
 
 	upd_edmaze(false)
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,mazn)
-	sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, mazn, true)
+	sav_maz(fil, xbuf, ebuf, eflg, opts.DimX, opts.DimY, mazn, true)
 }
 
 func upd_edmaze(ovrm bool) {
@@ -451,7 +451,7 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 	for y := 0; y < 11; y++ {
 		edmaze.optbyts[y] = eflg[y]
 	}
-	if wpalop && palfol { palete() }
+	if wpalop && palfol { palete(0) }
 	flagbytes := make([]byte, 4)
 	flagbytes[0] = byte(eflg[1])
 	flagbytes[1] = byte(eflg[2])
@@ -728,15 +728,17 @@ var plflg [11]int
 var palxs int
 var palys int
 var palfol bool		// palette decor follows map chg
+// junk def, for parm blank
+var xplb Xdat
 
-func palete() {
+func palete(p int) {
 
 	nm := 0
 	pmx := opts.DimX; pmy := opts.DimY
 	for my := 0; my <= pmy; my++ {
 	for mx := 0; mx <= pmx; mx++ { plbuf[xy{mx, my}] = 0 }}
 	fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nm,opts.Gtp)
-	cnd := lod_maz(fil, plbuf, false, false)
+	cnd := lod_maz(fil, xplb, plbuf, false, false)
 	cpx = opts.DimX; cpy = opts.DimY
 
 	if cnd >= 0 { for y := 0; y < 11; y++ { plflg[y] =  tflg[y] };
@@ -984,7 +986,7 @@ func mini_stat (buf MazeData, sx int, sy int, ex int, ey int, hed string) {
 
 func calc_stats() {
 
-	if wpalop { if palfol { palete() }}
+	if wpalop { if palfol { palete(0) }}
 
 	zero_stat()
 //fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
@@ -1016,6 +1018,7 @@ func calc_stats() {
 // cut / copy & paste
 
 var cpbuf MazeData	// c/c/p buffer
+var xcpbuf Xdat		// exp c/c/p buffer
 var pbcnt int		// master count of c/c/p buffers saved
 var lpbcnt int		// sesssion count of c/c/p buffers - reset every
 var cpx int			// max paste buf, start is always 0, 0
@@ -1054,7 +1057,7 @@ func pb_upd(id string, nt string, vl int) {
 	for my := 0; my <= pmy; my++ {
 	for mx := 0; mx <= pmx; mx++ { cpbuf[xy{mx, my}] = 0 }}
 	fil := fmt.Sprintf(".pb/%s_%07d_g%d.ed",id,vl,opts.Gtp)
-	lod_maz(fil, cpbuf, false, false)
+	lod_maz(fil, xcpbuf, cpbuf, false, false)
 	cpx = opts.DimX; cpy = opts.DimY
 fmt.Printf("%spb dun: px %d py %d, %s\n",nt,cpx,cpy,fil)
 	opts.DimX = pmx; opts.DimY = pmy
@@ -1075,7 +1078,7 @@ fmt.Printf("\n")
 
 func pb_loced(cnt int) {
 	fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",cnt,opts.Gtp)
-	sav_maz(fil, cpbuf, eflg, cpx, cpy, 0, false)
+	sav_maz(fil, xcpbuf, cpbuf, eflg, cpx, cpy, 0, false)
 	pb_upd("pb", "mas", cnt)
 }
 

@@ -347,13 +347,13 @@ fmt.Printf("cc dun: px %d py %d\n",px,py)
 // saving paste buffer now
 			fil := fmt.Sprintf(".pb/pb_%07d_g%d.ed",pbcnt,opts.Gtp)
 			pbcnt++
-			sav_maz(fil, cpbuf, eflg, cpx, cpy, 0, false)
+			sav_maz(fil, xcpbuf, cpbuf, eflg, cpx, cpy, 0, false)
 // local for short range
 			fil = fmt.Sprintf(".pb/ses_%07d_g%d.ed",lpbcnt,opts.Gtp)
 			lpbcnt++
 			if G1 { lg1cnt = lpbcnt}
 			if G2 { lg2cnt = lpbcnt}
-			sav_maz(fil, cpbuf, eflg, cpx, cpy, 0, false)
+			sav_maz(fil, xcpbuf, cpbuf, eflg, cpx, cpy, 0, false)
 
 // pb sort of doesnt end
 				fil = fmt.Sprintf(".pb/cnt_g%d",opts.Gtp)

@@ -56,7 +56,7 @@ func specialKey(cw fyne.Window) {
 			}
 			if key.Name == "Delete" { del = true; ccp_NOP() }
 //			if key.Name == "BackSpace" { del = true }
-			if key.Name == "Home" { home = true; if !wpalop { palete() }}
+			if key.Name == "Home" { home = true; if !wpalop { palete(0) }}
 			if key.Name == "LeftSuper" { logo = true }
 			if key.Name == "LeftShift" { shift = true }
 			if key.Name == "RightShift" { shift = true }
@@ -329,7 +329,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				if opts.bufdrt { menu_savit(true) }		// autosave
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
-				cnd := lod_maz(fil, ebuf, false, true)
+				cnd := lod_maz(fil, xbuf, ebuf, false, true)
 				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
 				anum = 0
 			} else { opts.Nogtop = !opts.Nogtop; opts.dntr = (opts.edat > 0); relod = true }
@@ -372,7 +372,7 @@ fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				if anum > 0 && anum < sdmax {		// save buf when not in edit, rand load can go into all mazes
 fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 					fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
-					sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, 0 - anum, true)
+					sav_maz(fil, xbuf, ebuf, eflg, opts.DimX, opts.DimY, 0 - anum, true)
 					anum = 0
 				} else {
 					spau = sdbit(1)
@@ -631,10 +631,10 @@ func menu_ndsav(y bool) {
 	if y {
 		if nssb < 0 {
 			fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",nsgg,nsmz)
-			sav_maz(fil, ebuf, eflg, nsxd, nsyd, nsmz, true)
+			sav_maz(fil, xbuf, ebuf, eflg, nsxd, nsyd, nsmz, true)
 		} else {
 			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nssb,nsgg)
-			sav_maz(fil, ebuf, eflg, nsxd, nsyd, 0 - nssb, true)
+			sav_maz(fil, xbuf, ebuf, eflg, nsxd, nsyd, 0 - nssb, true)
 		}
 	}
 	if exitsel { os.Exit(0) }
@@ -800,7 +800,7 @@ func sdbit(dir int) string {
 		ldb += dir
 		if ldb == 0 { ldb = 1 }
 		fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
-		cnd = lod_maz(fil, ebuf, false, true)
+		cnd = lod_maz(fil, xbuf, ebuf, false, true)
 		if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spar = fmt.Sprintf("cmd: S - ") }
 		if dir < 0 && cnd < 0 && ldb == 1 { cnd = 0; break }
 	}

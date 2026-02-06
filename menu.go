@@ -38,7 +38,7 @@ func menu_savit(y bool) {
 			ed_sav(opts.mnum+1)
 		} else {
 			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",sdb,opts.Gtp)
-			sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, 0 - sdb, true)
+			sav_maz(fil, xbuf, ebuf, eflg, opts.DimX, opts.DimY, 0 - sdb, true)
 		}
 	}
 }
@@ -48,7 +48,7 @@ func menu_lodit(y bool) {
 	if y {
 		if sdb < 0 {
 			Ovwallpat = -1
-			cnd := lod_maz(fil, ebuf, true, true)
+			cnd := lod_maz(fil, xbuf, ebuf, true, true)
 			if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
 			remaze(opts.mnum)
 		} else {
@@ -112,7 +112,7 @@ func menu_savas() {
 
 		mazn := opts.mnum+1
 		if anum > 0 { mazn = anum }
-		sav_maz(fil, ebuf, eflg, opts.DimX, opts.DimY, mazn, true)
+		sav_maz(fil, xbuf, ebuf, eflg, opts.DimX, opts.DimY, mazn, true)
 
 	}, w)
 	fileDialog.Show()
@@ -137,7 +137,7 @@ func menu_laodf() {
 
 		if opts.bufdrt { menu_savit(true) }		// autosave
 		Ovwallpat = -1
-		cnd := lod_maz(fil, ebuf, true, true)
+		cnd := lod_maz(fil, xbuf, ebuf, true, true)
 		sdb = -1
 		if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
 		remaze(opts.mnum)
@@ -252,7 +252,7 @@ func st_menu() {
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
 	menuItemGvs := fyne.NewMenuItem("Gaunlet view sim toggle",func() { gvs = !gvs })
 	menuItemWob := fyne.NewMenuItem("Wall border right & bottom",func() { opts.Wob = !opts.Wob; remaze(opts.mnum) })
-	menuItemPalf := fyne.NewMenuItem("Palette; map decore toggle",func() { if wpalop {palfol = !palfol}; palete() })
+	menuItemPalf := fyne.NewMenuItem("Palette; map decore toggle",func() { if wpalop {palfol = !palfol}; palete(0) })
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
 	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemFmap, menuItemFmapb, menuItemFmapc, menuItemRand, menuItemLin1,  menuItemGvs, menuItemWob, menuItemPalf, menuItemMute, menuItemExit)
 
@@ -353,7 +353,7 @@ func subsw() {
 	ccp = NOP
 	statlin(cmdhin,"")
 	if wpbop { pbmas_cyc(0) }
-	if wpalop { palete() }
+	if wpalop { palete(0) }
 }
 
 // make clickable image wimg in window cw with given size

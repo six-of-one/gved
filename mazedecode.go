@@ -173,7 +173,7 @@ if opts.Verbose {
 	if opts.edat > 0 {
 		sdb = -1
 		fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
-		cnd := lod_maz(fil, ebuf, true, true)
+		cnd := lod_maz(fil, xbuf, ebuf, true, true)
 		if cnd > -1 { opts.edip = cnd }
 		for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }
 		if opts.edip != 0 {
