@@ -304,7 +304,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				nwt := NOWALL | NOG1W
 				switch scanbuf(maze.data, x, y, x, y, -2) {
 				case G1OBJ_WALL_DESTRUCTABLE:
-					adj := checkwalladj8g1(maze, x, y)
+					adj, _ := checkwalladj8g1(maze, x, y)
 				if (nothing & NOWALL) == 0 {
 					stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
 				}
@@ -314,7 +314,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 					nwt = NOWALL
 					fallthrough
 				case G1OBJ_WALL_REGULAR:
-					adj := checkwalladj8g1(maze, x, y)
+					adj, _ := checkwalladj8g1(maze, x, y)
 					if (nothing & nwt) == 0 {
 						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 				}

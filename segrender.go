@@ -157,36 +157,70 @@ func checkwalladj3g1(maze *Maze, x int, y int) int {
 //    left:     0x08      right:      0x10      down left: 0x20
 //    down:     0x40      down right: 0x80
 
+// added in Se wally value for picking walls from Se wall set
+
 // g1 version -- g2 has more walls
-func checkwalladj8g1(maze *Maze, x int, y int) int {
+func checkwalladj8g1(maze *Maze, x int, y int) (int, int) {
 	adj := 0
+	wally := 0					// sanctuary expanded wall tester mk II
+	wp1, wp2 := false, false	// pointers for findwall(mpixel(tx, ty, tx+1, ty+1, m)),
+								//				findwall(mpixel(tx, ty, tx-1, ty+1, m))
 
 	if iswallg1(scanbuf(maze.data, x, y, x-1, y-1, -2)) {
 		adj += 0x01
 	}
 	if iswallg1(scanbuf(maze.data, x, y, x, y-1, -2)) {
 		adj += 0x02
+		wally |= 1
 	}
 	if iswallg1(scanbuf(maze.data, x, y, x+1, y-1, -2)) {
 		adj += 0x04
 	}
 	if iswallg1(scanbuf(maze.data, x, y, x-1, y, -2)) {
 		adj += 0x08
+		wally |= 8
 	}
 	if iswallg1(scanbuf(maze.data, x, y, x+1, y, -2)) {
 		adj += 0x010
+		wally |= 2
 	}
 	if iswallg1(scanbuf(maze.data, x, y, x-1, y+1, -2)) {
 		adj += 0x20
+		wp2 = true
 	}
 	if iswallg1(scanbuf(maze.data, x, y, x, y+1, -2)) {
 		adj += 0x40
+		wally |= 4
 	}
 	if iswallg1(scanbuf(maze.data, x, y, x+1, y+1, -2)) {
 		adj += 0x80
+		wp1 = true
+	}
+// Se logics extending wall set
+	if wally > 13 {
+		if wp2 {		// adj = 0x20
+			wally += 6
+			if wp1 {	// adj = 0x80
+				wally += 4
+			}
+		} else if wp1 {	// adj = 0x80
+			wally += 8
+		}
 	}
 
-	return adj
+	if wally == 6 || wally == 7 {
+		if wp1 {		// adj = 0x80
+			wally += 10
+		}
+	}
+
+	if wally == 12 || wally == 13 {
+		if wp2 {		// adj = 0x20
+			wally += 6
+		}
+	}
+
+	return adj, wally
 }
 
 // Look and see what doors are adjacent to this door
@@ -365,7 +399,9 @@ func writepngtoimage(img *image.NRGBA, ptamp image.Image, rx,ry,cl,rw, xw, yw in
 	draw.Copy(cpy, image.Pt(0,0), ptamp, rec, draw.Over, nil)
 //fmt.Printf("shadow %d: %d x %d \n",na,(x-xb)*16, (y-yb)*16)
 	offset := image.Pt(xw, yw)
-	draw.Draw(img, cpy.Bounds().Add(offset), cpy, image.ZP, draw.Over)
+	if img != nil {
+		draw.Draw(img, cpy.Bounds().Add(offset), cpy, image.ZP, draw.Over)
+	}
 	return cpy
 }
 /*
@@ -577,7 +613,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				nwt := NOWALL | NOG1W
 				switch scanbuf(maze.data, x, y, x, y, -2) {
 				case G1OBJ_WALL_DESTRUCTABLE:
-					adj := checkwalladj8g1(maze, x, y)
+					adj, _ := checkwalladj8g1(maze, x, y)
 				if (nothing & NOWALL) == 0 {
 					stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
 				}
@@ -587,7 +623,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 					nwt = NOWALL
 					fallthrough
 				case G1OBJ_WALL_REGULAR:
-					adj := checkwalladj8g1(maze, x, y)
+					adj, _ := checkwalladj8g1(maze, x, y)
 					if (nothing & nwt) == 0 {
 						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 				}
