@@ -178,9 +178,12 @@ func prep(fn string, prp string) string {
 
 func init_buf() {
 	if ebuf == nil { ebuf = make(map[xy]int) }
+	if xbuf == nil { xbuf = make(map[xy]string) }
 	if ubuf == nil { ubuf = make(map[xy]int) }
 	if cpbuf == nil { cpbuf = make(map[xy]int) }
+	if xcpbuf == nil { xbuf = make(map[xy]string) }
 	if plbuf == nil { plbuf = make(map[xy]int) }
+	if xplb == nil { xbuf = make(map[xy]string) }
 }
 
 // clear mazedata buf, max size mx x my, fill with z, unless wh is set > -66, then only replace wh
@@ -240,6 +243,10 @@ if opts.Verbose { fmt.Printf("saving maze %s\n",fil) }
 		fmt.Print(err)
 		fmt.Printf("\n")
 	}
+
+	xbf := prep(fil, "xb_")
+	file, err = os.Create(xbf)
+			file.Close()
 
 // now save deleted elements -- set mazn 0 for buffers like paste
 	if delstak > 0 && svdb {
@@ -418,7 +425,7 @@ func stor_maz(mazn int) {
 			for y := 0; y <= lasty; y++ {
 				for x := 0; x <= lastx; x++ {
 				ebuf[xy{x, y}] = maze.data[xy{x, y}]
-				xbuf[xy{x, y}] = "00"
+				xbuf[xy{x, y}] = "00"					// initialize to nop
 			}}
 			sav_maz(fil, xbuf, ebuf, eflg, lastx, lasty, mazn, false)
 			delstak = 0
