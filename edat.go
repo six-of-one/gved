@@ -192,7 +192,7 @@ func init_buf() {
 
 // clear mazedata buf, max size mx x my, fill with z, unless wh is set > -66, then only replace wh
 
-func clr_buf(buf MazeData, mx int, my int, z int, wh int) {
+func clr_buf(buf MazeData, xdat Xdat, mx int, my int, z int, wh int) {
 	if wh < -65 {		// if we dont have a when = wh, set size for possible larger edited mazes
 		de := 256
 		if mx < de { mx = de }
@@ -200,9 +200,9 @@ func clr_buf(buf MazeData, mx int, my int, z int, wh int) {
 	}
 	for y := 0; y <= my; y++ {
 		for x := 0; x <= mx; x++ {
-			if wh < -65 { buf[xy{x, y}] = z; xbuf[xy{x, y}] = "0"
+			if wh < -65 { buf[xy{x, y}] = z; xdat[xy{x, y}] = "0"
 		} else {
-			if buf[xy{x, y}] == wh { buf[xy{x, y}] = z; xbuf[xy{x, y}] = "0" }
+			if buf[xy{x, y}] == wh { buf[xy{x, y}] = z; xdat[xy{x, y}] = "0" }
 		}
 	}}
 }
@@ -301,7 +301,7 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 	data, err := ioutil.ReadFile(fil)
 	edp := 0
 	if err == nil {
-		clr_buf(mdat, opts.DimX, opts.DimY, -1, -66)		// erase old data now
+		clr_buf(mdat, xdat, opts.DimX, opts.DimY, -1, -66)		// erase old data now
 
 		dscan := fmt.Sprintf("%s",data)
 // may not be the optimal way, but it works for now

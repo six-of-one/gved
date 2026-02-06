@@ -139,7 +139,7 @@ func specialKey(cw fyne.Window) {
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimX += da; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
-						  clr_buf(ebuf, px, py, 0, -1)
+						  clr_buf(ebuf, xbuf, px, py, 0, -1)
 						} else {
 							//if vpx + viewp < opts.DimX { vpx++ }
 							vpx += va; px, py = vpx, vpy
@@ -159,7 +159,7 @@ func specialKey(cw fyne.Window) {
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimY += da; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
-						  clr_buf(ebuf, px, py, 0, -1)
+						  clr_buf(ebuf, xbuf, px, py, 0, -1)
 						} else {
 							//if vpy + viewp < opts.DimY { vpy++ }
 							vpy += va; px, py = vpx, vpy
