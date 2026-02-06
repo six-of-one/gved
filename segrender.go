@@ -626,7 +626,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
 		} else {
 					stamp = nil
-					writepngtoimage(img, wtamp, 16,16,wly,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writepngtoimage(img, wtamp, 16,16,wly+26,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 		}
 				}
 
