@@ -159,9 +159,9 @@ func delbck(ct int, t int){
 	}
 }
 
-// pre-pend .db_ to save filename for delete buffer save & load
+// pre-pend $prp to save filename for delete buffer save & load
 
-func prep(fn string) string {
+func prep(fn string, prp string) string {
 	fl := len(fn)
 	rfl := fn
 	lstb := 0
@@ -169,7 +169,7 @@ func prep(fn string) string {
 	for y := 0; y < fl; y++ {
 		if rfl[y:y+1] == "/" { lstb = y+1 }
 	}
-	rfl = fn[0:lstb]+".db_"+fn[lstb:fl]
+	rfl = fn[0:lstb]+prp+fn[lstb:fl]
 //fmt.Printf("sv fil: %s last bld: %d\n",rfl, lstb)
 	return rfl
 }
@@ -243,7 +243,7 @@ if opts.Verbose { fmt.Printf("saving maze %s\n",fil) }
 
 // now save deleted elements -- set mazn 0 for buffers like paste
 	if delstak > 0 && svdb {
-		dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
+		dbf := prep(fil, ".db_") //fil[0:4]+".db_"+fil[4:len(fil)]
 if opts.Verbose { fmt.Printf("saving maze undo %s\n",dbf) }
 		file, err := os.Create(dbf)
 		if err == nil {
@@ -339,7 +339,7 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 	}
 // now load deleted elements - but not for pb or pal
   if ldb {
-	dbf := prep(fil) //fil[0:4]+".db_"+fil[4:len(fil)]
+	dbf := prep(fil, ".db_") //fil[0:4]+".db_"+fil[4:len(fil)]
 	data, err = ioutil.ReadFile(dbf)
 	delstak = 0
 	restak = 0
@@ -418,6 +418,7 @@ func stor_maz(mazn int) {
 			for y := 0; y <= lasty; y++ {
 				for x := 0; x <= lastx; x++ {
 				ebuf[xy{x, y}] = maze.data[xy{x, y}]
+				xbuf[xy{x, y}] = "00"
 			}}
 			sav_maz(fil, xbuf, ebuf, eflg, lastx, lasty, mazn, false)
 			delstak = 0
@@ -733,11 +734,10 @@ var xplb Xdat
 
 func palete(p int) {
 
-	nm := 0
 	pmx := opts.DimX; pmy := opts.DimY
 	for my := 0; my <= pmy; my++ {
 	for mx := 0; mx <= pmx; mx++ { plbuf[xy{mx, my}] = 0 }}
-	fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nm,opts.Gtp)
+	fil := fmt.Sprintf(".ed/pal%03d_g%d.ed",p,opts.Gtp)
 	cnd := lod_maz(fil, xplb, plbuf, false, false)
 	cpx = opts.DimX; cpy = opts.DimY
 
