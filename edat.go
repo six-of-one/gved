@@ -380,7 +380,7 @@ fmt.Printf("xwf %s\n",fin)
 //			}
 			for y := 0; y <= iy; y++ {	// read one line per element due to ops
 			for x := 0; x <= ix; x++ {
-				l = "00"
+				l, fin = "00", "000"
 				if scanr.Scan() { l = scanr.Text() }
 				fmt.Sscanf(l,"%s",&fin)
 				xdat[xy{x, y}] = fin
