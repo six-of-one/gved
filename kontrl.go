@@ -736,7 +736,7 @@ func ccp_tog(op int) {
 	ccp_NOP()
 	if wccp != op { ccp = op }
 	if ccp == PASTE {
-		if !wpbop { wpbimg = segimage(cpbuf,eflg,0,0,cpx+1,cpy+1,false) }
+		if !wpbop { wpbimg = segimage(cpbuf,xcpbuf,eflg,0,0,cpx+1,cpy+1,false) }
 		blotup = true
 		blotoff()
 	}

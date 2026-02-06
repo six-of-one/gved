@@ -423,7 +423,7 @@ func writepngtoimage(img *image.NRGBA, ptamp image.Image, rx,ry,cl,rw, xw, yw in
 var Se_cflr_cnt int
 var Se_cwal_cnt int
 
-func segimage(mdat MazeData, fdat [11]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
+func segimage(mdat MazeData, xdat Xdat, fdat [11]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
 
 //if opts.Verbose {
 fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)

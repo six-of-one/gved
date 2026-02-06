@@ -375,7 +375,7 @@ fmt.Printf("in pasty\n")
 				if ex > opts.DimX { ex = opts.DimX }
 				if ey > opts.DimY { ey = opts.DimY }
 			} else {
-				bwin(cpx+1, cpy+1, pbcnt - 1, cpbuf, eflg, "ses")		// draw the buffer
+				bwin(cpx+1, cpy+1, pbcnt - 1, cpbuf, xcpbuf, eflg, "ses")		// draw the buffer
 				if ccp == COPY { return }
 			}
 		}}

@@ -200,9 +200,9 @@ func clr_buf(buf MazeData, mx int, my int, z int, wh int) {
 	}
 	for y := 0; y <= my; y++ {
 		for x := 0; x <= mx; x++ {
-			if wh < -65 { buf[xy{x, y}] = z
+			if wh < -65 { buf[xy{x, y}] = z; xbuf[xy{x, y}] = "0"
 		} else {
-			if buf[xy{x, y}] == wh { buf[xy{x, y}] = z }
+			if buf[xy{x, y}] == wh { buf[xy{x, y}] = z; xbuf[xy{x, y}] = "0" }
 		}
 	}}
 }
@@ -565,7 +565,7 @@ fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lviewp,vpx,vpy,fx,fy)
 		lvpp = fx
 fmt.Printf("lvpp: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lvpp,vpx,vpy,fx,fy)
 	}
-	Ovimg := segimage(ebuf, eflg, vpx, vpy, fx,fy, false)
+	Ovimg := segimage(ebuf, xbuf, eflg, vpx, vpy, fx,fy, false)
 	upwin(Ovimg, lvpp)
 	calc_stats()
 }
@@ -807,7 +807,7 @@ func palete(p int) {
 
 	if cnd >= 0 { for y := 0; y < 11; y++ { plflg[y] =  tflg[y] };
 		if palfol { for y := 0; y < 11; y++ { plflg[y] =  eflg[y] }}
-		bwin(cpx+1, cpy+1, 0, plbuf, plflg, "pal") }
+		bwin(cpx+1, cpy+1, 0, plbuf, xplb, plflg, "pal") }
 	opts.DimX = pmx; opts.DimY = pmy
 }
 
@@ -1133,7 +1133,7 @@ fmt.Printf("%03d ",cpbuf[xy{mx, my}])
 fmt.Printf("\n")
 }*/
 
-	bwin(cpx+1, cpy+1, vl, cpbuf, eflg, id)		// draw the buffer
+	bwin(cpx+1, cpy+1, vl, cpbuf, xcpbuf, eflg, id)		// draw the buffer
 	bl := fmt.Sprintf("paste buf: %d", vl)
 	statlin(cmdhin,bl)
 }
@@ -1199,11 +1199,11 @@ func pbRune(r rune) {
 // px, py - size of paste buffer from 0, 0
 // bn - buffer #
 
-func bwin(px int, py int, bn int, mbuf MazeData, fdat [11]int, id string) {
+func bwin(px int, py int, bn int, mbuf MazeData, xdat Xdat, fdat [11]int, id string) {
 
 var lw fyne.Window	// local cpy win to view buf contents
   wt := "palette selector"
-  nimg := segimage(mbuf,fdat,0,0,px,py,false) // (bn == 0)) stats off for now
+  nimg := segimage(mbuf,xdat,fdat,0,0,px,py,false) // (bn == 0)) stats off for now
   dt := float32(opts.dtec)
 	if (bn > 0) {
 	if !wpbop {
