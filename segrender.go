@@ -352,22 +352,34 @@ func vcoord(c, cb, ba int) int {
 // xw, yw - x & y loc to write on img
 // ptamp - png image stamp
 // rx, ry - pixel size of rectaNGLE to copy
-// rw, cl - row & col tile of ptamp
+// clm rw - col (x) & row (y) tile of ptamp
 // also return extracted area
 
-func writepngtoimage(img *image.NRGBA, ptamp image.Image, rx,ry,rw,cl, xw, yw int) *image.NRGBA {
+func writepngtoimage(img *image.NRGBA, ptamp image.Image, rx,ry,cl,rw, xw, yw int) *image.RGBA {
 
 	bnds := ptamp.Bounds()
 	iw, ih := bnds.Dx(), bnds.Dy()
 	rec := image.Rect((cl)*rx, (rw)*ry, (cl+1)*rx, (rw+1)*ry)			// this pegs the intended rect on sprite sheet
 	rrr := image.Rect(0,0,iw,ih)
-	cpy := image.NewNRGBA(rrr)
+	cpy := image.NewRGBA(rrr)
 	draw.Copy(cpy, image.Pt(0,0), ptamp, rec, draw.Over, nil)
 //fmt.Printf("shadow %d: %d x %d \n",na,(x-xb)*16, (y-yb)*16)
 	offset := image.Pt(xw, yw)
 	draw.Draw(img, cpy.Bounds().Add(offset), cpy, image.ZP, draw.Over)
 	return cpy
 }
+/*
+				writepngtoimage(img, shtamp, 16,16,na,0, (x-xb)*16, (y-yb)*16)
+
+				r := image.Rect((na)*16, 0, (na+1)*16, 16)
+				rr := image.Rect(0,0,256,16)
+				shd := image.NewRGBA(rr)
+				draw.Copy(shd, image.Pt(0,0), shtamp, r, draw.Over, nil)
+//fmt.Printf("shadow %d: %d x %d \n",na,(x-xb)*16, (y-yb)*16)
+				offset := image.Pt((x-xb)*16, (y-yb)*16)
+				draw.Draw(img, shd.Bounds().Add(offset), shd, image.ZP, draw.Over)	*/
+
+
 // image from buffer segment			- stat: display stats if true
 // segment of buffer from xb,yb to xs,ys (begin to stop)
 
