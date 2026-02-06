@@ -451,7 +451,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MRP = true
 				upd_edmaze(false)
-				opts.DimX, opts.DimY = rotmirbuf(edmaze)
+				opts.DimX, opts.DimY = rotmirbuf(edmaze,xbuf)
 				opts.dntr = true
 				opts.bufdrt = true
 			} else {
@@ -463,7 +463,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MRM = true
 				upd_edmaze(false)
-				opts.DimX, opts.DimY = rotmirbuf(edmaze)
+				opts.DimX, opts.DimY = rotmirbuf(edmaze,xbuf)
 				opts.dntr = true
 				opts.bufdrt = true
 			} else {
@@ -481,7 +481,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MV = true
 				upd_edmaze(false)
-				rotmirbuf(edmaze)
+				rotmirbuf(edmaze,xbuf)
 				opts.dntr = true
 				opts.bufdrt = true
 			} else {
@@ -499,7 +499,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MH = true
 				upd_edmaze(false)
-				rotmirbuf(edmaze)
+				rotmirbuf(edmaze,xbuf)
 				opts.dntr = true
 				opts.bufdrt = true
 			} else {

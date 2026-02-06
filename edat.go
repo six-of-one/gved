@@ -375,7 +375,7 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 //			for fin != "xwfdn" && lsv > 0 {
 				if scanr.Scan() { l = scanr.Text() }
 				fmt.Sscanf(l,"%s",&fin)		// this loop will read cust walls & floor pairs until xwfdn
-fmt.Printf("xwf %s\n",fin)
+fmt.Printf("%s\n",fin)
 //				lsv--
 //			}
 			for y := 0; y <= iy; y++ {	// read one line per element due to ops
@@ -623,16 +623,18 @@ actual rotate maths
 */
 // the actual werker, so we can use it on cpbuf, etc
 
-func rotmirmov(mdat MazeData, sx int, sy int, lastx int, lasty int, flg int) (int, int) {
+func rotmirmov(mdat MazeData, xdat Xdat, sx int, sy int, lastx int, lasty int, flg int) (int, int) {
 
 // to transform maze, array copy
 	xform := make(map[xy]int)
+	xbxf := make(map[xy]string)
 // transform																										 - rotating sq. wall mazes will always work
 // rotate +90 degrees				-- * there is the issue of gauntlet arcade NEEDING the y = 0 wall *always* intact, rotating looper mazes wont work
 		if opts.MRP {
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{lasty - ty, tx}] = mdat[xy{tx, ty}]
+				xbxf[xy{lasty - ty, tx}] = xdat[xy{tx, ty}]
 // g1 - must transform all dors on a rotat since they have horiz & vert dependent
 				if xform[xy{lasty - ty, tx}] == G1OBJ_DOOR_HORIZ { xform[xy{lasty - ty, tx}] = G1OBJ_DOOR_VERT } else {
 				if xform[xy{lasty - ty, tx}] == G1OBJ_DOOR_VERT { xform[xy{lasty - ty, tx}] = G1OBJ_DOOR_HORIZ } }
@@ -699,7 +701,7 @@ func rotmirmov(mdat MazeData, sx int, sy int, lastx int, lasty int, flg int) (in
 // same as mazeloop, but called by Rr, h, m while cmd keys active in edit mode
 // 	╚══> except in this buffer is changed by ops
 
-func rotmirbuf(rmmaze *Maze) (int, int) {
+func rotmirbuf(rmmaze *Maze, rmxdat Xdat) (int, int) {
 
 	fmt.Printf("in rotmirbuf\n")
 
@@ -720,7 +722,7 @@ func rotmirbuf(rmmaze *Maze) (int, int) {
 	fmt.Printf("rmb wraps -- hw: %d vw: %d\n", rmmaze.flags&LFLAG4_WRAP_H,rmmaze.flags&LFLAG4_WRAP_V)
 	fmt.Printf("rotmirbuf fx: %d lx %d fy %d ly %d\n", sx,lastx,sy,lasty)
 
-	lastx, lasty = rotmirmov(rmmaze.data,sx,sy,lastx,lasty,rmmaze.flags)
+	lastx, lasty = rotmirmov(rmmaze.data,rmxdat,sx,sy,lastx,lasty,rmmaze.flags)
 
 	for y := sy; y <= lasty; y++ {
 		for x := sx; x <= lastx; x++ {
@@ -1168,16 +1170,16 @@ func pbRune(r rune) {
 		case 's': cpy++; pb_loced(masbcnt)
 // some extras
 		case 'r': opts.MRP = true
-			cpx,cpy = rotmirmov(cpbuf,0,0,cpx,cpy,0)
+			cpx,cpy = rotmirmov(cpbuf,xcpbuf,0,0,cpx,cpy,0)
 			pb_loced(masbcnt)
 		case 'R': opts.MRM = true
-			cpx,cpy = rotmirmov(cpbuf,0,0,cpx,cpy,0)
+			cpx,cpy = rotmirmov(cpbuf,xcpbuf,0,0,cpx,cpy,0)
 			pb_loced(masbcnt)
 		case 'h': opts.MH = true
-			rotmirmov(cpbuf,0,0,cpx,cpy,0)
+			rotmirmov(cpbuf,xcpbuf,0,0,cpx,cpy,0)
 			pb_loced(masbcnt)
 		case 'm': opts.MV = true
-			rotmirmov(cpbuf,0,0,cpx,cpy,0)
+			rotmirmov(cpbuf,xcpbuf,0,0,cpx,cpy,0)
 			pb_loced(masbcnt)
 // std dialogs
 		case 'l': fallthrough
