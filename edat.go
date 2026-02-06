@@ -26,7 +26,7 @@ more complexity will be required for:
 
 var edmaze *Maze
 var ebuf MazeData		// main edit buffer and corresponding flags
-type Xdat map[xy]string	// extra data store, need test
+type Xdat map[xy]string	// extra data store
 var xbuf Xdat
 var ecolor color.Color	// master color for maze elements
 var eid string			// id string for titles
@@ -204,7 +204,7 @@ func clr_buf(buf MazeData, mx int, my int, z int, wh int) {
 // add a maze # to saves
 // svdb - save undo buf
 
-func sav_maz(fil string, mdat MazeData, fdat [11]int, mx int, my int, smazn int, svdb bool) {
+func sav_maz(fil string, xdat Xdat, mdat MazeData, fdat [11]int, mx int, my int, smazn int, svdb bool) {
 // edit settings
 // 1. edit status (1) max_x max_y
 // 2. 11 bytes of compressed maze lead in - all stats
