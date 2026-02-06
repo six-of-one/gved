@@ -419,8 +419,9 @@ func writepngtoimage(img *image.NRGBA, ptamp image.Image, rx,ry,cl,rw, xw, yw in
 // image from buffer segment			- stat: display stats if true
 // segment of buffer from xb,yb to xs,ys (begin to stop)
 
-// testing cust floor
+// testing cust floor & wall
 var Se_cflr_cnt int
+var Se_cwal_cnt int
 
 func segimage(mdat MazeData, fdat [11]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
 
@@ -429,6 +430,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 
 	var err error
 	var ptamp image.Image		// png stamp
+	var wtamp image.Image		// png stamp
 
 // dummy maze for ops that require it
 	var maze = &Maze{}
@@ -495,6 +497,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 		err, _, ptamp = itemGetPNG(Se_cflr[Se_cflr_cnt])
 		_, _, shtamp := itemGetPNG("gfx/shadows.16.png")		// note error block on this
+		_, _, wtamp = itemGetPNG("gfx/wall_T.16.png")		// note error block on this
 // resizing test
 //		smol := image.NewRGBA(image.Rect(0, 0, ptamp.Bounds().Max.X/2, ptamp.Bounds().Max.Y/2))
 //		draw.BiLinear.Scale(smol, smol.Rect, ptamp, ptamp.Bounds(), draw.Over, nil)
@@ -556,6 +559,10 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 
 	}}
 
+// testing wall exp
+stdwl := false
+Se_cwal_cnt++
+if Se_cwal_cnt > 7 { Se_cflr_cnt = 1 }
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & g2 draw walls, see screens
 	for y := yb; y <= ys; y++ {
@@ -613,9 +620,14 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				nwt := NOWALL | NOG1W
 				switch scanbuf(maze.data, x, y, x, y, -2) {
 				case G1OBJ_WALL_DESTRUCTABLE:
-					adj, _ := checkwalladj8g1(maze, x, y)
+					adj, wly := checkwalladj8g1(maze, x, y)
 				if (nothing & NOWALL) == 0 {
+		if stdwl {
 					stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
+		} else {
+					stamp = nil
+					writepngtoimage(img, wtamp, 16,16,wly,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+		}
 				}
 
 				case G1OBJ_WALL_TRAP1:
@@ -623,9 +635,14 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 					nwt = NOWALL
 					fallthrough
 				case G1OBJ_WALL_REGULAR:
-					adj, _ := checkwalladj8g1(maze, x, y)
+					adj, wly := checkwalladj8g1(maze, x, y)
 					if (nothing & nwt) == 0 {
+		if stdwl {
 						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+		} else {
+						stamp = nil
+						writepngtoimage(img, wtamp, 16,16,wly,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+		}
 				}
 // test of some items not place in mazes - place in empty floor tile @random
 				case MAZEOBJ_TILE_FLOOR:
