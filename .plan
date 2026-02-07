@@ -58,7 +58,6 @@ copy / cut / paste / replace
   \_ turned off by c/c/p, del, edit off, pgup/dn
 
 issues needing fixed
-- g2 crash on 49, 65, wall draw issue on 104
 - will the autosaves (around L, S, etc) become an issue?    (see pb bug below)
 - undo after paste works weirdly sometimes - usually with the next issue
 - saw instanced where paste pasted wrong data, not sure, was on G¹ only editing an sdb

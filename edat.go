@@ -114,7 +114,7 @@ fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 		opts.MH = false
 	}
 	if xbline == nil {
-		xbline = dboxtx("xb-line", "0000000", 512, 60,xbl_cls,xbl_typ)
+		xbline = dboxtx("xb-line", "0000000", 512, 60,xbl_cls,nil)
 	}
 // activate keys & select k (edkdef from mb click)
 	if k > 0 {
@@ -126,20 +126,23 @@ fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 // txt dialog to store & retr xbuf data
 
 var xbline binding.Item[string]
+var xblchg string					// detect changes in xbline
 
 // box typer so edits go into xb edit key
 
-func xbl_typ(r rune) {
+func xbl_typ() {
 
-	if xbline != nil {
-		g1edit_xbmap[valid_keys(edkey)] = xbline.Get()
+	if xbline != nil {		// this open input needs validated to hex string, no spaces
+		g1edit_xbmap[valid_keys(edkey)], _ = xbline.Get()
+		sv_config()
+fmt.Printf("xbline key: %d = %s\n",valid_keys(edkey),g1edit_xbmap[valid_keys(edkey)])
 	}
 }
 
 // close out edit line for se exp
 
 func xbl_cls() {
-fmt.Printf("xbline close\n")
+
 	xbline = nil
 }
 
@@ -962,22 +965,23 @@ func close_keys() {
 
 func key_asgn(buf MazeData, xdat Xdat, ax int, ay int) {
 
+	edk := valid_keys(edkey)
 	if G1 {
-		g1edit_keymap[edkey] = buf[xy{ax, ay}]
-		g1edit_xbmap[edkey] = xdat[xy{ax, ay}]
-		if xbline != nil { xbline.Set(g1edit_xbmap[edkey]) }
-		kys := g1mapid[g1edit_keymap[edkey]]
-		keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
+		g1edit_keymap[edk] = buf[xy{ax, ay}]
+		g1edit_xbmap[edk] = xdat[xy{ax, ay}]
+		if xbline != nil { xblchg = g1edit_xbmap[edk]; xbline.Set(xblchg) }
+		kys := g1mapid[g1edit_keymap[edk]]
+		keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edk],g1edit_keymap[edk],kys)
 		statlin(cmdhin,keyst)
-		play_sfx(g1auds[g1edit_keymap[edkey]])
-		if edkey == cycloc { cycl = g1edit_keymap[cycloc] }		// when reassign 'c' key, set cycl as well
+		play_sfx(g1auds[g1edit_keymap[edk]])
+		if edk == cycloc { cycl = g1edit_keymap[cycloc] }		// when reassign 'c' key, set cycl as well
 	} else {
-		g2edit_keymap[edkey] = buf[xy{ax, ay}]
-		kys := g2mapid[g2edit_keymap[edkey]]
-		keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
+		g2edit_keymap[edk] = buf[xy{ax, ay}]
+		kys := g2mapid[g2edit_keymap[edk]]
+		keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edk],g2edit_keymap[edk],kys)
 		statlin(cmdhin,keyst)
-		play_sfx(g2auds[g2edit_keymap[edkey]])
-		if edkey == cycloc { cycl = g1edit_keymap[cycloc] }
+		play_sfx(g2auds[g2edit_keymap[edk]])
+		if edk == cycloc { cycl = g1edit_keymap[cycloc] }
 	}
 	if listK != nil { list_keys() }
 }

@@ -494,6 +494,8 @@ func wizecon() {
 			sv_config()			// prog config stuff
 		}
 		time.Sleep(2 * time.Second)
+// run here for the timer
+		xbl_typ()
 	}
 }
 
@@ -594,7 +596,6 @@ func dboxtx(dt string, dbc string, w float32, h float32, cf func(), sbr func(r r
 	txtB := binding.NewString()
 	txtWid := widget.NewEntryWithData(txtB)
 	txtWid.MultiLine = true
-	if dt == "x-line" { txtWid.MultiLine = false }
 	txtWid.Disabled()
 
 	// we can disable the Entry field so the user can't modify the text:
@@ -606,7 +607,9 @@ func dboxtx(dt string, dbc string, w float32, h float32, cf func(), sbr func(r r
 	ww.Show()
 	specialKey(ww)
 	wwlup++; if wwlup > 8 { wwlup = 1 }
-	if sbr != nil {
+//xb line is boigah knigget
+	if dt == "x-line" { txtWid.MultiLine = false
+	} else {}
 	switch wwlup {
 
 	case 1: wwa = ww; ww.Canvas().SetOnTypedRune(generalRune1); subra = sbr	// this is my mess to allow 'q' 'Q' to close any of these dialogs
@@ -617,7 +620,7 @@ func dboxtx(dt string, dbc string, w float32, h float32, cf func(), sbr func(r r
 	case 6: wwf = ww; ww.Canvas().SetOnTypedRune(generalRune6); subrf = sbr
 	case 7: wwg = ww; ww.Canvas().SetOnTypedRune(generalRune7); subrg = sbr
 	case 8: wwh = ww; ww.Canvas().SetOnTypedRune(generalRune8); subrh = sbr
-	}}
+	}
 
 	if cf != nil {
 		ww.SetCloseIntercept(func() {			// if cf is passed, assign it to close intercept
