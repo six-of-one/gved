@@ -6,6 +6,20 @@ import (
 	"github.com/disintegration/imaging"
 )
 
+// swap values
+
+// ints
+
+func is(i1, i2 int) (int,int) {
+	return i2,i1
+}
+
+// strings
+
+func ss(s1, s2 string) (string,string) {
+	return s2,s1
+}
+
 // absint returns the absolute value of i.
 func absint(i int) int {
 	if i < 0 {
