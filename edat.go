@@ -114,7 +114,7 @@ fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 		opts.MH = false
 	}
 	if xbline == nil {
-		xbline = dboxtx("xb-line", "0000000", 512, 60,xbl_cls,nil)
+		xbline = dboxtx("xb-line", "0000000", 512, 60,xbl_cls,xbl_typ)
 	}
 // activate keys & select k (edkdef from mb click)
 	if k > 0 {
@@ -126,6 +126,15 @@ fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 // txt dialog to store & retr xbuf data
 
 var xbline binding.Item[string]
+
+// box typer so edits go into xb edit key
+
+func xbl_typ(r rune) {
+
+	if xbline != nil {
+		g1edit_xbmap[valid_keys(edkey)] = xbline.Get()
+	}
+}
 
 // close out edit line for se exp
 

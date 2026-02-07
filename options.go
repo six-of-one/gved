@@ -125,12 +125,21 @@ func ld_config() {
 		l := "1060 1086 23"
 		if scanr.Scan() { l = scanr.Text() }
 		fmt.Sscanf(string(l),"%v %v %d", &geow, &geoh,&viewp)		// win size w * h, viewport size
+// g1 ed keymap read
 		for i := 27; i <= 107; i += 20 {
 			if scanr.Scan() { l = scanr.Text()						// edit keys g1
 				fmt.Sscanf(l,"%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d \n",&g1edit_keymap[i+0], &g1edit_keymap[i+1], &g1edit_keymap[i+2], &g1edit_keymap[i+3],
 						&g1edit_keymap[i+4], &g1edit_keymap[i+5], &g1edit_keymap[i+6], &g1edit_keymap[i+7], &g1edit_keymap[i+8], &g1edit_keymap[i+9], &g1edit_keymap[i+10],&g1edit_keymap[i+11],
 						&g1edit_keymap[i+12], &g1edit_keymap[i+13], &g1edit_keymap[i+14], &g1edit_keymap[i+15], &g1edit_keymap[i+16], &g1edit_keymap[i+17], &g1edit_keymap[i+18], &g1edit_keymap[i+19]) }
 		}
+// g1 xb keymap read
+		for i := 27; i <= 107; i += 20 {
+			if scanr.Scan() { l = scanr.Text()						// xb keys g1
+				fmt.Sscanf(l,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n",&g1edit_xbmap[i+0], &g1edit_xbmap[i+1], &g1edit_xbmap[i+2], &g1edit_xbmap[i+3],
+						&g1edit_xbmap[i+4], &g1edit_xbmap[i+5], &g1edit_xbmap[i+6], &g1edit_xbmap[i+7], &g1edit_xbmap[i+8], &g1edit_xbmap[i+9], &g1edit_xbmap[i+10],&g1edit_xbmap[i+11],
+						&g1edit_xbmap[i+12], &g1edit_xbmap[i+13], &g1edit_xbmap[i+14], &g1edit_xbmap[i+15], &g1edit_xbmap[i+16], &g1edit_xbmap[i+17], &g1edit_xbmap[i+18], &g1edit_xbmap[i+19]) }
+		}
+// g2 ed keymap read
 		for i := 27; i <= 107; i += 20 {
 			if scanr.Scan() { l = scanr.Text()						// edit keys g2
 						//        0    1                        6                            12                       17                                 24                       29             32
@@ -178,6 +187,7 @@ func sv_config() {
 	file, err := os.Create(".config")
 	if err == nil {
 		wfs := fmt.Sprintf("%d %d %d\n",int(opts.Geow),int(opts.Geoh),viewp)
+// g1 ed keymap
 		k1, k2, k3, k4, k5 := "","","","",""
 		for i := 27; i < 46; i++ {
 			k1 += fmt.Sprintf("%d ",g1edit_keymap[i])
@@ -188,6 +198,18 @@ func sv_config() {
 		}
 		k1 += "\n"; k2 += "\n"; k3 += "\n"; k4 += "\n"; k5 += "\n"
 		wfs += k1+k2+k3+k4+k5
+// g1 xb keymap
+		k1, k2, k3, k4, k5 = "","","","",""
+		for i := 27; i < 46; i++ {
+			k1 += fmt.Sprintf("%s ",g1edit_xbmap[i])
+			k2 += fmt.Sprintf("%s ",g1edit_xbmap[i+20])
+			k3 += fmt.Sprintf("%s ",g1edit_xbmap[i+40])
+			k4 += fmt.Sprintf("%s ",g1edit_xbmap[i+60])
+			k5 += fmt.Sprintf("%s ",g1edit_xbmap[i+80])
+		}
+		k1 += "\n"; k2 += "\n"; k3 += "\n"; k4 += "\n"; k5 += "\n"
+		wfs += k1+k2+k3+k4+k5
+// g2 ed keymap
 		k1, k2, k3, k4, k5 = "","","","",""
 		for i := 27; i < 46; i++ {
 			k1 += fmt.Sprintf("%d ",g2edit_keymap[i])
