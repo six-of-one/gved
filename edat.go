@@ -9,6 +9,7 @@ import (
 	"image"
 	"encoding/binary"
 	"image/color"
+	"math"
 	"math/rand"
 	"time"
 	"fyne.io/fyne/v2"
@@ -965,11 +966,15 @@ func close_keys() {
 	listK = nil
 }
 
-// extend map ids for sanctuary by limiting mapids arrays, and shoehorn into item 66
+// valid check, mapid
+var g1maxid = 102
+var g2maxid = 66
 
-func shoehorn(tid int) int {
-	id := 0
-	if tid > 66 {}
+func valid_id(tid int) int {
+	id := G1OBJ_WALL_REGULAR
+	max := g1maxid
+	if G2 { max := g2maxid }
+	if tid >= 0 && tid <= max { id = tid }
 	return id
 }
 
