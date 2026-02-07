@@ -665,13 +665,10 @@ func undo() {
 		revk := delbuf.revc[restak]	// revoke count - items in loops can undo/redo all at once
 fmt.Printf(" stk %d undo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak,delbuf.elem[restak],delbuf.mx[restak],delbuf.my[restak],delbuf.revc[restak])
 		for revk > 0 && restak >= 0 {
-			sw := ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}]
-			ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}] = delbuf.elem[restak]
-			delbuf.elem[restak] = sw
 
-			ss := xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}]					// add xbuf in all these places
-			xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}] = delbuf.xbfd[restak]
-			delbuf.xbfd[restak] = ss
+			ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.elem[restak] = is(ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.elem[restak])
+			xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak] = ss(xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak])
+
 			revk--
 			if revk > 0 && restak > 0 { restak-- }
 		}
@@ -686,14 +683,10 @@ func redo() {
 fmt.Printf(" stk %d redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak,delbuf.elem[restak],delbuf.mx[restak],delbuf.my[restak],delbuf.revc[restak])
 		revk := delbuf.revc[restak]	// revoke count - items in loops can undo/redo all at once
 		for revk > 0 && restak >= 0 {
-			sw := ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}]
-			ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}] = delbuf.elem[restak]
 //fmt.Printf(" redo %d elem: %d maze: %d x %d - rloop: %d\n",restak,delbuf.elem[restak],delbuf.mx[restak],delbuf.my[restak],delbuf.revc[restak])
-			delbuf.elem[restak] = sw
 
-			ss := xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}]
-			xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}] = delbuf.xbfd[restak]
-			delbuf.xbfd[restak] = ss
+			ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.elem[restak] = is(ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.elem[restak])
+			xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak] = ss(xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak])
 
 			revk++
 			restak++
@@ -711,7 +704,7 @@ func uswap() {
 			ebuf[xy{x,y}],ubuf[xy{x,y}] = is(ebuf[xy{x,y}],ubuf[xy{x,y}])
 			xbuf[xy{x,y}],xubf[xy{x,y}] = ss(xbuf[xy{x,y}],xubf[xy{x,y}])
 	}}
-	for y := 0; y < 11; y++ { sw := eflg[y]; eflg[y] = uflg[y]; uflg[y] = sw }
+	for y := 0; y < 11; y++ { eflg[y], uflg[y] = is(eflg[y], uflg[y]) }
 // also have to swap delete stak
 	udbck(delstak+1,delstak)
 	su := udstak
