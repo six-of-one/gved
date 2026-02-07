@@ -792,8 +792,10 @@ func sdbit(dir int) string {
 	cnd := -1
 	ldb := sdb
 	spar := ""
+	saf := sdmax * 2
 	if opts.bufdrt { menu_savit(true) }		// autosave
 	for cnd < 0 && ldb < sdmax {
+		saf--
 		pgdir = dir
 		ldb += dir
 		if ldb == 0 { ldb = 1 }
@@ -801,6 +803,7 @@ func sdbit(dir int) string {
 		cnd = lod_maz(fil, xbuf, ebuf, false, true)
 		if cnd >= 0 { sdb = ldb; fax(&eflg,&tflg,11); ed_maze(true); spar = fmt.Sprintf("cmd: S - ") }
 		if dir < 0 && cnd < 0 && ldb == 1 { cnd = 0; break }
+		if saf < 1 { break }
 	}
 	if cnd < 0 {
 		menu_lodit(true)
