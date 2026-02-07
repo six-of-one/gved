@@ -135,6 +135,8 @@ const (
 	G1OBJ_EXTEND = 66
 	G1OBJ_WIZARD = 67
 	GORO_TEST = 70
+// sanctuary engine ops
+	SEOBJ_FLOOR = 101
 )
 // contrl var nothing [ no-thing ] that blocks elements display
 const (

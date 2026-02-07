@@ -143,6 +143,10 @@ in edit mode with cmd keys set, many of the view mode keys still function
 edit mode stores changes in buffer files in subdir .ed
 there is as yet no way, *with gved*, to recompress and store mazes in rom
 
+sanctuary engine extra features has an xb-line for its hexadecimal cfg
+this will be opened entering any edit mode and will need repositioned
+the data entered will be some esoteric tech wizardy with a guide elsewhere
+
 most of these have a corresponging item on edit or file menus
 
 <SH-CTRL>-S	save current buffer for maze to disk as a generic file save
