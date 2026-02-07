@@ -49,7 +49,7 @@ func menu_lodit(y bool) {
 		if sdb < 0 {
 			Ovwallpat = -1
 			cnd := lod_maz(fil, xbuf, ebuf, true, true)
-			if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
+			if cnd >= 0 { fax(&eflg,&tflg,11) }
 			remaze(opts.mnum)
 		} else {
 			sdbit(0)
@@ -139,7 +139,7 @@ func menu_laodf() {
 		Ovwallpat = -1
 		cnd := lod_maz(fil, xbuf, ebuf, true, true)
 		sdb = -1
-		if cnd >= 0 { for y := 0; y < 11; y++ { eflg[y] =  tflg[y] } }
+		if cnd >= 0 { fax(&eflg,&tflg,11) }
 		remaze(opts.mnum)
 	}, w)
 	fileDialog.Show()

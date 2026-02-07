@@ -330,7 +330,7 @@ fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				if opts.bufdrt { menu_savit(true) }		// autosave
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 				cnd := lod_maz(fil, xbuf, ebuf, false, true)
-				if cnd >= 0 { sdb = anum; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true) }
+				if cnd >= 0 { sdb = anum; fax(&eflg,&tflg,11); ed_maze(true) }
 				anum = 0
 			} else { opts.Nogtop = !opts.Nogtop; opts.dntr = (opts.edat > 0); relod = true }
 //		case 69:		// E

@@ -175,7 +175,7 @@ if opts.Verbose {
 		fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
 		cnd := lod_maz(fil, xbuf, ebuf, true, true)
 		if cnd > -1 { opts.edip = cnd }
-		for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }
+		fax(&eflg,&tflg,11)
 		if opts.edip != 0 {
 			for y := 0; y < 11; y++ {
 //				maze.optbyts[y] = eflg[y]
