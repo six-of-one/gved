@@ -113,11 +113,21 @@ fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 		opts.MV = false
 		opts.MH = false
 	}
+	if xbline == nil {
+		xbline = dboxtx("Ox-line", "0000000", 100, 20,xbl_cls,typedRune)
+	}
 // activate keys & select k (edkdef from mb click)
 	if k > 0 {
 		if !cmdoff { typedRune('\\') }	// turn cmd keys off
 		typedRune(rune(k))
 	}
+}
+
+// close out edit line for se exp
+
+func xbl_cls() {
+
+	xbline = nil
 }
 
 func udbck(ct int, t int){

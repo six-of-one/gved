@@ -584,6 +584,7 @@ func keyhints() {
 // text dialog boxes for all hint sets
 // title, content, w, h
 // return text box point for updating contents live
+var xbline binding.Item[string]
 var wwlup int
 
 func dboxtx(dt string, dbc string, w float32, h float32, cf func(), sbr func(r rune)) binding.Item[string] {
@@ -593,6 +594,7 @@ func dboxtx(dt string, dbc string, w float32, h float32, cf func(), sbr func(r r
 	txtB := binding.NewString()
 	txtWid := widget.NewEntryWithData(txtB)
 	txtWid.MultiLine = true
+	if dt == "x-line" { txtWid.MultiLine = false }
 	txtWid.Disabled()
 
 	// we can disable the Entry field so the user can't modify the text:
