@@ -413,7 +413,12 @@ fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",dt,ex,ey,opbuf[xy{ex, e
 				if shift { delstr = -1 }
 				if del { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = delstr; xopbf[xy{mx, my}] = "0"; opts.bufdrt = true } else {	// delete anything for now makes a floor
 				if pasty { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; xopbf[xy{mx, my}] = xcpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }	// cant use setcode below, it wont set floors
-				if setcode > 0 { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = setcode; xopbf[xy{mx, my}] = xstcode; opts.bufdrt = true }
+				if setcode > 0 {
+					undo_buf(mx, my,rcl);
+					if ! shift { opbuf[xy{mx, my}] = setcode; }
+					xopbf[xy{mx, my}] = xstcode;
+					opts.bufdrt = true
+				}
 fmt.Printf("%03d ",opbuf[xy{mx, my}])
 				}
 				rcl++

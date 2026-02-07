@@ -136,8 +136,7 @@ const (
 	G1OBJ_WIZARD = 67
 	GORO_TEST = 70
 // sanctuary engine ops
-	SEOBJ_CFLOR = 100
-	SEOBJ_FLOOR = 101
+	SEOBJ_FLOOR = 100
 )
 // contrl var nothing [ no-thing ] that blocks elements display
 const (
@@ -266,8 +265,8 @@ var g1mapid = map[int]string{
 	97:		"No_thing_97",
 	98:		"No_thing_98",
 	99:		"No_thing_99",
-	SEOBJ_CFLOR:	"X_FLOOR",
 	SEOBJ_FLOOR:	"XOV_FLOOR",
+	101:	"No_thing_101",
 	102:		"No_thing_102",
 
 }
@@ -446,7 +445,7 @@ var g1auds = map[int]string{
 	98:		"",
 	99:		"",
 	100:	"sfx/tile.ogg",
-	101:	"sfx/tile.ogg",
+	101:	"",
 	102:	"",
 }
 
