@@ -707,12 +707,8 @@ func uswap() {
 	for y := 0; y < 11; y++ { eflg[y], uflg[y] = is(eflg[y], uflg[y]) }
 // also have to swap delete stak
 	udbck(delstak+1,delstak)
-	su := udstak
-	udstak = delstak
-	delstak = su
-	su = urstak
-	urstak = restak
-	restak = su
+	udstak, delstak = is(udstak, delstak)
+	urstak, restak = is(urstak, restak)
 	for y := 0; y <= udstak; y++ {
 		udb.mx[y],delbuf.mx[y] = is(udb.mx[y],delbuf.mx[y])
 		udb.my[y],delbuf.my[y] = is(udb.my[y],delbuf.my[y])
@@ -803,7 +799,7 @@ func sdbit(dir int) string {
 		if ldb == 0 { ldb = 1 }
 		fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
 		cnd = lod_maz(fil, xbuf, ebuf, false, true)
-		if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] =  tflg[y] }; ed_maze(true); spar = fmt.Sprintf("cmd: S - ") }
+		if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] = tflg[y] }; ed_maze(true); spar = fmt.Sprintf("cmd: S - ") }
 		if dir < 0 && cnd < 0 && ldb == 1 { cnd = 0; break }
 	}
 	if cnd < 0 {
