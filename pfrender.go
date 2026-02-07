@@ -201,7 +201,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	// maze := mazeDecompress(mazedata)
 //	copyedges(maze)
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
-
+fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
 	if G2 {
 // g2 checks
 	for y := 0; y < maxvp; y++ {
@@ -233,7 +233,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 			nwt := NOWALL | NOG1W
 			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
 			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
-			if maze.wallpattern < 11 {
+			if maze.wallpattern < 6 {
 				if (nothing & nwt) == 0 {		// wall shadows here
 				adj = checkwalladj3g1(maze, x, y)
 				}
@@ -301,6 +301,8 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 					}
 			}}
 			if G1 {
+							if maze.wallpattern > 5 { maze.wallpattern -= 6 }		// Se enhance that allows shadowless g1 walls
+
 				nwt := NOWALL | NOG1W
 				switch scanbuf(maze.data, x, y, x, y, -2) {
 				case G1OBJ_WALL_DESTRUCTABLE:

@@ -645,6 +645,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					}
 			}}
 			if G1 {
+				if maze.wallpattern > 5 { maze.wallpattern -= 6 }		// Se enhance that allows shadowless g1 walls
 				nwt := NOWALL | NOG1W
 				switch scanbuf(maze.data, x, y, x, y, -2) {
 				case G1OBJ_WALL_DESTRUCTABLE:

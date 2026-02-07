@@ -222,12 +222,12 @@ if opts.Verbose {
 	}
 
 // testing - this could be g1 codes, hard to tell with out the g1 gfx roms loaded
-	if G1 {
+/*	if G1 {
 		if maze.wallpattern > 5 {
 			maze.wallpattern = rand.Intn(4)
 			fmt.Printf("maze.wallpattern = rand.Intn(4)\n")
 		}
-	}
+	}*/
 if opts.Verbose { fmt.Printf("mdcmp wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4_WRAP_H,maze.flags&LFLAG4_WRAP_V) }
 	if metaonly {
 		return maze
