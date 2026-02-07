@@ -445,8 +445,8 @@ var g1auds = map[int]string{
 	98:		"",
 	99:		"",
 	100:	"",
-	101:	"",
-	102:	"sfx/tile.ogg",
+	101:	"sfx/tile.ogg",
+	102:	"",
 }
 
 var g2auds = map[int]string{

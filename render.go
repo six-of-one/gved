@@ -213,19 +213,22 @@ const (
 )
 // bytes for each cmd
 var parms = []int{
-	2, 2, 0,
+	0, 2, 2, 0, 0, 0, 0, 2, 0,
 }
 var secmd [64]int
 
 func parser(sp string, lc int) (int, int, int) {
 	r1, r2, r3 := -1,0,0
+//fmt.Printf("parse %s\n ",sp)
 	if sp != "" && lc > 0 {
-		for i := 0; i < 17; i++ { secmd[i] = -1 }
+		for i := 0; i < 17; i++ { secmd[i] = 0 }
 					//	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16
 		fmt.Sscanf(sp,"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
 					&secmd[0],&secmd[1],&secmd[2],&secmd[3],&secmd[4],&secmd[5],&secmd[6],&secmd[7],&secmd[8],&secmd[9],&secmd[10],&secmd[11],&secmd[12],&secmd[13],&secmd[14],&secmd[15],&secmd[16])
 		for i := 0; i < 17; i++ {
-			if lc == secmd[i] { r1 =secmd[i+1]; r3 =secmd[i+2]; r3 =secmd[i+3]; if parms[secmd[i]] == 0 { r1 = 1 }; break }
+			if lc == secmd[i] { r1 =secmd[i+1]; r3 =secmd[i+2]; r3 =secmd[i+3]; if parms[secmd[i]] == 0 { r1 = 1 }; 
+fmt.Printf("parm %d of %d= %d\n ",secmd[i],parms[secmd[i]])
+								break }
 			i = i + parms[secmd[i]]
 		}
 
