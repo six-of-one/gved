@@ -520,7 +520,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		}
 	}} else {
 // tesing Se, xpanded floor
-		stdfl := true
+		stdfl := false
 		Se_cflr_cnt++
 		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 		err, _, ptamp = itemGetPNG(Se_cflr[Se_cflr_cnt])
@@ -535,12 +535,13 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 
 		tw := int(opts.Geow - 4)
 		th := int(opts.Geoh - 30)
-
+// image of an entire floor to writepngtoimage to img
+		flim := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
 		for ty := 0; ty < th ; ty=ty+ih {
 			for tx := 0; tx < tw ; tx=tx+iw {
 				offset := image.Pt(tx, ty)
 //				draw.Draw(img, smol.Bounds().Add(offset), smol, image.ZP, draw.Over)
-				draw.Draw(img, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)
+				draw.Draw(flim, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)
 			}}
 
 // g1 checks
@@ -549,6 +550,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			adj := 0
 			nwt := NOWALL | NOG1W
 // Se can override these on individual tiles
+			sb := scanbuf(maze.data, x, y, x, y, -2)
 			xp := scanxb(xdat, x, y, x, y, "")
 			wp, fp, fc := maze.wallpattern, maze.floorpattern, maze.floorcolor
 			gt := G1
@@ -560,8 +562,8 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			if p >= 0 { wp = p }
 
 //			defshd := "gfx/shadows.16.png"		// default shadows for exp floors, custom wall load has to change this to walls png
-			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
-			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
+			if sb == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
+			if sb == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
 			if wp < 6 {
 				if (nothing & nwt) == 0 {			// wall shadows here
 				adj = checkwalladj3g1(maze, x, y)	// this sets adjust for shadows, floorGetStamp sets shadows by darkening floor parts
@@ -583,14 +585,17 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			}
 		  }
 			stamp := floorGetStamp(fp, adj+rand.Intn(4), fc)
-			if scanbuf(maze.data, x, y, x, y, -2) < 0 {
+			if sb < 0 {
 				coltil(img,0,(x-xb)*16, (y-yb)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
+				if sb == SEOBJ_CFLOR {			// cust floor from png - laded by lod_maz from xb file
+					writepngtoimage(img, flim, 16,16,(x-xb),(y-yb), (x-xb)*16, (y-yb)*16)
+				} else {
 // exp floor test, turn this off for sd mazes/ edits
-		  if stdfl {	// do std floor stamps
+		  if stdfl || xp != "0" {	// do std floor stamps
 				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
-		  }
+		  }}
 			}}
 // testing
 //			coltil(img,0x770077,(x-xb)*16, (y-yb)*16)
@@ -610,6 +615,12 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 			var dots int // dot count
 			wp, wc := maze.wallpattern, maze.wallcolor
 			gt := G1
+			xp := scanxb(xdat, x, y, x, y, "")
+			p,q,_ := parser(xp, SE_G2)
+			if p == 1 { gt = false }
+			p,q,_ = parser(xp, SE_WALL)
+			if p >= 0 { wp = p; wc = q
+			}
 
 			if G2 {
 				switch whatis(maze, x, y) {
