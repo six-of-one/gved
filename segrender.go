@@ -574,7 +574,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			// in this test, we already have the wall code in adj from gauntlet test - exp walls edit will need extra test if wall code is diff
 			na := (adj >> 2)		// div 4
 			if na > 0 {
-				writepngtoimage(img, shtamp, 16,16,na,0, (x-xb)*16, (y-yb)*16)
+				writepngtoimage(img, shtamp, 16,16,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 /*				r := image.Rect((na)*16, 0, (na+1)*16, 16)
 				rr := image.Rect(0,0,256,16)
 				shd := image.NewRGBA(rr)
@@ -589,10 +589,19 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				coltil(img,0,(x-xb)*16, (y-yb)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
+				var r int
+				p,q,r = parser(xp, SE_COLRT)
+				var cl uint32
+				cl = 0
+				if p >= 0 {
+					cl = uint32(0xff000000 + r + q * 256 + p * 65536)
+					coltil(img,cl,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				}
 				p,_,_ = parser(xp, SE_CFLOR)
 				if p > 0 {			// cust floor from png - laded by lod_maz from xb file
-					writepngtoimage(img, flim, 16,16,(x-xb),(y-yb), (x-xb)*16, (y-yb)*16)
-				} else {
+					writepngtoimage(img, flim, 16,16,(x-xb),(y-yb), vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				}
+				if p < 0 && cl < 1 {
 // exp floor test, turn this off for sd mazes/ edits
 		  if stdfl || xp != "0" {	// do std floor stamps
 				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
