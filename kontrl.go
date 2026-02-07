@@ -336,7 +336,9 @@ fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			} else { opts.Nogtop = !opts.Nogtop; opts.dntr = (opts.edat > 0); relod = true }
 //		case 69:		// E
 		case 'c':
-			if anum > 0 && anum < 65 {
+			max := g1maxid
+			if G2 { max = g2maxid }
+			if anum > 0 && anum <= max {
 				cycl = anum - 1
 				anum = 0
 			} else { cycl--; cycl-- }
