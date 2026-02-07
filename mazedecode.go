@@ -221,7 +221,8 @@ if opts.Verbose {
 		maze.floorcolor = Ovflorcol
 	}
 
-// testing - this could be g1 codes, hard to tell with out the g1 gfx roms loaded
+// removed - this could be g1 codes, hard to tell with out the g1 gfx roms loaded
+// the higher wall patterns is where g2 does shrubs - g1 has no such, as rodger the shrubber could not be contacted during g1 dev
 /*	if G1 {
 		if maze.wallpattern > 5 {
 			maze.wallpattern = rand.Intn(4)

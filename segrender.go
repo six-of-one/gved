@@ -548,10 +548,14 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		for x := xb; x < xs; x++ {
 			adj := 0
 			nwt := NOWALL | NOG1W
+// Se can override these on individual tiles
+			wp, fp, fc := maze.wallpattern, maze.floorpattern, maze.floorcolor
+			gt := G1
+
 //			defshd := "gfx/shadows.16.png"		// default shadows for exp floors, custom wall load has to change this to walls png
 			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
 			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
-			if maze.wallpattern < 6 {
+			if wp < 6 {
 				if (nothing & nwt) == 0 {			// wall shadows here
 				adj = checkwalladj3g1(maze, x, y)	// this sets adjust for shadows, floorGetStamp sets shadows by darkening floor parts
 				}
@@ -571,14 +575,14 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				draw.Draw(img, shd.Bounds().Add(offset), shd, image.ZP, draw.Over)	*/
 			}
 		  }
-			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
+			stamp := floorGetStamp(fp, adj+rand.Intn(4), fc)
 			if scanbuf(maze.data, x, y, x, y, -2) < 0 {
 				coltil(img,0,(x-xb)*16, (y-yb)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
 // exp floor test, turn this off for sd mazes/ edits
 		  if stdfl {	// do std floor stamps
-				writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 		  }
 			}}
 // testing
@@ -597,6 +601,8 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 		for x := xb; x <= xs; x++ {
 			var stamp *Stamp
 			var dots int // dot count
+			wp, wc := maze.wallpattern, maze.wallcolor
+			gt := G1
 
 			if G2 {
 				switch whatis(maze, x, y) {
@@ -645,17 +651,17 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					}
 			}}
 			if G1 {
-				if maze.wallpattern > 5 { maze.wallpattern -= 6 }		// Se enhance that allows shadowless g1 walls
+				if wp > 5 { wp -= 6 }		// Se enhance that allows shadowless g1 walls
 				nwt := NOWALL | NOG1W
 				switch scanbuf(maze.data, x, y, x, y, -2) {
 				case G1OBJ_WALL_DESTRUCTABLE:
 					adj, wly := checkwalladj8g1(maze, x, y)
 				if (nothing & NOWALL) == 0 {
 		if stdwl {
-					stamp = wallGetDestructableStamp(maze.wallpattern, adj, maze.wallcolor)
+					stamp = wallGetDestructableStamp(wp, adj, wc)
 		} else {
 					stamp = nil
-					writepngtoimage(img, wtamp, 16,16,wly+26,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writepngtoimage(img, wtamp, 16,16,wly+26,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
 		}
 				}
 
@@ -667,7 +673,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					adj, wly := checkwalladj8g1(maze, x, y)
 					if (nothing & nwt) == 0 {
 		if stdwl {
-						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
+						stamp = wallGetStamp(wp, adj, wc)
 		} else {
 						stamp = nil
 						writepngtoimage(img, wtamp, 16,16,wly,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
@@ -683,7 +689,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					}
 				}}
 			if stamp != nil {
-				writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
+				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
