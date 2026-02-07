@@ -965,6 +965,14 @@ func close_keys() {
 	listK = nil
 }
 
+// extend map ids for sanctuary by limiting mapids arrays, and shoehorn into item 66
+
+func shoehorn(tid int) int {
+	id := 0
+	if tid > 66 {}
+	return id
+}
+
 // assign keys
 
 func key_asgn(buf MazeData, xdat Xdat, ax int, ay int) {
