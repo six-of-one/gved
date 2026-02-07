@@ -793,7 +793,7 @@ var stonce [1000]int	// on;y display a stat once
 var wpalop bool		// is the pb win open?
 var wpal fyne.Window // is the pal win open?
 var plbuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
-var xplb Xdat		// junk def, for parm blank
+var xplb Xdat
 var plflg [11]int
 var palxs int
 var palys int
@@ -937,7 +937,7 @@ func close_keys() {
 
 // assign keys
 
-func key_asgn(buf MazeData, ax int, ay int) {
+func key_asgn(buf MazeData, xdat Xdat, ax int, ay int) {
 
 	if G1 {
 		g1edit_keymap[edkey] = buf[xy{ax, ay}]

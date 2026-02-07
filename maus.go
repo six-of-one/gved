@@ -281,7 +281,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if opts.edat == 0 || !cmdoff { edit_on(edkdef) }
 		if wpalop {					// palette element selector
 		if inpal {
-				if cmdoff { key_asgn(plbuf, int(exmd / dt), int(eymd / dt)); sv_config() }
+				if cmdoff { key_asgn(plbuf, xplb, int(exmd / dt), int(eymd / dt)); sv_config() }
 				return
 			}
 	}}
@@ -303,9 +303,11 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
  //   fmt.Printf("up %v\n",mm)
 	if opts.edat > 0 {
 		opbuf := ebuf
+		xopbf := xbuf
 		pbe := false		// paste buf edit
 		if strings.Contains(h.title, " pbf") {			// simple edit on pb win content
 			opbuf = cpbuf
+			xopbf = xcpbuf
 			ccp = NOP
 			pbe = true
 		}
@@ -316,10 +318,13 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		if ex < sx { t := ex; ex = sx; sx = t }		// swap if end smaller than start
 		if ey < sy { t := ey; ey = sy; sy = t }
 		var setcode int			// code to store given edit hotkey
+		var xstcode string
 		if G1 {
 			setcode = g1edit_keymap[edkey]
+			xstcode = "00"
 		} else {
 			setcode = g2edit_keymap[edkey]
+			xstcode = "00"
 		}
 // a cut / copy / paste is active
 		pasty := false
@@ -334,6 +339,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 				px =0
 			for mx := sx; mx <= ex; mx++ {
 				cpbuf[xy{px, py}] = opbuf[xy{mx, my}]
+				xcpbuf[xy{px, py}] = xopbf[xy{mx, my}]
 fmt.Printf("%03d ",cpbuf[xy{px, py}])
 				px++
 				}
@@ -385,7 +391,7 @@ mid := g1mapid[opbuf[xy{mxmd, mymd}]]
 if G2 { mid = g2mapid[opbuf[xy{mxmd, mymd}]] }
 fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",dt,ex,ey,opbuf[xy{ex, ey}],mid)
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
-			 key_asgn(opbuf, ex, ey); sv_config()
+			 key_asgn(opbuf, xopbf, ex, ey); sv_config()
 		} else {
 		if inpal { return }		// L clicks on palete should not place on main
 		if del || cmdoff || pasty {
@@ -402,9 +408,9 @@ fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",dt,ex,ey,opbuf[xy{ex, e
 			if rop {
 				delstr := 0
 				if shift { delstr = -1 }
-				if del { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = delstr; opts.bufdrt = true } else {	// delete anything for now makes a floor
-				if pasty { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }	// cant use setcode below, it wont set floors
-				if setcode > 0 { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = setcode; opts.bufdrt = true }
+				if del { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = delstr; xopbf[xy{mx, my}] = "0"; opts.bufdrt = true } else {	// delete anything for now makes a floor
+				if pasty { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; xopbf[xy{mx, my}] = xcpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }	// cant use setcode below, it wont set floors
+				if setcode > 0 { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = setcode; xopbf[xy{mx, my}] = xstcode; opts.bufdrt = true }
 fmt.Printf("%03d ",opbuf[xy{mx, my}])
 				}
 				rcl++
