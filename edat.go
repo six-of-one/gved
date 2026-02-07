@@ -133,9 +133,13 @@ var xblchg string					// detect changes in xbline
 func xbl_typ() {
 
 	if xbline != nil {		// this open input needs validated to hex string, no spaces
-		g1edit_xbmap[valid_keys(edkey)], _ = xbline.Get()
-		sv_config()
+		nv, _ := xbline.Get()
+		if nv != xblchg {
+			g1edit_xbmap[valid_keys(edkey)] = nv
+			sv_config()
+			xblchg = nv
 fmt.Printf("xbline key: %d = %s\n",valid_keys(edkey),g1edit_xbmap[valid_keys(edkey)])
+		}
 	}
 }
 

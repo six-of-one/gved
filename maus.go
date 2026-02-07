@@ -207,6 +207,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 				if cmdoff {
 				if G1 {
 					setcode = g1edit_keymap[edkey]
+					xstcode = g1edit_xbmap[edkey]
 				} else {
 					setcode = g2edit_keymap[edkey]
 				}}
@@ -321,7 +322,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
 		var xstcode string
 		if G1 {
 			setcode = g1edit_keymap[edkey]
-			xstcode = "00"
+			xstcode = g1edit_xbmap[edkey]
 		} else {
 			setcode = g2edit_keymap[edkey]
 			xstcode = "00"
