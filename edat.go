@@ -652,7 +652,7 @@ func rotmirmov(mdat MazeData, xdat Xdat, sx int, sy int, lastx int, lasty int, f
 				if xform[xy{lasty - ty, tx}] == MAZEOBJ_DOOR_HORIZ { xform[xy{lasty - ty, tx}] = MAZEOBJ_DOOR_VERT } else {
 				if xform[xy{lasty - ty, tx}] == MAZEOBJ_DOOR_VERT { xform[xy{lasty - ty, tx}] = MAZEOBJ_DOOR_HORIZ } }
 			}}
-			if lastx != lasty { sw := lastx; lastx = lasty; lasty = sw }		// on a rotate in edit when size x != size y, they must swap after the rot
+			if lastx != lasty { lastx, lasty = is(lastx, lasty) }		// on a rotate in edit when size x != size y, they must swap after the rot
 		} else {
 		if opts.MRM {
 			for ty := sy; ty <= lasty; ty++ {
@@ -666,7 +666,7 @@ func rotmirmov(mdat MazeData, xdat Xdat, sx int, sy int, lastx int, lasty int, f
 				if xform[xy{ty, lastx - tx}] == MAZEOBJ_DOOR_HORIZ { xform[xy{ty, lastx - tx}] = MAZEOBJ_DOOR_VERT } else {
 				if xform[xy{ty, lastx - tx}] == MAZEOBJ_DOOR_VERT { xform[xy{ty, lastx - tx}] = MAZEOBJ_DOOR_HORIZ } }
 			}}
-			if lastx != lasty { sw := lastx; lastx = lasty; lasty = sw }
+			if lastx != lasty { lastx, lasty = is(lastx, lasty) }
 		}
 		}
 
