@@ -204,15 +204,17 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 			if pmx != mxmd || pmy != mymd {
 
 				var setcode int			// code to store given edit hotkey
+				var xstcode string		// code to store given edit hotkey
 				if cmdoff {
 				if G1 {
 					setcode = g1edit_keymap[edkey]
 					xstcode = g1edit_xbmap[edkey]
 				} else {
 					setcode = g2edit_keymap[edkey]
+					xstcode = "00"
 				}}
-				if del { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = 0; opts.bufdrt = true } else {	// delete anything for now makes a floor
-				if setcode > 0 { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = setcode; opts.bufdrt = true }
+				if del { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = 0; xbuf[xy{mxmd, mymd}] = "0"; opts.bufdrt = true } else {	// delete anything for now makes a floor
+				if setcode > 0 { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = setcode; xbuf[xy{mxmd, mymd}] = xstcode; opts.bufdrt = true }
 				}
 // FX: a loop is happening including this when mouse exits main win
 fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd,mymd,pmx,pmy)
