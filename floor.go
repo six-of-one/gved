@@ -58,7 +58,7 @@ fmt.Printf("fs: %s",split)
 	if floorColor > 0 {
 		for x := 0; x < 159; x = x +16 {
 		for y := 0; y < 159; y = y +16 {
-			writestamptoimage(img, stamp, x, y)
+			writestamptoimage(G1,img, stamp, x, y)
 		}
 		}
 	}
@@ -81,7 +81,7 @@ fmt.Printf("fs: %s",split)
 				stamp := floorGetStamp(floorNum, floorAdj, floorColor)
 				for x := 0; x < 159; x = x +16 {
 				for y := 0; y < 159; y = y +16 {
-					writestamptoimage(img, stamp, x + floorColor * 160, y + subfloop * 160)
+					writestamptoimage(G1,img, stamp, x + floorColor * 160, y + subfloop * 160)
 				}}
 				subfloop++
 			floorNum++

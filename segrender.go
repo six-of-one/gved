@@ -407,7 +407,7 @@ func vcoord(c, cb, ba int) int {
 	i = c+ba
 	return i
 }
-//writestamptoimage(img, stamp, (x-xb+xba)*16, (y-yb+yba)*16)
+//writestamptoimage(G1,img, stamp, (x-xb+xba)*16, (y-yb+yba)*16)
 
 // write sqaure off png image grid to img
 // img - image to write on, if nil no write
@@ -477,7 +477,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	maze.wallcolor = fdat[6] & 0x0f
 	maze.floorcolor = (fdat[6] & 0xf0) >> 4
 
-	// unpin issue - - vals flummox canvas writes
+	// unpin issue - -vals flummox canvas writes
 	xba, yba := 0, 0
 	if xb < 0 { xba = absint(xb) }
 	if yb < 0 { yba = absint(yb) }
@@ -508,14 +508,14 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				if nothing & NOTRAP == 0 {
 					stamp.ptype = "forcefield"
 					stamp.pnum = 0
-					writestamptoimage(img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 			}
 			if scanbuf(maze.data, x, y, x, y, -2) < 0 {		// dont floor a null area
 				coltil(img,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
-				writestamptoimage(img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 			}}
 		}
 	}} else {
@@ -578,7 +578,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			if (nothing & NOFLOOR) == 0 {
 // exp floor test, turn this off for sd mazes/ edits
 		  if stdfl {	// do std floor stamps
-				writestamptoimage(img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 		  }
 			}}
 // testing
@@ -682,7 +682,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					}
 				}}
 			if stamp != nil {
-				writestamptoimage(img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
+				writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
@@ -1106,7 +1106,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 		}
 // Six: end G1 decode
 			if stamp != nil {
-				writestamptoimage(img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
+				writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
 // stats on palette
 				if stat {			// on palette screen, show stats for loaded maze
 					st := ""

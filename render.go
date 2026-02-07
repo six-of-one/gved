@@ -157,18 +157,17 @@ func genimage_fromarray(tiles []int, xtiles int, ytiles int) *image.NRGBA {
 	stamp := genstamp_fromarray(tiles, xtiles, opts.PalType, opts.PalNum)
 
 	img := blankimage(8*xtiles, 8*ytiles)
-	writestamptoimage(img, stamp, 0, 0)
+	writestamptoimage(G1,img, stamp, 0, 0)
 
 	return img
 }
 
-// FIXME: Rename later!
-func writestamptoimage(img *image.NRGBA, stamp *Stamp, xloc int, yloc int) {
+func writestamptoimage(G1,g1 bool, img *image.NRGBA, stamp *Stamp, xloc int, yloc int) {
 	ptyp := stamp.ptype
 // gauntlet has diff base pallet from g2, this is easiest way for now
-	if ptyp == "base" && G1 { ptyp = "gbase" }
-	if ptyp == "wall" && G1 { ptyp = "gwall" }
-	if ptyp == "floor" && G1 { ptyp = "gfloor" }
+	if ptyp == "base" && g1 { ptyp = "gbase" }
+	if ptyp == "wall" && g1 { ptyp = "gwall" }
+	if ptyp == "floor" && g1 { ptyp = "gfloor" }
 //fmt.Printf("g palettes %s,%d\n", ptyp, stamp.pnum)
 	p := gauntletPalettes[ptyp][stamp.pnum]
 	for y := 0; y < len(stamp.data)/stamp.width; y++ {

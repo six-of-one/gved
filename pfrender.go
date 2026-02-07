@@ -65,7 +65,7 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
  // impl: 16 x 16 for the 2 x 2 tiles, and dragon size for hims (4 x 4)
  // special 8 x 8 tiles for unit list
 	wimg := blankimage(sz, sz)
-	writestamptoimage(wimg, stamp, 0, 0)
+	writestamptoimage(G1,wimg, stamp, 0, 0)
 	wrfile, err := os.Create(wnam)
 	if err == nil {
 		png.Encode(wrfile,wimg)
@@ -218,11 +218,11 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 				if nothing & NOTRAP == 0 {
 					stamp.ptype = "forcefield"
 					stamp.pnum = 0
-					writestamptoimage(img, stamp, x*16+xpad, y*16+xpad)
+					writestamptoimage(G1,img, stamp, x*16+xpad, y*16+xpad)
 				}
 			}
 			if (nothing & NOFLOOR) == 0 {
-				writestamptoimage(img, stamp, x*16+xpad, y*16+xpad)
+				writestamptoimage(G1,img, stamp, x*16+xpad, y*16+xpad)
 			}
 		}
 	}} else {
@@ -241,7 +241,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
 			stamp := floorGetStamp(maze.floorpattern, adj+rand.Intn(4), maze.floorcolor)
 			if (nothing & NOFLOOR) == 0 {
-				writestamptoimage(img, stamp, x*16+xpad, y*16+xpad)
+				writestamptoimage(G1,img, stamp, x*16+xpad, y*16+xpad)
 			}
 		}
 
@@ -328,7 +328,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 					}
 				}}
 			if stamp != nil {
-				writestamptoimage(img, stamp, x*16+xpad+stamp.nudgex, y*16+xpad+stamp.nudgey)
+				writestamptoimage(G1,img, stamp, x*16+xpad+stamp.nudgex, y*16+xpad+stamp.nudgey)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
@@ -808,7 +808,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 		}
 // Six: end G1 decode
 			if stamp != nil {
-				writestamptoimage(img, stamp, x*16+xpad+stamp.nudgex, y*16+xpad+stamp.nudgey)
+				writestamptoimage(G1,img, stamp, x*16+xpad+stamp.nudgex, y*16+xpad+stamp.nudgey)
 // generator monster type letter draw - only do when set
 				if gtopl != "" && !opts.Nogtop {
 // while each monsters gen has a letter color, some are hard to read - resetting to red
@@ -1226,8 +1226,8 @@ if opts.Verbose || opts.Se {
 			l := itemGetStamp("arrowleft")
 			r := itemGetStamp("arrowright")
 			for i := 2; i <= 32; i++ {
-				writestamptoimage(img, l, 0, i*16)
-				writestamptoimage(img, r, 32*16+16, i*16)
+				writestamptoimage(G1,img, l, 0, i*16)
+				writestamptoimage(G1,img, r, 32*16+16, i*16)
 			}
 		}
 
@@ -1235,8 +1235,8 @@ if opts.Verbose || opts.Se {
 			u := itemGetStamp("arrowup")
 			d := itemGetStamp("arrowdown")
 			for i := 1; i < 32; i++ {
-				writestamptoimage(img, u, i*16+16, 0)
-				writestamptoimage(img, d, i*16+16, 32*16+16)
+				writestamptoimage(G1,img, u, i*16+16, 0)
+				writestamptoimage(G1,img, d, i*16+16, 32*16+16)
 			}
 		}
 	}

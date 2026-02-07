@@ -779,7 +779,7 @@ func doitem(arg string) {
 
 			if ss != "item" {
 				stamp := itemGetStamp(ss)
-				writestamptoimage(img, stamp, pos, 8)
+				writestamptoimage(G1,img, stamp, pos, 8)
 				pos += stamp.width*16
 			}
 		}

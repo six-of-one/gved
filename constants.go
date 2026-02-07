@@ -266,7 +266,7 @@ var g1mapid = map[int]string{
 	98:		"No_thing_98",
 	99:		"No_thing_99",
 	100:	"No_thing_100",
-	101:	"X_FLOOR",
+	SEOBJ_FLOOR:	"X_FLOOR",
 	102:		"No_thing_102",
 
 }
