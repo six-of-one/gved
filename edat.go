@@ -114,7 +114,7 @@ fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 		opts.MH = false
 	}
 	if xbline == nil {
-		xbline = dboxtx("Ox-line", "0000000", 100, 20,xbl_cls,typedRune)
+		xbline = dboxtx("Ox-line", "0000000", 512, 60,xbl_cls,nil)
 	}
 // activate keys & select k (edkdef from mb click)
 	if k > 0 {
@@ -126,7 +126,7 @@ fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 // close out edit line for se exp
 
 func xbl_cls() {
-
+fmt.Printf("xbline close\n")
 	xbline = nil
 }
 

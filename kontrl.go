@@ -77,6 +77,7 @@ func specialKey(cw fyne.Window) {
 				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 					if opts.edat == 1 {
 						opts.edat++;
+						edit_on(0)		// active xb-line if needed
 						opts.dntr = true
 						srelod = true
 						statlin(cmdhin,"full view")
