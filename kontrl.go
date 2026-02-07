@@ -391,14 +391,14 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'w':
 			Ovwallpat += 1
 			if anum > 0 { Ovwallpat = anum - 1; anum = 0 }
-			if Ovwallpat > 12 { Ovwallpat = 0 }
+			if Ovwallpat > walvld() { Ovwallpat = 0 }
 			eflg[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
 		case 87:		// W
 			Ovwallpat -= 1
-			if Ovwallpat < 0 { Ovwallpat = 7 }
+			if Ovwallpat < 0 { Ovwallpat = walvld() }
 			eflg[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
 			opts.bufdrt = (opts.edat > 0)

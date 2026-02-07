@@ -542,6 +542,10 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 //				draw.Draw(img, smol.Bounds().Add(offset), smol, image.ZP, draw.Over)
 				draw.Draw(img, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)
 			}}
+	g1wallpattern = maze.wallpattern
+	g1floorpattern = maze.floorpattern
+	g1wallcolor = maze.wallcolor
+	g1floorcolor = maze.floorcolor
 
 // g1 checks
 	for y := yb; y < ys; y++ {
@@ -551,7 +555,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 //			defshd := "gfx/shadows.16.png"		// default shadows for exp floors, custom wall load has to change this to walls png
 			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
 			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
-			if maze.wallpattern < 11 {
+			if maze.wallpattern < 6 {
 				if (nothing & nwt) == 0 {			// wall shadows here
 				adj = checkwalladj3g1(maze, x, y)	// this sets adjust for shadows, floorGetStamp sets shadows by darkening floor parts
 				}

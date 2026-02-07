@@ -965,6 +965,18 @@ func close_keys() {
 	listK = nil
 }
 
+// wall valid
+
+var g1maxwal = 11		// only 6 walls, Se exp has shadowless walls
+var g2maxwal = 12
+
+func walvld() int {
+
+	max := g1maxwal
+	if G2 { max = g2maxwal }
+	return max
+}
+
 // valid check, mapid
 var g1maxid = 102
 var g2maxid = 66
