@@ -20,6 +20,13 @@ func ss(s1, s2 string) (string,string) {
 	return s2,s1
 }
 
+// flag arrya xfer
+
+func fax(f1*[14]int, f2*[14]int, ie int) {
+
+	for i := 0; i < ie; i++ { f1[i] =  f2[i] }
+}
+
 // absint returns the absolute value of i.
 func absint(i int) int {
 	if i < 0 {

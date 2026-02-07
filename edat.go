@@ -807,8 +807,8 @@ func palete(p int) {
 	cnd := lod_maz(fil, xplb, plbuf, false, false)
 	cpx = opts.DimX; cpy = opts.DimY
 
-	if cnd >= 0 { for y := 0; y < 11; y++ { plflg[y] =  tflg[y] };
-		if palfol { for y := 0; y < 11; y++ { plflg[y] =  eflg[y] }}
+	if cnd >= 0 { fax(&plflg,&tflg,11)
+		if palfol { fax(&plflg,&eflg,11)}
 		bwin(cpx+1, cpy+1, 0, plbuf, xplb, plflg, "pal") }
 	opts.DimX = pmx; opts.DimY = pmy
 }

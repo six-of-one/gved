@@ -799,7 +799,7 @@ func sdbit(dir int) string {
 		if ldb == 0 { ldb = 1 }
 		fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
 		cnd = lod_maz(fil, xbuf, ebuf, false, true)
-		if cnd >= 0 { sdb = ldb; for y := 0; y < 11; y++ { eflg[y] = tflg[y] }; ed_maze(true); spar = fmt.Sprintf("cmd: S - ") }
+		if cnd >= 0 { sdb = ldb; fax(&eflg,&tflg,11); ed_maze(true); spar = fmt.Sprintf("cmd: S - ") }
 		if dir < 0 && cnd < 0 && ldb == 1 { cnd = 0; break }
 	}
 	if cnd < 0 {
