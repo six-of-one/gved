@@ -45,7 +45,44 @@ func whatis(maze *Maze, x, y int) int {
 	return maze.data[xy{x, y}]
 }
 
-// scan buffer data same, 
+// isolating loop over target code
+// sx,y - starting point
+// tx,y - test point
+
+func lot(sx, sy, tx, ty int) (bool, int, int) {
+
+	rf := true				// return over flows
+	if tx < 0 {
+		if !unpinx && tx != -1  { rf = false }
+		if opts.edat == 0 && tx != -1  { rf = false }		// not entirely sure - border wall should always render correct
+		tx = opts.DimX + tx + 1
+	}
+
+	if tx > opts.DimX {
+		if !unpinx && tx != opts.DimX + 1 { rf = false }
+		if opts.edat == 0 && tx != opts.DimX + 1 { rf = false }
+		tx = tx - opts.DimX - 1
+	}
+
+	if ty < 0 {
+		if !unpiny && ty != -1 { rf = false }
+		if opts.edat == 0 && ty != -1  { rf = false }
+		ty = opts.DimY + ty + 1
+	}
+
+	if ty > opts.DimY {
+		if !unpiny && ty != opts.DimY + 1 { rf = false }
+		if opts.edat == 0 && ty != opts.DimY + 1 { rf = false }
+		ty = ty - opts.DimY - 1
+	}
+
+	if tx < 0 { tx = 0 }
+	if ty < 0 { ty = 0 }
+
+	return rf, tx, ty
+}
+
+// scan buffer data same,
 // sx,y - starting point
 // tx,y - test point
 // asgn - if > -2, this is assign value
@@ -55,37 +92,10 @@ func whatis(maze *Maze, x, y int) int {
 func scanbuf (mdat MazeData, sx, sy, tx, ty, asgn int) int {
 
 	i := -1
-	rf := true				// return over flows
 	txe, tye := tx, ty		// for debug fmt so we know how test is adjusted
 
-		if tx < 0 {
-			if !unpinx && tx != -1  { rf = false }
-			if opts.edat == 0 && tx != -1  { rf = false }		// not entirely sure - border wall should always render correct
-			tx = opts.DimX + tx + 1
-		}
-
-		if tx > opts.DimX {
-			if !unpinx && tx != opts.DimX + 1 { rf = false }
-			if opts.edat == 0 && tx != opts.DimX + 1 { rf = false }
-			tx = tx - opts.DimX - 1
-		}
-
-		if ty < 0 {
-			if !unpiny && ty != -1 { rf = false }
-			if opts.edat == 0 && ty != -1  { rf = false }
-			ty = opts.DimY + ty + 1
-		}
-
-		if ty > opts.DimY {
-			if !unpiny && ty != opts.DimY + 1 { rf = false }
-			if opts.edat == 0 && ty != opts.DimY + 1 { rf = false }
-			ty = ty - opts.DimY - 1
-		}
-
-		if tx < 0 { tx = 0 }
-		if ty < 0 { ty = 0 }
-
-		if rf { i = mdat[xy{tx, ty}] }
+	rf, ux, uy := lot(sx, sy, tx, ty)
+	if rf { i = mdat[xy{ux, uy}] }
 
 if false && vpx < 0 {
 fmt.Printf("scan: %d s-e: %d x %d, %d x %d test: %d x %d\n",i,sx,sy,txe,tye,tx,ty)
@@ -104,6 +114,24 @@ scnbuf s-e: 0 x 31, 0 x 32 dif: 0, 1 test: 0 x 0
 scnbuf s-e: 29 x 31, 29 x 32 dif: 0, 1 test: 29 x 0
 scnbuf s-e: 29 x 31, 28 x 31 dif: 1, 0 test: 28 x 31
 */
+
+// also need to scan xbuf data same coords system
+
+func scanxb (xdat Xdat, sx, sy, tx, ty int, asgn string) string {
+
+	v := "0"
+	txe, tye := tx, ty		// for debug fmt so we know how test is adjusted
+
+	rf, ux, uy := lot(sx, sy, tx, ty)
+	if rf { v = xdat[xy{ux, uy}] }
+
+if false && vpx < 0 {
+fmt.Printf("scan: %s s-e: %d x %d, %d x %d test: %d x %d\n",v,sx,sy,txe,tye,tx,ty)
+}
+// the assigner, for when we need it
+//		if asgn > -2 { mdat[xy{tx, ty}] = asgn }
+	return v
+}
 
 // door check
 
