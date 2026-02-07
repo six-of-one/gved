@@ -162,7 +162,7 @@ func genimage_fromarray(tiles []int, xtiles int, ytiles int) *image.NRGBA {
 	return img
 }
 
-func writestamptoimage(G1,g1 bool, img *image.NRGBA, stamp *Stamp, xloc int, yloc int) {
+func writestamptoimage(g1 bool, img *image.NRGBA, stamp *Stamp, xloc int, yloc int) {
 	ptyp := stamp.ptype
 // gauntlet has diff base pallet from g2, this is easiest way for now
 	if ptyp == "base" && g1 { ptyp = "gbase" }
