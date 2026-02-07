@@ -708,13 +708,8 @@ fmt.Printf(" stk %d redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 func uswap() {
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
-			sw := ebuf[xy{x,y}]
-			ebuf[xy{x,y}] = ubuf[xy{x,y}]
-			ubuf[xy{x,y}] = sw
-
-			ss := xbuf[xy{x,y}]
-			xbuf[xy{x,y}] = xubf[xy{x,y}]
-			xubf[xy{x,y}] = ss
+			ebuf[xy{x,y}],ubuf[xy{x,y}] = is(ebuf[xy{x,y}],ubuf[xy{x,y}])
+			xbuf[xy{x,y}],xubf[xy{x,y}] = ss(xbuf[xy{x,y}],xubf[xy{x,y}])
 	}}
 	for y := 0; y < 11; y++ { sw := eflg[y]; eflg[y] = uflg[y]; uflg[y] = sw }
 // also have to swap delete stak
@@ -726,11 +721,11 @@ func uswap() {
 	urstak = restak
 	restak = su
 	for y := 0; y <= udstak; y++ {
-		su = udb.mx[y]; udb.mx[y] = delbuf.mx[y]; delbuf.mx[y] = su
-		su = udb.my[y]; udb.my[y] = delbuf.my[y]; delbuf.my[y] = su
-		su = udb.revc[y]; udb.revc[y] = delbuf.revc[y]; delbuf.revc[y] = su
-		su = udb.elem[y]; udb.elem[y] = delbuf.elem[y]; delbuf.elem[y] = su
-	   ss := udb.xbfd[y]; udb.xbfd[y] = delbuf.xbfd[y]; delbuf.xbfd[y] = ss
+		udb.mx[y],delbuf.mx[y] = is(udb.mx[y],delbuf.mx[y])
+		udb.my[y],delbuf.my[y] = is(udb.my[y],delbuf.my[y])
+		udb.revc[y],delbuf.revc[y] = is(udb.revc[y],delbuf.revc[y])
+		udb.elem[y],delbuf.elem[y] = is(udb.elem[y],delbuf.elem[y])
+		udb.xbfd[y],delbuf.xbfd[y] = ss(udb.xbfd[y],delbuf.xbfd[y])
 //		if udb.elem[y] < 0 { delstak = y; break }
 	}
 	ed_maze(true)
