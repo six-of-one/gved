@@ -520,7 +520,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		}
 	}} else {
 // tesing Se, xpanded floor
-		stdfl := false
+		stdfl := true
 		Se_cflr_cnt++
 		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 		err, _, ptamp = itemGetPNG(Se_cflr[Se_cflr_cnt])
@@ -589,7 +589,8 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				coltil(img,0,(x-xb)*16, (y-yb)*16)
 			} else {
 			if (nothing & NOFLOOR) == 0 {
-				if sb == SEOBJ_CFLOR {			// cust floor from png - laded by lod_maz from xb file
+				p,_,_ = parser(xp, SE_CFLOR)
+				if p > 0 {			// cust floor from png - laded by lod_maz from xb file
 					writepngtoimage(img, flim, 16,16,(x-xb),(y-yb), (x-xb)*16, (y-yb)*16)
 				} else {
 // exp floor test, turn this off for sd mazes/ edits

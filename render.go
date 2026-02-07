@@ -207,10 +207,11 @@ func genanim(animarray []int, xtiles int, ytiles int) []*image.Paletted {
 // Sanctuary expanded maze parser
 // parse exp maze string, looking for cmd lc, return parms if found
 const (
-	SE_FLOR = 1
-	SE_WALL = 2
-	SE_G2 = 3			// gauntlet 2 mode - e.g. turn off g1
-
+	SE_FLOR		= 1		// load any gauntlet & g2 floors & walls
+	SE_WALL		= 2
+	SE_G2		= 3		// gauntlet 2 mode - e.g. turn off g1
+	SE_CFLOR	= 4		// custom floor unit from xb*.ed file wall&floor lines
+	SE_CWAL		= 5		// data: flor: sheet, r, c, xy size		wal: sheet, row, (xy size?)
 )
 // bytes for each cmd
 var parms = []int{
