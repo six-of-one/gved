@@ -33,7 +33,7 @@ var eid string			// id string for titles
 
 var sdmax = 1000
 var sdb int			// current sd selected, -1 when on ebuf
-var eflg [11]int
+var eflg [14]int
 var tflg [14]int	// transfer flags - because they dont pass as a parm for scan from file?
 					//					so after a file load, these have to be copied to the appropriate flags
 var din [33]int		// set to be 1 line per std gauntlet maze (gved encoding) of 0 - 32 elements [ with H wrap being 0 - 31 ]
@@ -55,7 +55,7 @@ var restak int		// keep track of redo chain
 // ulternate buffer - copy of maze from load
 var ubuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var xubf Xdat
-var uflg [11]int
+var uflg [14]int
 var udb = &Deletebuf{}	// and with the way the delbuf operates now, ubuf must also swap that
 var udstak int
 var urstak int
@@ -213,7 +213,7 @@ func clr_buf(buf MazeData, xdat Xdat, mx int, my int, z int, wh int) {
 // add a maze # to saves
 // svdb - save undo buf
 
-func sav_maz(fil string, xdat Xdat, mdat MazeData, fdat [11]int, mx int, my int, smazn int, svdb bool) {
+func sav_maz(fil string, xdat Xdat, mdat MazeData, fdat [14]int, mx int, my int, smazn int, svdb bool) {
 // edit settings
 // 1. edit status (1) max_x max_y
 // 2. 11 bytes of compressed maze lead in - all stats
@@ -794,7 +794,7 @@ var wpalop bool		// is the pb win open?
 var wpal fyne.Window // is the pal win open?
 var plbuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var xplb Xdat
-var plflg [11]int
+var plflg [14]int
 var palxs int
 var palys int
 var palfol bool		// palette decor follows map chg
@@ -1201,7 +1201,7 @@ func pbRune(r rune) {
 // px, py - size of paste buffer from 0, 0
 // bn - buffer #
 
-func bwin(px int, py int, bn int, mbuf MazeData, xdat Xdat, fdat [11]int, id string) {
+func bwin(px int, py int, bn int, mbuf MazeData, xdat Xdat, fdat [14]int, id string) {
 
 var lw fyne.Window	// local cpy win to view buf contents
   wt := "palette selector"
