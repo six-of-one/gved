@@ -9,7 +9,6 @@ import (
 	"image"
 	"encoding/binary"
 	"image/color"
-	"math"
 	"math/rand"
 	"time"
 	"fyne.io/fyne/v2"
@@ -973,7 +972,7 @@ var g2maxid = 66
 func valid_id(tid int) int {
 	id := G1OBJ_WALL_REGULAR
 	max := g1maxid
-	if G2 { max := g2maxid }
+	if G2 { max = g2maxid }
 	if tid >= 0 && tid <= max { id = tid }
 	return id
 }
@@ -987,14 +986,14 @@ func key_asgn(buf MazeData, xdat Xdat, ax int, ay int) {
 		g1edit_keymap[edk] = buf[xy{ax, ay}]
 		g1edit_xbmap[edk] = xdat[xy{ax, ay}]
 		if xbline != nil { xblchg = g1edit_xbmap[edk]; xbline.Set(xblchg) }
-		kys := g1mapid[g1edit_keymap[edk]]
+		kys := g1mapid[valid_id(g1edit_keymap[edk])]
 		keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edk],g1edit_keymap[edk],kys)
 		statlin(cmdhin,keyst)
 		play_sfx(g1auds[g1edit_keymap[edk]])
 		if edk == cycloc { cycl = g1edit_keymap[cycloc] }		// when reassign 'c' key, set cycl as well
 	} else {
 		g2edit_keymap[edk] = buf[xy{ax, ay}]
-		kys := g2mapid[g2edit_keymap[edk]]
+		kys := g2mapid[valid_id(g2edit_keymap[edk])]
 		keyst := fmt.Sprintf("G² assn key: %s = %03d, %s",map_keymap[edk],g2edit_keymap[edk],kys)
 		statlin(cmdhin,keyst)
 		play_sfx(g2auds[g2edit_keymap[edk]])
@@ -1026,8 +1025,8 @@ func list_keys() {
 														   //   ┈┈┈┈┈┈┈┈  ᵃˢˢᶦᵍⁿ ᵗʰᶦˢ ᵏᵉʸ
 		if kv < 0 { sta = " ┈┈┈┈┈┈┈┈  ɴᴏ ᴀᴄᴄᴇss" }	//   ┈┈┈┈┈┈┈┈┈  n̵o̵t̵ ̵a̵v̵a̵i̵l̵a̵b̵l̵e
 															// ɴᴏᴛ ᴀᴠᴀɪʟ		n̵o̵t̵ ̵a̵v̵a̵i̵l̵a̵b̵l̵e̵
-		if kv > 0 && G1 { sta = g1mapid[kv] }
-		if kv > 0 && G2 { sta = g2mapid[kv] }
+		if kv > 0 && G1 { sta = g1mapid[valid_id(kv)] }
+		if kv > 0 && G2 { sta = g2mapid[valid_id(kv)] }
 		kl += fmt.Sprintf("%s\t=\t(%03d)   %s\n",map_keymap[y],kv,sta)
 	}
 	kl += "──────────────────────\nall keys (000) may be assigned\n"+
@@ -1076,15 +1075,15 @@ func mini_stat (buf MazeData, sx int, sy int, ex int, ey int, hed string) {
 	totnf := 0
 	if G1 {
 	for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
-		if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }
-		stl += fmt.Sprintf("  %s: %d\n",g1mapid[y],g1stat[y])
+		if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[valid_id(y)],g1stat[y]) }
+		stl += fmt.Sprintf("  %s: %d\n",g1mapid[valid_id(y)],g1stat[y])
 		tot += g1stat[y]
 		if y > 0 { totnf += g1stat[y] }
 	}}}
 	if G2 {
 	for y := 0; y <= 65; y++ { if g2stat[y] > 0 {
-		if opts.Verbose { fmt.Printf("  %s: %d\n",g2mapid[y],g2stat[y]) }
-		stl += fmt.Sprintf("  %s: %d\n",g2mapid[y],g2stat[y])
+		if opts.Verbose { fmt.Printf("  %s: %d\n",g2mapid[valid_id(y)],g2stat[y]) }
+		stl += fmt.Sprintf("  %s: %d\n",g2mapid[valid_id(y)],g2stat[y])
 		tot += g2stat[y]
 		if y > 0 { totnf += g2stat[y] }
 	}}}
@@ -1112,13 +1111,13 @@ func calc_stats() {
 
 	if G1 {
 	for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
-		if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[y],g1stat[y]) }
-		stl += fmt.Sprintf("  %s: %d\n",g1mapid[y],g1stat[y])
+		if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[valid_id(y)],g1stat[y]) }
+		stl += fmt.Sprintf("  %s: %d\n",g1mapid[valid_id(y)],g1stat[y])
 	}}}
 	if G2 {
 	for y := 0; y <= 65; y++ { if g2stat[y] > 0 {
-		if opts.Verbose { fmt.Printf("  %s: %d\n",g2mapid[y],g2stat[y]) }
-		stl += fmt.Sprintf("  %s: %d\n",g2mapid[y],g2stat[y])
+		if opts.Verbose { fmt.Printf("  %s: %d\n",g2mapid[valid_id(y)],g2stat[y]) }
+		stl += fmt.Sprintf("  %s: %d\n",g2mapid[valid_id(y)],g2stat[y])
 	}}}
 	stl += "══════════════════════\n"
 	stl += mazeMetaPrint(edmaze, true)

@@ -265,7 +265,7 @@ func typedRune(r rune) {
 //				if g1edit_keymap[edkey] < 0 { keyst := fmt.Sprintf("locked key: %s not usable",map_keymap[edkey]) }
 				if g1edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G¹ free key: %s middle mouse click to set",map_keymap[edkey]); statlin(cmdhin,keyst) }
 				if g1edit_keymap[edkey] > 0 {
-					kys := g1mapid[g1edit_keymap[edkey]]
+					kys := g1mapid[valid_id(g1edit_keymap[edkey])]
 					keyst := fmt.Sprintf("G¹ ed key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
 					ccp_NOP()
 					statlin(cmdhin,keyst)
@@ -275,7 +275,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 //				if g2edit_keymap[edkey] < 0 { keyst := fmt.Sprintf("locked key: %s not usable",map_keymap[edkey]) }
 				if g2edit_keymap[edkey] == 0 { keyst := fmt.Sprintf("G² free key: %s middle mouse click to set",map_keymap[edkey]); statlin(cmdhin,keyst) }
 				if g2edit_keymap[edkey] > 0 {
-					kys := g2mapid[g2edit_keymap[edkey]]
+					kys := g2mapid[valid_id(g2edit_keymap[edkey])]
 					keyst := fmt.Sprintf("G² ed key: %s = %03d, %s",map_keymap[edkey],g2edit_keymap[edkey],kys)
 					ccp_NOP()
 					statlin(cmdhin,keyst)
@@ -343,15 +343,17 @@ fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			fallthrough
 		case 67:		// C
 				cycl++
-				if cycl > 64 { cycl = 0 }
+				max := g1maxid
+				if G2 { max = g2maxid }
+				if cycl > max { cycl = 0 }
 				if cycl < 1 { cycl = 64 }		// cause 'c' falls thru here
 				kys := "n/a"
 				if G1 {
 					g1edit_keymap[cycloc] = cycl
-					kys = g1mapid[cycl]
+					kys = g1mapid[valid_id(cycl)]
 				} else {
 					g2edit_keymap[cycloc] = cycl
-					kys = g2mapid[cycl]
+					kys = g2mapid[valid_id(cycl)]
 				}
 				fmt.Printf("cyc %d - %s\n",cycl,kys)
 				stu := fmt.Sprintf("cyc key: %s = %03d, %s",map_keymap[cycloc],cycl,kys)

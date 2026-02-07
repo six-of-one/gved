@@ -182,8 +182,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
 // blotter size hinter
 		if mxmd == mxme && mymd == myme {
-			mid := g1mapid[ebuf[xy{mxmd+lvpx, mymd+lvpy}]]
-			if G2 { mid = g2mapid[ebuf[xy{mxmd+lvpx, mymd+lvpy}]] }
+			mid := g1mapid[valid_id(ebuf[xy{mxmd+lvpx, mymd+lvpy}])]
+			if G2 { mid = g2mapid[valid_id(ebuf[xy{mxmd+lvpx, mymd+lvpy}])] }
 			pos = fmt.Sprintf("r: %.0f,%.0f+ %.0f cell: %d, %d elem: %d %s",sx,sy,dt,mxmd+lvpx,mymd+lvpy,ebuf[xy{mxmd+lvpx, mymd+lvpy}],mid)
 		} else {
 			dx := mxme-mxmd+1
@@ -198,8 +198,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		if mk == 8 {			// logo key = paint for any stored ops
 			mxmd = int(rxm / dt)+lvpx // redo as start / end can swap
 			mymd = int(rym / dt)+lvpy
-			mid := g1mapid[ebuf[xy{mxmd, mymd}]]
-			if G2 { mid = g2mapid[ebuf[xy{mxmd, mymd}]] }
+			mid := g1mapid[valid_id(ebuf[xy{mxmd, mymd}])]
+			if G2 { mid = g2mapid[valid_id(ebuf[xy{mxmd, mymd}])] }
 			pos = fmt.Sprintf("paint: %.0f,%.0f+ %.0f cell: %d, %d elem: %d %s",rx,ry,dt,mxmd,mymd,ebuf[xy{mxmd, mymd}],mid)
 			if pmx != mxmd || pmy != mymd {
 
@@ -390,8 +390,8 @@ fmt.Printf("in pasty\n")
 		}}
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V
 // if opts.Verbose {
-mid := g1mapid[opbuf[xy{mxmd, mymd}]]
-if G2 { mid = g2mapid[opbuf[xy{mxmd, mymd}]] }
+mid := g1mapid[valid_id(opbuf[xy{mxmd, mymd}])]
+if G2 { mid = g2mapid[valid_id(opbuf[xy{mxmd, mymd}])] }
 fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",dt,ex,ey,opbuf[xy{ex, ey}],mid)
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			 key_asgn(opbuf, xopbf, ex, ey); sv_config()
