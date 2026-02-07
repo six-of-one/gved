@@ -279,8 +279,8 @@ func checkffadj4(maze *Maze, x int, y int) int {
 type FFMap map[xy]bool
 
 func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
-	for i := 1; ; i++ {
-		d := ffLoopDirs[dir]
+	for i := 1; i < 700000; i++ {		// this had no upper limit and could inf loop if ff were skunky
+		d := ffLoopDirs[dir]			// -- 700k reps a maze 850 x 850, this may already cause a delay on a bad ff placement
 		nx := x + (d.x * i)
 		ny := y + (d.y * i)
 
