@@ -542,10 +542,6 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 //				draw.Draw(img, smol.Bounds().Add(offset), smol, image.ZP, draw.Over)
 				draw.Draw(img, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)
 			}}
-	g1wallpattern = maze.wallpattern
-	g1floorpattern = maze.floorpattern
-	g1wallcolor = maze.wallcolor
-	g1floorcolor = maze.floorcolor
 
 // g1 checks
 	for y := yb; y < ys; y++ {
