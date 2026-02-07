@@ -114,7 +114,7 @@ fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 		opts.MH = false
 	}
 	if xbline == nil {
-		xbline = dboxtx("Ox-line", "0000000", 512, 60,xbl_cls,nil)
+		xbline = dboxtx("xb-line", "0000000", 512, 60,xbl_cls,nil)
 	}
 // activate keys & select k (edkdef from mb click)
 	if k > 0 {
@@ -122,6 +122,10 @@ fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 		typedRune(rune(k))
 	}
 }
+
+// txt dialog to store & retr xbuf data
+
+var xbline binding.Item[string]
 
 // close out edit line for se exp
 
@@ -951,6 +955,8 @@ func key_asgn(buf MazeData, xdat Xdat, ax int, ay int) {
 
 	if G1 {
 		g1edit_keymap[edkey] = buf[xy{ax, ay}]
+		g1edit_xbmap[edkey] = xdat[xy{ax, ay}]
+		if xbline != nil { xbline.Set(g1edit_xbmap[edkey]) }
 		kys := g1mapid[g1edit_keymap[edkey]]
 		keyst := fmt.Sprintf("G¹ assn key: %s = %03d, %s",map_keymap[edkey],g1edit_keymap[edkey],kys)
 		statlin(cmdhin,keyst)

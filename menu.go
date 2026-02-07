@@ -584,7 +584,7 @@ func keyhints() {
 // text dialog boxes for all hint sets
 // title, content, w, h
 // return text box point for updating contents live
-var xbline binding.Item[string]
+
 var wwlup int
 
 func dboxtx(dt string, dbc string, w float32, h float32, cf func(), sbr func(r rune)) binding.Item[string] {
