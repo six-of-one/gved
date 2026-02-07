@@ -336,18 +336,14 @@ fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			} else { opts.Nogtop = !opts.Nogtop; opts.dntr = (opts.edat > 0); relod = true }
 //		case 69:		// E
 		case 'c':
-			max := g1maxid
-			if G2 { max = g2maxid }
-			if anum > 0 && anum <= max {
+			if anum > 0 && anum <= maxid() {
 				cycl = anum - 1
 				anum = 0
 			} else { cycl--; cycl-- }
 			fallthrough
 		case 67:		// C
 				cycl++
-				max := g1maxid
-				if G2 { max = g2maxid }
-				if cycl > max { cycl = 0 }
+				if cycl > maxid() { cycl = 0 }
 				if cycl < 1 { cycl = 64 }		// cause 'c' falls thru here
 				kys := "n/a"
 				if G1 {
@@ -395,7 +391,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'w':
 			Ovwallpat += 1
 			if anum > 0 { Ovwallpat = anum - 1; anum = 0 }
-			if Ovwallpat > 7 { Ovwallpat = 0 }
+			if Ovwallpat > 12 { Ovwallpat = 0 }
 			eflg[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
 			opts.bufdrt = (opts.edat > 0)

@@ -969,11 +969,16 @@ func close_keys() {
 var g1maxid = 102
 var g2maxid = 66
 
-func valid_id(tid int) int {
-	id := G1OBJ_WALL_REGULAR
+func maxid() int {
+
 	max := g1maxid
 	if G2 { max = g2maxid }
-	if tid >= 0 && tid <= max { id = tid }
+	return max
+}
+
+func valid_id(tid int) int {
+	id := G1OBJ_WALL_REGULAR
+	if tid >= 0 && tid <= maxid() { id = tid }
 	return id
 }
 
