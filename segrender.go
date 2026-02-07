@@ -129,7 +129,7 @@ if false && vpx < 0 {
 fmt.Printf("scan: %s s-e: %d x %d, %d x %d test: %d x %d\n",v,sx,sy,txe,tye,tx,ty)
 }
 // the assigner, for when we need it
-//		if asgn > -2 { mdat[xy{tx, ty}] = asgn }
+//		if asgn != "" { xdat[xy{tx, ty}] = asgn }
 	return v
 }
 
@@ -549,8 +549,15 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			adj := 0
 			nwt := NOWALL | NOG1W
 // Se can override these on individual tiles
+			xp := scanxb(xdat, x, y, x, y, "")
 			wp, fp, fc := maze.wallpattern, maze.floorpattern, maze.floorcolor
 			gt := G1
+			p,q,_ := parser(xp, SE_G2)
+			if p == 1 { gt = false }
+			p,q,_ = parser(xp, SE_FLOR)
+			if p >= 0 { fp = p; fc = q }
+			p,q,_ = parser(xp, SE_WALL)
+			if p >= 0 { wp = p }
 
 //			defshd := "gfx/shadows.16.png"		// default shadows for exp floors, custom wall load has to change this to walls png
 			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
