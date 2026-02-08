@@ -899,6 +899,7 @@ var Se_cflr = map[int]string{
 	10:		"gfx/g1floor7.jpg",
 	11:		"gfx/floor013.jpg",
 }
+
 // the list of valid address in g1 / g2
 // this will allow parsing entire viewable maze space while avoiding crashes
 

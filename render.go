@@ -211,12 +211,12 @@ const (
 	SE_WALL		= 2
 	SE_G2		= 3		// gauntlet 2 mode - e.g. turn off g1
 	SE_CFLOR	= 4		// custom floor unit from xb*.ed file wall&floor lines
-	SE_CWAL		= 5		// data: flor: sheet, r, c, xy size		wal: sheet, row, (xy size?)
+	SE_CWAL		= 5		// data: flor: sheet, r, (c is wally), xy size		wal: sheet, row, (xy size?)
 	SE_COLRT	= 6		// color tiles under any
 )
 // bytes for each cmd
 var parms = []int{
-	0, 2, 2, 0, 0, 0, 3, 2, 0,
+	0, 2, 2, 0, 1, 2, 3, 2, 0,
 }
 var secmd [64]int
 var lastst string

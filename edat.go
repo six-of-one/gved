@@ -406,14 +406,27 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 		fmt.Sscanf(l,"%d %d",&ix, &iy)		// buffer size
 fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 		if ix > 0 && iy > 0 {
-			l, fin := "xwfdn", ""
-//			lsv := 20000
-//			for fin != "xwfdn" && lsv > 0 {
+			l, fin, wal := "gfx/floor016.jpg gfx/wall_jsgv_A.b.png", "", ""		// defaults on fail - this happens not...
+			i := 0
+			lsv := 500
+			for fin != "xwfdn" && lsv > 0 {
 				if scanr.Scan() { l = scanr.Text() }
-				fmt.Sscanf(l,"%s",&fin)		// this loop will read cust walls & floor pairs until xwfdn
-fmt.Printf("%s\n",fin)
-//				lsv--
-//			}
+				fin = "xwfdn"
+				fmt.Sscanf(l,"%s %s",&fin, &wal)		// this loop will read cust walls & floor pairs until xwfdn
+				if fin != "xwfdn" {
+					if i <= maxwf { nwalflor() }
+					wlfl.florn[i] = fin
+					wlfl.walln[i] = wal
+					err, _, wlfl.ftamp[i] = itemGetPNG(fin)
+					if err != nil { wlfl.ftamp[i] = blankimage(64, 64) }
+					err, _, wlfl.wtamp[i] = itemGetPNG(wal)
+					if err != nil { wlfl.ftamp[i] = blankimage(832, 16) }
+					i++
+				}
+fmt.Printf("%s %s\n",fin,wal)
+				lsv--
+			}
+			for i := 0; i < maxwf; i++ { wlfl.flrblt[i] = false }		// clear all built floors
 			for y := 0; y <= iy; y++ {	// read one line per element due to ops
 			for x := 0; x <= ix; x++ {
 				l, fin = "00", "000"

@@ -443,13 +443,36 @@ func writepngtoimage(img *image.NRGBA, ptamp image.Image, rx,ry,cl,rw, xw, yw in
 				offset := image.Pt((x-xb)*16, (y-yb)*16)
 				draw.Draw(img, shd.Bounds().Add(offset), shd, image.ZP, draw.Over)	*/
 
+type walflr struct {
+	ftamp	[]image.Image
+	flim	[]*image.NRGBA
+	wtamp	[]image.Image
+	florn   []string
+	walln   []string
+	flrblt	[]bool
+}
 
-// image from buffer segment			- stat: display stats if true
-// segment of buffer from xb,yb to xs,ys (begin to stop)
+var maxwf int
+var wlfl = &walflr{}
 
 // testing cust floor & wall
 var Se_cflr_cnt int
 var Se_cwal_cnt int
+
+func nwalflor(){
+
+//fmt.Printf("delbuf st: %d len %d, test: %d\n",delstak,len(delbuf.elem),t)
+	maxwf++
+	wlfl.florn = append(wlfl.florn,"gfx/1x1.png")
+	wlfl.walln = append(wlfl.florn,"gfx/1x1.png")
+	wlfl.ftamp = append(wlfl.ftamp,nil)
+	wlfl.flim  = append(wlfl.flim,nil)
+	wlfl.wtamp = append(wlfl.wtamp,nil)
+	wlfl.flrblt = append(wlfl.flrblt,false)
+}
+
+// image from buffer segment			- stat: display stats if true
+// segment of buffer from xb,yb to xs,ys (begin to stop)
 
 func segimage(mdat MazeData, xdat Xdat, fdat [14]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
 
@@ -536,13 +559,15 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		tw := int(opts.Geow - 4)
 		th := int(opts.Geoh - 30)
 // image of an entire floor to writepngtoimage to img
-		flim := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
+/// test - REMOVE
+	flim := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
+	if !stdfl {
 		for ty := 0; ty < th ; ty=ty+ih {
 			for tx := 0; tx < tw ; tx=tx+iw {
 				offset := image.Pt(tx, ty)
 //				draw.Draw(img, smol.Bounds().Add(offset), smol, image.ZP, draw.Over)
 				draw.Draw(flim, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)
-			}}
+			}}}
 
 // g1 checks
 	for y := yb; y < ys; y++ {
@@ -560,6 +585,14 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			if p >= 0 { fp = p; fc = q }
 			p,q,_ = parser(xp, SE_WALL)
 			if p >= 0 { wp = p }
+			p,q,_ = parser(xp, SE_CFLOR)		// build cust floors
+			if p >= 0 && p < maxwf {
+				for ty := 0; ty < th ; ty=ty+ih {
+				for tx := 0; tx < tw ; tx=tx+iw {
+					offset := image.Pt(tx, ty)
+					draw.Draw(wlfl.flim[p], wlfl.ftamp[p].Bounds().Add(offset), wlfl.ftamp[p], image.ZP, draw.Over)
+				}}
+			}
 
 //			defshd := "gfx/shadows.16.png"		// default shadows for exp floors, custom wall load has to change this to walls png
 			if sb == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
@@ -591,8 +624,8 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 					coltil(img,cl,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 				p,_,_ = parser(xp, SE_CFLOR)
-				if p > 0 {			// cust floor from png - laded by lod_maz from xb file
-					writepngtoimage(img, flim, 16,16,(x-xb),(y-yb), vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				if p >= 0 && p < maxwf {			// cust floor from png - laded by lod_maz from xb file
+					writepngtoimage(img, wlfl.flim[p], 16,16,(x-xb),(y-yb), vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 				if p < 0 && cl < 1 {
 // exp floor test, turn this off for sd mazes/ edits
@@ -679,7 +712,13 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					adj, wly := checkwalladj8g1(maze, x, y)
 				if (nothing & NOWALL) == 0 {
 		if stdwl {
-					stamp = wallGetDestructableStamp(wp, adj, wc)
+					p,q,_ = parser(xp, SE_CWAL)
+					if p >= 0 && p < maxwf {
+						stamp = nil
+						writepngtoimage(img,  wlfl.wtamp[p], 16,16,wly+26,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					} else {
+						stamp = wallGetDestructableStamp(wp, adj, wc)
+					}
 		} else {
 					stamp = nil
 					writepngtoimage(img, wtamp, 16,16,wly+26,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
