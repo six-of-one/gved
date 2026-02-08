@@ -284,8 +284,11 @@ if opts.Verbose { fmt.Printf("saving maze %s\n",fil) }
 	xbf := prep(fil, "xb_")
 	file, err = os.Create(xbf)
 		if err == nil {
-			wfs := fmt.Sprintf("%d %d\nxwfdn\n",mx,my)	// size of buf
-// custom walls here, read until "xwfdn" or other code indic walls+floors done
+			wfs := fmt.Sprintf("%d %d\n",mx,my)	// size of buf
+
+			for i := 0; i < maxwf; i++ { wfs += fmt.Sprintf("%s %s\n",wlfl.florn[i],wlfl.walln[i]) }
+			wfs += fmt.Sprintf("xwfdn\n")	// end of floors / walls
+// custom walls here, read until done
 			for y := 0; y <= my; y++ {	// store one line per element due to ops
 			for x := 0; x <= mx; x++ {
 				wfs += fmt.Sprintf("%s\n", xdat[xy{x, y}])
