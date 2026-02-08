@@ -286,7 +286,7 @@ if opts.Verbose { fmt.Printf("saving maze %s\n",fil) }
 		if err == nil {
 			wfs := fmt.Sprintf("%d %d\n",mx,my)	// size of buf
 
-			for i := 0; i < curwf; i++ { wfs += fmt.Sprintf("%s %s\n",wlfl.florn[i],wlfl.walln[i]); fmt.Printf("%s %s\n",wlfl.florn[i],wlfl.walln[i]) }
+			for i := 0; i < curwf; i++ { wfs += fmt.Sprintf("%s %s\n",wlfl.florn[i],wlfl.walln[i]); fmt.Printf("%d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i]) }
 			wfs += fmt.Sprintf("xwfdn\n")	// end of floors / walls
 // custom walls here, read until done
 			for y := 0; y <= my; y++ {	// store one line per element due to ops
@@ -423,10 +423,10 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 					err, _, wlfl.ftamp[i] = itemGetPNG(fin)
 					if err != nil { wlfl.ftamp[i] = blankimage(64, 64) }
 					err, _, wlfl.wtamp[i] = itemGetPNG(wal)
-					if err != nil { wlfl.ftamp[i] = blankimage(832, 16) }
+					if err != nil { wlfl.wtamp[i] = blankimage(832, 16) }
+fmt.Printf("%d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i])
 					i++
 				}
-fmt.Printf("%s %s\n",fin,wal)
 				lsv--
 			}
 			curwf = i	// current walls & floors for save
