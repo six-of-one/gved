@@ -738,7 +738,13 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					adj, wly := checkwalladj8g1(maze, x, y)
 					if (nothing & nwt) == 0 {
 		if stdwl {
+					p,q,_ = parser(xp, SE_CWAL)
+					if p >= 0 && p < curwf {
+						stamp = nil
+						writepngtoimage(img, wlfl.wtamp[p], 16,16,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					} else {
 						stamp = wallGetStamp(wp, adj, wc)
+					}
 		} else {
 						stamp = nil
 						writepngtoimage(img, wtamp, 16,16,wly,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
