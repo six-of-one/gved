@@ -286,7 +286,7 @@ if opts.Verbose { fmt.Printf("saving maze %s\n",fil) }
 		if err == nil {
 			wfs := fmt.Sprintf("%d %d\n",mx,my)	// size of buf
 
-			for i := 0; i < maxwf; i++ { wfs += fmt.Sprintf("%s %s\n",wlfl.florn[i],wlfl.walln[i]) }
+			for i := 0; i < curwf; i++ { wfs += fmt.Sprintf("%s %s\n",wlfl.florn[i],wlfl.walln[i]); fmt.Printf("%s %s\n",wlfl.florn[i],wlfl.walln[i]) }
 			wfs += fmt.Sprintf("xwfdn\n")	// end of floors / walls
 // custom walls here, read until done
 			for y := 0; y <= my; y++ {	// store one line per element due to ops
@@ -414,7 +414,7 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 			lsv := 500
 			for fin != "xwfdn" && lsv > 0 {
 				if scanr.Scan() { l = scanr.Text() }
-				fin = "xwfdn"
+				fin, wal = "xwfdn",""
 				fmt.Sscanf(l,"%s %s",&fin, &wal)		// this loop will read cust walls & floor pairs until xwfdn
 				if fin != "xwfdn" {
 					if i <= maxwf { nwalflor() }
