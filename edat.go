@@ -408,7 +408,7 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 		fmt.Sscanf(l,"%d %d",&ix, &iy)		// buffer size
 fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 		if ix > 0 && iy > 0 {
-			l, fin, wal := "", "", ""		// defaults on fail - this happens not...
+			l, fin, wal := "gfx/floor016.jpg gfx/wall_jsgv_A.b.png", "", ""		// defaults on fail - this happens not...
 			i := 0
 			lsv := 500
 			for fin != "xwfdn" && lsv > 0 {
