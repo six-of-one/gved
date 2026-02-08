@@ -575,13 +575,6 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			na := (adj >> 2)		// div 4
 			if na > 0 {
 				writepngtoimage(img, shtamp, 16,16,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
-/*				r := image.Rect((na)*16, 0, (na+1)*16, 16)
-				rr := image.Rect(0,0,256,16)
-				shd := image.NewRGBA(rr)
-				draw.Copy(shd, image.Pt(0,0), shtamp, r, draw.Over, nil)
-//fmt.Printf("shadow %d: %d x %d \n",na,(x-xb)*16, (y-yb)*16)
-				offset := image.Pt((x-xb)*16, (y-yb)*16)
-				draw.Draw(img, shd.Bounds().Add(offset), shd, image.ZP, draw.Over)	*/
 			}
 		  }
 			stamp := floorGetStamp(fp, adj+rand.Intn(4), fc)
