@@ -465,7 +465,7 @@ func nwalflor(){
 //fmt.Printf("delbuf st: %d len %d, test: %d\n",delstak,len(delbuf.elem),t)
 	maxwf++
 	wlfl.florn = append(wlfl.florn,"gfx/1x1.png")
-	wlfl.walln = append(wlfl.florn,"gfx/1x1.png")
+	wlfl.walln = append(wlfl.walln,"gfx/1x1.png")
 	wlfl.ftamp = append(wlfl.ftamp,nil)
 	wlfl.flim  = append(wlfl.flim,nil)
 	wlfl.wtamp = append(wlfl.wtamp,nil)
@@ -592,8 +592,8 @@ fmt.Printf("flim %d\n",p)
 				bnds := wlfl.ftamp[p].Bounds()
 				iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
 				wlfl.flim[p] = blankimage(8*2*(xs-xb), 8*2*(ys-yb))
-				for ty := 0; ty < th ; ty=ty+ih {
-				for tx := 0; tx < tw ; tx=tx+iw {
+				for ty := 0; ty < (opts.DimY*16) ; ty=ty+ih {
+				for tx := 0; tx < (opts.DimX*16) ; tx=tx+iw {
 					offset := image.Pt(tx, ty)
 					draw.Draw(wlfl.flim[p], wlfl.ftamp[p].Bounds().Add(offset), wlfl.ftamp[p], image.ZP, draw.Over)
 				}}
