@@ -553,15 +553,14 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 //		smol := image.NewRGBA(image.Rect(0, 0, ptamp.Bounds().Max.X/2, ptamp.Bounds().Max.Y/2))
 //		draw.BiLinear.Scale(smol, smol.Rect, ptamp, ptamp.Bounds(), draw.Over, nil)
 
-		bnds := ptamp.Bounds()
-		iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
-
 		tw := int(opts.Geow - 4)
 		th := int(opts.Geoh - 30)
 // image of an entire floor to writepngtoimage to img
 /// test - REMOVE
 	flim := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
 	if !stdfl {
+		bnds := ptamp.Bounds()
+		iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
 		for ty := 0; ty < th ; ty=ty+ih {
 			for tx := 0; tx < tw ; tx=tx+iw {
 				offset := image.Pt(tx, ty)
@@ -587,6 +586,10 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			if p >= 0 { wp = p }
 			p,q,_ = parser(xp, SE_CFLOR)		// build cust floors
 			if p >= 0 && p < maxwf {
+fmt.Printf("flim %d\n",p)
+				bnds := wlfl.ftamp[p].Bounds()
+				iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
+				wlfl.flim[p] = blankimage(8*2*(xs-xb), 8*2*(ys-yb))
 				for ty := 0; ty < th ; ty=ty+ih {
 				for tx := 0; tx < tw ; tx=tx+iw {
 					offset := image.Pt(tx, ty)
@@ -715,7 +718,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					p,q,_ = parser(xp, SE_CWAL)
 					if p >= 0 && p < maxwf {
 						stamp = nil
-						writepngtoimage(img,  wlfl.wtamp[p], 16,16,wly+26,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+						writepngtoimage(img, wlfl.wtamp[p], 16,16,wly+26,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					} else {
 						stamp = wallGetDestructableStamp(wp, adj, wc)
 					}
