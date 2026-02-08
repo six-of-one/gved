@@ -105,7 +105,6 @@ if opts.edat == 0 {
 		smod = "Edit mode: "
 fmt.Printf("editor on, maze: %03d or sd: %d\n",opts.mnum+1, sdb)
 		opts.edat = 1
-		if sdb < 0 { stor_maz(opts.mnum+1) }	// this does not auto store new edit mode to buffer save file, unless it creates the file
 		statlin(cmdhin,"viewport")
 // these all deactivate as override during edit
 		opts.MRM = false
@@ -496,59 +495,6 @@ fmt.Printf("\n")
 	}
   }
 	return edp
-}
-
-func stor_maz(mazn int) {
-
-	var lastx int
-	var lasty int
-	var maze *Maze
-//	fmt.Printf("buffer maze entry\n")
-
-// if g1 or g2 edit, get size & control bytes
-// g3 will be edit of sanctuary mazes
-	if opts.Gtp < 3 {
-		maze = mazeDecompress(slapsticReadMaze(mazn - 1), false)
-		lastx = 31
-		lasty = 31
-	}
-
-	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,mazn)
-
-	data, err := ioutil.ReadFile(fil)
-	if err != nil {
-		errs := fmt.Sprintf("%v",err)
-		fmt.Print(errs)
-		fmt.Printf("\n")
-// file does not exist yet
-		if strings.Contains(errs, "no such file") {
-// editor overs
-			maze.optbyts[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
-			maze.optbyts[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
-			for y := 0; y < 11; y++ {
-				eflg[y] = maze.optbyts[y]
-			}
-			opts.DimX = lastx
-			opts.DimY = lasty
-			for y := 0; y <= lasty; y++ {
-				for x := 0; x <= lastx; x++ {
-				ebuf[xy{x, y}] = maze.data[xy{x, y}]
-				xbuf[xy{x, y}] = "00"					// initialize to nop
-			}}
-			sav_maz(fil, xbuf, ebuf, eflg, lastx, lasty, mazn, false)
-			delstak = 0
-			restak = 0
-			delbset(0)
-		} else {
-			fmt.Print(err)
-			fmt.Printf("\n")
-		}
-		return
-	}
-
-	if false { fmt.Printf("buffer: %s\n",data) }
-	
-// handle g3 mazes here ?
 }
 
 func ed_sav(mazn int) {
