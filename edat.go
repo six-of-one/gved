@@ -426,6 +426,7 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 fmt.Printf("%s %s\n",fin,wal)
 				lsv--
 			}
+			curwf = i	// current walls & floors for save
 			for i := 0; i < maxwf; i++ { wlfl.flrblt[i] = false }		// clear all built floors
 			for y := 0; y <= iy; y++ {	// read one line per element due to ops
 			for x := 0; x <= ix; x++ {

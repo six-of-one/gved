@@ -453,6 +453,7 @@ type walflr struct {
 }
 
 var maxwf int
+var curwf int
 var wlfl = &walflr{}
 
 // testing cust floor & wall
@@ -578,15 +579,16 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			xp := scanxb(xdat, x, y, x, y, "")
 			wp, fp, fc := maze.wallpattern, maze.floorpattern, maze.floorcolor
 			gt := G1
-			p,q,_ := parser(xp, SE_G2)
+			p,q,_ := parser(xp, SE_G2)			// turn off G1 if G2 selected for a cell
 			if p == 1 { gt = false }
-			p,q,_ = parser(xp, SE_FLOR)
+			p,q,_ = parser(xp, SE_FLOR)			// set flor pat, flor col, g1 or g2
 			if p >= 0 { fp = p; fc = q }
-			p,q,_ = parser(xp, SE_WALL)
+			p,q,_ = parser(xp, SE_WALL)			// set wall pat
 			if p >= 0 { wp = p }
-			p,q,_ = parser(xp, SE_CFLOR)		// build cust floors
-			if p >= 0 && p < maxwf {
+			p,q,_ = parser(xp, SE_CFLOR)		// build cust floors from loaded png
+			if p >= 0 && p < curwf && !wlfl.flrblt[p] {
 fmt.Printf("flim %d\n",p)
+				wlfl.flrblt[p] = true
 				bnds := wlfl.ftamp[p].Bounds()
 				iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
 				wlfl.flim[p] = blankimage(8*2*(xs-xb), 8*2*(ys-yb))
@@ -627,7 +629,7 @@ fmt.Printf("flim %d\n",p)
 					coltil(img,cl,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 				p,_,_ = parser(xp, SE_CFLOR)
-				if p >= 0 && p < maxwf {			// cust floor from png - laded by lod_maz from xb file
+				if p >= 0 && p < curwf {			// cust floor from png - laded by lod_maz from xb file
 					writepngtoimage(img, wlfl.flim[p], 16,16,(x-xb),(y-yb), vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 				if p < 0 && cl < 1 {
@@ -716,7 +718,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 				if (nothing & NOWALL) == 0 {
 		if stdwl {
 					p,q,_ = parser(xp, SE_CWAL)
-					if p >= 0 && p < maxwf {
+					if p >= 0 && p < curwf {
 						stamp = nil
 						writepngtoimage(img, wlfl.wtamp[p], 16,16,wly+26,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					} else {
