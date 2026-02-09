@@ -298,6 +298,23 @@ var floorPalettes = [][]color.Color{
 		IRGB{0x8852},
 		IRGB{0xD842},
 		IRGB{0x86A6},
+	}, {
+		IRGB{0xF333}, // mystery palette
+		IRGB{0xF333},
+		IRGB{0xF030},
+		IRGB{0xF040},
+		IRGB{0xF060},
+		IRGB{0xF180},
+		IRGB{0xF290},
+		IRGB{0xF730},
+		IRGB{0xFA60},
+		IRGB{0xF000},
+		IRGB{0xF000},
+		IRGB{0xF000},
+		IRGB{0xF000},
+		IRGB{0xF000},
+		IRGB{0xF555},
+		IRGB{0xF444},
 	},
 }
 
@@ -1048,11 +1065,11 @@ var gauntletPalettes = map[string][][]color.Color{
 }
 
 var sColors1 = []int{
-	10, 10, 10, 10, 10, 1, 9, 9, 9, 10, 10,
+	10, 10, 10, 10, 10, 1, 9, 9, 9, 10, 8,
 }
 
 var sColors2 = []int{
-	12, 12, 12, 12, 12, 2, 11, 1, 2, 12, 12,
+	12, 12, 12, 12, 12, 2, 11, 1, 2, 12, 9,
 }
 
 var shrubFloorColorNums = [][]int{

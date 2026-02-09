@@ -928,6 +928,15 @@ func close_keys() {
 	listK = nil
 }
 
+// walls & floors g1/g2 color valid
+
+var gmaxcol = 16
+
+func colvld() int {
+
+	return gmaxcol
+}
+
 // wall valid
 
 var g1maxwal = 11		// only 6 walls, Se exp has shadowless walls
@@ -942,9 +951,17 @@ func walvld() int {
 
 // floors
 
+var g1maxflor = 10		// floors 9,10 were not in game, a bit sketchy as well
+var g2maxflor = 10
 
+func florvld() int {
 
-// supervalid
+	max := g1maxflor
+	if G2 { max = g2maxflor }
+	return max
+}
+
+// supervalid - bounds check all 4 assignments
 
 func suprval(wp,wc,fp,fc int) (int,int,int,int) {
 

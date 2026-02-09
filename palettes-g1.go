@@ -295,6 +295,23 @@ var g1floorPalettes = [][]color.Color{
 		IRGB{0x8852},
 		IRGB{0xD842},
 		IRGB{0x86A6},
+	}, {
+		IRGB{0xF333}, // mystery palette
+		IRGB{0xF333},
+		IRGB{0xF030},
+		IRGB{0xF040},
+		IRGB{0xF060},
+		IRGB{0xF180},
+		IRGB{0xF290},
+		IRGB{0xF730},
+		IRGB{0xFA60},
+		IRGB{0xF000},
+		IRGB{0xF000},
+		IRGB{0xF000},
+		IRGB{0xF000},
+		IRGB{0xF000},
+		IRGB{0xF555},
+		IRGB{0xF444},
 	},
 }
 

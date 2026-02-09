@@ -406,14 +406,14 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'e':
 			Ovwallcol += 1
 			if anum > 0 { Ovwallcol = anum - 1; anum = 0 }
-			if Ovwallcol > 16 { Ovwallcol = 0 }
+			if Ovwallcol > colvld() { Ovwallcol = 0 }
 			eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
 		case 'E':
 			Ovwallcol -= 1
-			if Ovwallcol < 0 { Ovwallcol = 16 }
+			if Ovwallcol < 0 { Ovwallcol = colvld() }
 			eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
 			opts.bufdrt = (opts.edat > 0)
@@ -421,14 +421,14 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'f':
 			Ovflorpat += 1
 			if anum > 0 { Ovflorpat = anum - 1; anum = 0 }
-			if Ovflorpat > 10 { Ovflorpat = 0 }
+			if Ovflorpat > florvld() { Ovflorpat = 0 }
 			eflg[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
 		case 70:		// F
 			Ovflorpat -= 1
-			if Ovflorpat < 0 { Ovflorpat = 8 }
+			if Ovflorpat < 0 { Ovflorpat = florvld() }
 			eflg[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
 			opts.bufdrt = (opts.edat > 0)
@@ -436,14 +436,14 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'g':
 			Ovflorcol += 1
 			if anum > 0 { Ovflorcol = anum - 1; anum = 0 }
-			if Ovflorcol > 15 { Ovflorcol = 0 }
+			if Ovflorcol > colvld() { Ovflorcol = 0 }
 			eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
 		case 71:		// G
 			Ovflorcol -= 1
-			if Ovflorcol < 0 { Ovflorcol = 15 }
+			if Ovflorcol < 0 { Ovflorcol = colvld() }
 			eflg[6] = (Ovflorcol & 0x0f) << 4 + (Ovwallcol & 0x0f)
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
 			opts.bufdrt = (opts.edat > 0)
