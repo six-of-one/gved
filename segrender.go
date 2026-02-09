@@ -769,7 +769,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 						p,q,r = parser(xp, SE_MSG)		// letter, msg mutually exclude
 						if p >= 0 {
 							for i := 0; i < 32; i++ {
-								if xpar[i] < 130 { c += map_keymap[xpar[i]] }
+								if xpar[i] < 130 { if xpar[i] == 0 {break}; c += map_keymap[xpar[i]] }
 							}
 						}
 					} else {
