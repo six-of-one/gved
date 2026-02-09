@@ -159,18 +159,28 @@ func isdoorg1(t int) bool {
 // vertical wall += 16
 
 // g1 version
-func checkwalladj3g1(maze *Maze, x int, y int) int {
+func checkwalladj3g1(maze *Maze, xdat Xdat, x int, y int) int {
 	adj := 0
+	wp := maze.wallpattern
 
-	if iswallg1(scanbuf(maze.data, x, y, x-1, y, -2)) {
+	xp := scanxb(xdat, x, y, x-1, y, "")
+	p,_,_ := parser(xp, SE_WALL)			// set wall pat
+	if p >= 0 { wp = p }
+	if iswallg1(scanbuf(maze.data, x, y, x-1, y, -2)) && wp < 6 {
 		adj += 4
 	}
 
-	if iswallg1(scanbuf(maze.data, x, y, x, y+1, -2)) {
+	xp = scanxb(xdat, x, y, x, y+1, "")
+	p,_,_ = parser(xp, SE_WALL)			// set wall pat
+	if p >= 0 { wp = p }
+	if iswallg1(scanbuf(maze.data, x, y, x, y+1, -2)) && wp < 6  {
 		adj += 16
 	}
 
-	if iswallg1(scanbuf(maze.data, x, y, x-1, y+1, -2)) {
+	xp = scanxb(xdat, x, y, x-1, y+1, "")
+	p,_,_ = parser(xp, SE_WALL)			// set wall pat
+	if p >= 0 { wp = p }
+	if iswallg1(scanbuf(maze.data, x, y, x-1, y+1, -2)) && wp < 6  {
 		adj += 8
 	}
 
@@ -602,16 +612,15 @@ fmt.Printf("flim %d\n",p)
 //			defshd := "gfx/shadows.16.png"		// default shadows for exp floors, custom wall load has to change this to walls png
 			if sb == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
 			if sb == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
-			if wp < 6 {
-				if (nothing & nwt) == 0 {			// wall shadows here
-				adj = checkwalladj3g1(maze, x, y)	// this sets adjust for shadows, floorGetStamp sets shadows by darkening floor parts
-				}
+
+			if (nothing & nwt) == 0 {			// wall shadows here
+				adj = checkwalladj3g1(maze, xdat, x, y)	// this sets adjust for shadows, floorGetStamp sets shadows by darkening floor parts
 			}
 // wall test
 		  if !stdfl {	// do exp walls shadows
 			// in this test, we already have the wall code in adj from gauntlet test - exp walls edit will need extra test if wall code is diff
 			na := (adj >> 2)		// div 4
-			if na > 0 {
+			if na > 0 && wp < 6 {
 				writepngtoimage(img, shtamp, 16,16,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 			}
 		  }

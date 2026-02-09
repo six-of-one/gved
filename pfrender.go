@@ -96,6 +96,25 @@ func checkwalladj3(maze *Maze, x int, y int) int {
 	return adj
 }
 
+// g1 version
+func pfcheckwalladj3g1(maze *Maze, x int, y int) int {
+	adj := 0
+
+	if iswallg1(scanbuf(maze.data, x, y, x-1, y, -2)) {
+		adj += 4
+	}
+
+	if iswallg1(scanbuf(maze.data, x, y, x, y+1, -2)) {
+		adj += 16
+	}
+
+	if iswallg1(scanbuf(maze.data, x, y, x-1, y+1, -2)) {
+		adj += 8
+	}
+
+	return adj
+}
+
 // check to see if there's walls on any side of location, for picking
 // which wall tile needs ot be used
 //
@@ -235,7 +254,7 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
 			if scanbuf(maze.data, x, y, x, y, -2) == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
 			if maze.wallpattern < 6 {
 				if (nothing & nwt) == 0 {		// wall shadows here
-				adj = checkwalladj3g1(maze, x, y)
+				adj = pfcheckwalladj3g1(maze, x, y)
 				}
 			}
 
