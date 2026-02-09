@@ -702,12 +702,12 @@ var g2edit_keymap = []int{
 }
 
 var map_keymap = []string{
-// all key indicator for edit mode	-	special chars for SE_LETR 'draw a letter index to map'
+// all key indicator for edit mode	-	special chars for SE_LETR 'draw a letter index to map'		0800FFFF5A326973321E00
 //    0    1    2    3    4    5    6    7    8    9		hex		dec
 	"א", " ", " ", " ", " ", " ", " ", " ", " ", " ", 	//  00		0	units 0 - 9
-	" ", " ", " ", " ", " ", "ƒ", "™", "≈", "¥", "œ", 	//  0A		10	unit start 0A / 10
-	"¤", "¦", "¶", "£", "∞", "Ω", "«", "»", "§", "˚",	//  14		20
-	"ø", "∆", "•", "!","\"", "#", "$", "%", "&", "'",	//	1E		30			valid keys 33 - 126
+	" ", " ", " ", " ", "•", "ƒ", "™", "≈", "¥", "œ", 	//  0A		10	unit start 0A / 10
+	"¤", "¦", "¶", "£", "∞", "ø", "«", "»", "§", "˚",	//  14		20
+	"∆", "Ω", " ", "!","\"", "#", "$", "%", "&", "'",	//	1E		30			valid keys 33 - 126
 	"(", ")", "*", "+", ",", "-", ".", "/", "0", "1",	//	28		40
 	"2", "3", "4", "5", "6", "7", "8", "9", ":", ";",	//	32		50
 	"<", "=", ">", "?", "@", "A", "B", "C", "D", "E",	//	3C		60
