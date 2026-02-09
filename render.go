@@ -230,10 +230,7 @@ var xpar [64]int		// extra parms past 3... - parms[] can NOT exceed this array s
 
 func parser(sp string, lc int) (int, int, int) {
 	r1, r2, r3 := -1,0,0
-fmt.Printf("parse %s\n ",sp)
-//	var t int
-//	fmt.Sscanf(sp,"%X",&t) // validate
-//	if t > 0 && lastst != sp { lastst = sp; fmt.Printf("t %X\n",t) }
+//fmt.Printf("parse %s\n ",sp)
 	if lc > 0 {
 		for i := 0; i < 17; i++ { secmd[i] = 0 }
 					//	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20	21	22	23	24	25	26	27	28	29	30	31	32	33	34	35	36

@@ -741,8 +741,6 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 				}
 
 				case G1OBJ_WALL_TRAP1:
-					dots = 1; nwt = NOWALL
-					fallthrough
 				case SEOBJ_WAL_TRAPCYC1:
 					dots = 1; nwt = NOWALL
 					fallthrough
@@ -827,8 +825,9 @@ if opts.Verbose { fmt.Printf("\n") }
 
 			ptamp = nil
 
+			xp := scanxb(xdat, x, y, x, y, "")
 			gt := G1
-			p,q,_ := parser(xp, SE_G2)			// turn off G1 if G2 selected for a cell
+			p,_,_ := parser(xp, SE_G2)			// turn off G1 if G2 selected for a cell
 			if p == 1 { gt = false }
 
 // gen type op - letter to draw
@@ -1075,8 +1074,6 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				stamp.pnum = 0
 */
 			case SEOBJ_TILE_TRAP1:
-				dots = 1
-				fallthrough
 			case G1OBJ_TILE_TRAP1:
 				dots = 1
 				fallthrough
@@ -1108,6 +1105,8 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				stamp = itemGetStamp("exitg1")
 			case G1OBJ_EXIT4:
 				stamp = itemGetStamp("exit4")
+			case SEOBJ_EXIT6:
+				stamp = itemGetStamp("exit6")
 			case G1OBJ_EXIT8:
 				stamp = itemGetStamp("exit8")
 
