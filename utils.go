@@ -6,6 +6,11 @@ import (
 	"github.com/disintegration/imaging"
 )
 
+func minint(i1, i2 int) int {
+	r := i1
+	if (i2 < r) { r = i2 }
+	return r
+}
 // swap values
 
 // ints

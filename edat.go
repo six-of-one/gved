@@ -965,7 +965,9 @@ func florvld() int {
 
 func suprval(wp,wc,fp,fc int) (int,int,int,int) {
 
-	return 0,0,0,0
+	wip, wic, fip, fic := minint(walvld(),wp),minint(colvld(),wc),minint(florvld(),fp),minint(colvld(),fc)
+
+	return wip, wic, fip, fic
 }
 
 // valid check, mapid

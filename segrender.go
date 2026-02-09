@@ -165,21 +165,21 @@ func checkwalladj3g1(maze *Maze, xdat Xdat, x int, y int) int {
 
 	xp := scanxb(xdat, x, y, x-1, y, "")
 	p,_,_ := parser(xp, SE_WALL)			// set wall pat
-	if p >= 0 { wp = p }
+	if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
 	if iswallg1(scanbuf(maze.data, x, y, x-1, y, -2)) && wp < 6 {
 		adj += 4
 	}
 
 	xp = scanxb(xdat, x, y, x, y+1, "")
 	p,_,_ = parser(xp, SE_WALL)			// set wall pat
-	if p >= 0 { wp = p }
+	if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
 	if iswallg1(scanbuf(maze.data, x, y, x, y+1, -2)) && wp < 6  {
 		adj += 16
 	}
 
 	xp = scanxb(xdat, x, y, x-1, y+1, "")
 	p,_,_ = parser(xp, SE_WALL)			// set wall pat
-	if p >= 0 { wp = p }
+	if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
 	if iswallg1(scanbuf(maze.data, x, y, x-1, y+1, -2)) && wp < 6  {
 		adj += 8
 	}
@@ -470,6 +470,8 @@ var wlfl = &walflr{}
 var Se_cflr_cnt int
 var Se_cwal_cnt int
 
+// when map is loaded, store floors & walls as designated in xb_*.ed file after X Y size and before "xwfdn" marker
+
 func nwalflor(){
 
 //fmt.Printf("delbuf st: %d len %d, test: %d\n",delstak,len(delbuf.elem),t)
@@ -531,7 +533,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 	for y := yb; y < ys; y++ {
 		for x := xb; x < xs; x++ {
 			adj := 0
-			if maze.wallpattern < 11 {
+			if maze.wallpattern < 10 {
 				if (nothing & NOWALL) == 0 {		// wall shadows here
 				adj = checkwalladj3(maze, x, y)
 				}
@@ -592,9 +594,9 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			p,q,_ := parser(xp, SE_G2)			// turn off G1 if G2 selected for a cell
 			if p == 1 { gt = false }
 			p,q,_ = parser(xp, SE_FLOR)			// set flor pat, flor col, g1 or g2
-			if p >= 0 { fp = p; fc = q }
+			if p >= 0 { _,_,fp,fc = suprval(0,0,p,q) }
 			p,q,_ = parser(xp, SE_WALL)			// set wall pat
-			if p >= 0 { wp = p }
+			if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
 			p,q,_ = parser(xp, SE_CFLOR)		// build cust floors from loaded png
 			if p >= 0 && p < curwf && !wlfl.flrblt[p] {
 fmt.Printf("flim %d\n",p)
@@ -669,8 +671,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 			p,q,_ := parser(xp, SE_G2)
 			if p == 1 { gt = false }
 			p,q,_ = parser(xp, SE_WALL)
-			if p >= 0 { wp = p; wc = q
-			}
+			if p >= 0 { wp,wc,_,_ = suprval(p,q,0,0) }
 
 			if G2 {
 				switch whatis(maze, x, y) {
