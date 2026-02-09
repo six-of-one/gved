@@ -222,7 +222,7 @@ var parms = []int{
 }
 var secmd [64]int
 var lastst string
-var xpar [16]int		// extra parms past 3... - parms[] can NOT exceed this array size!
+var xpar [64]int		// extra parms past 3... - parms[] can NOT exceed this array size!
 
 func parser(sp string, lc int) (int, int, int) {
 	r1, r2, r3 := -1,0,0

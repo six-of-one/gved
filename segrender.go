@@ -764,20 +764,29 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					fallthrough
 				case G1OBJ_TILE_FLOOR:
 					p,q,r := parser(xp, SE_LETR)
-					if p >= 0 {
+					c := ""
+					if p < 0 {
+						p,q,r = parser(xp, SE_MSG)		// letter, msg mutually exclude
+						if p >= 0 {
+							for i := 0; i < 32; i++ {
+								if xpar[i] < 130 { c += map_keymap[xpar[i]] }
+							}
+						}
+					} else {
 						l := xpar[0]
-							if l < 130 {
+						if l < 130 { c = map_keymap[l] }
+					}
+					if p >= 0 {
 							gtop := gg.NewContext(12, 12)
 							if err := gtop.LoadFontFace(".font/VrBd.ttf", 10); err == nil {
 							gtop.Clear()
 							fp, fq, fr := float64(p)/256,float64(q)/256,float64(r)/256
 							gtop.SetRGB(fp, fq, fr)
-							gtop.DrawStringAnchored(map_keymap[l], 6, 6, 0.5, 0.5)
+							gtop.DrawStringAnchored(c, 6, 6, 0.5, 0.5)
 							gtopim := gtop.Image()
 							offset := image.Pt(vcoord(x,xb,xba)*16+4, vcoord(y,yb,yba)*16)
 							draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 						}}
-					}
 					if opts.SP {
 						ts := rand.Intn(470)
 						if ts == 2 { mdat[xy{x, y}] = G1OBJ_TREASURE_BAG }
