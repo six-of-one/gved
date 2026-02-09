@@ -444,7 +444,7 @@ var g1auds = map[int]string{
 	97:		"",
 	98:		"",
 	99:		"",
-	100:	"sfx/tile.ogg",
+	SEOBJ_FLOOR:	"sfx/tile.ogg",
 	101:	"",
 	102:	"",
 }

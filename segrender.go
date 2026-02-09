@@ -751,6 +751,8 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 		}
 				}
 // test of some items not place in mazes - place in empty floor tile @random
+				case SEOBJ_FLOOR:
+					fallthrough
 				case G1OBJ_TILE_FLOOR:
 					p,q,r := parser(xp, SE_LETR)
 					if p >= 0 {
@@ -759,7 +761,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 							gtop := gg.NewContext(12, 12)
 							if err := gtop.LoadFontFace(".font/VrBd.ttf", 10); err == nil {
 							gtop.Clear()
-							fp, fq, fr := float64(p/256),float64(q/256),float64(r/256)
+							fp, fq, fr := float64(p)/256,float64(q)/256,float64(r)/256
 							gtop.SetRGB(fp, fq, fr)
 							gtop.DrawStringAnchored(map_keymap[l], 6, 6, 0.5, 0.5)
 							gtopim := gtop.Image()

@@ -240,7 +240,7 @@ func parser(sp string, lc int) (int, int, int) {
 				r1 =secmd[i+1]; r2 =secmd[i+2]; r3 =secmd[i+3]
 				if prc == 0 { r1 = 1 }
 				if prc > 3 { for k := 0; k < (prc - 3); k++ { xpar[k] = secmd[k+4]}}
-//				fmt.Printf("c:%d p:%d - r1 %d r2 %d r3 %d\n ",lc,prc,r1,r2,r3);
+//				fmt.Printf("c:%d p:%d - r1 %d r2 %d r3 %d\n ",lc,prc,r1,r2,r3)
 				break
 			}
 //fmt.Printf("parm %d of %d= %d\n ",secmd[i],parms[secmd[i]])
