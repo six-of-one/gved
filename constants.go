@@ -143,9 +143,9 @@ const (
 	SEOBJ_SECRTWAL				= 104
 // 5 is g2 destruct wall
 	SEOBJ_RNDWAL				= 106
-	SEOBJ_TRCWAL1				= 107		// g2 trap & cycle walls
-	SEOBJ_TRCWAL2				= 108
-	SEOBJ_TRCWAL3				= 109
+	SEOBJ_WAL_TRAPCYC1				= 107		// g2 trap & cycle walls
+	SEOBJ_WAL_TRAPCYC2				= 108
+	SEOBJ_WAL_TRAPCYC3				= 109
 	SEOBJ_TILE_TRAP1			= 110
 	SEOBJ_TILE_TRAP2			= 111
 	SEOBJ_TILE_TRAP3			= 112
@@ -311,9 +311,9 @@ var g1mapid = map[int]string{
 	104:	"SE_SECRTWAL",
 	105:	"No_thing_105",
 	106:	"SE_RNDWAL",
-	107:	"SE_TRCWAL1",
-	108:	"SE_TRCWAL2",
-	109:	"SE_TRCWAL3",
+	107:	"SE_WAL_TRAPCYC1",
+	108:	"SE_WAL_TRAPCYC2",
+	109:	"SE_WAL_TRAPCYC3",
 	110:	"SE_TILE_TRAP1",
 	111:	"SE_TILE_TRAP2",
 	112:	"SE_TILE_TRAP3",

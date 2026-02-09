@@ -714,14 +714,14 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 				case MAZEOBJ_TILE_FLOOR:
 					if opts.SP {
 						ts := rand.Intn(470)
-						if ts == 2 { mdat[xy{x, y}] = 	MAZEOBJ_TREASURE_BAG }		// do this with mdat
+						if ts == 2 { mdat[xy{x, y}] = MAZEOBJ_TREASURE_BAG }		// do this with mdat
 						if ts == 111 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
-						if ts == 311 {mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+						if ts == 311 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 					}
 			}}
 			if G1 {
 				if wp > 5 { wp -= 6 }		// Se enhance that allows shadowless g1 walls
-				nwt := NOWALL | NOG1W
+				nwt := NOWALL | NOG1W		// reg g1 walls taken out by themselves (no traps, cycs etc) by NOG1W flags
 				switch scanbuf(maze.data, x, y, x, y, -2) {
 				case G1OBJ_WALL_DESTRUCTABLE:
 					adj, wly := checkwalladj8g1(maze, x, y)
@@ -743,13 +743,13 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 				case G1OBJ_WALL_TRAP1:
 					dots = 1; nwt = NOWALL
 					fallthrough
-				case SEOBJ_TRCWAL1:
+				case SEOBJ_WAL_TRAPCYC1:
 					dots = 1; nwt = NOWALL
 					fallthrough
-				case SEOBJ_TRCWAL2:
+				case SEOBJ_WAL_TRAPCYC2:
 					if dots == 0 { dots = 2 }; nwt = NOWALL
 					fallthrough
-				case SEOBJ_TRCWAL3:
+				case SEOBJ_WAL_TRAPCYC3:
 					if dots == 0 { dots = 3 }; nwt = NOWALL
 					fallthrough
 				case SEOBJ_RNDWAL:
@@ -803,10 +803,10 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 							draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 						}}
 					if opts.SP {
-						ts := rand.Intn(470)
+						ts := rand.Intn(670)
 						if ts == 2 { mdat[xy{x, y}] = G1OBJ_TREASURE_BAG }
 						if ts == 11 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
-						if ts == 311 {mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+						if ts == 311 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 					}
 				}}
 			if stamp != nil {
@@ -826,6 +826,10 @@ if opts.Verbose { fmt.Printf("\n") }
 			var dots int // dot count
 
 			ptamp = nil
+
+			gt := G1
+			p,q,_ := parser(xp, SE_G2)			// turn off G1 if G2 selected for a cell
+			if p == 1 { gt = false }
 
 // gen type op - letter to draw
 			gtopl := ""
@@ -1070,8 +1074,17 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
 */
+			case SEOBJ_TILE_TRAP1:
+				dots = 1
+				fallthrough
 			case G1OBJ_TILE_TRAP1:
 				dots = 1
+				fallthrough
+			case SEOBJ_TILE_TRAP2:
+				if dots == 0 { dots = 2 }
+				fallthrough
+			case SEOBJ_TILE_TRAP3:
+				if dots == 0 { dots = 3 }
 
 				adj := checkwalladj3(maze, x, y) + rand.Intn(4)
 				if (nothing & NOTRAP) == 0 {
@@ -1234,7 +1247,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 		}
 // Six: end G1 decode
 			if stamp != nil {
-				writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
+				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
 // stats on palette
 				if stat {			// on palette screen, show stats for loaded maze
 					st := ""
