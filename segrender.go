@@ -556,6 +556,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		}
 	}} else {
 // tesing Se, xpanded floor
+// testing
 		stdfl := true
 		Se_cflr_cnt++
 		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
@@ -568,6 +569,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 
 		tw := int(opts.Geow - 4)
 		th := int(opts.Geoh - 30)
+// testing
 // image of an entire floor to writepngtoimage to img
 /// test - REMOVE
 	flim := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
@@ -580,6 +582,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 //				draw.Draw(img, smol.Bounds().Add(offset), smol, image.ZP, draw.Over)
 				draw.Draw(flim, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)
 			}}}
+// end testing
 
 // g1 checks
 	for y := yb; y < ys; y++ {
@@ -618,7 +621,7 @@ fmt.Printf("flim %d\n",p)
 			if (nothing & nwt) == 0 {			// wall shadows here
 				adj = checkwalladj3g1(maze, xdat, x, y)	// this sets adjust for shadows, floorGetStamp sets shadows by darkening floor parts
 			}
-// wall test
+// wall testing
 		  if !stdfl {	// do exp walls shadows
 			// in this test, we already have the wall code in adj from gauntlet test - exp walls edit will need extra test if wall code is diff
 			na := (adj >> 2)		// div 4
@@ -626,6 +629,7 @@ fmt.Printf("flim %d\n",p)
 				writepngtoimage(img, shtamp, 16,16,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 			}
 		  }
+// end testing
 			stamp := floorGetStamp(fp, adj+rand.Intn(4), fc)
 			if sb < 0 {
 				coltil(img,0,(x-xb)*16, (y-yb)*16)
@@ -659,6 +663,7 @@ fmt.Printf("flim %d\n",p)
 stdwl := true
 Se_cwal_cnt++
 if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
+// end testing
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & g2 draw walls, see screens
 	for y := yb; y <= ys; y++ {
@@ -711,6 +716,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 				}
 // test of some items not place in mazes
+// this test is view cmd 's'
 				case MAZEOBJ_TILE_FLOOR:
 					if opts.SP {
 						ts := rand.Intn(470)
@@ -718,6 +724,7 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 						if ts == 111 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 						if ts == 311 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 					}
+// end testing
 			}}
 			if G1 {
 				if wp > 5 { wp -= 6 }		// Se enhance that allows shadowless g1 walls
@@ -726,7 +733,9 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 				case G1OBJ_WALL_DESTRUCTABLE:
 					adj, wly := checkwalladj8g1(maze, x, y)
 				if (nothing & NOWALL) == 0 {
+// testing
 		if stdwl {
+// end testing
 					p,q,_ = parser(xp, SE_CWAL)
 					if p >= 0 && p < curwf {
 						stamp = nil
@@ -734,13 +743,16 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					} else {
 						stamp = wallGetDestructableStamp(wp, adj, wc)
 					}
+// testing
 		} else {
 					stamp = nil
 					writepngtoimage(img, wtamp, 16,16,wly+26,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
 		}
+// end testing
 				}
 
 				case G1OBJ_WALL_TRAP1:
+					fallthrough
 				case SEOBJ_WAL_TRAPCYC1:
 					dots = 1; nwt = NOWALL
 					fallthrough
@@ -756,7 +768,9 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 				case G1OBJ_WALL_REGULAR:
 					adj, wly := checkwalladj8g1(maze, x, y)
 					if (nothing & nwt) == 0 {
+// testing
 		if stdwl {
+// end testing
 					p,q,_ = parser(xp, SE_CWAL)
 					if p >= 0 && p < curwf {
 						stamp = nil
@@ -764,10 +778,12 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					} else {
 						stamp = wallGetStamp(wp, adj, wc)
 					}
+// testing
 		} else {
 						stamp = nil
 						writepngtoimage(img, wtamp, 16,16,wly,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 		}
+// end testing
 				}
 // test of some items not place in mazes - place in empty floor tile @random
 				case SEOBJ_FLOOR:
@@ -1074,6 +1090,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				stamp.pnum = 0
 */
 			case SEOBJ_TILE_TRAP1:
+					fallthrough
 			case G1OBJ_TILE_TRAP1:
 				dots = 1
 				fallthrough
