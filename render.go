@@ -214,10 +214,11 @@ const (
 	SE_CWAL		= 5		// data: flor: sheet, r, (c is wally), xy size		wal: sheet, row, (xy size?)
 	SE_COLRT	= 6		// color tiles under any
 	SE_LETR		= 7		// draw a letter index to map_keymap (as gen hints) in color, as R,G,B, ind
+	SE_MSG		= 8		// write a null term msg (up to 28 hex byts) onto maze in color as R,G,B, {MSG}, 00 
 )
 // bytes for each cmd
 var parms = []int{
-	0, 2, 2, 0, 1, 2, 3, 4, 0,
+	0, 2, 2, 0, 1, 2, 3, 4, 36,
 }
 var secmd [64]int
 var lastst string
@@ -231,10 +232,12 @@ func parser(sp string, lc int) (int, int, int) {
 //	if t > 0 && lastst != sp { lastst = sp; fmt.Printf("t %X\n",t) }
 	if t > 0 && lc > 0 {
 		for i := 0; i < 17; i++ { secmd[i] = 0 }
-					//	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16
-		fmt.Sscanf(sp,"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
-					&secmd[0],&secmd[1],&secmd[2],&secmd[3],&secmd[4],&secmd[5],&secmd[6],&secmd[7],&secmd[8],&secmd[9],&secmd[10],&secmd[11],&secmd[12],&secmd[13],&secmd[14],&secmd[15],&secmd[16])
-		for i := 0; i < 17; i++ {
+					//	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20	21	22	23	24	25	26	27	28	29	30	31	32	33	34	35	36
+		fmt.Sscanf(sp,"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+					&secmd[0],&secmd[1],&secmd[2],&secmd[3],&secmd[4],&secmd[5],&secmd[6],&secmd[7],&secmd[8],&secmd[9],&secmd[10],&secmd[11],&secmd[12],&secmd[11],&secmd[12],&secmd[13],&secmd[14],&secmd[15],&secmd[16],
+					&secmd[16],&secmd[17],&secmd[18],&secmd[19],&secmd[20],&secmd[21],&secmd[22],&secmd[23],&secmd[24],&secmd[25],&secmd[26],&secmd[27],&secmd[28],&secmd[29],&secmd[30],&secmd[31],&secmd[32],
+					&secmd[33],&secmd[34],&secmd[35],&secmd[36])
+		for i := 0; i < 37; i++ {
 			if lc == secmd[i] {
 				prc := parms[secmd[i]]
 				r1 =secmd[i+1]; r2 =secmd[i+2]; r3 =secmd[i+3]
