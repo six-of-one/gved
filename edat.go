@@ -216,7 +216,8 @@ func init_buf() {
 	if ubuf == nil { ubuf = make(map[xy]int) }
 	if xubf == nil { xubf = make(map[xy]string) }
 	if cpbuf == nil { cpbuf = make(map[xy]int) }
-	if xcpbuf == nil { xbuf = make(map[xy]string) }
+	if xcpbuf == nil { xcpbuf = make(map[xy]string) }
+	if xopbf == nil { xopbf = make(map[xy]string) }
 	if plbuf == nil { plbuf = make(map[xy]int) }
 	if xplb == nil { xplb = make(map[xy]string) }
 }
