@@ -741,8 +741,19 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 				}
 
 				case G1OBJ_WALL_TRAP1:
-					dots = 1
-					nwt = NOWALL
+					dots = 1; nwt = NOWALL
+					fallthrough
+				case SEOBJ_TRCWAL1:
+					dots = 1; nwt = NOWALL
+					fallthrough
+				case SEOBJ_TRCWAL2:
+					if dots == 0 { dots = 2 }; nwt = NOWALL
+					fallthrough
+				case SEOBJ_TRCWAL3:
+					if dots == 0 { dots = 3 }; nwt = NOWALL
+					fallthrough
+				case SEOBJ_RNDWAL:
+					if dots == 0 { dots = 4 }; nwt = NOWALL
 					fallthrough
 				case G1OBJ_WALL_REGULAR:
 					adj, wly := checkwalladj8g1(maze, x, y)
