@@ -630,7 +630,7 @@ fmt.Printf("flim %d\n",p)
 				}
 				p,_,_ = parser(xp, SE_CFLOR)
 				if p >= 0 && p < curwf {			// cust floor from png - laded by lod_maz from xb file
-					writepngtoimage(img, wlfl.flim[p], 16,16,(x-xb),(y-yb), vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writepngtoimage(img, wlfl.flim[p], 16,16,vcoord(x,xb,xba),vcoord(y,yb,yba), vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 				if p < 0 && cl < 1 {
 // exp floor test, turn this off for sd mazes/ edits
