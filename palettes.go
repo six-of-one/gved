@@ -1048,11 +1048,11 @@ var gauntletPalettes = map[string][][]color.Color{
 }
 
 var sColors1 = []int{
-	10, 10, 10, 10, 10, 1, 9, 9, 9,
+	10, 10, 10, 10, 10, 1, 9, 9, 9, 10, 10,
 }
 
 var sColors2 = []int{
-	12, 12, 12, 12, 12, 2, 11, 1, 2,
+	12, 12, 12, 12, 12, 2, 11, 1, 2, 12, 12,
 }
 
 var shrubFloorColorNums = [][]int{

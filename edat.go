@@ -940,8 +940,19 @@ func walvld() int {
 	return max
 }
 
+// floors
+
+
+
+// supervalid
+
+func suprval(wp,wc,fp,fc int) (int,int,int,int) {
+
+	return 0,0,0,0
+}
+
 // valid check, mapid
-var g1maxid = 102
+var g1maxid = 139
 var g2maxid = 66
 
 func maxid() int {

@@ -421,7 +421,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 		case 'f':
 			Ovflorpat += 1
 			if anum > 0 { Ovflorpat = anum - 1; anum = 0 }
-			if Ovflorpat > 8 { Ovflorpat = 0 }
+			if Ovflorpat > 10 { Ovflorpat = 0 }
 			eflg[5] = (Ovflorpat & 0x0f) << 4 + (Ovwallpat & 0x0f)
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
 			opts.bufdrt = (opts.edat > 0)
