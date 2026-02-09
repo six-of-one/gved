@@ -751,7 +751,22 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 		}
 				}
 // test of some items not place in mazes - place in empty floor tile @random
-				case MAZEOBJ_TILE_FLOOR:
+				case G1OBJ_TILE_FLOOR:
+					p,q,r := parser(xp, SE_LETR)
+					if p >= 0 {
+						l := xpar[0]
+							if l < 130 {
+							gtop := gg.NewContext(12, 12)
+							if err := gtop.LoadFontFace(".font/VrBd.ttf", 10); err == nil {
+							gtop.Clear()
+							fp, fq, fr := float64(p/256),float64(q/256),float64(r/256)
+							gtop.SetRGB(fp, fq, fr)
+							gtop.DrawStringAnchored(map_keymap[l], 6, 6, 0.5, 0.5)
+							gtopim := gtop.Image()
+							offset := image.Pt(vcoord(x,xb,xba)*16+4, vcoord(y,yb,yba)*16)
+							draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
+						}}
+					}
 					if opts.SP {
 						ts := rand.Intn(470)
 						if ts == 2 { mdat[xy{x, y}] = G1OBJ_TREASURE_BAG }
@@ -1197,7 +1212,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 						gtop.SetRGB(1, 0, 0)
 						gtop.DrawStringAnchored(st, 6, 6, 0.5, 0.5)
 						gtopim := gtop.Image()
-						offset := image.Pt((x-xb)*16+stamp.nudgex+15, (y-yb)*16+stamp.nudgey-5)
+						offset := image.Pt(vcoord(x,xb,xba)*16+stamp.nudgex-5, vcoord(y,yb,yba)*16+stamp.nudgey-5)
 						draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 						gtopl = ""		// these seem to conflict and the palette id's box gens with monsters nearby
 						stonce[mel] = 0
@@ -1212,7 +1227,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 						gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
 					}
 					gtopim := gtop.Image()
-					offset := image.Pt((x-xb)*16+stamp.nudgex-4, (y-yb)*16+stamp.nudgey-4)
+					offset := image.Pt(vcoord(x,xb,xba)*16+stamp.nudgex-4, vcoord(y,yb,yba)*16+stamp.nudgey-4)
 					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 				}
 			}

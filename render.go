@@ -213,13 +213,15 @@ const (
 	SE_CFLOR	= 4		// custom floor unit from xb*.ed file wall&floor lines
 	SE_CWAL		= 5		// data: flor: sheet, r, (c is wally), xy size		wal: sheet, row, (xy size?)
 	SE_COLRT	= 6		// color tiles under any
+	SE_LETR		= 7		// draw a letter index to map_keymap (as gen hints) in color, as R,G,B, ind
 )
 // bytes for each cmd
 var parms = []int{
-	0, 2, 2, 0, 1, 2, 3, 2, 0,
+	0, 2, 2, 0, 1, 2, 3, 4, 0,
 }
 var secmd [64]int
 var lastst string
+var xpar [16]int		// extra parms past 3... - parms[] can NOT exceed this array size!
 
 func parser(sp string, lc int) (int, int, int) {
 	r1, r2, r3 := -1,0,0
@@ -233,7 +235,14 @@ func parser(sp string, lc int) (int, int, int) {
 		fmt.Sscanf(sp,"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
 					&secmd[0],&secmd[1],&secmd[2],&secmd[3],&secmd[4],&secmd[5],&secmd[6],&secmd[7],&secmd[8],&secmd[9],&secmd[10],&secmd[11],&secmd[12],&secmd[13],&secmd[14],&secmd[15],&secmd[16])
 		for i := 0; i < 17; i++ {
-			if lc == secmd[i] { r1 =secmd[i+1]; r2 =secmd[i+2]; r3 =secmd[i+3]; if parms[secmd[i]] == 0 { r1 = 1 }; /*fmt.Printf("c:%d - r1 %d r2 %d r3 %d\n ",lc,r1,r2,r3);*/ break }
+			if lc == secmd[i] {
+				prc := parms[secmd[i]]
+				r1 =secmd[i+1]; r2 =secmd[i+2]; r3 =secmd[i+3]
+				if prc == 0 { r1 = 1 }
+				if prc > 3 { for k := 0; k < (prc - 3); k++ { xpar[k] = secmd[k+4]}}
+//				fmt.Printf("c:%d p:%d - r1 %d r2 %d r3 %d\n ",lc,prc,r1,r2,r3);
+				break
+			}
 //fmt.Printf("parm %d of %d= %d\n ",secmd[i],parms[secmd[i]])
 			i = i + parms[secmd[i]]
 		}
