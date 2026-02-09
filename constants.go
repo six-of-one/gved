@@ -132,11 +132,50 @@ const (
 	G1OBJ_TRANSPORTER = 59
 	G1OBJ_TILE_STUN = 62
 	G1OBJ_TREASURE_BAG = 64
-	G1OBJ_EXTEND = 66
-	G1OBJ_WIZARD = 67
-	GORO_TEST = 70
+	G1OBJ_EXTEND				= 66
+	G1OBJ_WIZARD				= 67
+	GORO_TEST					= 70
 // sanctuary engine ops
-	SEOBJ_FLOOR = 100
+	SEOBJ_FLOOR					= 100
+// Gauntlet II items implement in SE
+	SEOBJ_STUN					= 101
+	SEOBJ_PUSHWAL				= 103
+	SEOBJ_SECRTWAL				= 104
+// 5 is g2 destruct wall
+	SEOBJ_RNDWAL				= 106
+	SEOBJ_TRCWAL1				= 107		// g2 trap & cycle walls
+	SEOBJ_TRCWAL2				= 108
+	SEOBJ_TRCWAL3				= 109
+	SEOBJ_TILE_TRAP1			= 110
+	SEOBJ_TILE_TRAP2			= 111
+	SEOBJ_TILE_TRAP3			= 112
+	SEOBJ_DOOR_H				= 113
+	SEOBJ_DOOR_V				= 114
+// g2 start
+// g2 exit
+	SEOBJ_EXIT6					= 117
+	SEOBJ_G2GHOST				= 118
+	SEOBJ_G2GRUNT				= 119
+	SEOBJ_G2DEMON				= 120
+	SEOBJ_G2LOBER				= 121
+	SEOBJ_G2SORC				= 122
+	SEOBJ_G2AUXGR				= 123
+	SEOBJ_G2DEATH				= 124
+	SEOBJ_G2ACID				= 125
+	SEOBJ_G2SUPSORC				= 126
+	SEOBJ_G2IT					= 127
+	SEOBJ_G2GN_GST1				= 128
+	SEOBJ_G2GN_GST2				= 129
+	SEOBJ_G2GN_GST3				= 130
+	SEOBJ_G2GN_GR1				= 131
+	SEOBJ_G2GN_GR2				= 132
+	SEOBJ_G2GN_GR3				= 133
+	SEOBJ_G2GN_DM1				= 134
+	SEOBJ_G2GN_DM2				= 135
+	SEOBJ_G2GN_DM3				= 136
+	SEOBJ_G2GN_LB1				= 137
+	SEOBJ_G2GN_LB2				= 138
+	SEOBJ_G2GN_LB3				= 139
 )
 // contrl var nothing [ no-thing ] that blocks elements display
 const (
@@ -266,9 +305,57 @@ var g1mapid = map[int]string{
 	98:		"No_thing_98",
 	99:		"No_thing_99",
 	SEOBJ_FLOOR:	"XOV_FLOOR",
-	101:	"No_thing_101",
-	102:		"No_thing_102",
-
+	101:	"SE_STUN",
+	102:	"No_thing_102",
+	103:	"SE_PUSHWAL",
+	104:	"SE_SECRTWAL",
+	105:	"No_thing_105",
+	106:	"SE_RNDWAL",
+	107:	"SE_TRCWAL1",
+	108:	"SE_TRCWAL2",
+	109:	"SE_TRCWAL3",
+	110:	"SE_TILE_TRAP1",
+	111:	"SE_TILE_TRAP2",
+	112:	"SE_TILE_TRAP3",
+	113:	"SE_DOOR_H",
+	114:	"SE_DOOR_V",
+	115:	"No_thing_115",
+	116:	"No_thing_116",
+	117:	"SE_EXIT6",
+	118:	"SE_G2GHOST",
+	119:	"SE_G2GRUNT",
+	120:	"SE_G2DEMON",
+	121:	"SE_G2LOBER",
+	122:	"SE_G2SORC",
+	123:	"SE_G2AUXGR",
+	124:	"SE_G2DEATH",
+	125:	"SE_G2ACID",
+	126:	"SE_G2SUPSORC",
+	127:	"SE_G2_IT",
+	128:	"SE_G2GN_GHOST1",
+	129:	"SE_G2GN_GST2",
+	130:	"SE_G2GN_GST3",
+	131:	"SE_G2GN_GR1",
+	132:	"SE_G2GN_GR2",
+	133:	"SE_G2GN_GR3",
+	134:	"SE_G2GN_DM1",
+	135:	"SE_G2GN_DM2",
+	136:	"SE_G2GN_DM3",
+	137:	"SE_G2GN_LB1",
+	138:	"SE_G2GN_LB2",
+	139:	"SE_G2GN_LB3",
+/*
+	10:	"No_thing_10",
+	11:	"No_thing_11",
+	12:	"No_thing_12",
+	13:	"No_thing_13",
+	14:	"No_thing_14",
+	15:	"No_thing_15",
+	16:	"No_thing_16",
+	17:	"No_thing_17",
+	18:	"No_thing_18",
+	19:	"No_thing_19",
+*/
 }
 
 var g2mapid = map[int]string{
@@ -445,8 +532,57 @@ var g1auds = map[int]string{
 	98:		"",
 	99:		"",
 	SEOBJ_FLOOR:	"sfx/tile.ogg",
-	101:	"",
+	101:	"sfx/g1_stun.ogg",
 	102:	"",
+	103:	"sfx/push_wall.ogg",
+	104:	"sfx/g2_shotwall.ogg",
+	105:	"",
+	106:	"sfx/wall_rnd.ogg",
+	107:	"sfx/g2_wallphase1_f.ogg",
+	108:	"sfx/g2_wallphase1_f.ogg",
+	109:	"sfx/g2_wallphase1_f.ogg",
+	110:	"sfx/g2-trap.ogg",
+	111:	"sfx/g2-trap.ogg",
+	112:	"sfx/g2-trap.ogg",
+	113:	"sfx/g1_door.ogg",
+	114:	"sfx/g1_door.ogg",
+	115:	"",
+	116:	"",
+	117:	"sfx/g1_exit.ogg",
+	118:	"sfx/g1hit_ghost.ogg",
+	119:	"sfx/g1hit_grunt.ogg",
+	120:	"sfx/g1hit_grunt.ogg",
+	121:	"sfx/g2_lobshot.ogg",
+	122:	"sfx/g1hit_grunt.ogg",
+	123:	"sfx/g1hit_grunt.ogg",
+	124:	"sfx/g1_deathtouch.ogg",
+	125:	"sfx/g2_pickle.ogg",
+	126:	"sfx/g1fire_wiz.ogg",
+	127:	"sfx/g2an_nwit.ogg",
+	128:	"sfx/g1hit_ghost.ogg",
+	129:	"sfx/g1hit_ghost.ogg",
+	130:	"sfx/g1hit_ghost.ogg",
+	131:	"sfx/g1hit_grunt.ogg",
+	132:	"sfx/g1hit_grunt.ogg",
+	133:	"sfx/g1hit_grunt.ogg",
+	134:	"sfx/g1fire_wiz.ogg",
+	135:	"sfx/g1fire_wiz.ogg",
+	136:	"sfx/g1fire_wiz.ogg",
+	137:	"sfx/g2_lobshot.ogg",
+	138:	"sfx/g2_lobshot.ogg",
+	139:	"sfx/g2_lobshot.ogg",
+/*
+	10:	"",
+	11:	"",
+	12:	"",
+	13:	"",
+	14:	"",
+	15:	"",
+	16:	"",
+	17:	"",
+	18:	"",
+	19:	"",
+*/
 }
 
 var g2auds = map[int]string{
