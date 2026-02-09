@@ -214,8 +214,11 @@ const (
 	SE_CWAL		= 5		// data: flor: sheet, r, (c is wally), xy size		wal: sheet, row, (xy size?)
 	SE_COLRT	= 6		// color tiles under any
 	SE_LETR		= 7		// draw a letter index to map_keymap (as gen hints) in color, as R,G,B, ind
-	SE_MSG		= 8		// write a null term msg (up to 28 hex byts) onto maze in color as R,G,B, {MSG}, 00 
+	SE_MSG		= 8		// write a null term msg (up to 32 hex byts) onto maze in color as R,G,B, {MSG}, 00			test: 0800FFFF5A206973201E00
 						// -- NOT really compatible with any other opcode
+// more:
+// 'item underlay' - put any item under, say a trap wall, or shootable wall so it appears when wall is gone, or even under a dragon, generator or item
+
 )
 // bytes for each cmd
 var parms = []int{
