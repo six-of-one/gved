@@ -217,7 +217,6 @@ func init_buf() {
 	if xubf == nil { xubf = make(map[xy]string) }
 	if cpbuf == nil { cpbuf = make(map[xy]int) }
 	if xcpbuf == nil { xcpbuf = make(map[xy]string) }
-	if xopbf == nil { xopbf = make(map[xy]string) }
 	if plbuf == nil { plbuf = make(map[xy]int) }
 	if xplb == nil { xplb = make(map[xy]string) }
 }
@@ -1147,7 +1146,7 @@ func pb_upd(id string, nt string, vl int) {
 // clear old buf
 	pmx := opts.DimX; pmy := opts.DimY		// preserve these
 	for my := 0; my <= pmy; my++ {
-	for mx := 0; mx <= pmx; mx++ { cpbuf[xy{mx, my}] = 0 }}
+	for mx := 0; mx <= pmx; mx++ { cpbuf[xy{mx, my}] = 0; xcpbuf[xy{mx, my}] = "0" }}
 	fil := fmt.Sprintf(".pb/%s_%07d_g%d.ed",id,vl,opts.Gtp)
 	lod_maz(fil, xcpbuf, cpbuf, false, false)
 	cpx = opts.DimX; cpy = opts.DimY

@@ -378,6 +378,7 @@ fmt.Printf("cc dun: px %d py %d\n",px,py)
 			if pasty {
 // if opts.Verbose {
 fmt.Printf("in pasty\n")
+				setcode = 0; 
 				ex = sx + cpx
 				ey = sy + cpy
 				if ex < 0 || ey < 0 { fmt.Printf("paste fail x\n"); return }
@@ -390,9 +391,9 @@ fmt.Printf("in pasty\n")
 		}}
 // no access for keys: ?, \, C, A #a, eE, L, S, H, V
 // if opts.Verbose {
-mid := g1mapid[valid_id(opbuf[xy{mxmd, mymd}])]
-if G2 { mid = g2mapid[valid_id(opbuf[xy{mxmd, mymd}])] }
-fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",dt,ex,ey,opbuf[xy{ex, ey}],mid)
+mid := g1mapid[valid_id(opbuf[xy{ex, ey}])]
+if G2 { mid = g2mapid[valid_id(opbuf[xy{ex, ey}])] }
+fmt.Printf(" dtec: %.2f maze: %d x %d - element:%d - %s --- XB: %s\n",dt,ex,ey,opbuf[xy{ex, ey}],mid,xopbf[xy{ex, ey}])
 		if mb == 4 && cmdoff {		// middle mb, do a reassign
 			 key_asgn(opbuf, xopbf, ex, ey); sv_config()
 		} else {
@@ -413,13 +414,13 @@ fmt.Printf(" dtec: %f maze: %d x %d - element:%d - %s\n",dt,ex,ey,opbuf[xy{ex, e
 				if shift { delstr = -1 }
 				if del { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = delstr; xopbf[xy{mx, my}] = "0"; opts.bufdrt = true } else {	// delete anything for now makes a floor
 				if pasty { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; xopbf[xy{mx, my}] = xcpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }	// cant use setcode below, it wont set floors
-				if setcode > 0 {
+				if setcode > 0 {						// i think i found the bug where paste doesnt work right
 					undo_buf(mx, my,rcl);
 					if ! shift { opbuf[xy{mx, my}] = setcode; }
 					xopbf[xy{mx, my}] = xstcode;
 					opts.bufdrt = true
 				}
-fmt.Printf("%03d ",opbuf[xy{mx, my}])
+fmt.Printf("%03d ",xopbf[xy{mx, my}])
 				}
 				rcl++
 			}
