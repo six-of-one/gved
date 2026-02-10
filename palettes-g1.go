@@ -797,3 +797,5 @@ var g1elfPalettes = [][]color.Color{
 		IRGB{0x4A8F}, // 15
 	},
 }
+
+// 0800FFFF 4761 756E 746C 6574 20 5061 6C65 7474 65 00

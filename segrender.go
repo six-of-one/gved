@@ -813,8 +813,10 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					if p < 0 {
 						p,q,r = parser(xp, SE_MSG)		// letter, msg mutually exclude
 						if p >= 0 {
+fmt.Printf("parsa %s\n ",xp)
 							for i := 0; i < 32; i++ {
 								if xpar[i] < 130 { if xpar[i] == 0 {break}; c += map_keymap[xpar[i]]; len += 14 }
+fmt.Printf("parsb %02X %s\n ",xpar[i],c)
 							}
 						}
 					} else {
