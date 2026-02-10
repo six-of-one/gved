@@ -437,9 +437,9 @@ fmt.Printf("%d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i])
 				fmt.Sscanf(l,"%s",&fin)
 				xdat[xy{x, y}] = fin
 				if ud { xubf[xy{x, y}] = fin }
-fmt.Printf("%s ",fin)
+	if opts.Verbose { fmt.Printf("%s ",fin) }
 			}
-fmt.Printf("\n")
+	if opts.Verbose { fmt.Printf("\n") }
 		}
 		}
 	} else {
