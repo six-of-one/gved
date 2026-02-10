@@ -356,7 +356,7 @@ func ffMakeMap(maze *Maze) FFMap {
 }
 
 func isforcefield(t int) bool {
-	if t == MAZEOBJ_FORCEFIELDHUB {
+	if t == MAZEOBJ_FORCEFIELDHUB || t == SEOBJ_FORCEFIELDHUB {
 		return true
 	} else {
 		return false
@@ -1223,6 +1223,9 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			case SEOBJ_G2IT:
 				G1 = false
 				stamp = itemGetStamp("it")
+			case SEOBJ_MONST_DRAGON:
+				G1 = false
+				stamp = itemGetStamp("dragon")
 
 			case G1OBJ_MONST_THIEF:
 				stamp = itemGetStamp("thief")
@@ -1245,6 +1248,8 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 
 // if a clear is done after, this SetRGB set bkg somehow
 			case SEOBJ_G2GN_GR1:
+				G1 = false; fallthrough
+			case SEOBJ_G2GN_AUXGR1:
 				G1 = false; fallthrough
 			case G1OBJ_GEN_GRUNT1:
 				gtopl = "G"
@@ -1271,6 +1276,8 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 
 			case SEOBJ_G2GN_GR2:
 				G1 = false; fallthrough
+			case SEOBJ_G2GN_AUXGR2:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_GRUNT2:
 				gtopl = "G"
 				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
@@ -1295,6 +1302,8 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				stamp = itemGetStamp("generator2")
 
 			case SEOBJ_G2GN_GR3:
+				G1 = false; fallthrough
+			case SEOBJ_G2GN_AUXGR3:
 				G1 = false; fallthrough
 			case G1OBJ_GEN_GRUNT3:
 				gtopl = "G"

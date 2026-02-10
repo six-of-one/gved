@@ -50,7 +50,9 @@ func iswall(t int) bool {
 }
 
 func iswallg1(t int) bool {
-	if t == G1OBJ_WALL_REGULAR || t == G1OBJ_WALL_DESTRUCTABLE || t == G1OBJ_WALL_TRAP1 { // || t == MAZEOBJ_FORCEFIELDHUB {
+	if t == G1OBJ_WALL_REGULAR || t == G1OBJ_WALL_DESTRUCTABLE || t == G1OBJ_WALL_TRAP1 ||
+		t == SEOBJ_SECRTWAL || t == SEOBJ_RNDWAL ||
+		t == SEOBJ_WAL_TRAPCYC1 || t == SEOBJ_WAL_TRAPCYC2 || t == SEOBJ_WAL_TRAPCYC3 { // || t == MAZEOBJ_FORCEFIELDHUB {
 		return true
 	} else {
 		return false
