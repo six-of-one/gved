@@ -466,9 +466,9 @@ var maxwf int
 var curwf int
 var wlfl = &walflr{}
 
-// testing cust floor & wall
-var Se_cflr_cnt int
-var Se_cwal_cnt int
+// master wall replace
+var Se_mwal int
+var Se_rwal int
 
 // when map is loaded, store floors & walls as designated in xb_*.ed file after X Y size and before "xwfdn" marker
 
@@ -557,32 +557,10 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 	}} else {
 // tesing Se, xpanded floor
 // testing
-		stdfl := true
-		Se_cflr_cnt++
-		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
-		err, _, ptamp = itemGetPNG(Se_cflr[Se_cflr_cnt])
 		_, _, shtamp := itemGetPNG("gfx/shadows.16.png")		// note error block on this
 		_, _, wtamp = itemGetPNG("gfx/wall_T.16.png")		// note error block on this
-// resizing test
-//		smol := image.NewRGBA(image.Rect(0, 0, ptamp.Bounds().Max.X/2, ptamp.Bounds().Max.Y/2))
-//		draw.BiLinear.Scale(smol, smol.Rect, ptamp, ptamp.Bounds(), draw.Over, nil)
-
-		tw := int(opts.Geow - 4)
-		th := int(opts.Geoh - 30)
-// testing
-// image of an entire floor to writepngtoimage to img
-/// test - REMOVE
-	flim := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
-	if !stdfl {
-		bnds := ptamp.Bounds()
-		iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
-		for ty := 0; ty < th ; ty=ty+ih {
-			for tx := 0; tx < tw ; tx=tx+iw {
-				offset := image.Pt(tx, ty)
-//				draw.Draw(img, smol.Bounds().Add(offset), smol, image.ZP, draw.Over)
-				draw.Draw(flim, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)
-			}}}
-// end testing
+		xp := scanxb(xdat, 0, 0, 0, 0, "")
+		Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
 
 // g1 checks
 	for y := yb; y < ys; y++ {
@@ -614,22 +592,13 @@ fmt.Printf("flim %d\n",p)
 				}}
 			}
 
-//			defshd := "gfx/shadows.16.png"		// default shadows for exp floors, custom wall load has to change this to walls png
 			if sb == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
 			if sb == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
 
-			if (nothing & nwt) == 0 {			// wall shadows here
+			if (nothing & nwt) == 0 {			// std wall shadows here
 				adj = checkwalladj3g1(maze, xdat, x, y)	// this sets adjust for shadows, floorGetStamp sets shadows by darkening floor parts
 			}
-// wall testing
-		  if !stdfl {	// do exp walls shadows
-			// in this test, we already have the wall code in adj from gauntlet test - exp walls edit will need extra test if wall code is diff
-			na := (adj >> 2)		// div 4
-			if na > 0 && wp < 6 {
-				writepngtoimage(img, shtamp, 16,16,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
-			}
-		  }
-// end testing
+
 			stamp := floorGetStamp(fp, adj+rand.Intn(4), fc)
 			if sb < 0 {
 				coltil(img,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// null cell, black tile
@@ -669,11 +638,6 @@ fmt.Printf("flim %d\n",p)
 		}
 	}}
 
-// testing wall exp
-stdwl := true
-Se_cwal_cnt++
-if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
-// end testing
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & g2 draw walls, see screens
 	for y := yb; y <= ys; y++ {
@@ -745,22 +709,18 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 				case G1OBJ_WALL_DESTRUCTABLE:
 					adj, wly := checkwalladj8g1(maze, x, y)
 				if (nothing & NOWALL) == 0 {
-// testing
-		if stdwl {
-// end testing
 					p,q,_ = parser(xp, SE_CWAL)
 					if p >= 0 && p < curwf {
 						stamp = nil
 						writepngtoimage(img, wlfl.wtamp[p], 16,16,wly+26,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					} else {
+					  if Se_mwal >= 0 {
+								stamp = nil
+								writepngtoimage(img, wtamp, 16,16,wly+26,Se_mwal, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
+					  } else {
 						stamp = wallGetDestructableStamp(wp, adj, wc)
+					  }
 					}
-// testing
-		} else {
-					stamp = nil
-					writepngtoimage(img, wtamp, 16,16,wly+26,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
-		}
-// end testing
 				}
 
 				case SEOBJ_SECRTWAL:
@@ -769,7 +729,10 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					p,q,_ = parser(xp, SE_CWAL)
 					if p >= 0 && p < curwf {
 						stamp = nil
-						wlt := AdjustHue(wlfl.wtamp[p], 1.0)
+						wlt := wlfl.wtamp[p]
+						if !opts.Nosec {
+							wlt = AdjustHue(wlfl.wtamp[p], 31.0)
+						}
 						writepngtoimage(img, wlt, 16,16,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					} else {
 						stamp = wallGetStamp(wp, adj, wc)
@@ -796,22 +759,18 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 				case G1OBJ_WALL_REGULAR:
 					adj, wly := checkwalladj8g1(maze, x, y)
 					if (nothing & nwt) == 0 {
-// testing
-		if stdwl {
-// end testing
 					p,q,_ = parser(xp, SE_CWAL)
 					if p >= 0 && p < curwf {
 						stamp = nil
 						writepngtoimage(img, wlfl.wtamp[p], 16,16,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					} else {
+					  if Se_mwal >= 0 {
+								stamp = nil
+								writepngtoimage(img, wtamp, 16,16,wly,Se_mwal, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					  } else {
 						stamp = wallGetStamp(wp, adj, wc)
+					  }
 					}
-// testing
-		} else {
-						stamp = nil
-						writepngtoimage(img, wtamp, 16,16,wly,Se_cwal_cnt, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
-		}
-// end testing
 				}
 // test of some items not place in mazes - place in empty floor tile @random
 				case SEOBJ_FLOOR:

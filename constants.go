@@ -1101,6 +1101,7 @@ var sanct_vrt2 = []int{
 }
 
 // sanctuary custom floor tests
+//		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 
 var Se_cflr = map[int]string{
 

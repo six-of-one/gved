@@ -67,8 +67,7 @@ viewport
 - floor draw (floor gets redrawn with rnd shift every move)
 * xb editing can enter floor vals & like causing crashes - all data needs bounded when calling render code
   \_ bounding is done, needs tested
-- cust floor doesnt "move" with maze, nor do ff beams
-- cust floors have no wall shadows, except in test
+* cust floor doesnt "move" with maze - fix, but loop over issues exist
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
@@ -78,6 +77,7 @@ possible:
 - way using sprites to demo half transparent paste content over maze
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 - more keys for dialog win to still operate main win (stats, etc)
+- thinking about from stdwl test to a 'master wall replace' that takes all std walls to some custom wall
 
 config ideas:
 - master pb ctrl-f filter selections
