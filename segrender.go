@@ -558,8 +558,8 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 	}} else {
 // tesing Se, xpanded floor
 // testing
-		_, _, shtamp := itemGetPNG("gfx/shadows.16.png")		// note error block on this
-		_, _, wtamp = itemGetPNG("gfx/wall_T.16.png")		// note error block on this
+		_, _, shtamp := itemGetPNG("gfx/shadows.16.png")		// no error block on this
+		_, _, wtamp = itemGetPNG("gfx/wall_bkgs.b.png")			// master wall replace def
 		xp := scanxb(xdat, 0, 0, 0, 0, "")
 		Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
 		Se_mflor, _,_ = parser(xp, SE_MFLR)
@@ -567,7 +567,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		flim := blankimage(16, 16)
 		if Se_mflor >= 0 {
 			err, _, ptamp = itemGetPNG(Se_cflr[Se_mflor])
-			if err != nil {
+			if err == nil {
 				flim = blankimage(opts.DimX*16, opts.DimY*16)
 				bnds := ptamp.Bounds()
 				iw, ih := bnds.Dx(), bnds.Dy()		  // in theory this image does not HAVE to be square anymore
@@ -635,7 +635,7 @@ fmt.Printf("flim %d\n",p)
 					writepngtoimage(img, wlfl.flim[p2], 16,16,x,y, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 				if p2 < 0 && p < 0 {
-				if Se_mwal >= 0 {
+				if Se_mflor >= 0 {
 					stamp = nil
 					writepngtoimage(img, flim, 16,16,x,y, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// master floor replace SE_MFLR
 				 } else {

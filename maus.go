@@ -417,7 +417,7 @@ fmt.Printf(" dtec: %.2f maze: %d x %d - element:%d - %s --- XB: %s\n",dt,ex,ey,o
 				if setcode > 0 {						// i think i found the bug where paste doesnt work right
 					undo_buf(mx, my,rcl);
 					if ! shift { opbuf[xy{mx, my}] = setcode; }
-					xopbf[xy{mx, my}] = xstcode;
+					if ! ctrl { xopbf[xy{mx, my}] = xstcode; }
 					opts.bufdrt = true
 				}
 fmt.Printf("%03d ",xopbf[xy{mx, my}])

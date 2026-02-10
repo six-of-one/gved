@@ -224,7 +224,7 @@ const (
 )
 // bytes for each cmd
 var parms = []int{
-	0, 2, 2, 0, 1, 2, 3, 4, 36, 0, 2, 0,
+	0, 2, 2, 0, 1, 2, 3, 4, 36, 0, 2, 1, 0,
 }
 var secmd [64]int
 var lastst string
