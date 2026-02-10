@@ -322,7 +322,7 @@ func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
 		nx := x + (d.x * i)
 		ny := y + (d.y * i)
 
-		if isforcefield(maze.data[xy{nx, ny}]) {
+		if isforcefield(scanbuf(maze.data, nx, ny, nx, ny, -2)) {		// maze.data[xy{nx, ny}]) {
 			// done with this direction
 			return
 		}
@@ -544,7 +544,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				if nothing & NOTRAP == 0 {
 					stamp.ptype = "forcefield"
 					stamp.pnum = 0
-					writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+//					writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 			}
 			if scanbuf(maze.data, x, y, x, y, -2) < 0 {		// dont floor a null area
@@ -606,7 +606,7 @@ fmt.Printf("flim %d\n",p)
 				wlfl.flrblt[p] = true
 				bnds := wlfl.ftamp[p].Bounds()
 				iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
-				wlfl.flim[p] = blankimage(8*2*(xs-xb), 8*2*(ys-yb))
+				wlfl.flim[p] = blankimage(opts.DimX*16, opts.DimY*16)
 				for ty := 0; ty < (opts.DimY*16) ; ty=ty+ih {
 				for tx := 0; tx < (opts.DimX*16) ; tx=tx+iw {
 					offset := image.Pt(tx, ty)
@@ -632,8 +632,9 @@ fmt.Printf("flim %d\n",p)
 // end testing
 			stamp := floorGetStamp(fp, adj+rand.Intn(4), fc)
 			if sb < 0 {
-				coltil(img,0,(x-xb)*16, (y-yb)*16)
-			} else {
+				coltil(img,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+			}
+			if sb >= 0 {
 			if (nothing & NOFLOOR) == 0 {
 				var r int
 				p,q,r = parser(xp, SE_COLRT)
@@ -653,6 +654,14 @@ fmt.Printf("flim %d\n",p)
 				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 		  }}
 			}}
+			if ffmap[xy{vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16}] {		// are we on a forcefield beam area
+				if nothing & NOTRAP == 0 {
+					stamp.ptype = "forcefield"								// this is writter over: void tiles, color tiles, cust floor
+					stamp.pnum = 0
+					writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				}
+			}
+
 // testing
 //			coltil(img,0x770077,(x-xb)*16, (y-yb)*16)
 		}
