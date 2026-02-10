@@ -251,7 +251,7 @@ func st_menu() {
 //	menuItemTmap := fyne.NewMenuItem("Map++ test",func() { map_test() })
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
 	menuItemGvs := fyne.NewMenuItem("Gaunlet view sim toggle",func() { gvs = !gvs })
-	menuItemNosec := fyne.NewMenuItem("Dont show secret walls toggle",func() { opts.Nosec = !opts.Nosec })
+	menuItemNosec := fyne.NewMenuItem("Dont show secret walls toggle",func() { opts.Nosec = !opts.Nosec; remaze(opts.mnum) })
 	menuItemWob := fyne.NewMenuItem("Wall border right & bottom",func() { opts.Wob = !opts.Wob; remaze(opts.mnum) })
 	menuItemPalf := fyne.NewMenuItem("Palette; map decore toggle",func() { if wpalop {palfol = !palfol}; palete(0) })
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
