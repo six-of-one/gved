@@ -844,7 +844,7 @@ if opts.Verbose { fmt.Printf("\n") }
 			xp := scanxb(xdat, x, y, x, y, "")
 			gt := G1
 			p,_,_ := parser(xp, SE_G2)			// turn off G1 if G2 selected for a cell
-			if p == 1 { gt = false }
+			if p == 1 { G1 = false }
 
 // gen type op - letter to draw
 			gtopl := ""
@@ -862,7 +862,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 
 			// We should do better
 			switch whatis(maze, x, y) {
-// specials are jammed in somewhere in G2 code, we just do this
+	// specials are jammed in somewhere in G2 code, we just do this
 			case 70:
 				stamp = itemGetStamp("speedpotion")
 			case 71:
@@ -1081,14 +1081,13 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			case G1OBJ_TILE_FLOOR:
 			// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
 			// stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
-/*
-// dont think g1 has stun tile
-			case G1OBJ_TILE_STUN:
+
+			case SEOBJ_STUN:
 				adj := checkwalladj3g1(maze, x, y) + rand.Intn(4)
 				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 				stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
-*/
+
 			case SEOBJ_TILE_TRAP1:
 					fallthrough
 			case G1OBJ_TILE_TRAP1:
@@ -1109,9 +1108,13 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			case G1OBJ_KEY:
 				stamp = itemGetStamp("key")
 
+			case SEOBJ_DOOR_H:
+				G1 = false; fallthrough
 			case G1OBJ_DOOR_HORIZ:
 				adj := checkdooradj4g1(maze, x, y)
 				stamp = doorGetStamp(DOOR_HORIZ, adj)
+			case SEOBJ_DOOR_V:
+				G1 = false; fallthrough
 			case G1OBJ_DOOR_VERT:
 				adj := checkdooradj4g1(maze, x, y)
 				stamp = doorGetStamp(DOOR_VERT, adj)
@@ -1123,6 +1126,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			case G1OBJ_EXIT4:
 				stamp = itemGetStamp("exit4")
 			case SEOBJ_EXIT6:
+				G1 = false
 				stamp = itemGetStamp("exit6")
 			case G1OBJ_EXIT8:
 				stamp = itemGetStamp("exit8")
@@ -1262,8 +1266,10 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			if scanbuf(maze.data, x, y, x, y, -2) > 0 && stamp != nil { g1mask[scanbuf(maze.data, x, y, x, y, -2)] = stamp.mask }
 		}
 // Six: end G1 decode
+// if !G1 { fmt.Printf("stamp # %d - p: %s\n",scanbuf(maze.data, x, y, x, y, -2),stamp.ptype)}
 			if stamp != nil {
-				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
+// note G1 here, opposite of other writes using gt - here gt preserves true G1 state due to complex tile rom extract and pallet select
+				writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
 // stats on palette
 				if stat {			// on palette screen, show stats for loaded maze
 					st := ""
@@ -1310,6 +1316,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			if dots != 0 && nothing & NOWALL == 0 {
 				renderdots(img, (x-xb)*16, (y-yb)*16, dots)
 			}
+			G1 = gt			// restore G1 for any SE using g2 turning it off
 		}
 	}
 

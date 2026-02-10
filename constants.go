@@ -143,9 +143,9 @@ const (
 	SEOBJ_SECRTWAL				= 104
 // 5 is g2 destruct wall
 	SEOBJ_RNDWAL				= 106
-	SEOBJ_WAL_TRAPCYC1				= 107		// g2 trap & cycle walls
-	SEOBJ_WAL_TRAPCYC2				= 108
-	SEOBJ_WAL_TRAPCYC3				= 109
+	SEOBJ_WAL_TRAPCYC1			= 107		// g2 trap & cycle walls
+	SEOBJ_WAL_TRAPCYC2			= 108
+	SEOBJ_WAL_TRAPCYC3			= 109
 	SEOBJ_TILE_TRAP1			= 110
 	SEOBJ_TILE_TRAP2			= 111
 	SEOBJ_TILE_TRAP3			= 112
