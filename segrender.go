@@ -605,9 +605,11 @@ fmt.Printf("flim %d\n",p)
 				wlfl.flrblt[p] = true
 				bnds := wlfl.ftamp[p].Bounds()
 				iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
-				wlfl.flim[p] = blankimage(opts.DimX*16, opts.DimY*16)
-				for ty := 0; ty < (opts.DimY*16) ; ty=ty+ih {
-				for tx := 0; tx < (opts.DimX*16) ; tx=tx+iw {
+				totw :=  int(math.Ceil(opts.Geow/float64(iw))) * iw		// round up so images not divinding easily into maze size cover entire maze
+				toth :=  int(math.Ceil(opts.Geoh/float64(ih))) * ih
+				wlfl.flim[p] = blankimage(totw, toth)
+				for ty := 0; ty < toth ; ty=ty+ih {
+				for tx := 0; tx < totw ; tx=tx+iw {
 					offset := image.Pt(tx, ty)
 					draw.Draw(wlfl.flim[p], wlfl.ftamp[p].Bounds().Add(offset), wlfl.ftamp[p], image.ZP, draw.Over)
 				}}
@@ -636,12 +638,12 @@ fmt.Printf("flim %d\n",p)
 				}
 				p2,_,_ := parser(xp, SE_CFLOR)
 				if p2 >= 0 && p2 < curwf {			// cust floor from png - laded by lod_maz from xb file
-					writepngtoimage(img, wlfl.flim[p2], 16,16,x,y, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writepngtoimage(img, wlfl.flim[p2], 16,16,vcoord(x,xb,xba), vcoord(y,yb,yba), (x+xba)*16, (y+yba)*16)
 				}
 				if p2 < 0 && p < 0 {
 				if Se_mflor >= 0 {
 					stamp = nil
-					writepngtoimage(img, flim, 16,16,x,y, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// master floor replace SE_MFLR
+					writepngtoimage(img, flim, 16,16,vcoord(x,xb,xba), vcoord(y,yb,yba), vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// master floor replace SE_MFLR
 				 } else {
 					writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// g1 floors & overrides SE_FLOR
 				}}
