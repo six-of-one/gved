@@ -36,6 +36,7 @@ var opts struct {
 	Aob		bool   `long:"ab" description:"arrow border around outer wall"`
 	Wob		bool   `long:"wb" description:"extra walls border maze right and bottom"`
 	Nogtop	bool   `long:"ngt" description:"no generator indicate letter"`
+	Nosec	bool   `long:"nsec" description:"no secret walls shown"`
 // cli option to force an address (originally for g2 force)
 	Addr	int    `long:"ad" default:"0" base:"16" description:"load maze rom address x38000 to x3FFFF (in hex)"`
 // cli option to use rev 14 maze roms (final release, differs from identical maze roms in r1 - r9)

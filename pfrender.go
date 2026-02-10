@@ -284,8 +284,10 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
 					adj := checkwalladj8(maze, x, y)
 				if (nothing & NOWALL) == 0 {
 					stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
-					stamp.ptype = "secret"
-					stamp.pnum = 0
+					if !opts.Nosec {
+						stamp.ptype = "secret"
+						stamp.pnum = 0
+					}
 				}
 				case MAZEOBJ_WALL_TRAPCYC1:
 					dots = 1

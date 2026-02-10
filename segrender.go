@@ -689,8 +689,10 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 					adj := checkwalladj8(maze, x, y)
 				if (nothing & NOWALL) == 0 {
 					stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
-					stamp.ptype = "secret"
-					stamp.pnum = 0
+					if !opts.Nosec {
+						stamp.ptype = "secret"
+						stamp.pnum = 0
+					}
 				}
 				case MAZEOBJ_WALL_TRAPCYC1:
 					dots = 1
@@ -751,6 +753,22 @@ if Se_cwal_cnt > 7 { Se_cwal_cnt = 1 }
 // end testing
 				}
 
+				case SEOBJ_SECRTWAL:
+					adj, wly := checkwalladj8g1(maze, x, y)
+				if (nothing & NOWALL) == 0 {
+					p,q,_ = parser(xp, SE_CWAL)
+					if p >= 0 && p < curwf {
+						stamp = nil
+						wlt := AdjustHue(wlfl.wtamp[p], 1.0)
+						writepngtoimage(img, wlt, 16,16,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					} else {
+						stamp = wallGetStamp(wp, adj, wc)
+						if !opts.Nosec {
+							stamp.ptype = "secret"
+							stamp.pnum = 0
+						}
+					}
+				}
 				case G1OBJ_WALL_TRAP1:
 					fallthrough
 				case SEOBJ_WAL_TRAPCYC1:
@@ -1089,7 +1107,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				stamp.pnum = 0
 
 			case SEOBJ_TILE_TRAP1:
-					fallthrough
+				fallthrough
 			case G1OBJ_TILE_TRAP1:
 				dots = 1
 				fallthrough
@@ -1105,6 +1123,9 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 					stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
 					stamp.pnum = 0
 				}
+			case SEOBJ_PUSHWAL:
+				G1 = false
+				stamp = itemGetStamp("pushwall")
 			case G1OBJ_KEY:
 				stamp = itemGetStamp("key")
 
