@@ -842,9 +842,9 @@ if opts.Verbose { fmt.Printf("\n") }
 			ptamp = nil
 
 			xp := scanxb(xdat, x, y, x, y, "")
-			gt := G1
+			gtp := G1
 			p,_,_ := parser(xp, SE_G2)			// turn off G1 if G2 selected for a cell
-			if p == 1 { G1 = false }
+			if p == 1 { G1 = false }			// have to literally false G1, gtp preserves state in loop
 
 // gen type op - letter to draw
 			gtopl := ""
@@ -1083,7 +1083,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			// stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 
 			case SEOBJ_STUN:
-				adj := checkwalladj3g1(maze, x, y) + rand.Intn(4)
+				adj := checkwalladj3g1(maze, xdat, x, y) + rand.Intn(4)
 				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 				stamp.ptype = "stun" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
@@ -1316,7 +1316,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			if dots != 0 && nothing & NOWALL == 0 {
 				renderdots(img, (x-xb)*16, (y-yb)*16, dots)
 			}
-			G1 = gt			// restore G1 for any SE using g2 turning it off
+			G1 = gtp			// restore G1 for any SE using g2 turning it off
 		}
 	}
 
