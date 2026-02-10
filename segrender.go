@@ -3,6 +3,7 @@ package main
 import (
 	"image"
 //	"image/png"
+	"math"
 	"math/rand"
 	"fmt"
 //	"image/draw"
@@ -568,11 +569,14 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		if Se_mflor >= 0 {
 			err, _, ptamp = itemGetPNG(Se_cflr[Se_mflor])
 			if err == nil {
-				flim = blankimage((opts.DimX+10)*16, (opts.DimY+10)*16)
 				bnds := ptamp.Bounds()
 				iw, ih := bnds.Dx(), bnds.Dy()		  // in theory this image does not HAVE to be square anymore
-				for ty := 0; ty < (opts.DimY*16) ; ty=ty+ih {
-						for tx := 0; tx < (opts.DimX*16) ; tx=tx+iw {
+				totw :=  int(math.Ceil(opts.Geow/float64(iw))) * iw		// round up so images not divinding easily into maze size cover entire maze
+				toth :=  int(math.Ceil(opts.Geoh/float64(ih))) * ih
+				flim = blankimage(totw, toth)
+
+				for ty := 0; ty < toth ; ty=ty+ih {
+						for tx := 0; tx < totw ; tx=tx+iw {
 							offset := image.Pt(tx, ty)
 							draw.Draw(flim, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)	// floor image
 					   }}
