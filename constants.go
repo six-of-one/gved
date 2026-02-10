@@ -97,7 +97,6 @@ const (
 	G1OBJ_MONST_SORC2 = 22
 	G1OBJ_MONST_SORC3 = 23
 	G1OBJ_MONST_DEATH = 24
-	G1OBJ_MONST_THIEF = 65
 	G1OBJ_GEN_GHOST1 = 25
 	G1OBJ_GEN_GHOST2 = 26
 	G1OBJ_GEN_GHOST3 = 27
@@ -132,6 +131,7 @@ const (
 	G1OBJ_TRANSPORTER = 59
 	G1OBJ_TILE_STUN = 62
 	G1OBJ_TREASURE_BAG = 64
+	G1OBJ_MONST_THIEF = 65
 	G1OBJ_EXTEND				= 66
 	G1OBJ_WIZARD				= 67
 	GORO_TEST					= 70
@@ -176,6 +176,33 @@ const (
 	SEOBJ_G2GN_LB1				= 137
 	SEOBJ_G2GN_LB2				= 138
 	SEOBJ_G2GN_LB3				= 139
+	SEOBJ_G2GN_SORC1			= 140
+	SEOBJ_G2GN_SORC2			= 141
+	SEOBJ_G2GN_SORC3			= 142
+	SEOBJ_G2GN_AUXGR1			= 143
+	SEOBJ_G2GN_AUXGR2			= 144
+	SEOBJ_G2GN_AUXGR3			= 145
+// g2 treasure
+	SEOBJ_TREASURE_LOCKED		= 147
+// g2 treasure bag
+// g2 food destr
+// g2 food inv
+// g2 pot
+// g2 pot inv
+// g2 key				153
+// g2 power invis
+	SEOBJ_POWER_REPULSE		= 155
+	SEOBJ_POWER_REFLECT		= 156
+	SEOBJ_POWER_TRANSPORT		= 157
+	SEOBJ_POWER_SUPERSHOT		= 158
+	SEOBJ_POWER_INVULN		= 159
+	SEOBJ_MONST_DRAGON		= 160
+// g2 hidden potion
+// g2 transport
+	SEOBJ_FORCEFIELDHUB		= 163
+	SEOBJ_MONST_MUGGER		= 164
+// g2 thief
+// extend
 )
 // contrl var nothing [ no-thing ] that blocks elements display
 const (
@@ -344,6 +371,33 @@ var g1mapid = map[int]string{
 	137:	"SE_G2GN_LB1",
 	138:	"SE_G2GN_LB2",
 	139:	"SE_G2GN_LB3",
+	140:	"SEOBJ_G2GN_SORC1",
+	141:	"SEOBJ_G2GN_SORC2",
+	142:	"SEOBJ_G2GN_SORC3",
+	143:	"SEOBJ_G2GN_AUXGR1",
+	144:	"SEOBJ_G2GN_AUXGR2",
+	145:	"SEOBJ_G2GN_AUXGR3",
+	146:	"No_thing_146",
+	147:	"SEOBJ_TREASURE_LOCKED",
+	148:	"No_thing_148",
+	149:	"No_thing_149",
+	150:	"No_thing_150",
+	151:	"No_thing_151",
+	152:	"No_thing_152",
+	153:	"No_thing_153",
+	154:	"No_thing_154",
+	155:	"SEOBJ_POWER_REPULSE",
+	156:	"SEOBJ_POWER_REFLECT",
+	157:	"SEOBJ_POWER_TRANSPORT",
+	158:	"SEOBJ_POWER_SUPERSHOT",
+	159:	"SEOBJ_POWER_INVULN",
+	160:	"SEOBJ_MONST_DRAGON",
+	161:	"No_thing_161",
+	162:	"No_thing_162",
+	163:	"SEOBJ_FORCEFIELDHUB",
+	164:	"SEOBJ_MONST_MUGGER",
+	165:	"No_thing_165",
+	166:	"No_thing_166",
 /*
 	10:	"No_thing_10",
 	11:	"No_thing_11",
@@ -571,6 +625,33 @@ var g1auds = map[int]string{
 	137:	"sfx/g2_lobshot.ogg",
 	138:	"sfx/g2_lobshot.ogg",
 	139:	"sfx/g2_lobshot.ogg",
+	140:	"sfx/sorc.ogg",
+	141:	"sfx/sorc.ogg",
+	142:	"sfx/sorc.ogg",
+	143:	"sfx/g1hit_grunt.ogg",
+	144:	"sfx/g1hit_grunt.ogg",
+	145:	"sfx/g1hit_grunt.ogg",
+	146:	"",
+	147:	"sfx/g2_unlkchest.ogg",
+	148:	"",
+	149:	"",
+	150:	"",
+	151:	"",
+	152:	"",
+	153:	"",
+	154:	"",
+	155:	"sfx/g1_potionpick.ogg",
+	156:	"sfx/g2_bouncshot.ogg",
+	157:	"sfx/g1_teleport.ogg",
+	158:	"sfx/g1fire_wiz.ogg",
+	159:	"sfx/g1_potionpick.ogg",
+	160:	"sfx/g2_drag.ogg",
+	161:	"",
+	162:	"",
+	163:	"sfx/g2_ffield.ogg",
+	164:	"sfx/g2mug_appr.ogg",
+	165:	"",
+	166:	"",
 /*
 	10:	"",
 	11:	"",
