@@ -1156,54 +1156,85 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				stamp = itemGetStamp("ghost1")
 			case G1OBJ_MONST_GHOST2:
 				stamp = itemGetStamp("ghost2")
+			case SEOBJ_G2GHOST:
+				G1 = false; fallthrough
 			case G1OBJ_MONST_GHOST3:
 				stamp = itemGetStamp("ghost")
 			case G1OBJ_MONST_GRUNT1:
 				stamp = itemGetStamp("grunt1")
 			case G1OBJ_MONST_GRUNT2:
 				stamp = itemGetStamp("grunt2")
+			case SEOBJ_G2GRUNT:
+				G1 = false; fallthrough
 			case G1OBJ_MONST_GRUNT3:
 				stamp = itemGetStamp("grunt")
 			case G1OBJ_MONST_DEMON1:
 				stamp = itemGetStamp("demon1")
 			case G1OBJ_MONST_DEMON2:
 				stamp = itemGetStamp("demon2")
+			case SEOBJ_G2DEMON:
+				G1 = false; fallthrough
 			case G1OBJ_MONST_DEMON3:
 				stamp = itemGetStamp("demon")
 			case G1OBJ_MONST_LOBBER1:
 				stamp = itemGetStamp("lobber1")
 			case G1OBJ_MONST_LOBBER2:
 				stamp = itemGetStamp("lobber2")
+			case SEOBJ_G2LOBER:
+				G1 = false; fallthrough
 			case G1OBJ_MONST_LOBBER3:
 				stamp = itemGetStamp("lobber")
 			case G1OBJ_MONST_SORC1:
 				stamp = itemGetStamp("sorcerer1")
 			case G1OBJ_MONST_SORC2:
 				stamp = itemGetStamp("sorcerer2")
+			case SEOBJ_G2SORC:
+				G1 = false; fallthrough
 			case G1OBJ_MONST_SORC3:
 				stamp = itemGetStamp("sorcerer")
 			case G1OBJ_MONST_DEATH:
 				stamp = itemGetStamp("death")
+			case SEOBJ_G2ACID:
+				G1 = false
+				stamp = itemGetStamp("acid")
+			case SEOBJ_G2SUPSORC:
+				G1 = false
+				stamp = itemGetStamp("supersorc")
+			case SEOBJ_G2IT:
+				G1 = false
+				stamp = itemGetStamp("it")
 
 			case G1OBJ_MONST_THIEF:
 				stamp = itemGetStamp("thief")
 
+			case SEOBJ_G2GN_GST1:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_GHOST1:
 				stamp = itemGetStamp("ghostgen1")
+			case SEOBJ_G2GN_GST2:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_GHOST2:
 				stamp = itemGetStamp("ghostgen2")
+			case SEOBJ_G2GN_GST3:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_GHOST3:
 				stamp = itemGetStamp("ghostgen3")
 
 // if a clear is done after, this SetRGB set bkg somehow
+			case SEOBJ_G2GN_GR1:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_GRUNT1:
 				gtopl = "G"
 				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
 				stamp = itemGetStamp("generator1")
+			case SEOBJ_G2GN_DM1:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_DEMON1:
 				gtopl = "D"
 				if gtopcol { gtop.SetRGB(1, 0, 0) }
 				stamp = itemGetStamp("generator1")
+			case SEOBJ_G2GN_LB1:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_LOBBER1:
 				gtopl = "L"
 				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
@@ -1213,14 +1244,20 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
 				stamp = itemGetStamp("generator1")
 
+			case SEOBJ_G2GN_GR2:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_GRUNT2:
 				gtopl = "G"
 				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
 				stamp = itemGetStamp("generator2")
+			case SEOBJ_G2GN_DM2:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_DEMON2:
 				gtopl = "D"
 				if gtopcol { gtop.SetRGB(1, 0, 0) }
 				stamp = itemGetStamp("generator2")
+			case SEOBJ_G2GN_LB2:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_LOBBER2:
 				gtopl = "L"
 				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
@@ -1230,14 +1267,20 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
 				stamp = itemGetStamp("generator2")
 
+			case SEOBJ_G2GN_GR3:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_GRUNT3:
 				gtopl = "G"
 				if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
 				stamp = itemGetStamp("generator3")
+			case SEOBJ_G2GN_DM3:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_DEMON3:
 				gtopl = "D"
 				if gtopcol { gtop.SetRGB(1, 0, 0) }
 				stamp = itemGetStamp("generator3")
+			case SEOBJ_G2GN_LB3:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_LOBBER3:
 				gtopl = "L"
 				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
