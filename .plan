@@ -65,7 +65,10 @@ issues needing fixed
   \_ this still occasionally happens and it might be paste getting turned off or ignored somehow
 viewport
 - floor draw (floor gets redrawn with rnd shift every move)
-- xb editing can enter floor vals & like causing crashes - all data needs bounded when calling render code
+* xb editing can enter floor vals & like causing crashes - all data needs bounded when calling render code
+  \_ bounding is done, needs tested
+- cust floor doesnt "move" with maze, nor do ff beams
+- cust floors have no wall shadows, except in test
 
 possible:
 - down the line .ed stored maz# could be used to set maz num

@@ -646,26 +646,23 @@ fmt.Printf("flim %d\n",p)
 				}
 				p,_,_ = parser(xp, SE_CFLOR)
 				if p >= 0 && p < curwf {			// cust floor from png - laded by lod_maz from xb file
-					writepngtoimage(img, wlfl.flim[p], 16,16,vcoord(x,xb,xba),vcoord(y,yb,yba), vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writepngtoimage(img, wlfl.flim[p], 16,16,x,y, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 				if p < 0 && cl < 1 {
 // exp floor test, turn this off for sd mazes/ edits
 		  if stdfl || xp != "0" {	// do std floor stamps
 				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
-		  }}
+		  }
 			}}
-			if ffmap[xy{vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16}] {		// are we on a forcefield beam area
+			if ffmap[xy{x,y}] {		// are we on a forcefield beam area
 				if nothing & NOTRAP == 0 {
+//fmt.Printf("ffbeam %d x %d, vc: %d x %d\n ",x,y,vcoord(x,xb,xba), vcoord(y,yb,yba))
 					stamp.ptype = "forcefield"								// this is writter over: void tiles, color tiles, cust floor
 					stamp.pnum = 0
 					writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 			}
-
-// testing
-//			coltil(img,0x770077,(x-xb)*16, (y-yb)*16)
 		}
-
 	}}
 
 // testing wall exp
@@ -1169,6 +1166,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				stamp = itemGetStamp("plusg1")
 			case G1OBJ_EXIT:
 				stamp = itemGetStamp("exitg1")
+//fmt.Printf("g1exit %d x %d, vc: %d x %d\n ",x,y,vcoord(x,xb,xba), vcoord(y,yb,yba))
 			case G1OBJ_EXIT4:
 				stamp = itemGetStamp("exit4")
 			case SEOBJ_EXIT6:
