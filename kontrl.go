@@ -344,7 +344,7 @@ fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 		case 67:		// C
 				cycl++
 				if cycl > maxid() { cycl = 0 }
-				if cycl < 1 { cycl = 64 }		// cause 'c' falls thru here
+				if cycl < 1 { cycl = maxid() }		// cause 'c' falls thru here
 				kys := "n/a"
 				if G1 {
 					g1edit_keymap[cycloc] = cycl

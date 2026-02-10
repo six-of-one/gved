@@ -971,7 +971,7 @@ func suprval(wp,wc,fp,fc int) (int,int,int,int) {
 }
 
 // valid check, mapid
-var g1maxid = 139
+var g1maxid = 166
 var g2maxid = 66
 
 func maxid() int {
