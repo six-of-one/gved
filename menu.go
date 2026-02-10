@@ -285,7 +285,7 @@ func st_menu() {
 		} else {
 			strp = "View mode: cmd keys only"
 		}
-		dboxtx("Edit hints", strp+"\n══════════════════════════════\nSave - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for g1/g2\n - and ### is the maze number e.g. 003\n"+
+		dboxtx("Edit hints", strp+"\n══════════════════════════════\nSave - store buffer in file .ed/g{#}maze{###}.ed\n - where g# is 1 or 2 for G¹/G²\n - and ### is the maze number e.g. 003\n"+
 			"\nLoad - overwrite current file contents this maze\n\nReset - reload buffer from rom read\n\nedit keys:\nESC: turn editor on, init maze store in .ed/\n"+
 			"ESC:	turn editor off, check unsaved buf\n\\	┈ toggle edit keys / command keys\n"+
 			"del	┈ set floor\nctrl-del - sticky delete\nC: cycle edit item #++, c: cycle item #-- *\n#c enter number {1-64}c, all set place item *\n"+
@@ -550,8 +550,8 @@ func keyhints() {
 	}
 	strp += "\nA	┈ toggle a override"+
 			"\n{n}a	┈ numeric of valid maze"+
-			"\n - load maze 1 - 127 g1"+
-			"\n - load maze 1 - 117 g2"+
+			"\n - load maze 1 - 127 G¹"+
+			"\n - load maze 1 - 117 G²"+
 			"\n - load address 229376 - 262143 "+
 			"\n–—–—–—–—–—–—–—–—–—–—–—"
 /*	strb := fmt.Sprintf("\nG%d ",opts.Gtp)

@@ -826,7 +826,7 @@ func palRune(r rune) {
 		case 't': fallthrough
 		case 'T': hide_flags(palRune)
 		case 'f': fallthrough
-		case 'F': dboxtx("G2 maze flags","     Gauntlet 2 flags                hex value        bit pos\n"+
+		case 'F': dboxtx("G² maze flags","     Gauntlet 2 flags                hex value        bit pos\n"+
 						"ODDANGLE_GHOSTS	= 0x01000000 - 00000001\n"+
 						"ODDANGLE_GRUNTS	= 0x02000000 - 00000010\n"+
 						"ODDANGLE_DEMONS	= 0x04000000 - 00000100\n"+
@@ -863,7 +863,7 @@ func palRune(r rune) {
 						"flag math is binary 'or' \"|\" together\n"+
 						"bit position is within byte of that flag portion",420,744,nil,palRune)
 		case 'x': fallthrough
-		case 'X': dboxtx("G2 secret tricks","     Gauntlet 2 secret room tricks\n"+
+		case 'X': dboxtx("G² secret tricks","     Gauntlet 2 secret room tricks\n"+
 						"NONE 		= 0x00  \"No trick\"\n"+
 						"TRANSPORT1 	= 0x01  \"Try Transportability (onto death)\"\n"+
 						"TRANSPORT2	= 0x02  \"Try Transportability (onto death)\"\n"+
@@ -916,8 +916,8 @@ dboxtx("T hide flags", "in gved main window:\n\n"+
 		"NOEXP	= 128		// exit, push wall\n"+
 		"NOTHN	= 256		// anything else left\n"+
 		"NOFLOOR	= 512\n"+
-		"NOWALL	= 1024	// g2 *walls\n"+
-		"NOG1W	= 2048	// g1 std wall only\n\n"+
+		"NOWALL	= 1024	// G² *walls\n"+
+		"NOG1W	= 2048	// G¹ std wall only\n\n"+
 		"set # with:\nBlank maze (file menu)\n- keep items flags cover\n\n"+
 		"Random profile load\n- only load items flags cover"+
 		"\n\n* T hide items disabled when edit keys active",440,700,nil,sr)
@@ -1147,7 +1147,7 @@ var cpy int
 // roll thru pb
 var masbcnt int		// run thru master pb
 var sesbcnt int		// run thru local ses pb
-var lg1cnt int		// ses pb save for g1 maps
+var lg1cnt int		// ses pb save for G¹ maps
 var lg2cnt int		// ses pb save for g2 maps
 
 // i've discovered a 'local' in function version of these will crash, this prob needs to be a struct
