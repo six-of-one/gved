@@ -62,7 +62,7 @@ func iswallg1(t int) bool {
 
 // Is it a floor tile of some type (or similar)
 func isspecialfloor(t int) bool {
-	if t == MAZEOBJ_TILE_STUN || t == MAZEOBJ_TILE_TRAP1 || t == MAZEOBJ_TILE_TRAP2 || t == MAZEOBJ_TILE_TRAP3 || t == MAZEOBJ_EXIT || t == MAZEOBJ_EXITTO6 || t == MAZEOBJ_TRANSPORTER
+	if t == MAZEOBJ_TILE_STUN || t == MAZEOBJ_TILE_TRAP1 || t == MAZEOBJ_TILE_TRAP2 || t == MAZEOBJ_TILE_TRAP3 || t == MAZEOBJ_EXIT || t == MAZEOBJ_EXITTO6 || t == MAZEOBJ_TRANSPORTER ||
 		t == SEOBJ_STUN || t == SEOBJ_TILE_TRAP1 || t == SEOBJ_TILE_TRAP2 || t == SEOBJ_TILE_TRAP3 || t == G1OBJ_TILE_TRAP1 {
 		return true
 	} else {
