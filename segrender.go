@@ -632,7 +632,7 @@ fmt.Printf("flim %d\n",p)
 // end testing
 			stamp := floorGetStamp(fp, adj+rand.Intn(4), fc)
 			if sb < 0 {
-				coltil(img,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				coltil(img,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// null cell, black tile
 			}
 			if sb >= 0 {
 			if (nothing & NOFLOOR) == 0 {
@@ -644,15 +644,19 @@ fmt.Printf("flim %d\n",p)
 					cl = uint32(0xff000000 + r + q * 256 + p * 65536)
 					coltil(img,cl,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
-				p,_,_ = parser(xp, SE_CFLOR)
-				if p >= 0 && p < curwf {			// cust floor from png - laded by lod_maz from xb file
-					writepngtoimage(img, wlfl.flim[p], 16,16,x,y, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				p2,_,_ := parser(xp, SE_CFLOR)
+				if p2 >= 0 && p2 < curwf {			// cust floor from png - laded by lod_maz from xb file
+					writepngtoimage(img, wlfl.flim[p2], 16,16,x,y, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
-				if p < 0 && cl < 1 {
-// exp floor test, turn this off for sd mazes/ edits
-		  if stdfl || xp != "0" {	// do std floor stamps
-				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
-		  }
+				if p2 < 0 && p < 0 {
+					writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// g1 floors & overrides SE_FLOR
+				}
+				if p >= 0 || p2 >= 0 {				// cust floor or colortiles req this shadow set (for no shadow, set wp cust to 7)
+					na := (adj >> 2)		// div 4
+					if na > 0 && wp < 6 {
+						writepngtoimage(img, shtamp, 16,16,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					}
+				}
 			}}
 			if ffmap[xy{x,y}] {		// are we on a forcefield beam area
 				if nothing & NOTRAP == 0 {
