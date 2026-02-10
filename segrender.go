@@ -1129,6 +1129,22 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			case G1OBJ_KEY:
 				stamp = itemGetStamp("key")
 
+			case SEOBJ_POWER_REPULSE:
+				G1 = false
+				stamp = itemGetStamp("repulse")
+			case SEOBJ_POWER_REFLECT:
+				G1 = false
+				stamp = itemGetStamp("reflect")
+			case SEOBJ_POWER_TRANSPORT:
+				G1 = false
+				stamp = itemGetStamp("transportability")
+			case SEOBJ_POWER_SUPERSHOT:
+				G1 = false
+				stamp = itemGetStamp("supershot")
+			case SEOBJ_POWER_INVULN:
+				G1 = false
+				stamp = itemGetStamp("invuln")
+
 			case SEOBJ_DOOR_H:
 				G1 = false; fallthrough
 			case G1OBJ_DOOR_HORIZ:
@@ -1192,6 +1208,10 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				G1 = false; fallthrough
 			case G1OBJ_MONST_SORC3:
 				stamp = itemGetStamp("sorcerer")
+			case SEOBJ_G2AUXGR:
+				G1 = false
+				stamp = itemGetStamp("auxgrunt")
+
 			case G1OBJ_MONST_DEATH:
 				stamp = itemGetStamp("death")
 			case SEOBJ_G2ACID:
@@ -1206,6 +1226,9 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 
 			case G1OBJ_MONST_THIEF:
 				stamp = itemGetStamp("thief")
+			case SEOBJ_MONST_MUGGER:
+				G1 = false
+				stamp = itemGetStamp("mugger")
 
 			case SEOBJ_G2GN_GST1:
 				G1 = false; fallthrough
@@ -1239,6 +1262,8 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				gtopl = "L"
 				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
 				stamp = itemGetStamp("generator1")
+			case SEOBJ_G2GN_SORC1:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_SORC1:
 				gtopl = "S"
 				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
@@ -1262,6 +1287,8 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				gtopl = "L"
 				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
 				stamp = itemGetStamp("generator2")
+			case SEOBJ_G2GN_SORC2:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_SORC2:
 				gtopl = "S"
 				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
@@ -1285,6 +1312,8 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				gtopl = "L"
 				if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
 				stamp = itemGetStamp("generator3")
+			case SEOBJ_G2GN_SORC3:
+				G1 = false; fallthrough
 			case G1OBJ_GEN_SORC3:
 				gtopl = "S"
 				if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
@@ -1292,6 +1321,10 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 
 			case G1OBJ_TREASURE:
 				stamp = itemGetStamp("treasure")
+			case SEOBJ_TREASURE_LOCKED:
+				G1 = false
+				stamp = itemGetStamp("treasurelocked")
+
 			case G1OBJ_TREASURE_BAG:
 				stamp = itemGetStamp("goldbag")
 			case G1OBJ_FOOD_DESTRUCTABLE:
@@ -1318,6 +1351,10 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			case G1OBJ_X_MAGIC:
 				stamp = itemGetStamp("magicpotion")
 
+			case SEOBJ_FORCEFIELDHUB:
+				G1 = false
+				adj := checkffadj4(maze, x, y)
+				if nothing & NOEXP == 0 { stamp = ffGetStamp(adj) }
 			case G1OBJ_TRANSPORTER:
 				stamp = itemGetStamp("tportg1")
 			case GORO_TEST:
