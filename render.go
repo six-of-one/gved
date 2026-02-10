@@ -217,6 +217,7 @@ const (
 	SE_MSG		= 8		// write a null term msg (up to 32 hex byts) onto maze in color as R,G,B, {MSG}, 00			test: 0800FFFF5A206973201E00
 						// -- NOT really compatible with any other opcode
 	SE_MWAL		= 10	// master wall replace - must be placed under 0,0 - will be read first, data: sheet, r
+	SE_MFLR		= 11	// master floor replace from string list - data: list entry
 // more:
 // 'item underlay' - put any item under, say a trap wall, or shootable wall so it appears when wall is gone, or even under a dragon, generator or item
 

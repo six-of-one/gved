@@ -76,8 +76,7 @@ possible:
 - dialog for setting / reading bits of #T hide mask and #flg blank maze keep mask
 - way using sprites to demo half transparent paste content over maze
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
-- more keys for dialog win to still operate main win (stats, etc)
-- thinking about from stdwl test to a 'master wall replace' that takes all std walls to some custom wall
+* more keys for dialog win to still operate main win (stats, etc) -- add main win keyrune to most dialogs
 
 config ideas:
 - master pb ctrl-f filter selections

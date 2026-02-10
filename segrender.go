@@ -19,21 +19,21 @@ var g2mask [256]int
 
 // for maze output to se -- outputter is in pfrender
 func ParseHexColor(s string) (c color.RGBA, err error) {
-    c.A = 0xff
-    switch len(s) {
-    case 7:
-        _, err = fmt.Sscanf(s, "#%02x%02x%02x", &c.R, &c.G, &c.B)
-    case 4:
-        _, err = fmt.Sscanf(s, "#%1x%1x%1x", &c.R, &c.G, &c.B)
-        // Double the hex digits:
-        c.R *= 17
-        c.G *= 17
-        c.B *= 17
-    default:
-        err = fmt.Errorf("invalid length, must be 7 or 4")
+	c.A = 0xff
+	switch len(s) {
+	case 7:
+		_, err = fmt.Sscanf(s, "#%02x%02x%02x", &c.R, &c.G, &c.B)
+	case 4:
+		_, err = fmt.Sscanf(s, "#%1x%1x%1x", &c.R, &c.G, &c.B)
+		// Double the hex digits:
+		c.R *= 17
+		c.G *= 17
+		c.B *= 17
+	default:
+		err = fmt.Errorf("invalid length, must be 7 or 4")
 
-    }
-    return
+	}
+	return
 }
 
 var foods = []string{"ifood1", "ifood2", "ifood3"}
@@ -427,14 +427,14 @@ func vcoord(c, cb, ba int) int {
 // clm rw - col (x) & row (y) tile of ptamp
 // also return extracted area
 
-func writepngtoimage(img *image.NRGBA, ptamp image.Image, rx,ry,cl,rw, xw, yw int) *image.RGBA {
+func writepngtoimage(img *image.NRGBA, lptamp image.Image, rx,ry,cl,rw, xw, yw int) *image.RGBA {
 
-	bnds := ptamp.Bounds()
+	bnds := lptamp.Bounds()
 	iw, ih := bnds.Dx(), bnds.Dy()
 	rec := image.Rect((cl)*rx, (rw)*ry, (cl+1)*rx, (rw+1)*ry)			// this pegs the intended rect on sprite sheet
 	rrr := image.Rect(0,0,iw,ih)
 	cpy := image.NewRGBA(rrr)
-	draw.Copy(cpy, image.Pt(0,0), ptamp, rec, draw.Over, nil)
+	draw.Copy(cpy, image.Pt(0,0), lptamp, rec, draw.Over, nil)
 //fmt.Printf("shadow %d: %d x %d \n",na,(x-xb)*16, (y-yb)*16)
 	offset := image.Pt(xw, yw)
 	if img != nil {
@@ -467,6 +467,7 @@ var curwf int
 var wlfl = &walflr{}
 
 // master wall replace
+var Se_mflor int
 var Se_mwal int
 var Se_rwal int
 
@@ -561,7 +562,23 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		_, _, wtamp = itemGetPNG("gfx/wall_T.16.png")		// note error block on this
 		xp := scanxb(xdat, 0, 0, 0, 0, "")
 		Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
+		Se_mflor, _,_ = parser(xp, SE_MFLR)
+		if Se_mflor > Se_maxflr { Se_mflor = -1 }
+		flim := blankimage(16, 16)
+		if Se_mflor >= 0 {
+			err, _, ptamp = itemGetPNG(Se_cflr[Se_mflor])
+			if err != nil {
+				flim = blankimage(opts.DimX*16, opts.DimY*16)
+				bnds := ptamp.Bounds()
+				iw, ih := bnds.Dx(), bnds.Dy()		  // in theory this image does not HAVE to be square anymore
+				for ty := 0; ty < (opts.DimY*16) ; ty=ty+ih {
+						for tx := 0; tx < (opts.DimX*16) ; tx=tx+iw {
+							offset := image.Pt(tx, ty)
+							draw.Draw(flim, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)	// floor image
+					   }}
 
+			} else { Se_mflor = -1 }
+		}
 // g1 checks
 	for y := yb; y < ys; y++ {
 		for x := xb; x < xs; x++ {
@@ -618,9 +635,13 @@ fmt.Printf("flim %d\n",p)
 					writepngtoimage(img, wlfl.flim[p2], 16,16,x,y, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 				if p2 < 0 && p < 0 {
+				if Se_mwal >= 0 {
+					stamp = nil
+					writepngtoimage(img, flim, 16,16,x,y, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// master floor replace SE_MFLR
+				 } else {
 					writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// g1 floors & overrides SE_FLOR
-				}
-				if p >= 0 || p2 >= 0 {				// cust floor or colortiles req this shadow set (for no shadow, set wp cust to 7)
+				}}
+				if p >= 0 || p2 >= 0 || Se_mflor >= 0 {				// cust floor or colortiles req this shadow set (for no shadow, set wp cust to 7)
 					na := (adj >> 2)		// div 4
 					if na > 0 && wp < 6 {
 						writepngtoimage(img, shtamp, 16,16,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)

@@ -822,7 +822,7 @@ func palRune(r rune) {
 						"edit hint on menu bar give status"+
 						"\n\npal win keys:\nq,Q	┈ quit\nl,L	┈ list edit keys, auto updates\nt,T	┈ hide flags info\n"+
 						"s, S	┈ stats window open, auto updates\n"+
-						"f, F	┈ gauntlet 2 maze flags list\nx, X	┈ gauntlet 2 secret tricks", 350,540,nil,palRune)
+						"f, F	┈ gauntlet 2 maze flags list\nx, X	┈ gauntlet 2 secret tricks\np,P	┈ cycle sanctuary palette", 350,540,nil,palRune)
 		case 't': fallthrough
 		case 'T': hide_flags(palRune)
 		case 'f': fallthrough
