@@ -764,6 +764,7 @@ fmt.Printf("flim %d\n",p)
 						stamp = nil
 						wlt := wlfl.wtamp[p]
 						if !opts.Nosec {
+fmt.Printf("hue-ue-ue\n")
 							wlt = AdjustHue(wlfl.wtamp[p], 31.0)
 
 						}

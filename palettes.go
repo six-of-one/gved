@@ -1090,6 +1090,20 @@ func paletteClone(dest []color.Color, src []color.Color) {
 	}
 }
 
+func paletteSecret(pn int) {
+
+	for i := 0; i < 16; i++ {
+		c := wallPalettes[pn][i].(IRGB)
+		c2 := (c.irgb & 0xf000) >> 12
+		c2 += 4
+		if c2 > 0xf {
+			c2 = 0xf
+		}
+		c2 = (c.irgb & 0x0fff) + (c2 << 12)
+		secretPalette[0][i] = IRGB{c2}
+	}
+}
+
 func paletteMakeSpecial(floorpattern int, floorcolor int, wallpattern, wallcolor int) {
 	// for i := 0; i < 16; i++ {
 	// 	trapPalette[0][i] = floorPalettes[floorcolor][i]
@@ -1109,16 +1123,7 @@ func paletteMakeSpecial(floorpattern int, floorcolor int, wallpattern, wallcolor
 	forcefieldPalette[0][sColors1[floorpattern]] = IRGB{0xaa00}
 	forcefieldPalette[0][sColors2[floorpattern]] = IRGB{0xda60}
 
-	for i := 0; i < 16; i++ {
-		c := wallPalettes[0][i].(IRGB)
-		c2 := (c.irgb & 0xf000) >> 12
-		c2 += 4
-		if c2 > 0xf {
-			c2 = 0xf
-		}
-		c2 = (c.irgb & 0x0fff) + (c2 << 12)
-		secretPalette[0][i] = IRGB{c2}
-	}
+	paletteSecret(16)
 
 	// FIXME: The below won't behave if we call this multiple times for
 	// different mazes.
