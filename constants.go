@@ -853,13 +853,40 @@ var mazeSecretStrings = map[int]string{
 // door -> wall overlaps per wall seg and door pos around wall
 // 		   wall seq will test for doors in 4 positions
 // door over laps - endcap in 4 dir, wall over in 3 dir
-//					there is no wall over for dir 2
+//					there is no wall over for dir 2		overlap dirs are from door perspect
 // door pieces: overec L, overec R, overec U, overec D, overw L, overw R, overw U 
 //				1		  2			3		  4			5		 6		  7
 // these point into shtamp shadow set, past the shadows
 
 var dorvwal = [][]int{
 	{ 5, 7, 0, 6, },		// 0, a single pillar
+	{ 5, 3, 0, 6, },		// 1  largest surf down facing endcap
+	{ 0, 7, 0, 2, },		// 2  large surf left facing endcap
+	{ 0,0,0,0,},
+	{ 5, 0, 4, 6, },		// 4  smol surf up facing endcap
+	{ 5, 0, 0, 6, },		// 5  u/d wall doors r/l
+	{ 0, 0, 0, 6, },		// 6  ┍ corner doors u/l
+	{ 0, 0, 0, 6, },		// 7  ┣ door l
+	{ 1, 7, 0, 0, },		// 8  med surf right facing endcap
+	{ 5, 7, 0, 0, },		// 9  ┙ corner doors d/r
+	{ 0, 7, 0, 0, },		// 10 r/l wall doors u/d
+	{ 0, 7, 0, 0, },		// 11 ┻ wall doors d
+	{ 5, 0, 0, 0, },		// 12 ┓ door u/r
+	{ 5, 0, 0, 0, },		// 13 ┫ door r
+	{ 0,0,0,0,},			// 14 ┳ door u - no adj
+	{ 0,0,0,0,},
+	{ 0,0,0,0,},
+	{ 0, 0, 0, 6, },		// 17 ┣ door l
+	{ 0,0,0,0,},
+	{ 5, 0, 0, 0, },		// 19 ┫ door r
+	{ 0,0,0,0,},
+	{ 0,0,0,0,},
+	{ 0,0,0,0,},
+	{ 0,0,0,0,},
+	{ 0,0,0,0,},			// 24 ┳ door u - no adj
+	{ 0,0,0,0,},
+	{ 0,0,0,0,},
+	{ 0,0,0,0,},
 }
 // edit key shortcut list - < 0 means not usable, not reassingable
 // most of these will need manually set (note: save to cfg file)
