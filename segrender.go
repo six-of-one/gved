@@ -427,6 +427,8 @@ func vcoord(c, cb, ba int) int {
 // rx, ry - pixel size of rectaNGLE to copy
 // clm rw - col (x) & row (y) tile of ptamp
 // also return extracted area
+var dbgwrt bool
+//								dbgwrt = true
 
 func writepngtoimage(img *image.NRGBA, lptamp image.Image, rx,ry,cl,rw, xw, yw int) *image.RGBA {
 
@@ -436,7 +438,9 @@ func writepngtoimage(img *image.NRGBA, lptamp image.Image, rx,ry,cl,rw, xw, yw i
 	rrr := image.Rect(0,0,iw,ih)
 	cpy := image.NewRGBA(rrr)
 	draw.Copy(cpy, image.Pt(0,0), lptamp, rec, draw.Over, nil)
-//fmt.Printf("shadow %d: %d x %d \n",na,(x-xb)*16, (y-yb)*16)
+if dbgwrt {
+fmt.Printf("sz %d %d c, r %d, %d vp abs %d x %d\n",rx,ry,cl,rw,xw,yw)
+}
 	offset := image.Pt(xw, yw)
 	if img != nil {
 		draw.Draw(img, cpy.Bounds().Add(offset), cpy, image.ZP, draw.Over)
@@ -642,12 +646,14 @@ fmt.Printf("flim %d\n",p)
 				}
 				p2,_,_ := parser(xp, SE_CFLOR)
 				if p2 >= 0 && p2 < curwf {			// cust floor from png - laded by lod_maz from xb file
-					writepngtoimage(img, wlfl.flim[p2], 16,16,vcoord(x,xb,xba), vcoord(y,yb,yba), absx*16, absy*16)
+					_, ux, uy := lot(x, y, x, y)
+					writepngtoimage(img, wlfl.flim[p2], 16,16,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 				if p2 < 0 && p < 0 {
 				if Se_mflor >= 0 {
 					stamp = nil
-					writepngtoimage(img, flim, 16,16,vcoord(x,xb,xba), vcoord(y,yb,yba), absx*16, absy*16)		// master floor replace SE_MFLR
+					_, ux, uy := lot(x, y, x, y)
+					writepngtoimage(img, flim, 16,16,ux, uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// master floor replace SE_MFLR
 				 } else {
 					writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// g1 floors & overrides SE_FLOR
 				}}
