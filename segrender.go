@@ -858,18 +858,12 @@ fmt.Printf("flim %d\n",p)
 // check door -> wall overlaps
 			if wly > 0 || walop > 0 {
 fmt.Printf("wall seg %d adj %d, type %d, dor: ",wly,adj,walop)
-				dor := false
-				for i := 0; i < 8; i++ {
+				for i := 0; i < 4; i++ {
 					s := scanbuf(maze.data, x + dirs[i].x, y + dirs[i].y, x + dirs[i].x, y + dirs[i].y, -2)
 					if s == G1OBJ_DOOR_HORIZ || s == G1OBJ_DOOR_VERT {
 						fmt.Printf("i(%d) %d.%d ",i, dirs[i].x, dirs[i].y)
-						dor = true
-					}
-					if dor {
-						for i := 0; i < 8; i++ {
 							ovlp := dorvwal[wly][i]
 							if ovlp > 0 { writepngtoimage(img, dvw, 16,16,15+ovlp,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16) }
-						}
 					}
 				}
 fmt.Printf("\n")
