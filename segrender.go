@@ -764,15 +764,13 @@ fmt.Printf("flim %d\n",p)
 						stamp = nil
 						wlt := wlfl.wtamp[p]
 						if !opts.Nosec {
-fmt.Printf("hue-ue-ue\n")
-							wlt = AdjustHue(wlfl.wtamp[p], 31.0)
-
+							wlt = AdjustHue(wlfl.wtamp[p], 41.0)
 						}
 						writepngtoimage(img, wlt, 16,16,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					} else {
 						stamp = wallGetStamp(wp, adj, wc)
 						if !opts.Nosec {
-							ppn := stamp.pnum + 1;
+							ppn := stamp.pnum + 1;		// shift secret wall display color so it cant match any wall spec
 							if ppn > 16 { ppn = 0 }
 							paletteSecret(ppn)
 							stamp.ptype = "secret"
