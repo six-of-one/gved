@@ -588,12 +588,8 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			} else { Se_mflor = -1 }
 		}
 // g1 checks
-	absy := -1		// absolute y cell in view port *16 for write pos
 	for y := yb; y < ys; y++ {
-		absx := -1		// absolute y cell in view port *16 for write pos
-		absy++
 		for x := xb; x < xs; x++ {
-			absx++
 			adj := 0
 			nwt := NOWALL | NOG1W
 // Se can override these on individual tiles
@@ -769,6 +765,7 @@ fmt.Printf("flim %d\n",p)
 						wlt := wlfl.wtamp[p]
 						if !opts.Nosec {
 							wlt = AdjustHue(wlfl.wtamp[p], 31.0)
+
 						}
 						writepngtoimage(img, wlt, 16,16,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					} else {

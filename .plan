@@ -67,7 +67,6 @@ viewport
 - floor draw (floor gets redrawn with rnd shift every move)
 * xb editing can enter floor vals & like causing crashes - all data needs bounded when calling render code
   \_ bounding is done, needs tested
-* cust floor doesnt "move" with maze - fix, but loop over issues exist
 
 possible:
 - down the line .ed stored maz# could be used to set maz num
