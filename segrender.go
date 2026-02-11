@@ -735,12 +735,14 @@ fmt.Printf("flim %d\n",p)
 					}
 // end testing
 			}}
+			wly, adj, walop := 0,0,0
 			if G1 {
 				if wp > 5 { wp -= 6 }		// Se enhance that allows shadowless g1 walls
 				nwt := NOWALL | NOG1W		// reg g1 walls taken out by themselves (no traps, cycs etc) by NOG1W flags
-				switch scanbuf(maze.data, x, y, x, y, -2) {
+				wbd := scanbuf(maze.data, x, y, x, y, -2)
+				switch wbd {
 				case G1OBJ_WALL_DESTRUCTABLE:
-					adj, wly := checkwalladj8g1(maze, x, y)
+					adj, wly = checkwalladj8g1(maze, x, y)
 				if (nothing & NOWALL) == 0 {
 					p,q,_ = parser(xp, SE_CWAL)
 					if p >= 0 && p < curwf {
@@ -754,10 +756,11 @@ fmt.Printf("flim %d\n",p)
 						stamp = wallGetDestructableStamp(wp, adj, wc)
 					  }
 					}
+					walop = wbd
 				}
 
 				case SEOBJ_SECRTWAL:
-					adj, wly := checkwalladj8g1(maze, x, y)
+					adj, wly = checkwalladj8g1(maze, x, y)
 				if (nothing & NOWALL) == 0 {
 					p,q,_ = parser(xp, SE_CWAL)
 					if p >= 0 && p < curwf {
@@ -777,6 +780,7 @@ fmt.Printf("flim %d\n",p)
 							stamp.pnum = 0
 						}
 					}
+					walop = wbd
 				}
 				case G1OBJ_WALL_TRAP1:
 					fallthrough
@@ -793,7 +797,7 @@ fmt.Printf("flim %d\n",p)
 					if dots == 0 { dots = 4 }; nwt = NOWALL
 					fallthrough
 				case G1OBJ_WALL_REGULAR:
-					adj, wly := checkwalladj8g1(maze, x, y)
+					adj, wly = checkwalladj8g1(maze, x, y)
 					if (nothing & nwt) == 0 {
 					p,q,_ = parser(xp, SE_CWAL)
 					if p >= 0 && p < curwf {
@@ -807,6 +811,7 @@ fmt.Printf("flim %d\n",p)
 						stamp = wallGetStamp(wp, adj, wc)
 					  }
 					}
+					walop = wbd
 				}
 // test of some items not place in mazes - place in empty floor tile @random
 				case SEOBJ_FLOOR:
@@ -849,7 +854,17 @@ fmt.Printf("flim %d\n",p)
 			if stamp != nil {
 				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
 			}
-
+// check door -> wall overlaps
+			if wly > 0 || walop > 0 {
+fmt.Printf("wall seg %d adj %d, type %d, dor: ",wly,adj,walop)
+				for i := 0; i < 8; i++ {
+					s := scanbuf(maze.data, x + dirs[i].x, y + dirs[i].y, x + dirs[i].x, y + dirs[i].y, -2)
+					if s == G1OBJ_DOOR_HORIZ || s == G1OBJ_DOOR_VERT {
+						fmt.Printf("i(%d) %d.%d ",i, dirs[i].x, dirs[i].y)
+					}
+				}
+fmt.Printf("\n")
+			}
 			if dots != 0 && nothing & NOWALL == 0 {
 				renderdots(img, (x-xb)*16, (y-yb)*16, dots)
 			}

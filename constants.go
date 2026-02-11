@@ -850,6 +850,17 @@ var mazeSecretStrings = map[int]string{
 	TRICK_NOHURTFRIENDS:  "Don't Hurt Friends",
 }
 
+// door -> wall overlaps per wall seg and door pos around wall
+// 		   wall seq will test for doors in 4 positions
+// door over laps - endcap in 4 dir, wall over in 3 dir
+//					there is no wall over for dir 2
+// door pieces: overec L, overec R, overec U, overec D, overw L, overw R, overw U 
+//				1		  2			3		  4			5		 6		  7
+// these point into shtamp shadow set, past the shadows
+
+var dorvwal = [][]int{
+	{ 5, 7, 0, 6, },		// 0, a single pillar
+}
 // edit key shortcut list - < 0 means not usable, not reassingable
 // most of these will need manually set (note: save to cfg file)
 
