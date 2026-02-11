@@ -467,7 +467,7 @@ var maxwf int
 var curwf int
 var wlfl = &walflr{}
 
-// master wall replace
+// master floor/wall replace
 var Se_mflor int
 var Se_mwal int
 var Se_rwal int
@@ -486,7 +486,7 @@ func nwalflor(){
 	wlfl.flrblt = append(wlfl.flrblt,false)
 }
 
-// image from buffer segment			- stat: display stats if true
+// image from buffer segment			- stat: display stats 'On image' if true
 // segment of buffer from xb,yb to xs,ys (begin to stop)
 
 func segimage(mdat MazeData, xdat Xdat, fdat [14]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
@@ -584,8 +584,12 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			} else { Se_mflor = -1 }
 		}
 // g1 checks
+	absy := -1		// absolute y cell in view port *16 for write pos
 	for y := yb; y < ys; y++ {
+		absx := -1		// absolute y cell in view port *16 for write pos
+		absy++
 		for x := xb; x < xs; x++ {
+			absx++
 			adj := 0
 			nwt := NOWALL | NOG1W
 // Se can override these on individual tiles
@@ -638,12 +642,12 @@ fmt.Printf("flim %d\n",p)
 				}
 				p2,_,_ := parser(xp, SE_CFLOR)
 				if p2 >= 0 && p2 < curwf {			// cust floor from png - laded by lod_maz from xb file
-					writepngtoimage(img, wlfl.flim[p2], 16,16,vcoord(x,xb,xba), vcoord(y,yb,yba), (x+xba)*16, (y+yba)*16)
+					writepngtoimage(img, wlfl.flim[p2], 16,16,vcoord(x,xb,xba), vcoord(y,yb,yba), absx*16, absy*16)
 				}
 				if p2 < 0 && p < 0 {
 				if Se_mflor >= 0 {
 					stamp = nil
-					writepngtoimage(img, flim, 16,16,vcoord(x,xb,xba), vcoord(y,yb,yba), vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// master floor replace SE_MFLR
+					writepngtoimage(img, flim, 16,16,vcoord(x,xb,xba), vcoord(y,yb,yba), absx*16, absy*16)		// master floor replace SE_MFLR
 				 } else {
 					writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// g1 floors & overrides SE_FLOR
 				}}
