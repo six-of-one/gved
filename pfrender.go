@@ -285,6 +285,9 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
 				if (nothing & NOWALL) == 0 {
 					stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 					if !opts.Nosec {
+						ppn := stamp.pnum + 1;
+						if ppn > 16 { ppn = 0 }
+						paletteSecret(ppn)			// rotate so secret wall when displayed never matches any wall
 						stamp.ptype = "secret"
 						stamp.pnum = 0
 					}

@@ -772,6 +772,9 @@ fmt.Printf("hue-ue-ue\n")
 					} else {
 						stamp = wallGetStamp(wp, adj, wc)
 						if !opts.Nosec {
+							ppn := stamp.pnum + 1;
+							if ppn > 16 { ppn = 0 }
+							paletteSecret(ppn)
 							stamp.ptype = "secret"
 							stamp.pnum = 0
 						}
