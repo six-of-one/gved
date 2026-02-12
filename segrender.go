@@ -571,6 +571,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
 		Se_rrnd = 0
 		if Se_mwal < 0 { Se_mwal, Se_rwal, Se_rrnd = parser(xp, SE_MWALRND) }		// randomly select from wall row Se_rwal + rnd 0 - Se_rrnd val
+fmt.Printf("Se_rrnd %d\n",Se_rrnd)
 		Se_mflor, _,_ = parser(xp, SE_MFLR)
 		if Se_mflor > Se_maxflr { Se_mflor = -1 }
 		flim := blankimage(16, 16)
@@ -820,7 +821,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 					} else {
 					  if Se_mwal >= 0 {
 								stamp = nil
-								rn := rndr(0, Se_rrnd)
+								rn := rndr(0,Se_rrnd)
 								writepngtoimage(img, wtamp, 16,16,0,0,wly,Se_mwal + rn, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					  } else {
 						stamp = wallGetStamp(wp, adj, wc)
