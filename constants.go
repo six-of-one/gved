@@ -191,18 +191,27 @@ const (
 // g2 pot inv
 // g2 key				153
 // g2 power invis
-	SEOBJ_POWER_REPULSE		= 155
-	SEOBJ_POWER_REFLECT		= 156
+	SEOBJ_POWER_REPULSE			= 155
+	SEOBJ_POWER_REFLECT			= 156
 	SEOBJ_POWER_TRANSPORT		= 157
 	SEOBJ_POWER_SUPERSHOT		= 158
-	SEOBJ_POWER_INVULN		= 159
-	SEOBJ_MONST_DRAGON		= 160
+	SEOBJ_POWER_INVULN			= 159
+	SEOBJ_MONST_DRAGON			= 160
 // g2 hidden potion
 // g2 transport
-	SEOBJ_FORCEFIELDHUB		= 163
-	SEOBJ_MONST_MUGGER		= 164
+	SEOBJ_FORCEFIELDHUB			= 163
+	SEOBJ_MONST_MUGGER			= 164
 // g2 thief
 // extend
+	SEOBJ_FIRE_STICK			= 166		// 26, 33
+	SEOBJ_G2_POISPOT			= 167		// 8, 11
+	SEOBJ_G2_POISFUD			= 168		// 1, 11		23, 10
+	SEOBJ_G2_QFUD				= 169		// 2, 11
+
+//	SEOBJ_WATER_POOL			= 1
+//	SEOBJ_SLIME_POOL			= 1
+//	SEOBJ_LAVA_POOL				= 1
+
 )
 // contrl var nothing [ no-thing ] that blocks elements display
 const (
@@ -397,7 +406,12 @@ var g1mapid = map[int]string{
 	SEOBJ_FORCEFIELDHUB:	"SE_FORCEFIELDHUB",
 	SEOBJ_MONST_MUGGER:	"SE_MONST_MUGGER",
 	165:	"No_thing_165",
-	166:	"No_thing_166",
+	SEOBJ_FIRE_STICK:	"SE_FIRE_STICK",
+	SEOBJ_G2_POISPOT:	"SE_G2_POISPOT",
+	SEOBJ_G2_POISFUD:	"SE_G2_POISFUD",
+	SEOBJ_G2_QFUD:	"SE_G2_QFUD",
+//	169:	"SE_",
+
 /*
 	10:	"No_thing_10",
 	11:	"No_thing_11",
@@ -651,7 +665,11 @@ var g1auds = map[int]string{
 	SEOBJ_FORCEFIELDHUB:	"sfx/g2_ffield.ogg",
 	SEOBJ_MONST_MUGGER:	"sfx/g2mug_appr.ogg",
 	165:	"",
-	166:	"",
+	SEOBJ_FIRE_STICK:	"",
+	SEOBJ_G2_POISPOT:	"sfx/g2_slopoisn.ogg",
+	SEOBJ_G2_POISFUD:	"sfx/g2_slopoisn.ogg",
+	SEOBJ_G2_QFUD:	"sfx/g1_foodsnrf.ogg",
+
 /*
 	10:	"",
 	11:	"",

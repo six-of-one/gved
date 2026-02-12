@@ -1394,7 +1394,14 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				stamp = itemGetStamp("tportg1")
 			case GORO_TEST:
 				err, _, ptamp = itemGetPNG("gfx/goro.16.png")
-
+			case SEOBJ_FIRE_STICK:
+				psx, psy = 33, 26
+			case SEOBJ_G2_POISPOT:
+				psx, psy = 8, 11
+			case SEOBJ_G2_POISFUD:
+				psx, psy = 1, 11
+			case SEOBJ_G2_QFUD:
+				psx, psy = 2, 11
 			default:
 				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", scanbuf(maze.data, x, y, x, y, -2)) }
 			}
