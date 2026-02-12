@@ -1409,7 +1409,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				psx, psy = 28, 10
 
 			case SEOBJ_MAPPYBDG:		// 33, 23
-				psx, psy = 33, 22
+				psx, psy = 32, 22
 
 			case SEOBJ_MAPPYARAD:		// 25, 21
 				psx, psy, szx = 24, 20, 32
@@ -1482,7 +1482,6 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			}
 // expand and sanctuary
 			if psx >= 0 && psy >= 0 {
-				szx = 16
 				writepngtoimage(img, sents, szx,szy,psx,psy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 			}
 			if err == nil && ptamp != nil {
