@@ -882,7 +882,7 @@ if opts.Verbose { fmt.Printf("\n") }
 			var dots int // dot count
 
 			ptamp = nil
-			psx, psy := -1, -1
+			psx, psy, szx, szy := -1, -1, 16 ,16
 
 			xp := scanxb(xdat, x, y, x, y, "")
 			gtp := G1
@@ -1394,6 +1394,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				stamp = itemGetStamp("tportg1")
 			case GORO_TEST:
 				err, _, ptamp = itemGetPNG("gfx/goro.16.png")
+	// SE expand
 			case SEOBJ_FIRE_STICK:
 				psx, psy = 33, 26
 			case SEOBJ_G2_POISPOT:
@@ -1402,6 +1403,37 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				psx, psy = 1, 11
 			case SEOBJ_G2_QFUD:
 				psx, psy = 2, 11
+			case SEOBJ_KEYRING:		// 29, 11
+				psx, psy = 29, 11
+
+			case SEOBJ_MAPPYBDG:		// 33, 23
+				psx, psy = 33, 23
+
+			case SEOBJ_MAPPYARAD:		// 25, 21
+				psx, psy, szx = 25, 21, 32
+			case SEOBJ_MAPPYATV:		// 27, 21
+				psx, psy, szx = 27, 21, 32
+			case SEOBJ_MAPPYAPC:		// 29, 21
+				psx, psy, szx = 29, 21, 32
+			case SEOBJ_MAPPYAART:		// 31, 21
+				psx, psy, szx = 31, 21, 32
+			case SEOBJ_MAPPYASAF:		// 33, 21
+				psx, psy, szx = 33, 21, 32
+
+			case SEOBJ_MAPPYRAD:		// 25, 22
+				psx, psy, szx = 25, 22, 32
+			case SEOBJ_MAPPYTV:		// 27, 22
+				psx, psy, szx = 27, 22, 32
+			case SEOBJ_MAPPYPC:		// 29, 22
+				psx, psy, szx = 29, 22, 32
+			case SEOBJ_MAPPYART:		// 31, 22
+				psx, psy, szx = 31, 22, 32
+			case SEOBJ_MAPPYSAF:		// 33, 22
+				psx, psy, szx = 33, 22, 32
+
+			case SEOBJ_MAPPYBELL:		// 35, 21
+			case SEOBJ_MAPPYBAL:		// 35, 22
+
 			default:
 				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", scanbuf(maze.data, x, y, x, y, -2)) }
 			}
@@ -1446,7 +1478,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			}
 // expand and sanctuary
 			if psx >= 0 && psy >= 0 {
-				writepngtoimage(img, sents, 16,16,psx,psy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				writepngtoimage(img, sents, szx,szy,psx,psy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 			}
 			if err == nil && ptamp != nil {
 
