@@ -425,6 +425,7 @@ func vcoord(c, cb, ba int) int {
 // xw, yw - x & y loc to write on img
 // ptamp - png image stamp
 // rx, ry - pixel size of rectaNGLE to copy
+// ax, ay - add this to rectangle
 // clm rw - col (x) & row (y) tile of ptamp
 // also return extracted area
 var dbgwrt bool
@@ -645,7 +646,13 @@ fmt.Printf("flim %d\n",p)
 					_, ux, uy := lot(x, y, x, y)
 					writepngtoimage(img, wlfl.flim[p2], 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
-				if p2 < 0 && p < 0 {
+				p3,c,_ := parser(xp, SE_TFLOR)
+				if p3 >= 0 && p3 < curwf {			// cust floor tiled in png (select tile with 'c' val) - laded by lod_maz from xb file
+					bnds :=  wlfl.flim[p2].Bounds()
+					ih := bnds.Dy()
+					writepngtoimage(img, wlfl.flim[p3], ih,ih,0,0,0,c,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				}
+				if p3 < 0 && p2 < 0 && p < 0 && sb != SEOBJ_FLOORNODRAW {
 				if Se_mflor >= 0 {
 					stamp = nil
 					_, ux, uy := lot(x, y, x, y)
@@ -653,7 +660,7 @@ fmt.Printf("flim %d\n",p)
 				 } else {
 					writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// g1 floors & overrides SE_FLOR
 				}}
-				if p >= 0 || p2 >= 0 || Se_mflor >= 0 {				// cust floor or colortiles req this shadow set (for no shadow, set wp cust to 7)
+				if p >= 0 || p2 >= 0 || p3 >= 0 || Se_mflor >= 0 {				// cust floor or colortiles req this shadow set (for no shadow, set wp cust to 7)
 					na := (adj >> 2)		// div 4
 					if na > 0 && wp < 6 {
 						writepngtoimage(img, shtamp, 16,16,0,0,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)

@@ -216,9 +216,11 @@ const (
 	SE_LETR		= 7		// draw a letter index to map_keymap (as gen hints) in color, as R,G,B, ind
 	SE_MSG		= 8		// write a null term msg (up to 32 hex byts) onto maze in color as R,G,B, {MSG}, 00			test: 0800FFFF5A206973201E00
 						// -- NOT really compatible with any other opcode due to possible embed action
+
 	SE_MWAL		= 10	// master wall replace - must be placed under 0,0 - will be read first, data: sheet, r
 	SE_MFLR		= 11	// master floor replace from string list - data: list entry
 // once we get to super mazes, can these be a localized area?
+	SE_TFLOR	= 12	// cust floor from xb*.ed, where floor pieces are tiled in sheet, data: line of xb, c floor tile col
 
 // more:
 // 'item underlay' - put any item under, say a trap wall, or shootable wall so it appears when wall is gone, or even under a dragon, generator or item
@@ -226,10 +228,11 @@ const (
 )
 // bytes for each cmd
 var parms = []int{
-	0, 2, 2, 0,
-	1, 2, 3, 4,
-   36, 0, 2, 1,
-	0,
+	0, 					// item o, not used
+	2, 2, 0, 1,
+	2, 3, 4, 36,
+	0, 2, 1, 2,
+	0, 0, 0, 0,
 }
 var secmd [64]int
 var lastst string

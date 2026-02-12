@@ -150,6 +150,7 @@ const (
 	SEOBJ_FAKE_PAS				= 92			//  "  , pass over (to block weps, xb needed)
 	SEOBJ_FAKE_PAS_SHT			= 93			//  "  , pass over, can be shot out (absorbs shot to hit pts)
 
+	SEOBJ_FLOORNODRAW			= 99			// dont draw a floor here - colortile / cust floor are 1st, this applies to: std floor, master floor ovrd
 	SEOBJ_FLOOR					= 100
 // Gauntlet II items implement in SE
 	SEOBJ_STUN					= 101
@@ -364,16 +365,16 @@ var g1mapid = map[int]string{
 	87:		"No_thing_87",
 	88:		"No_thing_88",
 	89:		"No_thing_89",
-	90:		"No_thing_90",
-	91:		"No_thing_91",
-	92:		"No_thing_92",
-	93:		"No_thing_93",
+	SEOBJ_FAKE_BLK:		"SE_FAKE_BLK",
+	SEOBJ_FAKE_BLK_SHT:		"SE_FAKE_BLK_SHT",
+	SEOBJ_FAKE_PAS:		"SE_FAKE_PAS",
+	SEOBJ_FAKE_PAS_SHT:		"SE_FAKE_PAS_SHT",
 	94:		"No_thing_94",
 	95:		"No_thing_95",
 	96:		"No_thing_96",
 	97:		"No_thing_97",
 	98:		"No_thing_98",
-	99:		"No_thing_99",
+	SEOBJ_FLOORNODRAW:		"SE_FLOORNODRAW",
 	SEOBJ_FLOOR:	"XOV_FLOOR",
 	SEOBJ_STUN:	"SE_STUN",
 	102:	"No_thing_102",
@@ -642,16 +643,16 @@ var g1auds = map[int]string{
 	87:		"",
 	88:		"",
 	89:		"",
-	90:		"",
-	91:		"",
-	92:		"",
-	93:		"",
+	SEOBJ_FAKE_BLK:		"",
+	SEOBJ_FAKE_BLK_SHT:		"",
+	SEOBJ_FAKE_PAS:		"",
+	SEOBJ_FAKE_PAS_SHT:		"",
 	94:		"",
 	95:		"",
 	96:		"",
 	97:		"",
 	98:		"",
-	99:		"",
+	SEOBJ_FLOORNODRAW:		"",
 	SEOBJ_FLOOR:	"sfx/tile.ogg",
 	SEOBJ_STUN:	"sfx/g1_stun.ogg",
 	102:	"",
