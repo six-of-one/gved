@@ -1405,7 +1405,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				psx, psy = 1, 11
 			case SEOBJ_G2_QFUD:
 				psx, psy = 2, 11
-			case SEOBJ_KEYRING:		// 29, 11
+			case SEOBJ_KEYRING:
 				psx, psy = 29, 10
 
 			case SEOBJ_MAPPYBDG:		// 33, 23
@@ -1434,7 +1434,9 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				psx, psy, szx = 33, 22, 32
 
 			case SEOBJ_MAPPYBELL:		// 35, 21
+				psx, psy = 35, 21
 			case SEOBJ_MAPPYBAL:		// 35, 22
+				psx, psy = 35, 21
 
 			default:
 				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", scanbuf(maze.data, x, y, x, y, -2)) }
