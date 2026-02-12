@@ -207,17 +207,19 @@ func genanim(animarray []int, xtiles int, ytiles int) []*image.Paletted {
 // Sanctuary expanded maze parser
 // parse exp maze string, looking for cmd lc, return parms if found
 const (
-	SE_FLOR		= 1		// load any gauntlet & g2 floors & walls
+	SE_FLOR		= 1		// load any gauntlet & G² floors & walls
 	SE_WALL		= 2
 	SE_G2		= 3		// gauntlet 2 mode - e.g. turn off g1
-	SE_CFLOR	= 4		// custom floor unit from xb*.ed file wall&floor lines
+	SE_CFLOR	= 4		// custom floor unit from xb*.ed file wall & floor lines
 	SE_CWAL		= 5		// data: sheet, r, (c is wally), xy size		wal: sheet, row, (xy size?)
 	SE_COLRT	= 6		// color tiles under any
 	SE_LETR		= 7		// draw a letter index to map_keymap (as gen hints) in color, as R,G,B, ind
 	SE_MSG		= 8		// write a null term msg (up to 32 hex byts) onto maze in color as R,G,B, {MSG}, 00			test: 0800FFFF5A206973201E00
-						// -- NOT really compatible with any other opcode
+						// -- NOT really compatible with any other opcode due to possible embed action
 	SE_MWAL		= 10	// master wall replace - must be placed under 0,0 - will be read first, data: sheet, r
 	SE_MFLR		= 11	// master floor replace from string list - data: list entry
+// once we get to super mazes, can these be a localized area?
+
 // more:
 // 'item underlay' - put any item under, say a trap wall, or shootable wall so it appears when wall is gone, or even under a dragon, generator or item
 

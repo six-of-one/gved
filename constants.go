@@ -74,6 +74,7 @@ const (
 // Six: g1 objects
 const (
 	G1OBJ_TILE_FLOOR = 0
+// 1
 	G1OBJ_WALL_REGULAR = 2
 	G1OBJ_DOOR_HORIZ = 3
 	G1OBJ_DOOR_VERT = 4
@@ -113,9 +114,11 @@ const (
 	G1OBJ_GEN_SORC2 = 38
 	G1OBJ_GEN_SORC3 = 39
 	G1OBJ_TREASURE = 40
+// 41
 	G1OBJ_FOOD_DESTRUCTABLE = 42
 	G1OBJ_FOOD_INVULN = 43
 	G1OBJ_POT_DESTRUCTABLE = 44
+	G1OBJ_POT_INVULN = 45
 	G1OBJ_INVISIBL = 46
 	G1OBJ_X_SPEED = 48
 	G1OBJ_X_SHOTPW = 50
@@ -124,18 +127,29 @@ const (
 	G1OBJ_X_FIGHT = 52
 	G1OBJ_X_MAGIC = 49
 	G1OBJ_KEY = 53
-	G1OBJ_POT_INVULN = 45
+// 54
+// 55
 	G1OBJ_WALL_DESTRUCTABLE = 56
 	G1OBJ_WALL_TRAP1 = 57
 	G1OBJ_TILE_TRAP1 = 58
 	G1OBJ_TRANSPORTER = 59
-//	G1OBJ_TILE_STUN = 62
-	G1OBJ_TREASURE_BAG = 64
-	G1OBJ_MONST_THIEF = 65
+// 60
+// 61
+//	G1OBJ_TILE_STUN = 62				// G¹ had no stun tile
+// 63
+	G1OBJ_TREASURE_BAG			= 64
+	G1OBJ_MONST_THIEF			= 65
 	G1OBJ_EXTEND				= 66
 	G1OBJ_WIZARD				= 67
+// 68
+// 69
 	GORO_TEST					= 70
 // sanctuary engine ops
+	SEOBJ_FAKE_BLK				= 90			// fake item, block movement/ weps			will need xb to change appearance
+	SEOBJ_FAKE_BLK_SHT			= 91			//  "  , blocks mv, can be shot out
+	SEOBJ_FAKE_PAS				= 92			//  "  , pass over (to block weps, xb needed)
+	SEOBJ_FAKE_PAS_SHT			= 93			//  "  , pass over, can be shot out (absorbs shot to hit pts)
+
 	SEOBJ_FLOOR					= 100
 // Gauntlet II items implement in SE
 	SEOBJ_STUN					= 101
