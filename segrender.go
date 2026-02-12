@@ -1406,37 +1406,37 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			case SEOBJ_G2_QFUD:
 				psx, psy = 2, 11
 			case SEOBJ_KEYRING:
-				psx, psy = 29, 10
+				psx, psy = 28, 10
 
 			case SEOBJ_MAPPYBDG:		// 33, 23
-				psx, psy = 33, 23
+				psx, psy = 33, 22
 
 			case SEOBJ_MAPPYARAD:		// 25, 21
-				psx, psy, szx = 25, 21, 32
+				psx, psy, szx = 24, 20, 32
 			case SEOBJ_MAPPYATV:		// 27, 21
-				psx, psy, szx = 27, 21, 32
+				psx, psy, szx = 26, 20, 32
 			case SEOBJ_MAPPYAPC:		// 29, 21
-				psx, psy, szx = 29, 21, 32
+				psx, psy, szx = 28, 20, 32
 			case SEOBJ_MAPPYAART:		// 31, 21
-				psx, psy, szx = 31, 21, 32
+				psx, psy, szx = 30, 20, 32
 			case SEOBJ_MAPPYASAF:		// 33, 21
-				psx, psy, szx = 33, 21, 32
+				psx, psy, szx = 32, 20, 32
 
 			case SEOBJ_MAPPYRAD:		// 25, 22
-				psx, psy, szx = 25, 22, 32
+				psx, psy, szx = 24, 21, 32
 			case SEOBJ_MAPPYTV:		// 27, 22
-				psx, psy, szx = 27, 22, 32
+				psx, psy, szx = 26, 21, 32
 			case SEOBJ_MAPPYPC:		// 29, 22
-				psx, psy, szx = 29, 22, 32
+				psx, psy, szx = 28, 21, 32
 			case SEOBJ_MAPPYART:		// 31, 22
-				psx, psy, szx = 31, 22, 32
+				psx, psy, szx = 30, 21, 32
 			case SEOBJ_MAPPYSAF:		// 33, 22
-				psx, psy, szx = 33, 22, 32
+				psx, psy, szx = 32, 21, 32
 
 			case SEOBJ_MAPPYBELL:		// 35, 21
-				psx, psy = 35, 21
+				psx, psy = 34, 20
 			case SEOBJ_MAPPYBAL:		// 35, 22
-				psx, psy = 35, 21
+				psx, psy = 34, 21
 
 			default:
 				if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", scanbuf(maze.data, x, y, x, y, -2)) }
@@ -1482,6 +1482,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			}
 // expand and sanctuary
 			if psx >= 0 && psy >= 0 {
+				szx = 16
 				writepngtoimage(img, sents, szx,szy,psx,psy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 			}
 			if err == nil && ptamp != nil {
