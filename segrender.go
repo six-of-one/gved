@@ -569,9 +569,10 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		_, _, wtamp = itemGetPNG("gfx/wall_bkgs.b.png")			// master wall replace def
 		xp := scanxb(xdat, 0, 0, 0, 0, "")
 		Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
+//fmt.Printf("Se_mwal %d row %d\n",Se_mwal, Se_rwal)
 		Se_rrnd = 0
 		if Se_mwal < 0 { Se_mwal, Se_rwal, Se_rrnd = parser(xp, SE_MWALRND) }		// randomly select from wall row Se_rwal + rnd 0 - Se_rrnd val
-fmt.Printf("Se_rrnd %d\n",Se_rrnd)
+//fmt.Printf("Se_mwalrnd %d row %d Se_rrnd %d\n",Se_mwal, Se_rwal,Se_rrnd)
 		Se_mflor, _,_ = parser(xp, SE_MFLR)
 		if Se_mflor > Se_maxflr { Se_mflor = -1 }
 		flim := blankimage(16, 16)
@@ -766,7 +767,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 					  if Se_mwal >= 0 {
 								stamp = nil
 								rn := rndr(0, Se_rrnd)
-								writepngtoimage(img, wtamp, 16,16,0,0,wly+26,Se_mwal + rn, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
+								writepngtoimage(img, wtamp, 16,16,0,0,wly+26,Se_rwal + rn, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
 					  } else {
 						stamp = wallGetDestructableStamp(wp, adj, wc)
 					  }
@@ -822,7 +823,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 					  if Se_mwal >= 0 {
 								stamp = nil
 								rn := rndr(0,Se_rrnd)
-								writepngtoimage(img, wtamp, 16,16,0,0,wly,Se_mwal + rn, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+								writepngtoimage(img, wtamp, 16,16,0,0,wly,Se_rwal + rn, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					  } else {
 						stamp = wallGetStamp(wp, adj, wc)
 					  }

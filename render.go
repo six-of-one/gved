@@ -233,7 +233,7 @@ var parms = []int{
 	2, 2, 0, 1,
 	2, 3, 4, 36,
 	0, 2, 1, 2,
-	0, 0, 0, 0,
+	0, 3, 0, 0,
 }
 var maxparm = 15
 var secmd [64]int
