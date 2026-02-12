@@ -1395,6 +1395,8 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			case GORO_TEST:
 				err, _, ptamp = itemGetPNG("gfx/goro.16.png")
 	// SE expand
+			case SEOBJ_SE_ANKH:
+				psx, psy = 21, 11
 			case SEOBJ_FIRE_STICK:
 				psx, psy = 33, 26
 			case SEOBJ_G2_POISPOT:
@@ -1404,7 +1406,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			case SEOBJ_G2_QFUD:
 				psx, psy = 2, 11
 			case SEOBJ_KEYRING:		// 29, 11
-				psx, psy = 29, 11
+				psx, psy = 29, 10
 
 			case SEOBJ_MAPPYBDG:		// 33, 23
 				psx, psy = 33, 23
