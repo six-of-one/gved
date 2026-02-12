@@ -476,6 +476,7 @@ var wlfl = &walflr{}
 var Se_mflor int
 var Se_mwal int
 var Se_rwal int
+var Se_rrnd int
 
 // when map is loaded, store floors & walls as designated in xb_*.ed file after X Y size and before "xwfdn" marker
 
@@ -568,6 +569,8 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 		_, _, wtamp = itemGetPNG("gfx/wall_bkgs.b.png")			// master wall replace def
 		xp := scanxb(xdat, 0, 0, 0, 0, "")
 		Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
+		Se_rrnd = 0
+		if Se_mwal < 0 { Se_mwal, Se_rwal, Se_rrnd = parser(xp, SE_MWALRND) }		// randomly select from wall row Se_rwal + rnd 0 - Se_rrnd val
 		Se_mflor, _,_ = parser(xp, SE_MFLR)
 		if Se_mflor > Se_maxflr { Se_mflor = -1 }
 		flim := blankimage(16, 16)
@@ -606,7 +609,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
 			p,q,_ = parser(xp, SE_CFLOR)		// build cust floors from loaded png
 			if p >= 0 && p < curwf && !wlfl.flrblt[p] {
-fmt.Printf("flim %d\n",p)
+fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 				wlfl.flrblt[p] = true
 				bnds := wlfl.ftamp[p].Bounds()
 				iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
@@ -648,13 +651,13 @@ fmt.Printf("flim %d\n",p)
 				}
 				p3,c,_ := parser(xp, SE_TFLOR)
 				if p3 >= 0 && p3 < curwf {			// cust floor tiled in png (select tile with 'c' val) - laded by lod_maz from xb file
-					bnds :=  wlfl.flim[p3].Bounds()
+					bnds :=  wlfl.ftamp[p3].Bounds()
 					ih := bnds.Dy()
-fmt.Printf("SE_TFLOR %d - %s, x: %d\n",p3,wlfl.florn[p3],ih)
+//fmt.Printf("SE_TFLOR %d - %s, x: %d\n",p3,wlfl.florn[p3],ih)
 					writepngtoimage(img, wlfl.ftamp[p3], ih,ih,0,0,c,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
-				p4,_,_ := parser(xp, SE_NOFLOR)
-				if p3 < 0 && p2 < 0 && p < 0 && p4 < 0 && sb != SEOBJ_FLOORNODRAW {			// note: for now SEOBJ_FLOORNODRAW only works where players & monsters dont cross the tile, e.g. use SE_NOFLOR
+				p4,_,_ := parser(xp, SE_NOFLOR)			// note: for now SEOBJ_FLOORNODRAW only works where players & monsters dont cross the tile, e.g. use SE_NOFLOR
+				if p3 < 0 && p2 < 0 && p < 0 && p4 < 0 && sb != SEOBJ_FLOORNODRAW {
 				if Se_mflor >= 0 {
 					stamp = nil
 					_, ux, uy := lot(x, y, x, y)
@@ -761,7 +764,8 @@ fmt.Printf("SE_TFLOR %d - %s, x: %d\n",p3,wlfl.florn[p3],ih)
 					} else {
 					  if Se_mwal >= 0 {
 								stamp = nil
-								writepngtoimage(img, wtamp, 16,16,0,0,wly+26,Se_mwal, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
+								rn := rndr(0, Se_rrnd)
+								writepngtoimage(img, wtamp, 16,16,0,0,wly+26,Se_mwal + rn, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
 					  } else {
 						stamp = wallGetDestructableStamp(wp, adj, wc)
 					  }
@@ -816,7 +820,8 @@ fmt.Printf("SE_TFLOR %d - %s, x: %d\n",p3,wlfl.florn[p3],ih)
 					} else {
 					  if Se_mwal >= 0 {
 								stamp = nil
-								writepngtoimage(img, wtamp, 16,16,0,0,wly,Se_mwal, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+								rn := rndr(0, Se_rrnd)
+								writepngtoimage(img, wtamp, 16,16,0,0,wly,Se_mwal + rn, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					  } else {
 						stamp = wallGetStamp(wp, adj, wc)
 					  }

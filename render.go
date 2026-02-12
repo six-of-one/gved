@@ -221,8 +221,8 @@ const (
 	SE_MFLR		= 11	// master floor replace from string list - data: list entry
 // once we get to super mazes, can these be a localized area?
 	SE_TFLOR	= 12	// cust floor from xb*.ed, where floor pieces are tiled in sheet, data: line of xb, c floor tile col
-	SE_NOFLOR	= 13	// display no: regular floor tile, or master override - same as SEOBJ_FLOORNODRAW
-
+	SE_NOFLOR	= 13	// display no: regular floor tile, or master override - same as SEOBJ_FLOORNODRAW, but ents can occupy cell
+	SE_MWALRND	= 14	// master wall replace - under 0,0 as above, rnd loads of multiwall set, data: sheet, r, cnt rnd rows past - 2 rows on sheet 1 starting row 3 would be 0E000201
 // more:
 // 'item underlay' - put any item under, say a trap wall, or shootable wall so it appears when wall is gone, or even under a dragon, generator or item
 

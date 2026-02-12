@@ -11,6 +11,7 @@ import (
 	"image/color"
 	"math/rand"
 	"time"
+	"regexp"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/data/binding"
 )
@@ -327,6 +328,7 @@ if opts.Verbose { fmt.Printf("saving maze undo %s\n",dbf) }
 
 // load stored maze data into ebuf / eflg or other data stores
 var mazln int		// maze load # stored
+var reFloorT = regexp.MustCompile(`flor_.*`)
 
 func lod_maz(fil string, xdat Xdat, mdat MazeData, ud bool, ldb bool) int {
 
@@ -408,6 +410,7 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 		fmt.Sscanf(l,"%d %d",&ix, &iy)		// buffer size
 fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 		if ix > 0 && iy > 0 {
+			for i := 0; i < maxwf; i++ { wlfl.flrblt[i] = false }		// clear all built floors
 			l, fin, wal := "gfx/floor016.jpg gfx/wall_jsgv_A.b.png", "", ""		// defaults on fail - this happens not...
 			i := 0
 			lsv := 500
@@ -417,19 +420,19 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 				fmt.Sscanf(l,"%s %s",&fin, &wal)		// this loop will read cust walls & floor pairs until xwfdn
 				if fin != "xwfdn" {
 					if i <= maxwf { nwalflor() }
-					wlfl.florn[i] = fin
+					wlfl.florn[i] = fin					// if floor name starts 'flor_' this is accepted as a tiled floor set for individual use, and will not build a level sized floor
 					wlfl.walln[i] = wal
 					err, _, wlfl.ftamp[i] = itemGetPNG(fin)
 					if err != nil { wlfl.ftamp[i] = blankimage(64, 64) }
 					err, _, wlfl.wtamp[i] = itemGetPNG(wal)
 					if err != nil { wlfl.wtamp[i] = blankimage(832, 16) }
+					if reFloorT.MatchString(fin) { wlfl.flrblt[i] = true; fmt.Printf("flor_ match\n") }		// single row of vars floor tiles, do not multiplex to level sized copyover
 fmt.Printf("%d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i])
 					i++
 				}
 				lsv--
 			}
 			curwf = i	// current walls & floors for save
-			for i := 0; i < maxwf; i++ { wlfl.flrblt[i] = false }		// clear all built floors
 			for y := 0; y <= iy; y++ {	// read one line per element due to ops
 			for x := 0; x <= ix; x++ {
 				l, fin = "00", "000"
