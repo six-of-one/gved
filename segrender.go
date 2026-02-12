@@ -725,8 +725,8 @@ fmt.Printf("flim %d\n",p)
 					if (nothing & NOWALL) == 0 {
 						stamp = wallGetStamp(maze.wallpattern, adj, maze.wallcolor)
 				}
-// test of some items not place in mazes
-// this test is view cmd 's'
+	// test of some items not place in mazes
+	// this test is view cmd 's'
 				case MAZEOBJ_TILE_FLOOR:
 					if opts.SP {
 						ts := rand.Intn(470)
@@ -734,7 +734,7 @@ fmt.Printf("flim %d\n",p)
 						if ts == 111 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 						if ts == 311 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
 					}
-// end testing
+	// end testing
 			}}
 			wly, adj, walop := 0,0,0
 			if G1 {
@@ -814,7 +814,7 @@ fmt.Printf("flim %d\n",p)
 					}
 					walop = wbd
 				}
-// test of some items not place in mazes - place in empty floor tile @random
+	// test of some items not place in mazes - place in empty floor tile @random
 				case SEOBJ_FLOOR:
 					fallthrough
 				case G1OBJ_TILE_FLOOR:
@@ -855,18 +855,18 @@ fmt.Printf("flim %d\n",p)
 			if stamp != nil {
 				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
 			}
-// check door -> wall overlaps
+	// check door -> wall overlaps
 			if wly > 0 || walop > 0 {
-fmt.Printf("wall seg %d adj %d, type %d, dor: ",wly,adj,walop)
+	//fmt.Printf("wall seg %d adj %d, type %d, dor: ",wly,adj,walop)
 				for i := 0; i < 4; i++ {
 					s := scanbuf(maze.data, x + dirs[i].x, y + dirs[i].y, x + dirs[i].x, y + dirs[i].y, -2)
 					if s == G1OBJ_DOOR_HORIZ || s == G1OBJ_DOOR_VERT {
-						fmt.Printf("i(%d) %d.%d ",i, dirs[i].x, dirs[i].y)
+	//fmt.Printf("i(%d) %d.%d ",i, dirs[i].x, dirs[i].y)
 							ovlp := dorvwal[wly][i]
 							if ovlp > 0 { writepngtoimage(img, dvw, 16,16,15+ovlp,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16) }
 					}
 				}
-fmt.Printf("\n")
+	//fmt.Printf("\n")
 			}
 			if dots != 0 && nothing & NOWALL == 0 {
 				renderdots(img, (x-xb)*16, (y-yb)*16, dots)
@@ -874,6 +874,7 @@ fmt.Printf("\n")
 		}
 	}
 
+	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
 	for y := yb; y <= ys; y++ {
 if opts.Verbose { fmt.Printf("\n") }
 		for x := xb; x <= xs; x++ {
@@ -881,6 +882,7 @@ if opts.Verbose { fmt.Printf("\n") }
 			var dots int // dot count
 
 			ptamp = nil
+			psx, psy := -1, -1
 
 			xp := scanxb(xdat, x, y, x, y, "")
 			gtp := G1
@@ -1436,13 +1438,16 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				}
 			}
 // expand and sanctuary
+			if psx >= 0 && psy >= 0 {
+				writepngtoimage(img, sents, 16,16,psx,psy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+			}
 			if err == nil && ptamp != nil {
 
 //				r := image.Rect(0, 0, 11, 11)
 //				dst := image.NewRGBA(r)
 //				draw.Copy(dst, image.Pt(-4,-4), ptamp, r, draw.Over, nil)
 
-				offset := image.Pt((x-xb)*16, (y-yb)*16)
+				offset := image.Pt(vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 //				draw.Draw(img, dst.Bounds().Add(offset), dst, image.ZP, draw.Over)
 				draw.Draw(img, ptamp.Bounds().Add(offset), ptamp, image.ZP, draw.Over)
 			}

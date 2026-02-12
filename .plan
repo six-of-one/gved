@@ -69,7 +69,7 @@ viewport
   \_ bounding is done, needs tested
 
 possible:
-- down the line .ed stored maz# could be used to set maz num
+* down the line .ed stored maz# could be used to set maz num
 - .ed files need sanctuary details - special floors, cust walls, special settings
   - indicator for treasure rooms, secret rooms
 - dialog for setting / reading bits of #T hide mask and #flg blank maze keep mask
