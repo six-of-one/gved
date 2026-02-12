@@ -129,7 +129,7 @@ const (
 	G1OBJ_WALL_TRAP1 = 57
 	G1OBJ_TILE_TRAP1 = 58
 	G1OBJ_TRANSPORTER = 59
-	G1OBJ_TILE_STUN = 62
+//	G1OBJ_TILE_STUN = 62
 	G1OBJ_TREASURE_BAG = 64
 	G1OBJ_MONST_THIEF = 65
 	G1OBJ_EXTEND				= 66
@@ -322,7 +322,7 @@ var g1mapid = map[int]string{
 	G1OBJ_TRANSPORTER:	"TRANSPORTER",
 	60:		"Nothing_60",
 	61:		"Nothing_61",
-	G1OBJ_TILE_STUN:	"TILE_STUN",
+//	G1OBJ_TILE_STUN:	"TILE_STUN",
 	63:		"Nothing_63",
 	G1OBJ_TREASURE_BAG:	"TREASURE_BAG",
 	G1OBJ_MONST_THIEF:	"THIEF",
@@ -600,7 +600,7 @@ var g1auds = map[int]string{
 	G1OBJ_TRANSPORTER:	"sfx/g1_teleport.ogg",
 	60:		"",
 	61:		"",
-	G1OBJ_TILE_STUN:	"sfx/g1_stun.ogg",
+//	G1OBJ_TILE_STUN:	"sfx/g1_stun.ogg",
 	63:		"",
 	G1OBJ_TREASURE_BAG:	"sfx/g1_treaspick.ogg",
 	G1OBJ_MONST_THIEF:	"sfx/g1thf_lau1.ogg",
