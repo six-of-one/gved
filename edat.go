@@ -1063,7 +1063,7 @@ func zero_stat() {
 
 func stats(elm int) {
 
-	if elm >= 0 {
+	if elm >= 0 && elm < 1000 {
 		if G1 { g1stat[elm]++ }
 		if G2 { g2stat[elm]++ }
 	}
@@ -1120,12 +1120,12 @@ func calc_stats() {
 		if opts.Verbose { fmt.Printf("%s\nstats:\n",stl) }
 
 	if G1 {
-	for y := 0; y <= 65; y++ { if g1stat[y] > 0 {
+	for y := 0; y <= maxid(); y++ { if g1stat[y] > 0 {
 		if opts.Verbose { fmt.Printf("  %s: %d\n",g1mapid[valid_id(y)],g1stat[y]) }
 		stl += fmt.Sprintf("  %s: %d\n",g1mapid[valid_id(y)],g1stat[y])
 	}}}
 	if G2 {
-	for y := 0; y <= 65; y++ { if g2stat[y] > 0 {
+	for y := 0; y <= maxid(); y++ { if g2stat[y] > 0 {
 		if opts.Verbose { fmt.Printf("  %s: %d\n",g2mapid[valid_id(y)],g2stat[y]) }
 		stl += fmt.Sprintf("  %s: %d\n",g2mapid[valid_id(y)],g2stat[y])
 	}}}
