@@ -226,6 +226,7 @@ const (
 
 	SEOBJ_MAPPYBELL				= 182		// 35, 21
 	SEOBJ_MAPPYBAL				= 183		// 35, 22
+	SEOBJ_MAPPYGORO				= 184		// 36, 22
 
 //	SEOBJ_WATER_POOL			= 1
 //	SEOBJ_SLIME_POOL			= 1
@@ -447,6 +448,7 @@ var g1mapid = map[int]string{
 
 	SEOBJ_MAPPYBELL:	"SE_MAPPYBELL",		// 35, 21
 	SEOBJ_MAPPYBAL:		"SE_MAPPYBAL",		// 35, 22
+	SEOBJ_MAPPYGORO:	"SE_MAPPYGORO",		// 35, 22
 //	169:	"SE_",
 
 /*
@@ -724,6 +726,7 @@ var g1auds = map[int]string{
 
 	SEOBJ_MAPPYBELL:	"",		// 35, 21
 	SEOBJ_MAPPYBAL:		"",		// 35, 22
+	SEOBJ_MAPPYGORO:	"",		// 35, 22
 
 /*
 	10:	"",

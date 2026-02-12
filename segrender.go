@@ -430,11 +430,11 @@ func vcoord(c, cb, ba int) int {
 var dbgwrt bool
 //								dbgwrt = true
 
-func writepngtoimage(img *image.NRGBA, lptamp image.Image, rx,ry,cl,rw, xw, yw int) *image.RGBA {
+func writepngtoimage(img *image.NRGBA, lptamp image.Image, rx,ry,ax,ay,cl,rw, xw, yw int) *image.RGBA {
 
 	bnds := lptamp.Bounds()
 	iw, ih := bnds.Dx(), bnds.Dy()
-	rec := image.Rect((cl)*rx, (rw)*ry, (cl+1)*rx, (rw+1)*ry)			// this pegs the intended rect on sprite sheet
+	rec := image.Rect((cl)*rx, (rw)*ry, ax+(cl+1)*rx, ay+(rw+1)*ry)			// this pegs the intended rect on sprite sheet
 	rrr := image.Rect(0,0,iw,ih)
 	cpy := image.NewRGBA(rrr)
 	draw.Copy(cpy, image.Pt(0,0), lptamp, rec, draw.Over, nil)
@@ -643,20 +643,20 @@ fmt.Printf("flim %d\n",p)
 				p2,_,_ := parser(xp, SE_CFLOR)
 				if p2 >= 0 && p2 < curwf {			// cust floor from png - laded by lod_maz from xb file
 					_, ux, uy := lot(x, y, x, y)
-					writepngtoimage(img, wlfl.flim[p2], 16,16,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writepngtoimage(img, wlfl.flim[p2], 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
 				if p2 < 0 && p < 0 {
 				if Se_mflor >= 0 {
 					stamp = nil
 					_, ux, uy := lot(x, y, x, y)
-					writepngtoimage(img, flim, 16,16,ux, uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// master floor replace SE_MFLR
+					writepngtoimage(img, flim, 16,16,0,0,ux, uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// master floor replace SE_MFLR
 				 } else {
 					writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// g1 floors & overrides SE_FLOR
 				}}
 				if p >= 0 || p2 >= 0 || Se_mflor >= 0 {				// cust floor or colortiles req this shadow set (for no shadow, set wp cust to 7)
 					na := (adj >> 2)		// div 4
 					if na > 0 && wp < 6 {
-						writepngtoimage(img, shtamp, 16,16,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+						writepngtoimage(img, shtamp, 16,16,0,0,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					}
 				}
 			}}
@@ -748,11 +748,11 @@ fmt.Printf("flim %d\n",p)
 					p,q,_ = parser(xp, SE_CWAL)
 					if p >= 0 && p < curwf {
 						stamp = nil
-						writepngtoimage(img, wlfl.wtamp[p], 16,16,wly+26,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+						writepngtoimage(img, wlfl.wtamp[p], 16,16,0,0,wly+26,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					} else {
 					  if Se_mwal >= 0 {
 								stamp = nil
-								writepngtoimage(img, wtamp, 16,16,wly+26,Se_mwal, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
+								writepngtoimage(img, wtamp, 16,16,0,0,wly+26,Se_mwal, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
 					  } else {
 						stamp = wallGetDestructableStamp(wp, adj, wc)
 					  }
@@ -770,7 +770,7 @@ fmt.Printf("flim %d\n",p)
 						if !opts.Nosec {
 							wlt = AdjustHue(wlfl.wtamp[p], 41.0)
 						}
-						writepngtoimage(img, wlt, 16,16,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+						writepngtoimage(img, wlt, 16,16,0,0,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					} else {
 						stamp = wallGetStamp(wp, adj, wc)
 						if !opts.Nosec {
@@ -803,11 +803,11 @@ fmt.Printf("flim %d\n",p)
 					p,q,_ = parser(xp, SE_CWAL)
 					if p >= 0 && p < curwf {
 						stamp = nil
-						writepngtoimage(img, wlfl.wtamp[p], 16,16,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+						writepngtoimage(img, wlfl.wtamp[p], 16,16,0,0,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					} else {
 					  if Se_mwal >= 0 {
 								stamp = nil
-								writepngtoimage(img, wtamp, 16,16,wly,Se_mwal, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+								writepngtoimage(img, wtamp, 16,16,0,0,wly,Se_mwal, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					  } else {
 						stamp = wallGetStamp(wp, adj, wc)
 					  }
@@ -863,7 +863,7 @@ fmt.Printf("flim %d\n",p)
 					if s == G1OBJ_DOOR_HORIZ || s == G1OBJ_DOOR_VERT {
 	//fmt.Printf("i(%d) %d.%d ",i, dirs[i].x, dirs[i].y)
 							ovlp := dorvwal[wly][i]
-							if ovlp > 0 { writepngtoimage(img, dvw, 16,16,15+ovlp,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16) }
+							if ovlp > 0 { writepngtoimage(img, dvw, 16,16,0,0,15+ovlp,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16) }
 					}
 				}
 	//fmt.Printf("\n")
@@ -882,7 +882,7 @@ if opts.Verbose { fmt.Printf("\n") }
 			var dots int // dot count
 
 			ptamp = nil
-			psx, psy, szx, szy := -1, -1, 16 ,16
+			psx, psy, szx, szy := -1, -1, 0 ,0
 
 			xp := scanxb(xdat, x, y, x, y, "")
 			gtp := G1
@@ -1408,30 +1408,32 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			case SEOBJ_KEYRING:
 				psx, psy = 28, 10
 
-			case SEOBJ_MAPPYBDG:		// 33, 23
+			case SEOBJ_MAPPYBDG:
 				psx, psy = 32, 22
+			case SEOBJ_MAPPYGORO:
+				psx, psy = 34, 22
 
 			case SEOBJ_MAPPYARAD:		// 25, 21
-				psx, psy, szx = 24, 20, 32
+				psx, psy, szx = 24, 20, 16
 			case SEOBJ_MAPPYATV:		// 27, 21
-				psx, psy, szx = 26, 20, 32
+				psx, psy, szx = 26, 20, 16
 			case SEOBJ_MAPPYAPC:		// 29, 21
-				psx, psy, szx = 28, 20, 32
+				psx, psy, szx = 28, 20, 16
 			case SEOBJ_MAPPYAART:		// 31, 21
-				psx, psy, szx = 30, 20, 32
+				psx, psy, szx = 30, 20, 16
 			case SEOBJ_MAPPYASAF:		// 33, 21
-				psx, psy, szx = 32, 20, 32
+				psx, psy, szx = 32, 20, 16
 
 			case SEOBJ_MAPPYRAD:		// 25, 22
-				psx, psy, szx = 24, 21, 32
+				psx, psy, szx = 24, 21, 16
 			case SEOBJ_MAPPYTV:		// 27, 22
-				psx, psy, szx = 26, 21, 32
+				psx, psy, szx = 26, 21, 16
 			case SEOBJ_MAPPYPC:		// 29, 22
-				psx, psy, szx = 28, 21, 32
+				psx, psy, szx = 28, 21, 16
 			case SEOBJ_MAPPYART:		// 31, 22
-				psx, psy, szx = 30, 21, 32
+				psx, psy, szx = 30, 21, 16
 			case SEOBJ_MAPPYSAF:		// 33, 22
-				psx, psy, szx = 32, 21, 32
+				psx, psy, szx = 32, 21, 16
 
 			case SEOBJ_MAPPYBELL:		// 35, 21
 				psx, psy = 34, 20
@@ -1482,7 +1484,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			}
 // expand and sanctuary
 			if psx >= 0 && psy >= 0 {
-				writepngtoimage(img, sents, szx,szy,psx,psy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				writepngtoimage(img, sents, 16,16,szx,szy,psx,psy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 			}
 			if err == nil && ptamp != nil {
 
