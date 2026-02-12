@@ -1487,14 +1487,6 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				writepngtoimage(img, sents, 16,16,szx,szy,psx,psy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 			}
 			if err == nil && ptamp != nil {
-
-//				r := image.Rect(0, 0, 11, 11)
-//				dst := image.NewRGBA(r)
-//				draw.Copy(dst, image.Pt(-4,-4), ptamp, r, draw.Over, nil)
-
-//				offset := image.Pt(vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
-//				draw.Draw(img, dst.Bounds().Add(offset), dst, image.ZP, draw.Over)
-//				draw.Draw(img, ptamp.Bounds().Add(offset), ptamp, image.ZP, draw.Over)
 				writepngtoimage(img, ptamp, 16,16,0,0,0,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 			}
 
