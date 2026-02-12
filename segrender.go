@@ -648,11 +648,13 @@ fmt.Printf("flim %d\n",p)
 				}
 				p3,c,_ := parser(xp, SE_TFLOR)
 				if p3 >= 0 && p3 < curwf {			// cust floor tiled in png (select tile with 'c' val) - laded by lod_maz from xb file
-					bnds :=  wlfl.flim[p2].Bounds()
+					bnds :=  wlfl.flim[p3].Bounds()
 					ih := bnds.Dy()
-					writepngtoimage(img, wlfl.flim[p3], ih,ih,0,0,0,c,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+fmt.Printf("SE_TFLOR %d - %s, x: %d\n",p3,wlfl.florn[p3],ih)
+					writepngtoimage(img, wlfl.ftamp[p3], ih,ih,0,0,c,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}
-				if p3 < 0 && p2 < 0 && p < 0 && sb != SEOBJ_FLOORNODRAW {
+				p4,_,_ := parser(xp, SE_NOFLOR)
+				if p3 < 0 && p2 < 0 && p < 0 && p4 < 0 && sb != SEOBJ_FLOORNODRAW {			// note: for now SEOBJ_FLOORNODRAW only works where players & monsters dont cross the tile, e.g. use SE_NOFLOR
 				if Se_mflor >= 0 {
 					stamp = nil
 					_, ux, uy := lot(x, y, x, y)
@@ -660,7 +662,7 @@ fmt.Printf("flim %d\n",p)
 				 } else {
 					writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// g1 floors & overrides SE_FLOR
 				}}
-				if p >= 0 || p2 >= 0 || p3 >= 0 || Se_mflor >= 0 {				// cust floor or colortiles req this shadow set (for no shadow, set wp cust to 7)
+				if p >= 0 || p2 >= 0 || p3 >= 0 || p4 >= 0 || Se_mflor >= 0 {				// cust floor or colortiles req this shadow set (for no shadow, set wp cust to 7)
 					na := (adj >> 2)		// div 4
 					if na > 0 && wp < 6 {
 						writepngtoimage(img, shtamp, 16,16,0,0,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
