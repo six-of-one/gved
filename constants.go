@@ -191,6 +191,7 @@ const (
 // g2 pot inv
 // g2 key				153
 // g2 power invis
+	SEOBJ_SE_ANKH				= 154
 	SEOBJ_POWER_REPULSE			= 155
 	SEOBJ_POWER_REFLECT			= 156
 	SEOBJ_POWER_TRANSPORT		= 157
@@ -412,7 +413,7 @@ var g1mapid = map[int]string{
 	151:	"No_thing_151",
 	152:	"No_thing_152",
 	153:	"No_thing_153",
-	154:	"No_thing_154",
+	SEOBJ_SE_ANKH:	"SE_ANKH",
 	SEOBJ_POWER_REPULSE:	"SE_POWER_REPULSE",
 	SEOBJ_POWER_REFLECT:	"SE_POWER_REFLECT",
 	SEOBJ_POWER_TRANSPORT:	"SE_POWER_TRANSPORT",
@@ -689,7 +690,7 @@ var g1auds = map[int]string{
 	151:	"",
 	152:	"",
 	153:	"",
-	154:	"",
+	SEOBJ_SE_ANKH:	"sfx/g1_potionpick.ogg",
 	SEOBJ_POWER_REPULSE:	"sfx/g1_potionpick.ogg",
 	SEOBJ_POWER_REFLECT:	"sfx/g2_bouncshot.ogg",
 	SEOBJ_POWER_TRANSPORT:	"sfx/g1_teleport.ogg",
