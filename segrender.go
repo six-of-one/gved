@@ -495,10 +495,10 @@ func nwalflor(){
 	maxwf++
 	wlfl.florn = append(wlfl.florn,"gfx/1x1.png")
 	wlfl.walln = append(wlfl.walln,"gfx/1x1.png")
-	wlfl.ftamp = append(wlfl.ftamp,nil)
-	wlfl.flim  = append(wlfl.flim,nil)
-	wlfl.wtamp = append(wlfl.wtamp,nil)
-	wlfl.flrblt = append(wlfl.flrblt,false)
+	wlfl.ftamp = append(wlfl.ftamp,nil)				// floor tile loaded from fil
+	wlfl.flim  = append(wlfl.flim,nil)				// floor panel made for maze writepngtoimage
+	wlfl.wtamp = append(wlfl.wtamp,nil)				// wall tiles, should be 26 16x16 segments + 26 shot wall 16x16 segs, as many rows as desired
+	wlfl.flrblt = append(wlfl.flrblt,false)			// flag indicates if floor built after loaded
 }
 
 // image from buffer segment			- stat: display stats 'On image' if true
@@ -557,7 +557,6 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
 
 //	if G2 {			removed G² render
-
 
 	_, _, shtamp := itemGetPNG("gfx/shadows.16.png")		// no error block on this
 	_, _, wtamp = itemGetPNG("gfx/wall_bkgs.b.png")			// master wall replace def
