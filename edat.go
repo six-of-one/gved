@@ -497,6 +497,7 @@ fmt.Printf("%d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i])
 		}
 	}
   }
+	flordirt = true			// mark floor dirty so it gets rebuilt
 	return edp
 }
 

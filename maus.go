@@ -222,6 +222,7 @@ fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd
 				pmx = mxmd; pmy = mymd
 				ed_maze(true)
 			}
+			flordirt = opts.bufdrt
 			statlin(pos,tsshn)
 		} else {				// no op on mouse move here
 			statlin(tcmdhn,tsshn)
@@ -431,6 +432,7 @@ fmt.Printf("\n")
 		}
 //			fmt.Printf(" chg elem: %d maze: %d x %d\n",opbuf[xy{mx, my}],mx,my)
 		}}
+		flordirt = opts.bufdrt
 		if pbe && opts.bufdrt {			// paste buf edit
 			pb_loced(masbcnt)
 			opts.bufdrt = false

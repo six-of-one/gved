@@ -501,54 +501,14 @@ func nwalflor(){
 	wlfl.flrblt = append(wlfl.flrblt,false)			// flag indicates if floor built after loaded
 }
 
-// image from buffer segment			- stat: display stats 'On image' if true
-// segment of buffer from xb,yb to xs,ys (begin to stop)
+// make base floor, of:
 
-func segimage(mdat MazeData, xdat Xdat, fdat [14]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
+var florb *image.NRGBA
+var flordirt bool			// whether or not an edit could dirty the flor
 
-//if opts.Verbose {
-fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
+func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 
-	var err error
-	var ptamp image.Image		// png stamp
-	var wtamp image.Image		// png stamp
-
-// dummy maze for ops that require it
-	var maze = &Maze{}
-// G² edit & game will now translate to SE mode
-	var skp bool
-	if G2 {
-		maze.data = make(map[xy]int)
-		for y := 0; y <= opts.DimY; y++ {
-			for x := 0; x <= opts.DimX; x++ {
-				c := g2tose[mdat[xy{x, y}]]
-				if mdat[xy{x, y}] > G1OBJ_EXTEND { skp = true }
-				maze.data[xy{x, y}] = c
-			}}
-	}
-	if skp || !G2 { maze.data = mdat }			// whats really wild is this just translates for the seg render system - edit still works normal
-
-// get flags when passed
-	flagbytes := make([]byte, 4)
-	flagbytes[0] = byte(fdat[1])
-	flagbytes[1] = byte(fdat[2])
-	flagbytes[2] = byte(fdat[3])
-	flagbytes[3] = byte(fdat[4])
-	maze.flags = int(binary.BigEndian.Uint32(flagbytes))
-
-	maze.wallpattern = fdat[5] & 0x0f
-	maze.floorpattern = (fdat[5] & 0xf0) >> 4
-	maze.wallcolor = fdat[6] & 0x0f
-	maze.floorcolor = (fdat[6] & 0xf0) >> 4
-
-	// unpin issue - -vals flummox canvas writes
-	xba, yba := 0, 0
-	if xb < 0 { xba = absint(xb) }
-	if yb < 0 { yba = absint(yb) }
-
-fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
-
-	// 8 pixels * 2 tiles * x,y stamps
+	xb, yb := 0,0
 	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
 
 	// Map out where forcefield floor tiles are, so we can lay those down first
@@ -559,18 +519,12 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 //	if G2 {			removed G² render
 
 	_, _, shtamp := itemGetPNG("gfx/shadows.16.png")		// no error block on this
-	_, _, wtamp = itemGetPNG("gfx/wall_bkgs.b.png")			// master wall replace def
 	xp := scanxb(xdat, 0, 0, 0, 0, "")
-	Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
-//fmt.Printf("Se_mwal %d row %d\n",Se_mwal, Se_rwal)
-	Se_rrnd = 0
-	if Se_mwal < 0 { Se_mwal, Se_rwal, Se_rrnd = parser(xp, SE_MWALRND) }		// randomly select from wall row Se_rwal + rnd 0 - Se_rrnd val
-//fmt.Printf("Se_mwalrnd %d row %d Se_rrnd %d\n",Se_mwal, Se_rwal,Se_rrnd)
 	Se_mflor, _,_ = parser(xp, SE_MFLR)
 	if Se_mflor > Se_maxflr { Se_mflor = -1 }
 	flim := blankimage(16, 16)
 	if Se_mflor >= 0 {
-		err, _, ptamp = itemGetPNG(Se_cflr[Se_mflor])
+		err, _, ptamp := itemGetPNG(Se_cflr[Se_mflor])
 		if err == nil {
 			bnds := ptamp.Bounds()
 			iw, ih := bnds.Dx(), bnds.Dy()		  // in theory this image does not HAVE to be square anymore
@@ -627,7 +581,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 
 			stamp := floorGetStamp(fp, adj+rand.Intn(4), fc)
 			if sb < 0 {
-				coltil(img,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// null cell, black tile
+				coltil(img,0,x*16, y*16)		// null cell, black tile
 			}
 			if sb >= 0 {
 			if (nothing & NOFLOOR) == 0 {
@@ -637,33 +591,33 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 				cl = 0
 				if p >= 0 {
 					cl = uint32(0xff000000 + r + q * 256 + p * 65536)
-					coltil(img,cl,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					coltil(img,cl,x*16, y*16)
 				}
 				p2,_,_ := parser(xp, SE_CFLOR)
 				if p2 >= 0 && p2 < curwf {			// cust floor from png - laded by lod_maz from xb file
-					_, ux, uy := lot(x, y, x, y)
-					writepngtoimage(img, wlfl.flim[p2], 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+//					_, ux, uy := lot(x, y, x, y)
+					writepngtoimage(img, wlfl.flim[p2], 16,16,0,0,x,y,x*16, y*16)
 				}
 				p3,c,_ := parser(xp, SE_TFLOR)
 				if p3 >= 0 && p3 < curwf {			// cust floor tiled in png (select tile with 'c' val) - laded by lod_maz from xb file
 					bnds :=  wlfl.ftamp[p3].Bounds()
 					ih := bnds.Dy()
 //fmt.Printf("SE_TFLOR %d - %s, x: %d\n",p3,wlfl.florn[p3],ih)
-					writepngtoimage(img, wlfl.ftamp[p3], ih,ih,0,0,c,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writepngtoimage(img, wlfl.ftamp[p3], ih,ih,0,0,c,0,x*16, y*16)
 				}
 				p4,_,_ := parser(xp, SE_NOFLOR)			// note: for now SEOBJ_FLOORNODRAW only works where players & monsters dont cross the tile, e.g. use SE_NOFLOR
 				if p3 < 0 && p2 < 0 && p < 0 && p4 < 0 && sb != SEOBJ_FLOORNODRAW {
 				if Se_mflor >= 0 {
 					stamp = nil
-					_, ux, uy := lot(x, y, x, y)
-					writepngtoimage(img, flim, 16,16,0,0,ux, uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// master floor replace SE_MFLR
+//					_, ux, uy := lot(x, y, x, y)
+					writepngtoimage(img, flim, 16,16,0,0,x, y,x*16, y*16)		// master floor replace SE_MFLR
 				 } else {
-					writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// G¹ floors & overrides SE_FLOR
+					writestamptoimage(gt,img, stamp, x*16, y*16)		// G¹ floors & overrides SE_FLOR
 				}}
 				if p >= 0 || p2 >= 0 || p3 >= 0 || p4 >= 0 || Se_mflor >= 0 {				// cust floor or colortiles req this shadow set (for no shadow, set wp cust to 7)
 					na := (adj >> 2)		// div 4
 					if na > 0 && wp < shad_wallpat() {
-						writepngtoimage(img, shtamp, 16,16,0,0,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+						writepngtoimage(img, shtamp, 16,16,0,0,na,0, x*16, y*16)
 					}
 				}
 			}}
@@ -672,14 +626,84 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 //fmt.Printf("ffbeam %d x %d, vc: %d x %d\n ",x,y,vcoord(x,xb,xba), vcoord(y,yb,yba))
 					stamp.ptype = "forcefield"								// this is writter over: void tiles, color tiles, cust floor
 					stamp.pnum = 0
-					writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writestamptoimage(G1,img, stamp, x*16, y*16)
 				}
 			}
 		}
 	}				// } removed G² render
+	return img
+}
+
+// image from buffer segment			- stat: display stats 'On image' if true
+// segment of buffer from xb,yb to xs,ys (begin to stop)
+
+func segimage(mdat MazeData, xdat Xdat, fdat [14]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
+
+//if opts.Verbose {
+fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
+
+	var err error
+	var ptamp image.Image		// png stamp
+	var wtamp image.Image		// png stamp
+
+// dummy maze for ops that require it
+	var maze = &Maze{}
+// G² edit & game will now translate to SE mode
+	var skp bool
+	if G2 {
+		maze.data = make(map[xy]int)
+		for y := 0; y <= opts.DimY; y++ {
+			for x := 0; x <= opts.DimX; x++ {
+				c := g2tose[mdat[xy{x, y}]]
+				if mdat[xy{x, y}] > G1OBJ_EXTEND { skp = true }
+				maze.data[xy{x, y}] = c
+			}}
+	}
+	if skp || !G2 { maze.data = mdat }			// whats really wild is this just translates for the seg render system - edit still works normal
+
+// get flags when passed
+	flagbytes := make([]byte, 4)
+	flagbytes[0] = byte(fdat[1])
+	flagbytes[1] = byte(fdat[2])
+	flagbytes[2] = byte(fdat[3])
+	flagbytes[3] = byte(fdat[4])
+	maze.flags = int(binary.BigEndian.Uint32(flagbytes))
+
+	maze.wallpattern = fdat[5] & 0x0f
+	maze.floorpattern = (fdat[5] & 0xf0) >> 4
+	maze.wallcolor = fdat[6] & 0x0f
+	maze.floorcolor = (fdat[6] & 0xf0) >> 4
+
+	// unpin issue - -vals flummox canvas writes
+	xba, yba := 0, 0
+	if xb < 0 { xba = absint(xb) }
+	if yb < 0 { yba = absint(yb) }
+
+	if flordirt { florb = florbas(maze, xdat, opts.DimX+1, opts.DimY+1) }		//rebuild floor on load or when edit dirties it
+	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
+	bnds :=  florb.Bounds()
+	ih, iw := bnds.Dy(),bnds.Dx()
+	writepngtoimage(img, florb, iw,ih,0,0,0,0,0,0)			// this is the base image, used for animation & gameplay
+	for y := yb; y < ys; y++ {
+		for x := xb; x < xs; x++ {
+			_, ux, uy := lot(x, y, x, y)
+			writepngtoimage(img, florb, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+		}}
+
+fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
+
+	// 8 pixels * 2 tiles * x,y stamps
 
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & G² draw walls, see screens
+	_, _, wtamp = itemGetPNG("gfx/wall_bkgs.b.png")			// master wall replace def
+	xp := scanxb(xdat, 0, 0, 0, 0, "")
+	Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
+//fmt.Printf("Se_mwal %d row %d\n",Se_mwal, Se_rwal)
+	Se_rrnd = 0
+	if Se_mwal < 0 { Se_mwal, Se_rwal, Se_rrnd = parser(xp, SE_MWALRND) }		// randomly select from wall row Se_rwal + rnd 0 - Se_rrnd val
+//fmt.Printf("Se_mwalrnd %d row %d Se_rrnd %d\n",Se_mwal, Se_rwal,Se_rrnd)
+
 	_, _, dvw := itemGetPNG("gfx/g1door_overlp.png")			// door over wall std
 	for y := yb; y <= ys; y++ {
 		for x := xb; x <= xs; x++ {
