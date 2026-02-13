@@ -517,7 +517,6 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 	for y := 0; y < 11; y++ {
 		edmaze.optbyts[y] = eflg[y]
 	}
-	if wpalop && palfol { palete(0) }
 	flagbytes := make([]byte, 4)
 	flagbytes[0] = byte(eflg[1])
 	flagbytes[1] = byte(eflg[2])
@@ -535,6 +534,7 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 		edmaze.wallcolor = Ovwallcol
 		edmaze.floorcolor = Ovflorcol
 	}
+	if wpalop && palfol { palete(0) }
 }
 // udpate maze from edits - rld false to keep overload colors / pats
 func ed_maze(rld bool) {
@@ -795,8 +795,12 @@ var plflg [14]int
 var palxs int
 var palys int
 var palfol bool		// palette decor follows map chg
+var cpal5 int
+var cpal6 int
 
 func palete(p int) {
+
+  if cpal5 != eflg[5] || cpal6 != eflg[6] {
 
 	pmx := opts.DimX; pmy := opts.DimY
 	clr_buf(plbuf, xplb, pmx, pmy, -1, -66)
@@ -808,6 +812,9 @@ func palete(p int) {
 		if palfol { fax(&plflg,&eflg,11)}
 		bwin(cpx+1, cpy+1, 0, plbuf, xplb, plflg, "pal") }
 	opts.DimX = pmx; opts.DimY = pmy
+	cpal5 = eflg[5]
+	cpal6 = eflg[6]
+	}
 }
 
 // typer for pal win

@@ -573,6 +573,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				nothing = nothing ^ NOFLOOR
 				spau = fmt.Sprintf("no floors: %d\n",nothing & NOFLOOR)
 				opts.dntr = true
+				flordirt = 1
 			}
 		case 80:		// P
 			if !cmdoff {
