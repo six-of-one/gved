@@ -690,13 +690,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 
 	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
 	if flordirt > 0 { florb = florbas(maze, xdat, opts.DimX+1, opts.DimY+1) }		//rebuild floor on load or when edit dirties it
-	if flordirt >= 0 {
-		for y := yb; y < ys; y++ {
-			for x := xb; x < xs; x++ {
-				_, ux, uy := lot(x, y, x, y)
-				writepngtoimage(img, florb, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
-			}}
-	} else {	// -1
+	if flordirt < 0 {	// -1
 		img = florbas(maze, xdat, opts.DimX+1, opts.DimY+1)
 //		flordirt = fldrsv
 	}
@@ -738,6 +732,10 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			nwt := NOWALL | NOG1W		// reg G¹ walls taken out by themselves (no traps, cycs etc) by NOG1W flags
 			wbd := scanbuf(maze.data, x, y, x, y, -2)
 			vcx, vcy := vcoord(x,xb,xba), vcoord(y,yb,yba)
+			if flordirt >= 0 {
+				_, ux, uy := lot(x, y, x, y)
+				writepngtoimage(img, florb, 16,16,0,0,ux,uy,vcx*16, vcy*16)
+			}
 			switch wbd {
 			case G1OBJ_WALL_DESTRUCTABLE:
 				adj, wly = checkwalladj8g1(maze, x, y)
