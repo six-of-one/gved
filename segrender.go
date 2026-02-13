@@ -504,7 +504,7 @@ func nwalflor(){
 	wlfl.flrblt = append(wlfl.flrblt,false)			// flag indicates if floor built after loaded
 }
 
-// make base floor, of:
+// make base floor, of: null space, SE_COLRT, SE_CFLOR, SE_TFLOR, SE_NOFLOR, Se_mflor, std floor, adj/wly shadows, ff beams
 
 var florb *image.NRGBA
 var flordirt int			// whether or not an edit could dirty the flor, pb & palete set to -1
@@ -518,6 +518,7 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
 
+// ** this causes a bug with traps & ff on custom floors, it needs to be done every wp, wc, fp, fc re-assign where there is a trap/ff and should be in animate
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
 
 //	if G2 {			removed G² render
@@ -527,7 +528,7 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 	Se_mflor, _,_ = parser(xp, SE_MFLR)
 	if Se_mflor > Se_maxflr { Se_mflor = -1 }
 	flim := blankimage(16, 16)
-	if Se_mflor >= 0 {
+	if Se_mflor >= 0 {			// ** does not need doen every entry **
 		err, _, ptamp := itemGetPNG(Se_cflr[Se_mflor])
 		if err == nil {
 			bnds := ptamp.Bounds()
@@ -545,6 +546,7 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 		} else { Se_mflor = -1 }
 	}
 // G¹ checks
+// building the ENTIRE floor everytime we come here as main maze (not palete, or pb), which is much slower
 	for y := yb; y < ys; y++ {
 		for x := xb; x < xs; x++ {
 			adj := 0
