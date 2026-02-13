@@ -535,7 +535,7 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 		edmaze.wallcolor = Ovwallcol
 		edmaze.floorcolor = Ovflorcol
 	}
-	if wpalop && palfol { palete(0) }
+	if wpalop && palfol { palete(pals) }
 }
 // udpate maze from edits - rld false to keep overload colors / pats
 func ed_maze(rld bool) {
@@ -788,8 +788,9 @@ var g2stat [1000]int
 var stonce [1000]int	// on;y display a stat once
 
 // bring up edit palette after saving
-var wpalop bool		// is the pb win open?
+var wpalop bool		// is palete following main win maze decor?
 var wpal fyne.Window // is the pal win open?
+var pals int	// are we in se palete
 var plbuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
 var xplb Xdat
 var plflg [14]int
@@ -803,6 +804,7 @@ func palete(p int) {
 
   if cpal5 != eflg[5] || cpal6 != eflg[6] {
 
+	pals = p
 	pmx := opts.DimX; pmy := opts.DimY
 	clr_buf(plbuf, xplb, pmx, pmy, -1, -66)
 	fil := fmt.Sprintf(".ed/pal%03d_g%d.ed",p,opts.Gtp)
@@ -898,6 +900,8 @@ func palRune(r rune) {
 		case 'L': listK = dboxtx("Edit key assignments","",400,800, close_keys,palRune); list_keys()
 		case 's': fallthrough
 		case 'S': statsB = dboxtx("Maze stats","",400,700,close_stats,palRune); calc_stats()
+		case 'p': fallthrough
+		case 'P': pals = absint(pals - 1); calc_stats()
 		case 'q': fallthrough
 		case 'Q': if wpalop { wpalop = false; wpal.Close() }
 		default:
@@ -1144,7 +1148,7 @@ func calc_stats() {
 	if statsB != nil { statsB.Set(stl) }
 	stl_str = stl	// for mini stat append
 //	bwin(palxs, palys, 0, plbuf, plflg)
-	if wpalop { if palfol { palete(0) }}
+	if wpalop { if palfol { palete(pals) }}
 }
 
 // cut / copy & paste
