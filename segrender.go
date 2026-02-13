@@ -162,34 +162,35 @@ func isdoorg1(t int) bool {
 // shadows by wall pattern - G²
 
 func shad_wallpat() int {
-
+	wp := 6
+	if G2 { wp = 11 }
+	return wp
 }
 
 // G¹ version
 func checkwalladj3g1(maze *Maze, xdat Xdat, x int, y int) int {
 	adj := 0
 	wp := maze.wallpattern
-	wpsha := 6
-	if G2 { wpsha }
+	wpsha := shad_wallpat()		// what wall patterns have shadows, G2 < 11, SE < 6
 
 	xp := scanxb(xdat, x, y, x-1, y, "")
 	p,_,_ := parser(xp, SE_WALL)			// set wall pat
 	if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
-	if iswallg1(scanbuf(maze.data, x, y, x-1, y, -2)) && wp < 6 {
+	if iswallg1(scanbuf(maze.data, x, y, x-1, y, -2)) && wp < wpsha {
 		adj += 4
 	}
 
 	xp = scanxb(xdat, x, y, x, y+1, "")
 	p,_,_ = parser(xp, SE_WALL)			// set wall pat
 	if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
-	if iswallg1(scanbuf(maze.data, x, y, x, y+1, -2)) && wp < 6  {
+	if iswallg1(scanbuf(maze.data, x, y, x, y+1, -2)) && wp < wpsha  {
 		adj += 16
 	}
 
 	xp = scanxb(xdat, x, y, x-1, y+1, "")
 	p,_,_ = parser(xp, SE_WALL)			// set wall pat
 	if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
-	if iswallg1(scanbuf(maze.data, x, y, x-1, y+1, -2)) && wp < 6  {
+	if iswallg1(scanbuf(maze.data, x, y, x-1, y+1, -2)) && wp < wpsha  {
 		adj += 8
 	}
 
@@ -662,7 +663,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 				}}
 				if p >= 0 || p2 >= 0 || p3 >= 0 || p4 >= 0 || Se_mflor >= 0 {				// cust floor or colortiles req this shadow set (for no shadow, set wp cust to 7)
 					na := (adj >> 2)		// div 4
-					if na > 0 && wp < 6 {
+					if na > 0 && wp < shad_wallpat() {
 						writepngtoimage(img, shtamp, 16,16,0,0,na,0, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 					}
 				}
@@ -849,7 +850,7 @@ if opts.Verbose { fmt.Printf("\n") }
 
 			xp := scanxb(xdat, x, y, x, y, "")
 			gtp := G1
-			p,_,_ := parser(xp, SE_G²)			// turn off G¹ if G² selected for a cell
+			p,_,_ := parser(xp, SE_G2)			// turn off G¹ if G² selected for a cell
 			if p == 1 { G1 = false }			// have to literally false G¹, gtp preserves state in loop
 
 // gen type op - letter to draw
