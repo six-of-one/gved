@@ -432,7 +432,7 @@ fmt.Printf("\n")
 		}
 //			fmt.Printf(" chg elem: %d maze: %d x %d\n",opbuf[xy{mx, my}],mx,my)
 		}}
-		flordirt = opts.bufdrt
+		flordirt = opts.bufdrt && pbe
 		if pbe && opts.bufdrt {			// paste buf edit
 			pb_loced(masbcnt)
 			opts.bufdrt = false

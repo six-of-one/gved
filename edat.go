@@ -497,7 +497,7 @@ fmt.Printf("%d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i])
 		}
 	}
   }
-	flordirt = true			// mark floor dirty so it gets rebuilt
+	flordirt = ldb			// mark floor dirty so it gets rebuilt, when loading main maze (not palette or pb)
 	return edp
 }
 

@@ -631,6 +631,8 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 			}
 		}
 	}				// } removed G² render
+fmt.Printf("rebuilt florb\n")
+	flordirt = false
 	return img
 }
 
