@@ -173,7 +173,7 @@ func checkwalladj3g1(maze *Maze, xdat Xdat, x int, y int) int {
 	wp := maze.wallpattern
 	wpsha := shad_wallpat()		// what wall patterns have shadows, G2 < 11, SE < 6
 
-	if !iswallg1(scanbuf(maze.data, x, y, x, y, -2)) {
+	if !iswallg1(scanbuf(maze.data, x, y, x, y, -2)) {	// no need for a shadow under a wall
 
 		xp := scanxb(xdat, x, y, x-1, y, "")
 		p,_,_ := parser(xp, SE_WALL)			// set wall pat
@@ -691,9 +691,6 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
 	if flordirt > 0 { florb = florbas(maze, xdat, opts.DimX+1, opts.DimY+1) }		//rebuild floor on load or when edit dirties it
 	if flordirt >= 0 {
-//		bnds :=  florb.Bounds()
-//		ih, iw := bnds.Dy(),bnds.Dx()
-//		writepngtoimage(img, florb, iw,ih,0,0,0,0,0,0)			// this is the base image, used for animation & gameplay
 		for y := yb; y < ys; y++ {
 			for x := xb; x < xs; x++ {
 				_, ux, uy := lot(x, y, x, y)
