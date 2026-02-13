@@ -629,7 +629,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 			}}
 			if ffmap[xy{x,y}] {		// are we on a forcefield beam area
 				if nothing & NOTRAP == 0 {
-//fmt.Printf("ffbeam %d x %d, vc: %d x %d\n ",x,y,vcoord(x,xb,xba), vcoord(y,yb,yba))
+//fmt.Printf("ffbeam %d x %d, vc: %d x %d\n ",x,y,vcx, vcy)
 					stamp.ptype = "forcefield"								// this is writter over: void tiles, color tiles, cust floor
 					stamp.pnum = 0
 					writestamptoimage(G1,img, stamp, x*16, y*16)
@@ -691,9 +691,9 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
 	if flordirt > 0 { florb = florbas(maze, xdat, opts.DimX+1, opts.DimY+1) }		//rebuild floor on load or when edit dirties it
 	if flordirt >= 0 {
-		bnds :=  florb.Bounds()
-		ih, iw := bnds.Dy(),bnds.Dx()
-		writepngtoimage(img, florb, iw,ih,0,0,0,0,0,0)			// this is the base image, used for animation & gameplay
+//		bnds :=  florb.Bounds()
+//		ih, iw := bnds.Dy(),bnds.Dx()
+//		writepngtoimage(img, florb, iw,ih,0,0,0,0,0,0)			// this is the base image, used for animation & gameplay
 		for y := yb; y < ys; y++ {
 			for x := xb; x < xs; x++ {
 				_, ux, uy := lot(x, y, x, y)
@@ -740,6 +740,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			}
 			nwt := NOWALL | NOG1W		// reg G¹ walls taken out by themselves (no traps, cycs etc) by NOG1W flags
 			wbd := scanbuf(maze.data, x, y, x, y, -2)
+			vcx, vcy := vcoord(x,xb,xba), vcoord(y,yb,yba)
 			switch wbd {
 			case G1OBJ_WALL_DESTRUCTABLE:
 				adj, wly = checkwalladj8g1(maze, x, y)
@@ -747,12 +748,12 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				p,q,_ = parser(xp, SE_CWAL)
 				if p >= 0 && p < curwf {
 					stamp = nil
-					writepngtoimage(img, wlfl.wtamp[p], 16,16,0,0,wly+26,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writepngtoimage(img, wlfl.wtamp[p], 16,16,0,0,wly+26,q, vcx*16, vcy*16)
 				} else {
 					if Se_mwal >= 0 {
 							stamp = nil
 							rn := rndr(0, Se_rrnd)
-							writepngtoimage(img, wtamp, 16,16,0,0,wly+26,Se_rwal + rn, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)		// in new Se, destruct is 26 past regylar
+							writepngtoimage(img, wtamp, 16,16,0,0,wly+26,Se_rwal + rn, vcx*16, vcy*16)		// in new Se, destruct is 26 past regylar
 					} else {
 					stamp = wallGetDestructableStamp(wp, adj, wc)
 					}
@@ -770,7 +771,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 					if !opts.Nosec {
 						wlt = AdjustHue(wlfl.wtamp[p], 41.0)
 					}
-					writepngtoimage(img, wlt, 16,16,0,0,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writepngtoimage(img, wlt, 16,16,0,0,wly,q, vcx*16, vcy*16)
 				} else {
 					stamp = wallGetStamp(wp, adj, wc)
 					if !opts.Nosec {
@@ -803,12 +804,12 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				p,q,_ = parser(xp, SE_CWAL)
 				if p >= 0 && p < curwf {
 					stamp = nil
-					writepngtoimage(img, wlfl.wtamp[p], 16,16,0,0,wly,q, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					writepngtoimage(img, wlfl.wtamp[p], 16,16,0,0,wly,q, vcx*16, vcy*16)
 				} else {
 					if Se_mwal >= 0 {
 							stamp = nil
 							rn := rndr(0,Se_rrnd)
-							writepngtoimage(img, wtamp, 16,16,0,0,wly,Se_rwal + rn, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+							writepngtoimage(img, wtamp, 16,16,0,0,wly,Se_rwal + rn, vcx*16, vcy*16)
 					} else {
 					stamp = wallGetStamp(wp, adj, wc)
 					}
@@ -843,7 +844,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 						if len > 16 { cpos = 0.0 }
 						gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
 						gtopim := gtop.Image()
-						offset := image.Pt(vcoord(x,xb,xba)*16+4, vcoord(y,yb,yba)*16)
+						offset := image.Pt(vcx*16+4, vcy*16)
 						draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 					}}
 				if opts.SP {
@@ -854,7 +855,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				}
 			}
 			if stamp != nil {
-				writestamptoimage(gt,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
+				writestamptoimage(gt,img, stamp, vcx*16+stamp.nudgex, vcy*16+stamp.nudgey)
 			}
 	// check door -> wall overlaps
 			if wly > 0 || walop > 0 {
@@ -864,13 +865,13 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 					if (s == G1OBJ_DOOR_HORIZ && dirs[i].x != 0) || (s == G1OBJ_DOOR_VERT && dirs[i].y != 0) {
 	//fmt.Printf("i(%d) %d.%d ",i, dirs[i].x, dirs[i].y)
 							ovlp := dorvwal[wly][i]
-							if ovlp > 0 { writepngtoimage(img, dvw, 16,16,0,0,15+ovlp,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16) }
+							if ovlp > 0 { writepngtoimage(img, dvw, 16,16,0,0,15+ovlp,0,vcx*16, vcy*16) }
 					}
 				}
 	//fmt.Printf("\n")
 			}
 			if dots != 0 && nothing & NOWALL == 0 {
-				renderdots(img, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16, dots)
+				renderdots(img, vcx*16, vcy*16, dots)
 			}
 		}
 	}
@@ -886,6 +887,7 @@ if opts.Verbose { fmt.Printf("\n") }
 			ptamp = nil
 			psx, psy, szx, szy := -1, -1, 0 ,0
 
+			vcx, vcy := vcoord(x,xb,xba), vcoord(y,yb,yba)
 			sb := scanbuf(maze.data, x, y, x, y, -2)
 			xp := scanxb(xdat, x, y, x, y, "")
 			gtp := G1
@@ -1014,7 +1016,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 		case G1OBJ_EXIT:
 			stamp = itemGetStamp("exitg1")
 			if G2 { stamp = itemGetStamp("exit") }
-//fmt.Printf("g1exit %d x %d, vc: %d x %d\n ",x,y,vcoord(x,xb,xba), vcoord(y,yb,yba))
+//fmt.Printf("g1exit %d x %d, vc: %d x %d\n ",x,y,vcx, vcy)
 		case G1OBJ_EXIT4:
 			stamp = itemGetStamp("exit4")
 		case SEOBJ_EXIT6:
@@ -1294,7 +1296,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			nugetx, nugety := -4, -4
 			if stamp != nil {
 // note G¹ here, opposite of other writes using gt - here gt preserves true G¹ state due to complex tile rom extract and pallet select
-				writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
+				writestamptoimage(G1,img, stamp, vcx*16+stamp.nudgex, vcy*16+stamp.nudgey)
 				nugetx, nugety = stamp.nudgex, stamp.nudgey
 			}
 // stats on palette
@@ -1311,7 +1313,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 					gtopim := gtop.Image()
 					if mel == G1OBJ_WALL_REGULAR { nugetx += 16; nugety += 240 }		// hackety mchakerson
 					if mel == G1OBJ_TILE_FLOOR { nugetx += 16; nugety += 240 }
-					offset := image.Pt(vcoord(x,xb,xba)*16+nugetx-5, vcoord(y,yb,yba)*16+nugety-5)
+					offset := image.Pt(vcx*16+nugetx-5, vcy*16+nugety-5)
 					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 					gtopl = ""		// these seem to conflict and the palette id's box gens with monsters nearby
 					stonce[mel] = 0
@@ -1326,15 +1328,15 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 					gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
 				}
 				gtopim := gtop.Image()
-				offset := image.Pt(vcoord(x,xb,xba)*16+nugetx-4, vcoord(y,yb,yba)*16+nugety-4)
+				offset := image.Pt(vcx*16+nugetx-4, vcy*16+nugety-4)
 				draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 			}
 // expand and sanctuary
 			if psx >= 0 && psy >= 0 {
-				writepngtoimage(img, sents, 16,16,szx,szy,psx,psy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				writepngtoimage(img, sents, 16,16,szx,szy,psx,psy,vcx*16, vcy*16)
 			}
 			if err == nil && ptamp != nil {
-				writepngtoimage(img, ptamp, 16,16,0,0,0,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				writepngtoimage(img, ptamp, 16,16,0,0,0,0,vcx*16, vcy*16)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
