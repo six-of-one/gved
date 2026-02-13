@@ -1264,7 +1264,10 @@ func bwin(px int, py int, bn int, mbuf MazeData, xdat Xdat, fdat [14]int, id str
 
 var lw fyne.Window	// local cpy win to view buf contents
   wt := "palette selector"
+  fldrsv = flordirt
+  flordirt = -1
   nimg := segimage(mbuf,xdat,fdat,0,0,px,py,false) // (bn == 0)) stats off for now
+  flordirt = fldrsv
   dt := float32(opts.dtec)
 	if (bn > 0) {
 	if !wpbop {

@@ -173,25 +173,28 @@ func checkwalladj3g1(maze *Maze, xdat Xdat, x int, y int) int {
 	wp := maze.wallpattern
 	wpsha := shad_wallpat()		// what wall patterns have shadows, G2 < 11, SE < 6
 
-	xp := scanxb(xdat, x, y, x-1, y, "")
-	p,_,_ := parser(xp, SE_WALL)			// set wall pat
-	if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
-	if iswallg1(scanbuf(maze.data, x, y, x-1, y, -2)) && wp < wpsha {
-		adj += 4
-	}
+	if !iswallg1(scanbuf(maze.data, x, y, x, y, -2)) {
 
-	xp = scanxb(xdat, x, y, x, y+1, "")
-	p,_,_ = parser(xp, SE_WALL)			// set wall pat
-	if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
-	if iswallg1(scanbuf(maze.data, x, y, x, y+1, -2)) && wp < wpsha  {
-		adj += 16
-	}
+		xp := scanxb(xdat, x, y, x-1, y, "")
+		p,_,_ := parser(xp, SE_WALL)			// set wall pat
+		if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
+		if iswallg1(scanbuf(maze.data, x, y, x-1, y, -2)) && wp < wpsha {
+			adj += 4
+		}
 
-	xp = scanxb(xdat, x, y, x-1, y+1, "")
-	p,_,_ = parser(xp, SE_WALL)			// set wall pat
-	if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
-	if iswallg1(scanbuf(maze.data, x, y, x-1, y+1, -2)) && wp < wpsha  {
-		adj += 8
+		xp = scanxb(xdat, x, y, x, y+1, "")
+		p,_,_ = parser(xp, SE_WALL)			// set wall pat
+		if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
+		if iswallg1(scanbuf(maze.data, x, y, x, y+1, -2)) && wp < wpsha  {
+			adj += 16
+		}
+
+		xp = scanxb(xdat, x, y, x-1, y+1, "")
+		p,_,_ = parser(xp, SE_WALL)			// set wall pat
+		if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
+		if iswallg1(scanbuf(maze.data, x, y, x-1, y+1, -2)) && wp < wpsha  {
+			adj += 8
+		}
 	}
 
 	return adj
@@ -505,6 +508,7 @@ func nwalflor(){
 
 var florb *image.NRGBA
 var flordirt int			// whether or not an edit could dirty the flor, pb & palete set to -1
+var fldrsv int				// pb & pal save flordirt state
 
 func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 
@@ -694,6 +698,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 			}}
 	} else {	// -1
 		img = florbas(maze, xdat, opts.DimX+1, opts.DimY+1)
+//		flordirt = fldrsv
 	}
 
 fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
