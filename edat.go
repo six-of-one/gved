@@ -888,7 +888,7 @@ func palRune(r rune) {
 		case 'l': fallthrough
 		case 'L': listK = dboxtx("Edit key assignments","",400,800, close_keys,palRune); list_keys()
 		case 's': fallthrough
-		case 'S': statsB = dboxtx("Maze stats","",340,700,close_stats,palRune); calc_stats()
+		case 'S': statsB = dboxtx("Maze stats","",400,700,close_stats,palRune); calc_stats()
 		case 'q': fallthrough
 		case 'Q': if wpalop { wpalop = false; wpal.Close() }
 		default:
