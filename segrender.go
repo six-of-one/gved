@@ -663,6 +663,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 		for y := 0; y <= opts.DimY; y++ {
 			for x := 0; x <= opts.DimX; x++ {
 				c := g2tose[mdat[xy{x, y}]]
+				g1stat[c] = g2stat[mdat[xy{x, y}]]
 				if mdat[xy{x, y}] > G1OBJ_EXTEND { skp = true }
 				maze.data[xy{x, y}] = c
 			}}
@@ -885,6 +886,7 @@ if opts.Verbose { fmt.Printf("\n") }
 			ptamp = nil
 			psx, psy, szx, szy := -1, -1, 0 ,0
 
+			sb := scanbuf(maze.data, x, y, x, y, -2)
 			xp := scanxb(xdat, x, y, x, y, "")
 			gtp := G1
 			p,_,_ := parser(xp, SE_G2)			// turn off G¹ if G² selected for a cell
@@ -907,24 +909,24 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 	if G2 {
  // hack for score table map display of: gold bag after treasure box, special potions
 	if x < (ys - 1) && opts.mnum == 103 {	// dont hit past end of array & only do on score table maze
-		ts := scanbuf(maze.data, x, y, x, y, -2)
+
 		tt := scanbuf(maze.data, x, y, x+1, y, -2)
-		if ts == G1OBJ_TREASURE && tt == G1OBJ_TREASURE { maze.data[xy{x+1, y}] = G1OBJ_TREASURE_BAG }
+		if sb == G1OBJ_TREASURE && tt == G1OBJ_TREASURE { maze.data[xy{x+1, y}] = G1OBJ_TREASURE_BAG }
 		switch opr {
 		case 1:
-			if ts == G1OBJ_KEY && tt == G1OBJ_KEY {
+			if sb == G1OBJ_KEY && tt == G1OBJ_KEY {
 				maze.data[xy{x, y}] = G1OBJ_X_SHTSPD
 				maze.data[xy{x+1, y}] = G1OBJ_X_FIGHT
 				opr--
 			}
 		case 2:
-			if ts == G1OBJ_KEY && tt == G1OBJ_KEY {
+			if sb == G1OBJ_KEY && tt == G1OBJ_KEY {
 				maze.data[xy{x, y}] = G1OBJ_X_MAGIC
 				maze.data[xy{x+1, y}] = G1OBJ_X_SHOTPW
 				opr--
 			}
 		case 3:
-			if ts == G1OBJ_KEY && tt == G1OBJ_KEY {
+			if sb == G1OBJ_KEY && tt == G1OBJ_KEY {
 				maze.data[xy{x, y}] = G1OBJ_X_ARMOR
 				maze.data[xy{x+1, y}] = G1OBJ_X_SPEED
 				opr--
@@ -944,7 +946,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			gtopl = ""// make sure G² code (if it runs with G¹) doesnt set extra dots on non walls
 			dots = 0
 // /fmt.Printf("G¹ dec: %x -- ", scanbuf(maze.data, x, y, x, y, -2))
-		switch scanbuf(maze.data, x, y, x, y, -2) {
+		switch sb {
 
 		case G1OBJ_TILE_FLOOR:
 		// adj := checkwalladj3(maze, x, y) + rand.Intn(4)
@@ -1282,10 +1284,10 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			psx, psy = 32, 8
 
 		default:
-			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", scanbuf(maze.data, x, y, x, y, -2)) }
+			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", sb) }
 		}
 // set mask flag in array
-		if scanbuf(maze.data, x, y, x, y, -2) > 0 && stamp != nil { g1mask[scanbuf(maze.data, x, y, x, y, -2)] = stamp.mask }
+		if sb > 0 && stamp != nil { g1mask[sb] = stamp.mask }
 
 // Six: end G¹ decode
 // if !G1 { fmt.Printf("stamp # %d - p: %s\n",scanbuf(maze.data, x, y, x, y, -2),stamp.ptype)}
@@ -1298,9 +1300,9 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 // stats on palette
 			if stat {			// on palette screen, show stats for loaded maze
 				st := ""
-				mel := scanbuf(maze.data, x, y, x, y, -2)
-				if G1 { st = fmt.Sprintf("%d",g1stat[mel]) }
-				if G2 { st = fmt.Sprintf("%d",g2stat[mel]) }
+				mel := sb
+				st = fmt.Sprintf("%d",g1stat[mel])
+//				if G2 { st = fmt.Sprintf("%d",g2stat[mel]) }
 				if st != "" && stonce[mel] > 0 {
 					gtop.Clear()
 					gtop.SetRGB(0.5, 0.5, 0.5)

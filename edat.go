@@ -901,7 +901,7 @@ func palRune(r rune) {
 		case 's': fallthrough
 		case 'S': statsB = dboxtx("Maze stats","",400,700,close_stats,palRune); calc_stats()
 		case 'p': fallthrough
-		case 'P': pals = absint(pals - 1); calc_stats()
+		case 'P': pals = absint(pals - 1); cpal5 = -1; palete(pals)
 		case 'q': fallthrough
 		case 'Q': if wpalop { wpalop = false; wpal.Close() }
 		default:
@@ -1148,6 +1148,7 @@ func calc_stats() {
 	if statsB != nil { statsB.Set(stl) }
 	stl_str = stl	// for mini stat append
 //	bwin(palxs, palys, 0, plbuf, plflg)
+	cpal5 = -1
 	if wpalop { if palfol { palete(pals) }}
 }
 
@@ -1277,7 +1278,7 @@ var lw fyne.Window	// local cpy win to view buf contents
   wt := "palette selector"
   fldrsv = flordirt
   flordirt = -1
-  nimg := segimage(mbuf,xdat,fdat,0,0,px,py,(bn == 0)) // (bn == 0)) stats off for now
+  nimg := segimage(mbuf,xdat,fdat,0,0,px,py,(bn == 0))
   flordirt = fldrsv
   dt := float32(opts.dtec)
 	if (bn > 0) {
