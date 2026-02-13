@@ -935,7 +935,6 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 		case SEOBJ_POWER_REPULSE:
 			G1 = false
 			stamp = itemGetStamp("repulse")
-fmt.Printf("--- in repulse\n")
 		case SEOBJ_POWER_REFLECT:
 			G1 = false
 			stamp = itemGetStamp("reflect")
@@ -1228,7 +1227,6 @@ fmt.Printf("--- in repulse\n")
 // set mask flag in array
 		if scanbuf(maze.data, x, y, x, y, -2) > 0 && stamp != nil { g1mask[scanbuf(maze.data, x, y, x, y, -2)] = stamp.mask }
 
-if scanbuf(maze.data, x, y, x, y, -2) == SEOBJ_POWER_REPULSE { fmt.Printf("g1 %t  st %v \n",G1,stamp) }
 // Six: end G¹ decode
 // if !G1 { fmt.Printf("stamp # %d - p: %s\n",scanbuf(maze.data, x, y, x, y, -2),stamp.ptype)}
 			if stamp != nil {
