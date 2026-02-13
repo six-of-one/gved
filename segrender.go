@@ -1269,11 +1269,17 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			psx, psy = 34, 21
 
 		case SEOBJ_DETHGEN3:		// 34, 8
+			gtopl = "D"
+			gtop.SetRGB(0, 0, 0)
 			psx, psy = 34, 8
 		case SEOBJ_DETHGEN2:		// 35, 8
-			psx, psy = 35, 8
+			gtopl = "D"
+			gtop.SetRGB(0, 0, 0)
+			psx, psy = 33, 8
 		case SEOBJ_DETHGEN1:		// 36, 8
-			psx, psy = 36, 8
+			gtopl = "D"
+			gtop.SetRGB(0, 0, 0)
+			psx, psy = 32, 8
 
 		default:
 			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", scanbuf(maze.data, x, y, x, y, -2)) }
@@ -1283,39 +1289,41 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 
 // Six: end G¹ decode
 // if !G1 { fmt.Printf("stamp # %d - p: %s\n",scanbuf(maze.data, x, y, x, y, -2),stamp.ptype)}
+			nugetx, nugety := -4, -4
 			if stamp != nil {
 // note G¹ here, opposite of other writes using gt - here gt preserves true G¹ state due to complex tile rom extract and pallet select
 				writestamptoimage(G1,img, stamp, vcoord(x,xb,xba)*16+stamp.nudgex, vcoord(y,yb,yba)*16+stamp.nudgey)
+				nugetx, nugety = stamp.nudgex, stamp.nudgey
+			}
 // stats on palette
-				if stat {			// on palette screen, show stats for loaded maze
-					st := ""
-					mel := scanbuf(maze.data, x, y, x, y, -2)
-					if G1 { st = fmt.Sprintf("%d",g1stat[mel]) }
-					if G2 { st = fmt.Sprintf("%d",g2stat[mel]) }
-					if st != "" && stonce[mel] > 0 {
-						gtop.Clear()
-						gtop.SetRGB(0.5, 0.5, 0.5)
-						gtop.SetRGB(1, 0, 0)
-						gtop.DrawStringAnchored(st, 6, 6, 0.5, 0.5)
-						gtopim := gtop.Image()
-						offset := image.Pt(vcoord(x,xb,xba)*16+stamp.nudgex-5, vcoord(y,yb,yba)*16+stamp.nudgey-5)
-						draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
-						gtopl = ""		// these seem to conflict and the palette id's box gens with monsters nearby
-						stonce[mel] = 0
-					}
-				}
-// generator monster type letter draw - only do when set
-				if gtopl != "" && !opts.Nogtop {
-// while each monsters gen has a letter color, some are hard to read - resetting to red
+			if stat {			// on palette screen, show stats for loaded maze
+				st := ""
+				mel := scanbuf(maze.data, x, y, x, y, -2)
+				if G1 { st = fmt.Sprintf("%d",g1stat[mel]) }
+				if G2 { st = fmt.Sprintf("%d",g2stat[mel]) }
+				if st != "" && stonce[mel] > 0 {
 					gtop.Clear()
-					if !gtopcol { gtop.SetRGB(1, 0, 0) }
-					if nothing & NOGEN == 0 {
-						gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
-					}
+					gtop.SetRGB(0.5, 0.5, 0.5)
+					gtop.SetRGB(1, 0, 0)
+					gtop.DrawStringAnchored(st, 6, 6, 0.5, 0.5)
 					gtopim := gtop.Image()
-					offset := image.Pt(vcoord(x,xb,xba)*16+stamp.nudgex-4, vcoord(y,yb,yba)*16+stamp.nudgey-4)
+					offset := image.Pt(vcoord(x,xb,xba)*16+nugetx-5, vcoord(y,yb,yba)*16+nugety-5)
 					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
+					gtopl = ""		// these seem to conflict and the palette id's box gens with monsters nearby
+					stonce[mel] = 0
 				}
+			}
+// generator monster type letter draw - only do when set
+			if gtopl != "" && !opts.Nogtop {
+// while each monsters gen has a letter color, some are hard to read - resetting to red
+				gtop.Clear()
+				if !gtopcol { gtop.SetRGB(1, 0, 0) }
+				if nothing & NOGEN == 0 {
+					gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
+				}
+				gtopim := gtop.Image()
+				offset := image.Pt(vcoord(x,xb,xba)*16+nugetx-4, vcoord(y,yb,yba)*16+nugety-4)
+				draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 			}
 // expand and sanctuary
 			if psx >= 0 && psy >= 0 {

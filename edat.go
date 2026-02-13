@@ -1118,8 +1118,6 @@ func mini_stat (buf MazeData, sx int, sy int, ex int, ey int, hed string) {
 
 func calc_stats() {
 
-	if wpalop { if palfol { palete(0) }}
-
 	zero_stat()
 //fmt.Printf("get stats: %d %d\n",opts.DimX,opts.DimY)
 	for y := 0; y <= opts.DimY; y++ {
@@ -1145,6 +1143,7 @@ func calc_stats() {
 	if statsB != nil { statsB.Set(stl) }
 	stl_str = stl	// for mini stat append
 //	bwin(palxs, palys, 0, plbuf, plflg)
+	if wpalop { if palfol { palete(0) }}
 }
 
 // cut / copy & paste
@@ -1273,7 +1272,7 @@ var lw fyne.Window	// local cpy win to view buf contents
   wt := "palette selector"
   fldrsv = flordirt
   flordirt = -1
-  nimg := segimage(mbuf,xdat,fdat,0,0,px,py,false) // (bn == 0)) stats off for now
+  nimg := segimage(mbuf,xdat,fdat,0,0,px,py,(bn == 0)) // (bn == 0)) stats off for now
   flordirt = fldrsv
   dt := float32(opts.dtec)
 	if (bn > 0) {
