@@ -1125,7 +1125,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			if scanbuf(maze.data, x, y, x, y, -2) > 0 && stamp != nil { g2mask[scanbuf(maze.data, x, y, x, y, -2)] = stamp.mask }
 			}
 // g1 decodes
-			if G1 {
+			if !G2 {
 // gen type op - put a letter on up left corner of every gen to indicate monsters
 //		brw G - grunts
 //		red D - demons
@@ -1173,6 +1173,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			case SEOBJ_POWER_REPULSE:
 				G1 = false
 				stamp = itemGetStamp("repulse")
+fmt.Printf("--- in repulse\n")
 			case SEOBJ_POWER_REFLECT:
 				G1 = false
 				stamp = itemGetStamp("reflect")
@@ -1462,6 +1463,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 // set mask flag in array
 			if scanbuf(maze.data, x, y, x, y, -2) > 0 && stamp != nil { g1mask[scanbuf(maze.data, x, y, x, y, -2)] = stamp.mask }
 		}
+if scanbuf(maze.data, x, y, x, y, -2) == SEOBJ_POWER_REPULSE { fmt.Printf("g1 %t  st %v \n",G1,stamp) }
 // Six: end G1 decode
 // if !G1 { fmt.Printf("stamp # %d - p: %s\n",scanbuf(maze.data, x, y, x, y, -2),stamp.ptype)}
 			if stamp != nil {

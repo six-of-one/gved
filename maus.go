@@ -416,11 +416,11 @@ fmt.Printf(" dtec: %.2f maze: %d x %d - element:%d - %s --- XB: %s\n",dt,ex,ey,o
 				if pasty { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; xopbf[xy{mx, my}] = xcpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }	// cant use setcode below, it wont set floors
 				if setcode > 0 {						// i think i found the bug where paste doesnt work right
 					undo_buf(mx, my,rcl);
-					if ! shift { opbuf[xy{mx, my}] = setcode; }
+					if ! shift { opbuf[xy{mx, my}] = setcode; fmt.Printf("!shift set\n")}
 					if ! ctrl { xopbf[xy{mx, my}] = xstcode; }
 					opts.bufdrt = true
 				}
-fmt.Printf("%03d ",xopbf[xy{mx, my}])
+fmt.Printf("---stored %03d ::%s",opbuf[xy{mx, my}],xopbf[xy{mx, my}])
 				}
 				rcl++
 			}
