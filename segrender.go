@@ -894,7 +894,7 @@ if opts.Verbose { fmt.Printf("\n") }
 			gtopl := ""
 			gtopcol := false	// disable gen letter seperate colors
 // gen type op - the context to draw
-			gtop := gg.NewContext(12, 12)
+			gtop := gg.NewContext(32, 12)
 // gtop font
 			if err := gtop.LoadFontFace(".font/VrBd.ttf", 10); err != nil {
 				panic(err)
@@ -1305,8 +1305,10 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 					gtop.Clear()
 					gtop.SetRGB(0.5, 0.5, 0.5)
 					gtop.SetRGB(1, 0, 0)
-					gtop.DrawStringAnchored(st, 6, 6, 0.5, 0.5)
+					gtop.DrawStringAnchored(st, 6, 6, 0, 0.5)
 					gtopim := gtop.Image()
+					if mel == G1OBJ_WALL_REGULAR { nugetx += 16; nugety += 240 }		// hackety mchakerson
+					if mel == G1OBJ_TILE_FLOOR { nugetx += 16; nugety += 240 }
 					offset := image.Pt(vcoord(x,xb,xba)*16+nugetx-5, vcoord(y,yb,yba)*16+nugety-5)
 					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 					gtopl = ""		// these seem to conflict and the palette id's box gens with monsters nearby

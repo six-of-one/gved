@@ -97,6 +97,7 @@ func ed_init() {
 	zmod = 0			// play test mode
 	zm_x = -1
 	zm_y = -1
+	cpal5 = -1
 }
 
 // turn on edit mode
