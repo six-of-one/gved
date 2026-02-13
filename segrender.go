@@ -526,7 +526,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 				maze.data[xy{x, y}] = c
 			}}
 	}
-	if skp || !G2 { maze.data = mdat }
+	if skp || !G2 { maze.data = mdat }			// whats really wild is this just translates for the seg render system - edit still works normal
 
 // get flags when passed
 	flagbytes := make([]byte, 4)
