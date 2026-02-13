@@ -218,7 +218,7 @@ const (
 	SEOBJ_FORCEFIELDHUB			= 163
 	SEOBJ_MONST_MUGGER			= 164
 // g2 thief
-// extend
+// extend - sanctuary engine specific
 	SEOBJ_FIRE_STICK			= 166		// 26, 33
 	SEOBJ_G2_POISPOT			= 167		// 8, 11
 	SEOBJ_G2_POISFUD			= 168		// 1, 11		23, 10
@@ -242,6 +242,10 @@ const (
 	SEOBJ_MAPPYBELL				= 182		// 35, 21
 	SEOBJ_MAPPYBAL				= 183		// 35, 22
 	SEOBJ_MAPPYGORO				= 184		// 36, 22
+
+	SEOBJ_DETHGEN3				= 185		// 34, 8
+	SEOBJ_DETHGEN2				= 186		// 35, 8
+	SEOBJ_DETHGEN1				= 187		// 36, 8
 
 //	SEOBJ_WATER_POOL			= 1
 //	SEOBJ_SLIME_POOL			= 1
@@ -465,6 +469,11 @@ var g1mapid = map[int]string{
 	SEOBJ_MAPPYBELL:	"SE_MAPPYBELL",		// 35, 21
 	SEOBJ_MAPPYBAL:		"SE_MAPPYBAL",		// 35, 22
 	SEOBJ_MAPPYGORO:	"SE_MAPPYGORO",		// 35, 22
+
+	SEOBJ_DETHGEN3:		"SE_DETHGEN3",		// 34, 8
+	SEOBJ_DETHGEN2:		"SE_DETHGEN2",		// 35, 8
+	SEOBJ_DETHGEN1:		"SE_DETHGEN1",		// 36, 8
+
 //	169:	"SE_",
 
 /*
@@ -725,7 +734,7 @@ var g1auds = map[int]string{
 	SEOBJ_G2_POISPOT:	"sfx/g2_slopoisn.ogg",
 	SEOBJ_G2_POISFUD:	"sfx/g2_slopoisn.ogg",
 	SEOBJ_G2_QFUD:		"sfx/g1_foodsnrf.ogg",
-	SEOBJ_KEYRING:		"",		// 29, 11
+	SEOBJ_KEYRING:		"sfx/g1_key.ogg",		// 29, 11
 
 	SEOBJ_MAPPYBDG:		"",		// 33, 23
 
@@ -744,6 +753,10 @@ var g1auds = map[int]string{
 	SEOBJ_MAPPYBELL:	"",		// 35, 21
 	SEOBJ_MAPPYBAL:		"",		// 35, 22
 	SEOBJ_MAPPYGORO:	"",		// 35, 22
+
+	SEOBJ_DETHGEN3:		"sfx/g1_deathtouch.ogg",		// 34, 8
+	SEOBJ_DETHGEN2:		"sfx/g1_deathtouch.ogg",		// 35, 8
+	SEOBJ_DETHGEN1:		"sfx/g1_deathtouch.ogg",		// 36, 8
 
 /*
 	10:	"",

@@ -1268,6 +1268,13 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 		case SEOBJ_MAPPYBAL:		// 35, 22
 			psx, psy = 34, 21
 
+		case SEOBJ_DETHGEN3:		// 34, 8
+			psx, psy = 34, 8
+		case SEOBJ_DETHGEN2:		// 35, 8
+			psx, psy = 35, 8
+		case SEOBJ_DETHGEN1:		// 36, 8
+			psx, psy = 36, 8
+
 		default:
 			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", scanbuf(maze.data, x, y, x, y, -2)) }
 		}
