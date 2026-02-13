@@ -506,7 +506,17 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 
 // dummy maze for ops that require it
 	var maze = &Maze{}
-	maze.data = mdat
+// G2 edit & game will now translate to SE mode
+	var skp bool
+	if G2 {
+		for y := 0; y <= opts.DimY; y++ {
+			for x := 0; x <= opts.DimX; x++ {
+				c := g2tose[mdat[xy{x, y}]]
+				if c > G1OBJ_EXTEND { skp = true }
+				maze.data[xy{x, y}] = c
+			}}
+	}
+	if skp || !G2 { maze.data = mdat }
 
 // get flags when passed
 	flagbytes := make([]byte, 4)
