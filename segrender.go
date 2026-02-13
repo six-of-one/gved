@@ -833,11 +833,12 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 	//fmt.Printf("\n")
 			}
 			if dots != 0 && nothing & NOWALL == 0 {
-				renderdots(img, (x-xb)*16, (y-yb)*16, dots)
+				renderdots(img, vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16, dots)
 			}
 		}
 	}
 
+	opr := 3		// G² hack to present specials on scoreboard / info maze 104
 	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
 	for y := yb; y <= ys; y++ {
 if opts.Verbose { fmt.Printf("\n") }
@@ -867,23 +868,33 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 
 			//	if G2 {			removed G² render
 
-/*			switch whatis(maze, x, y) {
-	// specials are jammed in somewhere in G² code, we just do this
-			case 70:
-				stamp = itemGetStamp("speedpotion")
-			case 71:
-				stamp = itemGetStamp("shotpowerpotion")
-			case 72:
-				stamp = itemGetStamp("shotspeedpotion")
-			case 73:
-				stamp = itemGetStamp("shieldpotion")
-			case 74:
-				stamp = itemGetStamp("fightpotion")
-			case 75:
-				stamp = itemGetStamp("magicpotion")
-			case 76:
-				stamp = itemGetStamp("goldbag")
-*/
+	if G2 {
+ // hack for score table map display of: gold bag after treasure box, special potions
+	if x < (ys - 1) && opts.mnum == 103 {	// dont hit past end of array & only do on score table maze
+		ts := scanbuf(maze.data, x, y, x, y, -2)
+		tt := scanbuf(maze.data, x, y, x+1, y, -2)
+		if ts == G1OBJ_TREASURE && tt == G1OBJ_TREASURE { maze.data[xy{x+1, y}] = G1OBJ_TREASURE_BAG }
+		switch opr {
+		case 1:
+			if ts == G1OBJ_KEY && tt == G1OBJ_KEY {
+				maze.data[xy{x, y}] = G1OBJ_X_SHTSPD
+				maze.data[xy{x+1, y}] = G1OBJ_X_FIGHT
+				opr--
+			}
+		case 2:
+			if ts == G1OBJ_KEY && tt == G1OBJ_KEY {
+				maze.data[xy{x, y}] = G1OBJ_X_MAGIC
+				maze.data[xy{x+1, y}] = G1OBJ_X_SHOTPW
+				opr--
+			}
+		case 3:
+			if ts == G1OBJ_KEY && tt == G1OBJ_KEY {
+				maze.data[xy{x, y}] = G1OBJ_X_ARMOR
+				maze.data[xy{x+1, y}] = G1OBJ_X_SPEED
+				opr--
+			}
+		}
+	}}
 
 					 // }			removed G² render
 // G¹ decodes
