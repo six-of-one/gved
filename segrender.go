@@ -513,7 +513,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 		for y := 0; y <= opts.DimY; y++ {
 			for x := 0; x <= opts.DimX; x++ {
 				c := g2tose[mdat[xy{x, y}]]
-				if c > G1OBJ_EXTEND { skp = true }
+				if mdat[xy{x, y}] > G1OBJ_EXTEND { skp = true }
 				maze.data[xy{x, y}] = c
 			}}
 	}
@@ -999,8 +999,10 @@ fmt.Printf("--- in repulse\n")
 
 		case G1OBJ_PLAYERSTART:
 			stamp = itemGetStamp("plusg1")
+			if G2 { stamp = itemGetStamp("plus") }
 		case G1OBJ_EXIT:
 			stamp = itemGetStamp("exitg1")
+			if G2 { stamp = itemGetStamp("exit") }
 //fmt.Printf("g1exit %d x %d, vc: %d x %d\n ",x,y,vcoord(x,xb,xba), vcoord(y,yb,yba))
 		case G1OBJ_EXIT4:
 			stamp = itemGetStamp("exit4")
@@ -1208,6 +1210,7 @@ fmt.Printf("--- in repulse\n")
 			if nothing & NOEXP == 0 { stamp = ffGetStamp(adj) }
 		case G1OBJ_TRANSPORTER:
 			stamp = itemGetStamp("tportg1")
+			if G2 { stamp = itemGetStamp("tport") }
 		case GORO_TEST:
 			err, _, ptamp = itemGetPNG("gfx/goro.16.png")
 // SE expand
@@ -1314,16 +1317,16 @@ if scanbuf(maze.data, x, y, x, y, -2) == SEOBJ_POWER_REPULSE { fmt.Printf("g1 %t
 		}
 	}
 
-	g2mask[MAZEOBJ_WALL_REGULAR] = 2048
-	g2mask[MAZEOBJ_WALL_SECRET] = 1024
-	g2mask[MAZEOBJ_WALL_DESTRUCTABLE] = 1024
-	g2mask[MAZEOBJ_WALL_RANDOM] = 1024
-	g2mask[MAZEOBJ_WALL_TRAPCYC1] = 1024
-	g2mask[MAZEOBJ_WALL_TRAPCYC2] = 1024
-	g2mask[MAZEOBJ_WALL_TRAPCYC3] = 1024
-	g2mask[MAZEOBJ_TILE_TRAP1] = 64
-	g2mask[MAZEOBJ_TILE_TRAP2] = 64
-	g2mask[MAZEOBJ_TILE_TRAP3] = 64
+	g2mask[G1OBJ_WALL_REGULAR] = 2048
+	g2mask[SEOBJ_SECRTWAL] = 1024
+	g2mask[G1OBJ_WALL_DESTRUCTABLE] = 1024
+	g2mask[SEOBJ_RNDWAL] = 1024
+	g2mask[SEOBJ_WAL_TRAPCYC1] = 1024
+	g2mask[SEOBJ_WAL_TRAPCYC2] = 1024
+	g2mask[SEOBJ_WAL_TRAPCYC3] = 1024
+	g2mask[SEOBJ_TILE_TRAP1] = 64
+	g2mask[SEOBJ_TILE_TRAP2] = 64
+	g2mask[SEOBJ_TILE_TRAP3] = 64
 //	g2mask[] =
 	g1mask[G1OBJ_WALL_REGULAR] = 2048
 	g1mask[G1OBJ_WALL_DESTRUCTABLE] = 1024
