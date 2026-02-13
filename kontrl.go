@@ -607,7 +607,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			relodsub = false
 		}
 	  }
-	  flordirt = opts.bufdrt
+	  if opts.bufdrt { flordirt = 1 }
 	  upd_edmaze(false)		// store vars view changes like floors or walls
 		if spau == "G¹ " {
 			if opts.R14 { spau += "rv14" } else { spau += "rv1-9" }
@@ -676,7 +676,7 @@ fmt.Printf(" stk %d undo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 		}
 fmt.Printf(" del %d elem: %d\n",restak,delbuf.elem[restak])
 		opts.bufdrt = true
-		flordirt = opts.bufdrt
+		flordirt = 1
 		ed_maze(true)
 	}
 }
@@ -696,7 +696,7 @@ fmt.Printf(" stk %d redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 			if delbuf.elem[restak] < 0 || delbuf.revc[restak] == 1 { revk = 0}
 		}
 		opts.bufdrt = true
-		flordirt = opts.bufdrt
+		flordirt = 1
 		ed_maze(true)
 	}
 //	ed_maze()

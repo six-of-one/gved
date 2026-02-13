@@ -65,7 +65,7 @@ func menu_rst(y bool) {
 		Ovwallpat = -1
 		remaze(opts.mnum)
 		opts.edat = sv
-		flordirt = true
+		flordirt = 1
 		ed_maze(true)
 		//ed_sav(opts.mnum+1)	// reset does not overwrite file buffer, still need to save
 	}

@@ -504,7 +504,7 @@ func nwalflor(){
 // make base floor, of:
 
 var florb *image.NRGBA
-var flordirt bool			// whether or not an edit could dirty the flor
+var flordirt int			// whether or not an edit could dirty the flor, pb & palete set to -1
 
 func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 
@@ -632,7 +632,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 		}
 	}				// } removed G² render
 fmt.Printf("rebuilt florb\n")
-	flordirt = false
+	flordirt = 0
 	return img
 }
 
@@ -681,16 +681,20 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	if xb < 0 { xba = absint(xb) }
 	if yb < 0 { yba = absint(yb) }
 
-	if flordirt { florb = florbas(maze, xdat, opts.DimX+1, opts.DimY+1) }		//rebuild floor on load or when edit dirties it
 	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
-	bnds :=  florb.Bounds()
-	ih, iw := bnds.Dy(),bnds.Dx()
-	writepngtoimage(img, florb, iw,ih,0,0,0,0,0,0)			// this is the base image, used for animation & gameplay
-	for y := yb; y < ys; y++ {
-		for x := xb; x < xs; x++ {
-			_, ux, uy := lot(x, y, x, y)
-			writepngtoimage(img, florb, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
-		}}
+	if flordirt > 0 { florb = florbas(maze, xdat, opts.DimX+1, opts.DimY+1) }		//rebuild floor on load or when edit dirties it
+	if flordirt >= 0 {
+		bnds :=  florb.Bounds()
+		ih, iw := bnds.Dy(),bnds.Dx()
+		writepngtoimage(img, florb, iw,ih,0,0,0,0,0,0)			// this is the base image, used for animation & gameplay
+		for y := yb; y < ys; y++ {
+			for x := xb; x < xs; x++ {
+				_, ux, uy := lot(x, y, x, y)
+				writepngtoimage(img, florb, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+			}}
+	} else {	// -1
+		img = florbas(maze, xdat, opts.DimX+1, opts.DimY+1)
+	}
 
 fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
 
@@ -849,7 +853,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 	//fmt.Printf("wall seg %d adj %d, type %d, dor: ",wly,adj,walop)
 				for i := 0; i < 4; i++ {
 					s := scanbuf(maze.data, x + dirs[i].x, y + dirs[i].y, x + dirs[i].x, y + dirs[i].y, -2)
-					if s == G1OBJ_DOOR_HORIZ || s == G1OBJ_DOOR_VERT {
+					if (s == G1OBJ_DOOR_HORIZ && dirs[i].x != 0) || (s == G1OBJ_DOOR_VERT && dirs[i].y != 0) {
 	//fmt.Printf("i(%d) %d.%d ",i, dirs[i].x, dirs[i].y)
 							ovlp := dorvwal[wly][i]
 							if ovlp > 0 { writepngtoimage(img, dvw, 16,16,0,0,15+ovlp,0,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16) }
