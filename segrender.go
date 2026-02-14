@@ -587,7 +587,7 @@ var florb *image.NRGBA
 var flordirt int			// whether or not an edit could dirty the flor, pb & palete set to -1
 var fldrsv int				// pb & pal save flordirt state
 
-func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
+func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int) {
 
 	xb, yb := 0,0
 //	img = blankimage(16*(xs-xb), 16*(ys-yb))
@@ -685,7 +685,6 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 	}				// } removed G² render
 fmt.Printf("rebuilt florb\n")
 	flordirt = 0
-	return img
 }
 
 // image from buffer segment			- stat: display stats 'On image' if true

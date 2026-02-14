@@ -66,6 +66,27 @@ func blankimage(x int, y int) *image.NRGBA {
 	return img
 }
 
+// image failed to load, make something halflife-esq tex missing
+
+func loadfail(x int, y int) *image.NRGBA {
+	img := blankimage(x,y)
+	b := HRGB{0xff008f8f}
+	a := HRGB{0xff8f008f}
+	var c color.Color
+	for fy := 0; fy < y; fy += 8 {
+		if fy & 8 == 8 { c = a } else { c = b }
+		for fx := 0; fx < x; fx += 8 {
+
+		for j := 0; j < 8; j++ {
+			for i := 0; i < 8; i++ {
+				img.Set(fx+i, fy+j, c)
+			}}
+			if c == b { c = a } else { c = b }
+		}
+	}
+	return img
+}
+
 func getparsedtile(tilenum int) TileData {
 	planedata := make([]TileLinePlane, 4)
 
