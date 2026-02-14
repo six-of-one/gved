@@ -150,6 +150,7 @@ const (
 	SEOBJ_FAKE_PAS				= 92			//  "  , pass over (to block weps, xb needed)
 	SEOBJ_FAKE_PAS_SHT			= 93			//  "  , pass over, can be shot out (absorbs shot to hit pts)
 
+	SEOBJ_FLOORNUL				= 98			// draw as null square, color = 0
 	SEOBJ_FLOORNODRAW			= 99			// dont draw a floor here - colortile / cust floor are 1st, this applies to: std floor, master floor ovrd
 	SEOBJ_FLOOR					= 100
 // Gauntlet II items implement in SE
@@ -378,7 +379,7 @@ var g1mapid = map[int]string{
 	95:		"No_thing_95",
 	96:		"No_thing_96",
 	97:		"No_thing_97",
-	98:		"No_thing_98",
+	SEOBJ_FLOORNUL:		"SE_FLOORNUL",
 	SEOBJ_FLOORNODRAW:		"SE_FLOORNODRAW",
 	SEOBJ_FLOOR:	"XOV_FLOOR",
 	SEOBJ_STUN:	"SE_STUN",

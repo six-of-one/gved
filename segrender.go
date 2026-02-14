@@ -988,11 +988,9 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			gtop.Clear()
 			gtopl = ""// make sure G² code (if it runs with G¹) doesnt set extra dots on non walls
 			dots = 0
-		coltil(img,0,x*16, y*16)
-		if opts.edat == 2 {
-			if x > opts.DimX || y > opts.DimY {
-				sb = 0
-			}
+
+		if opts.edat < 1 || opts.edat == 2 {
+			if x > opts.DimX || y > opts.DimY { sb = SEOBJ_FLOORNUL }
 		}
 // /fmt.Printf("G¹ dec: %x -- ", scanbuf(maze.data, x, y, x, y, -2))
 		switch sb {
@@ -1331,6 +1329,8 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			gtopl = "D"
 			gtop.SetRGB(0, 0, 0)
 			psx, psy = 32, 8
+		case SEOBJ_FLOORNUL:
+			psx, psy = 34, 10
 
 		default:
 			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", sb) }
