@@ -594,26 +594,6 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 	xp := scanxb(xdat, 0, 0, 0, 0, "")
 	Se_mflor, _,_ = parser(xp, SE_MFLR)
 	if Se_mflor >= curwf { Se_mflor = -1 }
-		/*
-	flim := blankimage(16, 16)
-	if Se_mflor >= 0 {
-		if Se_mflor >= curwf { Se_mflor = -1 }
-		err, _, ptamp := itemGetPNG(Se_cflr[Se_mflor])
-		if err == nil {
-			bnds := ptamp.Bounds()
-			iw, ih := bnds.Dx(), bnds.Dy()		  // in theory this image does not HAVE to be square anymore
-			totw :=  int(math.Ceil(opts.Geow/float64(iw))) * iw		// round up so images not divinding easily into maze size cover entire maze
-			toth :=  int(math.Ceil(opts.Geoh/float64(ih))) * ih
-			flim = blankimage(totw, toth)
-
-			for ty := 0; ty < toth ; ty=ty+ih {
-					for tx := 0; tx < totw ; tx=tx+iw {
-						offset := image.Pt(tx, ty)
-						draw.Draw(flim, ptamp.Bounds().Add(offset), ptamp , image.ZP, draw.Over)	// floor image
-					}}
-
-		} else { Se_mflor = -1 }
-	}*/
 // G¹ checks
 // building the ENTIRE floor everytime we come here as main maze (not palete, or pb), which is much slower
 	for y := yb; y < ys; y++ {
@@ -656,14 +636,14 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 				p2,_,_ := parser(xp, SE_CFLOR)
 				if p2 >= 0 && p2 < curwf {			// cust floor from png - laded by lod_maz from xb file
 //					_, ux, uy := lot(x, y, x, y)
-fmt.Printf("SE_CFLOR %d - %d m: %df\n",p2,curwf,maxwf)//,wlfl.florn[fref[p2]])
+//fmt.Printf("SE_CFLOR %d - %d m: %df\n",p2,curwf,maxwf)//,wlfl.florn[fref[p2]])
 					writewftoimage(img, -1,fref[p2],-1, 16,16,0,0,x,y,x*16, y*16)
 				}
 				p3,c,_ := parser(xp, SE_TFLOR)
 				if p3 >= 0 && p3 < curwf {			// cust floor tiled in png (select tile with 'c' val) - laded by lod_maz from xb file
 					bnds :=  wlfl.ftamp[fref[p3]].Bounds()
 					ih := bnds.Dy()
-//fmt.Printf("SE_TFLOR %d - %s, x: %d\n",p3,wlfl.florn[p3],ih)
+//fmt.Printf("SE_TFLOR %d - %s, x: %d\n",p3,wlfl.florn[fref[p3]],ih)
 					writewftoimage(img, fref[p3],-1,-1, ih,ih,0,0,c,0,x*16, y*16)
 				}
 				p4,_,_ := parser(xp, SE_NOFLOR)			// note: for now SEOBJ_FLOORNODRAW only works where players & monsters dont cross the tile, e.g. use SE_NOFLOR
@@ -765,7 +745,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & G² draw walls, see screens
-//	_, _, wtamp = itemGetPNG("gfx/wall_bkgs.b.png")			// master wall replace def
+
 	xp := scanxb(xdat, 0, 0, 0, 0, "")
 	Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
 //fmt.Printf("Se_mwal %d row %d\n",Se_mwal, Se_rwal)

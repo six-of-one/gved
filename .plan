@@ -67,6 +67,7 @@ viewport
 - floor draw (floor gets redrawn with rnd shift every move)
 * xb editing can enter floor vals & like causing crashes - all data needs bounded when calling render code
   \_ bounding is done, needs tested
+- non H & V wrap maps - sdb, walls / floor outside of dimx,y when smaller than 32x32
 
 possible:
 * down the line .ed stored maz# could be used to set maz num
