@@ -588,11 +588,12 @@ var florb *image.NRGBA
 var flordirt int			// whether or not an edit could dirty the flor, pb & palete set to -1
 var fldrsv int				// pb & pal save flordirt state
 
-func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int) {
+func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 
 	xb, yb := 0,0
 //	img = blankimage(16*(xs-xb), 16*(ys-yb))
-
+// one - render single tile at xs,ys
+	if one { xb, yb = xs, ys;  xs, ys = xs+1, ys+1}
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
 
@@ -684,7 +685,7 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int) {
 			}
 		}
 	}				// } removed G² render
-fmt.Printf("rebuilt florb\n")
+fmt.Printf("rebuilt florb: %d\n",flordirt)
 	flordirt = 0
 }
 
@@ -736,7 +737,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	img := blankimage(16*(xs-xb), 16*(ys-yb))
 	if flordirt > 0 {
 		florb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
-		florbas(florb, maze, xdat, opts.DimX+1, opts.DimY+1)		//rebuild floor on load or when edit dirties it
+		florbas(florb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild floor on load or when edit dirties it
 	}
 	if flordirt >= 0 {
 		if opts.edat < 0 || opts.edat == 2 {
@@ -755,10 +756,6 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 						if sf {
 fmt.Printf("  x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)*16,xs,ys,ux,uy,vcoord(x,xb,xba)*16,vcoord(y,yb,yba)*16)
 							writepngtoimage(img,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
-			for i := y; i < fys; i++ {
-				for k := x; k < fxs; k++ {
-						coltil(img,0,(vcoord(x,xb,xba)+k)*16, (vcoord(y,yb,yba)+i)*16)
-					}}
 							sf = false
 						}
 					} else {
@@ -767,11 +764,11 @@ fmt.Printf("  x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)
 				}}
 		}
 	} else {	// -1		= palete or pb
-		florbas(img, maze, xdat, opts.DimX+1, opts.DimY+1)
+		florbas(img, maze, xdat, opts.DimX+1, opts.DimY+1,false)
 //		flordirt = fldrsv
 	}
 
-fmt.Printf("  xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
+fmt.Printf(" xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
 
 	// 8 pixels * 2 tiles * x,y stamps
 

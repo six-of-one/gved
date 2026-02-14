@@ -190,11 +190,11 @@ func specialKey(cw fyne.Window) {
 				} else { srelod = pagit(1) }
 			}}
 			if stu != "" { statlin(cmdhin,stu) }
-			upd_edmaze(false)
+
 //fmt.Printf("sk cond relod: %t\n",srelod)
 			if srelod {
 				remaze(opts.mnum)
-			}
+			} else { upd_edmaze(false) }
        })
     }
 }
