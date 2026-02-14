@@ -442,15 +442,16 @@ func vcoord(c, cb, ba int) int {
 // also return extracted area
 var dbgwrt bool
 //								dbgwrt = true
+var parimg image.Image			// keep large images off stacks
 
-func writepngtoimage(img *image.NRGBA, lptamp image.Image, rx,ry,ax,ay,cl,rw, xw, yw int) {
+func writepngtoimage(img *image.NRGBA, rx,ry,ax,ay,cl,rw, xw, yw int) {
 
-	bnds := lptamp.Bounds()
+	bnds := parimg.Bounds()
 	iw, ih := bnds.Dx(), bnds.Dy()
 	rec := image.Rect((cl)*rx, (rw)*ry, ax+(cl+1)*rx, ay+(rw+1)*ry)			// this pegs the intended rect on sprite sheet
 	rrr := image.Rect(0,0,iw,ih)
 	cpy := image.NewRGBA(rrr)
-	draw.Copy(cpy, image.Pt(0,0), lptamp, rec, draw.Over, nil)
+	draw.Copy(cpy, image.Pt(0,0), parimg, rec, draw.Over, nil)
 if dbgwrt {
 fmt.Printf("sz %d %d c, r %d, %d vp abs %d x %d\n",rx,ry,cl,rw,xw,yw)
 }
@@ -461,7 +462,7 @@ fmt.Printf("sz %d %d c, r %d, %d vp abs %d x %d\n",rx,ry,cl,rw,xw,yw)
 //	return cpy
 }
 
-// teh quickening - stop sending large images thru parms
+// teh quickening - stop sending large images thru parms, all floor & wall slice store img comes here
 
 func writewftoimage(img *image.NRGBA, ftmp,fflm,wtmp, rx,ry,ax,ay,cl,rw, xw, yw int) {
 
@@ -664,7 +665,8 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 				if p >= 0 || p2 >= 0 || p3 >= 0 || p4 >= 0 || Se_mflor >= 0 {				// cust floor or colortiles req this shadow set (for no shadow, set wp cust to 7)
 					na := (adj >> 2)		// div 4
 					if na > 0 && wp < shad_wallpat() {
-						writepngtoimage(img, shtamp, 16,16,0,0,na,0, x*16, y*16)
+						parimg = shtamp
+						writepngtoimage(img, 16,16,0,0,na,0, x*16, y*16)
 					}
 				}
 			}}
@@ -731,16 +733,18 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
 	if flordirt > 0 { florb = florbas(maze, xdat, opts.DimX+1, opts.DimY+1) }		//rebuild floor on load or when edit dirties it
 	if flordirt >= 0 {
-		if opts.edat == 2 {
-			writepngtoimage(img, florb, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0)
+		if opts.edat < 0 || opts.edat == 2 {
+			parimg = florb
+			writepngtoimage(img, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0)
 		} else {
 			for y := yb; y < ys; y++ {
 				for x := xb; x < xs; x++ {
 					_, ux, uy := lot(x, y, x, y)
-					writepngtoimage(img, florb, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					parimg = florb
+					writepngtoimage(img, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
 				}}
 		}
-	} else {	// -1
+	} else {	// -1		= palete or pb
 		img = florbas(maze, xdat, opts.DimX+1, opts.DimY+1)
 //		flordirt = fldrsv
 	}
@@ -812,7 +816,8 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 					if !opts.Nosec {
 						wlt = AdjustHue(wlfl.wtamp[wref[p]], 41.0)
 					}
-					writepngtoimage(img, wlt, 16,16,0,0,wly,q, vcx*16, vcy*16)
+					parimg = wlt
+					writepngtoimage(img, 16,16,0,0,wly,q, vcx*16, vcy*16)
 				} else {
 					stamp = wallGetStamp(wp, adj, wc)
 					if !opts.Nosec {
@@ -906,7 +911,8 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 					if (s == G1OBJ_DOOR_HORIZ && dirs[i].x != 0) || (s == G1OBJ_DOOR_VERT && dirs[i].y != 0) {
 	//fmt.Printf("i(%d) %d.%d ",i, dirs[i].x, dirs[i].y)
 							ovlp := dorvwal[wly][i]
-							if ovlp > 0 { writepngtoimage(img, dvw, 16,16,0,0,15+ovlp,0,vcx*16, vcy*16) }
+							parimg = dvw
+							if ovlp > 0 { writepngtoimage(img, 16,16,0,0,15+ovlp,0,vcx*16, vcy*16) }
 					}
 				}
 	//fmt.Printf("\n")
@@ -1380,10 +1386,12 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			}
 // expand and sanctuary
 			if psx >= 0 && psy >= 0 {
-				writepngtoimage(img, sents, 16,16,szx,szy,psx,psy,vcx*16, vcy*16)
+				parimg = sents
+				writepngtoimage(img, 16,16,szx,szy,psx,psy,vcx*16, vcy*16)
 			}
 			if err == nil && ptamp != nil {
-				writepngtoimage(img, ptamp, 16,16,0,0,0,0,vcx*16, vcy*16)
+				parimg = ptamp
+				writepngtoimage(img, 16,16,0,0,0,0,vcx*16, vcy*16)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
