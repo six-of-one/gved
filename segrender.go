@@ -545,9 +545,11 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 	_, _, shtamp := itemGetPNG("gfx/shadows.16.png")		// no error block on this
 	xp := scanxb(xdat, 0, 0, 0, 0, "")
 	Se_mflor, _,_ = parser(xp, SE_MFLR)
-	if Se_mflor > Se_maxflr { Se_mflor = -1 }
+	if Se_mflor >= curwf { Se_mflor = -1 }
+		/*
 	flim := blankimage(16, 16)
-	if Se_mflor >= 0 {			// ** does not need doen every entry **
+	if Se_mflor >= 0 {
+		if Se_mflor >= curwf { Se_mflor = -1 }
 		err, _, ptamp := itemGetPNG(Se_cflr[Se_mflor])
 		if err == nil {
 			bnds := ptamp.Bounds()
@@ -563,7 +565,7 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 					}}
 
 		} else { Se_mflor = -1 }
-	}
+	}*/
 // G¹ checks
 // building the ENTIRE floor everytime we come here as main maze (not palete, or pb), which is much slower
 	for y := yb; y < ys; y++ {
@@ -618,24 +620,24 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p2],p2)
 					cl = uint32(0xff000000 + r + q * 256 + p * 65536)
 					coltil(img,cl,x*16, y*16)
 				}
-//				p2,_,_ := parser(xp, SE_CFLOR)
+				p2,_,_ := parser(xp, SE_CFLOR)
 				if p2 >= 0 && p2 < curwf {			// cust floor from png - laded by lod_maz from xb file
 //					_, ux, uy := lot(x, y, x, y)
-					writepngtoimage(img, wlfl.flim[p2], 16,16,0,0,x,y,x*16, y*16)
+					writepngtoimage(img, wlfl.flim[fref[p2]], 16,16,0,0,x,y,x*16, y*16)
 				}
 				p3,c,_ := parser(xp, SE_TFLOR)
 				if p3 >= 0 && p3 < curwf {			// cust floor tiled in png (select tile with 'c' val) - laded by lod_maz from xb file
-					bnds :=  wlfl.ftamp[p3].Bounds()
+					bnds :=  wlfl.ftamp[fref[p3]].Bounds()
 					ih := bnds.Dy()
 //fmt.Printf("SE_TFLOR %d - %s, x: %d\n",p3,wlfl.florn[p3],ih)
-					writepngtoimage(img, wlfl.ftamp[p3], ih,ih,0,0,c,0,x*16, y*16)
+					writepngtoimage(img, wlfl.ftamp[fref[p3]], ih,ih,0,0,c,0,x*16, y*16)
 				}
 				p4,_,_ := parser(xp, SE_NOFLOR)			// note: for now SEOBJ_FLOORNODRAW only works where players & monsters dont cross the tile, e.g. use SE_NOFLOR
 				if p3 < 0 && p2 < 0 && p < 0 && p4 < 0 && sb != SEOBJ_FLOORNODRAW {
 				if Se_mflor >= 0 {
 					stamp = nil
 //					_, ux, uy := lot(x, y, x, y)
-					writepngtoimage(img, flim, 16,16,0,0,x, y,x*16, y*16)		// master floor replace SE_MFLR
+					writepngtoimage(img, wlfl.flim[fref[Se_mflor]], 16,16,0,0,x, y,x*16, y*16)		// master floor replace SE_MFLR
 				 } else {
 					writestamptoimage(gt,img, stamp, x*16, y*16)		// G¹ floors & overrides SE_FLOR
 				}}
@@ -768,7 +770,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				p,q,_ = parser(xp, SE_CWAL)
 				if p >= 0 && p < curwf {
 					stamp = nil
-					writepngtoimage(img, wlfl.wtamp[p], 16,16,0,0,wly+26,q, vcx*16, vcy*16)
+					writepngtoimage(img, wlfl.wtamp[wref[p]], 16,16,0,0,wly+26,q, vcx*16, vcy*16)
 				} else {
 					if Se_mwal >= 0 {
 							stamp = nil
@@ -787,9 +789,9 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				p,q,_ = parser(xp, SE_CWAL)
 				if p >= 0 && p < curwf {
 					stamp = nil
-					wlt := wlfl.wtamp[p]
+					wlt := wlfl.wtamp[wref[p]]
 					if !opts.Nosec {
-						wlt = AdjustHue(wlfl.wtamp[p], 41.0)
+						wlt = AdjustHue(wlfl.wtamp[wref[p]], 41.0)
 					}
 					writepngtoimage(img, wlt, 16,16,0,0,wly,q, vcx*16, vcy*16)
 				} else {
@@ -824,7 +826,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				p,q,_ = parser(xp, SE_CWAL)
 				if p >= 0 && p < curwf {
 					stamp = nil
-					writepngtoimage(img, wlfl.wtamp[p], 16,16,0,0,wly,q, vcx*16, vcy*16)
+					writepngtoimage(img, wlfl.wtamp[wref[p]], 16,16,0,0,wly,q, vcx*16, vcy*16)
 				} else {
 					if Se_mwal >= 0 {
 							stamp = nil

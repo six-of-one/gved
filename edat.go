@@ -434,7 +434,7 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 						err, _, wlfl.wtamp[maxwf] = itemGetPNG(wal)
 						if err != nil { wlfl.wtamp[maxwf] = blankimage(832, 16) }
 					}
-					if K > 0 || l > 0 { nwalflor() }	// add one if either is new, there could be empty entries
+					if k > 0 || l > 0 { nwalflor() }	// add one if either is new, there could be empty entries
 fmt.Printf("%d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i])
 //---------------------------
 					i++
