@@ -425,17 +425,17 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 		if ix > 0 && iy > 0 {
 
 			l, fin, wal := "", "", ""		// defaults on fail - this happens not...
+			for i := 0; i <= maxwf; i++ { fref[i] = 0; wref[i] = 0 }
 			i := 0
 			lsv := 500
-			for i := 0; i <= maxwf; i++ { fref[i] = 0; wref[i] = 0 }
 			for fin != "xwfdn" && lsv > 0 {
 				if scanr.Scan() { l = scanr.Text() }
 				fin, wal = "xwfdn",""
 				fmt.Sscanf(l,"%s %s",&fin, &wal)		// this loop will read cust walls & floor pairs until xwfdn
 				if fin != "xwfdn" {
 					k,l := findwf(fin,wal)
-					if k < 0 && l < 0 { nwalflor() }	// add one if either is new, there could be empty entries
-					if k > 0 { fref[i] = k } else {
+					if k < 0 || l < 0 { nwalflor() }	// add one if either is new, there could be empty entries
+					if k >= 0 { fref[i] = k } else {
 						fref[i] = maxwf
 						wlfl.florn[maxwf] = fin					// if floor name starts 'flor_' this is accepted as a tiled floor set for individual use, and will not build a level sized floor
 						err, _, wlfl.ftamp[maxwf] = itemGetPNG(fin)
@@ -443,13 +443,13 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 						if reFloorT.MatchString(fin) { wlfl.flrtls[maxwf] = true; fmt.Printf("flor_ match\n") }		// single row of vars floor tiles, do not multiplex to level sized copyover
 						florflim(maxwf)
 					}
-					if l > 0 { wref[i] = l } else {
+					if l >= 0 { wref[i] = l } else {
 						wref[i] = maxwf
 						wlfl.walln[maxwf] = wal
 						err, _, wlfl.wtamp[maxwf] = itemGetPNG(wal)
 						if err != nil { wlfl.wtamp[maxwf] = blankimage(832, 16) }
 					}
-fmt.Printf("%d: %s %s\n",i,wlfl.florn[maxwf],wlfl.walln[maxwf])
+fmt.Printf("ld %d: p-%d %d -- %s %s\n",i,fref[i],wref[i],wlfl.florn[maxwf],wlfl.walln[maxwf])
 //---------------------------
 					i++
 				}

@@ -542,10 +542,12 @@ func nwalflor(){
 
 func findwf(fl,wl string) (int, int) {
 	f,w := -1,-1
-	for i := 0; i < maxwf; i++ {
+	for i := 0; i <= maxwf; i++ {
 		if f < 0 && fl == wlfl.florn[i] { f = i }
 		if w < 0 && wl == wlfl.walln[i] { w = i }
+fmt.Printf("srch %d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i])
 	}
+fmt.Printf("fnd f%d, w%d\n",f,w)
 	return f,w
 }
 
@@ -553,13 +555,12 @@ func findwf(fl,wl string) (int, int) {
 
 func florflim(p int) {
 
-fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 
 	if wlfl.flrtls[p] { return }	// dont render tile set into flim here
 	bnds := wlfl.ftamp[p].Bounds()
 	iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
-	totw :=  int(math.Ceil(float64((opts.DimX*16)/iw))) * iw		// round up so images not divinding easily into maze size cover entire maze
-	toth :=  int(math.Ceil(float64((opts.DimY*16)/ih))) * ih
+	totw :=  int(math.Ceil(float64(((opts.DimX+1)*16)/iw))) * iw		// round up so images not divinding easily into maze size cover entire maze
+	toth :=  int(math.Ceil(float64(((opts.DimY+1)*16)/ih))) * ih
 	if totw <= wlfl.totw[p] && toth <= wlfl.toth[p] { return }
 
 	if wlfl.totw[p] == 0 { wlfl.flim[p] = blankimage(totw, toth) }
@@ -569,6 +570,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 		draw.Draw(wlfl.flim[p], wlfl.ftamp[p].Bounds().Add(offset), wlfl.ftamp[p], image.ZP, draw.Over)
 	}}
 	 wlfl.totw[p], wlfl.toth[p] = totw, toth
+fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 }
 
 // make base floor, of: null space, SE_COLRT, SE_CFLOR, SE_TFLOR, SE_NOFLOR, Se_mflor, std floor, adj/wly shadows, ff beams
