@@ -689,6 +689,189 @@ fmt.Printf("rebuilt florb: %d\n",flordirt)
 	flordirt = 0
 }
 
+// make walls base 
+
+var walsb *image.NRGBA
+var walsdirt int			// whether or not an edit could dirty the flor, pb & palete set to -1
+
+func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
+
+	xb, yb := 0,0
+// one - render single tile at xs,ys
+	if one { xb, yb = xs, ys;  xs, ys = xs+1, ys+1}
+
+// seperating walls from other ents so walls dont overwrite 24 x 24 ents
+// unless emu is wrong, this is the way g & G² draw walls, see screens
+
+	xp := scanxb(xdat, 0, 0, 0, 0, "")
+	Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
+//fmt.Printf("Se_mwal %d row %d\n",Se_mwal, Se_rwal)
+	Se_rrnd = 0
+	if Se_mwal < 0 { Se_mwal, Se_rwal, Se_rrnd = parser(xp, SE_MWALRND) }		// randomly select from wall row Se_rwal + rnd 0 - Se_rrnd val
+//fmt.Printf("Se_mwalrnd %d row %d Se_rrnd %d\n",Se_mwal, Se_rwal,Se_rrnd)
+
+	_, _, dvw := itemGetPNG("gfx/g1door_overlp.png")			// door over wall std
+	for y := yb; y <= ys; y++ {
+		for x := xb; x <= xs; x++ {
+			var stamp *Stamp
+			var dots int // dot count
+			wp, wc := maze.wallpattern, maze.wallcolor
+			gt := G1
+			xp := scanxb(xdat, x, y, x, y, "")
+			p,q,_ := parser(xp, SE_G2)
+			if p == 1 { gt = false }
+			p,q,_ = parser(xp, SE_WALL)
+			if p >= 0 { wp,wc,_,_ = suprval(p,q,0,0) }
+
+				//			if G2 {		removed G² render
+				//	}		removed G² render
+			wly, adj, walop := 0,0,0
+
+			if !G2 {
+				if wp > 5 { wp -= 6 }		// Se enhance that allows shadowless G¹ walls
+			}
+			nwt := NOWALL | NOG1W		// reg G¹ walls taken out by themselves (no traps, cycs etc) by NOG1W flags
+			wbd := scanbuf(maze.data, x, y, x, y, -2)
+
+			switch wbd {
+			case G1OBJ_WALL_DESTRUCTABLE:
+				adj, wly = checkwalladj8g1(maze, x, y)
+			if (nothing & NOWALL) == 0 {
+				p,q,_ = parser(xp, SE_CWAL)
+				if p >= 0 && p < curwf {
+					stamp = nil
+					writewftoimage(img, -1,-1,wref[p], 16,16,0,0,wly+26,q, x*16, y*16)
+				} else {
+					if Se_mwal >= 0 {
+							stamp = nil
+							rn := rndr(0, Se_rrnd)
+							writewftoimage(img, -1,-1,wref[Se_mwal], 16,16,0,0,wly+26,Se_rwal + rn, x*16, y*16)		// in new Se, destruct is 26 past regylar
+					} else {
+					stamp = wallGetDestructableStamp(wp, adj, wc)
+					}
+				}
+				walop = wbd
+			}
+
+			case SEOBJ_SECRTWAL:
+				adj, wly = checkwalladj8g1(maze, x, y)
+			if (nothing & NOWALL) == 0 {
+				p,q,_ = parser(xp, SE_CWAL)
+				if p >= 0 && p < curwf {
+					stamp = nil
+					wlt := wlfl.wtamp[wref[p]]
+					if !opts.Nosec {
+						wlt = AdjustHue(wlfl.wtamp[wref[p]], 41.0)
+					}
+					parimg = wlt
+					writepngtoimage(img, 16,16,0,0,wly,q, x*16, y*16,0)
+				} else {
+					stamp = wallGetStamp(wp, adj, wc)
+					if !opts.Nosec {
+						ppn := stamp.pnum + 1;		// shift secret wall display color so it cant match any wall spec
+						if ppn > 16 { ppn = 0 }
+						paletteSecret(ppn)
+						stamp.ptype = "secret"
+						stamp.pnum = 0
+					}
+				}
+				walop = wbd
+			}
+			case G1OBJ_WALL_TRAP1:
+				fallthrough
+			case SEOBJ_WAL_TRAPCYC1:
+				dots = 1; nwt = NOWALL
+				fallthrough
+			case SEOBJ_WAL_TRAPCYC2:
+				if dots == 0 { dots = 2 }; nwt = NOWALL
+				fallthrough
+			case SEOBJ_WAL_TRAPCYC3:
+				if dots == 0 { dots = 3 }; nwt = NOWALL
+				fallthrough
+			case SEOBJ_RNDWAL:
+				if dots == 0 { dots = 4 }; nwt = NOWALL
+				fallthrough
+			case G1OBJ_WALL_REGULAR:
+				adj, wly = checkwalladj8g1(maze, x, y)
+				if (nothing & nwt) == 0 {
+				p,q,_ = parser(xp, SE_CWAL)
+				if p >= 0 && p < curwf {
+					stamp = nil
+					writewftoimage(img, -1,-1,wref[p], 16,16,0,0,wly,q, x*16, y*16)
+				} else {
+					if Se_mwal >= 0 {
+							stamp = nil
+							rn := rndr(0,Se_rrnd)
+							writewftoimage(img, -1,-1,wref[Se_mwal], 16,16,0,0,wly,Se_rwal + rn, x*16, y*16)
+					} else {
+					stamp = wallGetStamp(wp, adj, wc)
+					}
+				}
+				walop = wbd
+			}
+// test of some items not place in mazes - place in empty floor tile @random
+			case SEOBJ_FLOOR:
+				fallthrough
+			case G1OBJ_TILE_FLOOR:
+				p,q,r := parser(xp, SE_LETR)
+				c := ""
+				len := 12
+				if p < 0 {
+					p,q,r = parser(xp, SE_MSG)		// letter, msg mutually exclude
+					if p >= 0 {
+						for i := 0; i < 32; i++ {
+							if xpar[i] < 130 { if xpar[i] == 0 {break}; c += map_keymap[xpar[i]]; len += 14 }
+						}
+					}
+				} else {
+					l := xpar[0]
+					if l < 130 { c = map_keymap[l] }
+				}
+				if p >= 0 {
+						gtop := gg.NewContext(len, 12)
+						if err := gtop.LoadFontFace(".font/VrBd.ttf", 10); err == nil {
+						gtop.Clear()
+						fp, fq, fr := float64(p)/256,float64(q)/256,float64(r)/256
+						gtop.SetRGB(fp, fq, fr)
+						cpos := 0.5
+						if len > 16 { cpos = 0.0 }
+						gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
+						gtopim := gtop.Image()
+						offset := image.Pt(x*16+4, y*16)
+						draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
+					}}
+				if opts.SP {
+					ts := rand.Intn(670)
+					if ts == 2 { maze.data[xy{x, y}] = G1OBJ_TREASURE_BAG }
+					if ts == 11 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+					if ts == 311 { maze.data[xy{x, y}] = MAZEOBJ_HIDDENPOT }
+				}
+			}
+			if stamp != nil {
+				writestamptoimage(gt,img, stamp, x*16+stamp.nudgex, y*16+stamp.nudgey)
+			}
+	// check door -> wall overlaps
+			if wly > 0 || walop > 0 {
+	//fmt.Printf("wall seg %d adj %d, type %d, dor: ",wly,adj,walop)
+				for i := 0; i < 4; i++ {
+					s := scanbuf(maze.data, x + dirs[i].x, y + dirs[i].y, x + dirs[i].x, y + dirs[i].y, -2)
+					if (s == G1OBJ_DOOR_HORIZ && dirs[i].x != 0) || (s == G1OBJ_DOOR_VERT && dirs[i].y != 0) {
+	//fmt.Printf("i(%d) %d.%d ",i, dirs[i].x, dirs[i].y)
+							ovlp := dorvwal[wly][i]
+							parimg = dvw
+							if ovlp > 0 { writepngtoimage(img, 16,16,0,0,15+ovlp,0,x*16, y*16,0) }
+					}
+				}
+	//fmt.Printf("\n")
+			}
+			if dots != 0 && nothing & NOWALL == 0 {
+				renderdots(img, x*16, y*16, dots)
+			}
+		}
+	}
+
+	walsdirt = 0
+}
 // image from buffer segment			- stat: display stats 'On image' if true
 // segment of buffer from xb,yb to xs,ys (begin to stop)
 
@@ -729,12 +912,15 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	maze.wallcolor = fdat[6] & 0x0f
 	maze.floorcolor = (fdat[6] & 0xf0) >> 4
 
+	walsdirt = flordirt		// cheet for now - later these should seperate
+
 	// unpin issue - -vals flummox canvas writes
 	xba, yba := 0, 0
 	if xb < 0 { xba = absint(xb) }
 	if yb < 0 { yba = absint(yb) }
 
 	img := blankimage(16*(xs-xb), 16*(ys-yb))
+
 	if flordirt > 0 {
 		florb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
 		florbas(florb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild floor on load or when edit dirties it
@@ -765,182 +951,15 @@ fmt.Printf("  x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)
 		}
 	} else {	// -1		= palete or pb
 		florbas(img, maze, xdat, opts.DimX+1, opts.DimY+1,false)
-//		flordirt = fldrsv
+	}
+
+	if walsdirt > 0 {
+		walsb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
+		walbas(walsb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild floor on load or when edit dirties it
 	}
 
 fmt.Printf(" xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
 
-	// 8 pixels * 2 tiles * x,y stamps
-
-// seperating walls from other ents so walls dont overwrite 24 x 24 ents
-// unless emu is wrong, this is the way g & G² draw walls, see screens
-
-	xp := scanxb(xdat, 0, 0, 0, 0, "")
-	Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
-//fmt.Printf("Se_mwal %d row %d\n",Se_mwal, Se_rwal)
-	Se_rrnd = 0
-	if Se_mwal < 0 { Se_mwal, Se_rwal, Se_rrnd = parser(xp, SE_MWALRND) }		// randomly select from wall row Se_rwal + rnd 0 - Se_rrnd val
-//fmt.Printf("Se_mwalrnd %d row %d Se_rrnd %d\n",Se_mwal, Se_rwal,Se_rrnd)
-
-	_, _, dvw := itemGetPNG("gfx/g1door_overlp.png")			// door over wall std
-	for y := yb; y <= ys; y++ {
-		for x := xb; x <= xs; x++ {
-			var stamp *Stamp
-			var dots int // dot count
-			wp, wc := maze.wallpattern, maze.wallcolor
-			gt := G1
-			xp := scanxb(xdat, x, y, x, y, "")
-			p,q,_ := parser(xp, SE_G2)
-			if p == 1 { gt = false }
-			p,q,_ = parser(xp, SE_WALL)
-			if p >= 0 { wp,wc,_,_ = suprval(p,q,0,0) }
-
-				//			if G2 {		removed G² render
-				//	}		removed G² render
-			wly, adj, walop := 0,0,0
-
-			if !G2 {
-				if wp > 5 { wp -= 6 }		// Se enhance that allows shadowless G¹ walls
-			}
-			nwt := NOWALL | NOG1W		// reg G¹ walls taken out by themselves (no traps, cycs etc) by NOG1W flags
-			wbd := scanbuf(maze.data, x, y, x, y, -2)
-			vcx, vcy := vcoord(x,xb,xba), vcoord(y,yb,yba)
-			switch wbd {
-			case G1OBJ_WALL_DESTRUCTABLE:
-				adj, wly = checkwalladj8g1(maze, x, y)
-			if (nothing & NOWALL) == 0 {
-				p,q,_ = parser(xp, SE_CWAL)
-				if p >= 0 && p < curwf {
-					stamp = nil
-					writewftoimage(img, -1,-1,wref[p], 16,16,0,0,wly+26,q, vcx*16, vcy*16)
-				} else {
-					if Se_mwal >= 0 {
-							stamp = nil
-							rn := rndr(0, Se_rrnd)
-							writewftoimage(img, -1,-1,wref[Se_mwal], 16,16,0,0,wly+26,Se_rwal + rn, vcx*16, vcy*16)		// in new Se, destruct is 26 past regylar
-					} else {
-					stamp = wallGetDestructableStamp(wp, adj, wc)
-					}
-				}
-				walop = wbd
-			}
-
-			case SEOBJ_SECRTWAL:
-				adj, wly = checkwalladj8g1(maze, x, y)
-			if (nothing & NOWALL) == 0 {
-				p,q,_ = parser(xp, SE_CWAL)
-				if p >= 0 && p < curwf {
-					stamp = nil
-					wlt := wlfl.wtamp[wref[p]]
-					if !opts.Nosec {
-						wlt = AdjustHue(wlfl.wtamp[wref[p]], 41.0)
-					}
-					parimg = wlt
-					writepngtoimage(img, 16,16,0,0,wly,q, vcx*16, vcy*16,0)
-				} else {
-					stamp = wallGetStamp(wp, adj, wc)
-					if !opts.Nosec {
-						ppn := stamp.pnum + 1;		// shift secret wall display color so it cant match any wall spec
-						if ppn > 16 { ppn = 0 }
-						paletteSecret(ppn)
-						stamp.ptype = "secret"
-						stamp.pnum = 0
-					}
-				}
-				walop = wbd
-			}
-			case G1OBJ_WALL_TRAP1:
-				fallthrough
-			case SEOBJ_WAL_TRAPCYC1:
-				dots = 1; nwt = NOWALL
-				fallthrough
-			case SEOBJ_WAL_TRAPCYC2:
-				if dots == 0 { dots = 2 }; nwt = NOWALL
-				fallthrough
-			case SEOBJ_WAL_TRAPCYC3:
-				if dots == 0 { dots = 3 }; nwt = NOWALL
-				fallthrough
-			case SEOBJ_RNDWAL:
-				if dots == 0 { dots = 4 }; nwt = NOWALL
-				fallthrough
-			case G1OBJ_WALL_REGULAR:
-				adj, wly = checkwalladj8g1(maze, x, y)
-				if (nothing & nwt) == 0 {
-				p,q,_ = parser(xp, SE_CWAL)
-				if p >= 0 && p < curwf {
-					stamp = nil
-					writewftoimage(img, -1,-1,wref[p], 16,16,0,0,wly,q, vcx*16, vcy*16)
-				} else {
-					if Se_mwal >= 0 {
-							stamp = nil
-							rn := rndr(0,Se_rrnd)
-							writewftoimage(img, -1,-1,wref[Se_mwal], 16,16,0,0,wly,Se_rwal + rn, vcx*16, vcy*16)
-					} else {
-					stamp = wallGetStamp(wp, adj, wc)
-					}
-				}
-				walop = wbd
-			}
-// test of some items not place in mazes - place in empty floor tile @random
-			case SEOBJ_FLOOR:
-				fallthrough
-			case G1OBJ_TILE_FLOOR:
-				p,q,r := parser(xp, SE_LETR)
-				c := ""
-				len := 12
-				if p < 0 {
-					p,q,r = parser(xp, SE_MSG)		// letter, msg mutually exclude
-					if p >= 0 {
-						for i := 0; i < 32; i++ {
-							if xpar[i] < 130 { if xpar[i] == 0 {break}; c += map_keymap[xpar[i]]; len += 14 }
-						}
-					}
-				} else {
-					l := xpar[0]
-					if l < 130 { c = map_keymap[l] }
-				}
-				if p >= 0 {
-						gtop := gg.NewContext(len, 12)
-						if err := gtop.LoadFontFace(".font/VrBd.ttf", 10); err == nil {
-						gtop.Clear()
-						fp, fq, fr := float64(p)/256,float64(q)/256,float64(r)/256
-						gtop.SetRGB(fp, fq, fr)
-						cpos := 0.5
-						if len > 16 { cpos = 0.0 }
-						gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
-						gtopim := gtop.Image()
-						offset := image.Pt(vcx*16+4, vcy*16)
-						draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
-					}}
-				if opts.SP {
-					ts := rand.Intn(670)
-					if ts == 2 { mdat[xy{x, y}] = G1OBJ_TREASURE_BAG }
-					if ts == 11 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
-					if ts == 311 { mdat[xy{x, y}] = MAZEOBJ_HIDDENPOT }
-				}
-			}
-			if stamp != nil {
-				writestamptoimage(gt,img, stamp, vcx*16+stamp.nudgex, vcy*16+stamp.nudgey)
-			}
-	// check door -> wall overlaps
-			if wly > 0 || walop > 0 {
-	//fmt.Printf("wall seg %d adj %d, type %d, dor: ",wly,adj,walop)
-				for i := 0; i < 4; i++ {
-					s := scanbuf(maze.data, x + dirs[i].x, y + dirs[i].y, x + dirs[i].x, y + dirs[i].y, -2)
-					if (s == G1OBJ_DOOR_HORIZ && dirs[i].x != 0) || (s == G1OBJ_DOOR_VERT && dirs[i].y != 0) {
-	//fmt.Printf("i(%d) %d.%d ",i, dirs[i].x, dirs[i].y)
-							ovlp := dorvwal[wly][i]
-							parimg = dvw
-							if ovlp > 0 { writepngtoimage(img, 16,16,0,0,15+ovlp,0,vcx*16, vcy*16,0) }
-					}
-				}
-	//fmt.Printf("\n")
-			}
-			if dots != 0 && nothing & NOWALL == 0 {
-				renderdots(img, vcx*16, vcy*16, dots)
-			}
-		}
-	}
 
 	opr := 3		// G² hack to present specials on scoreboard / info maze 104
 	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
