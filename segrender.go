@@ -638,7 +638,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 		}
 	}				// } removed G² render
 fmt.Printf("rebuilt florb\n")
-	flordirt = 0
+//	flordirt = 0
 	return img
 }
 
@@ -688,6 +688,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	if xb < 0 { xba = absint(xb) }
 	if yb < 0 { yba = absint(yb) }
 
+fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d, flor %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY,flordirt)
 	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
 	if flordirt > 0 { florb = florbas(maze, xdat, opts.DimX+1, opts.DimY+1) }		//rebuild floor on load or when edit dirties it
 	if flordirt < 0 {	// -1
@@ -695,7 +696,6 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 //		flordirt = fldrsv
 	}
 
-fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
 
 	// 8 pixels * 2 tiles * x,y stamps
 
@@ -732,7 +732,8 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			nwt := NOWALL | NOG1W		// reg G¹ walls taken out by themselves (no traps, cycs etc) by NOG1W flags
 			wbd := scanbuf(maze.data, x, y, x, y, -2)
 			vcx, vcy := vcoord(x,xb,xba), vcoord(y,yb,yba)
-			if flordirt >= 0 {
+	// now copy floor in 1 cell at a time during this loop
+			if flordirt >= 0 {			// can not be used when coming in flordirt < 0
 				_, ux, uy := lot(x, y, x, y)
 				writepngtoimage(img, florb, 16,16,0,0,ux,uy,vcx*16, vcy*16)
 			}
@@ -870,7 +871,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 			}
 		}
 	}
-
+	flordirt = 0	// had to move this here per individual floor loop
 	opr := 3		// G² hack to present specials on scoreboard / info maze 104
 	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
 	for y := yb; y <= ys; y++ {
@@ -899,7 +900,7 @@ if opts.Verbose { fmt.Printf("\n") }
 				panic(err)
 				}
 
-if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
+if opts.Verbose { fmt.Printf("%03d ",sb) }
 
 			//	if G2 {			removed G² render
 
