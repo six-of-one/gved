@@ -500,14 +500,27 @@ func nwalflor(){
 
 //fmt.Printf("delbuf st: %d len %d, test: %d\n",delstak,len(delbuf.elem),t)
 	maxwf++
-	wlfl.florn = append(wlfl.florn,"gfx/1x1.png")
-	wlfl.walln = append(wlfl.walln,"gfx/1x1.png")
+	wlfl.florn = append(wlfl.florn,"")
+	wlfl.walln = append(wlfl.walln,"")
 	wlfl.ftamp = append(wlfl.ftamp,nil)				// floor tile loaded from fil
 	wlfl.flim  = append(wlfl.flim,nil)				// floor panel made for maze writepngtoimage
 	wlfl.wtamp = append(wlfl.wtamp,nil)				// wall tiles, should be 26 16x16 segments + 26 shot wall 16x16 segs, as many rows as desired
 	wlfl.flrblt = append(wlfl.flrblt,false)			// flag indicates if floor built after loaded
-	wref = append(wref,0)							// ref pointer in wlfl slice, floors walls, only load once
+	wlfl.totw = append(wlfl.totw,0)
+	wlfl.toth = append(wlfl.toth,0)
+	wref = append(wref,0)							// ref pointer in wlfl slice, floors & walls, only load once
 	fref = append(fref,0)
+}
+
+// find a wall or floor in the slice struct
+
+func findwf(fl,wl string) (int, int) {
+	f,w := -1,-1
+	for i := 0; i < maxwf; i++ {
+		if f < 0 && fl == wlfl.florn[i] { f = i }
+		if w < 0 && wl == wlfl.walln[i] { w = i }
+	}
+	return f,w
 }
 
 // make base floor, of: null space, SE_COLRT, SE_CFLOR, SE_TFLOR, SE_NOFLOR, Se_mflor, std floor, adj/wly shadows, ff beams

@@ -98,6 +98,8 @@ func ed_init() {
 	zm_x = -1
 	zm_y = -1
 	cpal5 = -1
+	nwalflor()
+	maxwf = 0; // pointer to new entry
 }
 
 // turn on edit mode
@@ -411,7 +413,7 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 		fmt.Sscanf(l,"%d %d",&ix, &iy)		// buffer size
 fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 		if ix > 0 && iy > 0 {
-			for i := 0; i < maxwf; i++ { wlfl.flrblt[i] = false }		// clear all built floors
+
 			l, fin, wal := "gfx/floor016.jpg gfx/wall_jsgv_A.b.png", "", ""		// defaults on fail - this happens not...
 			i := 0
 			lsv := 500
@@ -420,15 +422,21 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 				fin, wal = "xwfdn",""
 				fmt.Sscanf(l,"%s %s",&fin, &wal)		// this loop will read cust walls & floor pairs until xwfdn
 				if fin != "xwfdn" {
-					if i <= maxwf { nwalflor() }
-					wlfl.florn[i] = fin					// if floor name starts 'flor_' this is accepted as a tiled floor set for individual use, and will not build a level sized floor
-					wlfl.walln[i] = wal
-					err, _, wlfl.ftamp[i] = itemGetPNG(fin)
-					if err != nil { wlfl.ftamp[i] = blankimage(64, 64) }
-					err, _, wlfl.wtamp[i] = itemGetPNG(wal)
-					if err != nil { wlfl.wtamp[i] = blankimage(832, 16) }
-					if reFloorT.MatchString(fin) { wlfl.flrblt[i] = true; fmt.Printf("flor_ match\n") }		// single row of vars floor tiles, do not multiplex to level sized copyover
+					k,l := findwf(fin,wal)
+					if k > 0 { fref[i] = k } else {
+						wlfl.florn[maxwf] = fin					// if floor name starts 'flor_' this is accepted as a tiled floor set for individual use, and will not build a level sized floor
+						err, _, wlfl.ftamp[maxwf] = itemGetPNG(fin)
+						if err != nil { wlfl.ftamp[maxwf] = blankimage(64, 64) }
+						if reFloorT.MatchString(fin) { wlfl.flrblt[maxwf] = true; fmt.Printf("flor_ match\n") }		// single row of vars floor tiles, do not multiplex to level sized copyover
+					}
+					if l > 0 { wref[i] = l } else {
+						wlfl.walln[maxwf] = wal
+						err, _, wlfl.wtamp[maxwf] = itemGetPNG(wal)
+						if err != nil { wlfl.wtamp[maxwf] = blankimage(832, 16) }
+					}
+					if K > 0 || l > 0 { nwalflor() }	// add one if either is new, there could be empty entries
 fmt.Printf("%d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i])
+//---------------------------
 					i++
 				}
 				lsv--
