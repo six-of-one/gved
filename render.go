@@ -238,6 +238,7 @@ var parms = []int{
 var maxparm = 15
 var secmd [64]int
 var lastsp string		// dont need to reprocess same dats every parse call
+var lastprl int			// last parm len
 var xpar [64]int		// extra parms past 3... - parms[] can NOT exceed this array size!
 
 func parser(sp string, lc int) (int, int, int) {
@@ -252,8 +253,9 @@ func parser(sp string, lc int) (int, int, int) {
 					&secmd[0],&secmd[1],&secmd[2],&secmd[3],&secmd[4],&secmd[5],&secmd[6],&secmd[7],&secmd[8],&secmd[9],&secmd[10],&secmd[11],&secmd[12],&secmd[13],&secmd[14],&secmd[15],&secmd[16],
 					&secmd[17],&secmd[18],&secmd[19],&secmd[20],&secmd[21],&secmd[22],&secmd[23],&secmd[24],&secmd[25],&secmd[26],&secmd[27],&secmd[28],&secmd[29],&secmd[30],&secmd[31],&secmd[32],
 					&secmd[33],&secmd[34],&secmd[35],&secmd[36])
+		for i := 0; i < 37; i++ { if secmd[i] != 0 { lastprl = i }}
 	  }
-		for i := 0; i < 37; i++ {
+		for i := 0; i <= lastprl; i++ {
 			prc := parms[minint(secmd[i],maxparm)]
 			if lc == secmd[i] {
 				r1 =secmd[i+1]; r2 =secmd[i+2]; r3 =secmd[i+3]
