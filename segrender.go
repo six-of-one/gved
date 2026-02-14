@@ -438,17 +438,19 @@ func vcoord(c, cb, ba int) int {
 // ptamp - png image stamp
 // rx, ry - pixel size of rectaNGLE to copy
 // ax, ay - add this to rectangle
-// clm rw - col (x) & row (y) tile of ptamp
+// clm rw - col (x) & row (y) tile of ptamp		-- rx, ry used for row / col select unless st set as sub tile size, rx,ry always used for sizing
 // also return extracted area
 var dbgwrt bool
 //								dbgwrt = true
 var parimg image.Image			// keep large images off stacks
 
-func writepngtoimage(img *image.NRGBA, rx,ry,ax,ay,cl,rw, xw, yw int) {
+func writepngtoimage(img *image.NRGBA, rx,ry,ax,ay,cl,rw, xw, yw, st int) {
 
 	bnds := parimg.Bounds()
 	iw, ih := bnds.Dx(), bnds.Dy()
-	rec := image.Rect((cl)*rx, (rw)*ry, ax+(cl+1)*rx, ay+(rw+1)*ry)			// this pegs the intended rect on sprite sheet
+	tsx, tsy := rx,ry
+	if st > 0 { tsx, tsy = st,st }
+	rec := image.Rect((cl)*tsx, (rw)*tsy, ax+(cl+1)*rx, ay+(rw+1)*ry)			// this pegs the intended rect on sprite sheet
 	rrr := image.Rect(0,0,iw,ih)
 	cpy := image.NewRGBA(rrr)
 	draw.Copy(cpy, image.Pt(0,0), parimg, rec, draw.Over, nil)
@@ -563,7 +565,6 @@ fmt.Printf("\n")
 
 func florflim(p int) {
 
-
 	if wlfl.flrtls[p] { return }	// dont render tile set into flim here
 	bnds := wlfl.ftamp[p].Bounds()
 	iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
@@ -669,7 +670,7 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int) {
 					na := (adj >> 2)		// div 4
 					if na > 0 && wp < shad_wallpat() {
 						parimg = shtamp
-						writepngtoimage(img, 16,16,0,0,na,0, x*16, y*16)
+						writepngtoimage(img, 16,16,0,0,na,0, x*16, y*16, 0)
 					}
 				}
 			}}
@@ -693,7 +694,7 @@ fmt.Printf("rebuilt florb\n")
 func segimage(mdat MazeData, xdat Xdat, fdat [14]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
 
 //if opts.Verbose {
-fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
+fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 
 	var err error
 	var ptamp image.Image		// png stamp
@@ -740,13 +741,22 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	if flordirt >= 0 {
 		if opts.edat < 0 || opts.edat == 2 {
 			parimg = florb
-			writepngtoimage(img, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0)
+			writepngtoimage(img, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
 		} else {
+			parimg = florb
+			sf := true
 			for y := yb; y < ys; y++ {
 				for x := xb; x < xs; x++ {
 					_, ux, uy := lot(x, y, x, y)
-					parimg = florb
-					writepngtoimage(img, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+					if x >= 0 && y >= 0 && xs <= opts.DimX && ys <= opts.DimY {
+						if sf {
+fmt.Printf("  x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(xs-x)*16,(ys-y)*16,xs,ys,ux,uy,vcoord(x,xb,xba)*16,vcoord(y,yb,yba)*16)
+							writepngtoimage(img,(xs-x)*16,(ys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
+							sf = false
+						}
+					} else {
+						writepngtoimage(img, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
+					}
 				}}
 		}
 	} else {	// -1		= palete or pb
@@ -754,7 +764,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 //		flordirt = fldrsv
 	}
 
-fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
+fmt.Printf("  xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
 
 	// 8 pixels * 2 tiles * x,y stamps
 
@@ -822,7 +832,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 						wlt = AdjustHue(wlfl.wtamp[wref[p]], 41.0)
 					}
 					parimg = wlt
-					writepngtoimage(img, 16,16,0,0,wly,q, vcx*16, vcy*16)
+					writepngtoimage(img, 16,16,0,0,wly,q, vcx*16, vcy*16,0)
 				} else {
 					stamp = wallGetStamp(wp, adj, wc)
 					if !opts.Nosec {
@@ -917,7 +927,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 	//fmt.Printf("i(%d) %d.%d ",i, dirs[i].x, dirs[i].y)
 							ovlp := dorvwal[wly][i]
 							parimg = dvw
-							if ovlp > 0 { writepngtoimage(img, 16,16,0,0,15+ovlp,0,vcx*16, vcy*16) }
+							if ovlp > 0 { writepngtoimage(img, 16,16,0,0,15+ovlp,0,vcx*16, vcy*16,0) }
 					}
 				}
 	//fmt.Printf("\n")
@@ -1392,11 +1402,11 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 // expand and sanctuary
 			if psx >= 0 && psy >= 0 {
 				parimg = sents
-				writepngtoimage(img, 16,16,szx,szy,psx,psy,vcx*16, vcy*16)
+				writepngtoimage(img, 16,16,szx,szy,psx,psy,vcx*16, vcy*16,0)
 			}
 			if err == nil && ptamp != nil {
 				parimg = ptamp
-				writepngtoimage(img, 16,16,0,0,0,0,vcx*16, vcy*16)
+				writepngtoimage(img, 16,16,0,0,0,0,vcx*16, vcy*16,0)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
