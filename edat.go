@@ -103,7 +103,7 @@ func ed_init() {
 // 0 ent is wall set & 1 def floor
 	wlfl.florn[0] = "gfx/flor_jsgv.png"
 var err error
-	err, _, wlfl.ftamp[0] = itemGetPNG("gfx/flor_jsgv..png")
+	err, _, wlfl.ftamp[0] = itemGetPNG("gfx/flor_jsgv.32.png")
 	if err != nil { wlfl.ftamp[0] = loadfail(1088, 32) }
 	wlfl.flrtls[0] = true;
 
@@ -440,8 +440,7 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 						fref[i] = maxwf
 						wlfl.florn[maxwf] = fin					// if floor name starts 'flor_' this is accepted as a tiled floor set for individual use, and will not build a level sized floor
 						err, _, wlfl.ftamp[maxwf] = itemGetPNG(fin)
-						if err != nil { wlfl.ftamp[maxwf] = loadfail(64, 64) }
-						wlfl.ftamp[maxwf] = loadfail(64, 64)
+						if err != nil { wlfl.ftamp[maxwf] = loadfail(512, 16) }		// missing tex here chosen to copy SE_TFLOR and other cust floors
 						if reFloorT.MatchString(fin) { wlfl.flrtls[maxwf] = true; fmt.Printf("flor_ match\n") }		// single row of vars floor tiles, do not multiplex to level sized copyover
 						florflim(maxwf)
 					}
