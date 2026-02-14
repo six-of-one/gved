@@ -461,6 +461,8 @@ fmt.Printf("sz %d %d c, r %d, %d vp abs %d x %d\n",rx,ry,cl,rw,xw,yw)
 //	return cpy
 }
 
+// teh quickening - stop sending large images thru parms
+
 func writewftoimage(img *image.NRGBA, ftmp,fflm,wtmp, rx,ry,ax,ay,cl,rw, xw, yw int) {
 
 	var lptamp image.Image
@@ -483,8 +485,6 @@ fmt.Printf("sz %d %d c, r %d, %d vp abs %d x %d\n",rx,ry,cl,rw,xw,yw)
 	}
 //	return cpy
 }
-
-// teh quickening - stop sending large images thru parms
 
 /*
 				writepngtoimage(img, shtamp, 16,16,na,0, (x-xb)*16, (y-yb)*16)

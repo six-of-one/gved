@@ -95,6 +95,11 @@ future:
 * with the success of the rubberband blotter implement, a glimmer of an idea starts
   on how to actually code the sanctuary-go game screen
 
+notes:
+
+se_mflor, se_mwal* - weird could happen if there are walls/floors in xb_* and the se_ ref vars are not correct
+                     so far if no wall/flor are spec and 0 is used for se_ it will default to 0 entry
+
 game player:
 
 - save floor layer

@@ -427,6 +427,7 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 			l, fin, wal := "", "", ""		// defaults on fail - this happens not...
 			i := 0
 			lsv := 500
+			for i := 0; i <= maxwf; i++ { fref[i] = 0; wref[i] = 0 }
 			for fin != "xwfdn" && lsv > 0 {
 				if scanr.Scan() { l = scanr.Text() }
 				fin, wal = "xwfdn",""
