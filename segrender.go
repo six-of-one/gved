@@ -782,7 +782,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 					if Se_mwal >= 0 {
 							stamp = nil
 							rn := rndr(0, Se_rrnd)
-							writepngtoimage(img, wlfl.wtamp[0], 16,16,0,0,wly+26,Se_rwal + rn, vcx*16, vcy*16)		// in new Se, destruct is 26 past regylar
+							writepngtoimage(img, wlfl.wtamp[Se_mwal], 16,16,0,0,wly+26,Se_rwal + rn, vcx*16, vcy*16)		// in new Se, destruct is 26 past regylar
 					} else {
 					stamp = wallGetDestructableStamp(wp, adj, wc)
 					}
@@ -838,7 +838,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 					if Se_mwal >= 0 {
 							stamp = nil
 							rn := rndr(0,Se_rrnd)
-							writepngtoimage(img, wlfl.wtamp[0], 16,16,0,0,wly,Se_rwal + rn, vcx*16, vcy*16)
+							writepngtoimage(img, wlfl.wtamp[Se_mwal], 16,16,0,0,wly,Se_rwal + rn, vcx*16, vcy*16)
 					} else {
 					stamp = wallGetStamp(wp, adj, wc)
 					}
