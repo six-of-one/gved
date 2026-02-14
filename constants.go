@@ -1318,7 +1318,7 @@ var sanct_vrt2 = []int{
 
 // sanctuary custom floor tests
 //		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
-
+/*
 var Se_maxflr = 11
 var Se_cflr = map[int]string{
 
@@ -1333,7 +1333,7 @@ var Se_cflr = map[int]string{
 	9:		"gfx/floor027.jpg",
 	10:		"gfx/g1floor7.jpg",
 	11:		"gfx/floor013.jpg",
-}
+}*/
 
 // the list of valid address in g1 / g2
 // this will allow parsing entire viewable maze space while avoiding crashes

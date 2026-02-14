@@ -103,7 +103,7 @@ func ed_init() {
 // 0 ent is wall set & 1 def floor
 	wlfl.florn[0] = "gfx/flor_jsgv.png"
 var err error
-	err, _, wlfl.ftamp[0] = itemGetPNG("gfx/flor_jsgv.png")
+	err, _, wlfl.ftamp[0] = itemGetPNG("gfx/flor_jsgv.32.png")
 	if err != nil { wlfl.ftamp[0] = blankimage(1088, 32) }
 	wlfl.flrtls[0] = true;
 
@@ -434,6 +434,7 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 				fmt.Sscanf(l,"%s %s",&fin, &wal)		// this loop will read cust walls & floor pairs until xwfdn
 				if fin != "xwfdn" {
 					k,l := findwf(fin,wal)
+//fmt.Printf("ldfnd %d: rp:%d %d -- %s %s\n",i,k,l,fin,wal)
 					if k < 0 || l < 0 { nwalflor() }	// add one if either is new, there could be empty entries
 					if k >= 0 { fref[i] = k } else {
 						fref[i] = maxwf
@@ -449,7 +450,7 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 						err, _, wlfl.wtamp[maxwf] = itemGetPNG(wal)
 						if err != nil { wlfl.wtamp[maxwf] = blankimage(832, 16) }
 					}
-fmt.Printf("ld %d: p-%d %d -- %s %s\n",i,fref[i],wref[i],wlfl.florn[maxwf],wlfl.walln[maxwf])
+fmt.Printf("ld %d: up:%d %d -- %s %s\n",i,fref[i],wref[i],wlfl.florn[fref[i]],wlfl.walln[wref[i]])
 //---------------------------
 					i++
 				}

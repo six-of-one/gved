@@ -465,23 +465,27 @@ fmt.Printf("sz %d %d c, r %d, %d vp abs %d x %d\n",rx,ry,cl,rw,xw,yw)
 
 func writewftoimage(img *image.NRGBA, ftmp,fflm,wtmp, rx,ry,ax,ay,cl,rw, xw, yw int) {
 
+//fmt.Printf("wwf %d %d %d - x,y %d %d\n",ftmp,fflm,wtmp, xw, yw)
 	var lptamp image.Image
 	if ftmp >= 0 { lptamp = wlfl.ftamp[ftmp] }
 	if fflm >= 0 { lptamp = wlfl.flim[fflm] }
 	if wtmp >= 0 { lptamp = wlfl.wtamp[wtmp] }
 
-	bnds := lptamp.Bounds()
-	iw, ih := bnds.Dx(), bnds.Dy()
-	rec := image.Rect((cl)*rx, (rw)*ry, ax+(cl+1)*rx, ay+(rw+1)*ry)			// this pegs the intended rect on sprite sheet
-	rrr := image.Rect(0,0,iw,ih)
-	cpy := image.NewRGBA(rrr)
-	draw.Copy(cpy, image.Pt(0,0), lptamp, rec, draw.Over, nil)
+	if lptamp != nil {
+		bnds := lptamp.Bounds()
+		iw, ih := bnds.Dx(), bnds.Dy()
+		rec := image.Rect((cl)*rx, (rw)*ry, ax+(cl+1)*rx, ay+(rw+1)*ry)			// this pegs the intended rect on sprite sheet
+		rrr := image.Rect(0,0,iw,ih)
+		cpy := image.NewRGBA(rrr)
+		draw.Copy(cpy, image.Pt(0,0), lptamp, rec, draw.Over, nil)
 if dbgwrt {
 fmt.Printf("sz %d %d c, r %d, %d vp abs %d x %d\n",rx,ry,cl,rw,xw,yw)
 }
-	offset := image.Pt(xw, yw)
-	if img != nil {
-		draw.Draw(img, cpy.Bounds().Add(offset), cpy, image.ZP, draw.Over)
+		offset := image.Pt(xw, yw)
+		if img != nil {
+if ftmp >= 0 { fmt.Printf("wrote ftmp %d, %d\n",xw, yw)}
+			draw.Draw(img, cpy.Bounds().Add(offset), cpy, image.ZP, draw.Over)
+		}
 	}
 //	return cpy
 }
@@ -559,8 +563,8 @@ func florflim(p int) {
 	if wlfl.flrtls[p] { return }	// dont render tile set into flim here
 	bnds := wlfl.ftamp[p].Bounds()
 	iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
-	totw :=  int(math.Ceil(float64(((opts.DimX+1)*16)/iw))) * iw		// round up so images not divinding easily into maze size cover entire maze
-	toth :=  int(math.Ceil(float64(((opts.DimY+1)*16)/ih))) * ih
+	totw :=  int(math.Ceil(float64(((opts.DimX+1)*16))/float64(iw))) * iw		// round up so images not divinding easily into maze size cover entire maze
+	toth :=  int(math.Ceil(float64(((opts.DimY+1)*16))/float64(ih))) * ih
 	if totw <= wlfl.totw[p] && toth <= wlfl.toth[p] { return }
 
 	if wlfl.totw[p] == 0 { wlfl.flim[p] = blankimage(totw, toth) }
@@ -570,7 +574,7 @@ func florflim(p int) {
 		draw.Draw(wlfl.flim[p], wlfl.ftamp[p].Bounds().Add(offset), wlfl.ftamp[p], image.ZP, draw.Over)
 	}}
 	 wlfl.totw[p], wlfl.toth[p] = totw, toth
-fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
+fmt.Printf("flim %s entry %d t:%d x %d, src %d x %d\n",wlfl.florn[p],p,totw, toth,iw,ih)
 }
 
 // make base floor, of: null space, SE_COLRT, SE_CFLOR, SE_TFLOR, SE_NOFLOR, Se_mflor, std floor, adj/wly shadows, ff beams
@@ -645,7 +649,7 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 				if p3 >= 0 && p3 < curwf {			// cust floor tiled in png (select tile with 'c' val) - laded by lod_maz from xb file
 					bnds :=  wlfl.ftamp[fref[p3]].Bounds()
 					ih := bnds.Dy()
-//fmt.Printf("SE_TFLOR %d - %s, x: %d\n",p3,wlfl.florn[fref[p3]],ih)
+//fmt.Printf("SE_TFLOR %d c:%d - %s, x: %d\n",p3,c,wlfl.florn[fref[p3]],ih)
 					writewftoimage(img, fref[p3],-1,-1, ih,ih,0,0,c,0,x*16, y*16)
 				}
 				p4,_,_ := parser(xp, SE_NOFLOR)			// note: for now SEOBJ_FLOORNODRAW only works where players & monsters dont cross the tile, e.g. use SE_NOFLOR
@@ -984,6 +988,12 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			gtop.Clear()
 			gtopl = ""// make sure G² code (if it runs with G¹) doesnt set extra dots on non walls
 			dots = 0
+		coltil(img,0,x*16, y*16)
+		if opts.edat == 2 {
+			if x > opts.DimX || y > opts.DimY {
+				sb = 0
+			}
+		}
 // /fmt.Printf("G¹ dec: %x -- ", scanbuf(maze.data, x, y, x, y, -2))
 		switch sb {
 
