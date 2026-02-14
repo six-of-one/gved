@@ -478,7 +478,11 @@ type walflr struct {
 	florn   []string
 	walln   []string
 	flrblt	[]bool
+	totw	[]int				// total w & h of a floor built in flim, may need expanded if a maze gets larger
+	toth	[]int
 }
+var wref []int					// ref pntrs to walflr array, only going to load / build floors once
+var fref []int
 
 var maxwf int
 var curwf int
@@ -502,6 +506,8 @@ func nwalflor(){
 	wlfl.flim  = append(wlfl.flim,nil)				// floor panel made for maze writepngtoimage
 	wlfl.wtamp = append(wlfl.wtamp,nil)				// wall tiles, should be 26 16x16 segments + 26 shot wall 16x16 segs, as many rows as desired
 	wlfl.flrblt = append(wlfl.flrblt,false)			// flag indicates if floor built after loaded
+	wref = append(wref,0)							// ref pointer in wlfl slice, floors walls, only load once
+	fref = append(fref,0)
 }
 
 // make base floor, of: null space, SE_COLRT, SE_CFLOR, SE_TFLOR, SE_NOFLOR, Se_mflor, std floor, adj/wly shadows, ff beams
