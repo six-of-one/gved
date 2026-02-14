@@ -484,7 +484,7 @@ fmt.Printf("sz %d %d c, r %d, %d vp abs %d x %d\n",rx,ry,cl,rw,xw,yw)
 }
 		offset := image.Pt(xw, yw)
 		if img != nil {
-if ftmp >= 0 { fmt.Printf("wrote ftmp %d, %d\n",xw, yw)}
+//if ftmp >= 0 { fmt.Printf("wrote ftmp %d, %d\n",xw, yw)}
 			draw.Draw(img, cpy.Bounds().Add(offset), cpy, image.ZP, draw.Over)
 		}
 	}
@@ -550,9 +550,12 @@ func findwf(fl,wl string) (int, int) {
 	for i := 0; i <= maxwf; i++ {
 		if f < 0 && fl == wlfl.florn[i] { f = i }
 		if w < 0 && wl == wlfl.walln[i] { w = i }
-fmt.Printf("srch %d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i])
+//fmt.Printf("srch %d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i])
 	}
-fmt.Printf("fnd f%d, w%d\n",f,w)
+fmt.Printf("fnd f%d, w%d = ",f,w)
+if f >= 0 {fmt.Printf(" %s",wlfl.florn[f])}
+if w >= 0 {fmt.Printf(" %s",wlfl.walln[w])}
+fmt.Printf("\n")
 	return f,w
 }
 
@@ -584,10 +587,10 @@ var florb *image.NRGBA
 var flordirt int			// whether or not an edit could dirty the flor, pb & palete set to -1
 var fldrsv int				// pb & pal save flordirt state
 
-func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
+func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 
 	xb, yb := 0,0
-	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
+//	img = blankimage(16*(xs-xb), 16*(ys-yb))
 
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
@@ -730,8 +733,11 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	if xb < 0 { xba = absint(xb) }
 	if yb < 0 { yba = absint(yb) }
 
-	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
-	if flordirt > 0 { florb = florbas(maze, xdat, opts.DimX+1, opts.DimY+1) }		//rebuild floor on load or when edit dirties it
+	img := blankimage(16*(xs-xb), 16*(ys-yb))
+	if flordirt > 0 {
+		florb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
+		florbas(florb, maze, xdat, opts.DimX+1, opts.DimY+1)		//rebuild floor on load or when edit dirties it
+	}
 	if flordirt >= 0 {
 		if opts.edat < 0 || opts.edat == 2 {
 			parimg = florb
@@ -745,7 +751,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 				}}
 		}
 	} else {	// -1		= palete or pb
-		img = florbas(maze, xdat, opts.DimX+1, opts.DimY+1)
+		florbas(img, maze, xdat, opts.DimX+1, opts.DimY+1)
 //		flordirt = fldrsv
 	}
 

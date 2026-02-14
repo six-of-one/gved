@@ -64,10 +64,11 @@ issues needing fixed
   |    - every time this happens 1 element is set over x,y size of pb
   \_ this still occasionally happens and it might be paste getting turned off or ignored somehow
 viewport
-- floor draw (floor gets redrawn with rnd shift every move)
+* floor draw (floor gets redrawn with rnd shift every move) - until flordirt is set
 * xb editing can enter floor vals & like causing crashes - all data needs bounded when calling render code
   \_ bounding is done, needs tested
-- non H & V wrap maps - sdb, walls / floor outside of dimx,y when smaller than 32x32
+* non H & V wrap maps - sdb, walls / floor outside of dimx,y when smaller than 32x32
+  \_ does not test H & V yet
 
 possible:
 * down the line .ed stored maz# could be used to set maz num
