@@ -562,19 +562,19 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 			if p >= 0 { _,_,fp,fc = suprval(0,0,p,q) }
 			p,q,_ = parser(xp, SE_WALL)			// set wall pat
 			if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
-			p,q,_ = parser(xp, SE_CFLOR)		// build cust floors from loaded png
-			if p >= 0 && p < curwf && !wlfl.flrblt[p] {
-fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
-				wlfl.flrblt[p] = true
-				bnds := wlfl.ftamp[p].Bounds()
+			p2,_,_ := parser(xp, SE_CFLOR)		// build cust floors from loaded png
+			if p2 >= 0 && p2 < curwf && !wlfl.flrblt[p2] {
+fmt.Printf("flim %s entry %d\n",wlfl.florn[p2],p2)
+				wlfl.flrblt[p2] = true
+				bnds := wlfl.ftamp[p2].Bounds()
 				iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
 				totw :=  int(math.Ceil(opts.Geow/float64(iw))) * iw		// round up so images not divinding easily into maze size cover entire maze
 				toth :=  int(math.Ceil(opts.Geoh/float64(ih))) * ih
-				wlfl.flim[p] = blankimage(totw, toth)
+				wlfl.flim[p2] = blankimage(totw, toth)
 				for ty := 0; ty < toth ; ty=ty+ih {
 				for tx := 0; tx < totw ; tx=tx+iw {
 					offset := image.Pt(tx, ty)
-					draw.Draw(wlfl.flim[p], wlfl.ftamp[p].Bounds().Add(offset), wlfl.ftamp[p], image.ZP, draw.Over)
+					draw.Draw(wlfl.flim[p2], wlfl.ftamp[p2].Bounds().Add(offset), wlfl.ftamp[p2], image.ZP, draw.Over)
 				}}
 			}
 
@@ -599,7 +599,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 					cl = uint32(0xff000000 + r + q * 256 + p * 65536)
 					coltil(img,cl,x*16, y*16)
 				}
-				p2,_,_ := parser(xp, SE_CFLOR)
+//				p2,_,_ := parser(xp, SE_CFLOR)
 				if p2 >= 0 && p2 < curwf {			// cust floor from png - laded by lod_maz from xb file
 //					_, ux, uy := lot(x, y, x, y)
 					writepngtoimage(img, wlfl.flim[p2], 16,16,0,0,x,y,x*16, y*16)
@@ -638,7 +638,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 		}
 	}				// } removed G² render
 fmt.Printf("rebuilt florb\n")
-//	flordirt = 0
+	flordirt = 0
 	return img
 }
 
@@ -688,14 +688,24 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 	if xb < 0 { xba = absint(xb) }
 	if yb < 0 { yba = absint(yb) }
 
-fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d, flor %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY,flordirt)
 	img := blankimage(8*2*(xs-xb), 8*2*(ys-yb))
 	if flordirt > 0 { florb = florbas(maze, xdat, opts.DimX+1, opts.DimY+1) }		//rebuild floor on load or when edit dirties it
-	if flordirt < 0 {	// -1
+	if flordirt >= 0 {
+		if opts.edat == 2 {
+			writepngtoimage(img, florb, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0)
+		} else {
+			for y := yb; y < ys; y++ {
+				for x := xb; x < xs; x++ {
+					_, ux, uy := lot(x, y, x, y)
+					writepngtoimage(img, florb, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16)
+				}}
+		}
+	} else {	// -1
 		img = florbas(maze, xdat, opts.DimX+1, opts.DimY+1)
 //		flordirt = fldrsv
 	}
 
+fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
 
 	// 8 pixels * 2 tiles * x,y stamps
 
@@ -732,11 +742,6 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d, flor %d\n",xb,y
 			nwt := NOWALL | NOG1W		// reg G¹ walls taken out by themselves (no traps, cycs etc) by NOG1W flags
 			wbd := scanbuf(maze.data, x, y, x, y, -2)
 			vcx, vcy := vcoord(x,xb,xba), vcoord(y,yb,yba)
-	// now copy floor in 1 cell at a time during this loop
-			if flordirt >= 0 {			// can not be used when coming in flordirt < 0
-				_, ux, uy := lot(x, y, x, y)
-				writepngtoimage(img, florb, 16,16,0,0,ux,uy,vcx*16, vcy*16)
-			}
 			switch wbd {
 			case G1OBJ_WALL_DESTRUCTABLE:
 				adj, wly = checkwalladj8g1(maze, x, y)
@@ -871,7 +876,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d, flor %d\n",xb,y
 			}
 		}
 	}
-	flordirt = 0	// had to move this here per individual floor loop
+
 	opr := 3		// G² hack to present specials on scoreboard / info maze 104
 	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
 	for y := yb; y <= ys; y++ {
@@ -900,7 +905,7 @@ if opts.Verbose { fmt.Printf("\n") }
 				panic(err)
 				}
 
-if opts.Verbose { fmt.Printf("%03d ",sb) }
+if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 
 			//	if G2 {			removed G² render
 
