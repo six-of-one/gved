@@ -443,7 +443,7 @@ func vcoord(c, cb, ba int) int {
 var dbgwrt bool
 //								dbgwrt = true
 
-func writepngtoimage(img *image.NRGBA, lptamp image.Image, rx,ry,ax,ay,cl,rw, xw, yw int) *image.RGBA {
+func writepngtoimage(img *image.NRGBA, lptamp image.Image, rx,ry,ax,ay,cl,rw, xw, yw int) {
 
 	bnds := lptamp.Bounds()
 	iw, ih := bnds.Dx(), bnds.Dy()
@@ -458,8 +458,34 @@ fmt.Printf("sz %d %d c, r %d, %d vp abs %d x %d\n",rx,ry,cl,rw,xw,yw)
 	if img != nil {
 		draw.Draw(img, cpy.Bounds().Add(offset), cpy, image.ZP, draw.Over)
 	}
-	return cpy
+//	return cpy
 }
+
+func writewftoimage(img *image.NRGBA, ftmp,fflm,wtmp, rx,ry,ax,ay,cl,rw, xw, yw int) {
+
+	var lptamp image.Image
+	if ftmp >= 0 { lptamp = wlfl.ftamp[ftmp] }
+	if fflm >= 0 { lptamp = wlfl.flim[fflm] }
+	if wtmp >= 0 { lptamp = wlfl.wtamp[wtmp] }
+
+	bnds := lptamp.Bounds()
+	iw, ih := bnds.Dx(), bnds.Dy()
+	rec := image.Rect((cl)*rx, (rw)*ry, ax+(cl+1)*rx, ay+(rw+1)*ry)			// this pegs the intended rect on sprite sheet
+	rrr := image.Rect(0,0,iw,ih)
+	cpy := image.NewRGBA(rrr)
+	draw.Copy(cpy, image.Pt(0,0), lptamp, rec, draw.Over, nil)
+if dbgwrt {
+fmt.Printf("sz %d %d c, r %d, %d vp abs %d x %d\n",rx,ry,cl,rw,xw,yw)
+}
+	offset := image.Pt(xw, yw)
+	if img != nil {
+		draw.Draw(img, cpy.Bounds().Add(offset), cpy, image.ZP, draw.Over)
+	}
+//	return cpy
+}
+
+// teh quickening - stop sending large images thru parms
+
 /*
 				writepngtoimage(img, shtamp, 16,16,na,0, (x-xb)*16, (y-yb)*16)
 
@@ -631,21 +657,21 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 				if p2 >= 0 && p2 < curwf {			// cust floor from png - laded by lod_maz from xb file
 //					_, ux, uy := lot(x, y, x, y)
 fmt.Printf("SE_CFLOR %d - %d m: %df\n",p2,curwf,maxwf)//,wlfl.florn[fref[p2]])
-					writepngtoimage(img, wlfl.flim[fref[p2]], 16,16,0,0,x,y,x*16, y*16)
+					writewftoimage(img, -1,fref[p2],-1, 16,16,0,0,x,y,x*16, y*16)
 				}
 				p3,c,_ := parser(xp, SE_TFLOR)
 				if p3 >= 0 && p3 < curwf {			// cust floor tiled in png (select tile with 'c' val) - laded by lod_maz from xb file
 					bnds :=  wlfl.ftamp[fref[p3]].Bounds()
 					ih := bnds.Dy()
 //fmt.Printf("SE_TFLOR %d - %s, x: %d\n",p3,wlfl.florn[p3],ih)
-					writepngtoimage(img, wlfl.ftamp[fref[p3]], ih,ih,0,0,c,0,x*16, y*16)
+					writewftoimage(img, fref[p3],-1,-1, ih,ih,0,0,c,0,x*16, y*16)
 				}
 				p4,_,_ := parser(xp, SE_NOFLOR)			// note: for now SEOBJ_FLOORNODRAW only works where players & monsters dont cross the tile, e.g. use SE_NOFLOR
 				if p3 < 0 && p2 < 0 && p < 0 && p4 < 0 && sb != SEOBJ_FLOORNODRAW {
 				if Se_mflor >= 0 {
 					stamp = nil
 //					_, ux, uy := lot(x, y, x, y)
-					writepngtoimage(img, wlfl.flim[fref[Se_mflor]], 16,16,0,0,x, y,x*16, y*16)		// master floor replace SE_MFLR
+					writewftoimage(img, -1,fref[Se_mflor],-1, 16,16,0,0,x, y,x*16, y*16)		// master floor replace SE_MFLR
 				 } else {
 					writestamptoimage(gt,img, stamp, x*16, y*16)		// G¹ floors & overrides SE_FLOR
 				}}
@@ -777,12 +803,12 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				p,q,_ = parser(xp, SE_CWAL)
 				if p >= 0 && p < curwf {
 					stamp = nil
-					writepngtoimage(img, wlfl.wtamp[wref[p]], 16,16,0,0,wly+26,q, vcx*16, vcy*16)
+					writewftoimage(img, -1,-1,wref[p], 16,16,0,0,wly+26,q, vcx*16, vcy*16)
 				} else {
 					if Se_mwal >= 0 {
 							stamp = nil
 							rn := rndr(0, Se_rrnd)
-							writepngtoimage(img, wlfl.wtamp[Se_mwal], 16,16,0,0,wly+26,Se_rwal + rn, vcx*16, vcy*16)		// in new Se, destruct is 26 past regylar
+							writewftoimage(img, -1,-1,wref[Se_mwal], 16,16,0,0,wly+26,Se_rwal + rn, vcx*16, vcy*16)		// in new Se, destruct is 26 past regylar
 					} else {
 					stamp = wallGetDestructableStamp(wp, adj, wc)
 					}
@@ -833,12 +859,12 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 				p,q,_ = parser(xp, SE_CWAL)
 				if p >= 0 && p < curwf {
 					stamp = nil
-					writepngtoimage(img, wlfl.wtamp[wref[p]], 16,16,0,0,wly,q, vcx*16, vcy*16)
+					writewftoimage(img, -1,-1,wref[p], 16,16,0,0,wly,q, vcx*16, vcy*16)
 				} else {
 					if Se_mwal >= 0 {
 							stamp = nil
 							rn := rndr(0,Se_rrnd)
-							writepngtoimage(img, wlfl.wtamp[Se_mwal], 16,16,0,0,wly,Se_rwal + rn, vcx*16, vcy*16)
+							writewftoimage(img, -1,-1,wref[Se_mwal], 16,16,0,0,wly,Se_rwal + rn, vcx*16, vcy*16)
 					} else {
 					stamp = wallGetStamp(wp, adj, wc)
 					}
