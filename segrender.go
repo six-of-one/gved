@@ -540,7 +540,7 @@ fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
 	for ty := 0; ty < toth ; ty=ty+ih {
 	for tx := 0; tx < totw ; tx=tx+iw {
 		offset := image.Pt(tx, ty)
-		draw.Draw(wlfl.flim[p], wlfl.ftamp[2].Bounds().Add(offset), wlfl.ftamp[p], image.ZP, draw.Over)
+		draw.Draw(wlfl.flim[p], wlfl.ftamp[p].Bounds().Add(offset), wlfl.ftamp[p], image.ZP, draw.Over)
 	}}
 	 wlfl.totw[p], wlfl.toth[p] = totw, toth
 }
@@ -630,6 +630,7 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 				p2,_,_ := parser(xp, SE_CFLOR)
 				if p2 >= 0 && p2 < curwf {			// cust floor from png - laded by lod_maz from xb file
 //					_, ux, uy := lot(x, y, x, y)
+fmt.Printf("SE_CFLOR %d - %d m: %df\n",p2,curwf,maxwf)//,wlfl.florn[fref[p2]])
 					writepngtoimage(img, wlfl.flim[fref[p2]], 16,16,0,0,x,y,x*16, y*16)
 				}
 				p3,c,_ := parser(xp, SE_TFLOR)

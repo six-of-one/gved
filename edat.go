@@ -99,8 +99,10 @@ func ed_init() {
 	zm_y = -1
 	cpal5 = -1
 	nwalflor()
+	maxwf = 0
 // 0 ent is wall set & 1 def floor
 	wlfl.florn[0] = "gfx/flor_jsgv.png"
+var err error
 	err, _, wlfl.ftamp[0] = itemGetPNG("gfx/flor_jsgv.png")
 	if err != nil { wlfl.ftamp[0] = blankimage(1088, 32) }
 	wlfl.flrtls[0] = true;
@@ -422,7 +424,7 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 		if ix > 0 && iy > 0 {
 
-			l, fin, wal := "gfx/floor016.jpg gfx/wall_jsgv_A.b.png", "", ""		// defaults on fail - this happens not...
+			l, fin, wal := "", "", ""		// defaults on fail - this happens not...
 			i := 0
 			lsv := 500
 			for fin != "xwfdn" && lsv > 0 {
@@ -431,7 +433,9 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 				fmt.Sscanf(l,"%s %s",&fin, &wal)		// this loop will read cust walls & floor pairs until xwfdn
 				if fin != "xwfdn" {
 					k,l := findwf(fin,wal)
+					if k < 0 && l < 0 { nwalflor() }	// add one if either is new, there could be empty entries
 					if k > 0 { fref[i] = k } else {
+						fref[i] = maxwf
 						wlfl.florn[maxwf] = fin					// if floor name starts 'flor_' this is accepted as a tiled floor set for individual use, and will not build a level sized floor
 						err, _, wlfl.ftamp[maxwf] = itemGetPNG(fin)
 						if err != nil { wlfl.ftamp[maxwf] = blankimage(64, 64) }
@@ -439,12 +443,12 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 						florflim(maxwf)
 					}
 					if l > 0 { wref[i] = l } else {
+						wref[i] = maxwf
 						wlfl.walln[maxwf] = wal
 						err, _, wlfl.wtamp[maxwf] = itemGetPNG(wal)
 						if err != nil { wlfl.wtamp[maxwf] = blankimage(832, 16) }
 					}
-					if k > 0 || l > 0 { nwalflor() }	// add one if either is new, there could be empty entries
-fmt.Printf("%d: %s %s\n",i,wlfl.florn[i],wlfl.walln[i])
+fmt.Printf("%d: %s %s\n",i,wlfl.florn[maxwf],wlfl.walln[maxwf])
 //---------------------------
 					i++
 				}
