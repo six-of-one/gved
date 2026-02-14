@@ -477,7 +477,7 @@ type walflr struct {
 	wtamp	[]image.Image
 	florn   []string
 	walln   []string
-	flrblt	[]bool
+	flrtls	[]bool
 	totw	[]int				// total w & h of a floor built in flim, may need expanded if a maze gets larger
 	toth	[]int
 }
@@ -505,7 +505,7 @@ func nwalflor(){
 	wlfl.ftamp = append(wlfl.ftamp,nil)				// floor tile loaded from fil
 	wlfl.flim  = append(wlfl.flim,nil)				// floor panel made for maze writepngtoimage
 	wlfl.wtamp = append(wlfl.wtamp,nil)				// wall tiles, should be 26 16x16 segments + 26 shot wall 16x16 segs, as many rows as desired
-	wlfl.flrblt = append(wlfl.flrblt,false)			// flag indicates if floor built after loaded
+	wlfl.flrtls = append(wlfl.flrtls,false)			// flag indicates set of floor tiles not rendering into flim
 	wlfl.totw = append(wlfl.totw,0)
 	wlfl.toth = append(wlfl.toth,0)
 	wref = append(wref,0)							// ref pointer in wlfl slice, floors & walls, only load once
@@ -521,6 +521,28 @@ func findwf(fl,wl string) (int, int) {
 		if w < 0 && wl == wlfl.walln[i] { w = i }
 	}
 	return f,w
+}
+
+// build each loaded flim
+
+func florflim(p int) {
+
+fmt.Printf("flim %s entry %d\n",wlfl.florn[p],p)
+
+	if wlfl.flrtls[p] { return }	// dont render tile set into flim here
+	bnds := wlfl.ftamp[p].Bounds()
+	iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
+	totw :=  int(math.Ceil(float64((opts.DimX*16)/iw))) * iw		// round up so images not divinding easily into maze size cover entire maze
+	toth :=  int(math.Ceil(float64((opts.DimY*16)/ih))) * ih
+	if totw <= wlfl.totw[p] && toth <= wlfl.toth[p] { return }
+
+	if wlfl.totw[p] == 0 { wlfl.flim[p] = blankimage(totw, toth) }
+	for ty := 0; ty < toth ; ty=ty+ih {
+	for tx := 0; tx < totw ; tx=tx+iw {
+		offset := image.Pt(tx, ty)
+		draw.Draw(wlfl.flim[p], wlfl.ftamp[2].Bounds().Add(offset), wlfl.ftamp[p], image.ZP, draw.Over)
+	}}
+	 wlfl.totw[p], wlfl.toth[p] = totw, toth
 }
 
 // make base floor, of: null space, SE_COLRT, SE_CFLOR, SE_TFLOR, SE_NOFLOR, Se_mflor, std floor, adj/wly shadows, ff beams
@@ -583,21 +605,6 @@ func florbas(maze *Maze, xdat Xdat, xs, ys int) *image.NRGBA {
 			if p >= 0 { _,_,fp,fc = suprval(0,0,p,q) }
 			p,q,_ = parser(xp, SE_WALL)			// set wall pat
 			if p >= 0 { wp,_,_,_ = suprval(p,0,0,0) }
-			p2,_,_ := parser(xp, SE_CFLOR)		// build cust floors from loaded png
-			if p2 >= 0 && p2 < curwf && !wlfl.flrblt[p2] {
-fmt.Printf("flim %s entry %d\n",wlfl.florn[p2],p2)
-				wlfl.flrblt[p2] = true
-				bnds := wlfl.ftamp[p2].Bounds()
-				iw, ih := bnds.Dx(), bnds.Dy()		// in theory this image does not HAVE to be square anymore
-				totw :=  int(math.Ceil(opts.Geow/float64(iw))) * iw		// round up so images not divinding easily into maze size cover entire maze
-				toth :=  int(math.Ceil(opts.Geoh/float64(ih))) * ih
-				wlfl.flim[p2] = blankimage(totw, toth)
-				for ty := 0; ty < toth ; ty=ty+ih {
-				for tx := 0; tx < totw ; tx=tx+iw {
-					offset := image.Pt(tx, ty)
-					draw.Draw(wlfl.flim[p2], wlfl.ftamp[p2].Bounds().Add(offset), wlfl.ftamp[p2], image.ZP, draw.Over)
-				}}
-			}
 
 			if sb == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
 			if sb == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
@@ -673,7 +680,6 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n ",xb,yb,xs,ys,stat,viewp)
 
 	var err error
 	var ptamp image.Image		// png stamp
-	var wtamp image.Image		// png stamp
 
 // dummy maze for ops that require it
 	var maze = &Maze{}
@@ -732,7 +738,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
 // unless emu is wrong, this is the way g & G² draw walls, see screens
-	_, _, wtamp = itemGetPNG("gfx/wall_bkgs.b.png")			// master wall replace def
+//	_, _, wtamp = itemGetPNG("gfx/wall_bkgs.b.png")			// master wall replace def
 	xp := scanxb(xdat, 0, 0, 0, 0, "")
 	Se_mwal, Se_rwal,_ = parser(xp, SE_MWAL)
 //fmt.Printf("Se_mwal %d row %d\n",Se_mwal, Se_rwal)
@@ -775,7 +781,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 					if Se_mwal >= 0 {
 							stamp = nil
 							rn := rndr(0, Se_rrnd)
-							writepngtoimage(img, wtamp, 16,16,0,0,wly+26,Se_rwal + rn, vcx*16, vcy*16)		// in new Se, destruct is 26 past regylar
+							writepngtoimage(img, wlfl.wtamp[0], 16,16,0,0,wly+26,Se_rwal + rn, vcx*16, vcy*16)		// in new Se, destruct is 26 past regylar
 					} else {
 					stamp = wallGetDestructableStamp(wp, adj, wc)
 					}
@@ -831,7 +837,7 @@ fmt.Printf("xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,x
 					if Se_mwal >= 0 {
 							stamp = nil
 							rn := rndr(0,Se_rrnd)
-							writepngtoimage(img, wtamp, 16,16,0,0,wly,Se_rwal + rn, vcx*16, vcy*16)
+							writepngtoimage(img, wlfl.wtamp[0], 16,16,0,0,wly,Se_rwal + rn, vcx*16, vcy*16)
 					} else {
 					stamp = wallGetStamp(wp, adj, wc)
 					}

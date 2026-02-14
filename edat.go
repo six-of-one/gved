@@ -99,7 +99,15 @@ func ed_init() {
 	zm_y = -1
 	cpal5 = -1
 	nwalflor()
-	maxwf = 0; // pointer to new entry
+// 0 ent is wall set & 1 def floor
+	wlfl.florn[0] = "gfx/flor_jsgv.png"
+	err, _, wlfl.ftamp[0] = itemGetPNG("gfx/flor_jsgv.png")
+	if err != nil { wlfl.ftamp[0] = blankimage(1088, 32) }
+	wlfl.flrtls[0] = true;
+
+	wlfl.walln[0] = "gfx/wall_bkgs.b.png"
+	err, _, wlfl.wtamp[0] = itemGetPNG("gfx/wall_bkgs.b.png")
+	if err != nil { wlfl.wtamp[0] = blankimage(832, 16) }
 }
 
 // turn on edit mode
@@ -427,7 +435,8 @@ fmt.Printf("xbuf %s -- %d x %d\n",xbf,ix,iy)
 						wlfl.florn[maxwf] = fin					// if floor name starts 'flor_' this is accepted as a tiled floor set for individual use, and will not build a level sized floor
 						err, _, wlfl.ftamp[maxwf] = itemGetPNG(fin)
 						if err != nil { wlfl.ftamp[maxwf] = blankimage(64, 64) }
-						if reFloorT.MatchString(fin) { wlfl.flrblt[maxwf] = true; fmt.Printf("flor_ match\n") }		// single row of vars floor tiles, do not multiplex to level sized copyover
+						if reFloorT.MatchString(fin) { wlfl.flrtls[maxwf] = true; fmt.Printf("flor_ match\n") }		// single row of vars floor tiles, do not multiplex to level sized copyover
+						florflim(maxwf)
 					}
 					if l > 0 { wref[i] = l } else {
 						wlfl.walln[maxwf] = wal
