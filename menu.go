@@ -418,8 +418,7 @@ fmt.Printf("clwin-m tl: %s\n",rbtn.title)
 	cw.SetContent(box)								// and blot coming last is shown on top... huh?
 
 // call handle blot off after win chg
-//	blotoff()
-blot.Refresh()
+	blotoff()
 //fmt.Printf("btn sz %v\n",rbtn.Size())
 }
 

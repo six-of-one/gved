@@ -11,7 +11,6 @@ import (
 	"image/color"
 	"encoding/binary"
 	"golang.org/x/image/draw"
-	"fyne.io/fyne/v2"
 )
 
 
@@ -750,15 +749,16 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 				for x := xb; x < xs; x++ {
 					_, ux, uy := lot(x, y, x, y)
 					fxs, fys := xs, ys
-					if fxs > opts.DimX { fxs = opts.DimX }
-					if fys > opts.DimY { fys = opts.DimY }
+					if fxs > opts.DimX { fxs = opts.DimX+1 }
+					if fys > opts.DimY { fys = opts.DimY+1 }
 					if x >= 0 && y >= 0 && x < fxs && y < fys {		// when bulk of main render is in std bounds, do super floor copy
 						if sf {
 fmt.Printf("  x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)*16,xs,ys,ux,uy,vcoord(x,xb,xba)*16,vcoord(y,yb,yba)*16)
 							writepngtoimage(img,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
-fmt.Printf(" blot: %f %f sz %f %f\n",float32(vcoord(x,xb,xba)*16), float32(vcoord(y,yb,yba)*16),float32((fxs-x)*16),float32((fys-y)*16))
-		blot.Move(fyne.Position{float32(vcoord(x,xb,xba)*16), float32(vcoord(y,yb,yba)*16)})
-		blot.Resize(fyne.Size{float32((fxs-x)*16), float32((fys-y)*16)})
+			for i := y; i < fys; i++ {
+				for k := x; k < fxs; k++ {
+						coltil(img,0,(vcoord(x,xb,xba)+k)*16, (vcoord(y,yb,yba)+i)*16)
+					}}
 							sf = false
 						}
 					} else {
