@@ -68,7 +68,7 @@ type Stamp struct {
 	nudgey  int
 	mask	int
 	gtopl	string
-	theme	color.Color
+	theme	color.NRGBA
 	mimg	*image.NRGBA		// faster vers has img store
 	altimg	*image.NRGBA
 	anim	[]*image.NRGBA		// to animate mobs & such

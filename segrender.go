@@ -1134,17 +1134,13 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			writestamptoimage(G1,img, stamp, vcx*16+stamp.nudgex, vcy*16+stamp.nudgey)
 			nugetx, nugety = stamp.nudgex, stamp.nudgey
 		} else {
-			if arstamp[sb].pnum > -1 {
+			if arstamp[sb].pnum > -1 || arstamp[sb].pnum == -7 {
 				gtopl = arstamp[sb].gtopl
 				offset := image.Pt(vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
 				draw.Draw(arstamp[sb].mimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
-			} else {
-			if arstamp[sb].pnum == -7 {
-				gtopl = arstamp[sb].gtopl
-				offset := image.Pt(vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
-				draw.Draw(arstamp[sb].mimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
+				if arstamp[sb].pnum != -7 { nugetx, nugety = arstamp[sb].nudgex, arstamp[sb].nudgey }
 			}
-		}}
+		}
 
 // Six: end G¹ decode
 // if !G1 { fmt.Printf("stamp # %d - p: %s\n",scanbuf(maze.data, x, y, x, y, -2),stamp.ptype)}

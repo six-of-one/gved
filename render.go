@@ -623,23 +623,17 @@ func bld_star(lk int ) {
 		arstamp[lk] = itemGetStamp("key")
 		arstamp[lk].pnum = -1				// failed assign, no use
 	}
+	arstamp[lk].mimg = blankimage(16,16)
+	arstamp[lk].altimg = blankimage(16,16)
 	if arstamp[lk].pnum >= 0 {
-		arstamp[lk].mimg = blankimage(16,16)
 //fmt.Printf("star ld %d, 1\n",lk)
 		writestamptoimage(G1,arstamp[lk].mimg, arstamp[lk], 0, 0)
+		writestamptoimage(G1,arstamp[lk].altimg, arstamp[lk], 0, 0)
 	}
 	if psx >= 0 && psy >= 0 {			// supply alt img
 		parimg = sents
-		arstamp[lk].altimg = blankimage(16,16)
 		writepngtoimage(arstamp[lk].altimg,16,16,szx,szy,psx,psy,0,0,0)
 		if arstamp[lk].pnum < 0 { writepngtoimage(arstamp[lk].mimg,16,16,szx,szy,psx,psy,0,0,0); arstamp[lk].pnum = -7 }	// no main img, use alt
-	} else {
-		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = blankimage(16,16)		// no valid stamp, no altimg, blank it
-		} else {
-//fmt.Printf("star ld %d, 1\n",lk)
-			arstamp[lk].altimg = blankimage(16,16)
-			writestamptoimage(G1,arstamp[lk].altimg, arstamp[lk], 0, 0)		// main stamp, no alt, so copy main to alt
-		}
 	}
 	arstamp[lk].gtopl = gtopl
 	G1 = gsv
