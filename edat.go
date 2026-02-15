@@ -115,9 +115,12 @@ var err error
 	arstamp = make([]*Stamp, 0, g1maxid)
 	for i := 0; i <= g1maxid; i++ { arstamp = append(arstamp,nil); bld_star(i) }
 	go func() {
+//			time.Sleep(5 * time.Second)
+//   fyne.Do(func() {
 		animcon()
+//   })
 	}()
-
+fmt.Printf("edit init complt\n")
 }
 
 // turn on edit mode

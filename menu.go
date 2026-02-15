@@ -414,7 +414,8 @@ func clikwinm(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 fmt.Printf("clwin-m tl: %s\n",rbtn.title)
 
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
-	box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
+//	box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
+	box := container.NewStack(rbtn, rbimg)
 	cw.SetContent(box)								// and blot coming last is shown on top... huh?
 
 // call handle blot off after win chg

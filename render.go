@@ -11,6 +11,8 @@ import (
 	"fmt"
 	"time"
 	"golang.org/x/image/draw"
+    "fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/container"
 )
 
 func gettiledatafromfile(file string, tilenum int) TileLinePlane {
@@ -709,11 +711,11 @@ func bld_star(lk int ) {
 		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = arstamp[lk].altimg; arstamp[lk].pnum = -7 }	// no main img, use alt
 		arstamp[lk].mask = mask
 		if cnt > 0 {		// animation frames
-fmt.Printf("bld anim %d, c%d w%d\n",lk,cnt,16)
+//fmt.Printf("bld anim %d, c%d w%d\n",lk,cnt,16)
 			arstamp[lk].anim = append(arstamp[lk].anim,nil)
 			arstamp[lk].anim[0] = arstamp[lk].mimg		// main img is always 1st frame ?
-			for i := 0; i < cnt; i++ {
-fmt.Printf("bld anim %d, c%d w%d\n",lk,i,16)
+			for i := 1; i < cnt; i++ {
+//fmt.Printf("bld anim %d, c%d w%d\n",lk,i,16)
 				arstamp[lk].anim = append(arstamp[lk].anim,nil)
 				arstamp[lk].anim[i] = blankimage(16+azx,16+azy)
 				writepngtoimage(arstamp[lk].anim[i],16,16,azx,azy,psx+i,psy,0,0,0)
@@ -738,7 +740,6 @@ func animcon() {
 
 	for {
 	time.Sleep(200 * time.Millisecond)
-fmt.Printf("anim %t\n",manim)
 	if manim {								// only run when anim tiles are on map
 
 		xba, yba := vpc_adj(mvpx, mvpy)
@@ -757,20 +758,24 @@ fmt.Printf("anim %t\n",manim)
 				anmapr[xy{ux, uy}] = r
 				tl := ebuf[xy{ux, uy}]
 				w := arstamp[tl].width
-fmt.Printf("anim %d, c%d, w%d - %v\n",tl,r-1,w, arstamp[tl].anim[r - 1])
+fmt.Printf("anim %d, c%d, w%d\n",tl,r-1,w)
 				parimg = arstamp[tl].anim[r - 1]
 				writepngtoimage(fimg, w,w,0,0,0,0,vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16,0)
 				dida = true
 			}
 	}}
 	if dida {
-		lvpp := 0
-		if opts.edat < 1 || opts.edat == 2 { lvpp = mvxe }
+//		lvpp := 0
+//		if opts.edat < 1 || opts.edat == 2 { lvpp = mvxe }
 		rimg := blankimage(16*(mvxe-mvpx), 16*(mvye-mvpy))
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
 		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
-		upwin(rimg, lvpp)
+//		upwin(rimg, lvpp)
+		img := canvas.NewRasterFromImage(rimg)
+//		w.SetContent(img)
+		box := container.NewStack(rbtn, img)
+		w.SetContent(box)
 	}
 	}}
 }

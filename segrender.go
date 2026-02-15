@@ -386,7 +386,6 @@ func isforcefield(t int) bool {
 func isanimtil(t int) int {
 	r := 0
 	for i := 0; animcyc[i] > 0; i +=2 {
-fmt.Printf("t anim %d: %d - %d\n",i,animcyc[i], animcyc[i+1])
 		if animcyc[i] == t { r = animcyc[i+1]; manim = true }
 	}
 	return r
