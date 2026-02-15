@@ -386,7 +386,7 @@ func isforcefield(t int) bool {
 func isanimtil(t int) int {
 	r := 0
 	for i := 0; animcyc[i] > 0; i +=2 {
-		if animcyc[i] == t { r = animcyc[i+1]; manim = true }
+		if animcyc[i] == t { r = animcyc[i+1]; tmanim = true }
 	}
 	return r
 }
@@ -602,6 +602,7 @@ fmt.Printf("flim %s entry %d t:%d x %d, src %d x %d\n",wlfl.florn[p],p,totw, tot
 var florb *image.NRGBA
 var flordirt int			// whether or not an edit could dirty the flor, pb & palete set to -1
 var fldrsv int				// pb & pal save flordirt state
+var tmanim bool
 
 func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 
@@ -611,13 +612,12 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 	if one { xb, yb = xs, ys;  xs, ys = xs+1, ys+1}
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
-	svanim := manim
-	if flordirt >= 0 { anmapr = anmap		// only save animate map on main maze
+	if flordirt >= 0 { anmapr = anmap; manim = tmanim		// only save animate map on main maze
 		anmapt = AtMap{}
 		for k, v := range anmapr {
 			anmapt[k] = v
 		}
-	} else { manim = svanim }				// dont let pal, pb ruin animation
+	}
 
 // ** this causes a bug with traps & ff on custom floors, it needs to be done every wp, wc, fp, fc re-assign where there is a trap/ff and should be in animate
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)

@@ -741,7 +741,8 @@ var dida bool	// no blotter when animating
 func animcon() {
 
 	for {
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(32 * time.Millisecond)
+//fmt.Printf("in anim %t\n",manim);
 	if manim {								// only run when anim tiles are on map
 
 		xba, yba := vpc_adj(mvpx, mvpy)
@@ -750,6 +751,7 @@ func animcon() {
 			anmapt[k] ...
 		}	*/
 		// we need to check bounds of current viewport, set animation of any visible floor tiles
+//var r int
 	for y := mvpy; y < mvye; y++ {
 		for x := mvpx; x < mvxe; x++ {
 			_, ux, uy := lot(x, y, x, y)	// what would be nice when mapping for the vp, is to make a list of all animatables
@@ -759,7 +761,7 @@ func animcon() {
 				if r <= 0 { r = anmapt[xy{ux, uy}] }
 				anmapr[xy{ux, uy}] = r
 				tl := ebuf[xy{ux, uy}]
-				w := arstamp[tl].width
+				w := arstamp[tl].width * 8
 fmt.Printf("anim %d, c%d, w%d\n",tl,r-1,w)
 				parimg = arstamp[tl].anim[r - 1]
 				writepngtoimage(fimg, w,w,0,0,0,0,vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16,0)
@@ -773,11 +775,11 @@ fmt.Printf("anim %d, c%d, w%d\n",tl,r-1,w)
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
 		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
-//		upwin(rimg, lvpp)
+
 		img := canvas.NewRasterFromImage(rimg)
-//		w.SetContent(img)
 		box := container.NewStack(rbtn, img)
 		w.SetContent(box)
+//		box.Refresh()
 	}
 	}}
 }
