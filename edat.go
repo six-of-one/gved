@@ -570,6 +570,8 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 	if wpalop && palfol { palete(pals) }
 }
 // udpate maze from edits - rld false to keep overload colors / pats
+var mvpx, mvpy, mvxe, mvye int
+
 func ed_maze(rld bool) {
 	upd_edmaze(rld)
 	lviewp := viewp
@@ -598,6 +600,7 @@ fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lviewp,vpx,vpy,fx,fy)
 		lvpp = fx
 fmt.Printf("lvpp: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lvpp,vpx,vpy,fx,fy)
 	}
+	mvpx, mvpy, mvxe, mvye = vpx, vpy, fx,fy
 	Ovimg := segimage(ebuf, xbuf, eflg, vpx, vpy, fx,fy, false)
 	upwin(Ovimg, lvpp)
 	calc_stats()

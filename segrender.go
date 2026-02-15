@@ -331,6 +331,7 @@ type FFMap map[xy]bool
 type AtMap map[xy]int		// animate tiles
 var anmap AtMap
 var anmapr AtMap			// real animated map out, palete and pb will use this too
+var anmapt AtMap			// real animated timers
 
 func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
 	for i := 1; i < 90000; i++ {		// this had no upper limit and could inf loop if ff were skunky
@@ -611,6 +612,10 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 	ffmap := ffMakeMap(maze)
 	svanim := manim
 	if flordirt >= 0 { anmapr = anmap		// only save animate map on main maze
+		anmapt = AtMap{}
+		for k, v := range anmapr {
+			anmapt[k] = v
+		}
 	} else { manim = svanim }				// dont let pal, pb ruin animation
 
 // ** this causes a bug with traps & ff on custom floors, it needs to be done every wp, wc, fp, fc re-assign where there is a trap/ff and should be in animate
@@ -935,9 +940,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	walsdirt = flordirt		// cheet for now - later these should seperate
 
 	// unpin issue - -vals flummox canvas writes
-	xba, yba := 0, 0
-	if xb < 0 { xba = absint(xb) }
-	if yb < 0 { yba = absint(yb) }
+	xba, yba := vpc_adj(xb, yb)
 
 	multi := false
 	if flordirt >= 0 {

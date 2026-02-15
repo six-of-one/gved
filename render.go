@@ -652,14 +652,40 @@ func bld_star(lk int ) {
 	G1 = gsv
 }
 
+func vpc_adj(x, y int) (int,int) {
+
+	xba, yba := 0, 0
+	if x < 0 { xba = absint(x) }
+	if y < 0 { yba = absint(y) }
+	return xba, yba
+}
+
 // animate tiles
-var rcyc_anim int
 
 func animcon() {
 
-	time.Sleep(25 * time.Millisecond)
-	if manim {
-		rcyc_anim++
-		// we need to check bounds of current viewport, move animation of any floor tiles
+	time.Sleep(200 * time.Millisecond)
+	if manim {								// only run when anim tiles are on map
+
+		xba, yba := vpc_adj(mvpx, mvpy)
+
+/*		for k, v := range anmapr {
+			anmapt[k] ...
+		}	*/
+		// we need to check bounds of current viewport, set animation of any visible floor tiles
+	for y := mvpy; y < mvye; y++ {
+		for x := mvpx; x < mvxe; x++ {
+			_, ux, uy := lot(x, y, x, y)
+			r := anmapr[xy{ux, uy}]
+			if r > 0 {
+				r--
+				if r <= 0 { r = anmapt[xy{ux, uy}] }
+				anmapr[xy{ux, uy}] = r
+				tl := ebuf[xy{ux, uy}]
+				w := arstamp[tl].width
+				parimg = arstamp[tl].anim[r - 1]
+				writepngtoimage(fimg, w,w,0,0,0,0,vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16,0)
+			}
+	}}
 	}
 }
