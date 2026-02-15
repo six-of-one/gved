@@ -10,6 +10,7 @@ a. update mazedumps with new visuals from gved - and is done
 
 import (
 	"fmt"
+	"image"
 	"image/png"
 	"os"
 	"os/exec"
@@ -65,7 +66,11 @@ type Stamp struct {
 	nudgex  int
 	nudgey  int
 	mask	int
+	gtopl	string
+	mimg	*image.NRGBA		// faster vers has img store
+	altimg	*image.NRGBA
 }
+var arstamp []*Stamp
 
 func check(e error) {
 	if e != nil {

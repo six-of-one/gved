@@ -6,6 +6,7 @@ import (
 //	"image/color/palette"
 	"image/png"
 	"math"
+	"math/rand"
 	"os"
 	"fmt"
 )
@@ -294,4 +295,329 @@ func parser(sp string, lc int) (int, int, int) {
 	}
 
 	return r1, r2, r3
+}
+
+// stamp array builder
+
+func bld_star(lk int ) {
+
+	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
+	gtopl := ""
+//	gtopcol := false	// disable gen letter seperate colors
+	psx, psy, szx, szy := -1,-1,0,0
+
+
+	switch lk {
+	case SEOBJ_PUSHWAL:
+		G1 = false
+		arstamp[lk] = itemGetStamp("pushwall")
+	case G1OBJ_KEY:
+		arstamp[lk] = itemGetStamp("key")
+
+	case SEOBJ_POWER_REPULSE:
+		G1 = false
+		arstamp[lk] = itemGetStamp("repulse")
+	case SEOBJ_POWER_REFLECT:
+		G1 = false
+		arstamp[lk] = itemGetStamp("reflect")
+	case SEOBJ_POWER_TRANSPORT:
+		G1 = false
+		arstamp[lk] = itemGetStamp("transportability")
+	case SEOBJ_POWER_SUPERSHOT:
+		G1 = false
+		arstamp[lk] = itemGetStamp("supershot")
+	case SEOBJ_POWER_INVULN:
+		G1 = false
+		arstamp[lk] = itemGetStamp("invuln")
+
+	case G1OBJ_PLAYERSTART:
+		arstamp[lk] = itemGetStamp("plusg1")
+		if G2 { arstamp[lk] = itemGetStamp("plus") }
+	case G1OBJ_EXIT:
+		arstamp[lk] = itemGetStamp("exitg1")
+		if G2 { arstamp[lk] = itemGetStamp("exit") }
+//fmt.Printf("g1exit %d x %d, vc: %d x %d\n ",x,y,vcx, vcy)
+	case G1OBJ_EXIT4:
+		arstamp[lk] = itemGetStamp("exit4")
+	case SEOBJ_EXIT6:
+		G1 = false
+		arstamp[lk] = itemGetStamp("exit6")
+	case G1OBJ_EXIT8:
+		arstamp[lk] = itemGetStamp("exit8")
+
+	case G1OBJ_MONST_GHOST1:
+		arstamp[lk] = itemGetStamp("ghost1")
+	case G1OBJ_MONST_GHOST2:
+		arstamp[lk] = itemGetStamp("ghost2")
+	case SEOBJ_G2GHOST:
+		G1 = false; fallthrough
+	case G1OBJ_MONST_GHOST3:
+		arstamp[lk] = itemGetStamp("ghost")
+	case G1OBJ_MONST_GRUNT1:
+		arstamp[lk] = itemGetStamp("grunt1")
+	case G1OBJ_MONST_GRUNT2:
+		arstamp[lk] = itemGetStamp("grunt2")
+	case SEOBJ_G2GRUNT:
+		G1 = false; fallthrough
+	case G1OBJ_MONST_GRUNT3:
+		arstamp[lk] = itemGetStamp("grunt")
+	case G1OBJ_MONST_DEMON1:
+		arstamp[lk] = itemGetStamp("demon1")
+	case G1OBJ_MONST_DEMON2:
+		arstamp[lk] = itemGetStamp("demon2")
+	case SEOBJ_G2DEMON:
+		G1 = false; fallthrough
+	case G1OBJ_MONST_DEMON3:
+		arstamp[lk] = itemGetStamp("demon")
+	case G1OBJ_MONST_LOBBER1:
+		arstamp[lk] = itemGetStamp("lobber1")
+	case G1OBJ_MONST_LOBBER2:
+		arstamp[lk] = itemGetStamp("lobber2")
+	case SEOBJ_G2LOBER:
+		G1 = false; fallthrough
+	case G1OBJ_MONST_LOBBER3:
+		arstamp[lk] = itemGetStamp("lobber")
+	case G1OBJ_MONST_SORC1:
+		arstamp[lk] = itemGetStamp("sorcerer1")
+	case G1OBJ_MONST_SORC2:
+		arstamp[lk] = itemGetStamp("sorcerer2")
+	case SEOBJ_G2SORC:
+		G1 = false; fallthrough
+	case G1OBJ_MONST_SORC3:
+		arstamp[lk] = itemGetStamp("sorcerer")
+	case SEOBJ_G2AUXGR:
+		G1 = false
+		arstamp[lk] = itemGetStamp("auxgrunt")
+
+	case G1OBJ_MONST_DEATH:
+		arstamp[lk] = itemGetStamp("death")
+	case SEOBJ_G2ACID:
+		G1 = false
+		arstamp[lk] = itemGetStamp("acid")
+	case SEOBJ_G2SUPSORC:
+		G1 = false
+		arstamp[lk] = itemGetStamp("supersorc")
+	case SEOBJ_G2IT:
+		G1 = false
+		arstamp[lk] = itemGetStamp("it")
+	case SEOBJ_MONST_DRAGON:
+		G1 = false
+		arstamp[lk] = itemGetStamp("dragon")
+
+	case G1OBJ_MONST_THIEF:
+		arstamp[lk] = itemGetStamp("thief")
+	case SEOBJ_MONST_MUGGER:
+		G1 = false
+		arstamp[lk] = itemGetStamp("mugger")
+
+	case SEOBJ_G2GN_GST1:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_GHOST1:
+		arstamp[lk] = itemGetStamp("ghostgen1")
+	case SEOBJ_G2GN_GST2:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_GHOST2:
+		arstamp[lk] = itemGetStamp("ghostgen2")
+	case SEOBJ_G2GN_GST3:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_GHOST3:
+		arstamp[lk] = itemGetStamp("ghostgen3")
+
+// if a clear is done after, this SetRGB set bkg somehow
+	case SEOBJ_G2GN_GR1:
+		G1 = false; fallthrough
+	case SEOBJ_G2GN_AUXGR1:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_GRUNT1:
+		gtopl = "G"
+//		if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+		arstamp[lk] = itemGetStamp("generator1")
+	case SEOBJ_G2GN_DM1:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_DEMON1:
+		gtopl = "D"
+//		if gtopcol { gtop.SetRGB(1, 0, 0) }
+		arstamp[lk] = itemGetStamp("generator1")
+	case SEOBJ_G2GN_LB1:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_LOBBER1:
+		gtopl = "L"
+//		if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+		arstamp[lk] = itemGetStamp("generator1")
+	case SEOBJ_G2GN_SORC1:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_SORC1:
+		gtopl = "S"
+//		if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+		arstamp[lk] = itemGetStamp("generator1")
+
+	case SEOBJ_G2GN_GR2:
+		G1 = false; fallthrough
+	case SEOBJ_G2GN_AUXGR2:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_GRUNT2:
+		gtopl = "G"
+//		if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+		arstamp[lk] = itemGetStamp("generator2")
+	case SEOBJ_G2GN_DM2:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_DEMON2:
+		gtopl = "D"
+//		if gtopcol { gtop.SetRGB(1, 0, 0) }
+		arstamp[lk] = itemGetStamp("generator2")
+	case SEOBJ_G2GN_LB2:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_LOBBER2:
+		gtopl = "L"
+//		if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+		arstamp[lk] = itemGetStamp("generator2")
+	case SEOBJ_G2GN_SORC2:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_SORC2:
+		gtopl = "S"
+//		if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+		arstamp[lk] = itemGetStamp("generator2")
+
+	case SEOBJ_G2GN_GR3:
+		G1 = false; fallthrough
+	case SEOBJ_G2GN_AUXGR3:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_GRUNT3:
+		gtopl = "G"
+//		if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+		arstamp[lk] = itemGetStamp("generator3")
+	case SEOBJ_G2GN_DM3:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_DEMON3:
+		gtopl = "D"
+//		if gtopcol { gtop.SetRGB(1, 0, 0) }
+		arstamp[lk] = itemGetStamp("generator3")
+	case SEOBJ_G2GN_LB3:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_LOBBER3:
+		gtopl = "L"
+//		if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+		arstamp[lk] = itemGetStamp("generator3")
+	case SEOBJ_G2GN_SORC3:
+		G1 = false; fallthrough
+	case G1OBJ_GEN_SORC3:
+		gtopl = "S"
+//		if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+		arstamp[lk] = itemGetStamp("generator3")
+
+	case G1OBJ_TREASURE:
+		arstamp[lk] = itemGetStamp("treasure")
+	case SEOBJ_TREASURE_LOCKED:
+		G1 = false
+		arstamp[lk] = itemGetStamp("treasurelocked")
+
+	case G1OBJ_TREASURE_BAG:
+		arstamp[lk] = itemGetStamp("goldbag")
+	case G1OBJ_FOOD_DESTRUCTABLE:
+		arstamp[lk] = itemGetStamp("food")
+	case G1OBJ_FOOD_INVULN:
+		arstamp[lk] = itemGetStamp(foods[rand.Intn(3)])
+	case G1OBJ_POT_DESTRUCTABLE:
+		arstamp[lk] = itemGetStamp("potion")
+	case G1OBJ_POT_INVULN:
+		arstamp[lk] = itemGetStamp("ipotion")
+	case G1OBJ_INVISIBL:
+		arstamp[lk] = itemGetStamp("invis")
+// specials added after convert to se id'ed them on maze 115, score table block
+	case G1OBJ_X_SPEED:
+		arstamp[lk] = itemGetStamp("speedpotion")
+	case G1OBJ_X_SHOTPW:
+		arstamp[lk] = itemGetStamp("shotpowerpotion")
+	case G1OBJ_X_SHTSPD:
+		arstamp[lk] = itemGetStamp("shotspeedpotion")
+	case G1OBJ_X_ARMOR:
+		arstamp[lk] = itemGetStamp("shieldpotion")
+	case G1OBJ_X_FIGHT:
+		arstamp[lk] = itemGetStamp("fightpotion")
+	case G1OBJ_X_MAGIC:
+		arstamp[lk] = itemGetStamp("magicpotion")
+// SE expand
+	case SEOBJ_SE_ANKH:
+		psx, psy = 21, 11
+	case SEOBJ_FIRE_STICK:
+		psx, psy = 33, 26
+	case SEOBJ_G2_POISPOT:
+		psx, psy = 8, 11
+	case SEOBJ_G2_POISFUD:
+		psx, psy = 1, 11
+	case SEOBJ_G2_QFUD:
+		psx, psy = 2, 11
+	case SEOBJ_KEYRING:
+		psx, psy = 28, 10
+
+	case SEOBJ_MAPPYBDG:
+		psx, psy = 32, 22
+	case SEOBJ_MAPPYGORO:
+		psx, psy = 34, 22
+
+	case SEOBJ_MAPPYARAD:		// 25, 21
+		psx, psy, szx = 24, 20, 16
+	case SEOBJ_MAPPYATV:		// 27, 21
+		psx, psy, szx = 26, 20, 16
+	case SEOBJ_MAPPYAPC:		// 29, 21
+		psx, psy, szx = 28, 20, 16
+	case SEOBJ_MAPPYAART:		// 31, 21
+		psx, psy, szx = 30, 20, 16
+	case SEOBJ_MAPPYASAF:		// 33, 21
+		psx, psy, szx = 32, 20, 16
+
+	case SEOBJ_MAPPYRAD:		// 25, 22
+		psx, psy, szx = 24, 21, 16
+	case SEOBJ_MAPPYTV:		// 27, 22
+		psx, psy, szx = 26, 21, 16
+	case SEOBJ_MAPPYPC:		// 29, 22
+		psx, psy, szx = 28, 21, 16
+	case SEOBJ_MAPPYART:		// 31, 22
+		psx, psy, szx = 30, 21, 16
+	case SEOBJ_MAPPYSAF:		// 33, 22
+		psx, psy, szx = 32, 21, 16
+
+	case SEOBJ_MAPPYBELL:		// 35, 21
+		psx, psy = 34, 20
+	case SEOBJ_MAPPYBAL:		// 35, 22
+		psx, psy = 34, 21
+
+	case SEOBJ_DETHGEN3:		// 34, 8
+		gtopl = "D"
+//		gtop.SetRGB(0, 0, 0)
+		psx, psy = 34, 8
+	case SEOBJ_DETHGEN2:		// 35, 8
+		gtopl = "D"
+//		gtop.SetRGB(0, 0, 0)
+		psx, psy = 33, 8
+	case SEOBJ_DETHGEN1:		// 36, 8
+		gtopl = "D"
+//		gtop.SetRGB(0, 0, 0)
+		psx, psy = 32, 8
+	case SEOBJ_FLOORNUL:
+		psx, psy = 34, 10
+	default:
+		arstamp[lk] = itemGetStamp("key")
+		arstamp[lk].pnum = -1				// failed assign, no use
+
+			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", lk) }
+	}
+
+	if arstamp[lk] == nil {
+		arstamp[lk] = itemGetStamp("key")
+		arstamp[lk].pnum = -1				// failed assign, no use
+	}
+	if arstamp[lk].pnum >= 0 {
+		arstamp[lk].mimg = blankimage(16,16)
+		writestamptoimage(G1,arstamp[lk].mimg, arstamp[lk], 0, 0)
+	}
+	if psx >= 0 && psy >= 0 {
+		parimg = sents
+		arstamp[lk].altimg = blankimage(16,16)
+		writepngtoimage(arstamp[lk].altimg,16,16,szx,szy,psx,psy,0,0,0)
+		if arstamp[lk].pnum < 0 {writepngtoimage(arstamp[lk].mimg,16,16,szx,szy,psx,psy,0,0,0)  }
+	} else {
+		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = blankimage(16,16) }	// no valid stamp, no altimg, blank it
+	}
+	arstamp[lk].gtopl = gtopl
 }

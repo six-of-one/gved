@@ -940,7 +940,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 					if fys > opts.DimY { fys = opts.DimY+1 }
 					if x >= 0 && y >= 0 && x < fxs && y < fys {		// when bulk of main render is in std bounds, do super floor copy
 						if sf {
-fmt.Printf("  x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)*16,xs,ys,ux,uy,vcoord(x,xb,xba)*16,vcoord(y,yb,yba)*16)
+fmt.Printf(" flor x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)*16,xs,ys,ux,uy,vcoord(x,xb,xba)*16,vcoord(y,yb,yba)*16)
 							writepngtoimage(img,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
 							sf = false
 						}
@@ -956,6 +956,33 @@ fmt.Printf("  x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)
 	if walsdirt > 0 {
 		walsb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
 		walbas(walsb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild floor on load or when edit dirties it
+	}
+	if walsdirt >= 0 {
+		if opts.edat < 0 || opts.edat == 2 {
+			parimg = walsb
+			writepngtoimage(img, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
+		} else {
+			parimg = walsb
+			sf := true
+			for y := yb; y < ys; y++ {
+				for x := xb; x < xs; x++ {
+					_, ux, uy := lot(x, y, x, y)
+					fxs, fys := xs, ys
+					if fxs > opts.DimX { fxs = opts.DimX+1 }
+					if fys > opts.DimY { fys = opts.DimY+1 }
+					if x >= 0 && y >= 0 && x < fxs && y < fys {		// when bulk of main render is in std bounds, do super floor copy
+						if sf {
+fmt.Printf(" wals x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)*16,xs,ys,ux,uy,vcoord(x,xb,xba)*16,vcoord(y,yb,yba)*16)
+							writepngtoimage(img,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
+							sf = false
+						}
+					} else {
+						writepngtoimage(img, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
+					}
+				}}
+		}
+	} else {	// -1		= palete or pb
+		walbas(img, maze, xdat, opts.DimX+1, opts.DimY+1,false)
 	}
 
 fmt.Printf(" xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
@@ -984,6 +1011,7 @@ if opts.Verbose { fmt.Printf("\n") }
 			gtopcol := false	// disable gen letter seperate colors
 // gen type op - the context to draw
 			gtop := gg.NewContext(32, 12)
+
 // gtop font
 			if err := gtop.LoadFontFace(".font/VrBd.ttf", 10); err != nil {
 				panic(err)
@@ -1066,27 +1094,6 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
 			}
-		case SEOBJ_PUSHWAL:
-			G1 = false
-			stamp = itemGetStamp("pushwall")
-		case G1OBJ_KEY:
-			stamp = itemGetStamp("key")
-
-		case SEOBJ_POWER_REPULSE:
-			G1 = false
-			stamp = itemGetStamp("repulse")
-		case SEOBJ_POWER_REFLECT:
-			G1 = false
-			stamp = itemGetStamp("reflect")
-		case SEOBJ_POWER_TRANSPORT:
-			G1 = false
-			stamp = itemGetStamp("transportability")
-		case SEOBJ_POWER_SUPERSHOT:
-			G1 = false
-			stamp = itemGetStamp("supershot")
-		case SEOBJ_POWER_INVULN:
-			G1 = false
-			stamp = itemGetStamp("invuln")
 
 		case SEOBJ_DOOR_H:
 			G1 = false; fallthrough
@@ -1099,213 +1106,6 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			adj := checkdooradj4g1(maze, x, y)
 			stamp = doorGetStamp(DOOR_VERT, adj)
 
-		case G1OBJ_PLAYERSTART:
-			stamp = itemGetStamp("plusg1")
-			if G2 { stamp = itemGetStamp("plus") }
-		case G1OBJ_EXIT:
-			stamp = itemGetStamp("exitg1")
-			if G2 { stamp = itemGetStamp("exit") }
-//fmt.Printf("g1exit %d x %d, vc: %d x %d\n ",x,y,vcx, vcy)
-		case G1OBJ_EXIT4:
-			stamp = itemGetStamp("exit4")
-		case SEOBJ_EXIT6:
-			G1 = false
-			stamp = itemGetStamp("exit6")
-		case G1OBJ_EXIT8:
-			stamp = itemGetStamp("exit8")
-
-		case G1OBJ_MONST_GHOST1:
-			stamp = itemGetStamp("ghost1")
-		case G1OBJ_MONST_GHOST2:
-			stamp = itemGetStamp("ghost2")
-		case SEOBJ_G2GHOST:
-			G1 = false; fallthrough
-		case G1OBJ_MONST_GHOST3:
-			stamp = itemGetStamp("ghost")
-		case G1OBJ_MONST_GRUNT1:
-			stamp = itemGetStamp("grunt1")
-		case G1OBJ_MONST_GRUNT2:
-			stamp = itemGetStamp("grunt2")
-		case SEOBJ_G2GRUNT:
-			G1 = false; fallthrough
-		case G1OBJ_MONST_GRUNT3:
-			stamp = itemGetStamp("grunt")
-		case G1OBJ_MONST_DEMON1:
-			stamp = itemGetStamp("demon1")
-		case G1OBJ_MONST_DEMON2:
-			stamp = itemGetStamp("demon2")
-		case SEOBJ_G2DEMON:
-			G1 = false; fallthrough
-		case G1OBJ_MONST_DEMON3:
-			stamp = itemGetStamp("demon")
-		case G1OBJ_MONST_LOBBER1:
-			stamp = itemGetStamp("lobber1")
-		case G1OBJ_MONST_LOBBER2:
-			stamp = itemGetStamp("lobber2")
-		case SEOBJ_G2LOBER:
-			G1 = false; fallthrough
-		case G1OBJ_MONST_LOBBER3:
-			stamp = itemGetStamp("lobber")
-		case G1OBJ_MONST_SORC1:
-			stamp = itemGetStamp("sorcerer1")
-		case G1OBJ_MONST_SORC2:
-			stamp = itemGetStamp("sorcerer2")
-		case SEOBJ_G2SORC:
-			G1 = false; fallthrough
-		case G1OBJ_MONST_SORC3:
-			stamp = itemGetStamp("sorcerer")
-		case SEOBJ_G2AUXGR:
-			G1 = false
-			stamp = itemGetStamp("auxgrunt")
-
-		case G1OBJ_MONST_DEATH:
-			stamp = itemGetStamp("death")
-		case SEOBJ_G2ACID:
-			G1 = false
-			stamp = itemGetStamp("acid")
-		case SEOBJ_G2SUPSORC:
-			G1 = false
-			stamp = itemGetStamp("supersorc")
-		case SEOBJ_G2IT:
-			G1 = false
-			stamp = itemGetStamp("it")
-		case SEOBJ_MONST_DRAGON:
-			G1 = false
-			stamp = itemGetStamp("dragon")
-
-		case G1OBJ_MONST_THIEF:
-			stamp = itemGetStamp("thief")
-		case SEOBJ_MONST_MUGGER:
-			G1 = false
-			stamp = itemGetStamp("mugger")
-
-		case SEOBJ_G2GN_GST1:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_GHOST1:
-			stamp = itemGetStamp("ghostgen1")
-		case SEOBJ_G2GN_GST2:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_GHOST2:
-			stamp = itemGetStamp("ghostgen2")
-		case SEOBJ_G2GN_GST3:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_GHOST3:
-			stamp = itemGetStamp("ghostgen3")
-
-// if a clear is done after, this SetRGB set bkg somehow
-		case SEOBJ_G2GN_GR1:
-			G1 = false; fallthrough
-		case SEOBJ_G2GN_AUXGR1:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_GRUNT1:
-			gtopl = "G"
-			if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
-			stamp = itemGetStamp("generator1")
-		case SEOBJ_G2GN_DM1:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_DEMON1:
-			gtopl = "D"
-			if gtopcol { gtop.SetRGB(1, 0, 0) }
-			stamp = itemGetStamp("generator1")
-		case SEOBJ_G2GN_LB1:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_LOBBER1:
-			gtopl = "L"
-			if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
-			stamp = itemGetStamp("generator1")
-		case SEOBJ_G2GN_SORC1:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_SORC1:
-			gtopl = "S"
-			if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
-			stamp = itemGetStamp("generator1")
-
-		case SEOBJ_G2GN_GR2:
-			G1 = false; fallthrough
-		case SEOBJ_G2GN_AUXGR2:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_GRUNT2:
-			gtopl = "G"
-			if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
-			stamp = itemGetStamp("generator2")
-		case SEOBJ_G2GN_DM2:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_DEMON2:
-			gtopl = "D"
-			if gtopcol { gtop.SetRGB(1, 0, 0) }
-			stamp = itemGetStamp("generator2")
-		case SEOBJ_G2GN_LB2:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_LOBBER2:
-			gtopl = "L"
-			if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
-			stamp = itemGetStamp("generator2")
-		case SEOBJ_G2GN_SORC2:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_SORC2:
-			gtopl = "S"
-			if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
-			stamp = itemGetStamp("generator2")
-
-		case SEOBJ_G2GN_GR3:
-			G1 = false; fallthrough
-		case SEOBJ_G2GN_AUXGR3:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_GRUNT3:
-			gtopl = "G"
-			if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
-			stamp = itemGetStamp("generator3")
-		case SEOBJ_G2GN_DM3:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_DEMON3:
-			gtopl = "D"
-			if gtopcol { gtop.SetRGB(1, 0, 0) }
-			stamp = itemGetStamp("generator3")
-		case SEOBJ_G2GN_LB3:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_LOBBER3:
-			gtopl = "L"
-			if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
-			stamp = itemGetStamp("generator3")
-		case SEOBJ_G2GN_SORC3:
-			G1 = false; fallthrough
-		case G1OBJ_GEN_SORC3:
-			gtopl = "S"
-			if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
-			stamp = itemGetStamp("generator3")
-
-		case G1OBJ_TREASURE:
-			stamp = itemGetStamp("treasure")
-		case SEOBJ_TREASURE_LOCKED:
-			G1 = false
-			stamp = itemGetStamp("treasurelocked")
-
-		case G1OBJ_TREASURE_BAG:
-			stamp = itemGetStamp("goldbag")
-		case G1OBJ_FOOD_DESTRUCTABLE:
-			stamp = itemGetStamp("food")
-		case G1OBJ_FOOD_INVULN:
-			stamp = itemGetStamp(foods[rand.Intn(3)])
-		case G1OBJ_POT_DESTRUCTABLE:
-			stamp = itemGetStamp("potion")
-		case G1OBJ_POT_INVULN:
-			stamp = itemGetStamp("ipotion")
-		case G1OBJ_INVISIBL:
-			stamp = itemGetStamp("invis")
-// specials added after convert to se id'ed them on maze 115, score table block
-		case G1OBJ_X_SPEED:
-			stamp = itemGetStamp("speedpotion")
-		case G1OBJ_X_SHOTPW:
-			stamp = itemGetStamp("shotpowerpotion")
-		case G1OBJ_X_SHTSPD:
-			stamp = itemGetStamp("shotspeedpotion")
-		case G1OBJ_X_ARMOR:
-			stamp = itemGetStamp("shieldpotion")
-		case G1OBJ_X_FIGHT:
-			stamp = itemGetStamp("fightpotion")
-		case G1OBJ_X_MAGIC:
-			stamp = itemGetStamp("magicpotion")
-
 		case SEOBJ_FORCEFIELDHUB:
 			G1 = false
 			adj := checkffadj4(maze, x, y)
@@ -1315,66 +1115,6 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			if G2 { stamp = itemGetStamp("tport") }
 		case GORO_TEST:
 			err, _, ptamp = itemGetPNG("gfx/goro.16.png")
-// SE expand
-		case SEOBJ_SE_ANKH:
-			psx, psy = 21, 11
-		case SEOBJ_FIRE_STICK:
-			psx, psy = 33, 26
-		case SEOBJ_G2_POISPOT:
-			psx, psy = 8, 11
-		case SEOBJ_G2_POISFUD:
-			psx, psy = 1, 11
-		case SEOBJ_G2_QFUD:
-			psx, psy = 2, 11
-		case SEOBJ_KEYRING:
-			psx, psy = 28, 10
-
-		case SEOBJ_MAPPYBDG:
-			psx, psy = 32, 22
-		case SEOBJ_MAPPYGORO:
-			psx, psy = 34, 22
-
-		case SEOBJ_MAPPYARAD:		// 25, 21
-			psx, psy, szx = 24, 20, 16
-		case SEOBJ_MAPPYATV:		// 27, 21
-			psx, psy, szx = 26, 20, 16
-		case SEOBJ_MAPPYAPC:		// 29, 21
-			psx, psy, szx = 28, 20, 16
-		case SEOBJ_MAPPYAART:		// 31, 21
-			psx, psy, szx = 30, 20, 16
-		case SEOBJ_MAPPYASAF:		// 33, 21
-			psx, psy, szx = 32, 20, 16
-
-		case SEOBJ_MAPPYRAD:		// 25, 22
-			psx, psy, szx = 24, 21, 16
-		case SEOBJ_MAPPYTV:		// 27, 22
-			psx, psy, szx = 26, 21, 16
-		case SEOBJ_MAPPYPC:		// 29, 22
-			psx, psy, szx = 28, 21, 16
-		case SEOBJ_MAPPYART:		// 31, 22
-			psx, psy, szx = 30, 21, 16
-		case SEOBJ_MAPPYSAF:		// 33, 22
-			psx, psy, szx = 32, 21, 16
-
-		case SEOBJ_MAPPYBELL:		// 35, 21
-			psx, psy = 34, 20
-		case SEOBJ_MAPPYBAL:		// 35, 22
-			psx, psy = 34, 21
-
-		case SEOBJ_DETHGEN3:		// 34, 8
-			gtopl = "D"
-			gtop.SetRGB(0, 0, 0)
-			psx, psy = 34, 8
-		case SEOBJ_DETHGEN2:		// 35, 8
-			gtopl = "D"
-			gtop.SetRGB(0, 0, 0)
-			psx, psy = 33, 8
-		case SEOBJ_DETHGEN1:		// 36, 8
-			gtopl = "D"
-			gtop.SetRGB(0, 0, 0)
-			psx, psy = 32, 8
-		case SEOBJ_FLOORNUL:
-			psx, psy = 34, 10
 
 		default:
 			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", sb) }
