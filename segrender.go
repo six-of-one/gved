@@ -357,6 +357,7 @@ func ffMakeMap(maze *Maze) FFMap {
 	for k, v := range maze.data {
 		if !isforcefield(v) {
 			anmap[xy{k.x, k.y}] = isanimtil(v)
+if anmap[xy{k.x, k.y}] > 0 {fmt.Printf("det anim %d: %d x %d\n",v,k.x, k.y)}
 			continue
 		}
 
@@ -385,6 +386,7 @@ func isforcefield(t int) bool {
 func isanimtil(t int) int {
 	r := 0
 	for i := 0; animcyc[i] > 0; i +=2 {
+fmt.Printf("t anim %d: %d - %d\n",i,animcyc[i], animcyc[i+1])
 		if animcyc[i] == t { r = animcyc[i+1]; manim = true }
 	}
 	return r

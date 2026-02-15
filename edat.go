@@ -115,7 +115,6 @@ var err error
 	arstamp = make([]*Stamp, 0, g1maxid)
 	for i := 0; i <= g1maxid; i++ { arstamp = append(arstamp,nil); bld_star(i) }
 	go func() {
-fmt.Printf("launched anim\n")
 		animcon()
 	}()
 

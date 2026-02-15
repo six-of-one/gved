@@ -709,9 +709,11 @@ func bld_star(lk int ) {
 		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = arstamp[lk].altimg; arstamp[lk].pnum = -7 }	// no main img, use alt
 		arstamp[lk].mask = mask
 		if cnt > 0 {		// animation frames
+fmt.Printf("bld anim %d, c%d w%d\n",lk,cnt,16)
 			arstamp[lk].anim = append(arstamp[lk].anim,nil)
 			arstamp[lk].anim[0] = arstamp[lk].mimg		// main img is always 1st frame ?
 			for i := 0; i < cnt; i++ {
+fmt.Printf("bld anim %d, c%d w%d\n",lk,i,16)
 				arstamp[lk].anim = append(arstamp[lk].anim,nil)
 				arstamp[lk].anim[i] = blankimage(16+azx,16+azy)
 				writepngtoimage(arstamp[lk].anim[i],16,16,azx,azy,psx+i,psy,0,0,0)
@@ -755,8 +757,8 @@ fmt.Printf("anim %t\n",manim)
 				anmapr[xy{ux, uy}] = r
 				tl := ebuf[xy{ux, uy}]
 				w := arstamp[tl].width
+fmt.Printf("anim %d, c%d, w%d - %v\n",tl,r-1,w, arstamp[tl].anim[r - 1])
 				parimg = arstamp[tl].anim[r - 1]
-fmt.Printf("anim %d, c%d w%d\n",tl,r-1,w)
 				writepngtoimage(fimg, w,w,0,0,0,0,vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16,0)
 				dida = true
 			}
