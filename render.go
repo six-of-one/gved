@@ -10,6 +10,7 @@ import (
 	"os"
 	"fmt"
 	"time"
+	"golang.org/x/image/draw"
 )
 
 func gettiledatafromfile(file string, tilenum int) TileLinePlane {
@@ -308,6 +309,7 @@ func bld_star(lk int ) {
 	psx, psy, azx, azy := -1,-1,0,0
 	gsv := G1
 	mask := 256 		// set some masks here
+	cnt := 0			// animation frames
 
 	switch lk {
 	case SEOBJ_PUSHWAL:
@@ -560,6 +562,8 @@ func bld_star(lk int ) {
 		mask = NOPOT
 	case SEOBJ_FIRE_STICK:
 		psx, psy = 33, 26
+		mask = 256 | ANIM
+		cnt = 4
 	case SEOBJ_G2_POISPOT:
 		psx, psy = 8, 11
 		mask = NOPOT
@@ -602,8 +606,12 @@ func bld_star(lk int ) {
 
 	case SEOBJ_MAPPYBELL:		// 35, 21
 		psx, psy = 34, 20
+		mask = 256 | ANIM
+		cnt = 2
 	case SEOBJ_MAPPYBAL:		// 35, 22
 		psx, psy = 34, 21
+		mask = 256 | ANIM
+		cnt = 2
 
 	case SEOBJ_DETHGEN3:		// 34, 8
 		gtopl = "D"
@@ -623,6 +631,59 @@ func bld_star(lk int ) {
 	case SEOBJ_FLOORNUL:
 		psx, psy = 34, 10
 		mask = 0
+// animated floor
+	case SEOBJ_WATER_POOL:
+		psx, psy = 0, 26
+		mask = ANIM | NOFLOOR
+		cnt = 4
+	case SEOBJ_WATER_TOP:
+		psx, psy = 4, 26
+		mask = ANIM | NOFLOOR
+		cnt = 4
+	case SEOBJ_WATER_RT:
+		psx, psy = 12, 26
+		mask = ANIM | NOFLOOR
+		cnt = 4
+	case SEOBJ_WATER_COR:
+		psx, psy = 8, 26
+		mask = ANIM | NOFLOOR
+		cnt = 4
+	case SEOBJ_SLIME_POOL:
+		psx, psy = 16, 27
+		mask = ANIM | NOFLOOR
+		cnt = 3
+	case SEOBJ_SLIME_TOP:
+		psx, psy = 19, 27
+		mask = ANIM | NOFLOOR
+		cnt = 3
+	case SEOBJ_SLIME_RT:
+		psx, psy = 25, 27
+		mask = ANIM | NOFLOOR
+		cnt = 3
+	case SEOBJ_SLIME_COR:
+		psx, psy = 22, 27
+		mask = ANIM | NOFLOOR
+		cnt = 3
+	case SEOBJ_LAVA_POOL:
+		psx, psy = 16, 26
+		mask = ANIM | NOFLOOR
+		cnt = 4
+	case SEOBJ_LAVA_TOP:
+		psx, psy = 20, 26
+		mask = ANIM | NOFLOOR
+		cnt = 4
+	case SEOBJ_LAVA_RT:
+		psx, psy = 28, 26
+		mask = ANIM | NOFLOOR
+		cnt = 4
+	case SEOBJ_LAVA_COR:
+		psx, psy = 24, 26
+		mask = ANIM | NOFLOOR
+		cnt = 4
+	case SEOBJ_PULS_FLOR:
+		psx, psy = 28, 27
+		mask = ANIM | NOFLOOR
+		cnt = 8
 	default:
 
 			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", lk) }
@@ -647,6 +708,15 @@ func bld_star(lk int ) {
 		writepngtoimage(arstamp[lk].altimg,16,16,azx,azy,psx,psy,0,0,0)
 		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = arstamp[lk].altimg; arstamp[lk].pnum = -7 }	// no main img, use alt
 		arstamp[lk].mask = mask
+		if cnt > 0 {		// animation frames
+			arstamp[lk].anim = append(arstamp[lk].anim,nil)
+			arstamp[lk].anim[0] = arstamp[lk].mimg		// main img is always 1st frame ?
+			for i := 0; i < cnt; i++ {
+				arstamp[lk].anim = append(arstamp[lk].anim,nil)
+				arstamp[lk].anim[i] = blankimage(16+azx,16+azy)
+				writepngtoimage(arstamp[lk].altimg,16,16,azx,azy,psx+i,psy,0,0,0)
+			}
+		}
 	}
 	arstamp[lk].gtopl = gtopl
 	G1 = gsv
@@ -668,15 +738,15 @@ func animcon() {
 	if manim {								// only run when anim tiles are on map
 
 		xba, yba := vpc_adj(mvpx, mvpy)
-
+		dida := false	// did we animate?
 /*		for k, v := range anmapr {
 			anmapt[k] ...
 		}	*/
 		// we need to check bounds of current viewport, set animation of any visible floor tiles
 	for y := mvpy; y < mvye; y++ {
 		for x := mvpx; x < mvxe; x++ {
-			_, ux, uy := lot(x, y, x, y)
-			r := anmapr[xy{ux, uy}]
+			_, ux, uy := lot(x, y, x, y)	// what would be nice when mapping for the vp, is to make a list of all animatables
+			r := anmapr[xy{ux, uy}]			// and not have to check 200 to 400 cells every frame
 			if r > 0 {
 				r--
 				if r <= 0 { r = anmapt[xy{ux, uy}] }
@@ -685,7 +755,17 @@ func animcon() {
 				w := arstamp[tl].width
 				parimg = arstamp[tl].anim[r - 1]
 				writepngtoimage(fimg, w,w,0,0,0,0,vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16,0)
+				dida = true
 			}
 	}}
+	if dida {
+		lvpp := 0
+		if opts.edat < 1 || opts.edat == 2 { lvpp = mvxe }
+		rimg := blankimage(16*(mvxe-mvpx), 16*(mvye-mvpy))
+		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
+		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
+		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
+		upwin(rimg, lvpp)
+	}
 	}
 }

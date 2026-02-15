@@ -286,7 +286,8 @@ const (
 	NOTHN = 256		// anything else left			511  - all the items
 	NOFLOOR = 512
 	NOWALL = 1024	//								1536 - floors & walls
-	NOG1W = 2048		// g1 std wall only
+	NOG1W = 2048	// g1 std wall only
+	ANIM = 4096		// animated
 )
 // G1 - list of "wrap levels"
 var g1wrp = []int{

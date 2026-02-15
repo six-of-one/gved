@@ -1173,7 +1173,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				gtopl = arstamp[sb].gtopl
 //				writestamptoimage(G1,img, arstamp[sb], vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
 				offset := image.Pt(vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
-if sb < 99 || sb > 100 { fmt.Printf("star ld %d, %v %v\n",sb,arstamp[sb].mimg.Bounds(),offset) }
+//if sb < 99 || sb > 100 { fmt.Printf("star ld %d, %v %v\n",sb,arstamp[sb].mimg.Bounds(),offset) }
 				draw.Draw(img, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
 				if arstamp[sb].pnum != -7 { nugetx, nugety = arstamp[sb].nudgex, arstamp[sb].nudgey }
 			}
