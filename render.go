@@ -653,9 +653,13 @@ func bld_star(lk int ) {
 }
 
 // animate tiles
+var rcyc_anim int
 
 func animcon() {
 
 	time.Sleep(25 * time.Millisecond)
-
+	if manim {
+		rcyc_anim++
+		// we need to check bounds of current viewport, move animation of any floor tiles
+	}
 }
