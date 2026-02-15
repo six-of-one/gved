@@ -305,7 +305,7 @@ func bld_star(lk int ) {
 	gtopl := ""
 //	gtopcol := false	// disable gen letter seperate colors
 	psx, psy, szx, szy := -1,-1,0,0
-
+	gsv := G1
 
 	switch lk {
 	case SEOBJ_PUSHWAL:
@@ -431,24 +431,29 @@ func bld_star(lk int ) {
 	case G1OBJ_GEN_GRUNT1:
 		gtopl = "G"
 //		if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+		arstamp[lk].theme  = color.NRGBA{0xff, 166, 77, 25}
 		arstamp[lk] = itemGetStamp("generator1")
 	case SEOBJ_G2GN_DM1:
 		G1 = false; fallthrough
 	case G1OBJ_GEN_DEMON1:
 		gtopl = "D"
 //		if gtopcol { gtop.SetRGB(1, 0, 0) }
+		arstamp[lk].theme  = color.NRGBA{0xff, 255, 0, 0}
 		arstamp[lk] = itemGetStamp("generator1")
 	case SEOBJ_G2GN_LB1:
 		G1 = false; fallthrough
 	case G1OBJ_GEN_LOBBER1:
 		gtopl = "L"
 //		if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+		arstamp[lk].theme  = color.NRGBA{0xff, 179, 128, 52}
 		arstamp[lk] = itemGetStamp("generator1")
 	case SEOBJ_G2GN_SORC1:
 		G1 = false; fallthrough
 	case G1OBJ_GEN_SORC1:
 		gtopl = "S"
 //		if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+//		arstamp[lk].theme  = color.NRGBA{0xff, 255 * 0.37, 255 * 0.21, 255 * 0.7}
+		arstamp[lk].theme  = color.NRGBA{0xff, 95, 52, 179}
 		arstamp[lk] = itemGetStamp("generator1")
 
 	case SEOBJ_G2GN_GR2:
@@ -458,24 +463,28 @@ func bld_star(lk int ) {
 	case G1OBJ_GEN_GRUNT2:
 		gtopl = "G"
 //		if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+		arstamp[lk].theme  = color.NRGBA{0xff, 166, 77, 25}
 		arstamp[lk] = itemGetStamp("generator2")
 	case SEOBJ_G2GN_DM2:
 		G1 = false; fallthrough
 	case G1OBJ_GEN_DEMON2:
 		gtopl = "D"
 //		if gtopcol { gtop.SetRGB(1, 0, 0) }
+		arstamp[lk].theme  = color.NRGBA{0xff, 255, 0, 0}
 		arstamp[lk] = itemGetStamp("generator2")
 	case SEOBJ_G2GN_LB2:
 		G1 = false; fallthrough
 	case G1OBJ_GEN_LOBBER2:
 		gtopl = "L"
 //		if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+		arstamp[lk].theme  = color.NRGBA{0xff, 179, 128, 52}
 		arstamp[lk] = itemGetStamp("generator2")
 	case SEOBJ_G2GN_SORC2:
 		G1 = false; fallthrough
 	case G1OBJ_GEN_SORC2:
 		gtopl = "S"
 //		if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+		arstamp[lk].theme  = color.NRGBA{0xff, 95, 52, 179}
 		arstamp[lk] = itemGetStamp("generator2")
 
 	case SEOBJ_G2GN_GR3:
@@ -485,24 +494,28 @@ func bld_star(lk int ) {
 	case G1OBJ_GEN_GRUNT3:
 		gtopl = "G"
 //		if gtopcol { gtop.SetRGB(0.65, 0.3, 0.1) }
+		arstamp[lk].theme  = color.NRGBA{0xff, 166, 77, 25}
 		arstamp[lk] = itemGetStamp("generator3")
 	case SEOBJ_G2GN_DM3:
 		G1 = false; fallthrough
 	case G1OBJ_GEN_DEMON3:
 		gtopl = "D"
 //		if gtopcol { gtop.SetRGB(1, 0, 0) }
+		arstamp[lk].theme  = color.NRGBA{0xff, 255, 0, 0}
 		arstamp[lk] = itemGetStamp("generator3")
 	case SEOBJ_G2GN_LB3:
 		G1 = false; fallthrough
 	case G1OBJ_GEN_LOBBER3:
 		gtopl = "L"
 //		if gtopcol { gtop.SetRGB(0.7, 0.5, 0.2) }
+		arstamp[lk].theme  = color.NRGBA{0xff, 179, 128, 52}
 		arstamp[lk] = itemGetStamp("generator3")
 	case SEOBJ_G2GN_SORC3:
 		G1 = false; fallthrough
 	case G1OBJ_GEN_SORC3:
 		gtopl = "S"
 //		if gtopcol { gtop.SetRGB(0.37, 0.2, 0.7) }
+		arstamp[lk].theme  = color.NRGBA{0xff, 95, 52, 179}
 		arstamp[lk] = itemGetStamp("generator3")
 
 	case G1OBJ_TREASURE:
@@ -614,13 +627,17 @@ func bld_star(lk int ) {
 		arstamp[lk].mimg = blankimage(16,16)
 		writestamptoimage(G1,arstamp[lk].mimg, arstamp[lk], 0, 0)
 	}
-	if psx >= 0 && psy >= 0 {
+	if psx >= 0 && psy >= 0 {			// supply alt img
 		parimg = sents
 		arstamp[lk].altimg = blankimage(16,16)
 		writepngtoimage(arstamp[lk].altimg,16,16,szx,szy,psx,psy,0,0,0)
-		if arstamp[lk].pnum < 0 {writepngtoimage(arstamp[lk].mimg,16,16,szx,szy,psx,psy,0,0,0)  }
+		if arstamp[lk].pnum < 0 { writepngtoimage(arstamp[lk].mimg,16,16,szx,szy,psx,psy,0,0,0); arstamp[lk].pnum = -7 }	// no main img, use alt
 	} else {
-		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = blankimage(16,16) }	// no valid stamp, no altimg, blank it
+		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = blankimage(16,16)		// no valid stamp, no altimg, blank it
+		} else {
+			writestamptoimage(G1,arstamp[lk].altimg, arstamp[lk], 0, 0)		// main stamp, no alt, so copy main to alt
+		}
 	}
 	arstamp[lk].gtopl = gtopl
+	G1 = gsv
 }

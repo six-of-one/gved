@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"image"
 	"image/png"
+	"image/color"
 	"os"
 	"os/exec"
 
@@ -67,6 +68,7 @@ type Stamp struct {
 	nudgey  int
 	mask	int
 	gtopl	string
+	theme	color.Color
 	mimg	*image.NRGBA		// faster vers has img store
 	altimg	*image.NRGBA
 	anim	[]*image.NRGBA		// to animate mobs & such

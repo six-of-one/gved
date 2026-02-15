@@ -989,7 +989,7 @@ fmt.Printf(" xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,
 
 
 	opr := 3		// G² hack to present specials on scoreboard / info maze 104
-	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
+//	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
 	for y := yb; y <= ys; y++ {
 if opts.Verbose { fmt.Printf("\n") }
 		for x := xb; x <= xs; x++ {
@@ -997,7 +997,7 @@ if opts.Verbose { fmt.Printf("\n") }
 			var dots int // dot count
 
 			ptamp = nil
-			psx, psy, szx, szy := -1, -1, 0 ,0
+//			psx, psy, szx, szy := -1, -1, 0 ,0
 
 			vcx, vcy := vcoord(x,xb,xba), vcoord(y,yb,yba)
 			sb := scanbuf(maze.data, x, y, x, y, -2)
@@ -1106,6 +1106,15 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			adj := checkdooradj4g1(maze, x, y)
 			stamp = doorGetStamp(DOOR_VERT, adj)
 
+		case G1OBJ_PLAYERSTART:
+//			arstamp[lk] = itemGetStamp("plusg1")
+			if G2 { stamp = itemGetStamp("plus") }
+		case G1OBJ_EXIT:
+//			arstamp[lk] = itemGetStamp("exitg1")
+			if G2 { stamp = itemGetStamp("exit") }
+		case G1OBJ_TRANSPORTER:
+//			arstamp[lk] = itemGetStamp("tportg1")
+			if G2 { stamp = itemGetStamp("tport") }
 		case SEOBJ_FORCEFIELDHUB:
 			G1 = false
 			adj := checkffadj4(maze, x, y)
@@ -1119,18 +1128,26 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 // set mask flag in array
 		if sb > 0 && stamp != nil { g1mask[sb] = stamp.mask }
 
-		if stamp == nil && arstamp[sb].pnum > -1 {
-			stamp = arstamp[sb]
-			gtopl = arstamp[sb].gtopl
-		}
+		nugetx, nugety := -4, -4
+		if stamp != nil {
+// note G¹ here, opposite of other writes using gt - here gt preserves true G¹ state due to complex tile rom extract and pallet select
+			writestamptoimage(G1,img, stamp, vcx*16+stamp.nudgex, vcy*16+stamp.nudgey)
+			nugetx, nugety = stamp.nudgex, stamp.nudgey
+		} else {
+			if arstamp[sb].pnum > -1 {
+				gtopl = arstamp[sb].gtopl
+				offset := image.Pt(vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
+				draw.Draw(arstamp[sb].mimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
+			} else {
+			if arstamp[sb].pnum == -7 {
+				gtopl = arstamp[sb].gtopl
+				offset := image.Pt(vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
+				draw.Draw(arstamp[sb].mimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
+			}
+		}}
+
 // Six: end G¹ decode
 // if !G1 { fmt.Printf("stamp # %d - p: %s\n",scanbuf(maze.data, x, y, x, y, -2),stamp.ptype)}
-			nugetx, nugety := -4, -4
-			if stamp != nil {
-// note G¹ here, opposite of other writes using gt - here gt preserves true G¹ state due to complex tile rom extract and pallet select
-				writestamptoimage(G1,img, stamp, vcx*16+stamp.nudgex, vcy*16+stamp.nudgey)
-				nugetx, nugety = stamp.nudgex, stamp.nudgey
-			}
 // stats on palette
 			if stat {			// on palette screen, show stats for loaded maze
 				st := ""
@@ -1164,10 +1181,6 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 			}
 // expand and sanctuary
-			if psx >= 0 && psy >= 0 {
-				parimg = sents
-				writepngtoimage(img, 16,16,szx,szy,psx,psy,vcx*16, vcy*16,0)
-			}
 			if err == nil && ptamp != nil {
 				parimg = ptamp
 				writepngtoimage(img, 16,16,0,0,0,0,vcx*16, vcy*16,0)
