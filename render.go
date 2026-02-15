@@ -736,14 +736,16 @@ func vpc_adj(x, y int) (int,int) {
 
 // animate tiles
 
+var dida bool	// no blotter when animating
+
 func animcon() {
 
 	for {
-	time.Sleep(200 * time.Millisecond)
+	time.Sleep(500 * time.Millisecond)
 	if manim {								// only run when anim tiles are on map
 
 		xba, yba := vpc_adj(mvpx, mvpy)
-		dida := false	// did we animate?
+		dida = false	// did we animate?
 /*		for k, v := range anmapr {
 			anmapt[k] ...
 		}	*/
