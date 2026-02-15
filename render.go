@@ -306,6 +306,7 @@ func bld_star(lk int ) {
 //	gtopcol := false	// disable gen letter seperate colors
 	psx, psy, azx, azy := -1,-1,0,0
 	gsv := G1
+	mask := 256 		// set some masks here
 
 	switch lk {
 	case SEOBJ_PUSHWAL:
@@ -555,16 +556,21 @@ func bld_star(lk int ) {
 // SE expand
 	case SEOBJ_SE_ANKH:
 		psx, psy = 21, 11
+		mask = NOPOT
 	case SEOBJ_FIRE_STICK:
 		psx, psy = 33, 26
 	case SEOBJ_G2_POISPOT:
 		psx, psy = 8, 11
+		mask = NOPOT
 	case SEOBJ_G2_POISFUD:
 		psx, psy = 1, 11
+		mask = NOGUD
 	case SEOBJ_G2_QFUD:
 		psx, psy = 2, 11
+		mask = NOGUD
 	case SEOBJ_KEYRING:
 		psx, psy = 28, 10
+		mask = NODOR
 
 	case SEOBJ_MAPPYBDG:
 		psx, psy = 32, 22
@@ -600,18 +606,22 @@ func bld_star(lk int ) {
 
 	case SEOBJ_DETHGEN3:		// 34, 8
 		gtopl = "D"
+		mask = NOGEN
 //		gtop.SetRGB(0, 0, 0)
 		psx, psy = 34, 8
 	case SEOBJ_DETHGEN2:		// 35, 8
 		gtopl = "D"
+		mask = NOGEN
 //		gtop.SetRGB(0, 0, 0)
 		psx, psy = 33, 8
 	case SEOBJ_DETHGEN1:		// 36, 8
 		gtopl = "D"
+		mask = NOGEN
 //		gtop.SetRGB(0, 0, 0)
 		psx, psy = 32, 8
 	case SEOBJ_FLOORNUL:
 		psx, psy = 34, 10
+		mask = 0
 	default:
 
 			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", lk) }
@@ -635,6 +645,7 @@ func bld_star(lk int ) {
 //		arstamp[lk].mimg = blankimage(16+azx,16+azy)
 		writepngtoimage(arstamp[lk].altimg,16,16,azx,azy,psx,psy,0,0,0)
 		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = arstamp[lk].altimg; arstamp[lk].pnum = -7 }	// no main img, use alt
+		if mask != 256 arstamp[lk].mask = mask
 	}
 	arstamp[lk].gtopl = gtopl
 	G1 = gsv
