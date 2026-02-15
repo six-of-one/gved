@@ -912,7 +912,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	maze.wallcolor = fdat[6] & 0x0f
 	maze.floorcolor = (fdat[6] & 0xf0) >> 4
 
-	walsdirt = flordirt		// cheet for now - later these should seperate
+	if walsdirt == 0 { walsdirt = flordirt }		// cheet for now - later these should seperate
 
 	// unpin issue - -vals flummox canvas writes
 	xba, yba := 0, 0
@@ -954,6 +954,7 @@ fmt.Printf(" flor x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fy
 	}
 
 	if walsdirt > 0 {
+fmt.Printf("walldirt, cleen em up\n")
 		walsb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
 		walbas(walsb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild floor on load or when edit dirties it
 	}

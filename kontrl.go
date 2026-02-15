@@ -119,7 +119,7 @@ func specialKey(cw fyne.Window) {
 			if key.Name == "L" && ctrl  { if shift { menu_laodf() } else { menu_lod() }}
 			if key.Name == "R" && ctrl  { menu_res() }
 			if key.Name == "U" && ctrl  { uswap() }
-			if key.Name == "T" && ctrl  { if ! cmdoff { nothing = 0; srelod = true }}
+			if key.Name == "T" && ctrl  { if ! cmdoff { nothing = 0; flordirt = 1 }}
 			if key.Name == "Z" && ctrl  { undo() }
 			if key.Name == "Y" && ctrl  { redo() }
 			if key.Name == "C" && ctrl  { menu_copy() }
@@ -580,6 +580,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				nothing = nothing ^ NOWALL
 				spau = fmt.Sprintf("no walls: %d\n",nothing & NOWALL)
 				opts.dntr = true
+				flordirt = 1
 			}
 		case 84:		// T
 			if !cmdoff {
@@ -588,6 +589,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				if anum > 0 { nothing = (nothing & 1536) + anum; anum = 0 }		// set lower 9 bits of no-thing mask [ but not walls or floors ]
 				spau = fmt.Sprintf("no things: %d\n",nothing & 511)				// display no things mask
 				opts.dntr = true
+				flordirt = 1
 			}
 		case 's':
 			opts.SP = !opts.SP
