@@ -230,7 +230,7 @@ var itemStamps = map[string]Stamp{
 		pnum:    1,
 		trans0:  true,
 		nudgex:  -4,
-		nudgey:  -4,
+		nudgey:  0,
 		mask:    NOEXP,
 	},
 

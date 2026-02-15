@@ -631,8 +631,8 @@ func bld_star(lk int ) {
 	}
 	if psx >= 0 && psy >= 0 {			// supply alt img
 		parimg = sents
-		arstamp[lk].altimg = blankimage(psx+azx,psy+azy)
-		arstamp[lk].mimg = blankimage(16+azx,16+azy)
+		arstamp[lk].altimg = blankimage(16+azx,16+azy)
+//		arstamp[lk].mimg = blankimage(16+azx,16+azy)
 		writepngtoimage(arstamp[lk].altimg,16,16,azx,azy,psx,psy,0,0,0)
 		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = arstamp[lk].altimg; arstamp[lk].pnum = -7 }	// no main img, use alt
 	}
