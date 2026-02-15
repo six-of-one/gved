@@ -1110,9 +1110,6 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			G1 = false
 			adj := checkffadj4(maze, x, y)
 			if nothing & NOEXP == 0 { stamp = ffGetStamp(adj) }
-		case G1OBJ_TRANSPORTER:
-			stamp = itemGetStamp("tportg1")
-			if G2 { stamp = itemGetStamp("tport") }
 		case GORO_TEST:
 			err, _, ptamp = itemGetPNG("gfx/goro.16.png")
 
@@ -1122,6 +1119,10 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 // set mask flag in array
 		if sb > 0 && stamp != nil { g1mask[sb] = stamp.mask }
 
+		if stamp == nil && arstamp[sb].pnum > -1 {
+			stamp = arstamp[sb]
+			gtopl = arstamp[sb].gtopl
+		}
 // Six: end G¹ decode
 // if !G1 { fmt.Printf("stamp # %d - p: %s\n",scanbuf(maze.data, x, y, x, y, -2),stamp.ptype)}
 			nugetx, nugety := -4, -4

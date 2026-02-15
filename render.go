@@ -332,10 +332,10 @@ func bld_star(lk int ) {
 
 	case G1OBJ_PLAYERSTART:
 		arstamp[lk] = itemGetStamp("plusg1")
-		if G2 { arstamp[lk] = itemGetStamp("plus") }
+//		if G2 { arstamp[lk] = itemGetStamp("plus") }
 	case G1OBJ_EXIT:
 		arstamp[lk] = itemGetStamp("exitg1")
-		if G2 { arstamp[lk] = itemGetStamp("exit") }
+//		if G2 { arstamp[lk] = itemGetStamp("exit") }
 //fmt.Printf("g1exit %d x %d, vc: %d x %d\n ",x,y,vcx, vcy)
 	case G1OBJ_EXIT4:
 		arstamp[lk] = itemGetStamp("exit4")
@@ -536,6 +536,9 @@ func bld_star(lk int ) {
 		arstamp[lk] = itemGetStamp("fightpotion")
 	case G1OBJ_X_MAGIC:
 		arstamp[lk] = itemGetStamp("magicpotion")
+	case G1OBJ_TRANSPORTER:
+		arstamp[lk] = itemGetStamp("tportg1")
+//		if G2 { arstamp[lk] = itemGetStamp("tport") }
 // SE expand
 	case SEOBJ_SE_ANKH:
 		psx, psy = 21, 11
