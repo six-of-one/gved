@@ -714,7 +714,7 @@ func bld_star(lk int ) {
 			for i := 0; i < cnt; i++ {
 				arstamp[lk].anim = append(arstamp[lk].anim,nil)
 				arstamp[lk].anim[i] = blankimage(16+azx,16+azy)
-				writepngtoimage(arstamp[lk].altimg,16,16,azx,azy,psx+i,psy,0,0,0)
+				writepngtoimage(arstamp[lk].anim[i],16,16,azx,azy,psx+i,psy,0,0,0)
 			}
 		}
 	}
@@ -734,7 +734,9 @@ func vpc_adj(x, y int) (int,int) {
 
 func animcon() {
 
+	for {
 	time.Sleep(200 * time.Millisecond)
+fmt.Printf("anim %t\n",manim)
 	if manim {								// only run when anim tiles are on map
 
 		xba, yba := vpc_adj(mvpx, mvpy)
@@ -754,6 +756,7 @@ func animcon() {
 				tl := ebuf[xy{ux, uy}]
 				w := arstamp[tl].width
 				parimg = arstamp[tl].anim[r - 1]
+fmt.Printf("anim %d, c%d w%d\n",tl,r-1,w)
 				writepngtoimage(fimg, w,w,0,0,0,0,vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16,0)
 				dida = true
 			}
@@ -767,5 +770,5 @@ func animcon() {
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 		upwin(rimg, lvpp)
 	}
-	}
+	}}
 }
