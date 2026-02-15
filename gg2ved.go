@@ -10,9 +10,7 @@ a. update mazedumps with new visuals from gved - and is done
 
 import (
 	"fmt"
-	"image"
 	"image/png"
-	"image/color"
 	"os"
 	"os/exec"
 
@@ -56,24 +54,6 @@ var Ovwallpat int
 var Ovflorpat int
 var Ovwallcol int
 var Ovflorcol int
-
-type Stamp struct {
-	width   int
-	numbers []int
-	data    []TileData
-	ptype   string
-	pnum    int
-	trans0  bool
-	nudgex  int
-	nudgey  int
-	mask	int
-	gtopl	string
-	theme	color.NRGBA			// this is the color set generator id letters had
-	mimg	*image.NRGBA		// faster vers has img store
-	altimg	*image.NRGBA
-	anim	[]*image.NRGBA		// to animate mobs & such
-}
-var arstamp []*Stamp
 
 func check(e error) {
 	if e != nil {

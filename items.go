@@ -6,16 +6,26 @@ import (
 	"fyne.io/fyne/v2/canvas"
 	"os"
 	"image"
+	"image/color"
 )
 
-// type Stamp struct {
-//     width   int
-//     numbers []int
-//     data    []TileData
-//     ptype   string
-//     pnum    int
-//     trans0  bool
-// }
+type Stamp struct {
+	width   int
+	numbers []int
+	data    []TileData
+	ptype   string
+	pnum    int
+	trans0  bool
+	nudgex  int
+	nudgey  int
+	mask	int
+	gtopl	string
+	theme	color.NRGBA			// this is the color set generator id letters had
+	mimg	*image.NRGBA		// faster vers has img store
+	altimg	*image.NRGBA
+	anim	[]*image.NRGBA		// to animate mobs & such
+}
+var arstamp []*Stamp
 
 var itemStamps = map[string]Stamp{
 	"blank": Stamp{
