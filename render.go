@@ -564,10 +564,10 @@ func bld_star(lk int ) {
 		mask = NOPOT
 	case SEOBJ_G2_POISFUD:
 		psx, psy = 1, 11
-		mask = NOGUD
+		mask = NOFUD
 	case SEOBJ_G2_QFUD:
 		psx, psy = 2, 11
-		mask = NOGUD
+		mask = NOFUD
 	case SEOBJ_KEYRING:
 		psx, psy = 28, 10
 		mask = NODOR
@@ -645,7 +645,7 @@ func bld_star(lk int ) {
 //		arstamp[lk].mimg = blankimage(16+azx,16+azy)
 		writepngtoimage(arstamp[lk].altimg,16,16,azx,azy,psx,psy,0,0,0)
 		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = arstamp[lk].altimg; arstamp[lk].pnum = -7 }	// no main img, use alt
-		if mask != 256 arstamp[lk].mask = mask
+		if mask != 256 { arstamp[lk].mask = mask }
 	}
 	arstamp[lk].gtopl = gtopl
 	G1 = gsv
