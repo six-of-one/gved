@@ -69,7 +69,8 @@ var maxvp = 32
 var minvp = 12
 
 var unpinx bool		// in gauntlet - whether you approach and edge wall, or stay in the center of screen
-var unpiny bool		//				 this doesnt happen until much later, somewhere after level 50, or 80 or so
+var unpiny bool		//				 this doesnt happen until much later, somewhere after level 50, or 80 or s
+var manim bool		// main animate flag - load turns off, makeanim turns on
 
 var rng *rand.Rand
 
@@ -113,6 +114,10 @@ var err error
 // now an array of stamps
 	arstamp = make([]*Stamp, 0, g1maxid)
 	for i := 0; i <= g1maxid; i++ { arstamp = append(arstamp,nil); bld_star(i) }
+	go func() {
+		animcon()
+	}()
+
 }
 
 // turn on edit mode
@@ -1013,7 +1018,7 @@ func suprval(wp,wc,fp,fc int) (int,int,int,int) {
 }
 
 // valid check, mapid
-var g1maxid = 187
+var g1maxid = 200
 var g2maxid = 66
 
 func maxid() int {

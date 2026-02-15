@@ -328,10 +328,13 @@ func checkffadj4(maze *Maze, x int, y int) int {
 }
 
 type FFMap map[xy]bool
+type AtMap map[xy]int		// animate tiles
+var anmap AtMap
+var anmapr AtMap			// real animated map out, palete and pb will use this too
 
 func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
-	for i := 1; i < 700000; i++ {		// this had no upper limit and could inf loop if ff were skunky
-		d := ffLoopDirs[dir]			// -- 700k reps a maze 850 x 850, this may already cause a delay on a bad ff placement
+	for i := 1; i < 90000; i++ {		// this had no upper limit and could inf loop if ff were skunky
+		d := ffLoopDirs[dir]			// -- 90k reps a maze 300 x 300, this may already cause a delay on a bad ff placement
 		nx := x + (d.x * i)
 		ny := y + (d.y * i)
 
@@ -348,9 +351,11 @@ func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
 
 func ffMakeMap(maze *Maze) FFMap {
 	ffmap := FFMap{}
+	anmap = AtMap{}
 
 	for k, v := range maze.data {
 		if !isforcefield(v) {
+			anmap[xy{k.x, k.y}] = isanimtil(v)
 			continue
 		}
 
@@ -374,6 +379,14 @@ func isforcefield(t int) bool {
 	} else {
 		return false
 	}
+}
+
+func isanimtil(t int) int {
+	r := 0
+	for i := 0; animcyc[i] > 0; i +=2 {
+		if animcyc[i] == t { r = animcyc[i+1] }
+	}
+	return r
 }
 
 func dotat(img *image.NRGBA, xloc int, yloc int) {
@@ -596,6 +609,7 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 	if one { xb, yb = xs, ys;  xs, ys = xs+1, ys+1}
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
+	if flordirt >= 0 { anmapr = anmap }	// only save animate map on main maze
 
 // ** this causes a bug with traps & ff on custom floors, it needs to be done every wp, wc, fp, fc re-assign where there is a trap/ff and should be in animate
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
@@ -875,6 +889,10 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 // image from buffer segment			- stat: display stats 'On image' if true
 // segment of buffer from xb,yb to xs,ys (begin to stop)
 
+var fimg *image.NRGBA
+var wimg *image.NRGBA
+var mimg *image.NRGBA
+
 func segimage(mdat MazeData, xdat Xdat, fdat [14]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
 
 //if opts.Verbose {
@@ -912,14 +930,21 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	maze.wallcolor = fdat[6] & 0x0f
 	maze.floorcolor = (fdat[6] & 0xf0) >> 4
 
-	if walsdirt == 0 { walsdirt = flordirt }		// cheet for now - later these should seperate
+	walsdirt = flordirt		// cheet for now - later these should seperate
 
 	// unpin issue - -vals flummox canvas writes
 	xba, yba := 0, 0
 	if xb < 0 { xba = absint(xb) }
 	if yb < 0 { yba = absint(yb) }
 
-	img := blankimage(16*(xs-xb), 16*(ys-yb))
+	multi := false
+	if flordirt >= 0 {
+		multi = true
+		fimg = blankimage(16*(xs-xb), 16*(ys-yb))		// pre-set for viewport, floors, walls, mobs
+		wimg = blankimage(16*(xs-xb), 16*(ys-yb))
+		mimg = blankimage(16*(xs-xb), 16*(ys-yb))
+	}
+	img := blankimage(16*(xs-xb), 16*(ys-yb))		// not main maze
 
 	if flordirt > 0 {
 		florb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
@@ -928,7 +953,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	if flordirt >= 0 {
 		if opts.edat < 0 || opts.edat == 2 {
 			parimg = florb
-			writepngtoimage(img, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
+			writepngtoimage(fimg, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
 		} else {
 			parimg = florb
 			sf := true
@@ -941,11 +966,11 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 					if x >= 0 && y >= 0 && x < fxs && y < fys {		// when bulk of main render is in std bounds, do super floor copy
 						if sf {
 fmt.Printf(" flor x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)*16,xs,ys,ux,uy,vcoord(x,xb,xba)*16,vcoord(y,yb,yba)*16)
-							writepngtoimage(img,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
+							writepngtoimage(fimg,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
 							sf = false
 						}
 					} else {
-						writepngtoimage(img, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
+						writepngtoimage(fimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
 					}
 				}}
 		}
@@ -961,7 +986,7 @@ fmt.Printf("walldirt, cleen em up\n")
 	if walsdirt >= 0 {
 		if opts.edat < 0 || opts.edat == 2 {
 			parimg = walsb
-			writepngtoimage(img, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
+			writepngtoimage(wimg, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
 		} else {
 			parimg = walsb
 			sf := true
@@ -974,11 +999,11 @@ fmt.Printf("walldirt, cleen em up\n")
 					if x >= 0 && y >= 0 && x < fxs && y < fys {		// when bulk of main render is in std bounds, do super floor copy
 						if sf {
 fmt.Printf(" wals x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)*16,xs,ys,ux,uy,vcoord(x,xb,xba)*16,vcoord(y,yb,yba)*16)
-							writepngtoimage(img,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
+							writepngtoimage(wimg,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
 							sf = false
 						}
 					} else {
-						writepngtoimage(img, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
+						writepngtoimage(wimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
 					}
 				}}
 		}
@@ -1212,8 +1237,15 @@ if sb < 99 || sb > 100 { fmt.Printf("star ld %d, %v %v\n",sb,arstamp[sb].mimg.Bo
 	g1mask[G1OBJ_WALL_TRAP1] = 1024
 	g1mask[G1OBJ_TILE_TRAP1] = 64
 //	g1mask[] =
+	rimg := blankimage(16*(xs-xb), 16*(ys-yb))
+	if multi {
+		draw.Draw(mimg, img.Bounds(), img, image.ZP, draw.Over)
+		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
+		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
+		draw.Draw(rimg, img.Bounds(), img, image.ZP, draw.Over)
+		return rimg
+	}
 
-	savetopng(opts.Output, img)
-// for user select
+//	savetopng(opts.Output, img)
 	return img
 }

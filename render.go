@@ -9,6 +9,7 @@ import (
 	"math/rand"
 	"os"
 	"fmt"
+	"time"
 )
 
 func gettiledatafromfile(file string, tilenum int) TileLinePlane {
@@ -649,4 +650,12 @@ func bld_star(lk int ) {
 	}
 	arstamp[lk].gtopl = gtopl
 	G1 = gsv
+}
+
+// animate tiles
+
+func animcon() {
+
+	time.Sleep(25 * time.Millisecond)
+
 }
