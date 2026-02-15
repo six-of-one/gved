@@ -304,7 +304,7 @@ func bld_star(lk int ) {
 	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
 	gtopl := ""
 //	gtopcol := false	// disable gen letter seperate colors
-	psx, psy, szx, szy := -1,-1,0,0
+	psx, psy, azx, azy := -1,-1,0,0
 	gsv := G1
 
 	switch lk {
@@ -572,26 +572,26 @@ func bld_star(lk int ) {
 		psx, psy = 34, 22
 
 	case SEOBJ_MAPPYARAD:		// 25, 21
-		psx, psy, szx = 24, 20, 16
+		psx, psy, azx = 24, 20, 16
 	case SEOBJ_MAPPYATV:		// 27, 21
-		psx, psy, szx = 26, 20, 16
+		psx, psy, azx = 26, 20, 16
 	case SEOBJ_MAPPYAPC:		// 29, 21
-		psx, psy, szx = 28, 20, 16
+		psx, psy, azx = 28, 20, 16
 	case SEOBJ_MAPPYAART:		// 31, 21
-		psx, psy, szx = 30, 20, 16
+		psx, psy, azx = 30, 20, 16
 	case SEOBJ_MAPPYASAF:		// 33, 21
-		psx, psy, szx = 32, 20, 16
+		psx, psy, azx = 32, 20, 16
 
 	case SEOBJ_MAPPYRAD:		// 25, 22
-		psx, psy, szx = 24, 21, 16
+		psx, psy, azx = 24, 21, 16
 	case SEOBJ_MAPPYTV:		// 27, 22
-		psx, psy, szx = 26, 21, 16
+		psx, psy, azx = 26, 21, 16
 	case SEOBJ_MAPPYPC:		// 29, 22
-		psx, psy, szx = 28, 21, 16
+		psx, psy, azx = 28, 21, 16
 	case SEOBJ_MAPPYART:		// 31, 22
-		psx, psy, szx = 30, 21, 16
+		psx, psy, azx = 30, 21, 16
 	case SEOBJ_MAPPYSAF:		// 33, 22
-		psx, psy, szx = 32, 21, 16
+		psx, psy, azx = 32, 21, 16
 
 	case SEOBJ_MAPPYBELL:		// 35, 21
 		psx, psy = 34, 20
@@ -613,8 +613,6 @@ func bld_star(lk int ) {
 	case SEOBJ_FLOORNUL:
 		psx, psy = 34, 10
 	default:
-		arstamp[lk] = itemGetStamp("key")
-		arstamp[lk].pnum = -1				// failed assign, no use
 
 			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", lk) }
 	}
@@ -623,17 +621,20 @@ func bld_star(lk int ) {
 		arstamp[lk] = itemGetStamp("key")
 		arstamp[lk].pnum = -1				// failed assign, no use
 	}
-	arstamp[lk].mimg = blankimage(16,16)
-	arstamp[lk].altimg = blankimage(16,16)
 	if arstamp[lk].pnum >= 0 {
 //fmt.Printf("star ld %d, 1\n",lk)
+		v := arstamp[lk].width * 8
+		arstamp[lk].mimg = blankimage(v,v)
+//		arstamp[lk].altimg = blankimage(v,v)
 		writestamptoimage(G1,arstamp[lk].mimg, arstamp[lk], 0, 0)
-		writestamptoimage(G1,arstamp[lk].altimg, arstamp[lk], 0, 0)
+		arstamp[lk].altimg = arstamp[lk].mimg
 	}
 	if psx >= 0 && psy >= 0 {			// supply alt img
 		parimg = sents
-		writepngtoimage(arstamp[lk].altimg,16,16,szx,szy,psx,psy,0,0,0)
-		if arstamp[lk].pnum < 0 { writepngtoimage(arstamp[lk].mimg,16,16,szx,szy,psx,psy,0,0,0); arstamp[lk].pnum = -7 }	// no main img, use alt
+		arstamp[lk].altimg = blankimage(psx+azx,psy+azy)
+		arstamp[lk].mimg = blankimage(16+azx,16+azy)
+		writepngtoimage(arstamp[lk].altimg,16,16,azx,azy,psx,psy,0,0,0)
+		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = arstamp[lk].altimg; arstamp[lk].pnum = -7 }	// no main img, use alt
 	}
 	arstamp[lk].gtopl = gtopl
 	G1 = gsv

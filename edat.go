@@ -112,7 +112,7 @@ var err error
 	if err != nil { wlfl.wtamp[0] = loadfail(832, 16) }
 // now an array of stamps
 	arstamp = make([]*Stamp, 0, g1maxid)
-	for i := 0; i < g1maxid; i++ { arstamp = append(arstamp,nil); bld_star(i) }
+	for i := 0; i <= g1maxid; i++ { arstamp = append(arstamp,nil); bld_star(i) }
 }
 
 // turn on edit mode

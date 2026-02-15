@@ -1126,21 +1126,25 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Unhandled obj id 0x%02x\n", sb) }
 		}
 // set mask flag in array
-		if sb > 0 && stamp != nil { g1mask[sb] = stamp.mask }
-
 		nugetx, nugety := -4, -4
+		if sb > 0 {
+
 		if stamp != nil {
+			g1mask[sb] = stamp.mask
 // note G¹ here, opposite of other writes using gt - here gt preserves true G¹ state due to complex tile rom extract and pallet select
 			writestamptoimage(G1,img, stamp, vcx*16+stamp.nudgex, vcy*16+stamp.nudgey)
 			nugetx, nugety = stamp.nudgex, stamp.nudgey
 		} else {
+//fmt.Printf("star ld %d, %v\n",sb)
 			if arstamp[sb].pnum > -1 || arstamp[sb].pnum == -7 {
 				gtopl = arstamp[sb].gtopl
+//				writestamptoimage(G1,img, arstamp[sb], vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
 				offset := image.Pt(vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
-				draw.Draw(arstamp[sb].mimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
+if sb < 99 || sb > 100 { fmt.Printf("star ld %d, %v %v\n",sb,arstamp[sb].mimg.Bounds(),offset) }
+				draw.Draw(img, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
 				if arstamp[sb].pnum != -7 { nugetx, nugety = arstamp[sb].nudgex, arstamp[sb].nudgey }
 			}
-		}
+		}}
 
 // Six: end G¹ decode
 // if !G1 { fmt.Printf("stamp # %d - p: %s\n",scanbuf(maze.data, x, y, x, y, -2),stamp.ptype)}
