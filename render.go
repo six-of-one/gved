@@ -772,11 +772,12 @@ func animcon() {
 	}
 var box *fyne.Container
 	if mbd {
+		box = container.NewStack(rbtn, rbimg, blot)
 		blot.Resize(fyne.Size{blx, bly})
 		blot.Refresh()
-		box = container.NewStack(rbtn, rbimg, blot)
 	} else {
 		box = container.NewStack(rbtn, rbimg)
+		blx,bly = 0,0
 	}
 	if !vlock { w.SetContent(box) }
 	}

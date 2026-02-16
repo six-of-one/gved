@@ -42,6 +42,7 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 	blot.Move(fyne.Position{px, py})
 	blot.Resize(fyne.Size{sx, sy})
 	blx,bly = sx,sy
+fmt.Printf("in blotter init\n")
 }
 
 // click area for edits
