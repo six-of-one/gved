@@ -330,8 +330,8 @@ func checkffadj4(maze *Maze, x int, y int) int {
 type FFMap map[xy]bool
 type AtMap map[xy]int		// animate tiles
 var anmap AtMap
-var anmapr AtMap			// real animated map out
-var anmapt AtMap			// real animated timers
+var anmapt AtMap			// animated timer cnt
+var svanim bool				// if true save animated map
 
 func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
 	for i := 1; i < 90000; i++ {		// this had no upper limit and could inf loop if ff were skunky
@@ -352,12 +352,14 @@ func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
 
 func ffMakeMap(maze *Maze) FFMap {
 	ffmap := FFMap{}
-	anmap = AtMap{}
 
 	for k, v := range maze.data {
 		if !isforcefield(v) {
-			anmap[xy{k.x, k.y}] = isanimtil(v)
+			if svanim {
+				anmap[xy{k.x, k.y}] = isanimtil(v)
+				anmapt[xy{k.x, k.y}] = 0
 if anmap[xy{k.x, k.y}] > 0 {fmt.Printf("det anim %d: %d x %d\n",v,k.x, k.y)}
+			}
 			continue
 		}
 
@@ -383,10 +385,12 @@ func isforcefield(t int) bool {
 	}
 }
 
+// returns item if animated, all arstamp[] have a frames count in them
+
 func isanimtil(t int) int {
 	r := 0
-	for i := 0; animcyc[i] > 0; i +=2 {
-		if animcyc[i] == t { r = animcyc[i+1]; tmanim = true }
+	for i := 0; animcyc[i] > 0; i++ {
+		if animcyc[i] == t { r = t; manim = true }
 	}
 	return r
 }
@@ -612,11 +616,8 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 	if one { xb, yb = xs, ys;  xs, ys = xs+1, ys+1}
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
-	if flordirt >= 0 { anmapr = anmap; manim = tmanim		// only save animate map on main maze
+	if flordirt >= 0 {		// only save animate map on main maze
 		anmapt = AtMap{}
-		for k, v := range anmapr {
-			anmapt[k] = v
-		}
 	}
 
 // ** this causes a bug with traps & ff on custom floors, it needs to be done every wp, wc, fp, fc re-assign where there is a trap/ff and should be in animate

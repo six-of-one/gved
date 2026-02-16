@@ -114,6 +114,10 @@ var err error
 // now an array of stamps
 	arstamp = make([]*Stamp, 0, g1maxid)
 	for i := 0; i <= g1maxid; i++ { arstamp = append(arstamp,nil); bld_star(i) }
+// animation map & timers - set by ffMakeMap, read by animcon
+	anmap = AtMap{}
+	anmapt = AtMap{}
+
 	go func() {
 //			time.Sleep(5 * time.Second)
 //   fyne.Do(func() {

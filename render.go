@@ -752,14 +752,12 @@ func animcon() {
 	for y := mvpy; y < mvye; y++ {
 		for x := mvpx; x < mvxe; x++ {
 			_, ux, uy := lot(x, y, x, y)	// what would be nice when mapping for the vp, is to make a list of all animatables
-			r := anmapr[xy{ux, uy}]			// and not have to check 200 to 400 cells every frame
-			if r > 0 {
+			tl := anmap[xy{ux, uy}]			// and not have to check 200 to 400 cells every frame
+			r := anmapt[xy{ux, uy}]
+			if tl > 0 {
 				r--
-				if r <= 0 { r = anmapt[xy{ux, uy}] }
-				anmapr[xy{ux, uy}] = r
-				tl := ebuf[xy{ux, uy}]
-//				w := arstamp[tl].width * 8
-//fmt.Printf("anim %d, c%d, w%d\n",tl,r-1,w)
+				if r <= 0 { r = arstamp[tl].animtm }
+				anmapt[xy{ux, uy}] = r
 				drimg := arstamp[tl].anim[r - 1]
 				offset := image.Pt(vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16)
 				draw.Draw(mimg, drimg.Bounds().Add(offset), drimg, image.ZP, draw.Over)
