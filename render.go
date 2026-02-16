@@ -739,9 +739,9 @@ func vpc_adj(x, y int) (int,int) {
 func animcon() {
 
 	for {
+	time.Sleep(200 * time.Millisecond)
 //fmt.Printf("in anim %t\n",manim);
 	if manim {								// only run when anim tiles are on map
-		time.Sleep(200 * time.Millisecond)
 
 		xba, yba := vpc_adj(mvpx, mvpy)
 	// we need to check bounds of current viewport, set animation of any visible floor tiles
@@ -759,8 +759,6 @@ func animcon() {
 				draw.Draw(mimg, drimg.Bounds().Add(offset), drimg, image.ZP, draw.Over)
 			}
 		}}
-	} else {	// nothing animated, just update for ed
-		time.Sleep(500 * time.Millisecond)
 	}
 	rimg := blankimage(16*(mvxe-mvpx), 16*(mvye-mvpy))
 	if fimg != nil && wimg != nil && mimg != nil {

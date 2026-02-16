@@ -118,7 +118,7 @@ func domaze(arg string) {
 	aw_init()
 
 	Ovimg := genpfimage(edmaze, mazeNum)
-	upwin(Ovimg, 0)
+	upwin(Ovimg, -1)
 
 // call handle window resize lock
 	go func() {
