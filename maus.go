@@ -31,12 +31,12 @@ func blotter(img *image.NRGBA,px,py,sx,sy int) {
 			err, _, bll := itemGetPNG(blotimg)
 			if err == nil {
 				parimg = bll
-				img = blankimage(sx-px, sy-py)
-				writepngtoimage(img, sx-px, sy-py,0,0,0,0,0,0,0)
+				img = blankimage(sx, sy)
+				writepngtoimage(img, sx, sy,0,0,0,0,0,0,0)
 			}
 		}
 		if img == nil {
-			img = image.NewNRGBA(image.Rect(0, 0, sx-px, sy-py))
+			img = image.NewNRGBA(image.Rect(0, 0, sx, sy))
 			draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{blotcol}}, image.ZP, draw.Src)
 		}
 	}
@@ -45,6 +45,9 @@ func blotter(img *image.NRGBA,px,py,sx,sy int) {
 	blot = blankimage(iw, ih)
 	offset := image.Pt(px, py)
 	draw.Draw(blot, img.Bounds().Add(offset), img, image.ZP, draw.Over)
+//	parimg = img
+//	writepngtoimage(blot, sx, sy,0,0,0,0,px,py,0)
+fmt.Printf("p: %d x %d sz: %d x %d, mimg: %d %d\n",px, py,sx, sy,iw, ih)
 //	blot.Move(fyne.Position{px, py})
 //	blot.Resize(fyne.Size{sx, sy})
 }
@@ -128,13 +131,12 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	if ccp == PASTE {
 //		ex = float32(float32(rx) + dt)
 //		ey = float32(float32(ry) + dt)
-		sx := nong(float32(int(ex / dt)) * dt - 3)
-		sy := nong(float32(int(ey / dt)) * dt - 3)
+	//	sx := nong(float32(int(ex / dt)) * dt - 3)
+	//	sy := nong(float32(int(ey / dt)) * dt - 3)
 		lx := float32(cpx) * dt + dt
 		ly := float32(cpy) * dt + dt
 
-//		if blotup { blotwup(w, wpbimg) }
-		blx,bly = int(sx),int(sy)
+		blx,bly = int(rx),int(ry)
 		blotter(wpbimg,blx,bly,int(lx),int(ly))
 	} else {
 	tcmdhn := cmdhin
@@ -204,7 +206,7 @@ fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd
 			statlin(tcmdhn,tsshn)
 			blx,bly = 0,0
 	}}}}}
-	mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
+mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
 beef := fmt.Sprintf("bl: %d x %d a: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d",blx,bly,sx,sy,ex,ey,dt,mb,mbdi,mk)
 statlin(cmdhin,beef)
 }

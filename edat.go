@@ -1326,7 +1326,6 @@ var lw fyne.Window	// local cpy win to view buf contents
 // change pb blotter if active
 	wpbimg = nimg										// for blotter overlay on ctrl-p
 	if wpbop && ccp == PASTE {
-		blotup = true
 		blotter(wpbimg,blx,bly,blx+px,bly+py)
 //		blot.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
 	}
