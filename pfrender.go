@@ -181,6 +181,7 @@ func checkdooradj4(maze *Maze, x int, y int) int {
 
 func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 
+	vlock = true
 	extrax, extray, maxvp := 0, 0, 32	// this becomes the space for right & bottom convenience wall display
 	if opts.Wob {
 		extrax = 16
@@ -1270,5 +1271,7 @@ if opts.Verbose || opts.Se {
 	savetopng(opts.Output, img)
 // for user select
 	rbimg = canvas.NewRasterFromImage(img)
+	vlock = false
+	nobld = true
 	return img
 }

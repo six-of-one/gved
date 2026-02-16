@@ -735,6 +735,8 @@ func vpc_adj(x, y int) (int,int) {
 }
 
 // animate tiles
+var vlock bool		// viewport lock so maze loads dont blank screen
+var nobld bool		// dont build multi layer
 
 func animcon() {
 
@@ -761,7 +763,7 @@ func animcon() {
 		}}
 	}
 	rimg := blankimage(16*(mvxe-mvpx), 16*(mvye-mvpy))
-	if fimg != nil && wimg != nil && mimg != nil {
+	if !nobld {
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
 		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
@@ -769,6 +771,6 @@ func animcon() {
 	}
 
 	box := container.NewStack(rbtn, rbimg)
-	w.SetContent(box)
+	if !vlock { w.SetContent(box) }
 	}
 }

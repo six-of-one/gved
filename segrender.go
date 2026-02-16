@@ -704,7 +704,7 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 				}
 			}
 		}
-	}				// } removed G² render
+	}
 fmt.Printf("rebuilt florb: %d\n",flordirt)
 	flordirt = 0
 }
@@ -901,6 +901,7 @@ var mimg *image.NRGBA
 
 func segimage(mdat MazeData, xdat Xdat, fdat [14]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
 
+	vlock = true
 //if opts.Verbose {
 fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 
@@ -1240,5 +1241,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 	draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 
 //	savetopng(opts.Output, img)
+	vlock = false
+	nobld = false
 	return rimg
 }
