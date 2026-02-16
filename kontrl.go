@@ -737,7 +737,6 @@ func ccp_tog(op int) {
 	if ccp == PASTE {
 		if !wpbop { wpbimg = palimage(cpbuf,xcpbuf,eflg,0,0,cpx+1,cpy+1,false) }
 		blotup = true
-		blotoff()
 	}
 }
 

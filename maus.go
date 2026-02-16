@@ -7,8 +7,6 @@ import (
 //	"image/color"
 	"image/draw"
 	"strings"
-	"time"
-
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
@@ -44,25 +42,6 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 	blot.Move(fyne.Position{px, py})
 	blot.Resize(fyne.Size{sx, sy})
 	blx,bly = sx,sy
-}
-
-// turn off blotter after a window update
-// because the window update...
-// a. turns it on full maze for no reason
-// b. refuses to turn it off, even with a delay in fn()
-// and...
-// c. resize window also covers the maze in blotter, which needs a fix
-//		- blot.Hide() works, however blot.Show() flikers the entire maze with momentary blotter
-
-func blotoff() {
-
-	go func() {
-			time.Sleep(5 * time.Millisecond)
-   fyne.Do(func() {
-	//		blot.Resize(fyne.Size{0, 0})
-			blx,bly = 0,0
-   })
-	}()
 }
 
 // click area for edits

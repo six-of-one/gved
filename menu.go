@@ -391,7 +391,6 @@ fmt.Printf("clwin-s tl: %s\n",btn.title)
 	if !strings.Contains(btn.title, "G¹G²ved") {
 		box := container.NewStack(btn, bimg)
 		cw.SetContent(box)
-		blotoff()
 	}
 
 }
@@ -413,8 +412,6 @@ fmt.Printf("clwin-m tl: %s\n",rbtn.title)
 	box = container.NewStack(rbtn, rbimg)		// key to seeing maze & having the click button with full mouse sense
 	cw.SetContent(box)								// and blot coming last is shown on top... huh?
 
-// call handle blot off after win chg
-	blotoff()
 //fmt.Printf("btn sz %v\n",rbtn.Size())
 }
 
