@@ -762,10 +762,11 @@ func animcon() {
 				if r <= 0 { r = anmapt[xy{ux, uy}] }
 				anmapr[xy{ux, uy}] = r
 				tl := ebuf[xy{ux, uy}]
-				w := arstamp[tl].width * 8
+//				w := arstamp[tl].width * 8
 //fmt.Printf("anim %d, c%d, w%d\n",tl,r-1,w)
-				parimg = arstamp[tl].anim[r - 1]
-				writepngtoimage(mimg, w,w,0,0,0,0,vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16,0)
+				drimg := arstamp[tl].anim[r - 1]
+				offset := image.Pt(vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16)
+				draw.Draw(mimg, drimg.Bounds().Add(offset), drimg, image.ZP, draw.Over)
 				dida = true
 			}
 	}}
