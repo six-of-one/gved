@@ -771,22 +771,13 @@ func animcon() {
 		rbimg = canvas.NewRasterFromImage(rimg)
 	}
 var box *fyne.Container
-	if mbd {
-		box = container.NewStack(rbtn, rbimg, blot)
+	if mbd || ccp == PASTE {	// also in paste mode
+		blimg := canvas.NewRasterFromImage(blot)
+		box = container.NewStack(rbtn, rbimg, blimg)
+//		blimg.Refresh()
 	} else {
 		box = container.NewStack(rbtn, rbimg)
-		blx,bly = 0,0
 	}
 	if !vlock { w.SetContent(box) }
 	}
-}
-
-func blotcon() {
-	for {
-
-		if blx > 0 && bly > 0 {
-
-			lot.Resize(fyne.Size{blx, bly})
-			blot.Refresh()
-	}}
 }

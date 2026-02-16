@@ -368,10 +368,10 @@ var blotup bool
 func blotwup(cw fyne.Window, limg *image.NRGBA) {
 	t := cw.Title()
 	if strings.Contains(t, "G¹G²ved") {
-		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
-		blot = canvas.NewImageFromImage(limg)
-		box := container.NewStack(rbtn, rbimg, blot)
-		cw.SetContent(box)
+//		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
+//		blot = canvas.NewImageFromImage(limg)
+//		box := container.NewStack(rbtn, rbimg, blot)
+//		cw.SetContent(box)
 		blotup = false
 fmt.Printf("blotwup\n")
 	}
@@ -429,7 +429,10 @@ func upwin(simg *image.NRGBA, lvp int) {
 	if opts.edat > 0 {
 //		geow = geow & 0xfe0	+ 13			// lock to multiples of 32
 		ngeoh := geow + 26					// square maze area + 26 for menu bar - window is still 4 wider than maze content
-		if ngeoh != geoh { dialog.ShowInformation("Edit mode","set window ratio to edit",w) }
+		if ngeoh != geoh {
+			dialog.ShowInformation("Edit mode","set window ratio to edit",w)
+			clikwinm(w, simg, geow, ngeoh)
+		}
 		geoh = ngeoh
 		dtp = float64(vp) * 16
 	}											// having an edit viewport will change 528 - will have to be vport wid (same as high) * 16

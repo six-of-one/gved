@@ -724,9 +724,6 @@ func uswap() {
 // cut / copy / paste (c/c/p) controls
 
 func ccp_NOP() {
-	if ccp == PASTE {
-		if blot != ccblot { blot.Hide(); blot = ccblot }
-	}
 	ccp = NOP
 	if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }
 }
