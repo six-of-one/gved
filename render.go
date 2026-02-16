@@ -778,7 +778,7 @@ func animcon() {
 		rimg := blankimage(16*(mvxe-mvpx), 16*(mvye-mvpy))
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
 		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
-//		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
+		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 
 		img := canvas.NewRasterFromImage(rimg)
 		box := container.NewStack(rbtn, img)

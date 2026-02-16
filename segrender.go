@@ -330,7 +330,7 @@ func checkffadj4(maze *Maze, x int, y int) int {
 type FFMap map[xy]bool
 type AtMap map[xy]int		// animate tiles
 var anmap AtMap
-var anmapr AtMap			// real animated map out, palete and pb will use this too
+var anmapr AtMap			// real animated map out
 var anmapt AtMap			// real animated timers
 
 func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
@@ -1175,7 +1175,11 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 //				writestamptoimage(G1,img, arstamp[sb], vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
 				offset := image.Pt(vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
 //if sb < 99 || sb > 100 { fmt.Printf("star ld %d, %v %v\n",sb,arstamp[sb].mimg.Bounds(),offset) }
-				draw.Draw(img, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
+				if arstamp[sb].mask & NOFLOOR != 0 {
+					draw.Draw(fimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)	// this will work, but may not be ideal
+				} else {
+					draw.Draw(img, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
+				}
 				if arstamp[sb].pnum != -7 { nugetx, nugety = arstamp[sb].nudgex, arstamp[sb].nudgey }
 			}
 		}}}
