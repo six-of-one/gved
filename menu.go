@@ -371,7 +371,7 @@ func blotwup(cw fyne.Window, limg *image.NRGBA) {
 	if strings.Contains(t, "G¹G²ved") {
 		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
 		blot = canvas.NewImageFromImage(limg)
-		box := container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
+		box := container.NewStack(rbtn, rbimg, blot)
 		cw.SetContent(box)
 		blotup = false
 fmt.Printf("blotwup\n")
@@ -392,11 +392,7 @@ fmt.Printf("clwin-s tl: %s\n",btn.title)
 	if strings.Contains(btn.title, "G¹G²ved") {
 		cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
 	var box *fyne.Container
-	if dida {
-		box = container.NewStack(btn, bimg)			// no blotter while animating
-	} else {
 		box = container.NewStack(btn, bimg, blot)		// key to seeing maze & having the click button with full mouse sense
-	}
 		cw.SetContent(box)								// and blot coming last is shown on top... huh?
 	} else {
 		box := container.NewStack(btn, bimg)
@@ -420,11 +416,7 @@ fmt.Printf("clwin-m tl: %s\n",rbtn.title)
 
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
 	var box *fyne.Container
-	if dida {
-		box = container.NewStack(rbtn, rbimg)			// no blotter while animating
-	} else {
-		box = container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
-	}
+	box = container.NewStack(rbtn, rbimg, blot)		// key to seeing maze & having the click button with full mouse sense
 	cw.SetContent(box)								// and blot coming last is shown on top... huh?
 
 // call handle blot off after win chg

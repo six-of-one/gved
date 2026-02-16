@@ -736,18 +736,14 @@ func vpc_adj(x, y int) (int,int) {
 
 // animate tiles
 
-var dida bool	// no blotter when animating
-var cyc int
-
 func animcon() {
 
 	for {
-	time.Sleep(200 * time.Millisecond)
 //fmt.Printf("in anim %t\n",manim);
 	if manim {								// only run when anim tiles are on map
+		time.Sleep(200 * time.Millisecond)
 
 		xba, yba := vpc_adj(mvpx, mvpy)
-		dida = false	// did we animate?
 	// we need to check bounds of current viewport, set animation of any visible floor tiles
 	for y := mvpy; y < mvye; y++ {
 		for x := mvpx; x < mvxe; x++ {
@@ -761,21 +757,20 @@ func animcon() {
 				drimg := arstamp[tl].anim[r - 1]
 				offset := image.Pt(vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16)
 				draw.Draw(mimg, drimg.Bounds().Add(offset), drimg, image.ZP, draw.Over)
-				dida = true
 			}
-	}}
-//cyc++
-//fil := fmt.Sprintf("test-%d.png",cyc)
-//savetopng(fil, fimg)
-	if dida {
-		rimg := blankimage(16*(mvxe-mvpx), 16*(mvye-mvpy))
+		}}
+	} else {	// nothing animated, just update for ed
+		time.Sleep(500 * time.Millisecond)
+	}
+	rimg := blankimage(16*(mvxe-mvpx), 16*(mvye-mvpy))
+	if fimg != nil && wimg != nil && mimg != nil {
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
 		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
-
-		img := canvas.NewRasterFromImage(rimg)
-		box := container.NewStack(rbtn, img)
-		w.SetContent(box)
+		rbimg = canvas.NewRasterFromImage(rimg)
 	}
-	}}
+
+	box := container.NewStack(rbtn, rbimg)
+	w.SetContent(box)
+	}
 }

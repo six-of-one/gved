@@ -536,7 +536,8 @@ fmt.Printf("ld %d: up:%d %d -- %s %s\n",i,fref[i],wref[i],wlfl.florn[fref[i]],wl
 		}
 	}
   }
-  	manim = false;					// turned on by map render
+	svanim = true
+	manim = false;					// turned on by map render
 	if ldb { flordirt = 1 }			// mark floor dirty so it gets rebuilt, when loading main maze (not palette or pb)
 	return edp
 }

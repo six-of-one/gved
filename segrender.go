@@ -616,9 +616,6 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 	if one { xb, yb = xs, ys;  xs, ys = xs+1, ys+1}
 	// Map out where forcefield floor tiles are, so we can lay those down first
 	ffmap := ffMakeMap(maze)
-	if flordirt >= 0 {		// only save animate map on main maze
-		anmapt = AtMap{}
-	}
 
 // ** this causes a bug with traps & ff on custom floors, it needs to be done every wp, wc, fp, fc re-assign where there is a trap/ff and should be in animate
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
@@ -944,7 +941,7 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	// unpin issue - -vals flummox canvas writes
 	xba, yba := vpc_adj(xb, yb)
 
-	fimg = blankimage(16*(xs-xb), 16*(ys-yb))		// pre-set for viewport, floors, walls, mobs
+	fimg = blankimage(16*(xs-xb), 16*(ys-yb))		// pre-set for viewport: floors, walls, mobs
 	wimg = blankimage(16*(xs-xb), 16*(ys-yb))
 	mimg = blankimage(16*(xs-xb), 16*(ys-yb))
 
@@ -980,7 +977,7 @@ fmt.Printf(" flor x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fy
 	if walsdirt > 0 {
 fmt.Printf("walldirt, cleen em up\n")
 		walsb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
-		walbas(walsb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild floor on load or when edit dirties it
+		walbas(walsb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild walls on load or when edit dirties it
 	}
 
 	if opts.edat < 0 || opts.edat == 2 {
@@ -995,7 +992,7 @@ fmt.Printf("walldirt, cleen em up\n")
 				fxs, fys := xs, ys
 				if fxs > opts.DimX { fxs = opts.DimX+1 }
 				if fys > opts.DimY { fys = opts.DimY+1 }
-				if x >= 0 && y >= 0 && x < fxs && y < fys {		// when bulk of main render is in std bounds, do super floor copy
+				if x >= 0 && y >= 0 && x < fxs && y < fys {		// when bulk of main render is in std bounds, do super wall copy
 					if sf {
 fmt.Printf(" wals x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)*16,xs,ys,ux,uy,vcoord(x,xb,xba)*16,vcoord(y,yb,yba)*16)
 						writepngtoimage(wimg,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
