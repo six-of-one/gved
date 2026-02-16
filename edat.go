@@ -98,8 +98,8 @@ func ed_init() {
 	zmod = 0			// play test mode
 	zm_x = -1
 	zm_y = -1
-	cpal5 = -1
 	nwalflor()
+	flordirt, walsdirt = 1,1
 	maxwf = 0
 // 0 ent is wall set & 1 def floor
 	wlfl.florn[0] = "gfx/flor_jsgv.png"
@@ -832,7 +832,7 @@ var g2stat [1000]int
 var stonce [1000]int	// on;y display a stat once
 
 // bring up edit palette after saving
-var wpalop bool		// is palete following main win maze decor?
+var wpalop bool		// is `palete` following main win maze decor?
 var wpal fyne.Window // is the pal win open?
 var pals int	// are we in se palete
 var plbuf MazeData	// initial load from file, swappable with ebuf on <ctrl-u>
@@ -841,12 +841,8 @@ var plflg [14]int
 var palxs int
 var palys int
 var palfol bool		// palette decor follows map chg
-var cpal5 int
-var cpal6 int
 
 func palete(p int) {
-
-  if cpal5 != eflg[5] || cpal6 != eflg[6] {
 
 	pals = p
 	pmx := opts.DimX; pmy := opts.DimY
@@ -859,9 +855,6 @@ func palete(p int) {
 		if palfol { fax(&plflg,&eflg,11)}
 		bwin(cpx+1, cpy+1, 0, plbuf, xplb, plflg, "pal") }
 	opts.DimX = pmx; opts.DimY = pmy
-	cpal5 = eflg[5]
-	cpal6 = eflg[6]
-	}
 }
 
 // typer for pal win
@@ -945,7 +938,7 @@ func palRune(r rune) {
 		case 's': fallthrough
 		case 'S': statsB = dboxtx("Maze stats","",400,700,close_stats,palRune); calc_stats()
 		case 'p': fallthrough
-		case 'P': pals = absint(pals - 1); cpal5 = -1; palete(pals)
+		case 'P': pals = absint(pals - 1); palete(pals)
 		case 'q': fallthrough
 		case 'Q': if wpalop { wpalop = false; wpal.Close() }
 		default:
@@ -1192,7 +1185,6 @@ func calc_stats() {
 	if statsB != nil { statsB.Set(stl) }
 	stl_str = stl	// for mini stat append
 //	bwin(palxs, palys, 0, plbuf, plflg)
-	cpal5 = -1
 	if wpalop { if palfol { palete(pals) }}
 }
 
