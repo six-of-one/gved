@@ -210,6 +210,7 @@ fmt.Printf("stamp (msk) %d @ %d x %d\n ",stamp.mask,xloc, yloc)
 
 func savetopng(fn string, img *image.NRGBA) {
 	f, _ := os.OpenFile(fn, os.O_WRONLY|os.O_CREATE, 0600)
+fmt.Println(fn)
 	defer f.Close()
 	png.Encode(f, img)
 }
@@ -737,11 +738,12 @@ func vpc_adj(x, y int) (int,int) {
 // animate tiles
 
 var dida bool	// no blotter when animating
+var cyc int
 
 func animcon() {
 
 	for {
-	time.Sleep(32 * time.Millisecond)
+	time.Sleep(200 * time.Millisecond)
 //fmt.Printf("in anim %t\n",manim);
 	if manim {								// only run when anim tiles are on map
 
@@ -751,7 +753,6 @@ func animcon() {
 			anmapt[k] ...
 		}	*/
 		// we need to check bounds of current viewport, set animation of any visible floor tiles
-//var r int
 	for y := mvpy; y < mvye; y++ {
 		for x := mvpx; x < mvxe; x++ {
 			_, ux, uy := lot(x, y, x, y)	// what would be nice when mapping for the vp, is to make a list of all animatables
@@ -762,19 +763,22 @@ func animcon() {
 				anmapr[xy{ux, uy}] = r
 				tl := ebuf[xy{ux, uy}]
 				w := arstamp[tl].width * 8
-fmt.Printf("anim %d, c%d, w%d\n",tl,r-1,w)
+//fmt.Printf("anim %d, c%d, w%d\n",tl,r-1,w)
 				parimg = arstamp[tl].anim[r - 1]
-				writepngtoimage(fimg, w,w,0,0,0,0,vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16,0)
+				writepngtoimage(mimg, w,w,0,0,0,0,vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16,0)
 				dida = true
 			}
 	}}
+//cyc++
+//fil := fmt.Sprintf("test-%d.png",cyc)
+//savetopng(fil, fimg)
 	if dida {
 //		lvpp := 0
 //		if opts.edat < 1 || opts.edat == 2 { lvpp = mvxe }
 		rimg := blankimage(16*(mvxe-mvpx), 16*(mvye-mvpy))
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
 		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
-		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
+//		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 
 		img := canvas.NewRasterFromImage(rimg)
 		box := container.NewStack(rbtn, img)

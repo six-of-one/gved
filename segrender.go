@@ -1245,6 +1245,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 //	g1mask[] =
 	rimg := blankimage(16*(xs-xb), 16*(ys-yb))
 	if multi {
+	savetopng("tst-img-seg.png", img)
 		draw.Draw(mimg, img.Bounds(), img, image.ZP, draw.Over)
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
 		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
