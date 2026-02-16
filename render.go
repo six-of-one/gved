@@ -700,14 +700,12 @@ func bld_star(lk int ) {
 //fmt.Printf("star ld %d, 1\n",lk)
 		v := arstamp[lk].width * 8
 		arstamp[lk].mimg = blankimage(v,v)
-//		arstamp[lk].altimg = blankimage(v,v)
 		writestamptoimage(G1,arstamp[lk].mimg, arstamp[lk], 0, 0)
 		arstamp[lk].altimg = arstamp[lk].mimg
 	}
 	if psx >= 0 && psy >= 0 {			// supply alt img
 		parimg = sents
 		arstamp[lk].altimg = blankimage(16+azx,16+azy)
-//		arstamp[lk].mimg = blankimage(16+azx,16+azy)
 		writepngtoimage(arstamp[lk].altimg,16,16,azx,azy,psx,psy,0,0,0)
 		if arstamp[lk].pnum < 0 { arstamp[lk].mimg = arstamp[lk].altimg; arstamp[lk].pnum = -7 }	// no main img, use alt
 		arstamp[lk].mask = mask
@@ -749,10 +747,7 @@ func animcon() {
 
 		xba, yba := vpc_adj(mvpx, mvpy)
 		dida = false	// did we animate?
-/*		for k, v := range anmapr {
-			anmapt[k] ...
-		}	*/
-		// we need to check bounds of current viewport, set animation of any visible floor tiles
+	// we need to check bounds of current viewport, set animation of any visible floor tiles
 	for y := mvpy; y < mvye; y++ {
 		for x := mvpx; x < mvxe; x++ {
 			_, ux, uy := lot(x, y, x, y)	// what would be nice when mapping for the vp, is to make a list of all animatables
@@ -774,8 +769,6 @@ func animcon() {
 //fil := fmt.Sprintf("test-%d.png",cyc)
 //savetopng(fil, fimg)
 	if dida {
-//		lvpp := 0
-//		if opts.edat < 1 || opts.edat == 2 { lvpp = mvxe }
 		rimg := blankimage(16*(mvxe-mvpx), 16*(mvye-mvpy))
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
 		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
@@ -784,7 +777,6 @@ func animcon() {
 		img := canvas.NewRasterFromImage(rimg)
 		box := container.NewStack(rbtn, img)
 		w.SetContent(box)
-//		box.Refresh()
 	}
 	}}
 }
