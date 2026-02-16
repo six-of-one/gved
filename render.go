@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"time"
 	"golang.org/x/image/draw"
+	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 )
@@ -769,8 +770,14 @@ func animcon() {
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 		rbimg = canvas.NewRasterFromImage(rimg)
 	}
-
-	box := container.NewStack(rbtn, rbimg)
+var box *fyne.Container
+	if mbd {
+		blot.Resize(fyne.Size{blx, bly})
+		blot.Refresh()
+		box = container.NewStack(rbtn, rbimg, blot)
+	} else {
+		box = container.NewStack(rbtn, rbimg)
+	}
 	if !vlock { w.SetContent(box) }
 	}
 }

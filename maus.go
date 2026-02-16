@@ -43,6 +43,7 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 	}
 	blot.Move(fyne.Position{px, py})
 	blot.Resize(fyne.Size{sx, sy})
+	blx,bly = sx,sy
 }
 
 // turn off blotter after a window update
@@ -58,7 +59,8 @@ func blotoff() {
 	go func() {
 			time.Sleep(5 * time.Millisecond)
    fyne.Do(func() {
-			blot.Resize(fyne.Size{0, 0})
+	//		blot.Resize(fyne.Size{0, 0})
+			blx,bly = 0,0
    })
 	}()
 }
@@ -92,22 +94,16 @@ func nong(tv float32) float32 {
 
 // store x & y when mouse button goes down - to start rubberband area
 // 		and when released for other ops like cup & paste
-var sxmd float64
-var symd float64
-var exmd float64
-var eymd float64
+var sxmd,symd,exmd,eymd float64
 // maze x & y mouse down
-var mxmd int
-var mymd int
+var mxmd,mymd int
 var mbd bool			// true when mouse button 1 is held down, false otherwise
 // mouse move pos global track
-var rxm float32
-var rym float32
+var rxm,rym float32
 // painter counter on undo, x,y
 var prcl int
-var pmx int
-var pmy int
-
+var pmx,pmy int
+var blx,bly float32
 // &{{{387 545} {379 509.92188}} 4 0}
 
 func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
@@ -147,6 +143,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{lx, ly})
+		blx,bly = lx,ly
 	} else {
 	if ccp == PASTE {
 //		ex = float32(float32(rx) + dt)
@@ -159,6 +156,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		if blotup { blotwup(w, wpbimg) }
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{lx, ly})
+		blx,bly = lx,ly
 	} else {
 	tcmdhn := cmdhin
 	tsshn := sshin
@@ -180,6 +178,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		ey = float32(int(ey / dt)) * dt - 2
 		blot.Move(fyne.Position{sx, sy})
 		blot.Resize(fyne.Size{ex - sx, ey - sy})
+		blx,bly = ex - sx, ey - sy
 // blotter size hinter
 		if mxmd == mxme && mymd == myme {
 			mid := g1mapid[valid_id(ebuf[xy{mxmd+lvpx, mymd+lvpy}])]
@@ -226,6 +225,7 @@ fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd
 		} else {				// no op on mouse move here
 			statlin(tcmdhn,tsshn)
 			blot.Resize(fyne.Size{0, 0})
+			blx,bly = 0,0
 	}}}}}
 }
 
