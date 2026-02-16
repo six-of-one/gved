@@ -705,8 +705,6 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 			}
 		}
 	}
-fmt.Printf("rebuilt florb: %d\n",flordirt)
-	flordirt = 0
 }
 
 // make walls base 
@@ -889,8 +887,6 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 			}
 		}
 	}
-
-	walsdirt = 0
 }
 // image from buffer segment			- stat: display stats 'On image' if true
 // segment of buffer from xb,yb to xs,ys (begin to stop)
@@ -949,7 +945,6 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	if flordirt > 0 {
 		florb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
 		florbas(florb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild floor on load or when edit dirties it
-	}
 
 	if opts.edat < 0 || opts.edat == 2 {
 		parimg = florb
@@ -973,13 +968,12 @@ fmt.Printf(" flor x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fy
 					writepngtoimage(fimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
 				}
 			}}
-	}
+	}}
 
 	if walsdirt > 0 {
 fmt.Printf("walldirt, cleen em up\n")
 		walsb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
 		walbas(walsb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild walls on load or when edit dirties it
-	}
 
 	if opts.edat < 0 || opts.edat == 2 {
 		parimg = walsb
@@ -1003,7 +997,7 @@ fmt.Printf(" wals x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fy
 					writepngtoimage(wimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
 				}
 			}}
-	}
+	}}
 
 fmt.Printf(" xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
 

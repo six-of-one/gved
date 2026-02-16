@@ -119,7 +119,7 @@ func specialKey(cw fyne.Window) {
 			if key.Name == "L" && ctrl  { if shift { menu_laodf() } else { menu_lod() }}
 			if key.Name == "R" && ctrl  { menu_res() }
 			if key.Name == "U" && ctrl  { uswap() }
-			if key.Name == "T" && ctrl  { if ! cmdoff { nothing = 0; flordirt = 1 }}
+			if key.Name == "T" && ctrl  { if ! cmdoff { nothing = 0 }}
 			if key.Name == "Z" && ctrl  { undo() }
 			if key.Name == "Y" && ctrl  { redo() }
 			if key.Name == "C" && ctrl  { menu_copy() }
@@ -573,14 +573,12 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				nothing = nothing ^ NOFLOOR
 				spau = fmt.Sprintf("no floors: %d\n",nothing & NOFLOOR)
 				opts.dntr = true
-				flordirt = 1
 			}
 		case 80:		// P
 			if !cmdoff {
 				nothing = nothing ^ NOWALL
 				spau = fmt.Sprintf("no walls: %d\n",nothing & NOWALL)
 				opts.dntr = true
-				flordirt = 1
 			}
 		case 84:		// T
 			if !cmdoff {
@@ -589,7 +587,6 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				if anum > 0 { nothing = (nothing & 1536) + anum; anum = 0 }		// set lower 9 bits of no-thing mask [ but not walls or floors ]
 				spau = fmt.Sprintf("no things: %d\n",nothing & 511)				// display no things mask
 				opts.dntr = true
-				flordirt = 1
 			}
 		case 's':
 			opts.SP = !opts.SP
@@ -610,7 +607,6 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			relodsub = false
 		}
 	  }
-	  if opts.bufdrt { flordirt = 1 }
 	  upd_edmaze(false)		// store vars view changes like floors or walls
 		if spau == "G¹ " {
 			if opts.R14 { spau += "rv14" } else { spau += "rv1-9" }
@@ -679,7 +675,6 @@ fmt.Printf(" stk %d undo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 		}
 fmt.Printf(" del %d elem: %d\n",restak,delbuf.elem[restak])
 		opts.bufdrt = true
-		flordirt = 1
 		ed_maze(true)
 	}
 }
@@ -699,7 +694,6 @@ fmt.Printf(" stk %d redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 			if delbuf.elem[restak] < 0 || delbuf.revc[restak] == 1 { revk = 0}
 		}
 		opts.bufdrt = true
-		flordirt = 1
 		ed_maze(true)
 	}
 //	ed_maze()
