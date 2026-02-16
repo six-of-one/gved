@@ -696,6 +696,7 @@ func bld_star(lk int ) {
 		arstamp[lk] = itemGetStamp("key")
 		arstamp[lk].pnum = -1				// failed assign, no use
 	}
+	arstamp[lk].animtm = cnt				// frames to animate (in a single set) if any
 	if arstamp[lk].pnum >= 0 {
 //fmt.Printf("star ld %d, 1\n",lk)
 		v := arstamp[lk].width * 8

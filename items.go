@@ -24,6 +24,7 @@ type Stamp struct {
 	mimg	*image.NRGBA		// faster vers has img store
 	altimg	*image.NRGBA
 	anim	[]*image.NRGBA		// to animate mobs & such
+	animtm	int					// frames to animate, single set
 }
 var arstamp []*Stamp
 

@@ -943,45 +943,37 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	// unpin issue - -vals flummox canvas writes
 	xba, yba := vpc_adj(xb, yb)
 
-	multi := false
-	if flordirt >= 0 {
-		multi = true
-		fimg = blankimage(16*(xs-xb), 16*(ys-yb))		// pre-set for viewport, floors, walls, mobs
-		wimg = blankimage(16*(xs-xb), 16*(ys-yb))
-		mimg = blankimage(16*(xs-xb), 16*(ys-yb))
-	}
-	img := blankimage(16*(xs-xb), 16*(ys-yb))		// not main maze
+	fimg = blankimage(16*(xs-xb), 16*(ys-yb))		// pre-set for viewport, floors, walls, mobs
+	wimg = blankimage(16*(xs-xb), 16*(ys-yb))
+	mimg = blankimage(16*(xs-xb), 16*(ys-yb))
 
 	if flordirt > 0 {
 		florb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
 		florbas(florb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild floor on load or when edit dirties it
 	}
-	if flordirt >= 0 {
-		if opts.edat < 0 || opts.edat == 2 {
-			parimg = florb
-			writepngtoimage(fimg, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
-		} else {
-			parimg = florb
-			sf := true
-			for y := yb; y < ys; y++ {
-				for x := xb; x < xs; x++ {
-					_, ux, uy := lot(x, y, x, y)
-					fxs, fys := xs, ys
-					if fxs > opts.DimX { fxs = opts.DimX+1 }
-					if fys > opts.DimY { fys = opts.DimY+1 }
-					if x >= 0 && y >= 0 && x < fxs && y < fys {		// when bulk of main render is in std bounds, do super floor copy
-						if sf {
+
+	if opts.edat < 0 || opts.edat == 2 {
+		parimg = florb
+		writepngtoimage(fimg, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
+	} else {
+		parimg = florb
+		sf := true
+		for y := yb; y < ys; y++ {
+			for x := xb; x < xs; x++ {
+				_, ux, uy := lot(x, y, x, y)
+				fxs, fys := xs, ys
+				if fxs > opts.DimX { fxs = opts.DimX+1 }
+				if fys > opts.DimY { fys = opts.DimY+1 }
+				if x >= 0 && y >= 0 && x < fxs && y < fys {		// when bulk of main render is in std bounds, do super floor copy
+					if sf {
 fmt.Printf(" flor x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)*16,xs,ys,ux,uy,vcoord(x,xb,xba)*16,vcoord(y,yb,yba)*16)
-							writepngtoimage(fimg,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
-							sf = false
-						}
-					} else {
-						writepngtoimage(fimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
+						writepngtoimage(fimg,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
+						sf = false
 					}
-				}}
-		}
-	} else {	// -1		= palete or pb
-		florbas(img, maze, xdat, opts.DimX+1, opts.DimY+1,false)
+				} else {
+					writepngtoimage(fimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
+				}
+			}}
 	}
 
 	if walsdirt > 0 {
@@ -989,36 +981,32 @@ fmt.Printf("walldirt, cleen em up\n")
 		walsb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
 		walbas(walsb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild floor on load or when edit dirties it
 	}
-	if walsdirt >= 0 {
-		if opts.edat < 0 || opts.edat == 2 {
-			parimg = walsb
-			writepngtoimage(wimg, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
-		} else {
-			parimg = walsb
-			sf := true
-			for y := yb; y < ys; y++ {
-				for x := xb; x < xs; x++ {
-					_, ux, uy := lot(x, y, x, y)
-					fxs, fys := xs, ys
-					if fxs > opts.DimX { fxs = opts.DimX+1 }
-					if fys > opts.DimY { fys = opts.DimY+1 }
-					if x >= 0 && y >= 0 && x < fxs && y < fys {		// when bulk of main render is in std bounds, do super floor copy
-						if sf {
+
+	if opts.edat < 0 || opts.edat == 2 {
+		parimg = walsb
+		writepngtoimage(wimg, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
+	} else {
+		parimg = walsb
+		sf := true
+		for y := yb; y < ys; y++ {
+			for x := xb; x < xs; x++ {
+				_, ux, uy := lot(x, y, x, y)
+				fxs, fys := xs, ys
+				if fxs > opts.DimX { fxs = opts.DimX+1 }
+				if fys > opts.DimY { fys = opts.DimY+1 }
+				if x >= 0 && y >= 0 && x < fxs && y < fys {		// when bulk of main render is in std bounds, do super floor copy
+					if sf {
 fmt.Printf(" wals x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fys-y)*16,xs,ys,ux,uy,vcoord(x,xb,xba)*16,vcoord(y,yb,yba)*16)
-							writepngtoimage(wimg,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
-							sf = false
-						}
-					} else {
-						writepngtoimage(wimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
+						writepngtoimage(wimg,(fxs-x)*16,(fys-y)*16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,16)
+						sf = false
 					}
-				}}
-		}
-	} else {	// -1		= palete or pb
-		walbas(img, maze, xdat, opts.DimX+1, opts.DimY+1,false)
+				} else {
+					writepngtoimage(wimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
+				}
+			}}
 	}
 
 fmt.Printf(" xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
-
 
 	opr := 3		// G² hack to present specials on scoreboard / info maze 104
 //	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
@@ -1165,7 +1153,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 		if stamp.mask & nothing == 0 {
 			g1mask[sb] = stamp.mask
 // note G¹ here, opposite of other writes using gt - here gt preserves true G¹ state due to complex tile rom extract and pallet select
-			writestamptoimage(G1,img, stamp, vcx*16+stamp.nudgex, vcy*16+stamp.nudgey)
+			writestamptoimage(G1,mimg, stamp, vcx*16+stamp.nudgex, vcy*16+stamp.nudgey)
 			nugetx, nugety = stamp.nudgex, stamp.nudgey
 		}} else {
 //fmt.Printf("star ld %d, %v\n",sb)
@@ -1178,7 +1166,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				if arstamp[sb].mask & NOFLOOR != 0 {
 					draw.Draw(fimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)	// this will work, but may not be ideal
 				} else {
-					draw.Draw(img, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
+					draw.Draw(mimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
 				}
 				if arstamp[sb].pnum != -7 { nugetx, nugety = arstamp[sb].nudgex, arstamp[sb].nudgey }
 			}
@@ -1201,7 +1189,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 					if mel == G1OBJ_WALL_REGULAR { nugetx += 16; nugety += 240 }		// hackety mchakerson
 					if mel == G1OBJ_TILE_FLOOR { nugetx += 16; nugety += 240 }
 					offset := image.Pt(vcx*16+nugetx-5, vcy*16+nugety-5)
-					draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
+					draw.Draw(mimg, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 					gtopl = ""		// these seem to conflict and the palette id's box gens with monsters nearby
 					stonce[mel] = 0
 				}
@@ -1216,16 +1204,16 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 				}
 				gtopim := gtop.Image()
 				offset := image.Pt(vcx*16+nugetx-4, vcy*16+nugety-4)
-				draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
+				draw.Draw(mimg, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 			}
 // expand and sanctuary -- this is a test item that is very out of place here
 			if err == nil && ptamp != nil {
 				parimg = ptamp
-				writepngtoimage(img, 16,16,0,0,0,0,vcx*16, vcy*16,0)
+				writepngtoimage(mimg, 16,16,0,0,0,0,vcx*16, vcy*16,0)
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
-				renderdots(img, (x-xb)*16, (y-yb)*16, dots)
+				renderdots(mimg, (x-xb)*16, (y-yb)*16, dots)
 			}
 			G1 = gtp			// restore G¹ for any SE using G² turning it off
 		}
@@ -1248,15 +1236,11 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 	g1mask[G1OBJ_TILE_TRAP1] = 64
 //	g1mask[] =
 	rimg := blankimage(16*(xs-xb), 16*(ys-yb))
-	if multi {
-	savetopng("tst-img-seg.png", img)
-		draw.Draw(mimg, img.Bounds(), img, image.ZP, draw.Over)
-		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
-		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
-		draw.Draw(rimg, img.Bounds(), img, image.ZP, draw.Over)
-		return rimg
-	}
+//savetopng("tst-img-seg.png", img)
+	draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
+	draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
+	draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 
 //	savetopng(opts.Output, img)
-	return img
+	return rimg
 }
