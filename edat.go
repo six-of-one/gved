@@ -125,6 +125,12 @@ var err error
 		animcon()
 //   })
 	}()
+	go func() {
+//			time.Sleep(5 * time.Second)
+//   fyne.Do(func() {
+		blotcon()
+//   })
+	}()
 fmt.Printf("edit init complt\n")
 }
 

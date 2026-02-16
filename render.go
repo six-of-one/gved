@@ -773,12 +773,20 @@ func animcon() {
 var box *fyne.Container
 	if mbd {
 		box = container.NewStack(rbtn, rbimg, blot)
-		blot.Resize(fyne.Size{blx, bly})
-		blot.Refresh()
 	} else {
 		box = container.NewStack(rbtn, rbimg)
 		blx,bly = 0,0
 	}
 	if !vlock { w.SetContent(box) }
 	}
+}
+
+func blotcon() {
+	for {
+
+		if blx > 0 && bly > 0 {
+
+			lot.Resize(fyne.Size{blx, bly})
+			blot.Refresh()
+	}}
 }

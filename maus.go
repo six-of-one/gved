@@ -42,7 +42,6 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 	blot.Move(fyne.Position{px, py})
 	blot.Resize(fyne.Size{sx, sy})
 	blx,bly = sx,sy
-fmt.Printf("in blotter init\n")
 }
 
 // click area for edits
@@ -103,9 +102,6 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	ex := float32(rx)
 	ey := float32(ry)
 	if logo { mk = 8 } else { prcl = 1 }		// mod keys not picked up here ?
-//	mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
-//beef := fmt.Sprintf("a: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d",sx,sy,ex,ey,dt,mb,mbdi,mk)
-//statlin(cmdhin,beef)
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
 		rxm = float32(rx)
@@ -207,6 +203,9 @@ fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd
 			blot.Resize(fyne.Size{0, 0})
 			blx,bly = 0,0
 	}}}}}
+	mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
+beef := fmt.Sprintf("bl: %.0f x %.0f a: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d",blx,bly,sx,sy,ex,ey,dt,mb,mbdi,mk)
+statlin(cmdhin,beef)
 }
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){
