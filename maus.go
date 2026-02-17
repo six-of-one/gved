@@ -7,51 +7,60 @@ import (
 //	"image/color"
 	"image/draw"
 	"strings"
+	"time"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
-//    "fyne.io/fyne/v2/canvas"
+    "fyne.io/fyne/v2/canvas"
 )
 
 // main mouse handler
 
 // rubber banded
 
+var blot *canvas.Image
+var ccblot *canvas.Image
 var blotimg string		// replace blotter with png image - blotter is stretched, so design must be right for outlines
 var blotcol uint32		// with no image, this controls color & transparency in hex 0xAARRGGBB
 var gvs bool			// use blotter to simulate view of gauntlet viewport
-var blot *image.NRGBA
 
-// REMOVE
+func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 
-func blotter(img *image.NRGBA,px,py,sx,sy int) {
-
-	if img == nil {		// draw std blotter
-		if blotimg != "" {
-			err, _, bll := itemGetPNG(blotimg)
-			if err == nil {
-				parimg = bll
-				img = blankimage(sx, sy)
-				writepngtoimage(img, sx, sy,0,0,0,0,0,0,0)
-			}
-		}
-		if img == nil {
-			img = image.NewNRGBA(image.Rect(0, 0, sx, sy))
-			draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{blotcol}}, image.ZP, draw.Src)
-		}
+	if img == nil {
+		img = image.NewNRGBA(image.Rect(0, 0, 1, 1))
+		draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{blotcol}}, image.ZP, draw.Src)
 	}
-//fmt.Printf("blotter proc\n")
-	bnds := mimg.Bounds()
-	iw, ih := bnds.Dx()*4, bnds.Dy()*4
-//	dt := opts.dtec
-	blot = blankimage(iw, ih)
-	offset := image.Pt(px, py)
-	draw.Draw(blot, img.Bounds().Add(offset), img, image.ZP, draw.Over)
-//	parimg = img
-//	writepngtoimage(blot, sx, sy,0,0,0,0,px,py,0)
-//fmt.Printf("p: %d x %d sz: %d x %d, mimg: %d %d\n",px, py,sx, sy,iw, ih)
-//	blot.Move(fyne.Position{px, py})
-//	blot.Resize(fyne.Size{sx, sy})
+// config override for default blotter with png image
+	if blotimg != "" {
+			err, bll, _ := itemGetPNG(blotimg)
+			if err == nil {
+				blot = bll
+			} else { blotimg = "" }
+	}
+	if blotimg == "" {
+		blot = canvas.NewImageFromImage(img)
+	}
+	blot.Move(fyne.Position{px, py})
+	blot.Resize(fyne.Size{sx, sy})
+}
+
+// turn off blotter after a window update
+// because the window update...
+// a. turns it on full maze for no reason
+// b. refuses to turn it off, even with a delay in fn()
+// and...
+// c. resize window also covers the maze in blotter, which needs a fix
+//		- blot.Hide() works, however blot.Show() flikers the entire maze with momentary blotter
+
+func blotoff() {
+
+	go func() {
+			time.Sleep(5 * time.Millisecond)
+   fyne.Do(func() {
+			blot.Resize(fyne.Size{0, 0})
+   })
+	}()
 }
 
 // click area for edits
@@ -83,16 +92,22 @@ func nong(tv float32) float32 {
 
 // store x & y when mouse button goes down - to start rubberband area
 // 		and when released for other ops like cup & paste
-var sxmd,symd,exmd,eymd float64
+var sxmd float64
+var symd float64
+var exmd float64
+var eymd float64
 // maze x & y mouse down
-var mxmd,mymd int
+var mxmd int
+var mymd int
 var mbd bool			// true when mouse button 1 is held down, false otherwise
 // mouse move pos global track
-var rxm,rym float32
+var rxm float32
+var rym float32
 // painter counter on undo, x,y
 var prcl int
-var pmx,pmy int
-var blx,bly int
+var pmx int
+var pmy int
+
 // &{{{387 545} {379 509.92188}} 4 0}
 
 func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
@@ -112,6 +127,9 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	ex := float32(rx)
 	ey := float32(ry)
 	if logo { mk = 8 } else { prcl = 1 }		// mod keys not picked up here ?
+//	mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
+//beef := fmt.Sprintf("a: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d",sx,sy,ex,ey,dt,mb,mbdi,mk)
+//statlin(cmdhin,beef)
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
 		rxm = float32(rx)
@@ -127,19 +145,20 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		if sx + lx > whlim { sx = whlim - lx }
 		if sy + ly > whlim { sy = whlim - ly }
 
-		blx,bly = int(sx),int(sy)
-		blotter(nil,blx,bly,int(lx),int(ly))
+		blot.Move(fyne.Position{sx, sy})
+		blot.Resize(fyne.Size{lx, ly})
 	} else {
 	if ccp == PASTE {
-		ex = float32(float32(rx) + dt)
-		ey = float32(float32(ry) + dt)
+//		ex = float32(float32(rx) + dt)
+//		ey = float32(float32(ry) + dt)
 		sx := nong(float32(int(ex / dt)) * dt - 3)
 		sy := nong(float32(int(ey / dt)) * dt - 3)
 		lx := float32(cpx) * dt + dt
 		ly := float32(cpy) * dt + dt
 
-		blx,bly = int(sx),int(sy)
-		blotter(wpbimg,blx,bly,int(lx),int(ly))
+		if blotup { blotwup(w, wpbimg) }
+		blot.Move(fyne.Position{sx, sy})
+		blot.Resize(fyne.Size{lx, ly})
 	} else {
 	tcmdhn := cmdhin
 	tsshn := sshin
@@ -159,8 +178,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		sy = nong(float32(int(sy / dt)) * dt - 4)
 		ex = float32(int(ex / dt)) * dt - 1
 		ey = float32(int(ey / dt)) * dt - 2
-		blx,bly = int(sx),int(sy)
-		blotter(nil,blx,bly,int(ex - sx),int(ey - sy))
+		blot.Move(fyne.Position{sx, sy})
+		blot.Resize(fyne.Size{ex - sx, ey - sy})
 // blotter size hinter
 		if mxmd == mxme && mymd == myme {
 			mid := g1mapid[valid_id(ebuf[xy{mxmd+lvpx, mymd+lvpy}])]
@@ -206,11 +225,8 @@ fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd
 			statlin(pos,tsshn)
 		} else {				// no op on mouse move here
 			statlin(tcmdhn,tsshn)
-			blx,bly = 0,0
+			blot.Resize(fyne.Size{0, 0})
 	}}}}}
-mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
-beef := fmt.Sprintf("bl: %d x %d a: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d",blx,bly,sx,sy,ex,ey,dt,mb,mbdi,mk)
-statlin(cmdhin,beef)
 }
 
 func (h *holdableButton) MouseDown(mm *desktop.MouseEvent){

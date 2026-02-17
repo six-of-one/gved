@@ -724,6 +724,9 @@ func uswap() {
 // cut / copy / paste (c/c/p) controls
 
 func ccp_NOP() {
+	if ccp == PASTE {
+		if blot != ccblot { blot.Hide(); blot = ccblot }
+	}
 	ccp = NOP
 	if opts.edat > 0 { smod = "Edit mode: "; statlin(cmdhin,"") }
 }
@@ -732,8 +735,9 @@ func ccp_tog(op int) {
 	ccp_NOP()
 	if wccp != op { ccp = op }
 	if ccp == PASTE {
-		if !wpbop { pb_upd("pb", "mas", 1); wpbimg = palimage(cpbuf,xcpbuf,eflg,0,0,cpx+1,cpy+1,false) }
-		blotter(wpbimg,blx,bly,(cpx+1)*int(opts.dtec),(cpy+1)*int(opts.dtec))
+		if !wpbop { wpbimg = palimage(cpbuf,xcpbuf,eflg,0,0,cpx+1,cpy+1,false) }
+		blotup = true
+		blotoff()
 	}
 }
 

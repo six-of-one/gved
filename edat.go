@@ -83,7 +83,8 @@ func ed_init() {
 	ccp = NOP			// paste buffer
 	prcl = 1			// paint multi undo ops
 	wpbop = false		// window for pb active
-	mimg = blankimage(512, 512)	// so blotter click has an image to start if used on view mode only
+	blotter(nil,0,0,0,0)	// init blotter
+	ccblot = blot			// rubber band blot, saved so pb can display contents then return to rb
 	lg1cnt = 1
 	lg2cnt = 1
 	sdb = -1			// sd buffer
@@ -1319,6 +1320,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 		wpb = a.NewWindow(" pbf")
 		wpb.Canvas().SetOnTypedRune(pbRune)
 		wpb.SetCloseIntercept(func() {
+			if blot != ccblot { blot.Hide(); blot = ccblot };	// rb blotter back
 			wpbop = false; wpb.Close()})
 		wpb.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))		// have to do this on new win
 		wpb.Show()
@@ -1326,7 +1328,8 @@ var lw fyne.Window	// local cpy win to view buf contents
 // change pb blotter if active
 	wpbimg = nimg										// for blotter overlay on ctrl-p
 	if wpbop && ccp == PASTE {
-		blotter(wpbimg,blx,bly,px*int(dt),py*int(dt))
+		blotup = true
+		blot.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
 	}
 	lw = wpb
 	wt = fmt.Sprintf("%d %sf",bn,id)

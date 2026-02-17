@@ -772,9 +772,8 @@ func animcon() {
 	}
 var box *fyne.Container
 	if mbd || ccp == PASTE {	// also in paste mode
-		blimg := canvas.NewRasterFromImage(blot)
-		box = container.NewStack(rbtn, rbimg, blimg)
-
+		box = container.NewStack(rbtn, rbimg, blot)
+//		blimg.Refresh()
 	} else {
 		box = container.NewStack(rbtn, rbimg)
 	}
