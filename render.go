@@ -746,7 +746,7 @@ func animcon() {
 // anim not compatible with blot
   if !mbd && ccp != PASTE && !gvs {
 	ablot = false
-//fmt.Printf("in anim %t\n",manim);
+fmt.Printf("in anim %t\n",manim);
 	if manim {								// only run when anim tiles are on map
 
 		xba, yba := vpc_adj(mvpx, mvpy)
@@ -773,13 +773,7 @@ func animcon() {
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 		rbimg = canvas.NewRasterFromImage(rimg)
 	}
-//var box *fyne.Container
-//	if mbd || ccp == PASTE {	// also in paste mode
-//		box = container.NewStack(rbtn, rbimg, blot)
-
-//	} else {
 	box := container.NewStack(rbtn, rbimg)
-//	}
 	if !vlock { w.SetContent(box) }
 	}}
 }
