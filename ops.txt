@@ -180,6 +180,9 @@ most of these have a corresponging item on edit or file menus
 			- both can be edited, but both can not yet be saved
 			- not working in view only mode
 
+<CTRL>-V	toggle gauntlet view simulate - a blotter rectangle size of
+			the arcade maze view, follows mouse
+
 <CTRL>-pgup	size up viewport (to max 32 x 32)
 <CTRL>-pgdn	size down viewport (to min 12 x 12)
 			- viewport will still fill edit window

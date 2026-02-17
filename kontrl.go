@@ -126,6 +126,7 @@ func specialKey(cw fyne.Window) {
 			if key.Name == "X" && ctrl  { menu_cut(); flordirt, walsdirt = 1,1 }
 			if key.Name == "P" && ctrl  { if shift { pbsess_cyc(1) } else { menu_paste() }}
 			if key.Name == "O" && ctrl  { if shift { pbmas_cyc(1) }}
+			if key.Name == "V" && ctrl  { gvs = !gvs }
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
 			if key.Name == "Left" {
 				opts.dntr = true; srelod = true

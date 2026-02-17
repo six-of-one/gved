@@ -136,8 +136,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		lvpx, lvpy := 0, 0
 		if opts.edat > 0 { lvpx, lvpy = vpx, vpy }
 	if gvs {
-		sx := nong(float32(int(ex / dt)) * dt - 7 * dt)
-		sy := nong(float32(int(ey / dt)) * dt - 7 * dt)
+		sx := nong(rxm - 7 * dt)
+		sy := nong(rym - 7 * dt)
 		lx := 15 * dt
 		ly := 15 * dt
 		whlim := float32(opts.Geoh - 30)
