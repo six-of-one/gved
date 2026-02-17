@@ -1367,6 +1367,20 @@ var sanct_vrt2 = []int{
 
 }
 
+// seleector for start level on launch, 0 is default, which is rnd 1 - 7
+
+var lvl_sel = map[string]int{
+	"Research":-6,
+	"Level 1":1,
+	"Level 2":2,
+	"Level 3":3,
+	"Level 4":4,
+	"Level 5":5,
+	"Level 6":6,
+	"Level 7":7,
+	"Level 8...":8,
+	"Random 1-7":0,
+}
 // sanctuary custom floor tests
 //		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 /*

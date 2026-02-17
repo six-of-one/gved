@@ -13,6 +13,8 @@ import (
 	"image/png"
 	"os"
 	"os/exec"
+	"math/rand"
+	"time"
 
 	"git.kirsle.net/go/audio/sdl"			// audio package
 	"github.com/veandco/go-sdl2/mix"
@@ -103,13 +105,26 @@ sfx, err := sdl.New(mix.INIT_MP3 | mix.INIT_OGG)
 
 	if opts.Addr > 0x37fff && opts.Addr < 0x40000 { Aov = opts.Addr }
 
+	source := rand.NewSource(time.Now().UnixNano()) // random #s
+	rng = rand.New(source)
+
 	switch runType {
 	case TypeNone:
 		if opts.Tile > 0 {
 			dotile(opts.Tile)
 			fmt.Println("dotile \n")
 		} else {
-			st := fmt.Sprintf("maze%d",opts.Lvl)
+			lv := maxint(0,minint(opts.Lvl,8))
+			if lv == 0 {
+				if opts.Lvl != -1 {
+					ld_config()			// if not forced rnd (-1), see if there is a setting
+					lv = opts.Lvl
+				}
+				if opts.Lvl < 1 {
+// put select research here
+				lv = rng.Intn(6) + 1 }	// 1 - 7, or 0 select = rnd
+			}
+			st := fmt.Sprintf("maze%d",lv)
 			if opts.Intr { domaze(st) } else {		// set interactive but left out maze# - do it by default
 				fmt.Println("nothing selected - more options required, try:\n./gved -i maze1\n./gved floor0\n./gved wall0\n./gved item-dragon-ipotion\n       (./gved item-all for list)\nnote: non-interactive generates output.png\n")
 // do a 'help'

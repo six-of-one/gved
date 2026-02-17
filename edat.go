@@ -10,7 +10,6 @@ import (
 	"encoding/binary"
 	"image/color"
 	"math/rand"
-	"time"
 	"regexp"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/data/binding"
@@ -93,8 +92,6 @@ func ed_init() {
 	delbset(0)			// init undo (delbuf)
 	restak = 0			// restor position in delbuf
 //	diff_level = 1.0	// default diff, for now only rload uses - in options now
-	source := rand.NewSource(time.Now().UnixNano()) // random #s
-	rng = rand.New(source)
 	zmod = 0			// play test mode
 	zm_x = -1
 	zm_y = -1

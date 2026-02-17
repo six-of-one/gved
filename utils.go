@@ -11,6 +11,13 @@ func minint(i1, i2 int) int {
 	if (i2 < r) { r = i2 }
 	return r
 }
+
+func maxint(i1, i2 int) int {
+	r := i1
+	if (i2 > r) { r = i2 }
+	return r
+}
+
 // swap values
 
 // ints

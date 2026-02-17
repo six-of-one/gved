@@ -43,7 +43,7 @@ var opts struct {
 	R14		bool   `long:"r14" description:"use gauntlet rev14 maze rom"`
 // select gauntlet 1 or 2 to process - default is 2
 	Gtp 	int    `short:"g" long:"gtp" default:"1" base:"10" description:"Gauntlet to process, 1 or 2"`
-	Lvl		int	   `short:"l" long:"level" default:"1" base:"10" description:"Level start 1 - 8"`
+	Lvl		int	   `short:"l" long:"level" default:"0" base:"10" description:"Level start 1 - 8, def (or -1 to force) = random"`
 	Se		bool   `short:"z" description:"sanctuary engine data output"`
 // interactive mode for maze display, select wall & floors, rotates & mirrors, load new mazes, test addresses
 // only with maze{n}, if -i not given, prog just exits with maze in output.png
@@ -155,9 +155,9 @@ func ld_config() {
 		l = ""
 		if scanr.Scan() { l = scanr.Text() }						// blotter replacement image
 		fmt.Sscanf(l,"%s",&blotimg)
-		l = "1.0"
+		l = "0 1.0"
 		if scanr.Scan() { l = scanr.Text() }						// difficulty skill - affects rnd loader
-		fmt.Sscanf(l,"%f",&diff_level)
+		fmt.Sscanf(l,"%d %f",&opts.Lvl,&diff_level)
 		l = "false, false"
 		if scanr.Scan() { l = scanr.Text() }						// difficulty skill - affects rnd loader
 		fmt.Sscanf(l,"%t, %t\n",&unpinx,&unpiny)
@@ -225,7 +225,7 @@ func sv_config() {
 //fmt.Print(wfs)
 fmt.Printf("sv_config\n")
 		wfs += fmt.Sprintf("%08x\n%s\n",blotcol,blotimg)
-		wfs += fmt.Sprintf("%.1f\n",diff_level)
+		wfs += fmt.Sprintf("%d %.1f\n",opts.Lvl,diff_level)
 		wfs += fmt.Sprintf("%t, %t\n",unpinx,unpiny)
 		file.WriteString(wfs)
 		file.Close()
@@ -250,8 +250,10 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		diff_label.SetText(ns)
 		sv_config()
 	}
-	sellvl := widget.NewSelect([]string{"Research", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7", "Level 8..."}, func(str string) {
+	sellvl := widget.NewSelect([]string{"Research", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7", "Level 8...", "Random 1-7"}, func(str string) {
 		fmt.Printf("Select level: %s\n", str)
+		opts.Lvl = lvl_sel[str]
+		sv_config()
 	})
 	sellvl.SetSelected("Level 1")
 	sel_label := widget.NewLabelWithStyle("Start on:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
