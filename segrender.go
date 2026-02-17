@@ -348,7 +348,7 @@ func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
 
 }
 
-func ffMakeMap(maze *Maze) FFMap {
+func ffMakeMap(maze *Maze) FFMap {			// fix: this NEEDS locking with anmap, and ffmap once it animates
 	ffmap := FFMap{}
 
 	if svanim {  manim = false }
