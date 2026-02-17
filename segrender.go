@@ -351,6 +351,9 @@ func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
 func ffMakeMap(maze *Maze) FFMap {
 	ffmap := FFMap{}
 
+//fmt.Printf("a1: %t in ffmap %t\n",manim,svanim);
+	if svanim {  manim = false }
+//fmt.Printf("a2: %t in ffmap %t\n",manim,svanim);
 	for k, v := range maze.data {
 		if !isforcefield(v) {
 			if svanim {
@@ -371,6 +374,7 @@ if anmap[xy{k.x, k.y}] > 0 {fmt.Printf("det anim %d: %d x %d\n",v,k.x, k.y)}
 			ffMark(ffmap, maze, k.x, k.y, 2)
 		}
 	}
+//fmt.Printf("a3: %t in ffmap %t\n",manim,svanim);
 
 	return ffmap
 }

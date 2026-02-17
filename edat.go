@@ -98,7 +98,8 @@ func ed_init() {
 	zmod = 0			// play test mode
 	zm_x = -1
 	zm_y = -1
-	nwalflor()
+	svanim = true
+ 	nwalflor()
 	flordirt, walsdirt = 1,1
 	maxwf = 0
 // 0 ent is wall set & 1 def floor
@@ -537,8 +538,7 @@ fmt.Printf("ld %d: up:%d %d -- %s %s\n",i,fref[i],wref[i],wlfl.florn[fref[i]],wl
 		}
 	}
   }
-	svanim = ldb
-	if ldb { flordirt, walsdirt = 1,1; manim = false }			// mark floor dirty so it gets rebuilt, when loading main maze (not palette or pb)
+	if ldb { flordirt, walsdirt = 1,1 }			// mark floor dirty so it gets rebuilt, when loading main maze (not palette or pb)
 	return edp
 }
 

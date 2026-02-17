@@ -50,8 +50,10 @@ fmt.Printf("palimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 
 	img := blankimage(16*(xs-xb), 16*(ys-yb))		// not main maze
 
+	svanim = false
 	florbas(img, maze, xdat, opts.DimX+1, opts.DimY+1,false)
 	walbas(img, maze, xdat, opts.DimX+1, opts.DimY+1,false)
+	svanim = true
 
 	for y := yb; y <= ys; y++ {
 		for x := xb; x <= xs; x++ {

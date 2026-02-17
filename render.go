@@ -746,7 +746,7 @@ func animcon() {
 // anim not compatible with blot
   if !mbd && ccp != PASTE && !gvs {
 	ablot = false
-fmt.Printf("in anim %t\n",manim);
+//fmt.Printf("in anim %t, sv %t\n",manim,svanim)
 	if manim {								// only run when anim tiles are on map
 
 		xba, yba := vpc_adj(mvpx, mvpy)
