@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 	"image"
-//	"image/color"
 	"image/draw"
 	"strings"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/driver/desktop"
@@ -46,15 +46,16 @@ func blotter(img *image.NRGBA) {
 
 func blotmov(px float32, py float32, szx float32, szy float32) {
 
+//fmt.Printf("p: %.0f x %.0f sz: %.0f x %.0f dt: %.0f, mbd %t\n",px, py,szx, szy,opts.dtec,mbd)
+	blot.Move(fyne.Position{px, py})
+	blot.Resize(fyne.Size{szx, szy})
+//	blot.Refresh()
 	if !ablot {
 		box := container.NewStack(rbtn, rbimg, blot)
 		w.SetContent(box)
 		ablot = true
+fmt.Printf("ablot\n")
 	}
-fmt.Printf("p: %.0f x %.0f sz: %.0f x %.0f dt: %.0f, mbd %t\n",px, py,szx, szy,opts.dtec,mbd)
-	blot.Move(fyne.Position{px, py})
-	blot.Resize(fyne.Size{szx, szy})
-//	blot.Refresh()
 }
 
 // click area for edits
@@ -238,7 +239,20 @@ fmt.Printf("%d down - rel: %.0f x %.0f maze cell: %d x %d: %d\n",mb,sxmd,symd,mx
 fmt.Printf("%d down - rel: %.0f x %.0f maze cell: %d x %d\n",mb,sxmd,symd,mxmd,mymd)
 }}
 	mbd = (mb == 1)
-	if mbd { h.MouseMoved(mm) }		// engage 1 tile click
+	if mbd {
+		h.MouseMoved(mm)
+	go func() {
+			time.Sleep(10 * time.Millisecond)
+   fyne.Do(func() {
+		dt := float32(opts.dtec)
+		sx := nong(float32(int(float32(sxmd) / dt)) * dt - 3)				// blotter selects tiles with original unit of 16 x 16
+		sy := nong(float32(int(float32(symd) / dt)) * dt - 4)
+//		ex = float32(int(ex / dt)) * dt - 1
+//		ey = float32(int(ey / dt)) * dt - 2
+		blotmov(sx,sy,dt+2,dt+2)		// only way a single click, highlighting 1 cell works if mouse is not moving
+   })
+	}()
+	}		// engage 1 tile click
 }
 
 var repl int		// replace will be by ctrl-h in select area or entire maze, by match

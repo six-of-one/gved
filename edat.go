@@ -1330,7 +1330,6 @@ var lw fyne.Window	// local cpy win to view buf contents
 	wpbimg = nimg										// for blotter overlay on ctrl-p
 	if wpbop && ccp == PASTE {
 		blotup = true
-		//blot.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
 	}
 	lw = wpb
 	wt = fmt.Sprintf("%d %sf",bn,id)
