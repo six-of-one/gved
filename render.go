@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"time"
 	"golang.org/x/image/draw"
-	"fyne.io/fyne/v2"
+//	"fyne.io/fyne/v2"
     "fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 )
@@ -743,6 +743,8 @@ func animcon() {
 
 	for {
 	time.Sleep(200 * time.Millisecond)
+// anim not compatible with blot
+  if !mbd && ccp != PASTE {
 //fmt.Printf("in anim %t\n",manim);
 	if manim {								// only run when anim tiles are on map
 
@@ -770,13 +772,13 @@ func animcon() {
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 		rbimg = canvas.NewRasterFromImage(rimg)
 	}
-var box *fyne.Container
-	if mbd || ccp == PASTE {	// also in paste mode
-		box = container.NewStack(rbtn, rbimg, blot)
-//		blimg.Refresh()
-	} else {
-		box = container.NewStack(rbtn, rbimg)
-	}
+//var box *fyne.Container
+//	if mbd || ccp == PASTE {	// also in paste mode
+//		box = container.NewStack(rbtn, rbimg, blot)
+
+//	} else {
+	box := container.NewStack(rbtn, rbimg)
+//	}
 	if !vlock { w.SetContent(box) }
-	}
+	}}
 }
