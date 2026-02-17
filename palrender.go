@@ -18,7 +18,6 @@ fmt.Printf("palimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 
 // dummy maze for ops that require it
 	var maze = &Maze{}
-	svanim = false
 // G² edit & game will now translate to SE mode
 	var skp bool
 	if G2 {
@@ -221,6 +220,5 @@ fmt.Printf("palimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	g1mask[G1OBJ_WALL_TRAP1] = 1024
 	g1mask[G1OBJ_TILE_TRAP1] = 64
 
-	svanim = true
 	return img
 }
