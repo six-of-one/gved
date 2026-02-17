@@ -24,6 +24,7 @@ var ccblot *canvas.Image
 var blotimg string		// replace blotter with png image - blotter is stretched, so design must be right for outlines
 var blotcol uint32		// with no image, this controls color & transparency in hex 0xAARRGGBB
 var gvs bool			// use blotter to simulate view of gauntlet viewport
+var ablot bool			// active blotter
 
 func blotter(img *image.NRGBA) {
 
@@ -45,11 +46,15 @@ func blotter(img *image.NRGBA) {
 
 func blotmov(px float32, py float32, szx float32, szy float32) {
 
-	box := container.NewStack(rbtn, rbimg, blot)
-	w.SetContent(box)
-fmt.Printf("p: %.0f x %.0f sz: %.0f x %.0f dt: %.0f, mbd %d",px, py,szx, szy,opts.dtec,mbd)
+	if !ablot {
+		box := container.NewStack(rbtn, rbimg, blot)
+		w.SetContent(box)
+		ablot = true
+	}
+fmt.Printf("p: %.0f x %.0f sz: %.0f x %.0f dt: %.0f, mbd %t\n",px, py,szx, szy,opts.dtec,mbd)
 	blot.Move(fyne.Position{px, py})
 	blot.Resize(fyne.Size{szx, szy})
+//	blot.Refresh()
 }
 
 // click area for edits
@@ -120,9 +125,8 @@ mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
 beef := fmt.Sprintf("s: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d, %s",sx,sy,ex,ey,dt,mb,mbdi,mk,h.title)
 statlin(cmdhin,beef)
 
-fmt.Printf("mmv pre\n")
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
-fmt.Printf("mmv main\n")
+
 		rxm = float32(rx)
 		rym = float32(ry)
 		lvpx, lvpy := 0, 0
@@ -135,7 +139,6 @@ fmt.Printf("mmv main\n")
 		whlim := float32(opts.Geoh - 30)
 		if sx + lx > whlim { sx = whlim - lx }
 		if sy + ly > whlim { sy = whlim - ly }
-fmt.Printf("gvs\n")
 		blotmov(sx,sy,lx,ly)
 	} else {
 	if ccp == PASTE {
@@ -145,8 +148,8 @@ fmt.Printf("gvs\n")
 		sy := nong(float32(int(ey / dt)) * dt - 3)
 		lx := float32(cpx) * dt + dt
 		ly := float32(cpy) * dt + dt
-fmt.Printf("paster\n")
 		if blotup { blotwup(w, wpbimg) }
+//fmt.Printf("p: %.0f x %.0f sz: %.0f x %.0f dt: %.0f\n",sx,sy,lx,ly,opts.dtec)
 		blotmov(sx,sy,lx,ly)
 	} else {
 	tcmdhn := cmdhin
@@ -159,6 +162,7 @@ fmt.Printf("paster\n")
 	ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
 	ey = float32(float32(ey) + dt)
 	if mbd {
+fmt.Printf("blotr mbd\n")
 // blotter size hinter
 		mxmd = int(sx / dt) // redo as start / end can swap
 		mymd = int(sy / dt)
@@ -167,7 +171,6 @@ fmt.Printf("paster\n")
 		sy = nong(float32(int(sy / dt)) * dt - 4)
 		ex = float32(int(ex / dt)) * dt - 1
 		ey = float32(int(ey / dt)) * dt - 2
-fmt.Printf("blotr\n")
 		blotmov(sx,sy,ex - sx, ey - sy)
 // blotter size hinter
 		if mxmd == mxme && mymd == myme {

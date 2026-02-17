@@ -793,6 +793,7 @@ fmt.Printf("\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d, DIMS: %d - %d\n",o
 	}
 	opts.dntr = false
 	nsremaze = false
+	blotup = (ccp == PASTE)
 	if opts.edat > 0 || sdb > 0 { ed_maze(true) } else {
 		Ovimg := genpfimage(edmaze, mazn)
 		upwin(Ovimg, 0)
@@ -1329,7 +1330,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 	wpbimg = nimg										// for blotter overlay on ctrl-p
 	if wpbop && ccp == PASTE {
 		blotup = true
-		blot.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
+		//blot.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
 	}
 	lw = wpb
 	wt = fmt.Sprintf("%d %sf",bn,id)
