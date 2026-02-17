@@ -848,7 +848,7 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 				}
 				if p >= 0 {
 						gtop := gg.NewContext(len, 12)
-						if err := gtop.LoadFontFace(".font/ganic2.fnt", 10); err == nil {
+						if err := gtop.LoadFontFace(".font/Gauntlet.ttf", 6); err == nil {
 						gtop.Clear()
 						fp, fq, fr := float64(p)/256,float64(q)/256,float64(r)/256
 						gtop.SetRGB(fp, fq, fr)
