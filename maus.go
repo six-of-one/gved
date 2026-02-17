@@ -47,6 +47,7 @@ func blotmov(px float32, py float32, szx float32, szy float32) {
 
 	box := container.NewStack(rbtn, rbimg, blot)
 	w.SetContent(box)
+fmt.Printf("p: %.0f x %.0f sz: %.0f x %.0f dt: %.0f, mbd %d",px, py,szx, szy,opts.dtec,mbd)
 	blot.Move(fyne.Position{px, py})
 	blot.Resize(fyne.Size{szx, szy})
 }
@@ -115,11 +116,13 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	ex := float32(rx)
 	ey := float32(ry)
 	if logo { mk = 8 } else { prcl = 1 }		// mod keys not picked up here ?
-//	mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
-//beef := fmt.Sprintf("a: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d",sx,sy,ex,ey,dt,mb,mbdi,mk)
-//statlin(cmdhin,beef)
+mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
+beef := fmt.Sprintf("s: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d, %s",sx,sy,ex,ey,dt,mb,mbdi,mk,h.title)
+statlin(cmdhin,beef)
 
+fmt.Printf("mmv pre\n")
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
+fmt.Printf("mmv main\n")
 		rxm = float32(rx)
 		rym = float32(ry)
 		lvpx, lvpy := 0, 0
@@ -132,7 +135,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		whlim := float32(opts.Geoh - 30)
 		if sx + lx > whlim { sx = whlim - lx }
 		if sy + ly > whlim { sy = whlim - ly }
-
+fmt.Printf("gvs\n")
 		blotmov(sx,sy,lx,ly)
 	} else {
 	if ccp == PASTE {
@@ -142,7 +145,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		sy := nong(float32(int(ey / dt)) * dt - 3)
 		lx := float32(cpx) * dt + dt
 		ly := float32(cpy) * dt + dt
-
+fmt.Printf("paster\n")
 		if blotup { blotwup(w, wpbimg) }
 		blotmov(sx,sy,lx,ly)
 	} else {
@@ -164,6 +167,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		sy = nong(float32(int(sy / dt)) * dt - 4)
 		ex = float32(int(ex / dt)) * dt - 1
 		ey = float32(int(ey / dt)) * dt - 2
+fmt.Printf("blotr\n")
 		blotmov(sx,sy,ex - sx, ey - sy)
 // blotter size hinter
 		if mxmd == mxme && mymd == myme {
@@ -210,7 +214,6 @@ fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd
 			statlin(pos,tsshn)
 		} else {				// no op on mouse move here
 			statlin(tcmdhn,tsshn)
-//			blot.Resize(fyne.Size{0, 0})
 	}}}}}
 }
 

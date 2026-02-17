@@ -744,7 +744,7 @@ func animcon() {
 	for {
 	time.Sleep(200 * time.Millisecond)
 // anim not compatible with blot
-  if !mbd && ccp != PASTE {
+  if !mbd && ccp != PASTE && !gvs {
 //fmt.Printf("in anim %t\n",manim);
 	if manim {								// only run when anim tiles are on map
 
