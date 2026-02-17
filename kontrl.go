@@ -117,13 +117,13 @@ func specialKey(cw fyne.Window) {
 //			if key.Name == "Tab" { tab = false }
 			if key.Name == "S" && ctrl  { if shift { menu_savas() } else { menu_sav() }}
 			if key.Name == "L" && ctrl  { if shift { menu_laodf() } else { menu_lod() }}
-			if key.Name == "R" && ctrl  { menu_res() }
-			if key.Name == "U" && ctrl  { uswap() }
+			if key.Name == "R" && ctrl  { menu_res(); flordirt, walsdirt = 1,1 }
+			if key.Name == "U" && ctrl  { uswap(); flordirt, walsdirt = 1,1 }
 			if key.Name == "T" && ctrl  { if ! cmdoff { nothing = 0 }}
-			if key.Name == "Z" && ctrl  { undo() }
-			if key.Name == "Y" && ctrl  { redo() }
+			if key.Name == "Z" && ctrl  { undo(); flordirt, walsdirt = 1,1 }
+			if key.Name == "Y" && ctrl  { redo(); flordirt, walsdirt = 1,1 }
 			if key.Name == "C" && ctrl  { menu_copy() }
-			if key.Name == "X" && ctrl  { menu_cut() }
+			if key.Name == "X" && ctrl  { menu_cut(); flordirt, walsdirt = 1,1 }
 			if key.Name == "P" && ctrl  { if shift { pbsess_cyc(1) } else { menu_paste() }}
 			if key.Name == "O" && ctrl  { if shift { pbmas_cyc(1) }}
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
@@ -131,6 +131,7 @@ func specialKey(cw fyne.Window) {
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimX -= da; if opts.DimX < 1 { opts.DimX = 1 }
 						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
+						  flordirt = 1
 						} else {
 							vpx -= va; px, py = vpx, vpy
 						}
@@ -141,6 +142,7 @@ func specialKey(cw fyne.Window) {
 				if ctrl { opts.DimX += da; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						  clr_buf(ebuf, xbuf, px, py, 0, -1)
+						  flordirt = 1
 						} else {
 							//if vpx + viewp < opts.DimX { vpx++ }
 							vpx += va; px, py = vpx, vpy
@@ -151,6 +153,7 @@ func specialKey(cw fyne.Window) {
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimY -= da; if opts.DimY < 1 { opts.DimY = 1 };
 						  opts.bufdrt = true; sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
+						  flordirt = 1
 						} else {
 							vpy -= va; px, py = vpx, vpy
 						}
@@ -161,6 +164,7 @@ func specialKey(cw fyne.Window) {
 				if ctrl { opts.DimY += da; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
 						  clr_buf(ebuf, xbuf, px, py, 0, -1)
+						  flordirt = 1
 						} else {
 							//if vpy + viewp < opts.DimY { vpy++ }
 							vpy += va; px, py = vpx, vpy
@@ -363,10 +367,12 @@ fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				eflg[4] = eflg[4] ^ LFLAG4_WRAP_H
 				opts.dntr = true
 				relod = true
+				flordirt, walsdirt = 1,1
 		case 86:		// V	- vert wrap
 				eflg[4] = eflg[4] ^ LFLAG4_WRAP_V
 				opts.dntr = true
 				relod = true
+				flordirt, walsdirt = 1,1
 //	fmt.Printf("4 flag: %d\n",eflg[4])
 		case 83:		// S
 // have anum !=0, save ebuf into that sd buffer
@@ -396,6 +402,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
+			walsdirt = 1
 		case 87:		// W
 			Ovwallpat -= 1
 			if Ovwallpat < 0 { Ovwallpat = walvld() }
@@ -403,6 +410,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: w - wallp: %d\n",Ovwallpat)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
+			walsdirt = 1
 		case 'e':
 			Ovwallcol += 1
 			if anum > 0 { Ovwallcol = anum - 1; anum = 0 }
@@ -411,6 +419,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
+			walsdirt = 1
 		case 'E':
 			Ovwallcol -= 1
 			if Ovwallcol < 0 { Ovwallcol = colvld() }
@@ -418,6 +427,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: e - wallc: %d\n",Ovwallcol)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
+			walsdirt = 1
 		case 'f':
 			Ovflorpat += 1
 			if anum > 0 { Ovflorpat = anum - 1; anum = 0 }
@@ -426,6 +436,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
+			flordirt = 1
 		case 70:		// F
 			Ovflorpat -= 1
 			if Ovflorpat < 0 { Ovflorpat = florvld() }
@@ -433,6 +444,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: f - floorp: %d\n",Ovflorpat)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
+			flordirt = 1
 		case 'g':
 			Ovflorcol += 1
 			if anum > 0 { Ovflorcol = anum - 1; anum = 0 }
@@ -441,6 +453,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
+			flordirt = 1
 		case 71:		// G
 			Ovflorcol -= 1
 			if Ovflorcol < 0 { Ovflorcol = colvld() }
@@ -448,6 +461,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			spau = fmt.Sprintf("cmd: g - floorc: %d\n",Ovflorcol)
 			opts.bufdrt = (opts.edat > 0)
 			opts.dntr = (opts.edat > 0)
+			flordirt = 1
 		case 'r':
 			if opts.edat > 0 {
 				opts.MRP = true
@@ -455,6 +469,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				opts.DimX, opts.DimY = rotmirbuf(edmaze,xbuf, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
+				flordirt, walsdirt = 1,1
 			} else {
 				opts.MRP = true
 				opts.MRM = false
@@ -467,6 +482,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				opts.DimX, opts.DimY = rotmirbuf(edmaze,xbuf, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
+				flordirt, walsdirt = 1,1
 			} else {
 				opts.MRP = false
 				opts.MRM = true
@@ -485,6 +501,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				rotmirbuf(edmaze,xbuf, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
+				flordirt, walsdirt = 1,1
 			} else {
 				opts.MV = !opts.MV
 				spau = fmt.Sprintf("cmd: m - mv: %t\n",opts.MV)
@@ -503,6 +520,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				rotmirbuf(edmaze,xbuf, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
+				flordirt, walsdirt = 1,1
 			} else {
 				opts.MH = !opts.MH
 				spau = fmt.Sprintf("cmd: h - mh: %t\n",opts.MH)

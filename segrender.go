@@ -357,7 +357,7 @@ func ffMakeMap(maze *Maze) FFMap {
 			if svanim {
 				anmap[xy{k.x, k.y}] = isanimtil(v)
 				anmapt[xy{k.x, k.y}] = 0
-if anmap[xy{k.x, k.y}] > 0 {fmt.Printf("det anim %d: %d x %d\n",v,k.x, k.y)}
+//if anmap[xy{k.x, k.y}] > 0 {fmt.Printf("det anim %d: %d x %d\n",v,k.x, k.y)}
 			}
 			continue
 		}
@@ -931,8 +931,6 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	maze.wallcolor = fdat[6] & 0x0f
 	maze.floorcolor = (fdat[6] & 0xf0) >> 4
 
-	walsdirt = flordirt		// cheet for now - later these should seperate
-
 	// unpin issue - -vals flummox canvas writes
 	xba, yba := vpc_adj(xb, yb)
 
@@ -941,8 +939,11 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	mimg = blankimage(16*(xs-xb), 16*(ys-yb))
 
 	if flordirt > 0 {
+fmt.Printf("flordirt, cleen em up\n")
 		florb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
 		florbas(florb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild floor on load or when edit dirties it
+		flordirt = 0
+	}
 
 	if opts.edat < 0 || opts.edat == 2 {
 		parimg = florb
@@ -966,12 +967,14 @@ fmt.Printf(" flor x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fy
 					writepngtoimage(fimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
 				}
 			}}
-	}}
+	}
 
 	if walsdirt > 0 {
 fmt.Printf("walldirt, cleen em up\n")
 		walsb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
 		walbas(walsb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild walls on load or when edit dirties it
+		walsdirt = 0
+	}
 
 	if opts.edat < 0 || opts.edat == 2 {
 		parimg = walsb
@@ -995,7 +998,7 @@ fmt.Printf(" wals x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fy
 					writepngtoimage(wimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
 				}
 			}}
-	}}
+	}
 
 fmt.Printf(" xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
 

@@ -208,8 +208,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 					setcode = g2edit_keymap[edkey]
 					xstcode = "00"
 				}}
-				if del { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = 0; xbuf[xy{mxmd, mymd}] = "0"; opts.bufdrt = true } else {	// delete anything for now makes a floor
-				if setcode > 0 { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = setcode; xbuf[xy{mxmd, mymd}] = xstcode; opts.bufdrt = true }
+				if del { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = 0; xbuf[xy{mxmd, mymd}] = "0"; opts.bufdrt = true; flordirt, walsdirt = 1,1 } else {	// delete anything for now makes a floor
+				if setcode > 0 { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = setcode; xbuf[xy{mxmd, mymd}] = xstcode; opts.bufdrt = true; flordirt, walsdirt = 1,1 }
 				}
 // FX: a loop is happening including this when mouse exits main win
 fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd,mymd,pmx,pmy)
@@ -417,13 +417,13 @@ fmt.Printf(" dtec: %.2f maze: %d x %d - element:%d - %s --- XB: %s\n",dt,ex,ey,o
 			if rop {
 				delstr := 0
 				if shift { delstr = -1 }
-				if del { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = delstr; xopbf[xy{mx, my}] = "0"; opts.bufdrt = true } else {	// delete anything for now makes a floor
-				if pasty { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; xopbf[xy{mx, my}] = xcpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }	// cant use setcode below, it wont set floors
+				if del { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = delstr; xopbf[xy{mx, my}] = "0"; opts.bufdrt = true; flordirt, walsdirt = 1,1 } else {	// delete anything for now makes a floor
+				if pasty { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; xopbf[xy{mx, my}] = xcpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true; flordirt, walsdirt = 1,1 }	// cant use setcode below, it wont set floors
 				if setcode > 0 {						// i think i found the bug where paste doesnt work right
 					undo_buf(mx, my,rcl);
 					if ! shift { opbuf[xy{mx, my}] = setcode; fmt.Printf("!shift set\n")}
 					if ! ctrl { xopbf[xy{mx, my}] = xstcode; }
-					opts.bufdrt = true
+					opts.bufdrt = true; flordirt, walsdirt = 1,1
 				}
 fmt.Printf("---stored %03d ::%s",opbuf[xy{mx, my}],xopbf[xy{mx, my}])
 				}
