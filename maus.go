@@ -7,12 +7,12 @@ import (
 //	"image/color"
 	"image/draw"
 	"strings"
-	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
     "fyne.io/fyne/v2/canvas"
+    "fyne.io/fyne/v2/container"
 )
 
 // main mouse handler
@@ -25,7 +25,7 @@ var blotimg string		// replace blotter with png image - blotter is stretched, so
 var blotcol uint32		// with no image, this controls color & transparency in hex 0xAARRGGBB
 var gvs bool			// use blotter to simulate view of gauntlet viewport
 
-func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
+func blotter(img *image.NRGBA) {
 
 	if img == nil {
 		img = image.NewNRGBA(image.Rect(0, 0, 1, 1))
@@ -41,26 +41,14 @@ func blotter(img *image.NRGBA,px float32, py float32, sx float32, sy float32) {
 	if blotimg == "" {
 		blot = canvas.NewImageFromImage(img)
 	}
-	blot.Move(fyne.Position{px, py})
-	blot.Resize(fyne.Size{sx, sy})
 }
 
-// turn off blotter after a window update
-// because the window update...
-// a. turns it on full maze for no reason
-// b. refuses to turn it off, even with a delay in fn()
-// and...
-// c. resize window also covers the maze in blotter, which needs a fix
-//		- blot.Hide() works, however blot.Show() flikers the entire maze with momentary blotter
+func blotmov(px float32, py float32, szx float32, szy float32) {
 
-func blotoff() {
-
-	go func() {
-			time.Sleep(5 * time.Millisecond)
-   fyne.Do(func() {
-			blot.Resize(fyne.Size{0, 0})
-   })
-	}()
+	box := container.NewStack(rbtn, rbimg, blot)
+	w.SetContent(box)
+	blot.Move(fyne.Position{px, py})
+	blot.Resize(fyne.Size{szx, szy})
 }
 
 // click area for edits
@@ -145,8 +133,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		if sx + lx > whlim { sx = whlim - lx }
 		if sy + ly > whlim { sy = whlim - ly }
 
-		blot.Move(fyne.Position{sx, sy})
-		blot.Resize(fyne.Size{lx, ly})
+		blotmov(sx,sy,lx,ly)
 	} else {
 	if ccp == PASTE {
 //		ex = float32(float32(rx) + dt)
@@ -157,8 +144,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		ly := float32(cpy) * dt + dt
 
 		if blotup { blotwup(w, wpbimg) }
-		blot.Move(fyne.Position{sx, sy})
-		blot.Resize(fyne.Size{lx, ly})
+		blotmov(sx,sy,lx,ly)
 	} else {
 	tcmdhn := cmdhin
 	tsshn := sshin
@@ -178,8 +164,7 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		sy = nong(float32(int(sy / dt)) * dt - 4)
 		ex = float32(int(ex / dt)) * dt - 1
 		ey = float32(int(ey / dt)) * dt - 2
-		blot.Move(fyne.Position{sx, sy})
-		blot.Resize(fyne.Size{ex - sx, ey - sy})
+		blotmov(sx,sy,ex - sx, ey - sy)
 // blotter size hinter
 		if mxmd == mxme && mymd == myme {
 			mid := g1mapid[valid_id(ebuf[xy{mxmd+lvpx, mymd+lvpy}])]
@@ -225,7 +210,7 @@ fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd
 			statlin(pos,tsshn)
 		} else {				// no op on mouse move here
 			statlin(tcmdhn,tsshn)
-			blot.Resize(fyne.Size{0, 0})
+//			blot.Resize(fyne.Size{0, 0})
 	}}}}}
 }
 

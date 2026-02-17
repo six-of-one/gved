@@ -83,7 +83,7 @@ func ed_init() {
 	ccp = NOP			// paste buffer
 	prcl = 1			// paint multi undo ops
 	wpbop = false		// window for pb active
-	blotter(nil,0,0,0,0)	// init blotter
+	blotter(nil)	// init blotter
 	ccblot = blot			// rubber band blot, saved so pb can display contents then return to rb
 	lg1cnt = 1
 	lg2cnt = 1

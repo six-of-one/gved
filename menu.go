@@ -437,12 +437,12 @@ func upwin(simg *image.NRGBA, lvp int) {
 		dtp = float64(vp) * 16
 	}											// having an edit viewport will change 528 - will have to be vport wid (same as high) * 16
 	opts.dtec = 16.0 * (float64(geow - 4) / dtp)				// the size of a tile, odd window size may cause issues
-fmt.Printf("\nupwin %d x %d dtec: %f (vp: %d dtp %.1f) geom: %d x %d\n",opts.DimX,opts.DimY,opts.dtec,vp,dtp,geow,geoh)
+fmt.Printf("\nupwin %d x %d dtec: %f (vp: %d dtp %.1f) geom: %d x %d, p:%d\n",opts.DimX,opts.DimY,opts.dtec,vp,dtp,geow,geoh,ccp)
 if opts.Verbose { fmt.Printf(" dtec: %f\n",opts.dtec) }			// detected size of a single maze tile in pixels, used for click id of cell x,y
-	if lvp < 0 { clikwinm(w, simg, geow, geoh) }		// one time init shot
+	if lvp < 0 || rez || mbd || ccp == PASTE { clikwinm(w, simg, geow, geoh) }		// one time init shot
 
 	spx := ""
-	if sdb > 0 || rez || mbd || ccp == PASTE { spx = fmt.Sprintf("%s sdbuf: %d",rmsg,sdb) }
+	if sdb > 0 { spx = fmt.Sprintf("%s sdbuf: %d",rmsg,sdb) }
 	if anum != 0 { spx += fmt.Sprintf("| numeric: %d", anum) }
 	uptitl(opts.mnum, spx)
 }
