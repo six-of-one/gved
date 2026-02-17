@@ -43,6 +43,7 @@ var opts struct {
 	R14		bool   `long:"r14" description:"use gauntlet rev14 maze rom"`
 // select gauntlet 1 or 2 to process - default is 2
 	Gtp 	int    `short:"g" long:"gtp" default:"1" base:"10" description:"Gauntlet to process, 1 or 2"`
+	Lvl		int	   `short:"l" long:"level" default:"1" base:"10" description:"Level start 1 - 8"`
 	Se		bool   `short:"z" description:"sanctuary engine data output"`
 // interactive mode for maze display, select wall & floors, rotates & mirrors, load new mazes, test addresses
 // only with maze{n}, if -i not given, prog just exits with maze in output.png
