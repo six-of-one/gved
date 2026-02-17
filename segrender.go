@@ -355,8 +355,8 @@ func ffMakeMap(maze *Maze) FFMap {
 	for k, v := range maze.data {
 		if !isforcefield(v) {
 			if svanim {
-				anmap[xy{k.x, k.y}] = isanimtil(v)
-				anmapt[xy{k.x, k.y}] = 0
+				anmap[xy{k.x, k.y}] = isanimtil(v)		// /- with 757: tl := anmap[xy{ux, uy}] 	in animcon
+				anmapt[xy{k.x, k.y}] = 0				// fatal error: concurrent map read and map write
 //if anmap[xy{k.x, k.y}] > 0 {fmt.Printf("det anim %d: %d x %d\n",v,k.x, k.y)}
 			}
 			continue
