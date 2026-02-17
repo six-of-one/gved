@@ -1231,7 +1231,7 @@ func pb_upd(id string, nt string, vl int) {
 	fil := fmt.Sprintf(".pb/%s_%07d_g%d.ed",id,vl,opts.Gtp)
 	lod_maz(fil, xcpbuf, cpbuf, false, false)
 	cpx = opts.DimX; cpy = opts.DimY
-fmt.Printf("%spb dun: px %d py %d, %s\n",nt,cpx,cpy,fil)
+fmt.Printf("%spb dun: px %d py %d #%d, %s\n",nt,cpx,cpy,vl,fil)
 	opts.DimX = pmx; opts.DimY = pmy
 /*
 for my := 0; my <= cpy; my++ {
@@ -1326,8 +1326,7 @@ var lw fyne.Window	// local cpy win to view buf contents
 // change pb blotter if active
 	wpbimg = nimg										// for blotter overlay on ctrl-p
 	if wpbop && ccp == PASTE {
-		blotter(wpbimg,blx,bly,blx+px,bly+py)
-//		blot.Resize(fyne.NewSize(float32(px)*dt, float32(py)*dt))
+		blotter(wpbimg,blx,bly,px*int(dt),py*int(dt))
 	}
 	lw = wpb
 	wt = fmt.Sprintf("%d %sf",bn,id)

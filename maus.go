@@ -40,8 +40,10 @@ func blotter(img *image.NRGBA,px,py,sx,sy int) {
 			draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{blotcol}}, image.ZP, draw.Src)
 		}
 	}
+fmt.Printf("blotter proc\n")
 	bnds := mimg.Bounds()
-	iw, ih := bnds.Dx(), bnds.Dy()
+	iw, ih := bnds.Dx()*4, bnds.Dy()*4
+//	dt := opts.dtec
 	blot = blankimage(iw, ih)
 	offset := image.Pt(px, py)
 	draw.Draw(blot, img.Bounds().Add(offset), img, image.ZP, draw.Over)
@@ -129,14 +131,14 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 		blotter(nil,blx,bly,int(lx),int(ly))
 	} else {
 	if ccp == PASTE {
-//		ex = float32(float32(rx) + dt)
-//		ey = float32(float32(ry) + dt)
-	//	sx := nong(float32(int(ex / dt)) * dt - 3)
-	//	sy := nong(float32(int(ey / dt)) * dt - 3)
+		ex = float32(float32(rx) + dt)
+		ey = float32(float32(ry) + dt)
+		sx := nong(float32(int(ex / dt)) * dt - 3)
+		sy := nong(float32(int(ey / dt)) * dt - 3)
 		lx := float32(cpx) * dt + dt
 		ly := float32(cpy) * dt + dt
 
-		blx,bly = int(rx),int(ry)
+		blx,bly = int(sx),int(sy)
 		blotter(wpbimg,blx,bly,int(lx),int(ly))
 	} else {
 	tcmdhn := cmdhin

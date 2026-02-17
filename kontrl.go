@@ -732,7 +732,7 @@ func ccp_tog(op int) {
 	ccp_NOP()
 	if wccp != op { ccp = op }
 	if ccp == PASTE {
-		if !wpbop { wpbimg = palimage(cpbuf,xcpbuf,eflg,0,0,cpx+1,cpy+1,false) }
+		if !wpbop { pb_upd("pb", "mas", 1); wpbimg = palimage(cpbuf,xcpbuf,eflg,0,0,cpx+1,cpy+1,false) }
 		blotter(wpbimg,blx,bly,(cpx+1)*int(opts.dtec),(cpy+1)*int(opts.dtec))
 	}
 }
