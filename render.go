@@ -754,6 +754,7 @@ func animcon() {
 	for y := mvpy; y < mvye; y++ {
 		for x := mvpx; x < mvxe; x++ {
 			_, ux, uy := lot(x, y, x, y)	// what would be nice when mapping for the vp, is to make a list of all animatables
+			for alock {}					// cant access maps while segimg is writing
 			tl := anmap[xy{ux, uy}]			// and not have to check 200 to 400 cells every frame
 			r := anmapt[xy{ux, uy}]
 			if tl > 0 {

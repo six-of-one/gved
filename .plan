@@ -83,6 +83,8 @@ config ideas:
 - master pb ctrl-f filter selections
 - sound off item on key assign
 - add dialog - blotter color/alpha, blotter filename
+- maze xb - files, floors walls
+- do we want dev overrides on some items during play ? (unpin, etc)
 
 perhaps needs rewrite:
 - cleanup all modules

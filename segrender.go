@@ -327,6 +327,7 @@ func checkffadj4(maze *Maze, x int, y int) int {
 
 type FFMap map[xy]bool
 type AtMap map[xy]int		// animate tiles
+var alock bool				// fix concurrent read/write
 var anmap AtMap
 var anmapt AtMap			// animated timer cnt
 var svanim bool				// if true save animated map
@@ -352,6 +353,7 @@ func ffMakeMap(maze *Maze) FFMap {			// fix: this NEEDS locking with anmap, and 
 	ffmap := FFMap{}
 
 	if svanim {  manim = false }
+	alock = true
 	for k, v := range maze.data {
 		if !isforcefield(v) {
 			if svanim {
@@ -372,6 +374,7 @@ func ffMakeMap(maze *Maze) FFMap {			// fix: this NEEDS locking with anmap, and 
 			ffMark(ffmap, maze, k.x, k.y, 2)
 		}
 	}
+	alock = false
 
 	return ffmap
 }
@@ -845,7 +848,7 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 				}
 				if p >= 0 {
 						gtop := gg.NewContext(len, 12)
-						if err := gtop.LoadFontFace(".font/VrBd.ttf", 10); err == nil {
+						if err := gtop.LoadFontFace(".font/ganic2.fnt", 10); err == nil {
 						gtop.Clear()
 						fp, fq, fr := float64(p)/256,float64(q)/256,float64(r)/256
 						gtop.SetRGB(fp, fq, fr)
