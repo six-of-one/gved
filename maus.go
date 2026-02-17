@@ -40,7 +40,7 @@ func blotter(img *image.NRGBA,px,py,sx,sy int) {
 			draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{blotcol}}, image.ZP, draw.Src)
 		}
 	}
-fmt.Printf("blotter proc\n")
+//fmt.Printf("blotter proc\n")
 	bnds := mimg.Bounds()
 	iw, ih := bnds.Dx()*4, bnds.Dy()*4
 //	dt := opts.dtec
@@ -49,7 +49,7 @@ fmt.Printf("blotter proc\n")
 	draw.Draw(blot, img.Bounds().Add(offset), img, image.ZP, draw.Over)
 //	parimg = img
 //	writepngtoimage(blot, sx, sy,0,0,0,0,px,py,0)
-fmt.Printf("p: %d x %d sz: %d x %d, mimg: %d %d\n",px, py,sx, sy,iw, ih)
+//fmt.Printf("p: %d x %d sz: %d x %d, mimg: %d %d\n",px, py,sx, sy,iw, ih)
 //	blot.Move(fyne.Position{px, py})
 //	blot.Resize(fyne.Size{sx, sy})
 }
