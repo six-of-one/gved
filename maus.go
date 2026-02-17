@@ -26,6 +26,8 @@ var blotcol uint32		// with no image, this controls color & transparency in hex 
 var gvs bool			// use blotter to simulate view of gauntlet viewport
 var ablot bool			// active blotter
 
+// now the init fn() called at ed_init - tho could poss. update custom img changes
+
 func blotter(img *image.NRGBA) {
 
 	if img == nil {
@@ -44,6 +46,8 @@ func blotter(img *image.NRGBA) {
 	}
 }
 
+// moves blotter & adjusts
+
 func blotmov(px float32, py float32, szx float32, szy float32) {
 
 //fmt.Printf("p: %.0f x %.0f sz: %.0f x %.0f dt: %.0f, mbd %t\n",px, py,szx, szy,opts.dtec,mbd)
@@ -51,10 +55,9 @@ func blotmov(px float32, py float32, szx float32, szy float32) {
 	blot.Resize(fyne.Size{szx, szy})
 //	blot.Refresh()
 	if !ablot {
-		box := container.NewStack(rbtn, rbimg, blot)
-		w.SetContent(box)
+		box := container.NewStack(rbtn, rbimg, blot)	// SetContent will max size the blotter when its called
+		w.SetContent(box)								// call it too much and blotter malfunctions - thus why animcon must be off
 		ablot = true
-fmt.Printf("ablot\n")
 	}
 }
 
@@ -122,9 +125,9 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 	ex := float32(rx)
 	ey := float32(ry)
 	if logo { mk = 8 } else { prcl = 1 }		// mod keys not picked up here ?
-mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
-beef := fmt.Sprintf("s: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d, %s",sx,sy,ex,ey,dt,mb,mbdi,mk,h.title)
-statlin(cmdhin,beef)
+//mbdi := 0; if mbd { mbdi = 1 }	// this is part of beef
+//beef := fmt.Sprintf("s: %.0f x %.0f r: %.0f x %.0f dt: %.0f, mb/d %d/%d mk %d, %s",sx,sy,ex,ey,dt,mb,mbdi,mk,h.title)
+//statlin(cmdhin,beef)
 
 	if strings.Contains(h.title, "G¹G²ved") {		// only in main win
 
@@ -163,7 +166,6 @@ statlin(cmdhin,beef)
 	ex = float32(float32(ex) + dt)					// click in 1 tile selects the tile
 	ey = float32(float32(ey) + dt)
 	if mbd {
-fmt.Printf("blotr mbd\n")
 // blotter size hinter
 		mxmd = int(sx / dt) // redo as start / end can swap
 		mymd = int(sy / dt)
@@ -241,17 +243,15 @@ fmt.Printf("%d down - rel: %.0f x %.0f maze cell: %d x %d\n",mb,sxmd,symd,mxmd,m
 	mbd = (mb == 1)
 	if mbd {
 		h.MouseMoved(mm)
-	go func() {
+	  go func() {
 			time.Sleep(10 * time.Millisecond)
-   fyne.Do(func() {
-		dt := float32(opts.dtec)
-		sx := nong(float32(int(float32(sxmd) / dt)) * dt - 3)				// blotter selects tiles with original unit of 16 x 16
-		sy := nong(float32(int(float32(symd) / dt)) * dt - 4)
-//		ex = float32(int(ex / dt)) * dt - 1
-//		ey = float32(int(ey / dt)) * dt - 2
-		blotmov(sx,sy,dt+2,dt+2)		// only way a single click, highlighting 1 cell works if mouse is not moving
-   })
-	}()
+		fyne.Do(func() {
+			dt := float32(opts.dtec)
+			sx := nong(float32(int(float32(sxmd) / dt)) * dt - 3)				// blotter selects tiles with original unit of 16 x 16
+			sy := nong(float32(int(float32(symd) / dt)) * dt - 4)
+			blotmov(sx,sy,dt+2,dt+2)		// only way a single click, highlighting 1 cell works if mouse is not moving
+		})
+	  }()
 	}		// engage 1 tile click
 }
 

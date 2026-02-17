@@ -2,11 +2,9 @@ package main
 
 import (
 	"image"
-//	"image/png"
 	"math"
 	"math/rand"
 	"fmt"
-//	"image/draw"
 	"github.com/fogleman/gg"
 	"image/color"
 	"encoding/binary"
@@ -606,7 +604,6 @@ fmt.Printf("flim %s entry %d t:%d x %d, src %d x %d\n",wlfl.florn[p],p,totw, tot
 var florb *image.NRGBA
 var flordirt int			// whether or not an edit could dirty the flor, pb & palete set to -1
 var fldrsv int				// pb & pal save flordirt state
-var tmanim bool
 
 func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 
