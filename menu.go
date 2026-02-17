@@ -391,9 +391,7 @@ fmt.Printf("clwin-s tl: %s\n",btn.title)
 	if !strings.Contains(btn.title, "G¹G²ved") {
 		box := container.NewStack(btn, bimg)
 		cw.SetContent(box)
-		blotoff()
 	}
-
 }
 
 // main win updater - sets master rbimg for blot overlay
@@ -409,12 +407,9 @@ func clikwinm(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 fmt.Printf("clwin-m tl: %s\n",rbtn.title)
 
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
-	var box *fyne.Container
-	box = container.NewStack(rbtn, rbimg)		// key to seeing maze & having the click button with full mouse sense
+	box := container.NewStack(rbtn, rbimg)		// key to seeing maze & having the click button with full mouse sense
 	cw.SetContent(box)								// and blot coming last is shown on top... huh?
 
-// call handle blot off after win chg
-	blotoff()
 //fmt.Printf("btn sz %v\n",rbtn.Size())
 }
 
@@ -442,7 +437,7 @@ func upwin(simg *image.NRGBA, lvp int) {
 	opts.dtec = 16.0 * (float64(geow - 4) / dtp)				// the size of a tile, odd window size may cause issues
 fmt.Printf("upwin %d x %d dtec: %f (vp: %d dtp %.1f) geom: %d x %d\n",opts.DimX,opts.DimY,opts.dtec,vp,dtp,geow,geoh)
 if opts.Verbose { fmt.Printf(" dtec: %f\n",opts.dtec) }			// detected size of a single maze tile in pixels, used for click id of cell x,y
-	if lvp < 0 || mbd || ccp == PASTE { clikwinm(w, simg, geow, geoh) }		// one time init shot
+	if lvp < 0 { clikwinm(w, simg, geow, geoh) }		// one time init shot
 
 	spx := ""
 	if sdb > 0 { spx = fmt.Sprintf("sdbuf: %d",sdb) }
