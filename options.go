@@ -14,6 +14,7 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
+	"fyne.io/fyne/v2/theme"
 )
 
 var opts struct {
@@ -237,6 +238,19 @@ fmt.Printf("sv_config\n")
 
 func optCont(wn fyne.Window) fyne.CanvasObject {
 
+	vp_label := widget.NewLabelWithStyle("View size:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	vp_entr := widget.NewEntry()
+	vp := fmt.Sprintf("%d",viewp)
+	vp_entr.SetText(vp)
+	vp_entr.OnChanged = func(s string) {
+		fmt.Sscanf(s,"%d",&viewp)
+		if diff_level < 0 { diff_level = 1.0 }
+		ns := fmt.Sprintf("Viewport size: %d",viewp)
+		statlin(cmdhin,ns)
+		vp_label.SetText(ns)
+		sv_config()
+	}
+
 	diff_label := widget.NewLabelWithStyle("Difficulty:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 
 	diff_entr := widget.NewEntry()
@@ -255,7 +269,7 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		opts.Lvl = lvl_sel[str]
 		sv_config()
 	})
-	sellvl.SetSelected("Level 1")
+	sellvl.SetSelected(lvl_str[opts.Lvl])
 	sel_label := widget.NewLabelWithStyle("Start on:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 
 	unpx := widget.NewCheck("Unpin X", func(upx bool) {
@@ -271,7 +285,9 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 	})
 	unpy.Checked = unpiny
 
-	return container.New(
+	opdlg := container.NewAppTabs(
+	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),			// stats VisibilityIcon, scores StorageIcon, edit FileApplicationIcon, 
+	container.New(
 		layout.NewVBoxLayout(),
 //		layout.NewSpacer(),
 		container.New(
@@ -279,9 +295,31 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 			layout.NewSpacer(),
 			container.New(
 				layout.NewHBoxLayout(),
+				vp_label,
+				vp_entr,
+			),
+			layout.NewSpacer(),
+			container.New(
+				layout.NewHBoxLayout(),
 				diff_label,
 				diff_entr,
 			),
+			layout.NewSpacer(),
+			container.New(
+				layout.NewHBoxLayout(),
+				sel_label,
+				sellvl,
+			),
+			layout.NewSpacer(),
+		),
+		layout.NewSpacer(),
+	)),
+	container.NewTabItemWithIcon("Dev",theme.WarningIcon(),
+	container.New(
+		layout.NewVBoxLayout(),
+//		layout.NewSpacer(),
+		container.New(
+			layout.NewVBoxLayout(),
 			layout.NewSpacer(),
 			container.New(
 				layout.NewHBoxLayout(),
@@ -296,5 +334,8 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 			layout.NewSpacer(),
 		),
 		layout.NewSpacer(),
+	),
+	),
 	)
+	return opdlg
 }

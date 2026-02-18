@@ -1381,6 +1381,19 @@ var lvl_sel = map[string]int{
 	"Level 8...":8,
 	"Random 1-7":0,
 }
+var lvl_str = map[int]string{
+	-6:"Research",
+	0:"Random 1-7",
+	1:"Level 1",
+	2:"Level 2",
+	3:"Level 3",
+	4:"Level 4",
+	5:"Level 5",
+	6:"Level 6",
+	7:"Level 7",
+	8:"Level 8...",
+}
+
 // sanctuary custom floor tests
 //		if Se_cflr_cnt > 11 { Se_cflr_cnt = 1 }
 /*
