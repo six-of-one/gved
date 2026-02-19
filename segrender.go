@@ -648,7 +648,7 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 			if sb == G1OBJ_WALL_TRAP1 { nwt = NOWALL }
 			if sb == G1OBJ_WALL_DESTRUCTABLE { nwt = NOWALL }
 
-			if (nothing & nwt) == 0 {			// std wall shadows here
+			if !svanim || (nothing & nwt) == 0 {			// std wall shadows here
 				adj = checkwalladj3g1(maze, xdat, x, y)	// this sets adjust for shadows, floorGetStamp sets shadows by darkening floor parts
 			}
 
@@ -657,7 +657,7 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 				coltil(img,0,x*16, y*16)		// null cell, black tile
 			}
 			if sb >= 0 {
-			if (nothing & NOFLOOR) == 0 {
+			if  !svanim || (nothing & NOFLOOR) == 0 {
 				var r int
 				p,q,r = parser(xp, SE_COLRT)
 				var cl uint32
@@ -697,7 +697,7 @@ func florbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 				}
 			}}
 			if ffmap[xy{x,y}] {		// are we on a forcefield beam area
-				if nothing & NOTRAP == 0 {
+				if  !svanim || nothing & NOTRAP == 0 {
 //fmt.Printf("ffbeam %d x %d, vc: %d x %d\n ",x,y,vcx, vcy)
 					stamp.ptype = "forcefield"								// this is writter over: void tiles, color tiles, cust floor
 					stamp.pnum = 0
@@ -755,7 +755,7 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 			switch wbd {
 			case G1OBJ_WALL_DESTRUCTABLE:
 				adj, wly = checkwalladj8g1(maze, x, y)
-			if (nothing & NOWALL) == 0 {
+			if  !svanim || (nothing & NOWALL) == 0 {
 				p,q,_ = parser(xp, SE_CWAL)
 				if p >= 0 && p < curwf {
 					stamp = nil
@@ -774,7 +774,7 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 
 			case SEOBJ_SECRTWAL:
 				adj, wly = checkwalladj8g1(maze, x, y)
-			if (nothing & NOWALL) == 0 {
+			if  !svanim || (nothing & NOWALL) == 0 {
 				p,q,_ = parser(xp, SE_CWAL)
 				if p >= 0 && p < curwf {
 					stamp = nil
@@ -812,7 +812,7 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 				fallthrough
 			case G1OBJ_WALL_REGULAR:
 				adj, wly = checkwalladj8g1(maze, x, y)
-				if (nothing & nwt) == 0 {
+				if  !svanim || (nothing & nwt) == 0 {
 				p,q,_ = parser(xp, SE_CWAL)
 				if p >= 0 && p < curwf {
 					stamp = nil
@@ -883,7 +883,7 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 				}
 	//fmt.Printf("\n")
 			}
-			if dots != 0 && nothing & NOWALL == 0 {
+			if dots != 0 &&  !svanim || nothing & NOWALL == 0 {
 				renderdots(img, x*16, y*16, dots)
 			}
 		}

@@ -112,11 +112,11 @@ fmt.Printf("palimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 			if dots == 0 { dots = 3 }
 
 			adj := checkwalladj3(maze, x, y) + rand.Intn(4)
-			if (nothing & NOTRAP) == 0 {
+	//		if (nothing & NOTRAP) == 0 {
 				stamp = floorGetStamp(maze.floorpattern, adj, maze.floorcolor)
 				stamp.ptype = "trap" // use trap palette (FIXME: consider moving)
 				stamp.pnum = 0
-			}
+	//		}
 
 		case SEOBJ_DOOR_H:
 			G1 = false; fallthrough
@@ -141,7 +141,9 @@ fmt.Printf("palimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 		case SEOBJ_FORCEFIELDHUB:
 			G1 = false
 			adj := checkffadj4(maze, x, y)
-			if nothing & NOEXP == 0 { stamp = ffGetStamp(adj) }
+		//	if nothing & NOEXP == 0 {
+				stamp = ffGetStamp(adj)
+		//	}
 
 		default:
 			if opts.Verbose && false { fmt.Printf("G¹ WARNING: Palete/pb obj id 0x%02x\n", sb) }
@@ -151,21 +153,23 @@ fmt.Printf("palimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 		if sb > 0 {
 
 		if stamp != nil {
-		if stamp.mask & nothing == 0 {
+	//	if stamp.mask & nothing == 0 {
 			g1mask[sb] = stamp.mask
 // note G¹ here, opposite of other writes using gt - here gt preserves true G¹ state due to complex tile rom extract and pallet select
 			writestamptoimage(G1,img, stamp, vcx*16+stamp.nudgex, vcy*16+stamp.nudgey)
 			nugetx, nugety = stamp.nudgex, stamp.nudgey
-		}} else {
+	//	}
+		} else {
 //fmt.Printf("star ld %d, %v\n",sb)
-		if arstamp[sb].mask & nothing == 0 {
+	//	if arstamp[sb].mask & nothing == 0 {
 			if arstamp[sb].pnum > -1 || arstamp[sb].pnum == -7 {
 				gtopl = arstamp[sb].gtopl
 				offset := image.Pt(vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
 				draw.Draw(img, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
 				if arstamp[sb].pnum != -7 { nugetx, nugety = arstamp[sb].nudgex, arstamp[sb].nudgey }
 			}
-		}}}
+	//	}
+		}}
 
 // stats on palette
 			if stat {			// on palette screen, show stats for loaded maze
@@ -192,15 +196,15 @@ fmt.Printf("palimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 // while each monsters gen has a letter color, some are hard to read - resetting to red
 				gtop.Clear()
 				if !gtopcol { gtop.SetRGB(1, 0, 0) }
-				if nothing & NOGEN == 0 {
+			//	if nothing & NOGEN == 0 {
 					gtop.DrawStringAnchored(gtopl, 6, 6, 0.5, 0.5)
-				}
+			//	}
 				gtopim := gtop.Image()
 				offset := image.Pt(vcx*16+nugetx-4, vcy*16+nugety-4)
 				draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 			}
 
-			if dots != 0 && nothing & NOWALL == 0 {
+			if dots != 0 {
 				renderdots(img, (x-xb)*16, (y-yb)*16, dots)
 			}
 			G1 = gtp			// restore G¹ for any SE using G² turning it off
