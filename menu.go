@@ -428,12 +428,12 @@ func upwin(simg *image.NRGBA, lvp int) {
 	if opts.Wob { dtp = 528.0 }
 	if opts.edat > 0 {
 //		geow = geow & 0xfe0	+ 13			// lock to multiples of 32
-		ngeoh := geow + 26					// square maze area + 26 for menu bar - window is still 4 wider than maze content
-		if ngeoh != geoh {
+		ngeow := geoh - 26					// square maze area + 26 for menu bar - window is still 4 wider than maze content
+		if ngeow != geow {
 			rmsg = "set window ratio to edit"
 			rez = true
 		}
-		geoh = ngeoh
+		geow = ngeow
 		dtp = float64(vp) * 16
 	}											// having an edit viewport will change 528 - will have to be vport wid (same as high) * 16
 	opts.dtec = 16.0 * (float64(geow - 4) / dtp)				// the size of a tile, odd window size may cause issues
