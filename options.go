@@ -313,7 +313,34 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		sv_config()
 	})
 // game progress (similar to arcade but with a couple extra items)
-	prog_label := widget.NewLabelWithStyle("Level to start check and %% chance: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	prog_label := widget.NewLabelWithStyle("Level to start check and % chance: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+// note set / save val on these
+	pmir_lab :=  widget.NewLabelWithStyle("Maze mirror (X): ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	pflip_lab := widget.NewLabelWithStyle("Maze flip (Y):   ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	prot_lab :=  widget.NewLabelWithStyle("Maze rot -/+90°: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	unp_lab :=   widget.NewLabelWithStyle("Unpin edges:     ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	shst_lab :=  widget.NewLabelWithStyle("Shots stun:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	shhr_lab :=  widget.NewLabelWithStyle("Shots hurt:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	invw_lab :=  widget.NewLabelWithStyle("Invisible walls: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	lcol :=  widget.NewLabelWithStyle(" : ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	lper :=  widget.NewLabelWithStyle(" %", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+
+// level the check will start
+	prog_mirror := widget.NewEntry()
+	prog_flip := widget.NewEntry()
+	prog_rot := widget.NewEntry()
+	prog_unpin := widget.NewEntry()
+	prog_sstun := widget.NewEntry()
+	prog_shurt := widget.NewEntry()
+	prog_invw := widget.NewEntry()
+// inital percent of check
+	per_mirror := widget.NewEntry()
+	per_flip := widget.NewEntry()
+	per_rot := widget.NewEntry()
+	per_unpin := widget.NewEntry()
+	per_sstun := widget.NewEntry()
+	per_shurt := widget.NewEntry()
+	per_invw := widget.NewEntry()
 
 // the massive block out
 	opdlg := container.NewAppTabs(
@@ -351,6 +378,34 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 			container.New(
 				layout.NewVBoxLayout(),
 				prog_label,
+				container.New(
+					layout.NewHBoxLayout(),
+					pmir_lab, prog_mirror,lcol, per_mirror,lper,
+				),
+				container.New(
+				layout.NewHBoxLayout(),
+					pflip_lab,prog_flip,  lcol, per_flip,  lper,
+				),
+				container.New(
+				layout.NewHBoxLayout(),
+					prot_lab, prog_rot,   lcol, per_rot,   lper,
+				),
+				container.New(
+				layout.NewHBoxLayout(),
+					unp_lab,  prog_unpin, lcol, per_unpin, lper,
+				),
+				container.New(
+				layout.NewHBoxLayout(),
+					shst_lab, prog_sstun, lcol, per_sstun, lper,
+				),
+				container.New(
+				layout.NewHBoxLayout(),
+					shhr_lab, prog_shurt, lcol, per_shurt, lper,
+				),
+				container.New(
+				layout.NewHBoxLayout(),
+					invw_lab, prog_invw,  lcol, per_invw,  lper,
+				),
 			),
 		),
 		layout.NewSpacer(),
