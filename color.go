@@ -138,6 +138,7 @@ func colorCont(wn fyne.Window) fyne.CanvasObject {
 	})
 
 	blot_hexent := widget.NewEntry()
+	blot_hexent.Resize(fyne.Size{100, 36})
 	blot_hexent.SetText("FF00AAFF")
 	var nc uint32
 	blot_hexent.OnChanged = func(s string) {
@@ -164,6 +165,7 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 	})
 
 	col1_hexent := widget.NewEntry()
+	col1_hexent.Resize(fyne.Size{100, 36})
 	col1_hexent.SetText("FF00AAFF")
 	col1_hexent.OnChanged = func(s string) {
 		fmt.Sscanf(s,"%08x",&nc)
@@ -189,6 +191,7 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 	})
 
 	col2_hexent := widget.NewEntry()
+	col2_hexent.Resize(fyne.Size{100, 36})
 	col2_hexent.SetText("FF00AAFF")
 	col2_hexent.OnChanged = func(s string) {
 		fmt.Sscanf(s,"%08x",&nc)
@@ -204,6 +207,7 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 	cv1_rect := colorpicker.NewColorSelectModalRect(w, fyne.NewSize(30, 20), defaultColor)
 
 	cv1_hexent := widget.NewEntry()
+	cv1_hexent.Resize(fyne.Size{100, 36})
 	cv1_hexent.SetText("FF0000FF")
 	cv1_hexent.OnChanged = func(s string) {
 		fmt.Sscanf(s,"%08x",&nc)
@@ -224,7 +228,7 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 				blot_btn,
 				blot_tap.label,
 				blot_tap.rect,
-				blot_hexent,
+				container.NewWithoutLayout(blot_hexent),
 			),
 			layout.NewSpacer(),
 			container.New(
@@ -232,7 +236,7 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 				col1_btn,
 				col1_tap.label,
 				col1_tap.rect,
-				col1_hexent,
+				container.NewWithoutLayout(col1_hexent),
 			),
 			layout.NewSpacer(),
 			container.New(
@@ -240,14 +244,14 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 				col2_btn,
 				col2_tap.label,
 				col2_tap.rect,
-				col2_hexent,
+				container.NewWithoutLayout(col2_hexent),
 			),
 			layout.NewSpacer(),
 			container.New(
 				layout.NewHBoxLayout(),
 				cv1_label,
 				cv1_rect,
-				cv1_hexent,
+				container.NewWithoutLayout(cv1_hexent),
 			),
 			layout.NewSpacer(),
 		),
