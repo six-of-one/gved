@@ -240,20 +240,21 @@ fmt.Printf("sv_config\n")
 
 var mzw *canvas.Raster
 var cmzw *fyne.Container
+var optht float32 = 36.0
 
 func optCont(wn fyne.Window) fyne.CanvasObject {
 
 // viewport size
-	vp_label := widget.NewLabelWithStyle("View size:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	vp_label := widget.NewLabelWithStyle("View size:       ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 	vp_entr := widget.NewEntry()
+	vp_entr.Resize(fyne.Size{70, optht})
 	vp := fmt.Sprintf("%d",viewp)
 	vp_entr.SetText(vp)
 	vp_entr.OnChanged = func(s string) {
-		fmt.Sscanf(s,"%d",&viewp)
+		fmt.Sscanf(s,"%d",&viewp)					// force a canvas refresh here if visible
 		if diff_level < 0 { diff_level = 1.0 }
 		ns := fmt.Sprintf("Viewport size: %d",viewp)
 		statlin(cmdhin,ns)
-		vp_label.SetText(ns)
 		sv_config()
 	}
 
@@ -261,6 +262,7 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 	diff_label := widget.NewLabelWithStyle("Difficulty:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 
 	diff_entr := widget.NewEntry()
+	diff_entr.Resize(fyne.Size{70, optht})
 	ns := fmt.Sprintf("%.1f",diff_level)
 	diff_entr.SetText(ns)
 	diff_entr.OnChanged = func(s string) {
@@ -268,7 +270,6 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		if diff_level < 0 { diff_level = 1.0 }
 		ns := fmt.Sprintf("Difficulty: %.1f",diff_level)
 		statlin(cmdhin,ns)
-		diff_label.SetText(ns)
 		sv_config()
 	}
 
@@ -343,7 +344,7 @@ value="80" randomly turn some mazes (all std walls) invisible - this is a sanctu
 value="0.1" base % all std maze walls turn invisible
 */
 
-	prog_label := widget.NewLabelWithStyle("Level to start check and % chance: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	prog_label := widget.NewLabelWithStyle("Level to start check : % chance: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 // note set / save val on these
 	pmir_lab :=  widget.NewLabelWithStyle("Maze mirror (X): ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 	pflip_lab := widget.NewLabelWithStyle("Maze flip (Y):   ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
@@ -352,25 +353,39 @@ value="0.1" base % all std maze walls turn invisible
 	shst_lab :=  widget.NewLabelWithStyle("Shots stun:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 	shhr_lab :=  widget.NewLabelWithStyle("Shots hurt:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 	invw_lab :=  widget.NewLabelWithStyle("Invisible walls: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
-	lcol :=  widget.NewLabelWithStyle(" : ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	lcol :=  widget.NewLabelWithStyle("  :", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 	lper :=  widget.NewLabelWithStyle(" %", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 
 // level the check will start
 	prog_mirror := widget.NewEntry()
+	prog_mirror.Resize(fyne.Size{60, optht})
 	prog_flip := widget.NewEntry()
+	prog_flip.Resize(fyne.Size{60, optht})
 	prog_rot := widget.NewEntry()
+	prog_rot.Resize(fyne.Size{60, optht})
 	prog_unpin := widget.NewEntry()
+	prog_unpin.Resize(fyne.Size{60, optht})
 	prog_sstun := widget.NewEntry()
+	prog_sstun.Resize(fyne.Size{60, optht})
 	prog_shurt := widget.NewEntry()
+	prog_shurt.Resize(fyne.Size{60, optht})
 	prog_invw := widget.NewEntry()
+	prog_invw.Resize(fyne.Size{60, optht})
 // inital percent of check
 	per_mirror := widget.NewEntry()
+	per_mirror.Resize(fyne.Size{50, optht})
 	per_flip := widget.NewEntry()
+	per_flip.Resize(fyne.Size{50, optht})
 	per_rot := widget.NewEntry()
+	per_rot.Resize(fyne.Size{50, optht})
 	per_unpin := widget.NewEntry()
+	per_unpin.Resize(fyne.Size{50, optht})
 	per_sstun := widget.NewEntry()
+	per_sstun.Resize(fyne.Size{50, optht})
 	per_shurt := widget.NewEntry()
+	per_shurt.Resize(fyne.Size{50, optht})
 	per_invw := widget.NewEntry()
+	per_invw.Resize(fyne.Size{50, optht})
 
 // the massive block out
 	opdlg := container.NewAppTabs(
@@ -384,13 +399,13 @@ value="0.1" base % all std maze walls turn invisible
 			container.New(
 				layout.NewHBoxLayout(),
 				vp_label,
-				vp_entr,
+				container.NewWithoutLayout(vp_entr),
 			),
 			layout.NewSpacer(),
 			container.New(
 				layout.NewHBoxLayout(),
 				diff_label,
-				diff_entr,
+				container.NewWithoutLayout(diff_entr),
 			),
 			layout.NewSpacer(),
 			container.New(
@@ -410,31 +425,31 @@ value="0.1" base % all std maze walls turn invisible
 				prog_label,
 				container.New(
 					layout.NewHBoxLayout(),
-					pmir_lab, prog_mirror,lcol, per_mirror,lper,
+					pmir_lab,container.NewWithoutLayout(prog_mirror),lcol,container.NewWithoutLayout(per_mirror),lper,
 				),
 				container.New(
 				layout.NewHBoxLayout(),
-					pflip_lab,prog_flip,  lcol, per_flip,  lper,
+					pflip_lab,container.NewWithoutLayout(prog_flip),lcol,container.NewWithoutLayout(per_flip),lper,
 				),
 				container.New(
 				layout.NewHBoxLayout(),
-					prot_lab, prog_rot,   lcol, per_rot,   lper,
+					prot_lab,container.NewWithoutLayout(prog_rot),lcol,container.NewWithoutLayout(per_rot),lper,
 				),
 				container.New(
 				layout.NewHBoxLayout(),
-					unp_lab,  prog_unpin, lcol, per_unpin, lper,
+					unp_lab,container.NewWithoutLayout(prog_unpin),lcol,container.NewWithoutLayout(per_unpin),lper,
 				),
 				container.New(
 				layout.NewHBoxLayout(),
-					shst_lab, prog_sstun, lcol, per_sstun, lper,
+					shst_lab,container.NewWithoutLayout(prog_sstun),lcol,container.NewWithoutLayout(per_sstun),lper,
 				),
 				container.New(
 				layout.NewHBoxLayout(),
-					shhr_lab, prog_shurt, lcol, per_shurt, lper,
+					shhr_lab,container.NewWithoutLayout(prog_shurt),lcol,container.NewWithoutLayout(per_shurt),lper,
 				),
 				container.New(
 				layout.NewHBoxLayout(),
-					invw_lab, prog_invw,  lcol, per_invw,  lper,
+					invw_lab,container.NewWithoutLayout(prog_invw),lcol,container.NewWithoutLayout(per_invw),lper,
 				),
 			),
 		),
@@ -471,7 +486,7 @@ value="0.1" base % all std maze walls turn invisible
 			container.New(
 				layout.NewHBoxLayout(),
 				vp_label,
-				vp_entr,
+				container.NewWithoutLayout(vp_entr),
 			),
 		),
 		layout.NewSpacer(),
