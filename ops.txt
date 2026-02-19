@@ -386,6 +386,8 @@ License		- original gex code under GPL3, gved (new) code is GPL2
 
 Cmds↓:
 Options		- set and save various system options
+Colors		- set various color options for view/ edit
+Maze stats	- items counts for current maze, live updates
 View Sim	- blotter is set to default gauntlet view port to simulate
 			  what a player could see in any area (arcade)
 Secret wall	- toggle displaying G² 'shootable secret' walls in palette+1

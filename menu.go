@@ -295,7 +295,7 @@ func st_menu() {
 			"edit keys lock when pressed, hit 'b' and place doors\nmiddle click - click to reassign current key\n(middle click also activates edit mode,\n and uses default key 'y' if not set)\n"+
 			"logo key* + mouse: paint curr key or ctrl-del\n* these edit keys require '\\' mode\n\n\ngved - G¹G² visual editor\ngithub.com/six-of-one/", 400,755,nil,typedRune)
 	})
-	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemColr, menuItemStats, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
+	editMenu := fyne.NewMenu("Edit", menuItemSave, menuItemLoad, menuItemReset, menuItemEdhin, menuItemLin2, menuItemPb, menuItemCopy, menuItemCut, menuItemPaste, menuItemUndo, menuItemRedo, menuItemUswp)
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
 	menuItemOpt := fyne.NewMenuItem("Options", menu_option)
@@ -314,7 +314,7 @@ func st_menu() {
 	})
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemEdKey, menuItemOps, menuItemAbout, menuItemLIC)
 
-	hintup = fyne.NewMenu("cmds↓    ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, ilu, A #a",menuItemOpt, menuItemGvs, menuItemNosec, menuItemWob, menuItemPalf)
+	hintup = fyne.NewMenu("cmds↓    ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, ilu, A #a",menuItemOpt, menuItemColr, menuItemStats, menuItemGvs, menuItemNosec, menuItemWob, menuItemPalf)
 
 	statup = fyne.NewMenu("view mode:")
 
