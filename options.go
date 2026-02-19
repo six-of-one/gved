@@ -15,6 +15,7 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/theme"
+	"fyne.io/fyne/v2/canvas"
 )
 
 var opts struct {
@@ -235,6 +236,10 @@ fmt.Printf("sv_config\n")
 }
 
 // options dialog
+// testing
+
+var mzw *canvas.Raster
+var cmzw *fyne.Container
 
 func optCont(wn fyne.Window) fyne.CanvasObject {
 
@@ -284,9 +289,12 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		sv_config()
 	})
 	unpy.Checked = unpiny
+	img := blankimage(20*8, 20*8)
+	mzw = canvas.NewRasterFromImage(img)
+	cmzw = container.New(layout.NewHBoxLayout(),mzw)
 
 	opdlg := container.NewAppTabs(
-	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),			// stats VisibilityIcon, scores StorageIcon, edit FileApplicationIcon, 
+	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),			// stats VisibilityIcon, scores StorageIcon, edit FileApplicationIcon,
 	container.New(
 		layout.NewVBoxLayout(),
 //		layout.NewSpacer(),
@@ -334,8 +342,24 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 			layout.NewSpacer(),
 		),
 		layout.NewSpacer(),
-	),
-	),
+	)),
+	container.NewTabItemWithIcon("Edit",theme.FileApplicationIcon(),			// stats VisibilityIcon, scores StorageIcon, edit FileApplicationIcon,
+	container.New(
+		layout.NewVBoxLayout(),
+//		layout.NewSpacer(),
+		container.New(
+			layout.NewVBoxLayout(),
+			layout.NewSpacer(),
+			container.New(
+				layout.NewHBoxLayout(),
+				vp_label,
+				vp_entr,
+			),
+			layout.NewSpacer(),
+			cmzw,
+		),
+		layout.NewSpacer(),
+	)),
 	)
 	return opdlg
 }
