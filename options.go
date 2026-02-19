@@ -243,6 +243,7 @@ var cmzw *fyne.Container
 
 func optCont(wn fyne.Window) fyne.CanvasObject {
 
+// viewport size
 	vp_label := widget.NewLabelWithStyle("View size:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 	vp_entr := widget.NewEntry()
 	vp := fmt.Sprintf("%d",viewp)
@@ -256,6 +257,7 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		sv_config()
 	}
 
+// set difficulty level
 	diff_label := widget.NewLabelWithStyle("Difficulty:      ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 
 	diff_entr := widget.NewEntry()
@@ -269,6 +271,8 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		diff_label.SetText(ns)
 		sv_config()
 	}
+
+// select start level
 	sellvl := widget.NewSelect([]string{"Research", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7", "Level 8...", "Random 1-7"}, func(str string) {
 		fmt.Printf("Select level: %s\n", str)
 		opts.Lvl = lvl_sel[str]
@@ -277,6 +281,7 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 	sellvl.SetSelected(lvl_str[opts.Lvl])
 	sel_label := widget.NewLabelWithStyle("Start on:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 
+// unpin  controls
 	unpx := widget.NewCheck("Unpin X", func(upx bool) {
 		fmt.Printf("Unpin X set to %t\n", upx)
 		unpinx = upx
@@ -289,10 +294,28 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		sv_config()
 	})
 	unpy.Checked = unpiny
-//	img := blankimage(20*8, 20*8)
-//	mzw = canvas.NewRasterFromImage(img)
-//	cmzw = container.New(layout.NewHBoxLayout(),mzw)
 
+// enable tutorial messages / announcements: "use keys to open doors"
+	tut_label := widget.NewLabelWithStyle("Tutorials: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	g1tut := widget.NewCheck("G¹ ", func(g1t bool) {
+		fmt.Printf("Tutorial show / announce G¹ %t\n", g1t)
+	//	g1ton = g1t
+		sv_config()
+	})
+	g2tut := widget.NewCheck("G² ", func(g2t bool) {
+		fmt.Printf("Tutorial show / announce G² %t\n", g2t)
+	//	g2ton = g2t
+		sv_config()
+	})
+	setut := widget.NewCheck("Sanctuary", func(se_t bool) {
+		fmt.Printf("Tutorial show Sanctuary %t\n", se_t)
+	//	se_ton = se_t
+		sv_config()
+	})
+// game progress (similar to arcade but with a couple extra items)
+	prog_label := widget.NewLabelWithStyle("Level to start check and %% chance: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+
+// the massive block out
 	opdlg := container.NewAppTabs(
 	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),			// stats VisibilityIcon, scores StorageIcon, edit FileApplicationIcon,
 	container.New(
@@ -319,6 +342,16 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 				sellvl,
 			),
 			layout.NewSpacer(),
+			container.New(
+				layout.NewHBoxLayout(),
+				tut_label,
+				g1tut, g2tut, setut,
+			),
+			layout.NewSpacer(),
+			container.New(
+				layout.NewVBoxLayout(),
+				prog_label,
+			),
 		),
 		layout.NewSpacer(),
 	)),
@@ -358,7 +391,7 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		),
 		layout.NewSpacer(),
 	)),
-	container.NewTabItemWithIcon("Maze",theme.ViewFullScreenIcon(),			// stats VisibilityIcon, scores StorageIcon, edit FileApplicationIcon,
+	container.NewTabItemWithIcon("Maze",theme.ViewFullScreenIcon(),
 		cmzw,
 	),
 	)

@@ -208,7 +208,7 @@ func menu_color() {
 func menu_option() {
 
 	wc := a.NewWindow("Option controls")
-	wc.Resize(fyne.NewSize(350, 400))
+	wc.Resize(fyne.NewSize(400, 500))
 	wc.SetContent(optCont(wc))
 	wc.Show()
 }
