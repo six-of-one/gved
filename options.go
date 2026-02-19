@@ -289,9 +289,9 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		sv_config()
 	})
 	unpy.Checked = unpiny
-	img := blankimage(20*8, 20*8)
-	mzw = canvas.NewRasterFromImage(img)
-	cmzw = container.New(layout.NewHBoxLayout(),mzw)
+//	img := blankimage(20*8, 20*8)
+//	mzw = canvas.NewRasterFromImage(img)
+//	cmzw = container.New(layout.NewHBoxLayout(),mzw)
 
 	opdlg := container.NewAppTabs(
 	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),			// stats VisibilityIcon, scores StorageIcon, edit FileApplicationIcon,
@@ -355,11 +355,12 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 				vp_label,
 				vp_entr,
 			),
-			layout.NewSpacer(),
-			cmzw,
 		),
 		layout.NewSpacer(),
 	)),
+	container.NewTabItemWithIcon("Maze",theme.ViewFullScreenIcon(),			// stats VisibilityIcon, scores StorageIcon, edit FileApplicationIcon,
+		cmzw,
+	),
 	)
 	return opdlg
 }

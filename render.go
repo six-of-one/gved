@@ -775,6 +775,11 @@ func animcon() {
 		rbimg = canvas.NewRasterFromImage(rimg)
 	}
 	box := container.NewStack(rbtn, rbimg)
-	if !vlock { w.SetContent(box); mzw = rbimg; cmzw.Refresh() }
-	}}
+	if !vlock {
+		w.SetContent(box)
+		cmzw.Remove(mzw)
+		mzw = canvas.NewRasterFromImage(rimg)
+		cmzw.Add(mzw)
+		cmzw.Refresh()
+	}}}
 }

@@ -13,6 +13,8 @@ import (
 	"regexp"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/data/binding"
+	"fyne.io/fyne/v2/container"
+//	"fyne.io/fyne/v2/canvas"
 )
 
 /*
@@ -116,6 +118,10 @@ var err error
 	nobld = true
 	anmap = AtMap{}
 	anmapt = AtMap{}
+
+//	img := loadfail(128,128)
+//	mzw = canvas.NewRasterFromImage(img)
+	cmzw = container.NewStack(mzw)
 
 	go func() {
 //			time.Sleep(5 * time.Second)
