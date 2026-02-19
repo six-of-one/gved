@@ -313,6 +313,36 @@ func optCont(wn fyne.Window) fyne.CanvasObject {
 		sv_config()
 	})
 // game progress (similar to arcade but with a couple extra items)
+//controls progression of maze/game enhancements - default settings are sanctuary engine enhanced
+/* from sanctuary options sheet
+value="0.7" select max % to cap all of these might happen tests -- 10% = 0.1, set to zero 0 = turn ALL off
+
+above (+%) or (-%) below MID skill adjust base % by indicated %
+mid skill value="5" middle diffculty for % increment / decrement of test value
+value="0.1" decr by % per skill under MID">% value="0.05" incr by % per skill over MID - skill over 9 counts as 9
+
+per level count * %mod added to base % value="0.02" incr by % per level count %
+
+first level these maze progression will be tested and base percent to occur - 25% = 0.25 begins @level
+---------------------------------------------------------------------------
+mazes will be mirrored in X coordinate, starting on level at base %, set any % to 0 to stop that item
+value="10" select level to start rnd mirrors (Horiz) : value="0.3" base % to mirror (X axis) %
+mazes will be flipped in Y coordinate, starting on level at base %
+value="20" select level to start rnd flips (Vert) : value="0.25" base % to flip (Y axis) %
+mazes will be rotated 270 degrees: Se, starting on level at base %
+value="30" select level to start rnd rotates value="0.15" base % to rotate (270°) %
+mazes will be unpinned from X and/or Y zero line, starting on level at base %">unpin:</td></tr>
+value="50" select level to start rnd unpins : value="0.25" base % to unpin X or Y %
+mazes will have shots stun other players, starting on level at base %
+value="24" select level to start shots stun other players : value="0.2" base % players shots stun players %
+mazes will have shots hurt other players, starting on level at base %
+value="33" select level to start shots hurt other players : value="0.16" base % players shots hurt players %
+
+all std maze walls will be set invisible - rnd chance: Se, starting on level at base %
+value="80" randomly turn some mazes (all std walls) invisible - this is a sanctuary enhance, G2 had perm set invis walls
+value="0.1" base % all std maze walls turn invisible
+*/
+
 	prog_label := widget.NewLabelWithStyle("Level to start check and % chance: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 // note set / save val on these
 	pmir_lab :=  widget.NewLabelWithStyle("Maze mirror (X): ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
