@@ -124,15 +124,6 @@ var (
 	gridb [100][100]int		// grid to build map
 )
 
-// ancillary fn()
-// random int range
-
-func rndr(min, max int) int {
-	i := rng.Intn(max-min+1) + min
-//fmt.Printf("rng %d - %d  sel: %d\n",min,max,i)
-	return i
-}
-
 func _room(x1, y1, x2, y2, val int) {
 	for y := y1; y < y2; y++ {
 		if y < 0 || y >= MAP_H { continue }
