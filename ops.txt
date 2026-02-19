@@ -348,6 +348,7 @@ Menu operations
 
 additional not covered above:
 
+File:
 Quit		- seems to be a default on 1st menu, currently blocked
 			  (along with [X] close upper right window widget)
 			  - need to save dialog must run which blocks file-quit
@@ -368,14 +369,9 @@ Mapper test	- vars random map generate algorithms
 Random Load - empty tiles (floor) will be load with a random select
 			  profile - uses #T filter if set as include filter
 
-View Sim	- blotter is set to default gauntlet view port to simulate
-			  what a player could see in any area (arcade)
-Secret wall	- toggle displaying G² 'shootable secret' walls in palette+1
-Wall border	- stored mazes have no bottom or right wall - this simulates them
-Palette map - default: palette walls / floor match level cols & pats
-			  toggles on and off (1st click shows palette if hidden)
 Mute audio	- toggle audio hint when selecting edit elements -middle click
 
+Edit:
 Paste buffer menu
 Show		- bring up a paste buffer window with current content
 Next Mas	- cycle master pb store fwd
@@ -383,10 +379,19 @@ Prior Mas	- cycle master pb store back
 Next Ses	- cycle edit session pb store fwd
 Prior Ses	- cycle edit session pb store back
 
-Options		- set and save various system options
+Help:
 Edit Keys	- live update list of edit key assignments in a dialog
 Operation	- open this text in a dialog
 License		- original gex code under GPL3, gved (new) code is GPL2
+
+Cmds↓:
+Options		- set and save various system options
+View Sim	- blotter is set to default gauntlet view port to simulate
+			  what a player could see in any area (arcade)
+Secret wall	- toggle displaying G² 'shootable secret' walls in palette+1
+Wall border	- stored mazes have no bottom or right wall - this simulates them
+Palette map - default: palette walls / floor match level cols & pats
+			  toggles on and off (1st click shows palette if hidden)
 
 ---------------------------------------------
 

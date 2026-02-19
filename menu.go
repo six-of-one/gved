@@ -255,7 +255,7 @@ func st_menu() {
 	menuItemWob := fyne.NewMenuItem("Wall border right & bottom",func() { opts.Wob = !opts.Wob; remaze(opts.mnum) })
 	menuItemPalf := fyne.NewMenuItem("Palette; map decore toggle",func() { if wpalop {palfol = !palfol}; palete(0) })
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
-	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemFmap, menuItemFmapb, menuItemFmapc, menuItemRand, menuItemLin1,  menuItemGvs, menuItemNosec, menuItemWob, menuItemPalf, menuItemMute, menuItemExit)
+	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemFmap, menuItemFmapb, menuItemFmapc, menuItemRand, menuItemLin1, menuItemMute, menuItemExit)
 
 	menuItemColr := fyne.NewMenuItem("Set colors", menu_color)
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
@@ -312,9 +312,9 @@ func st_menu() {
 	menuItemLIC := fyne.NewMenuItem("License", func() {
 		dialog.ShowInformation("G¹G²ved License", "Gauntlet visual editor - gved\n\n(c) 2025 Six [a programmer]\n\nGPLv3.0\n\nhttps://www.gnu.org/licenses/gpl-3.0.html", w)
 	})
-	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemOpt, menuItemEdKey, menuItemOps, menuItemAbout, menuItemLIC)
+	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemEdKey, menuItemOps, menuItemAbout, menuItemLIC)
 
-	hintup = fyne.NewMenu("cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a")
+	hintup = fyne.NewMenu("cmds↓    ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a",menuItemOpt, menuItemGvs, menuItemNosec, menuItemWob, menuItemPalf)
 
 	statup = fyne.NewMenu("view mode:")
 

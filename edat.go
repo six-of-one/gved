@@ -90,7 +90,7 @@ func ed_init() {
 	lg2cnt = 1
 	sdb = -1			// sd buffer
 	cycl = 0			// edit key 'c' cycle ops
-	cmdhin = "cmds: ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
+	cmdhin = "cmds↓    ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
 	delbset(0)			// init undo (delbuf)
 	restak = 0			// restor position in delbuf
 //	diff_level = 1.0	// default diff, for now only rload uses - in options now
@@ -119,8 +119,6 @@ var err error
 	anmap = AtMap{}
 	anmapt = AtMap{}
 
-//	img := loadfail(128,128)
-//	mzw = canvas.NewRasterFromImage(img)
 	cmzw = container.NewStack(mzw)
 
 	go func() {
