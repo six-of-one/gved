@@ -948,6 +948,7 @@ fmt.Printf("flordirt, cleen em up\n")
 		flordirt = 0
 	}
 
+	if flordirt >= 0 {
 	if opts.edat < 0 || opts.edat == 2 {
 		parimg = florb
 		writepngtoimage(fimg, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
@@ -970,7 +971,7 @@ fmt.Printf(" flor x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fy
 					writepngtoimage(fimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
 				}
 			}}
-	}
+	}}
 
 	if walsdirt > 0 {
 fmt.Printf("walldirt, cleen em up\n")
@@ -979,6 +980,7 @@ fmt.Printf("walldirt, cleen em up\n")
 		walsdirt = 0
 	}
 
+	if walsdirt >= 0 {
 	if opts.edat < 0 || opts.edat == 2 {
 		parimg = walsb
 		writepngtoimage(wimg, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
@@ -1001,7 +1003,7 @@ fmt.Printf(" wals x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fy
 					writepngtoimage(wimg, 16,16,0,0,ux,uy,vcoord(x,xb,xba)*16, vcoord(y,yb,yba)*16,0)
 				}
 			}}
-	}
+	}}
 
 fmt.Printf(" xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
 
