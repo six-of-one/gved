@@ -314,7 +314,7 @@ func st_menu() {
 	})
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemEdKey, menuItemOps, menuItemAbout, menuItemLIC)
 
-	hintup = fyne.NewMenu("cmds↓    ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a",menuItemOpt, menuItemGvs, menuItemNosec, menuItemWob, menuItemPalf)
+	hintup = fyne.NewMenu("cmds↓    ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, ilu, A #a",menuItemOpt, menuItemGvs, menuItemNosec, menuItemWob, menuItemPalf)
 
 	statup = fyne.NewMenu("view mode:")
 

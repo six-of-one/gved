@@ -100,7 +100,7 @@ func specialKey(cw fyne.Window) {
 						cmdoff = false
 						if swnothing > 0 { nothing = swnothing; swnothing = 0 }
 						ccp_NOP()
-						cmdhin = "cmds↓    ?, <ESC>, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
+						cmdhin = "cmds↓    ?, <ESC>, fFgG, wWqQ, rRt, hm, pPT, sL, S, ilu, A #a"
 						statlin(cmdhin,"edit OFF")
 						Ovwallpat = -1
 					}}
@@ -318,8 +318,8 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 				opts.dntr = true
 				relod = true
 			}
-			cmdhin = "cmds↓    ?, <ESC>, fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a"
-			if opts.edat > 0 { cmdhin = "cmds↓    ?, <ESC>, '\\', fFgG, wWqQ, rRt, hm, pPT, sL, S, il, u, v, A #a" }
+			cmdhin = "cmds↓    ?, <ESC>, fFgG, wWqQ, rRt, hm, pPT, sL, S, ilu, A #a"
+			if opts.edat > 0 { cmdhin = "cmds↓    ?, <ESC>, '\\', fFgG, wWqQ, rRt, hm, pPT, sL, S, ilu, A #a" }
 			if cmdoff && opts.edat > 0 { cmdhin = "cmds↓    ?, <ESC>, '\\' - edit keys, #c C, HV, A #a, L, S" }
 			fmt.Printf("hint: %s\n", cmdhin)
 			statlin(cmdhin,ska)
