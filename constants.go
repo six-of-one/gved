@@ -1381,6 +1381,8 @@ var lvl_sel = map[string]int{
 	"Level 8...":8,
 	"Random 1-7":0,
 }
+
+// allow setting of select box from cfg
 var lvl_str = map[int]string{
 	-6:"Research",
 	0:"Random 1-7",

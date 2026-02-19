@@ -314,8 +314,10 @@ func st_menu() {
 	})
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemEdKey, menuItemOps, menuItemAbout, menuItemLIC)
 
+// list of active main keys for view / edit modes
 	hintup = fyne.NewMenu("cmds↓    ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, ilu, A #a",menuItemOpt, menuItemColr, menuItemStats, menuItemGvs, menuItemNosec, menuItemWob, menuItemPalf)
 
+// some extra hint info about what the editor is doing
 	statup = fyne.NewMenu("view mode:")
 
 	mainMenu = fyne.NewMainMenu(menuFile, editMenu, menuHelp, hintup, statup)
