@@ -945,7 +945,6 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 fmt.Printf("flordirt, cleen em up\n")
 		florb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
 		florbas(florb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild floor on load or when edit dirties it
-		flordirt = 0
 	}
 
 	if flordirt >= 0 {
@@ -977,7 +976,6 @@ fmt.Printf(" flor x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fy
 fmt.Printf("walldirt, cleen em up\n")
 		walsb = blankimage(16*(opts.DimX+1), 16*(opts.DimY+1))
 		walbas(walsb, maze, xdat, opts.DimX+1, opts.DimY+1,false)		//rebuild walls on load or when edit dirties it
-		walsdirt = 0
 	}
 
 	if walsdirt >= 0 {
@@ -1217,18 +1215,6 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			G1 = gtp			// restore G¹ for any SE using G² turning it off
 		}
 	}
-
-	g2mask[G1OBJ_WALL_REGULAR] = 2048
-	g2mask[SEOBJ_SECRTWAL] = 1024
-	g2mask[G1OBJ_WALL_DESTRUCTABLE] = 1024
-	g2mask[SEOBJ_RNDWAL] = 1024
-	g2mask[SEOBJ_WAL_TRAPCYC1] = 1024
-	g2mask[SEOBJ_WAL_TRAPCYC2] = 1024
-	g2mask[SEOBJ_WAL_TRAPCYC3] = 1024
-	g2mask[SEOBJ_TILE_TRAP1] = 64
-	g2mask[SEOBJ_TILE_TRAP2] = 64
-	g2mask[SEOBJ_TILE_TRAP3] = 64
-//	g2mask[] =
 	g1mask[G1OBJ_WALL_REGULAR] = 2048
 	g1mask[G1OBJ_WALL_DESTRUCTABLE] = 1024
 	g1mask[G1OBJ_WALL_TRAP1] = 1024
@@ -1240,6 +1226,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 	draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
 	draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 
+	flordirt, walsdirt = 0,0		// whether rebuild layers or jsut animating mobs, reset these
 //	savetopng(opts.Output, img)
 	vlock = false
 	nobld = false
