@@ -111,6 +111,9 @@ var err error
 	wlfl.walln[0] = "gfx/wall_bkgs.b.png"
 	err, _, wlfl.wtamp[0] = itemGetPNG("gfx/wall_bkgs.b.png")
 	if err != nil { wlfl.wtamp[0] = loadfail(832, 16) }
+// these will flummox animcon when first level loads if they arent defined
+	fimg = blankimage(16,16)
+	wimg = blankimage(16,16)
 // now an array of stamps
 	arstamp = make([]*Stamp, 0, g1maxid)
 	for i := 0; i <= g1maxid; i++ { arstamp = append(arstamp,nil); bld_star(i) }

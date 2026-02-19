@@ -937,8 +937,6 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	// unpin issue - -vals flummox canvas writes
 	xba, yba := vpc_adj(xb, yb)
 
-	fimg = blankimage(16*(xs-xb), 16*(ys-yb))		// pre-set for viewport: floors, walls, mobs
-	wimg = blankimage(16*(xs-xb), 16*(ys-yb))
 	mimg = blankimage(16*(xs-xb), 16*(ys-yb))
 
 	if flordirt > 0 {
@@ -948,6 +946,7 @@ fmt.Printf("flordirt, cleen em up\n")
 	}
 
 	if flordirt >= 0 {
+		fimg = blankimage(16*(xs-xb), 16*(ys-yb))		// pre-set for viewport: floors, walls, mobs
 	if opts.edat < 0 || opts.edat == 2 {
 		parimg = florb
 		writepngtoimage(fimg, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
@@ -979,6 +978,7 @@ fmt.Printf("walldirt, cleen em up\n")
 	}
 
 	if walsdirt >= 0 {
+		wimg = blankimage(16*(xs-xb), 16*(ys-yb))
 	if opts.edat < 0 || opts.edat == 2 {
 		parimg = walsb
 		writepngtoimage(wimg, opts.DimX*16+16,opts.DimY*16+16,0,0,0,0,0,0,0)
@@ -1160,10 +1160,13 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 //				writestamptoimage(G1,img, arstamp[sb], vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
 				offset := image.Pt(vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
 //if sb < 99 || sb > 100 { fmt.Printf("star ld %d, %v %v\n",sb,arstamp[sb].mimg.Bounds(),offset) }
-				if arstamp[sb].mask & NOFLOOR != 0 {
+				if arstamp[sb].mask & NOFLOOR != 0 && flordirt >= 0 {
 					draw.Draw(fimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)	// this will work, but may not be ideal
 				} else {
-					draw.Draw(mimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)
+					drimg := arstamp[sb].mimg
+					r := anmapt[xy{x, y}]
+					if r > 0 { drimg = arstamp[sb].anim[r - 1] }
+					draw.Draw(mimg, drimg.Bounds().Add(offset), drimg, image.ZP, draw.Over)
 				}
 				if arstamp[sb].pnum != -7 { nugetx, nugety = arstamp[sb].nudgex, arstamp[sb].nudgey }
 			}
@@ -1210,7 +1213,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			}
 
 			if dots != 0 && nothing & NOWALL == 0 {
-				renderdots(mimg, (x-xb)*16, (y-yb)*16, dots)
+				renderdots(mimg, vcx*16, vcy*16, dots)
 			}
 			G1 = gtp			// restore G¹ for any SE using G² turning it off
 		}

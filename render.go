@@ -565,7 +565,7 @@ func bld_star(lk int ) {
 		psx, psy = 21, 11
 		mask = NOPOT
 	case SEOBJ_FIRE_STICK:
-		psx, psy = 33, 26
+		psx, psy = 32, 26
 		mask = 256 | ANIM
 		cnt = 4
 	case SEOBJ_G2_POISPOT:
@@ -747,6 +747,7 @@ func animcon() {
   if !mbd && ccp != PASTE && !gvs {
 	ablot = false
 //fmt.Printf("in anim %t, sv %t\n",manim,svanim)
+	mobflg := false						// on anim loop found some mimg layer items that need animation
 	if manim {								// only run when anim tiles are on map
 
 		xba, yba := vpc_adj(mvpx, mvpy)
@@ -763,10 +764,13 @@ func animcon() {
 				anmapt[xy{ux, uy}] = r
 				drimg := arstamp[tl].anim[r - 1]
 				offset := image.Pt(vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16)
-				draw.Draw(mimg, drimg.Bounds().Add(offset), drimg, image.ZP, draw.Over)
+				if arstamp[tl].mask & NOFLOOR != 0 {
+					draw.Draw(fimg, drimg.Bounds().Add(offset), drimg, image.ZP, draw.Over)
+				} else { mobflg = true }
 			}
 		}}
 	}
+	if mobflg { flordirt, walsdirt = -1,-1; mimg = segimage(ebuf, xbuf, eflg, mvpx, mvpy, mvxe,mvye, false) } 
 	rimg := blankimage(16*(mvxe-mvpx), 16*(mvye-mvpy))
 	if !nobld {
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
