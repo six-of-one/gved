@@ -53,7 +53,6 @@ fmt.Printf("palimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	svanim = false
 	florbas(img, maze, xdat, opts.DimX+1, opts.DimY+1,false)
 	walbas(img, maze, xdat, opts.DimX+1, opts.DimY+1,false)
-	svanim = true
 
 	for y := yb; y <= ys; y++ {
 		for x := xb; x <= xs; x++ {
@@ -225,6 +224,7 @@ fmt.Printf("palimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 	g1mask[G1OBJ_WALL_DESTRUCTABLE] = 1024
 	g1mask[G1OBJ_WALL_TRAP1] = 1024
 	g1mask[G1OBJ_TILE_TRAP1] = 64
+	svanim = true
 
 	return img
 }

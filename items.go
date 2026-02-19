@@ -811,7 +811,7 @@ func itemGetStamp(itemType string) *Stamp {
 	}
 
 // if nothing bit matches mask in item, send blank back
-	if stamp.mask & nothing == 0 {
+	if  !svanim || stamp.mask & nothing == 0 {
 		fillstamp(&stamp)
 	}
 	return &stamp
