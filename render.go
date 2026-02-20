@@ -9,6 +9,7 @@ import (
 	"os"
 	"fmt"
 	"time"
+	"fyne.io/fyne/v2/canvas"
 	"golang.org/x/image/draw"
 )
 
@@ -773,14 +774,16 @@ func animcon() {
 		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 //		rbimg = canvas.NewRasterFromImage(rimg)
+		rbimg = rimg
 	}
 //	box := container.NewStack(rbtn, rbimg)
 	if !vlock {
 //		w.SetContent(box)
-/*		cmzw.Remove(mzw)
-		mzw = canvas.NewRasterFromImage(rimg)
+// left this in while options still has animcon maze tab
+		cmzw.Remove(mzw)
+		mzw = canvas.NewRasterFromImage(rbimg)
 		cmzw.Add(mzw)
-		cmzw.Refresh() */
-		maz_tab(cmzw, rimg, rbtn, blant)
+		cmzw.Refresh()
+		maz_tab(cmain, rbimg, rbtn, blant)
 	}}}
 }

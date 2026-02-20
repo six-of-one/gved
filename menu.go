@@ -13,6 +13,7 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/widget"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/data/binding"
@@ -349,11 +350,14 @@ q := 128 >> 2	// 32
 fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 
 // setup main tabs
+	cmain = container.NewStack()
 	maintab = container.NewAppTabs(
 		container.NewTabItemWithIcon("Maze view",theme.SearchIcon(),
 			cmain,
 	),
+	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),container.New(layout.NewVBoxLayout(),layout.NewSpacer())),
 	)
+	w.SetContent(cmain)
 	maintab.Refresh()
 }
 
@@ -363,13 +367,16 @@ var cmain *fyne.Container			// content maze viewer
 var pmaz *fyne.Container			// box with image, button & blot
 var pimg *canvas.Raster
 
-func maz_tab(tabcon *fyne.Container, maz *image.NRGBA, mbut *holdableButton, blot *canvas.Image) {
+func maz_tab(tabcon *fyne.Container, maz *image.NRGBA, mbut *holdableButton, pblot *canvas.Image) {
 
 	tabcon.Remove(pmaz)
 	pimg = canvas.NewRasterFromImage(maz)
-	pmaz = container.NewStack(mbut, pimg, blot)
+	pmaz = container.NewStack(mbut, pimg, pblot)
 	tabcon.Add(pmaz)
-	tabcon.Refresh()
+   fyne.Do(func() {
+		w.SetContent(cmain)
+		pmaz.Refresh()
+   })
 }
 // sub win switch G¹ / G²
 
@@ -396,7 +403,7 @@ func blotwup(cw fyne.Window, limg *image.NRGBA) {
 		blot = canvas.NewImageFromImage(limg)
 	//	box := container.NewStack(rbtn, rbimg, blot)
 	//	cw.SetContent(box)
-		maz_tab(cmzw, rbimg, rbtn, blot)
+		maz_tab(cmain, rbimg, rbtn, blot)
 		blotup = false
 fmt.Printf("blotwup\n")
 	}
@@ -434,7 +441,7 @@ fmt.Printf("clwin-m tl: %s\n",rbtn.title)
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
 //	box := container.NewStack(rbtn, rbimg)		// key to seeing maze & having the click button with full mouse sense
 //	cw.SetContent(box)								// and blot coming last is shown on top... huh?
-	maz_tab(cmzw, rbimg, rbtn, blant)
+	maz_tab(cmain, rbimg, rbtn, blant)
 
 //fmt.Printf("btn sz %v\n",rbtn.Size())
 }

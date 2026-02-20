@@ -899,9 +899,9 @@ var mimg *image.NRGBA
 func segimage(mdat MazeData, xdat Xdat, fdat [14]int, xb int, yb int, xs int, ys int, stat bool) *image.NRGBA {
 
 	vlock = true
-//if opts.Verbose {
+ if opts.Verbose {
 fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
-
+ }
 	var err error
 	var ptamp image.Image		// png stamp
 
@@ -1002,9 +1002,9 @@ fmt.Printf(" wals x,y,xs,ys %d %d %d %d ux,y %d %d, vc,y %d %d\n",(fxs-x)*16,(fy
 				}
 			}}
 	}}
-
+ if opts.Verbose {
 fmt.Printf(" xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,xba, yba,opts.DimX,opts.DimY)
-
+ }
 	opr := 3		// G² hack to present specials on scoreboard / info maze 104
 //	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
 	for y := yb; y <= ys; y++ {

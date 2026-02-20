@@ -33,7 +33,7 @@ func blotter(img *image.NRGBA) {
 	if img == nil {
 
 		img = image.NewNRGBA(image.Rect(0, 0, 1, 1))
-		blant = canvas.NewImageFromImage(img)
+		blant = canvas.NewImageFromImage(image.NewNRGBA(image.Rect(0, 0, 1, 1)))
 		draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{blotcol}}, image.ZP, draw.Src)
 	}
 // config override for default blotter with png image
@@ -59,7 +59,7 @@ func blotmov(px float32, py float32, szx float32, szy float32) {
 	if !ablot {
 //		box := container.NewStack(rbtn, rbimg, blot)	// SetContent will max size the blotter when its called
 //		w.SetContent(box)								// call it too much and blotter malfunctions - thus why animcon must be off
-		maz_tab(cmzw, rbimg, rbtn, blot)
+		maz_tab(cmain, rbimg, rbtn, blot)
 		ablot = true
 	}
 }
