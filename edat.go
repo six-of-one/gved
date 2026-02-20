@@ -123,13 +123,11 @@ var err error
 	anmap = AtMap{}
 	anmapt = AtMap{}
 
+// left this in while options still has animcon maze tab
 	cmzw = container.NewStack(mzw)
 
 	go func() {
-//			time.Sleep(5 * time.Second)
-//   fyne.Do(func() {
 		animcon()
-//   })
 	}()
 fmt.Printf("edit init complt\n")
 }

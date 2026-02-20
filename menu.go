@@ -374,7 +374,7 @@ func maz_tab(tabcon *fyne.Container, maz *image.NRGBA, mbut *holdableButton, pbl
 	pmaz = container.NewStack(mbut, pimg, pblot)
 	tabcon.Add(pmaz)
    fyne.Do(func() {
-		w.SetContent(cmain)
+		w.SetContent(maintab)
 		pmaz.Refresh()
    })
 }
