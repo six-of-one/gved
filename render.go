@@ -773,12 +773,9 @@ func animcon() {
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
 		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
-//		rbimg = canvas.NewRasterFromImage(rimg)
 		rbimg = rimg
 	}
-//	box := container.NewStack(rbtn, rbimg)
 	if !vlock {
-//		w.SetContent(box)
 // left this in while options still has animcon maze tab
 		cmzw.Remove(mzw)
 		mzw = canvas.NewRasterFromImage(rbimg)

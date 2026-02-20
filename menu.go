@@ -198,15 +198,6 @@ func menu_copy() { if opts.edat > 0 { ccp_tog(COPY); if ccp > 0 { smod = "Edit C
 func menu_cut() { if opts.edat > 0 { ccp_tog(CUT); if ccp > 0 { smod = "Edit CUT: "}; statlin(cmdhin,sshin) }}
 func menu_paste() { if opts.edat > 0 { ccp_tog(PASTE); if ccp > 0 { smod = "Edit PASTE: "}; statlin(cmdhin,sshin) }}
 
-func menu_color() {
-
-	wc := a.NewWindow("Color selector")
-	wcolp = wc
-	wc.Resize(fyne.NewSize(350, 300))
-	wc.SetContent(colorCont(wc))
-	wc.Show()
-}
-
 func menu_option() {
 
 	wc := a.NewWindow("Option controls")
@@ -259,7 +250,6 @@ func st_menu() {
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
 	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemFmap, menuItemFmapb, menuItemFmapc, menuItemRand, menuItemLin1, menuItemMute, menuItemExit)
 
-	menuItemColr := fyne.NewMenuItem("Set colors", menu_color)
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)
 	menuItemReset := fyne.NewMenuItem("Reset buffer <ctrl>-r", menu_res)
@@ -317,7 +307,7 @@ func st_menu() {
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemEdKey, menuItemOps, menuItemAbout, menuItemLIC)
 
 // list of active main keys for view / edit modes
-	hintup = fyne.NewMenu("cmds↓    ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, ilu, A #a",menuItemOpt, menuItemColr, menuItemStats, menuItemGvs, menuItemNosec, menuItemWob, menuItemPalf)
+	hintup = fyne.NewMenu("cmds↓    ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, ilu, A #a",menuItemOpt, menuItemStats, menuItemGvs, menuItemNosec, menuItemWob, menuItemPalf)
 
 // some extra hint info about what the editor is doing
 	statup = fyne.NewMenu("view mode:")

@@ -6,7 +6,6 @@ import (
 	"math/rand"
 	"fmt"
 	"github.com/fogleman/gg"
-	"image/color"
 	"encoding/binary"
 	"golang.org/x/image/draw"
 )
@@ -15,25 +14,6 @@ import (
 // arrays for item masks
 var g1mask [256]int
 var g2mask [256]int
-
-// for maze output to se -- outputter is in pfrender
-func ParseHexColor(s string) (c color.RGBA, err error) {
-	c.A = 0xff
-	switch len(s) {
-	case 7:
-		_, err = fmt.Sscanf(s, "#%02x%02x%02x", &c.R, &c.G, &c.B)
-	case 4:
-		_, err = fmt.Sscanf(s, "#%1x%1x%1x", &c.R, &c.G, &c.B)
-		// Double the hex digits:
-		c.R *= 17
-		c.G *= 17
-		c.B *= 17
-	default:
-		err = fmt.Errorf("invalid length, must be 7 or 4")
-
-	}
-	return
-}
 
 var foods = []string{"ifood1", "ifood2", "ifood3"}
 var nothing int
@@ -359,8 +339,6 @@ func ffMakeMap(maze *Maze) FFMap {			// fix: this NEEDS locking with anmap, and 
 		if !isforcefield(v) {
 			if svanim {
 				anmap[xy{k.x, k.y}] = isanimtil(v)		// /- with 757: tl := anmap[xy{ux, uy}] 	in animcon
-//				anmapt[xy{k.x, k.y}] = 0				// fatal error: concurrent map read and map write
-//if anmap[xy{k.x, k.y}] > 0 {fmt.Printf("det anim %d: %d x %d\n",v,k.x, k.y)}
 			}
 			continue
 		}
@@ -583,7 +561,7 @@ fmt.Printf("\n")
 	return f,w
 }
 
-// build each loaded flim
+// build each loaded flim once per run, excepting rebuilds for sizeup
 
 func florflim(p int) {
 
@@ -1174,7 +1152,7 @@ if opts.Verbose { fmt.Printf("%03d ",sb) }
 		}}}
 
 // Six: end G¹ decode
-// if !G1 { fmt.Printf("stamp # %d - p: %s\n",scanbuf(maze.data, x, y, x, y, -2),stamp.ptype)}
+// if !G1 { fmt.Printf("stamp # %d - p: %s\n",sb,stamp.ptype)}
 // stats on palette
 			if stat {			// on palette screen, show stats for loaded maze
 				st := ""
@@ -1225,13 +1203,12 @@ if opts.Verbose { fmt.Printf("%03d ",sb) }
 	g1mask[G1OBJ_TILE_TRAP1] = 64
 //	g1mask[] =
 	rimg := blankimage(16*(xs-xb), 16*(ys-yb))
-//savetopng("tst-img-seg.png", img)
 	draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
 	draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
 	draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 
 	flordirt, walsdirt = 0,0		// whether rebuild layers or jsut animating mobs, reset these
-//	savetopng(opts.Output, img)
+
 	vlock = false
 	nobld = false
 	return rimg

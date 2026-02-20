@@ -491,6 +491,8 @@ value="0.1" base % all std maze walls turn invisible
 		),
 		layout.NewSpacer(),
 	)),
+	container.NewTabItemWithIcon("Colors",theme.ColorPaletteIcon(),colorCont(wn),
+	),
 	container.NewTabItemWithIcon("Maze",theme.ViewFullScreenIcon(),
 		cmzw,
 	),
