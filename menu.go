@@ -461,7 +461,7 @@ func upwin(simg *image.NRGBA, lvp int) {
 	if opts.Wob { dtp = 528.0 }
 	if opts.edat > 0 {
 //		geow = geow & 0xfe0	+ 13			// lock to multiples of 32
-		ngeow := geoh - 26					// square maze area + 26 for menu bar - window is still 4 wider than maze content
+		ngeow := geoh - 71					// square maze area + 26 (tabs go to 71 it seems) for menu bar - window is still 4 wider than maze content
 		if ngeow != geow {
 			rmsg = "set window ratio to edit"
 			rez = true

@@ -327,7 +327,8 @@ func checkffadj4(maze *Maze, x int, y int) int {
 
 type FFMap map[xy]bool
 type AtMap map[xy]int		// animate tiles
-var alock bool				// fix concurrent read/write
+var alock bool				// fix concurrent read/write anmap
+var mlock bool				// fix concurrent read/write xdat
 var anmap AtMap
 var anmapt AtMap			// animated timer cnt
 var svanim bool				// if true save animated map
@@ -1007,6 +1008,7 @@ fmt.Printf(" xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,
  }
 	opr := 3		// G² hack to present specials on scoreboard / info maze 104
 //	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
+	mlock = true	// lock out multiple instances from accessing xdat
 	for y := yb; y <= ys; y++ {
 if opts.Verbose { fmt.Printf("\n") }
 		for x := xb; x <= xs; x++ {
@@ -1034,7 +1036,7 @@ if opts.Verbose { fmt.Printf("\n") }
 				panic(err)
 				}
 
-if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
+if opts.Verbose { fmt.Printf("%03d ",sb) }
 
 			//	if G2 {			removed G² render
 
@@ -1218,6 +1220,7 @@ if opts.Verbose { fmt.Printf("%03d ",scanbuf(maze.data, x, y, x, y, -2)) }
 			G1 = gtp			// restore G¹ for any SE using G² turning it off
 		}
 	}
+	mlock = false
 	g1mask[G1OBJ_WALL_REGULAR] = 2048
 	g1mask[G1OBJ_WALL_DESTRUCTABLE] = 1024
 	g1mask[G1OBJ_WALL_TRAP1] = 1024

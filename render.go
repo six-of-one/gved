@@ -767,7 +767,7 @@ func animcon() {
 			}
 		}}
 	}
-	if mobflg { flordirt, walsdirt = -1,-1; mimg = segimage(ebuf, xbuf, eflg, mvpx, mvpy, mvxe,mvye, false) } 
+	if mobflg { for mlock {}; flordirt, walsdirt = -1,-1; mimg = segimage(ebuf, xbuf, eflg, mvpx, mvpy, mvxe,mvye, false) } 
 	rimg := blankimage(16*(mvxe-mvpx), 16*(mvye-mvpy))
 	if !nobld {
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
