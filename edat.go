@@ -612,6 +612,7 @@ fmt.Printf("viewport: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lviewp,vpx,vpy,fx,fy)
 fmt.Printf("lvpp: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lvpp,vpx,vpy,fx,fy)
 	}
 	mvpx, mvpy, mvxe, mvye = vpx, vpy, fx,fy
+	for vlock {}
 	Ovimg := segimage(ebuf, xbuf, eflg, vpx, vpy, fx,fy, false)
 	upwin(Ovimg, lvpp)
 	calc_stats()

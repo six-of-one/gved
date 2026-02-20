@@ -353,13 +353,13 @@ func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
 func ffMakeMap(maze *Maze) FFMap {			// fix: this NEEDS locking with anmap, and ffmap once it animates
 	ffmap := FFMap{}
 
-	if svanim {  manim = false }
+	if svanim { manim = false; for k := range maze.data { anmapt[xy{k.x, k.y}] = 0 } }
 	alock = true
 	for k, v := range maze.data {
 		if !isforcefield(v) {
 			if svanim {
 				anmap[xy{k.x, k.y}] = isanimtil(v)		// /- with 757: tl := anmap[xy{ux, uy}] 	in animcon
-				anmapt[xy{k.x, k.y}] = 0				// fatal error: concurrent map read and map write
+//				anmapt[xy{k.x, k.y}] = 0				// fatal error: concurrent map read and map write
 //if anmap[xy{k.x, k.y}] > 0 {fmt.Printf("det anim %d: %d x %d\n",v,k.x, k.y)}
 			}
 			continue
@@ -1008,7 +1008,6 @@ fmt.Printf(" xb,yb,xs,ys %d %d %d %d xba,yba %d %d, dimX,y %d %d\n",xb,yb,xs,ys,
  }
 	opr := 3		// G² hack to present specials on scoreboard / info maze 104
 //	_, _, sents := itemGetPNG("gfx/se_ents.16.png")			// sanct engine ent sheet
-	mlock = true	// lock out multiple instances from accessing xdat
 	for y := yb; y <= ys; y++ {
 if opts.Verbose { fmt.Printf("\n") }
 		for x := xb; x <= xs; x++ {
@@ -1220,7 +1219,6 @@ if opts.Verbose { fmt.Printf("%03d ",sb) }
 			G1 = gtp			// restore G¹ for any SE using G² turning it off
 		}
 	}
-	mlock = false
 	g1mask[G1OBJ_WALL_REGULAR] = 2048
 	g1mask[G1OBJ_WALL_DESTRUCTABLE] = 1024
 	g1mask[G1OBJ_WALL_TRAP1] = 1024
