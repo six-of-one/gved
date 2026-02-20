@@ -6,6 +6,8 @@ import (
 //	"strconv"
 //	"strings"
 	"time"
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
 )
 
 // splash screen rotator
@@ -73,7 +75,7 @@ func splashrot() {
 	}
 */
   for {
-	rot := splRot
+	rot := splRot		// def 6000 millis
 
 	if splCyc < 1 || splCyc > 12 { splCyc = 0 }
 	splCyc++
@@ -133,15 +135,20 @@ func splashrot() {
 				showScorDiv()
 			}
 		}
+fmt.Printf("Splash load: %s\n",document.Splashrot.Src)
 		err, spl, _ := itemGetPNG(document.Splashrot.Src)
 			if err == nil {
 				splash.Remove(splim)
-				splash.Add(spl)
-				splash.Refresh()
-			} else { fmt.Printf("Splash screen fail: %s\n",document.Splashrot.Src) }
+				splim = container.NewStack(spl)
+				splash.Add(splim)
+			fyne.Do(func() {
+				splim.Refresh()
+			})
+			} else { fmt.Printf("Splash screen fail: %s\n",document.Splashrot.Src);fmt.Print(err) }
 //	}
 
-	time.AfterFunc(time.Duration(rot)*time.Millisecond, splashrot)
+//	time.AfterFunc(time.Duration(rot)*time.Millisecond, splashrot)
+	time.Sleep(time.Duration(rot) * time.Millisecond)
   }
 }
 /*

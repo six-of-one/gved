@@ -13,7 +13,6 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/widget"
-	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/data/binding"
@@ -346,14 +345,12 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 		container.NewTabItemWithIcon("Maze view",theme.SearchIcon(),
 			cmain,
 	),
-	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),container.New(layout.NewVBoxLayout(),splash)),
+	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),splash),
 	)
 	w.SetContent(cmain)
 	maintab.Refresh()
 	go func() {
-	  fyne.Do(func() {
 		splashrot()
-	  })
 	}()
 }
 
@@ -361,7 +358,7 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 var maintab *container.AppTabs		// tabs unit
 var cmain *fyne.Container			// content maze viewer
 var splash *fyne.Container			// splash intro screens
-var splim *canvas.Raster			// image to splash
+var splim *fyne.Container			// image to splash
 var pmaz *fyne.Container			// box with image, button & blot
 var pimg *canvas.Raster
 
