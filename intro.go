@@ -8,6 +8,7 @@ import (
 	"time"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/storage"
 )
 
 // splash screen rotator
@@ -118,9 +119,22 @@ func splashrot() {
 			splCyc = 12
 		}
 
+		upng := true
 		if splCyc == 2 {
 			document.Splashrot.Src = "splash/splash2b.gif"
 			rot = 12700
+			gif, err := NewAnimatedGif(storage.NewFileURI(document.Splashrot.Src))
+			if err == nil {
+				splash.Remove(splim)
+				splim = container.NewStack(gif)
+				splash.Add(splim)
+			fyne.Do(func() {
+				splim.Refresh()
+fmt.Printf("Splash load: %s\n",document.Splashrot.Src)
+			})
+				gif.Start()
+				upng = false
+			}
 		} else {
 			document.Splashrot.Src = "splash/splash" + string(splLoop[splCyc]) + ".png"
 		}
@@ -135,7 +149,7 @@ func splashrot() {
 				showScorDiv()
 			}
 		}
-fmt.Printf("Splash load: %s\n",document.Splashrot.Src)
+		if upng {
 		err, spl, _ := itemGetPNG(document.Splashrot.Src)
 			if err == nil {
 				splash.Remove(splim)
@@ -145,6 +159,7 @@ fmt.Printf("Splash load: %s\n",document.Splashrot.Src)
 				splim.Refresh()
 			})
 			} else { fmt.Printf("Splash screen fail: %s\n",document.Splashrot.Src);fmt.Print(err) }
+		}
 //	}
 
 //	time.AfterFunc(time.Duration(rot)*time.Millisecond, splashrot)
