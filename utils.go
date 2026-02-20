@@ -219,14 +219,14 @@ func generateName() string {
 
 	name4 := []string{"goblin", "pixie", "Orb", "Caleah", "Haukrefell", "Swords", "Falcons", "Bears", "Arrow", "Silver Bear", "Wayfarers", "Daymons", "angles", "Snakhagr", "Foxes", "Wyverns", "Heroes", "Tome", "Shields", "Arhill", "Lions", "Sword", "Bears", "Crastow", "Ravens", "Wands", "Ring", "Dragons", "Scepter", "Arrows", "Company", "Order", "Circle", "Arraws", "Tome", "Baford", "Foxes", "Heroes", "Wand", "Dragoons", "Jade Wand", "Adventurers", "Tri-Angle", "Fangs", "Crown", "Guild", "Axelbekkr", "Wedon", "Llani", "Bears", "Glenhowa", "Herickering", "Crawood", "Jorlaf", "Capriyoung", "Galick", "Dumblediaz", "Gadore", "Gonzacked", "Murranazzo", "Forestcher", "Huntalka", "Edwackering", "Aumtierrez", "Shlewis Shham", "Bailenga", "Hamiltonstinkmoore", "Piranhao'conno", "Devastation", "Archion", "Onixath"}
 
-	name1b := capFirst(name1[rndr(0, len(name1))])
-	name2b := capFirst(name2[rndr(0, len(name2))])
+	name1b := capFirst(name1[rndr(0, len(name1)-1)])
+	name2b := capFirst(name2[rndr(0, len(name2)-1)])
 
 	if rand.Float64() < 0.8 {
-		name1b = capFirst(name3[rndr(0, len(name3))])
+		name1b = capFirst(name3[rndr(0, len(name3)-1)])
 	}
 	if rand.Float64() < 0.7 {
-		name2b = capFirst(name4[rndr(0, len(name4))])
+		name2b = capFirst(name4[rndr(0, len(name4)-1)])
 	}
 
 	return name1b + " " + name2b
