@@ -131,8 +131,6 @@ var (
 	defaultColor = color.NRGBA{0xff, 0x00, 0xff, 0xff}
 )
 
-var wcolp fyne.Window
-
 // vars edit colors
 
 var lvl1col uint32
@@ -297,8 +295,7 @@ func newTappableDisplayColor(w fyne.Window) *tappableDisplayColor {
 }
 
 func (c *tappableDisplayColor) setColor(clr color.Color) {
-		til := fmt.Sprintf("Select: %02X",clr)
-		wcolp.SetTitle(til)
+
 	c.label.SetText(hexColorString(clr))
 	c.rect.SetColor(clr)
 	c.rect.Refresh()

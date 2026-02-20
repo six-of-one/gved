@@ -341,19 +341,27 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 
 // setup main tabs
 	cmain = container.NewStack()
+	splash = container.NewStack()
 	maintab = container.NewAppTabs(
 		container.NewTabItemWithIcon("Maze view",theme.SearchIcon(),
 			cmain,
 	),
-	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),container.New(layout.NewVBoxLayout(),layout.NewSpacer())),
+	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),container.New(layout.NewVBoxLayout(),splash)),
 	)
 	w.SetContent(cmain)
 	maintab.Refresh()
+	go func() {
+	  fyne.Do(func() {
+		splashrot()
+	  })
+	}()
 }
 
 // refresh maze tabs, edit unit
 var maintab *container.AppTabs		// tabs unit
 var cmain *fyne.Container			// content maze viewer
+var splash *fyne.Container			// splash intro screens
+var splim *canvas.Raster			// image to splash
 var pmaz *fyne.Container			// box with image, button & blot
 var pimg *canvas.Raster
 
