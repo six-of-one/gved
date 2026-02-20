@@ -16,6 +16,8 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// source: fyne.io/x/fyne
+
 // AnimatedGif widget shows a Gif image with many frames.
 type AnimatedGif struct {
 	widget.BaseWidget

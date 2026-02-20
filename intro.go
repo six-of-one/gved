@@ -16,7 +16,7 @@ import (
 
 var splRot = 6000
 var splCyc = 0
-var splLoop = "0123456789ABCDEF"
+var splLoop = "0123456789ABCDEFKc"
 
 type Video struct {
 	Height     int
@@ -75,13 +75,14 @@ func splashrot() {
 		return
 	}
 */
+	sec := false
   for {
 	rot := splRot		// def 6000 millis
 
 	if splCyc < 1 || splCyc > 12 { splCyc = 0 }
 	splCyc++
 
-	if splCyc != 11 { hideScorDiv() }
+	if splCyc != 12 { hideScorDiv() }
 
 /*	if splCyc == 1 {
 		vid.Height = 0 // no height info in Go, set to 0 or some default
@@ -115,14 +116,16 @@ func splashrot() {
 		vid.Pause()
 		vid.SetVisibility("hidden")  */
 
-		if splCyc == 3 && rand.Float64() > 0.6 {
-			splCyc = 12
-		}
+		if sec && splCyc == 1 && rand.Float64() > 0.65 {
+			splCyc = 10		}
 
 		upng := true
-		if splCyc == 2 {
-			document.Splashrot.Src = "splash/splash2b.gif"
-			rot = 12700
+		if splCyc == 1 || splCyc == 10 || splCyc == 11 {
+			document.Splashrot.Src = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
+//			if splCyc == 10 { document.Splashrot.Src = "splash/splashA.gif" }
+//			if splCyc == 10 { document.Splashrot.Src = "splash/splashB.gif" }
+			rot = 7700			// unless playing 18 secs of music g1, or 25.14 secs g2, or 14 secs ...B.gif
+			if splCyc == 11 { rot = 14000 }
 			gif, err := NewAnimatedGif(storage.NewFileURI(document.Splashrot.Src))
 			if err == nil {
 				splash.Remove(splim)
@@ -139,7 +142,7 @@ fmt.Printf("Splash load: %s\n",document.Splashrot.Src)
 			document.Splashrot.Src = "splash/splash" + string(splLoop[splCyc]) + ".png"
 		}
 
-		if splCyc == 11 {
+		if splCyc == 12 {
 			if rand.Float64() > 0.9 {
 				splCyc = 2
 			} else {
@@ -162,6 +165,7 @@ fmt.Printf("Splash load: %s\n",document.Splashrot.Src)
 		}
 //	}
 
+	sec = true		// second loop
 //	time.AfterFunc(time.Duration(rot)*time.Millisecond, splashrot)
 	time.Sleep(time.Duration(rot) * time.Millisecond)
   }
