@@ -6,8 +6,6 @@ import (
 	"math/rand"
 	"fmt"
 	"os"
-//	"image/draw"
-    "fyne.io/fyne/v2/canvas"
 	"github.com/fogleman/gg"
 	"golang.org/x/image/draw"
 )
@@ -1270,7 +1268,7 @@ if opts.Verbose || opts.Se {
 	}
 	savetopng(opts.Output, img)
 // for user select
-	rbimg = canvas.NewRasterFromImage(img)
+	rbimg = img //canvas.NewRasterFromImage(img)
 	vlock = false
 	nobld = true
 	return img

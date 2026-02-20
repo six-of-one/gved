@@ -3,7 +3,6 @@ package main
 import (
 	"image"
 	"image/color"
-//	"image/color/palette"
 	"image/png"
 	"math"
 	"math/rand"
@@ -11,9 +10,6 @@ import (
 	"fmt"
 	"time"
 	"golang.org/x/image/draw"
-//	"fyne.io/fyne/v2"
-    "fyne.io/fyne/v2/canvas"
-	"fyne.io/fyne/v2/container"
 )
 
 func gettiledatafromfile(file string, tilenum int) TileLinePlane {
@@ -776,14 +772,15 @@ func animcon() {
 		draw.Draw(rimg, fimg.Bounds(), fimg, image.ZP, draw.Over)
 		draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
-		rbimg = canvas.NewRasterFromImage(rimg)
+//		rbimg = canvas.NewRasterFromImage(rimg)
 	}
-	box := container.NewStack(rbtn, rbimg)
+//	box := container.NewStack(rbtn, rbimg)
 	if !vlock {
-		w.SetContent(box)
-		cmzw.Remove(mzw)
+//		w.SetContent(box)
+/*		cmzw.Remove(mzw)
 		mzw = canvas.NewRasterFromImage(rimg)
 		cmzw.Add(mzw)
-		cmzw.Refresh()
+		cmzw.Refresh() */
+		maz_tab(cmzw, rimg, rbtn, blant)
 	}}}
 }

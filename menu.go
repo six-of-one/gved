@@ -14,6 +14,7 @@ import (
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/data/binding"
 )
 
@@ -347,8 +348,29 @@ p := 128 << 2	// 512
 q := 128 >> 2	// 32
 fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 
+// setup main tabs
+	maintab = container.NewAppTabs(
+		container.NewTabItemWithIcon("Maze view",theme.SearchIcon(),
+			cmain,
+	),
+	)
+	maintab.Refresh()
 }
 
+// refresh maze tabs, edit unit
+var maintab *container.AppTabs		// tabs unit
+var cmain *fyne.Container			// content maze viewer
+var pmaz *fyne.Container			// box with image, button & blot
+var pimg *canvas.Raster
+
+func maz_tab(tabcon *fyne.Container, maz *image.NRGBA, mbut *holdableButton, blot *canvas.Image) {
+
+	tabcon.Remove(pmaz)
+	pimg = canvas.NewRasterFromImage(maz)
+	pmaz = container.NewStack(mbut, pimg, blot)
+	tabcon.Add(pmaz)
+	tabcon.Refresh()
+}
 // sub win switch G¹ / G²
 
 func subsw() {
@@ -361,7 +383,7 @@ func subsw() {
 
 // make clickable image wimg in window cw with given size
 
-var rbimg *canvas.Raster			// for the pb paste image dealy
+var rbimg *image.NRGBA			// for the pb paste image dealy
 var rbtn *holdableButton
 var blotup bool
 
@@ -372,8 +394,9 @@ func blotwup(cw fyne.Window, limg *image.NRGBA) {
 	if strings.Contains(t, "G¹G²ved") {
 		if blot == ccblot { blot.Resize(fyne.Size{0, 0}) }
 		blot = canvas.NewImageFromImage(limg)
-		box := container.NewStack(rbtn, rbimg, blot)
-		cw.SetContent(box)
+	//	box := container.NewStack(rbtn, rbimg, blot)
+	//	cw.SetContent(box)
+		maz_tab(cmzw, rbimg, rbtn, blot)
 		blotup = false
 fmt.Printf("blotwup\n")
 	}
@@ -400,7 +423,7 @@ fmt.Printf("clwin-s tl: %s\n",btn.title)
 
 func clikwinm(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 
-	rbimg = canvas.NewRasterFromImage(wimg)
+	rbimg = wimg //canvas.NewRasterFromImage(wimg)
 
 // turns display into clickable edit area
 	rbtn = newHoldableButton()
@@ -409,8 +432,9 @@ func clikwinm(cw fyne.Window, wimg *image.NRGBA, wx int, wy int) {
 fmt.Printf("clwin-m tl: %s\n",rbtn.title)
 
 	cw.Resize(fyne.NewSize(float32(wx), float32(wy)))
-	box := container.NewStack(rbtn, rbimg)		// key to seeing maze & having the click button with full mouse sense
-	cw.SetContent(box)								// and blot coming last is shown on top... huh?
+//	box := container.NewStack(rbtn, rbimg)		// key to seeing maze & having the click button with full mouse sense
+//	cw.SetContent(box)								// and blot coming last is shown on top... huh?
+	maz_tab(cmzw, rbimg, rbtn, blant)
 
 //fmt.Printf("btn sz %v\n",rbtn.Size())
 }

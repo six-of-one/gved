@@ -12,7 +12,6 @@ import (
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
     "fyne.io/fyne/v2/canvas"
-    "fyne.io/fyne/v2/container"
 )
 
 // main mouse handler
@@ -20,6 +19,7 @@ import (
 // rubber banded
 
 var blot *canvas.Image
+var blant *canvas.Image		// blank blot
 var ccblot *canvas.Image
 var blotimg string		// replace blotter with png image - blotter is stretched, so design must be right for outlines
 var blotcol uint32		// with no image, this controls color & transparency in hex 0xAARRGGBB
@@ -31,7 +31,9 @@ var ablot bool			// active blotter
 func blotter(img *image.NRGBA) {
 
 	if img == nil {
+
 		img = image.NewNRGBA(image.Rect(0, 0, 1, 1))
+		blant = canvas.NewImageFromImage(img)
 		draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{blotcol}}, image.ZP, draw.Src)
 	}
 // config override for default blotter with png image
@@ -55,8 +57,9 @@ func blotmov(px float32, py float32, szx float32, szy float32) {
 	blot.Resize(fyne.Size{szx, szy})
 //	blot.Refresh()
 	if !ablot {
-		box := container.NewStack(rbtn, rbimg, blot)	// SetContent will max size the blotter when its called
-		w.SetContent(box)								// call it too much and blotter malfunctions - thus why animcon must be off
+//		box := container.NewStack(rbtn, rbimg, blot)	// SetContent will max size the blotter when its called
+//		w.SetContent(box)								// call it too much and blotter malfunctions - thus why animcon must be off
+		maz_tab(cmzw, rbimg, rbtn, blot)
 		ablot = true
 	}
 }
