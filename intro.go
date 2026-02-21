@@ -106,15 +106,15 @@ func splashrot() {
 	sec := false	// first time in play g1 scroller intro w/music
 	smpl := ""		// sample play item
 	mus := ""		// music with anim, or static even
+	srot := 0		// sample play rot
 //	splashsrc := ""
   for {
 	rot := splRot		// def 6000 millis
-	srot := splRot		// sample play rot
 
 // blank last one, remove doesnt seem to actually remove leftovers
-	img := image.NewNRGBA(image.Rect(0, 0, 2000, 2000))
+	img := image.NewNRGBA(image.Rect(0, 0, 1, 1))
 	draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{0}}, image.ZP, draw.Src)
-	cimg := canvas.NewRasterFromImage(rbimg)
+	cimg := canvas.NewRasterFromImage(img)
 	splash.Remove(splim)
 	splim = container.NewStack(cimg)
 	splash.Add(splim)
@@ -135,6 +135,7 @@ fmt.Printf("smpl2: %s\n",rot)
 		splCyc++
 	}
 
+	if splCyc == 3 { splCyc = 8 }
 //	if splCyc != 12 { hideScorDiv() }
 
 /*
@@ -170,7 +171,7 @@ fmt.Printf("smpl1: %s\n",rot)
 		smpl = "splash/g1smpl.gif"; srot = 44400
 		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 84500 }
 		if splCyc == 11 { rot = 15000 }
-		if (splCyc == 1 && rand.Float64() < 0.21) || !sec { rot = 18100; mus = "sfx/music.title_sf.ogg" }
+		if (splCyc == 1 && rand.Float64() < 0.21) /*|| !sec*/ { rot = 18100; mus = "sfx/music.title_sf.ogg" }
 		if (splCyc == 10 && rand.Float64() < 0.13) { rot = 25160; mus = "sfx/music.g2.title.ogg" }
 		upng = !gif_lodr(document.Splashrot.Src, splash, splim, mus)
 		mus = ""
