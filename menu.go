@@ -349,6 +349,9 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 	)
 	w.SetContent(cmain)
 	maintab.Refresh()
+	maintab.OnSelected = func(t *container.TabItem) {
+
+	}
 	go func() {
 		splashrot()
 	}()

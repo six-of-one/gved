@@ -108,14 +108,7 @@ var splash *fyne.Container			// splash intro screens, layout in menu.go
 var splim *fyne.Container			// image to splash
 
 func splashrot() {
-// 	vid := document.IntroVid
-//	spl := document.Splash
 
-	// shutdown until game over
-/*	if spl.Visibility == "hidden" {
-		return
-	}
-*/
 	sec := false	// first time in play g1 scroller intro w/music
 	smpl := ""		// sample play item
 	mus := ""		// music with anim, or static even
@@ -208,14 +201,3 @@ func splashrot() {
 	time.Sleep(time.Duration(rot) * time.Millisecond)
   }
 }
-/*
-func main() {
-	// Initialize splash visibility for testing
-	document.Splash.Visibility = "visible"
-	// Start splash rotation
-	splashrot()
-
-	// Prevent main from exiting immediately
-	select {}
-}
-*/
