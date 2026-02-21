@@ -69,12 +69,24 @@ func showScorDiv() {
 	document.ScorDiv = true
 }
 
+// blank bkg display
+
+func gif_blnk(lod *fyne.Container) {
+	img := image.NewNRGBA(image.Rect(0, 0, 2000, 2000))
+	draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{0}}, image.ZP, draw.Src)
+	cimg := canvas.NewRasterFromImage(img)
+//	splash.Remove(splim)
+	spc := container.NewStack(cimg)
+	lod.Add(spc)
+}
+
 // load a gif from file fn, set lim as content of container lod, play mus if given
 // return true if gif loads
 
 func gif_lodr(fn string, lod, lim *fyne.Container, mus string) bool {
 
 	lded := false
+	gif_blnk(lod)
 	gif, err := NewAnimatedGif(storage.NewFileURI(fn))
 	if err == nil {
 		lod.Remove(lim)
@@ -110,14 +122,6 @@ func splashrot() {
 //	splashsrc := ""
   for {
 	rot := splRot		// def 6000 millis
-
-// blank last one, remove doesnt seem to actually remove leftovers
-	img := image.NewNRGBA(image.Rect(0, 0, 2000, 2000))
-	draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{0}}, image.ZP, draw.Src)
-	cimg := canvas.NewRasterFromImage(img)
-	splash.Remove(splim)
-	splim = container.NewStack(cimg)
-	splash.Add(splim)
 
 	upng := true
 // sample play if it didnt play after title, these screens are already done
