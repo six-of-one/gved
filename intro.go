@@ -149,6 +149,7 @@ func splashrot() {
 			gif_lodr(smpl, splash, splim, mus)
 			smpl = ""
 			rot = srot
+			upng = false
 		} else {
 		if splCyc == 1 || splCyc == 10 || splCyc == 11 {
 			document.Splashrot.Src = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
