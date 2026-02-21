@@ -84,11 +84,7 @@ func splashrot() {
 
 	if splCyc != 12 { hideScorDiv() }
 
-/*	if splCyc == 1 {
-		vid.Height = 0 // no height info in Go, set to 0 or some default
-		vid.Width = 0  // no width info in Go, set to 0 or some default
-		vid.Src = "gfx/1x1.png"
-		// play demo - gauntlet 1, quiet
+/*
 		vid.Src = "splash/g1samply_q.ogv"
 		rot = 44400 // 44 secs - len of g1 sample play
 
@@ -105,27 +101,20 @@ func splashrot() {
 			}
 			if rand.Float64() < 0.22 {
 				vid.Src = "splash/gN_intro.ogv"
-				rot = 34210
-			}
-		}
-		vid.Muted = AudioFX.Mute
-		vid.Play()
-		vid.SetVisibility("visible")
-	} else {
-		vid.Load()
-		vid.Pause()
-		vid.SetVisibility("hidden")  */
+				rot = 34210  */
 
-		if sec && splCyc == 1 && rand.Float64() > 0.65 {
-			splCyc = 10		}
+		if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }
+
+// add g1 & 2 smpl gifs & musics, later other intro sets
 
 		upng := true
+		mus := ""
 		if splCyc == 1 || splCyc == 10 || splCyc == 11 {
 			document.Splashrot.Src = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
-//			if splCyc == 10 { document.Splashrot.Src = "splash/splashA.gif" }
-//			if splCyc == 10 { document.Splashrot.Src = "splash/splashB.gif" }
 			rot = 7700			// unless playing 18 secs of music g1, or 25.14 secs g2, or 14 secs ...B.gif
-			if splCyc == 11 { rot = 14000 }
+			if splCyc == 11 { rot = 15000 }
+			if (splCyc == 1 && rand.Float64() < 0.21) || !sec { rot = 18100; mus = "sfx/music.title_sf.ogg" }
+			if (splCyc == 10 && rand.Float64() < 0.13) || sec { rot = 25160; mus = "sfx/music.g2.title.ogg" }
 			gif, err := NewAnimatedGif(storage.NewFileURI(document.Splashrot.Src))
 			if err == nil {
 				splash.Remove(splim)
