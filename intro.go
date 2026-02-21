@@ -120,7 +120,7 @@ func splashrot() {
 	smpl := ""		// sample play item
 	mus := ""		// music with anim, or static even
 	srot := 0		// sample play rot
-//	splashsrc := ""
+	splashsrc := ""
   for {
 	rot := splRot		// def 6000 millis
 
@@ -158,8 +158,8 @@ fmt.Printf("smpl2: %s\n",rot)
 				vid.Src = "splash/gN_intro.ogv"
 				rot = 34210  */
 
-//	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
-	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
+	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
+//	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
 
 // add g1 & 2 smpl gifs & musics, later other intro sets
 
@@ -172,20 +172,20 @@ fmt.Printf("smpl1: %s\n",rot)
 		upng = false
 	} else {		// skip anim splash since cyc goes back to 1 or 10
 	if splCyc == 1 || splCyc == 10 || splCyc == 11 {
-		document.Splashrot.Src = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
+		splashsrc = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
 		rot = 9700			// unless playing 18 secs of music g1, or 25.14 secs g2, or 14 secs ...B.gif
-		smpl = "splash/g1smpl.gif"; srot = 44000
-		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 84800 }
+		smpl = "splash/g1smpl.gif"; srot = 43800
+		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 85200 }
 		if splCyc == 11 { rot = 15000 }
 		if (splCyc == 1 && rand.Float64() < 0.21) /*|| !sec*/ { rot = 18100; mus = "sfx/music.title_sf.ogg" }
 		if (splCyc == 10 && rand.Float64() < 0.13) { rot = 25160; mus = "sfx/music.g2.title.ogg" }
-		upng = !gif_lodr(document.Splashrot.Src, splash, splim, mus)
+		upng = !gif_lodr(splashsrc, splash, splim, mus)
 		mus = ""
 	} else {
-		document.Splashrot.Src = "splash/splash" + string(splLoop[splCyc]) + ".png"
+		splashsrc = "splash/splash" + string(splLoop[splCyc]) + ".png"
 	}}
 	if upng {
-	err, spl, _ := itemGetPNG(document.Splashrot.Src)
+	err, spl, _ := itemGetPNG(splashsrc)
 		if err == nil {
 			splash.Remove(splim)
 			splim = container.NewStack(spl)
@@ -193,7 +193,7 @@ fmt.Printf("smpl1: %s\n",rot)
 		fyne.Do(func() {
 			splim.Refresh()
 		})
-		} else { fmt.Printf("Splash screen fail: %s\n",document.Splashrot.Src);fmt.Print(err) }
+		} else { fmt.Printf("Splash screen fail: %s\n",splashsrc);fmt.Print(err) }
 	}
 // show score tbl on 12, 13
 	if splCyc >= 12 {
