@@ -369,6 +369,7 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 
 	data, err := ioutil.ReadFile(fil)
 	edp := 0
+
 	if err == nil {
 		clr_buf(mdat, xdat, opts.DimX, opts.DimY, -1, -66)		// erase old data now
 
@@ -421,16 +422,52 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 			}
 	if opts.Verbose { fmt.Printf("\n") }
 		}
+// rest of load only if maze main loads in
+
+// now load deleted elements - but not for pb or pal
+  if ldb {
+	dbf := prep(fil, ".db_") //fil[0:4]+".db_"+fil[4:len(fil)]
+	data, err = ioutil.ReadFile(dbf)
+	delstak = 0
+	restak = 0
+	delbset(0)
+	if err == nil {
+		dscan := fmt.Sprintf("%s",data)
+	    scanr := bufio.NewScanner(strings.NewReader(dscan))
+		l := "0"	// the default on scan failure will produce a solid block of wall 32 x 32
+		if scanr.Scan() { l = scanr.Text() }
+		fmt.Sscanf(l,"%d %d",&delstak, &restak)
+
+		for y := 0; y < delstak; y++ {
+			l = "-1 0 0 1"
+			if scanr.Scan() { l = scanr.Text() }
+			delbck(6, y)
+			fmt.Sscanf(l, "%d %d %d %d %s\n", &delbuf.elem[y],&delbuf.mx[y],&delbuf.my[y],&delbuf.revc[y],&delbuf.xbfd[y])
+			if ud {
+				udbck(6,y)
+				udb.mx[y] = delbuf.mx[y]
+				udb.my[y] = delbuf.my[y]
+				udb.revc[y] = delbuf.revc[y]
+				udb.elem[y] = delbuf.elem[y]
+				udb.xbfd[y] = delbuf.xbfd[y]
+			}
+			if delbuf.elem[y] < 0 { delstak = y; break }
+		}
+		delbset(delstak)
+		if ud {
+			udstak = delstak; urstak = restak
+			udbck(3,udstak)
+			udb.elem[udstak] = -1
+		}
+
 	} else {
-// this warning will issue if a maze buffer save (maze not being edited) has not happened because and the maze is viewed
 		if opts.Verbose {
-			fmt.Printf("loading maze %s, warning:\n",fil)
+			fmt.Printf("edp %d failed < 0 or loading maze deleted %s, warning:\n",edp,dbf)
 			fmt.Print(err)
 			fmt.Printf("\n")
-			fmt.Printf("Note: 'no such file' if maze is not being edited and the maze is viewed when editor is on\n")
 		}
-		edp = -1
 	}
+  }
 // check for xtra buffer store
 	xbf := prep(fil, "xb_")
 	data, err = ioutil.ReadFile(xbf)
@@ -497,51 +534,19 @@ fmt.Printf("ld %d: up:%d %d -- %s %s\n",i,fref[i],wref[i],wlfl.florn[fref[i]],wl
 		}
 	}
 
-// now load deleted elements - but not for pb or pal
-  if ldb {
-	dbf := prep(fil, ".db_") //fil[0:4]+".db_"+fil[4:len(fil)]
-	data, err = ioutil.ReadFile(dbf)
-	delstak = 0
-	restak = 0
-	delbset(0)
-	if err == nil {
-		dscan := fmt.Sprintf("%s",data)
-	    scanr := bufio.NewScanner(strings.NewReader(dscan))
-		l := "0"	// the default on scan failure will produce a solid block of wall 32 x 32
-		if scanr.Scan() { l = scanr.Text() }
-		fmt.Sscanf(l,"%d %d",&delstak, &restak)
-
-		for y := 0; y < delstak; y++ {
-			l = "-1 0 0 1"
-			if scanr.Scan() { l = scanr.Text() }
-			delbck(6, y)
-			fmt.Sscanf(l, "%d %d %d %d %s\n", &delbuf.elem[y],&delbuf.mx[y],&delbuf.my[y],&delbuf.revc[y],&delbuf.xbfd[y])
-			if ud {
-				udbck(6,y)
-				udb.mx[y] = delbuf.mx[y]
-				udb.my[y] = delbuf.my[y]
-				udb.revc[y] = delbuf.revc[y]
-				udb.elem[y] = delbuf.elem[y]
-				udb.xbfd[y] = delbuf.xbfd[y]
-			}
-			if delbuf.elem[y] < 0 { delstak = y; break }
-		}
-		delbset(delstak)
-		if ud {
-			udstak = delstak; urstak = restak
-			udbck(3,udstak)
-			udb.elem[udstak] = -1
-		}
+	if ldb { flordirt, walsdirt = 1,1 }			// mark floor dirty so it gets rebuilt, when loading main maze (not palette or pb)
 
 	} else {
+// this warning will issue if a maze buffer save (maze not being edited) has not happened because and the maze is viewed
 		if opts.Verbose {
-			fmt.Printf("edp %d failed < 0 or loading maze deleted %s, warning:\n",edp,dbf)
+			fmt.Printf("loading maze %s, warning:\n",fil)
 			fmt.Print(err)
 			fmt.Printf("\n")
+			fmt.Printf("Note: 'no such file' if maze is not being edited and the maze is viewed when editor is on\n")
 		}
+		edp = -1
 	}
-  }
-	if ldb { flordirt, walsdirt = 1,1 }			// mark floor dirty so it gets rebuilt, when loading main maze (not palette or pb)
+
 	return edp
 }
 
