@@ -70,6 +70,7 @@ func showScorDiv() {
 }
 
 // blank bkg display
+// not removing previous spc blackout - does this low key leak mem, or does garbage collect clear it?
 
 func gif_blnk(lod *fyne.Container) {
 	img := image.NewNRGBA(image.Rect(0, 0, 2000, 2000))
@@ -86,7 +87,7 @@ func gif_blnk(lod *fyne.Container) {
 func gif_lodr(fn string, lod, lim *fyne.Container, mus string) bool {
 
 	lded := false
-	gif_blnk(lod)
+	gif_blnk(lod)	// reg png files are expected to fill splash area, so no need to blank
 	gif, err := NewAnimatedGif(storage.NewFileURI(fn))
 	if err == nil {
 		lod.Remove(lim)
