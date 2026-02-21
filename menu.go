@@ -357,8 +357,6 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 // refresh maze tabs, edit unit
 var maintab *container.AppTabs		// tabs unit
 var cmain *fyne.Container			// content maze viewer
-var splash *fyne.Container			// splash intro screens
-var splim *fyne.Container			// image to splash
 var pmaz *fyne.Container			// box with image, button & blot
 var pimg *canvas.Raster
 
