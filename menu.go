@@ -341,17 +341,22 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 // setup main tabs
 	cmain = container.NewStack()
 	splash = container.NewStack()
+	spexpl = container.NewStack()
+	sprview = container.NewStack()
 	maintab = container.NewAppTabs(
 		container.NewTabItemWithIcon("Maze view",theme.SearchIcon(),
 			cmain,
 	),
 	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),splash),
+	container.NewTabItemWithIcon("Sprites",theme.SearchReplaceIcon(),spexpl),
 	)
+
 	w.SetContent(cmain)
 	maintab.Refresh()
 	maintab.OnSelected = func(t *container.TabItem) {
 //fmt.Printf("tab: %s\n",t.Text)
 		actab = t.Text
+		if actab == "Sprites" { sprite_view() }
 	}
 	actab = "Maze view"
 	gif_lodr("splash/splash1.gif", splash, splim, "")		// pre-load intro gif
@@ -363,6 +368,7 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 // refresh maze tabs, edit unit
 var maintab *container.AppTabs		// tabs unit
 var cmain *fyne.Container			// content maze viewer
+var spexpl *fyne.Container			// sprite explorer / mem viewer
 var pmaz *fyne.Container			// box with image, button & blot
 var pimg *canvas.Raster				// current maze image
 var actab string					// active tab

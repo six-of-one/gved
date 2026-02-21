@@ -171,7 +171,7 @@ func splashrot() {
 		smpl = "splash/g1smpl.gif"; srot = 43900
 		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 122200 }
 		if splCyc == 11 { rot = 15000; smpl = "" }
-		if (splCyc == 1 && rand.Float64() < 0.71) || !sec { rot = 18100; mus = "sfx/music.title_sf.ogg" }
+		if (splCyc == 1 && rand.Float64() < 0.71) || !sec { rot = 18700; mus = "sfx/music.title_sf.ogg" }
 		if (splCyc == 10 && rand.Float64() < 0.73) { rot = 25160; mus = "sfx/music.g2.title.ogg" }
 		upng = !gif_lodr(splashsrc, splash, splim, mus)
 		mus = ""

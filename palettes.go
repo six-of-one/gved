@@ -1064,6 +1064,25 @@ var gauntletPalettes = map[string][][]color.Color{
 	"forcefield": forcefieldPalette,
 }
 
+var ptyp_lim = map[string]int{
+	"teleff":		0,
+	"floor":		16,
+	"gfloor":		16,
+	"wall":			16,
+	"gwall":		16,
+	"base":			31,
+	"gbase":		31,
+	"warrior":		3,
+	"valkyrie":		3,
+	"wizard":		3,
+	"elf":			3,
+	"trap":			0,
+	"stun":			0,
+	"secret":		0,
+	"shrub":		0,
+	"forcefield":	0,
+}
+
 var sColors1 = []int{
 	10, 10, 10, 10, 10, 1, 9, 9, 9, 10, 8,
 }
