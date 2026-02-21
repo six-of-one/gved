@@ -353,6 +353,7 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 //fmt.Printf("tab: %s\n",t.Text)
 		actab = t.Text
 	}
+	actab = "Maze view"
 	go func() {
 		splashrot()
 	}()
