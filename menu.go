@@ -354,6 +354,7 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 		actab = t.Text
 	}
 	actab = "Maze view"
+	gif_lodr("splash/splash1.gif", splash, splim, "")		// pre-load intro gif
 	go func() {
 		splashrot()
 	}()
