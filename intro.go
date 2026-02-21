@@ -158,8 +158,8 @@ fmt.Printf("smpl2: %s\n",rot)
 				vid.Src = "splash/gN_intro.ogv"
 				rot = 34210  */
 
-	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
-//	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
+//	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
+	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
 
 // add g1 & 2 smpl gifs & musics, later other intro sets
 
