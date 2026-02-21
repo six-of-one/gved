@@ -95,7 +95,7 @@ func gif_lodr(fn string, lod, lim *fyne.Container, mus string) bool {
 		lod.Add(lim)
 	fyne.Do(func() {
 		lim.Refresh()
-fmt.Printf("Splash load: %s\n",fn)
+//fmt.Printf("Splash load: %s\n",fn)
 	})
 		gif.Start()
 		lded = true
@@ -130,7 +130,7 @@ func splashrot() {
 		gif_lodr(smpl, splash, splim, mus)
 		smpl = ""
 		rot = srot
-fmt.Printf("smpl2: %s\n",rot)
+//fmt.Printf("smpl2: %s\n",rot)
 	} else {
 
 	if splCyc == 9 {		// done with g1 splash, load g1 score tbl gfx
@@ -167,7 +167,7 @@ fmt.Printf("smpl2: %s\n",rot)
 		gif_lodr(smpl, splash, splim, mus)
 		smpl = ""
 		rot = srot
-fmt.Printf("smpl1: %s\n",rot)
+//fmt.Printf("smpl1: %s\n",rot)
 		upng = false
 	} else {		// skip anim splash since cyc goes back to 1 or 10
 	if splCyc == 1 || splCyc == 10 || splCyc == 11 {
@@ -182,7 +182,7 @@ fmt.Printf("smpl1: %s\n",rot)
 		mus = ""
 	} else {
 		splashsrc = "splash/splash" + string(splLoop[splCyc]) + ".png"
-fmt.Printf("Splash disp: %s\n",splashsrc)
+//fmt.Printf("Splash disp: %s\n",splashsrc)
 	}}
 	if upng {
 	err, spl, _ := itemGetPNG(splashsrc)
@@ -197,7 +197,7 @@ fmt.Printf("Splash disp: %s\n",splashsrc)
 	}
 // show score tbl on 12, 13
 	if splCyc >= 12 {
-fmt.Printf("Scores: %s\n",splashsrc)
+//fmt.Printf("Scores: %s\n",splashsrc)
 		if rand.Float64() > 0.9 {		// this skips title scroller, strait into g1 ghosts pg
 			splCyc = 1
 		}
