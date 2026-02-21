@@ -136,11 +136,10 @@ fmt.Printf("smpl2: %s\n",rot)
 	if splCyc == 9 {		// done with g1 splash, load g1 score tbl gfx
 		splCyc = 13
 	} else {
-		if splCyc < 1 || splCyc > 12 { splCyc = 0 }
+		if splCyc < 1 || splCyc >= 12 { splCyc = 0 }
 		splCyc++
 	}
 
-	if splCyc == 3 { splCyc = 8 }
 //	if splCyc != 12 { hideScorDiv() }
 
 /*
@@ -175,14 +174,15 @@ fmt.Printf("smpl1: %s\n",rot)
 		splashsrc = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
 		rot = 9700			// unless playing 18 secs of music g1, or 25.14 secs g2, or 14 secs ...B.gif
 		smpl = "splash/g1smpl.gif"; srot = 43800
-		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 85200 }
-		if splCyc == 11 { rot = 15000 }
+		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 122000 }
+		if splCyc == 11 { rot = 15000; smpl = "" }
 		if (splCyc == 1 && rand.Float64() < 0.21) /*|| !sec*/ { rot = 18100; mus = "sfx/music.title_sf.ogg" }
 		if (splCyc == 10 && rand.Float64() < 0.13) { rot = 25160; mus = "sfx/music.g2.title.ogg" }
 		upng = !gif_lodr(splashsrc, splash, splim, mus)
 		mus = ""
 	} else {
 		splashsrc = "splash/splash" + string(splLoop[splCyc]) + ".png"
+fmt.Printf("Splash disp: %s\n",splashsrc)
 	}}
 	if upng {
 	err, spl, _ := itemGetPNG(splashsrc)
@@ -197,6 +197,7 @@ fmt.Printf("smpl1: %s\n",rot)
 	}
 // show score tbl on 12, 13
 	if splCyc >= 12 {
+fmt.Printf("Scores: %s\n",splashsrc)
 		if rand.Float64() > 0.9 {		// this skips title scroller, strait into g1 ghosts pg
 			splCyc = 1
 		}
