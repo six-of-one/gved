@@ -5,10 +5,13 @@ import (
 	"math/rand"
 //	"strconv"
 //	"strings"
+	"image"
+	"image/draw"
 	"time"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/storage"
+	"fyne.io/fyne/v2/canvas"
 )
 
 // splash screen rotator
@@ -101,11 +104,20 @@ func splashrot() {
 	smpl := ""		// sample play item
   for {
 	rot := splRot		// def 6000 millis
+	srot := splRot		// sample play rot
+
+// blank last one, remove doesnt seem to actually remove leftovers
+	img := image.NewNRGBA(image.Rect(0, 0, 1, 1))
+	draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{0}}, image.ZP, draw.Src)
+	cimg := canvas.NewRasterFromImage(rbimg)
+	splash.Remove(splim)
+	splim = container.NewStack(cimg)
+	splash.Add(splim)
 
 	if splCyc < 1 || splCyc > 12 { splCyc = 0 }
 	splCyc++
 
-	if splCyc != 12 { hideScorDiv() }
+//	if splCyc != 12 { hideScorDiv() }
 
 /*
 		vid.Src = "splash/g1samply_q.ogv"
@@ -136,12 +148,13 @@ func splashrot() {
 			splCyc--
 			gif_lodr(smpl, splash, splim, mus)
 			smpl = ""
+			rot = srot
 		} else {
 		if splCyc == 1 || splCyc == 10 || splCyc == 11 {
 			document.Splashrot.Src = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
-			rot = 7700			// unless playing 18 secs of music g1, or 25.14 secs g2, or 14 secs ...B.gif
-			smpl = "g1smpl.gif"
-			if splCyc == 10 { smpl = "g2smpl.gif" }
+			rot = 9700			// unless playing 18 secs of music g1, or 25.14 secs g2, or 14 secs ...B.gif
+			smpl = "g1smpl.gif"; srot = 44400
+			if splCyc == 10 { smpl = "g2smpl.gif"; srot = 84500 }
 			if splCyc == 11 { rot = 15000 }
 			if (splCyc == 1 && rand.Float64() < 0.21) || !sec { rot = 18100; mus = "sfx/music.title_sf.ogg" }
 			if (splCyc == 10 && rand.Float64() < 0.13) || sec { rot = 25160; mus = "sfx/music.g2.title.ogg" }
@@ -151,9 +164,10 @@ func splashrot() {
 		}}
 // sample play if it didnt play after title
 		if (splCyc == 12 || splCyc == 9) && smpl != "" {
-			splCyc--
+			splCyc--	// go back one, hold advance for sample
 			gif_lodr(smpl, splash, splim, mus)
 			smpl = ""
+			rot = srot
 		} else {
 		if upng {
 		err, spl, _ := itemGetPNG(document.Splashrot.Src)
