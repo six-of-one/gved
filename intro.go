@@ -66,6 +66,28 @@ func showScorDiv() {
 	document.ScorDiv = true
 }
 
+// load a gif from file fn, set lim as content of container lod, play mus if given
+// return true if gif loads
+
+func gif_lodr(fn string, lod, lim *fyne.Container, mus string) bool {
+
+	lded := false
+	gif, err := NewAnimatedGif(storage.NewFileURI(fn))
+	if err == nil {
+		lod.Remove(lim)
+		lim = container.NewStack(gif)
+		lod.Add(lim)
+	fyne.Do(func() {
+		lim.Refresh()
+fmt.Printf("Splash load: %s\n",fn)
+	})
+		gif.Start()
+		lded = true
+		if mus != "" { play_sfx(mus) }
+	}
+	return lded
+}
+
 func splashrot() {
 // 	vid := document.IntroVid
 //	spl := document.Splash
@@ -75,7 +97,8 @@ func splashrot() {
 		return
 	}
 */
-	sec := false
+	sec := false	// first time in play g1 scroller intro w/music
+	smpl := ""		// sample play item
   for {
 	rot := splRot		// def 6000 millis
 
@@ -109,38 +132,29 @@ func splashrot() {
 
 		upng := true
 		mus := ""
+		if (splCyc == 2 || splCyc == 11) && smpl != "" && rand.Float64() < 0.47 {	// chance for sample play after scroller
+			splCyc--
+			gif_lodr(smpl, splash, splim, mus)
+			smpl = ""
+		} else {
 		if splCyc == 1 || splCyc == 10 || splCyc == 11 {
 			document.Splashrot.Src = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
 			rot = 7700			// unless playing 18 secs of music g1, or 25.14 secs g2, or 14 secs ...B.gif
+			smpl = "g1smpl.gif"
+			if splCyc == 10 { smpl = "g2smpl.gif" }
 			if splCyc == 11 { rot = 15000 }
 			if (splCyc == 1 && rand.Float64() < 0.21) || !sec { rot = 18100; mus = "sfx/music.title_sf.ogg" }
 			if (splCyc == 10 && rand.Float64() < 0.13) || sec { rot = 25160; mus = "sfx/music.g2.title.ogg" }
-			gif, err := NewAnimatedGif(storage.NewFileURI(document.Splashrot.Src))
-			if err == nil {
-				splash.Remove(splim)
-				splim = container.NewStack(gif)
-				splash.Add(splim)
-			fyne.Do(func() {
-				splim.Refresh()
-fmt.Printf("Splash load: %s\n",document.Splashrot.Src)
-			})
-				gif.Start()
-				upng = false
-			}
+			upng = !gif_lodr(document.Splashrot.Src, splash, splim, mus)
 		} else {
 			document.Splashrot.Src = "splash/splash" + string(splLoop[splCyc]) + ".png"
-		}
-
-		if splCyc == 12 {
-			if rand.Float64() > 0.9 {
-				splCyc = 2
-			} else {
-				if rand.Float64() < 0.38 {
-					document.Splashrot.Src = "splash/splash" + string(splLoop[splCyc]) + "2.png"
-				}
-				showScorDiv()
-			}
-		}
+		}}
+// sample play if it didnt play after title
+		if (splCyc == 12 || splCyc == 9) && smpl != "" {
+			splCyc--
+			gif_lodr(smpl, splash, splim, mus)
+			smpl = ""
+		} else {
 		if upng {
 		err, spl, _ := itemGetPNG(document.Splashrot.Src)
 			if err == nil {
@@ -151,6 +165,17 @@ fmt.Printf("Splash load: %s\n",document.Splashrot.Src)
 				splim.Refresh()
 			})
 			} else { fmt.Printf("Splash screen fail: %s\n",document.Splashrot.Src);fmt.Print(err) }
+		}}
+// show score tbl on 12
+		if splCyc == 12 {
+			if rand.Float64() > 0.9 {
+				splCyc = 2
+			} else {
+				if rand.Float64() < 0.38 {
+					document.Splashrot.Src = "splash/splash" + string(splLoop[splCyc]) + "2.png"
+				}
+				showScorDiv()
+			}
 		}
 //	}
 
