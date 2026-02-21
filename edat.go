@@ -371,6 +371,7 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 	edp := 0
 
 	if err == nil {
+		if ldb { vlock = true }			// all this vlocking needs handled by more maze storage, where a loaded level doesnt set up as displayed till load is done and first render
 		clr_buf(mdat, xdat, opts.DimX, opts.DimY, -1, -66)		// erase old data now
 
 		dscan := fmt.Sprintf("%s",data)
