@@ -112,7 +112,7 @@ func splashrot() {
 	rot := splRot		// def 6000 millis
 
 // blank last one, remove doesnt seem to actually remove leftovers
-	img := image.NewNRGBA(image.Rect(0, 0, 1, 1))
+	img := image.NewNRGBA(image.Rect(0, 0, 2000, 2000))
 	draw.Draw(img, img.Bounds(), &image.Uniform{HRGB{0}}, image.ZP, draw.Src)
 	cimg := canvas.NewRasterFromImage(img)
 	splash.Remove(splim)
@@ -153,7 +153,8 @@ fmt.Printf("smpl2: %s\n",rot)
 				vid.Src = "splash/gN_intro.ogv"
 				rot = 34210  */
 
-	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
+//	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
+	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
 
 // add g1 & 2 smpl gifs & musics, later other intro sets
 
@@ -168,8 +169,8 @@ fmt.Printf("smpl1: %s\n",rot)
 	if splCyc == 1 || splCyc == 10 || splCyc == 11 {
 		document.Splashrot.Src = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
 		rot = 9700			// unless playing 18 secs of music g1, or 25.14 secs g2, or 14 secs ...B.gif
-		smpl = "splash/g1smpl.gif"; srot = 44400
-		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 84500 }
+		smpl = "splash/g1smpl.gif"; srot = 44000
+		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 84800 }
 		if splCyc == 11 { rot = 15000 }
 		if (splCyc == 1 && rand.Float64() < 0.21) /*|| !sec*/ { rot = 18100; mus = "sfx/music.title_sf.ogg" }
 		if (splCyc == 10 && rand.Float64() < 0.13) { rot = 25160; mus = "sfx/music.g2.title.ogg" }
