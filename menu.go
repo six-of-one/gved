@@ -350,7 +350,8 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 	w.SetContent(cmain)
 	maintab.Refresh()
 	maintab.OnSelected = func(t *container.TabItem) {
-
+//fmt.Printf("tab: %s\n",t.Text)
+		actab = t.Text
 	}
 	go func() {
 		splashrot()
@@ -361,7 +362,8 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 var maintab *container.AppTabs		// tabs unit
 var cmain *fyne.Container			// content maze viewer
 var pmaz *fyne.Container			// box with image, button & blot
-var pimg *canvas.Raster
+var pimg *canvas.Raster				// current maze image
+var actab string					// active tab
 
 func maz_tab(tabcon *fyne.Container, maz *image.NRGBA, mbut *holdableButton, pblot *canvas.Image) {
 

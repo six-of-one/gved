@@ -775,7 +775,7 @@ func animcon() {
 		draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 		rbimg = rimg
 	}
-	if !vlock {
+	if !vlock  && actab == "Maze view" {
 // left this in while options still has animcon maze tab
 		cmzw.Remove(mzw)
 		mzw = canvas.NewRasterFromImage(rbimg)

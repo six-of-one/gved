@@ -117,6 +117,8 @@ func splashrot() {
   for {
 	rot := splRot		// def 6000 millis
 
+  if actab == "Game" {		// tab loaded where this happen
+
 	upng := true
 // sample play if it didnt play after title, these screens are already done
 	if (splCyc == 11 || splCyc == 9) && smpl != "" {
@@ -150,8 +152,8 @@ func splashrot() {
 				vid.Src = "splash/gN_intro.ogv"
 				rot = 34210  */
 
-//	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
-	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
+	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
+//	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
 
 // add g1 & 2 smpl gifs & musics, later other intro sets
 
@@ -169,8 +171,8 @@ func splashrot() {
 		smpl = "splash/g1smpl.gif"; srot = 43800
 		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 122000 }
 		if splCyc == 11 { rot = 15000; smpl = "" }
-		if (splCyc == 1 && rand.Float64() < 0.21) /*|| !sec*/ { rot = 18100; mus = "sfx/music.title_sf.ogg" }
-		if (splCyc == 10 && rand.Float64() < 0.13) { rot = 25160; mus = "sfx/music.g2.title.ogg" }
+		if (splCyc == 1 && rand.Float64() < 0.71) || !sec { rot = 18100; mus = "sfx/music.title_sf.ogg" }
+		if (splCyc == 10 && rand.Float64() < 0.73) { rot = 25160; mus = "sfx/music.g2.title.ogg" }
 		upng = !gif_lodr(splashsrc, splash, splim, mus)
 		mus = ""
 	} else {
@@ -198,6 +200,7 @@ func splashrot() {
 	}}
 
 	sec = true		// second loop+
+  }
 	time.Sleep(time.Duration(rot) * time.Millisecond)
   }
 }
