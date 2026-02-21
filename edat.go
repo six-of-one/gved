@@ -535,7 +535,7 @@ fmt.Printf("ld %d: up:%d %d -- %s %s\n",i,fref[i],wref[i],wlfl.florn[fref[i]],wl
 		}
 	}
 
-	if ldb { flordirt, walsdirt = 1,1 }			// mark floor dirty so it gets rebuilt, when loading main maze (not palette or pb)
+	if ldb { flordirt, walsdirt = 1,1; vlock = false }			// mark floor dirty so it gets rebuilt, when loading main maze (not palette or pb)
 
 	} else {
 // this warning will issue if a maze buffer save (maze not being edited) has not happened because and the maze is viewed
