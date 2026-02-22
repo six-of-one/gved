@@ -133,7 +133,7 @@ var (
 
 // vars edit colors
 
-var lvl1col,lvl2col color.Color = HRGB{0xff0000ff},HRGB{0xfff0000}		// def level colors blue, red
+var lvl1col,lvl2col color.Color = HRGB{0xff0000ff},HRGB{0xffff0000}		// def level colors blue, red
 
 func colorCont(wn fyne.Window) fyne.CanvasObject {
 	var bas_col color.Color
