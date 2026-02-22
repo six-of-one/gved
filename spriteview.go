@@ -87,7 +87,7 @@ var lim *fyne.Container
 	}
 	xsiz.SetText(lasx)
 	ysiz := widget.NewEntry()
-	xsiz.OnChanged = func(s string) {
+	ysiz.OnChanged = func(s string) {
 
 		fmt.Sscanf(s,"%d",&svy)
 		svy = maxint(1,minint(svy,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
@@ -118,20 +118,22 @@ var lim *fyne.Container
 	bas := loadfail(400, 400)
 // need - g1/g2 flag check, tranpar flag
 	bld_btn := widget.NewButton("BUILD", func() {
+		var bstamp Stamp
 		if !chkg1rom.Checked && !chkg2rom.Checked { spchks(true,false,false,false) }
-		stamp := itemGetStamp("key")
+		bstamp = Stamp{} //itemGetStamp("key")
 		gx,gy := svx*8+8, svy*8+8
 		fmt.Sscanf(lasadr,"%d",&prcadr)
 		for y := 0; y <= 6; y++ {
 		for x := 0; x <= 6; x++ {
-			stamp.numbers = tilerange(prcadr, svx * svy)
+			bstamp.numbers = tilerange(prcadr, svx * svy)
 			prcadr += svx * svy * 8
-			stamp.width = svx
-			stamp.trans0 = false
-			stamp.pnum = pnumsel
-			stamp.ptype = paltype
-fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X -- @%d, %d\n",paltype,pnumsel,svx,svy,prcadr,x*gx, y*gy)
-			writestamptoimage(G1,bas, stamp, x*gx, y*gy)
+			bstamp.width = svx
+			bstamp.trans0 = false
+			bstamp.pnum = pnumsel
+			bstamp.ptype = paltype
+			fillstamp(&bstamp)
+fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X -- %v\n",paltype,pnumsel,svx,svy,prcadr,bstamp.numbers)
+			writestamptoimage(G1,bas, &bstamp, x*gx, y*gy)
 		}}
 		bld := canvas.NewRasterFromImage(bas)
 		savetopng("tst.png", bas)
