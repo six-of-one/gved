@@ -23,14 +23,16 @@ func spchks(c1,c2,c3,c4 bool){
 }
 
 var sprview *fyne.Container
-var laspnume string
-var lasadr string = "0"
-var prcadr int = 0				// process from this addr
+var lasadr string = "2048"
+var prcadr int = 2048			// process from this addr, 2048 is ghosts
 var paltype string = "base"
 var pallim int = 0				// each palete list has a # lim, which exceeding causes a crash
-var pnumsel int = 1				// base pnum 1 - most common items, treasure, foods, potions are in palete 1 of base
-var svx,svy int = 2,2				// xy size fo stamp
-var lasx,lasy string = "2","2"
+var laspnume string = "4"
+var pnumsel int = 4				// base pnum 1 - most common items, treasure, foods, potions are in palete 1 of base, 4 = 3rd level ghosts
+var svx,svy int = 3,3			// xy size fo stamp
+var lasx,lasy string = "3","3"
+var pixx = 380					// pixel size to fill - makes square canvas
+var lpixx string = "380"
 
 func sprite_view() {
 
@@ -64,7 +66,6 @@ var lim *fyne.Container
 // select palete num, limited for each palete type
 	pnumen := widget.NewEntry()
 	pnumen.Resize(fyne.Size{60, optht})
-	if laspnume == "" { laspnume = "0" }
 	pnumen.SetText(laspnume)
 	pnumen.OnChanged = func(s string) {
 
@@ -99,6 +100,18 @@ var lim *fyne.Container
 // size of stamp, x by y
 	ssiz_label := widget.NewLabelWithStyle("size:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 	x_label := widget.NewLabelWithStyle(" x ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
+// pxiel size of image to build
+	xpxz := widget.NewEntry()
+	xpxz.OnChanged = func(s string) {
+
+		fmt.Sscanf(s,"%d",&pixx)
+		pixx = maxint(128,minint(pixx,1200))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
+		lpixx = fmt.Sprintf("%d",pixx)
+		xpxz.SetText(lpixx)
+		xpxz.Refresh()
+	}
+	xpxz.SetText(lpixx)
+	pixs_label := widget.NewLabelWithStyle("pixel sz:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 // address to start rom read
 	if lasadr == "" { lasadr = "0" }
 	adr_label := widget.NewLabelWithStyle("Address: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
@@ -106,7 +119,7 @@ var lim *fyne.Container
 	radr.OnChanged = func(s string) {
 
 		fmt.Sscanf(s,"%d",&prcadr)
-		prcadr = maxint(0,minint(prcadr,16777216))	// 0x1000000 how large can a rom be? it will prob be read as absolute
+		prcadr = maxint(0,minint(prcadr,65536))	// 0x1000000/slashout - now 64K how large can a rom be? it will prob be read as absolute
 		lasadr = fmt.Sprintf("%d",prcadr)
 		radr.SetText(lasadr)
 		radr.Refresh()
@@ -115,26 +128,32 @@ var lim *fyne.Container
 	radr.Resize(fyne.Size{120, optht})
 // build button
 // need - g1/g2 flag check, tranpar flag
+// adjust so it fills test area w/ gx,gy
 	bld_btn := widget.NewButton("BUILD", func() {
 		var bstamp Stamp
 		ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
-		bas := loadfail(400, 400)
+
+		bas := loadfail(pixx,pixx)
 		if !chkg1rom.Checked && !chkg2rom.Checked { spchks(true,false,false,false) }
 		bstamp = Stamp{} //itemGetStamp("key")
 		gx,gy := svx*8+8, svy*8+8
+		suby := 65 / gy
+
+		fx,fy := pixx / gx, (pixx / gy) - suby
 		fmt.Sscanf(lasadr,"%d",&prcadr)
-		for y := 0; y <= 6; y++ {
-		for x := 0; x <= 6; x++ {
+		for y := 0; y <= fy; y++ {
+		for x := 0; x <= fx; x++ {
 			bstamp.numbers = tilerange(prcadr, svx * svy)
-			prcadr += svx * svy * 8
+			prcadr += svx * svy
 			bstamp.width = svx
 			bstamp.trans0 = false
 			bstamp.pnum = pnumsel
 			bstamp.ptype = paltype
+fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,fx,fy,prcadr,x*gx, y*gy)
 			fillstamp(&bstamp)
-fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,svx,svy,prcadr,x*gx, y*gy)
 			writestamptoimage(G1,bas, &bstamp, x*gx, y*gy)
 		}}
+fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d, suby %d\n",gx,gy,fx,fy,svx,svy,suby)
 		bld := canvas.NewRasterFromImage(bas)
 		gif_blnk(lim)
 		savetopng("tst.png", bas)
@@ -155,7 +174,7 @@ fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,
 			filerom, spsheet, container.NewWithoutLayout(fnent),
 		),
 		container.New(layout.NewHBoxLayout(),
-			bld_btn, ssiz_label, xsiz, x_label, ysiz, adr_label, container.NewWithoutLayout(radr),
+			bld_btn, pixs_label, xpxz, ssiz_label, xsiz, x_label, ysiz, adr_label, container.NewWithoutLayout(radr),
 		),
 		sprview,
 	)
@@ -165,6 +184,7 @@ fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,
 	fyne.Do(func() {
 		lim.Refresh()
 	})
+// blank view on launch
 	ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
 	bas := loadfail(400, 400)
 	bld := canvas.NewRasterFromImage(bas)
@@ -172,5 +192,5 @@ fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,
 	sprview.Remove(lim)
 	lim = container.NewWithoutLayout(bld)
 	sprview.Add(lim)
-	bld.Resize(fyne.Size{800, 800})
+	bld.Resize(fyne.Size{1000, 1000})
 }
