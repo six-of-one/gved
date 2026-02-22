@@ -215,13 +215,13 @@ var lim *fyne.Container
 		if g2m.Checked { G1 = false }
 		bstamp = Stamp{} //itemGetStamp("key")
 		gx,gy := svx*8+trnc, svy*8+trnc
-//		suby := 65 / gy
 		fx,fy := 0,0
-		sfx,sfy := int(opts.Geow)/pixx,int(opts.Geoh - 190)/pixx		// scale fit x & y
-		for x := 1; x <= 64; x++ { fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",(svx*8*sfx)+trnc,0,fx,0,svx,0); if x * ((svx*8*sfx)+trnc) < int(opts.Geow) { fx = x }}
-		for y := 1; y <= 64; y++ { fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",0,(svy*8*sfy)+trnc,0,fy,0,svy); if y * ((svy*8*sfy)+trnc) < int(opts.Geoh - 190) { fy = y }}
+	// calc how many rows & cols of sprites will fit in pixel area
+		subf := int((float64(pixx) / (opts.Geoh-190))* 120)
+fmt.Printf("subf: %d, %f, %f\n",subf, float64(pixx) / (opts.Geoh-190),(float64(pixx) / (opts.Geoh-190)) * 118)
+		for x := 1; x <= 64; x++ { if x * gx < pixx { fx = x-1 }; fmt.Printf("dis sprite gx: %d x %d fxy %d, %d svxy %d - %d\n",x*((svx*8)+trnc),gx,fx,0,svx,0)}
+		for y := 1; y <= 64; y++ { if y * gy < (pixx - subf) { fy = y-1 }; fmt.Printf("dis sprite gx: %d x %d fxy %d, %d svxy %d - %d\n",0,y*((svy*8)+trnc),gy,fy,pixx - subf,subf)}
 
-//		fx,fy := pixx / gx, (pixx / gy) - suby
 fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,svy)
 		fmt.Sscanf(lasadr,"%d",&prcadr)
 		for y := 0; y <= fy; y++ {
