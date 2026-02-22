@@ -247,7 +247,9 @@ var lim *fyne.Container
 // bounds addr
 		radr_bounds()
 
-		bas := loadfail(pixx,pixx)
+		bas := blankimage(pixx,pixx)
+		if ova != (HRGB{0}) && ovb != (HRGB{0}) { bas = loadfail(pixx,pixx) }
+
 		gtop := gg.NewContext(32, 12)
 // gtop font
 		if err := gtop.LoadFontFace(".font/VrBd.ttf", 7); err != nil {
@@ -299,7 +301,7 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 		if keepr.Checked { if roms { fmt.Sscanf(lasadr,"%d",&prcadr) }}
 		bld := canvas.NewRasterFromImage(bas)
 		gif_blnk(lim)
-		savetopng("tst.png", bas)
+		savetopng("sheet.png", bas)
 		sprview.Remove(lim)
 		lim = container.NewWithoutLayout(bld)
 		sprview.Add(lim)
@@ -371,7 +373,7 @@ func sprites_keys() {
 			"←→		- address -,+              shift modify -,+ 4\n"+
 			"↑↓		- address -10,+10     shift modify -,+ 40\n"+
 			"pgup		- address -100           shift modify -,+ 1000\n"+
-			"pgdn		- address +100\n"
+			"pgdn		- address +100\nq		- close key hints"
 fmt.Print(strp)
 	dboxtx("Sprite viewer", strp, 480, 300,nil,typedRune)
 }

@@ -411,6 +411,8 @@ G2 mode - use Gauntlet II tile ops (differs from G1 mostly by palette)
 
 trench	- space between all sprites, default 8, range 0 - 32
 no bkg	- render with no background - see through parts of sprites
+		- when level color 1 & 2 are both exaclty {0} output
+		  sheet.png will have no background
 
 Sprite sheet, load the png sheet spec by file: {filename entry}
 - this has slight differences from rom mode
