@@ -398,8 +398,39 @@ Palette map - default: palette walls / floor match level cols & pats
 ---------------------------------------------
 ops for sprite viewer
 
-Gauntlet, Gauntlet II - use this systems rom image
+Gauntlet / G² rom - use this systems rom image (G² selected by G2 mode)
+File rom, load the rom spec by file: {filename entry}
+| ---- these 2 options apply to all roms
+\_ palette type - select one of the palette types, which all limit pnum
+ \_ pnum - select palette number entry for palette type
+    - 0 - 16 floors/ walls, 0 - 31 base/ gbase,
+	{ 0 - 3 wizard, warrior, valkyrie, elf },
+	{ 0: trap, stun, secret, shrub, forcefield, teleff }
 
+G2 mode - use Gauntlet II tile ops (differs from G1 mostly by palette)
+
+Sprite sheet, load the png sheet spec by file: {filename entry}
+- this has slight differences from rom mode
+
+BUILD - build and display the view of sprites
+      - NOTE: errors in user entry will be defaulted to bounds by builder
+
+pixel size: build a bkg grafic this size square and fill best way possible
+size x by y: x and y (col and row) of sprites to build from source
+address: starting address in rom
+         NOTE: currently bounded 0 - 65536, if past end this WILL crash!
+keep: dont update rom address, just keep building same
+
+Key shortcuts:
+
+t,r		- palette type +,-
+p,o		- pnum +,-
+x,z		- sprite size x (col) +,-
+y,u		- sprite size y (row) +,-
+←→		- address -,+
+↑↓		- address -10,+10
+pgup	- address -100
+pgdn	- address +100
 
 ---------------------------------------------
 
