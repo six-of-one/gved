@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
+	"image"
+	"golang.org/x/image/draw"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/canvas"
+	"github.com/fogleman/gg"
 // /	"fyne.io/fyne/v2/driver/desktop"
 )
 
@@ -182,6 +185,11 @@ var lim *fyne.Container
 		radr_bounds()
 
 		bas := loadfail(pixx,pixx)
+		gtop := gg.NewContext(32, 12)
+// gtop font
+		if err := gtop.LoadFontFace(".font/VrBd.ttf", 7); err != nil {
+			panic(err)
+			}
 		if !chkg1rom.Checked && !chkg2rom.Checked { spchks(true,false,false,false) }
 		gsv := G1
 		if g2m.Checked { G1 = false }
@@ -194,17 +202,26 @@ var lim *fyne.Container
 		for y := 0; y <= fy; y++ {
 		for x := 0; x <= fx; x++ {
 			bstamp.numbers = tilerange(prcadr, svx * svy)
+			st := fmt.Sprintf("%d",prcadr)
 			prcadr += svx * svy
 			bstamp.width = svx
 			bstamp.trans0 = false
 			bstamp.pnum = pnumsel
 			bstamp.ptype = paltype
-fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,fx,fy,prcadr,x*gx, y*gy)
+//fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,fx,fy,prcadr,x*gx, y*gy)
 			fillstamp(&bstamp)
 			writestamptoimage(G1,bas, &bstamp, x*gx, y*gy)
+
+			gtop.Clear()
+			gtop.SetRGB(0.5, 0.5, 0.5)
+			gtop.SetRGB(1, 0, 0)
+			gtop.DrawStringAnchored(st, 6, 6, 0, 0.5)
+			gtopim := gtop.Image()
+			offset := image.Pt(x*gx, y*gy+(svy*8))
+			draw.Draw(bas, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 		}}
 		if keepr.Checked { fmt.Sscanf(lasadr,"%d",&prcadr) }
-fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d, suby %d\n",gx,gy,fx,fy,svx,svy,suby)
+//fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d, suby %d\n",gx,gy,fx,fy,svx,svy,suby)
 		bld := canvas.NewRasterFromImage(bas)
 		gif_blnk(lim)
 		savetopng("tst.png", bas)
@@ -213,7 +230,6 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d, suby %d\n",gx,gy,fx
 		sprview.Add(lim)
 		bld.Resize(fyne.Size{800, 800})
 		G1 = gsv
-//		SetOnTypedRune(typedRune)
 //		func(b *Button) TypedRune(rune)
 	})
 //	bld_btn.SetOnTypedRune(typedRune)
