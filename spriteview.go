@@ -54,6 +54,10 @@ var lim *fyne.Container
 		fmt.Printf("Sprite sheet %t\n", ss)
 		spchks(false,false,false,ss)
 	})
+// keep fixed address
+	keepr := widget.NewCheck("keep", func(k bool) {
+		fmt.Printf("keep addr %t\n", k)
+	})
 // gauntlet palete type - vars lists in palettes.go
 	selptype := widget.NewSelect([]string{"teleff","floor","gfloor","wall","gwall","base","gbase","warrior","valkyrie","wizard","elf","trap","stun","secret","shrub","forcefield"}, func(str string) {
 		fmt.Printf("Select ptype: %s\n", str)
@@ -70,10 +74,7 @@ var lim *fyne.Container
 	pnumen.OnChanged = func(s string) {
 
 		fmt.Sscanf(s,"%d",&pnumsel)
-		pnumsel = maxint(0,minint(pnumsel,pallim))
-		laspnume = fmt.Sprintf("%d",pnumsel)
-		pnumen.SetText(laspnume)
-		pnumen.Refresh()
+
 	}
 	pnum_label := widget.NewLabelWithStyle("pnum:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 // get a "stamp" size too, controls how rom is read into sprites
@@ -81,20 +82,12 @@ var lim *fyne.Container
 	xsiz.OnChanged = func(s string) {
 
 		fmt.Sscanf(s,"%d",&svx)
-		svx = maxint(1,minint(svx,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
-		lasx = fmt.Sprintf("%d",svx)
-		xsiz.SetText(lasx)
-		xsiz.Refresh()
 	}
 	xsiz.SetText(lasx)
 	ysiz := widget.NewEntry()
 	ysiz.OnChanged = func(s string) {
 
 		fmt.Sscanf(s,"%d",&svy)
-		svy = maxint(1,minint(svy,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
-		lasy = fmt.Sprintf("%d",svy)
-		ysiz.SetText(lasy)
-		ysiz.Refresh()
 	}
 	ysiz.SetText(lasy)
 // size of stamp, x by y
@@ -105,24 +98,17 @@ var lim *fyne.Container
 	xpxz.OnChanged = func(s string) {
 
 		fmt.Sscanf(s,"%d",&pixx)
-		pixx = maxint(128,minint(pixx,1200))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
-		lpixx = fmt.Sprintf("%d",pixx)
-		xpxz.SetText(lpixx)
-		xpxz.Refresh()
 	}
 	xpxz.SetText(lpixx)
 	pixs_label := widget.NewLabelWithStyle("pixel sz:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 // address to start rom read
 	if lasadr == "" { lasadr = "0" }
 	adr_label := widget.NewLabelWithStyle("Address: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
+	adr_spc := widget.NewLabelWithStyle("               ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 	radr := widget.NewEntry()
 	radr.OnChanged = func(s string) {
 
 		fmt.Sscanf(s,"%d",&prcadr)
-		prcadr = maxint(0,minint(prcadr,65536))	// 0x1000000/slashout - now 64K how large can a rom be? it will prob be read as absolute
-		lasadr = fmt.Sprintf("%d",prcadr)
-		radr.SetText(lasadr)
-		radr.Refresh()
 	}
 	radr.SetText(lasadr)
 	radr.Resize(fyne.Size{120, optht})
@@ -132,6 +118,33 @@ var lim *fyne.Container
 	bld_btn := widget.NewButton("BUILD", func() {
 		var bstamp Stamp
 		ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
+// change ops so bad inputs default here
+
+// bounds pnum sel
+		pnumsel = maxint(0,minint(pnumsel,pallim))
+		laspnume = fmt.Sprintf("%d",pnumsel)
+		pnumen.SetText(laspnume)
+		pnumen.Refresh()
+// bounds sprite x size
+		svx = maxint(1,minint(svx,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
+		lasx = fmt.Sprintf("%d",svx)
+		xsiz.SetText(lasx)
+		xsiz.Refresh()
+// bounds sprite y size
+		svy = maxint(1,minint(svy,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
+		lasy = fmt.Sprintf("%d",svy)
+		ysiz.SetText(lasy)
+		ysiz.Refresh()
+// bounds pixel size
+		pixx = maxint(128,minint(pixx,1200))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
+		lpixx = fmt.Sprintf("%d",pixx)
+		xpxz.SetText(lpixx)
+		xpxz.Refresh()
+// bounds addr
+		prcadr = maxint(0,minint(prcadr,65536))	// 0x1000000/slashout - now 64K how large can a rom be? it will prob be read as absolute
+		lasadr = fmt.Sprintf("%d",prcadr)
+		radr.SetText(lasadr)
+		radr.Refresh()
 
 		bas := loadfail(pixx,pixx)
 		if !chkg1rom.Checked && !chkg2rom.Checked { spchks(true,false,false,false) }
@@ -153,6 +166,7 @@ fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,
 			fillstamp(&bstamp)
 			writestamptoimage(G1,bas, &bstamp, x*gx, y*gy)
 		}}
+		if keepr.Checked { fmt.Sscanf(lasadr,"%d",&prcadr) }
 fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d, suby %d\n",gx,gy,fx,fy,svx,svy,suby)
 		bld := canvas.NewRasterFromImage(bas)
 		gif_blnk(lim)
@@ -174,7 +188,7 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d, suby %d\n",gx,gy,fx
 			filerom, spsheet, container.NewWithoutLayout(fnent),
 		),
 		container.New(layout.NewHBoxLayout(),
-			bld_btn, pixs_label, xpxz, ssiz_label, xsiz, x_label, ysiz, adr_label, container.NewWithoutLayout(radr),
+			bld_btn, pixs_label, xpxz, ssiz_label, xsiz, x_label, ysiz, adr_label, container.NewWithoutLayout(radr), adr_spc,keepr,
 		),
 		sprview,
 	)
