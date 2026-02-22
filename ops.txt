@@ -409,7 +409,7 @@ File rom, load the rom spec by file: {filename entry}
 
 G2 mode - use Gauntlet II tile ops (differs from G1 mostly by palette)
 
-trench	- space between all sprites, default 8
+trench	- space between all sprites, default 8, range 0 - 32
 
 Sprite sheet, load the png sheet spec by file: {filename entry}
 - this has slight differences from rom mode

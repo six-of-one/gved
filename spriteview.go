@@ -192,10 +192,15 @@ var lim *fyne.Container
 // bounds sprite y size
 		ysiz_bounds()
 // bounds pixel size
-		pixx = maxint(128,minint(pixx,1200))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
+		pixx = maxint(70,minint(pixx,1200))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
 		lpixx = fmt.Sprintf("%d",pixx)
 		xpxz.SetText(lpixx)
 		xpxz.Refresh()
+// bounds trench size
+		trnc = maxint(0,minint(trnc,32))
+		ltrnc = fmt.Sprintf("%d",trnc)
+		trench.SetText(ltrnc)
+		trench.Refresh()
 // bounds addr
 		radr_bounds()
 
@@ -212,8 +217,9 @@ var lim *fyne.Container
 		gx,gy := svx*8+trnc, svy*8+trnc
 //		suby := 65 / gy
 		fx,fy := 0,0
-		for x := 1; x <= 64; x++ { if x * gx < int(opts.Geow) { fx = x }}
-		for y := 1; y <= 64; y++ { if y * gy < int(opts.Geoh - 190) { fy = y }}
+		sfx,sfy := int(opts.Geow)/pixx,int(opts.Geoh - 190)/pixx		// scale fit x & y
+		for x := 1; x <= 64; x++ { fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",(svx*8*sfx)+trnc,0,fx,0,svx,0); if x * ((svx*8*sfx)+trnc) < int(opts.Geow) { fx = x }}
+		for y := 1; y <= 64; y++ { fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",0,(svy*8*sfy)+trnc,0,fy,0,svy); if y * ((svy*8*sfy)+trnc) < int(opts.Geoh - 190) { fy = y }}
 
 //		fx,fy := pixx / gx, (pixx / gy) - suby
 fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,svy)
