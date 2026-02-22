@@ -214,10 +214,10 @@ var lim *fyne.Container
 
 			gtop.Clear()
 			gtop.SetRGB(0.5, 0.5, 0.5)
-			gtop.SetRGB(1, 0, 0)
-			gtop.DrawStringAnchored(st, 6, 6, 0, 0.5)
+			gtop.DrawStringAnchored(st, 0, 6, 0, 0.5)
+			gtop.SetRGB(0.25, 0, 0.25)
 			gtopim := gtop.Image()
-			offset := image.Pt(x*gx, y*gy+(svy*8))
+			offset := image.Pt(x*gx, y*gy+(svy*8)-2)
 			draw.Draw(bas, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 		}}
 		if keepr.Checked { fmt.Sscanf(lasadr,"%d",&prcadr) }
@@ -245,7 +245,7 @@ var lim *fyne.Container
 			filerom, spsheet, container.NewWithoutLayout(fnent),
 		),
 		container.New(layout.NewHBoxLayout(),
-			bld_btn, pixs_label, xpxz, ssiz_label, xsiz, x_label, ysiz, adr_label, container.NewWithoutLayout(radr), adr_spc,keepr,lvlcol,
+			bld_btn,keepr, pixs_label, xpxz, ssiz_label, xsiz, x_label, ysiz, adr_label, container.NewWithoutLayout(radr), adr_spc,lvlcol,
 		),
 		sprview,
 	)
