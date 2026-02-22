@@ -7,6 +7,7 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/canvas"
+// /	"fyne.io/fyne/v2/driver/desktop"
 )
 
 var chkg1rom *widget.Check		// these cant even self refer inside the interal inline... huh
@@ -22,15 +23,44 @@ func spchks(c1,c2,c3,c4 bool){
 	spsheet.Checked = c4; spsheet.Refresh()
 }
 
-func radr_bounds () {						// find a way to get size of rom from file info / loading
+func radr_bounds() {						// find a way to get size of rom from file info / loading
+// bounds addr
 	prcadr = maxint(0,minint(prcadr,65536))	// 0x1000000/slashout - now 64K how large can a rom be? it will prob be read as absolute
 	lasadr = fmt.Sprintf("%d",prcadr)
 	radr.SetText(lasadr)
 	radr.Refresh()
 }
 
+func pnum_bounds() {
+// bounds pnum sel
+		pnumsel = maxint(0,minint(pnumsel,pallim))
+		laspnume = fmt.Sprintf("%d",pnumsel)
+		pnumen.SetText(laspnume)
+		pnumen.Refresh()
+}
+
+func xsiz_bounds() {
+// bounds sprite x size
+		svx = maxint(1,minint(svx,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
+		lasx = fmt.Sprintf("%d",svx)
+		xsiz.SetText(lasx)
+		xsiz.Refresh()
+}
+
+func ysiz_bounds() {
+// bounds sprite y size
+		svy = maxint(1,minint(svy,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
+		lasy = fmt.Sprintf("%d",svy)
+		ysiz.SetText(lasy)
+		ysiz.Refresh()
+}
+
 var sprview *fyne.Container
+var bld_btn *widget.Button
 var radr *widget.Entry
+var pnumen *widget.Entry
+var xsiz *widget.Entry
+var ysiz *widget.Entry
 var lasadr string = "2048"
 var prcadr int = 2048			// process from this addr, 2048 is ghosts
 var paltype string = "base"
@@ -84,7 +114,7 @@ var lim *fyne.Container
 	ptyp_label := widget.NewLabelWithStyle("Pal type:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 
 // select palete num, limited for each palete type
-	pnumen := widget.NewEntry()
+	pnumen = widget.NewEntry()
 	pnumen.Resize(fyne.Size{60, optht})
 	pnumen.SetText(laspnume)
 	pnumen.OnChanged = func(s string) {
@@ -94,13 +124,13 @@ var lim *fyne.Container
 	}
 	pnum_label := widget.NewLabelWithStyle("pnum:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 // get a "stamp" size too, controls how rom is read into sprites
-	xsiz := widget.NewEntry()
+	xsiz = widget.NewEntry()
 	xsiz.OnChanged = func(s string) {
 
 		fmt.Sscanf(s,"%d",&svx)
 	}
 	xsiz.SetText(lasx)
-	ysiz := widget.NewEntry()
+	ysiz = widget.NewEntry()
 	ysiz.OnChanged = func(s string) {
 
 		fmt.Sscanf(s,"%d",&svy)
@@ -131,27 +161,18 @@ var lim *fyne.Container
 // build button
 // need - g1/g2 flag check, tranpar flag
 // adjust so it fills test area w/ gx,gy
-	bld_btn := widget.NewButton("BUILD", func() {
+	bld_btn = widget.NewButton("BUILD", func() {
 		var bstamp Stamp
 		ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
 		if lvlcol.Checked { ova,ovb = lvl1col,lvl2col }
 // change ops so bad inputs default here
 
 // bounds pnum sel
-		pnumsel = maxint(0,minint(pnumsel,pallim))
-		laspnume = fmt.Sprintf("%d",pnumsel)
-		pnumen.SetText(laspnume)
-		pnumen.Refresh()
+		pnum_bounds()
 // bounds sprite x size
-		svx = maxint(1,minint(svx,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
-		lasx = fmt.Sprintf("%d",svx)
-		xsiz.SetText(lasx)
-		xsiz.Refresh()
+		xsiz_bounds()
 // bounds sprite y size
-		svy = maxint(1,minint(svy,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
-		lasy = fmt.Sprintf("%d",svy)
-		ysiz.SetText(lasy)
-		ysiz.Refresh()
+		ysiz_bounds()
 // bounds pixel size
 		pixx = maxint(128,minint(pixx,1200))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
 		lpixx = fmt.Sprintf("%d",pixx)
@@ -192,7 +213,10 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d, suby %d\n",gx,gy,fx
 		sprview.Add(lim)
 		bld.Resize(fyne.Size{800, 800})
 		G1 = gsv
+//		SetOnTypedRune(typedRune)
+//		func(b *Button) TypedRune(rune)
 	})
+//	bld_btn.SetOnTypedRune(typedRune)
 
 	fnent := widget.NewEntry()
 	fnent.Resize(fyne.Size{370, optht})

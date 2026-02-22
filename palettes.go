@@ -1064,6 +1064,7 @@ var gauntletPalettes = map[string][][]color.Color{
 	"forcefield": forcefieldPalette,
 }
 
+// 0 - 15 enumerated palette limits for each type, 0 - max allowed
 var ptyp_lim = map[string]int{
 	"teleff":		0,
 	"floor":		16,

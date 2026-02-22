@@ -71,8 +71,38 @@ func specialKey(cw fyne.Window) {
 			sta := "vp ⊙ %d x %d"
 			stu := ""
 			px, py := 0, 0
-			va, da := 4, 1		// view port adjust, maze dimension adjust by ↑↓←→ and <CTRL>↑↓←→
-			if shift { va, da  = 1, 4 }
+			va, da, cen := 4, 1, 100		// view port adjust, maze dimension adjust by ↑↓←→ and <CTRL>↑↓←→
+			if key.Name == "Home" { home = false }
+			if key.Name == "LeftSuper" { logo = false }
+			if key.Name == "LeftShift" { shift = false }
+			if key.Name == "RightShift" { shift = false }
+			if key.Name == "LeftControl" { ctrl = false }
+			if key.Name == "RightControl" { ctrl = false }
+			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
+			if shift { va, da, cen  = 1, 4, 1000 }
+		  if actab == "Sprites" {
+// sprite sheet keys
+			if key.Name == "Left" {
+				prcadr -= da
+					}
+			if key.Name == "Right" {
+				prcadr += da
+					}
+			if key.Name == "Up" {
+				prcadr -= da * 10
+					}
+			if key.Name == "Down" {
+				prcadr += da * 10
+					}
+			if key.Name == "Prior" {
+				prcadr -= cen
+				}
+			if key.Name == "Next" {
+				prcadr += cen
+				}
+			radr_bounds () 	// bound any of those changes, and update
+
+		  } else {
 			if key.Name == "Escape" {		// now toggle editor on/ off
 				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
 					if opts.edat == 1 {
@@ -108,12 +138,6 @@ func specialKey(cw fyne.Window) {
 			}
 			if key.Name == "Delete" { if !ctrl { del = false }; if opts.edat == 1 { smod = "Edit mode: "; if ctrl { smod = "Edit DEL: " }; statlin(cmdhin,"")}}
 //			if key.Name == "BackSpace" { del = false }
-			if key.Name == "Home" { home = false }
-			if key.Name == "LeftSuper" { logo = false }
-			if key.Name == "LeftShift" { shift = false }
-			if key.Name == "RightShift" { shift = false }
-			if key.Name == "LeftControl" { ctrl = false }
-			if key.Name == "RightControl" { ctrl = false }
 //			if key.Name == "Tab" { tab = false }
 			if key.Name == "S" && ctrl  { if shift { menu_savas() } else { menu_sav() }}
 			if key.Name == "L" && ctrl  { if shift { menu_laodf() } else { menu_lod() }}
@@ -200,6 +224,7 @@ func specialKey(cw fyne.Window) {
 			if srelod {
 				remaze(opts.mnum)
 			} else { upd_edmaze(false) }
+		  }
        })
     }
 }
@@ -264,6 +289,30 @@ func typedRune(r rune) {
 	}
 
 //fmt.Printf("r %v shift %v\n",r,shift)
+  if actab == "Sprites" {
+		switch r {
+
+		case 'p':
+			pnumsel++
+			pnum_bounds()
+		case 'o':
+			pnumsel--
+			pnum_bounds()
+		case 'x':
+			svx++
+			xsiz_bounds()
+		case 'z':
+			svx--
+			xsiz_bounds()
+		case 'y':
+			svy++
+			ysiz_bounds()
+		case 'u':
+			svy--
+			ysiz_bounds()
+//		case 'b':
+		}
+  } else {
 		edkey = valid_keys(int(r))
 		if cmdoff {
 			if G1 {
@@ -638,6 +687,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 	if sdb > 0 { spx = fmt.Sprintf("sdbuf: %d",sdb) }
 	if anum != 0 { spx += fmt.Sprintf("| numeric: %d", anum) }
 	uptitl(opts.mnum, spau + spx)
+  }
 }
 
 // data needing preserved by needsav - all this could be changed by the next op while dialog waits on user
