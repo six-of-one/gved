@@ -204,6 +204,10 @@ var lim *fyne.Container
 	}
 	trench.SetText(ltrnc)
 	trench_label := widget.NewLabelWithStyle("trench:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
+// transparent sprites
+	xpar := widget.NewCheck("no bkg", func(k bool) {
+		fmt.Printf("show transparent sprites %t\n", k)
+	})
 // address to start rom read
 	if lasadr == "" { lasadr = "0" }
 	adr_label := widget.NewLabelWithStyle("Address: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
@@ -249,32 +253,38 @@ var lim *fyne.Container
 		if err := gtop.LoadFontFace(".font/VrBd.ttf", 7); err != nil {
 			panic(err)
 			}
-		if !chkg1rom.Checked && !chkg2rom.Checked { spchks(true,false,false,false) }
+		if !chkg1rom.Checked && !spsheet.Checked  { spchks(true,false,false,false) }
+		roms := !spsheet.Checked
 		gsv := G1
 		if g2m.Checked { G1 = false }
-		bstamp = Stamp{} //itemGetStamp("key")
-		gx,gy := svx*8+trnc, svy*8+trnc
-		fx,fy := 0,0
-	// calc how many rows & cols of sprites will fit in pixel area
+		fx,fy,gx,gy := 0,0,0,0
 		subf := int((float64(pixx) / (opts.Geoh-190))* 116)
+		if roms {
+	// calc how many rows & cols of sprites will fit in pixel area
+			gx,gy = svx*8+trnc, svy*8+trnc
 //fmt.Printf("subf: %d, %f, %f\n",subf, float64(pixx) / (opts.Geoh-190),(float64(pixx) / (opts.Geoh-190)) * 118)
+			bstamp = Stamp{} //itemGetStamp("key")
+			fmt.Sscanf(lasadr,"%d",&prcadr)
+		} else { gx,gy = shx+trnc,shy+trnc }
 		for x := 1; x <= 64; x++ { if x * gx < (pixx+7) { fx = x-1 } }
 		for y := 1; y <= 64; y++ { if y * gy < (pixx - subf) { fy = y } }
 
+		st := ""
 fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,svy)
-		fmt.Sscanf(lasadr,"%d",&prcadr)
 		for y := 0; y <= fy; y++ {
 		for x := 0; x <= fx; x++ {
+		  if roms {
 			bstamp.numbers = tilerange(prcadr, svx * svy)
-			st := fmt.Sprintf("%d",prcadr)
+			st = fmt.Sprintf("%d",prcadr)
 			prcadr += svx * svy
 			bstamp.width = svx
-			bstamp.trans0 = false
+			bstamp.trans0 = xpar.Checked
 			bstamp.pnum = pnumsel
 			bstamp.ptype = paltype
 //fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,fx,fy,prcadr,x*gx, y*gy)
 			fillstamp(&bstamp)
 			writestamptoimage(G1,bas, &bstamp, x*gx, y*gy)
+		  }
 
 			if showr.Checked {
 				gtop.Clear()
@@ -286,7 +296,7 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 				draw.Draw(bas, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 			}
 		}}
-		if keepr.Checked { fmt.Sscanf(lasadr,"%d",&prcadr) }
+		if keepr.Checked { if roms { fmt.Sscanf(lasadr,"%d",&prcadr) }}
 		bld := canvas.NewRasterFromImage(bas)
 		gif_blnk(lim)
 		savetopng("tst.png", bas)
@@ -323,7 +333,7 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 	ld := container.New(
 		layout.NewVBoxLayout(),
 		container.New(layout.NewHBoxLayout(),
-			chkg1rom, ptyp_label, selptype, pnum_label,pnumen,g2m,trench_label,trench,
+			chkg1rom, ptyp_label, selptype, pnum_label,pnumen,g2m,trench_label,trench,xpar,
 		),
 		container.New(layout.NewHBoxLayout(),
 			filerom, spsheet, fnload, container.NewWithoutLayout(fnent),
