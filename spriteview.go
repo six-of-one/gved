@@ -74,6 +74,8 @@ var svx,svy int = 3,3			// xy size fo stamp
 var lasx,lasy string = "3","3"
 var pixx = 380					// pixel size to fill - makes square canvas
 var lpixx string = "380"
+var trnc = 8					// trnech space between sprites
+var ltrnc string = "8"
 
 func sprite_view() {
 
@@ -103,6 +105,11 @@ var lim *fyne.Container
 	keepr := widget.NewCheck("keep", func(k bool) {
 		fmt.Printf("keep addr %t\n", k)
 	})
+// show address on sheet for each sprite
+	showr := widget.NewCheck("show", func(sh bool) {
+		fmt.Printf("show addr %t\n", sh)
+	})
+	showr.Checked = true
 // use lvl1 & lvl2 colors for bkg checkerboard
 	lvlcol := widget.NewCheck("lvl color", func(k bool) {
 		fmt.Printf("use level color custom %t\n", k)
@@ -150,17 +157,25 @@ var lim *fyne.Container
 	}
 	xpxz.SetText(lpixx)
 	pixs_label := widget.NewLabelWithStyle("pixel sz:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
+// space between sprites
+	trench := widget.NewEntry()
+	trench.OnChanged = func(s string) {
+
+		fmt.Sscanf(s,"%d",&trnc)
+	}
+	trench.SetText(ltrnc)
+	trench_label := widget.NewLabelWithStyle("trench:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 // address to start rom read
 	if lasadr == "" { lasadr = "0" }
 	adr_label := widget.NewLabelWithStyle("Address: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
-	adr_spc := widget.NewLabelWithStyle("               ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
+	adr_spc := widget.NewLabelWithStyle("            ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 	radr = widget.NewEntry()
 	radr.OnChanged = func(s string) {
 
 		fmt.Sscanf(s,"%d",&prcadr)
 	}
 	radr.SetText(lasadr)
-	radr.Resize(fyne.Size{120, optht})
+	radr.Resize(fyne.Size{100, optht})
 // build button
 // need - g1/g2 flag check, tranpar flag
 // adjust so it fills test area w/ gx,gy
@@ -194,7 +209,7 @@ var lim *fyne.Container
 		gsv := G1
 		if g2m.Checked { G1 = false }
 		bstamp = Stamp{} //itemGetStamp("key")
-		gx,gy := svx*8+8, svy*8+8
+		gx,gy := svx*8+trnc, svy*8+trnc
 		suby := 65 / gy
 
 		fx,fy := pixx / gx, (pixx / gy) - suby
@@ -212,13 +227,15 @@ var lim *fyne.Container
 			fillstamp(&bstamp)
 			writestamptoimage(G1,bas, &bstamp, x*gx, y*gy)
 
-			gtop.Clear()
-			gtop.SetRGB(0.5, 0.5, 0.5)
-			gtop.DrawStringAnchored(st, 0, 6, 0, 0.5)
-			gtop.SetRGB(0.25, 0, 0.25)
-			gtopim := gtop.Image()
-			offset := image.Pt(x*gx, y*gy+(svy*8)-2)
-			draw.Draw(bas, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
+			if showr.Checked {
+				gtop.Clear()
+				gtop.SetRGB(0.5, 0.5, 0.5)
+				gtop.DrawStringAnchored(st, 0, 6, 0, 0.5)
+				gtop.SetRGB(0.12, 0.12, 0.12)
+				gtopim := gtop.Image()
+				offset := image.Pt(x*gx, y*gy+(svy*8)-2)
+				draw.Draw(bas, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
+			}
 		}}
 		if keepr.Checked { fmt.Sscanf(lasadr,"%d",&prcadr) }
 //fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d, suby %d\n",gx,gy,fx,fy,svx,svy,suby)
@@ -239,13 +256,13 @@ var lim *fyne.Container
 	ld := container.New(
 		layout.NewVBoxLayout(),
 		container.New(layout.NewHBoxLayout(),
-			chkg1rom, ptyp_label, selptype, pnum_label,pnumen,g2m,
+			chkg1rom, ptyp_label, selptype, pnum_label,pnumen,g2m,trench_label,trench,
 		),
 		container.New(layout.NewHBoxLayout(),
 			filerom, spsheet, container.NewWithoutLayout(fnent),
 		),
 		container.New(layout.NewHBoxLayout(),
-			bld_btn,keepr, pixs_label, xpxz, ssiz_label, xsiz, x_label, ysiz, adr_label, container.NewWithoutLayout(radr), adr_spc,lvlcol,
+			bld_btn,keepr, pixs_label, xpxz, ssiz_label, xsiz, x_label, ysiz, adr_label, container.NewWithoutLayout(radr), adr_spc,showr,lvlcol,
 		),
 		sprview,
 	)

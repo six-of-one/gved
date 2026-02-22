@@ -409,6 +409,8 @@ File rom, load the rom spec by file: {filename entry}
 
 G2 mode - use Gauntlet II tile ops (differs from G1 mostly by palette)
 
+trench	- space between all sprites, default 8
+
 Sprite sheet, load the png sheet spec by file: {filename entry}
 - this has slight differences from rom mode
 
@@ -419,6 +421,7 @@ pixel size: build a bkg grafic this size square and fill best way possible
 size x by y: x and y (col and row) of sprites to build from source
 address: starting address in rom
          NOTE: currently bounded 0 - 65536, if past end this WILL crash!
+show: write address of each sprite on sheet
 keep: dont update rom address, just keep building same
 
 Key shortcuts:
