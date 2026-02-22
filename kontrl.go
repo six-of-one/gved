@@ -100,7 +100,7 @@ func specialKey(cw fyne.Window) {
 			if key.Name == "Next" {
 				prcadr += cen
 				}
-			radr_bounds () 	// bound any of those changes, and update
+			radr_bounds() 	// bound any of those changes, and update
 
 		  } else {
 			if key.Name == "Escape" {		// now toggle editor on/ off
@@ -310,7 +310,12 @@ func typedRune(r rune) {
 		case 'u':
 			svy--
 			ysiz_bounds()
-//		case 'b':
+		case 'b':
+			prcadr += svx*svy
+			radr_bounds()
+		case 'v':
+			prcadr -= svx*svy
+			radr_bounds()
 		}
   } else {
 		edkey = valid_keys(int(r))

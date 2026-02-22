@@ -428,6 +428,7 @@ t,r		- palette type +,-
 p,o		- pnum +,-
 x,z		- sprite size x (col) +,-
 y,u		- sprite size y (row) +,-
+b,v		- address +,-{sprite size = x*y}
 ←→		- address -,+			shift modify -,+ 4
 ↑↓		- address -10,+10		  shift modify -,+ 40
 pgup	- address -100			  shift modify -,+ 1000
