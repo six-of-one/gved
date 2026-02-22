@@ -210,9 +210,13 @@ var lim *fyne.Container
 		if g2m.Checked { G1 = false }
 		bstamp = Stamp{} //itemGetStamp("key")
 		gx,gy := svx*8+trnc, svy*8+trnc
-		suby := 65 / gy
+//		suby := 65 / gy
+		fx,fy := 0,0
+		for x := 1; x <= 64; x++ { if x * gx < int(opts.Geow) { fx = x }}
+		for y := 1; y <= 64; y++ { if y * gy < int(opts.Geoh - 190) { fy = y }}
 
-		fx,fy := pixx / gx, (pixx / gy) - suby
+//		fx,fy := pixx / gx, (pixx / gy) - suby
+fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,svy)
 		fmt.Sscanf(lasadr,"%d",&prcadr)
 		for y := 0; y <= fy; y++ {
 		for x := 0; x <= fx; x++ {
@@ -238,7 +242,6 @@ var lim *fyne.Container
 			}
 		}}
 		if keepr.Checked { fmt.Sscanf(lasadr,"%d",&prcadr) }
-//fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d, suby %d\n",gx,gy,fx,fy,svx,svy,suby)
 		bld := canvas.NewRasterFromImage(bas)
 		gif_blnk(lim)
 		savetopng("tst.png", bas)
