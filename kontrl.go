@@ -300,16 +300,20 @@ func typedRune(r rune) {
 			pnum_bounds()
 		case 'x':
 			svx++
-			xsiz_bounds()
 		case 'z':
 			svx--
-			xsiz_bounds()
 		case 'y':
 			svy++
-			ysiz_bounds()
 		case 'u':
 			svy--
-			ysiz_bounds()
+		case 'X':
+			shx++
+		case 'Z':
+			shx--
+		case 'Y':
+			shy++
+		case 'U':
+			shy--
 		case 'b':
 			prcadr += svx*svy
 			radr_bounds()
@@ -317,6 +321,8 @@ func typedRune(r rune) {
 			prcadr -= svx*svy
 			radr_bounds()
 		}
+		xysiz_bounds()
+		shsiz_bounds()
   } else {
 		edkey = valid_keys(int(r))
 		if cmdoff {

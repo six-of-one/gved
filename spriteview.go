@@ -9,6 +9,8 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/theme"
+	"fyne.io/fyne/v2/dialog"
 	"github.com/fogleman/gg"
 // /	"fyne.io/fyne/v2/driver/desktop"
 )
@@ -42,20 +44,29 @@ func pnum_bounds() {
 		pnumen.Refresh()
 }
 
-func xsiz_bounds() {
+func xysiz_bounds() {
 // bounds sprite x size
 		svx = maxint(1,minint(svx,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
 		lasx = fmt.Sprintf("%d",svx)
 		xsiz.SetText(lasx)
 		xsiz.Refresh()
-}
-
-func ysiz_bounds() {
 // bounds sprite y size
 		svy = maxint(1,minint(svy,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
 		lasy = fmt.Sprintf("%d",svy)
 		ysiz.SetText(lasy)
 		ysiz.Refresh()
+}
+
+func shsiz_bounds() {
+		shx = maxint(1,minint(shx,1024))	// sheet read x & y, would a sprite sheet ever have > 1024 x 1024
+		shlasx = fmt.Sprintf("%d",shx)
+		shxsiz.SetText(shlasx)
+		shxsiz.Refresh()
+// bounds sprite y size
+		shy = maxint(1,minint(shy,1024))
+		shlasy = fmt.Sprintf("%d",shy)
+		shysiz.SetText(shlasy)
+		shysiz.Refresh()
 }
 
 var sprview *fyne.Container
@@ -64,6 +75,8 @@ var radr *widget.Entry
 var pnumen *widget.Entry
 var xsiz *widget.Entry
 var ysiz *widget.Entry
+var shxsiz *widget.Entry
+var shysiz *widget.Entry
 var lasadr string = "2048"
 var prcadr int = 2048			// process from this addr, 2048 is ghosts
 var paltype string = "base"
@@ -71,7 +84,9 @@ var pallim int = 0				// each palete list has a # lim, which exceeding causes a 
 var laspnume string = "4"
 var pnumsel int = 4				// base pnum 1 - most common items, treasure, foods, potions are in palete 1 of base, 4 = 3rd level ghosts
 var svx,svy int = 3,3			// xy size fo stamp
+var shx,shy int = 16,16			// xy size for sheet read
 var lasx,lasy string = "3","3"
+var shlasx,shlasy string = "16","16"
 var pixx = 380					// pixel size to fill - makes square canvas
 var lpixx string = "380"
 var trnc = 8					// trnech space between sprites
@@ -84,18 +99,26 @@ var lim *fyne.Container
 	chkg1rom = widget.NewCheck("Gauntlet / G² rom", func(gr bool) {
 		fmt.Printf("Gauntlet rom %t\n", gr)
 		spchks(gr,false,false,false)
+		shxsiz.Hide(); shysiz.Hide()
+		xsiz.Show(); ysiz.Show()
 	})
 	chkg2rom = widget.NewCheck("Gauntlet II rom", func(gr bool) {
 		fmt.Printf("Gauntlet 2 rom %t\n", gr)
 		spchks(false,gr,false,false)
+		shxsiz.Hide(); shysiz.Hide()
+		xsiz.Show(); ysiz.Show()
 	})
 	filerom = widget.NewCheck("File rom   ", func(fr bool) {
 		fmt.Printf("File rom %t\n", fr)
 		spchks(false,false,fr,false)
+		shxsiz.Hide(); shysiz.Hide()
+		xsiz.Show(); ysiz.Show()
 	})
 	spsheet = widget.NewCheck("Sprite sheet   file:", func(ss bool) {
 		fmt.Printf("Sprite sheet %t\n", ss)
 		spchks(false,false,false,ss)
+		shxsiz.Show(); shysiz.Show()
+		xsiz.Hide(); ysiz.Hide()
 	})
 // g2 mode enable
 	g2m := widget.NewCheck("G2 mode", func(g bool) {
@@ -146,6 +169,22 @@ var lim *fyne.Container
 		fmt.Sscanf(s,"%d",&svy)
 	}
 	ysiz.SetText(lasy)
+// sprite sheet sizes
+	shxsiz = widget.NewEntry()
+	shxsiz.OnChanged = func(s string) {
+
+		fmt.Sscanf(s,"%d",&shx)
+	}
+	shxsiz.SetText(shlasx)
+	shxsiz.Hide()
+	shysiz = widget.NewEntry()
+	shysiz.OnChanged = func(s string) {
+
+		fmt.Sscanf(s,"%d",&shy)
+	}
+	shysiz.SetText(shlasy)
+	shysiz.Hide()
+
 // size of stamp, x by y
 	ssiz_label := widget.NewLabelWithStyle("size:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 	x_label := widget.NewLabelWithStyle(" x ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
@@ -188,9 +227,9 @@ var lim *fyne.Container
 // bounds pnum sel
 		pnum_bounds()
 // bounds sprite x size
-		xsiz_bounds()
+		xysiz_bounds()
 // bounds sprite y size
-		ysiz_bounds()
+		shsiz_bounds()
 // bounds pixel size
 		pixx = maxint(70,minint(pixx,1200))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
 		lpixx = fmt.Sprintf("%d",pixx)
@@ -262,16 +301,35 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 
 	fnent := widget.NewEntry()
 	fnent.Resize(fyne.Size{370, optht})
+	fnload := widget.NewButtonWithIcon("", theme.DocumentSaveIcon(), func() {
+
+		fileDiag := dialog.NewFileOpen(func(reader fyne.URIReadCloser, err error) {
+			if err != nil {
+				fmt.Println("Save as Error:", err)
+				return
+			}
+			if reader == nil {
+				fmt.Println("No file selected")
+				return
+			}
+
+			fmt.Println("Selected:", reader.URI().Path())
+			fnent.SetText(reader.URI().Path())
+
+		}, w)
+		fileDiag.Show()
+		fileDiag.Resize(fyne.NewSize(float32(opts.Geow - 10), float32(opts.Geoh - 30)))
+	})
 	ld := container.New(
 		layout.NewVBoxLayout(),
 		container.New(layout.NewHBoxLayout(),
 			chkg1rom, ptyp_label, selptype, pnum_label,pnumen,g2m,trench_label,trench,
 		),
 		container.New(layout.NewHBoxLayout(),
-			filerom, spsheet, container.NewWithoutLayout(fnent),
+			filerom, spsheet, fnload, container.NewWithoutLayout(fnent),
 		),
 		container.New(layout.NewHBoxLayout(),
-			bld_btn,keepr, pixs_label, xpxz, ssiz_label, xsiz, x_label, ysiz, adr_label, container.NewWithoutLayout(radr), adr_spc,showr,lvlcol,
+			bld_btn,keepr, pixs_label, xpxz, ssiz_label, xsiz,shxsiz, x_label, ysiz,shysiz, adr_label, container.NewWithoutLayout(radr), adr_spc,showr,lvlcol,
 		),
 		sprview,
 	)
