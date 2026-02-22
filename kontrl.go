@@ -293,15 +293,21 @@ func typedRune(r rune) {
 		dx := 8
 		if logo { dx = 1 }
 		switch r {
-
 		case 'p':
 			pnumsel++
 			pnum_bounds()
 		case 'o':
 			pnumsel--
 			pnum_bounds()
+		case 'r':
+			shr++
+		case 'e':
+			shr--
+		case 'c':
+			shc++
 		case 'x':
-			svx++
+			if sheet_read { shc-- } else {
+			svx++ }
 		case 'z':
 			svx--
 		case 'y':
@@ -327,6 +333,7 @@ func typedRune(r rune) {
 		}
 		xysiz_bounds()
 		shsiz_bounds()
+		rowcol_bounds()
   } else {
 		edkey = valid_keys(int(r))
 		if cmdoff {

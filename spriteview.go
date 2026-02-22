@@ -69,6 +69,27 @@ func shsiz_bounds() {
 		shysiz.Refresh()
 }
 
+func rowcol_bounds() {
+		shc = maxint(0,minint(shc,1024))	// sheet read c & r, would a sprite sheet ever have > 1024 x 1024
+		lasc = fmt.Sprintf("%d",shc)
+		redc.SetText(lasc)
+		redc.Refresh()
+// bounds sprite y size
+		shr = maxint(0,minint(shr,1024))
+		lasr = fmt.Sprintf("%d",shr)
+		redr.SetText(lasr)
+		redr.Refresh()
+}
+
+func adr_mode() {
+	shxsiz.Hide(); shysiz.Hide()
+	redc.Hide(); redr.Hide()
+	xsiz.Show(); ysiz.Show()
+	adr_label.SetText("Address: ")
+	radr.Show()
+	adr_spc.Show()
+}
+
 var sprview *fyne.Container
 var bld_btn *widget.Button
 var radr *widget.Entry
@@ -77,6 +98,10 @@ var xsiz *widget.Entry
 var ysiz *widget.Entry
 var shxsiz *widget.Entry
 var shysiz *widget.Entry
+var redc *widget.Entry
+var redr *widget.Entry
+var adr_label *widget.Label
+var adr_spc *widget.Label
 var lasadr string = "2048"
 var prcadr int = 2048			// process from this addr, 2048 is ghosts
 var paltype string = "base"
@@ -87,10 +112,13 @@ var svx,svy int = 3,3			// xy size fo stamp
 var shx,shy int = 16,16			// xy size for sheet read
 var lasx,lasy string = "3","3"
 var shlasx,shlasy string = "16","16"
+var shr,shc int = 0,0			// row col coord for sheet read
+var lasr,lasc string = "0","0"
 var pixx = 380					// pixel size to fill - makes square canvas
 var lpixx string = "380"
 var trnc = 8					// trnech space between sprites
 var ltrnc string = "8"
+var sheet_read bool
 
 func sprite_view() {
 
@@ -99,26 +127,26 @@ var lim *fyne.Container
 	chkg1rom = widget.NewCheck("Gauntlet / G² rom", func(gr bool) {
 		fmt.Printf("Gauntlet rom %t\n", gr)
 		spchks(gr,false,false,false)
-		shxsiz.Hide(); shysiz.Hide()
-		xsiz.Show(); ysiz.Show()
+		adr_mode()
 	})
 	chkg2rom = widget.NewCheck("Gauntlet II rom", func(gr bool) {
 		fmt.Printf("Gauntlet 2 rom %t\n", gr)
 		spchks(false,gr,false,false)
-		shxsiz.Hide(); shysiz.Hide()
-		xsiz.Show(); ysiz.Show()
 	})
 	filerom = widget.NewCheck("File rom   ", func(fr bool) {
 		fmt.Printf("File rom %t\n", fr)
 		spchks(false,false,fr,false)
-		shxsiz.Hide(); shysiz.Hide()
-		xsiz.Show(); ysiz.Show()
+		adr_mode()
 	})
 	spsheet = widget.NewCheck("Sprite sheet   file:", func(ss bool) {
 		fmt.Printf("Sprite sheet %t\n", ss)
 		spchks(false,false,false,ss)
 		shxsiz.Show(); shysiz.Show()
+		redc.Show(); redr.Show()
 		xsiz.Hide(); ysiz.Hide()
+		radr.Hide()
+		adr_spc.Hide()
+		adr_label.SetText("Read c/r: ")
 	})
 // g2 mode enable
 	g2m := widget.NewCheck("G2 mode", func(g bool) {
@@ -184,6 +212,21 @@ var lim *fyne.Container
 	}
 	shysiz.SetText(shlasy)
 	shysiz.Hide()
+//  sheet read r/c
+	redc = widget.NewEntry()
+	redc.OnChanged = func(s string) {
+
+		fmt.Sscanf(s,"%d",&shc)
+	}
+	redc.SetText(lasc)
+	redc.Hide()
+	redr = widget.NewEntry()
+	redr.OnChanged = func(s string) {
+
+		fmt.Sscanf(s,"%d",&shr)
+	}
+	redr.SetText(lasr)
+	redr.Hide()
 
 // size of stamp, x by y
 	ssiz_label := widget.NewLabelWithStyle("size:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
@@ -210,8 +253,8 @@ var lim *fyne.Container
 	})
 // address to start rom read
 	if lasadr == "" { lasadr = "0" }
-	adr_label := widget.NewLabelWithStyle("Address: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
-	adr_spc := widget.NewLabelWithStyle("            ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
+	adr_label = widget.NewLabelWithStyle("Address: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
+	adr_spc = widget.NewLabelWithStyle("            ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 	radr = widget.NewEntry()
 	radr.OnChanged = func(s string) {
 
@@ -256,18 +299,21 @@ var lim *fyne.Container
 			panic(err)
 			}
 		if !chkg1rom.Checked && !spsheet.Checked  { spchks(true,false,false,false) }
-		roms := !spsheet.Checked
+		sheet_read = spsheet.Checked
+		roms := !sheet_read
 		gsv := G1
 		if g2m.Checked { G1 = false }
 		fx,fy,gx,gy := 0,0,0,0
 		subf := int((float64(pixx) / (opts.Geoh-190))* 116)
 		if roms {
-	// calc how many rows & cols of sprites will fit in pixel area
+\	// calc how many rows & cols of sprites will fit in pixel area
 			gx,gy = svx*8+trnc, svy*8+trnc
 //fmt.Printf("subf: %d, %f, %f\n",subf, float64(pixx) / (opts.Geoh-190),(float64(pixx) / (opts.Geoh-190)) * 118)
 			bstamp = Stamp{} //itemGetStamp("key")
 			fmt.Sscanf(lasadr,"%d",&prcadr)
-		} else { gx,gy = shx+trnc,shy+trnc }
+		} else {
+			gx,gy = shx+trnc,shy+trnc
+		}
 		for x := 1; x <= 64; x++ { if x * gx < (pixx+7) { fx = x-1 } }
 		for y := 1; y <= 64; y++ { if y * gy < (pixx - subf) { fy = y } }
 
@@ -341,7 +387,7 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 			filerom, spsheet, fnload, container.NewWithoutLayout(fnent),
 		),
 		container.New(layout.NewHBoxLayout(),
-			bld_btn,keepr, pixs_label, xpxz, ssiz_label, xsiz,shxsiz, x_label, ysiz,shysiz, adr_label, container.NewWithoutLayout(radr), adr_spc,showr,lvlcol,
+			bld_btn,keepr, pixs_label, xpxz, ssiz_label, xsiz,shxsiz, x_label, ysiz,shysiz, adr_label, container.NewWithoutLayout(radr),redc,redr, adr_spc,showr,lvlcol,
 		),
 		sprview,
 	)
@@ -363,8 +409,8 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 }
 
 func sprites_keys() {
-	strp := "t,r		- palette type +,-\n"+
-			"p,o		- pnum +,-\n"+
+//	strp := "t,r		- palette type +,-\n"+
+	strp := "p,o		- pnum +,-\n"+
 			"x,z		- sprite size x (col) +,-\n"+
 			"y,u		- sprite size y (row) +,-\n"+
 			"<SH>X,Z	- sheet size col +,- 8		<LOGO> for +,- 1\n"+
@@ -373,7 +419,11 @@ func sprites_keys() {
 			"←→		- address -,+              shift modify -,+ 4\n"+
 			"↑↓		- address -10,+10     shift modify -,+ 40\n"+
 			"pgup		- address -100           shift modify -,+ 1000\n"+
-			"pgdn		- address +100\nq		- close key hints"
+			"pgdn		- address +100\nq		- close key hints\n"+
+			"\nsprite sheet mode:\n"+
+			"r,e		- read row +,-\n"+
+			"c,x		- read col +,-\n"+
+			"\n build writes output 'sheet.png'"
 fmt.Print(strp)
-	dboxtx("Sprite viewer", strp, 480, 300,nil,typedRune)
+	dboxtx("Sprite viewer", strp, 480, 370,nil,typedRune)
 }
