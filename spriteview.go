@@ -343,6 +343,7 @@ var lim *fyne.Container
 		for y := 1; y <= 64; y++ { if y * gy < (pixx - subf) { fy = y } }
 
 		st := ""
+		usvy := svy*8
 fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,svy)
 		for y := 0; y <= fy; y++ {
 		for x := 0; x <= fx; x++ {
@@ -362,6 +363,7 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 				 writepngtoimage(bas, shx,shy,0,0,shc+x,shr+y,x*gx, y*gy,0)
 				 st = fmt.Sprintf("%d,%d",shc+x,shr+y)
 			}
+			usvy = shy
 		  }
 
 			if showr.Checked {
@@ -370,7 +372,7 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 				gtop.DrawStringAnchored(st, 0, 6, 0, 0.5)
 				gtop.SetRGB(0.12, 0.12, 0.12)
 				gtopim := gtop.Image()
-				offset := image.Pt(x*gx, y*gy+(svy*8)-2)
+				offset := image.Pt(x*gx, y*gy+(usvy)-2)
 				draw.Draw(bas, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 			}
 		}}
