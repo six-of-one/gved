@@ -423,7 +423,6 @@ keep: dont update rom address, just keep building same
 
 Key shortcuts:
 
-b		- build
 t,r		- palette type +,-
 p,o		- pnum +,-
 x,z		- sprite size x (col) +,-
