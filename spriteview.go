@@ -29,10 +29,12 @@ var prcadr int = 0				// process from this addr
 var paltype string = "base"
 var pallim int = 0				// each palete list has a # lim, which exceeding causes a crash
 var pnumsel int = 1				// base pnum 1 - most common items, treasure, foods, potions are in palete 1 of base
-var sx,sy int = 2,2				// xy size fo stamp
+var svx,svy int = 2,2				// xy size fo stamp
 var lasx,lasy string = "2","2"
 
 func sprite_view() {
+
+var lim *fyne.Container
 
 	chkg1rom = widget.NewCheck("Gauntlet ", func(gr bool) {
 		fmt.Printf("Gauntlet rom %t\n", gr)
@@ -77,9 +79,9 @@ func sprite_view() {
 	xsiz := widget.NewEntry()
 	xsiz.OnChanged = func(s string) {
 
-		fmt.Sscanf(s,"%d",&sx)
-		sx = maxint(1,minint(sx,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
-		lasx = fmt.Sprintf("%d",sx)
+		fmt.Sscanf(s,"%d",&svx)
+		svx = maxint(1,minint(svx,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
+		lasx = fmt.Sprintf("%d",svx)
 		xsiz.SetText(lasx)
 		xsiz.Refresh()
 	}
@@ -87,9 +89,9 @@ func sprite_view() {
 	ysiz := widget.NewEntry()
 	xsiz.OnChanged = func(s string) {
 
-		fmt.Sscanf(s,"%d",&sy)
-		sy = maxint(1,minint(sy,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
-		lasy = fmt.Sprintf("%d",sy)
+		fmt.Sscanf(s,"%d",&svy)
+		svy = maxint(1,minint(svy,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
+		lasy = fmt.Sprintf("%d",svy)
 		ysiz.SetText(lasy)
 		ysiz.Refresh()
 	}
@@ -112,8 +114,31 @@ func sprite_view() {
 	radr.SetText(lasadr)
 	radr.Resize(fyne.Size{120, optht})
 // build button
+	ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
+	bas := loadfail(400, 400)
+// need - g1/g2 flag check, tranpar flag
 	bld_btn := widget.NewButton("BUILD", func() {
 		if !chkg1rom.Checked && !chkg2rom.Checked { spchks(true,false,false,false) }
+		stamp := itemGetStamp("key")
+		gx,gy := svx*8+8, svy*8+8
+		fmt.Sscanf(lasadr,"%d",&prcadr)
+		for y := 0; y <= 6; y++ {
+		for x := 0; x <= 6; x++ {
+			stamp.numbers = tilerange(prcadr, svx * svy)
+			prcadr += svx * svy * 8
+			stamp.width = svx
+			stamp.trans0 = false
+			stamp.pnum = pnumsel
+			stamp.ptype = paltype
+fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X -- @%d, %d\n",paltype,pnumsel,svx,svy,prcadr,x*gx, y*gy)
+			writestamptoimage(G1,bas, stamp, x*gx, y*gy)
+		}}
+		bld := canvas.NewRasterFromImage(bas)
+		savetopng("tst.png", bas)
+		sprview.Remove(lim)
+		lim = container.NewWithoutLayout(bld)
+		sprview.Add(lim)
+		bld.Resize(fyne.Size{800, 800})
 	})
 
 	fnent := widget.NewEntry()
@@ -131,16 +156,12 @@ func sprite_view() {
 		),
 		sprview,
 	)
-var lim *fyne.Container
 	spexpl.Remove(lim)
 	lim = container.NewStack(ld)
 	spexpl.Add(lim)
 	fyne.Do(func() {
 		lim.Refresh()
-//fmt.Printf("Splash load: %s\n",fn)
 	})
-	ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
-	bas := loadfail(400, 400)
 	bld := canvas.NewRasterFromImage(bas)
 	savetopng("tst.png", bas)
 	sprview.Remove(lim)
