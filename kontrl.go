@@ -290,6 +290,8 @@ func typedRune(r rune) {
 
 //fmt.Printf("r %v shift %v\n",r,shift)
   if actab == "Sprites" {
+		dx := 8
+		if logo { dx = 1 }
 		switch r {
 
 		case 'p':
@@ -307,13 +309,13 @@ func typedRune(r rune) {
 		case 'u':
 			svy--
 		case 'X':
-			shx++
+			shx += dx
 		case 'Z':
-			shx--
+			shx -= dx
 		case 'Y':
-			shy++
+			shy += dx
 		case 'U':
-			shy--
+			shy -= dx
 		case 'b':
 			prcadr += svx*svy
 			radr_bounds()
