@@ -22,7 +22,15 @@ func spchks(c1,c2,c3,c4 bool){
 	spsheet.Checked = c4; spsheet.Refresh()
 }
 
+func radr_bounds () {						// find a way to get size of rom from file info / loading
+	prcadr = maxint(0,minint(prcadr,65536))	// 0x1000000/slashout - now 64K how large can a rom be? it will prob be read as absolute
+	lasadr = fmt.Sprintf("%d",prcadr)
+	radr.SetText(lasadr)
+	radr.Refresh()
+}
+
 var sprview *fyne.Container
+var radr *widget.Entry
 var lasadr string = "2048"
 var prcadr int = 2048			// process from this addr, 2048 is ghosts
 var paltype string = "base"
@@ -38,7 +46,7 @@ func sprite_view() {
 
 var lim *fyne.Container
 
-	chkg1rom = widget.NewCheck("Gauntlet ", func(gr bool) {
+	chkg1rom = widget.NewCheck("Gauntlet / G² rom", func(gr bool) {
 		fmt.Printf("Gauntlet rom %t\n", gr)
 		spchks(gr,false,false,false)
 	})
@@ -54,9 +62,17 @@ var lim *fyne.Container
 		fmt.Printf("Sprite sheet %t\n", ss)
 		spchks(false,false,false,ss)
 	})
+// g2 mode enable
+	g2m := widget.NewCheck("G2 mode", func(g bool) {
+		fmt.Printf("Gauntlet 2 gfx mode %t\n", g)
+	})
 // keep fixed address
 	keepr := widget.NewCheck("keep", func(k bool) {
 		fmt.Printf("keep addr %t\n", k)
+	})
+// use lvl1 & lvl2 colors for bkg checkerboard
+	lvlcol := widget.NewCheck("lvl color", func(k bool) {
+		fmt.Printf("use level color custom %t\n", k)
 	})
 // gauntlet palete type - vars lists in palettes.go
 	selptype := widget.NewSelect([]string{"teleff","floor","gfloor","wall","gwall","base","gbase","warrior","valkyrie","wizard","elf","trap","stun","secret","shrub","forcefield"}, func(str string) {
@@ -105,7 +121,7 @@ var lim *fyne.Container
 	if lasadr == "" { lasadr = "0" }
 	adr_label := widget.NewLabelWithStyle("Address: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 	adr_spc := widget.NewLabelWithStyle("               ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
-	radr := widget.NewEntry()
+	radr = widget.NewEntry()
 	radr.OnChanged = func(s string) {
 
 		fmt.Sscanf(s,"%d",&prcadr)
@@ -118,6 +134,7 @@ var lim *fyne.Container
 	bld_btn := widget.NewButton("BUILD", func() {
 		var bstamp Stamp
 		ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
+		if lvlcol.Checked { ova,ovb = lvl1col,lvl2col }
 // change ops so bad inputs default here
 
 // bounds pnum sel
@@ -141,13 +158,12 @@ var lim *fyne.Container
 		xpxz.SetText(lpixx)
 		xpxz.Refresh()
 // bounds addr
-		prcadr = maxint(0,minint(prcadr,65536))	// 0x1000000/slashout - now 64K how large can a rom be? it will prob be read as absolute
-		lasadr = fmt.Sprintf("%d",prcadr)
-		radr.SetText(lasadr)
-		radr.Refresh()
+		radr_bounds()
 
 		bas := loadfail(pixx,pixx)
 		if !chkg1rom.Checked && !chkg2rom.Checked { spchks(true,false,false,false) }
+		gsv := G1
+		if g2m.Checked { G1 = false }
 		bstamp = Stamp{} //itemGetStamp("key")
 		gx,gy := svx*8+8, svy*8+8
 		suby := 65 / gy
@@ -175,6 +191,7 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d, suby %d\n",gx,gy,fx
 		lim = container.NewWithoutLayout(bld)
 		sprview.Add(lim)
 		bld.Resize(fyne.Size{800, 800})
+		G1 = gsv
 	})
 
 	fnent := widget.NewEntry()
@@ -182,13 +199,13 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d, suby %d\n",gx,gy,fx
 	ld := container.New(
 		layout.NewVBoxLayout(),
 		container.New(layout.NewHBoxLayout(),
-			chkg1rom, chkg2rom, ptyp_label, selptype, pnum_label,pnumen,
+			chkg1rom, ptyp_label, selptype, pnum_label,pnumen,g2m,
 		),
 		container.New(layout.NewHBoxLayout(),
 			filerom, spsheet, container.NewWithoutLayout(fnent),
 		),
 		container.New(layout.NewHBoxLayout(),
-			bld_btn, pixs_label, xpxz, ssiz_label, xsiz, x_label, ysiz, adr_label, container.NewWithoutLayout(radr), adr_spc,keepr,
+			bld_btn, pixs_label, xpxz, ssiz_label, xsiz, x_label, ysiz, adr_label, container.NewWithoutLayout(radr), adr_spc,keepr,lvlcol,
 		),
 		sprview,
 	)
