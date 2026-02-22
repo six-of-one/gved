@@ -70,23 +70,25 @@ func blankimage(x int, y int) *image.NRGBA {
 }
 
 // image failed to load, make something halflife-esq tex missing
+var ova,ovb color.Color = HRGB{0xff8f008f},HRGB{0xff008f8f}
 
 func loadfail(x int, y int) *image.NRGBA {
 	img := blankimage(x,y)
-	b := HRGB{0xff008f8f}
-	a := HRGB{0xff8f008f}
+//	b := HRGB{0xff008f8f}
+//	a := HRGB{0xff8f008f}
 	var c color.Color
 	for fy := 0; fy < y; fy += 8 {
-		if fy & 8 == 8 { c = a } else { c = b }
+		if fy & 8 == 8 { c = ova } else { c = ovb }
 		for fx := 0; fx < x; fx += 8 {
 
 		for j := 0; j < 8; j++ {
 			for i := 0; i < 8; i++ {
 				img.Set(fx+i, fy+j, c)
 			}}
-			if c == b { c = a } else { c = b }
+			if c == ovb { c = ova } else { c = ovb }
 		}
 	}
+	ova,ovb = HRGB{0xff8f008f},HRGB{0xff008f8f}
 	return img
 }
 

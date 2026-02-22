@@ -25,6 +25,7 @@ func spchks(c1,c2,c3,c4 bool){
 var sprview *fyne.Container
 var laspnume string
 var lasadr string = "0"
+var prcadr int = 0				// process from this addr
 var paltype string = "base"
 var pallim int = 0				// each palete list has a # lim, which exceeding causes a crash
 var pnumsel int = 1				// base pnum 1 - most common items, treasure, foods, potions are in palete 1 of base
@@ -84,6 +85,14 @@ func sprite_view() {
 	}
 	xsiz.SetText(lasx)
 	ysiz := widget.NewEntry()
+	xsiz.OnChanged = func(s string) {
+
+		fmt.Sscanf(s,"%d",&sy)
+		sy = maxint(1,minint(sy,32))	// stamp 32 (8 bit units) takes up 256, seems reasonable, prob have issues if ew proceed past end of rom file
+		lasy = fmt.Sprintf("%d",sy)
+		ysiz.SetText(lasy)
+		ysiz.Refresh()
+	}
 	ysiz.SetText(lasy)
 // size of stamp, x by y
 	ssiz_label := widget.NewLabelWithStyle("size:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
@@ -92,11 +101,19 @@ func sprite_view() {
 	if lasadr == "" { lasadr = "0" }
 	adr_label := widget.NewLabelWithStyle("Address: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 	radr := widget.NewEntry()
+	radr.OnChanged = func(s string) {
+
+		fmt.Sscanf(s,"%d",&prcadr)
+		prcadr = maxint(0,minint(prcadr,16777216))	// 0x1000000 how large can a rom be? it will prob be read as absolute
+		lasadr = fmt.Sprintf("%d",prcadr)
+		radr.SetText(lasadr)
+		radr.Refresh()
+	}
 	radr.SetText(lasadr)
-	radr.Resize(fyne.Size{100, optht})
+	radr.Resize(fyne.Size{120, optht})
 // build button
 	bld_btn := widget.NewButton("BUILD", func() {
-
+		if !chkg1rom.Checked && !chkg2rom.Checked { spchks(true,false,false,false) }
 	})
 
 	fnent := widget.NewEntry()
@@ -122,6 +139,7 @@ var lim *fyne.Container
 		lim.Refresh()
 //fmt.Printf("Splash load: %s\n",fn)
 	})
+	ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
 	bas := loadfail(400, 400)
 	bld := canvas.NewRasterFromImage(bas)
 	savetopng("tst.png", bas)
