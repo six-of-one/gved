@@ -217,10 +217,10 @@ var lim *fyne.Container
 		gx,gy := svx*8+trnc, svy*8+trnc
 		fx,fy := 0,0
 	// calc how many rows & cols of sprites will fit in pixel area
-		subf := int((float64(pixx) / (opts.Geoh-190))* 120)
-fmt.Printf("subf: %d, %f, %f\n",subf, float64(pixx) / (opts.Geoh-190),(float64(pixx) / (opts.Geoh-190)) * 118)
-		for x := 1; x <= 64; x++ { if x * gx < pixx { fx = x-1 }; fmt.Printf("dis sprite gx: %d x %d fxy %d, %d svxy %d - %d\n",x*((svx*8)+trnc),gx,fx,0,svx,0)}
-		for y := 1; y <= 64; y++ { if y * gy < (pixx - subf) { fy = y-1 }; fmt.Printf("dis sprite gx: %d x %d fxy %d, %d svxy %d - %d\n",0,y*((svy*8)+trnc),gy,fy,pixx - subf,subf)}
+		subf := int((float64(pixx) / (opts.Geoh-190))* 116)
+//fmt.Printf("subf: %d, %f, %f\n",subf, float64(pixx) / (opts.Geoh-190),(float64(pixx) / (opts.Geoh-190)) * 118)
+		for x := 1; x <= 64; x++ { if x * gx < (pixx+7)pp { fx = x-1 } }
+		for y := 1; y <= 64; y++ { if y * gy < (pixx - subf) { fy = y } }
 
 fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,svy)
 		fmt.Sscanf(lasadr,"%d",&prcadr)
