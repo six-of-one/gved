@@ -146,7 +146,7 @@ var lim *fyne.Container
 		xsiz.Hide(); ysiz.Hide()
 		radr.Hide()
 		adr_spc.Hide()
-		adr_label.SetText("Read c/r: ")
+		adr_label.SetText("Read c/r:")
 	})
 // g2 mode enable
 	g2m := widget.NewCheck("G2 mode", func(g bool) {
@@ -262,11 +262,35 @@ var lim *fyne.Container
 	}
 	radr.SetText(lasadr)
 	radr.Resize(fyne.Size{100, optht})
+// file name for rom/sheet
+	fnent := widget.NewEntry()
+	fnent.Resize(fyne.Size{370, optht})
+	fnload := widget.NewButtonWithIcon("", theme.DocumentSaveIcon(), func() {
+
+		fileDiag := dialog.NewFileOpen(func(reader fyne.URIReadCloser, err error) {
+			if err != nil {
+				fmt.Println("Save as Error:", err)
+				return
+			}
+			if reader == nil {
+				fmt.Println("No file selected")
+				return
+			}
+
+			fmt.Println("Selected:", reader.URI().Path())
+			fnent.SetText(reader.URI().Path())
+
+		}, w)
+		fileDiag.Show()
+		fileDiag.Resize(fyne.NewSize(float32(opts.Geow - 10), float32(opts.Geoh - 30)))
+	})
+
 // build button
 // need - g1/g2 flag check, tranpar flag
 // adjust so it fills test area w/ gx,gy
 	bld_btn = widget.NewButton("BUILD", func() {
 		var bstamp Stamp
+		parimg = nil
 		ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
 		if lvlcol.Checked { ova,ovb = lvl1col,lvl2col }
 // change ops so bad inputs default here
@@ -306,13 +330,14 @@ var lim *fyne.Container
 		fx,fy,gx,gy := 0,0,0,0
 		subf := int((float64(pixx) / (opts.Geoh-190))* 116)
 		if roms {
-\	// calc how many rows & cols of sprites will fit in pixel area
+	// calc how many rows & cols of sprites will fit in pixel area
 			gx,gy = svx*8+trnc, svy*8+trnc
 //fmt.Printf("subf: %d, %f, %f\n",subf, float64(pixx) / (opts.Geoh-190),(float64(pixx) / (opts.Geoh-190)) * 118)
 			bstamp = Stamp{} //itemGetStamp("key")
 			fmt.Sscanf(lasadr,"%d",&prcadr)
 		} else {
 			gx,gy = shx+trnc,shy+trnc
+			_,_,parimg = itemGetPNG(fnent.Text)
 		}
 		for x := 1; x <= 64; x++ { if x * gx < (pixx+7) { fx = x-1 } }
 		for y := 1; y <= 64; y++ { if y * gy < (pixx - subf) { fy = y } }
@@ -332,6 +357,11 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 //fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,fx,fy,prcadr,x*gx, y*gy)
 			fillstamp(&bstamp)
 			writestamptoimage(G1,bas, &bstamp, x*gx, y*gy)
+		  } else {
+			if parimg != nil {
+				 writepngtoimage(bas, shx,shy,0,0,shc+x,shr+y,x*gx, y*gy,0)
+				 st = fmt.Sprintf("%d,%d",shc+x,shr+y)
+			}
 		  }
 
 			if showr.Checked {
@@ -357,27 +387,6 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 	})
 //	bld_btn.SetOnTypedRune(typedRune)
 
-	fnent := widget.NewEntry()
-	fnent.Resize(fyne.Size{370, optht})
-	fnload := widget.NewButtonWithIcon("", theme.DocumentSaveIcon(), func() {
-
-		fileDiag := dialog.NewFileOpen(func(reader fyne.URIReadCloser, err error) {
-			if err != nil {
-				fmt.Println("Save as Error:", err)
-				return
-			}
-			if reader == nil {
-				fmt.Println("No file selected")
-				return
-			}
-
-			fmt.Println("Selected:", reader.URI().Path())
-			fnent.SetText(reader.URI().Path())
-
-		}, w)
-		fileDiag.Show()
-		fileDiag.Resize(fyne.NewSize(float32(opts.Geow - 10), float32(opts.Geoh - 30)))
-	})
 	ld := container.New(
 		layout.NewVBoxLayout(),
 		container.New(layout.NewHBoxLayout(),
@@ -387,7 +396,7 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 			filerom, spsheet, fnload, container.NewWithoutLayout(fnent),
 		),
 		container.New(layout.NewHBoxLayout(),
-			bld_btn,keepr, pixs_label, xpxz, ssiz_label, xsiz,shxsiz, x_label, ysiz,shysiz, adr_label, container.NewWithoutLayout(radr),redc,redr, adr_spc,showr,lvlcol,
+			bld_btn,keepr, pixs_label, xpxz, ssiz_label, xsiz,shxsiz, x_label, ysiz,shysiz, adr_label, container.NewWithoutLayout(radr),redc,redr,adr_spc,showr,lvlcol,
 		),
 		sprview,
 	)
