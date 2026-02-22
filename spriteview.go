@@ -359,3 +359,19 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 	sprview.Add(lim)
 	bld.Resize(fyne.Size{1000, 1000})
 }
+
+func sprites_keys() {
+	strp := "t,r		- palette type +,-\n"+
+			"p,o		- pnum +,-\n"+
+			"x,z		- sprite size x (col) +,-\n"+
+			"y,u		- sprite size y (row) +,-\n"+
+			"<SH>X,Z	- sheet size col +,- 8		<LOGO> for +,- 1\n"+
+			"<SH>Y,U	- sheet size row +,- 8		<LOGO> for +,- 1\n"+
+			"b,v		- address +,-{sprite size = x*y}\n"+
+			"←→		- address -,+              shift modify -,+ 4\n"+
+			"↑↓		- address -10,+10     shift modify -,+ 40\n"+
+			"pgup		- address -100           shift modify -,+ 1000\n"+
+			"pgdn		- address +100\n"
+fmt.Print(strp)
+	dboxtx("Sprite viewer", strp, 480, 300,nil,typedRune)
+}

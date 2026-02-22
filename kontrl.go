@@ -322,6 +322,8 @@ func typedRune(r rune) {
 		case 'v':
 			prcadr -= svx*svy
 			radr_bounds()
+		case '?':
+			sprites_keys()
 		}
 		xysiz_bounds()
 		shsiz_bounds()
