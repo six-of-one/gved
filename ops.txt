@@ -396,6 +396,12 @@ Palette map - default: palette walls / floor match level cols & pats
 			  toggles on and off (1st click shows palette if hidden)
 
 ---------------------------------------------
+ops for sprite viewer
+
+Gauntlet, Gauntlet II - use this systems rom image
+
+
+---------------------------------------------
 
 Gauntlet / Gauntlet 2 visual editor
 Author: Six [a programmer]

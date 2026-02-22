@@ -133,8 +133,7 @@ var (
 
 // vars edit colors
 
-var lvl1col uint32
-var lvl2col uint32
+var lvl1col,lvl2col color.Color = HRGB{0xff0000ff},HRGB{0xfff0000}		// def level colors blue, red
 
 func colorCont(wn fyne.Window) fyne.CanvasObject {
 	var bas_col color.Color
@@ -166,18 +165,17 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 		blot_tap.label.SetText(s)
 	}
 // level colors 1
-	bas_col = HRGB{lvl1col}
 	col1_tap := newTappableDisplayColor(wn)
-	col1_tap.setColor(bas_col)
+	col1_tap.setColor(lvl1col)
 
 	col1_pick := colorpicker.New(200, colorpicker.StyleHueCircle)
 	col1_pick.SetOnChanged(func(c color.Color) {
-		bas_col = c
-		col1_tap.setColor(bas_col)
+		lvl1col = c
+		col1_tap.setColor(lvl1col)
 	})
 	col1_cont := container.NewWithoutLayout(col1_pick)
 	col1_btn := widget.NewButton("level color 1 ", func() {
-		col1_pick.SetColor(bas_col)
+		col1_pick.SetColor(lvl1col)
 		dialog.ShowCustom("Select color", "OK", col1_cont, wn)
 	})
 
@@ -186,24 +184,23 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 	col1_hexent.SetText("FF00AAFF")
 	col1_hexent.OnChanged = func(s string) {
 		fmt.Sscanf(s,"%08x",&nc)
-		bas_col = HRGB{nc}
-fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
-		col1_tap.setColor(bas_col)
+		lvl1col = HRGB{nc}
+fmt.Printf("hex col: %v: %x - %s\n",lvl1col,nc,s)
+		col1_tap.setColor(lvl1col)
 		col1_tap.label.SetText(s)
 	}
 // level colors 2
-	bas_col = HRGB{lvl2col}
 	col2_tap := newTappableDisplayColor(wn)
-	col2_tap.setColor(bas_col)
+	col2_tap.setColor(lvl2col)
 
 	col2_pick := colorpicker.New(200, colorpicker.StyleHueCircle)
 	col2_pick.SetOnChanged(func(c color.Color) {
-		bas_col = c
-		col2_tap.setColor(bas_col)
+		lvl2col = c
+		col2_tap.setColor(lvl2col)
 	})
 	col2_cont := container.NewWithoutLayout(col2_pick)
 	col2_btn := widget.NewButton("level color 2 ", func() {
-		col2_pick.SetColor(bas_col)
+		col2_pick.SetColor(lvl2col)
 		dialog.ShowCustom("Select color", "OK", col2_cont, wn)
 	})
 
@@ -212,9 +209,9 @@ fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
 	col2_hexent.SetText("FF00AAFF")
 	col2_hexent.OnChanged = func(s string) {
 		fmt.Sscanf(s,"%08x",&nc)
-		bas_col = HRGB{nc}
-fmt.Printf("hex col: %v: %x - %s\n",bas_col,nc,s)
-		col2_tap.setColor(bas_col)
+		lvl2col = HRGB{nc}
+fmt.Printf("hex col: %v: %x - %s\n",lvl2col,nc,s)
+		col2_tap.setColor(lvl2col)
 		col2_tap.label.SetText(s)
 	}
 
