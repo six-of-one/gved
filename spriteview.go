@@ -114,11 +114,11 @@ var lim *fyne.Container
 	radr.SetText(lasadr)
 	radr.Resize(fyne.Size{120, optht})
 // build button
-	ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
-	bas := loadfail(400, 400)
 // need - g1/g2 flag check, tranpar flag
 	bld_btn := widget.NewButton("BUILD", func() {
 		var bstamp Stamp
+		ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
+		bas := loadfail(400, 400)
 		if !chkg1rom.Checked && !chkg2rom.Checked { spchks(true,false,false,false) }
 		bstamp = Stamp{} //itemGetStamp("key")
 		gx,gy := svx*8+8, svy*8+8
@@ -132,10 +132,11 @@ var lim *fyne.Container
 			bstamp.pnum = pnumsel
 			bstamp.ptype = paltype
 			fillstamp(&bstamp)
-fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X -- %v\n",paltype,pnumsel,svx,svy,prcadr,bstamp.numbers)
+fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,svx,svy,prcadr,x*gx, y*gy)
 			writestamptoimage(G1,bas, &bstamp, x*gx, y*gy)
 		}}
 		bld := canvas.NewRasterFromImage(bas)
+		gif_blnk(lim)
 		savetopng("tst.png", bas)
 		sprview.Remove(lim)
 		lim = container.NewWithoutLayout(bld)
@@ -164,6 +165,8 @@ fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X -- %v\n",paltype,pnumsel,svx,
 	fyne.Do(func() {
 		lim.Refresh()
 	})
+	ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
+	bas := loadfail(400, 400)
 	bld := canvas.NewRasterFromImage(bas)
 	savetopng("tst.png", bas)
 	sprview.Remove(lim)
