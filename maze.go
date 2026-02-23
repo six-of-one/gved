@@ -92,7 +92,8 @@ func domaze(arg string) {
 	opts.mnum = mazeNum
 	fmt.Printf("Maze number: %d", mazeNum + 1)
 	if Aov > 0 {
-		fmt.Printf(", address: 0x%X ", Aov)
+		Aov := addrver(Aov)
+		fmt.Printf(", override address: 0x%X ", Aov)
 	}
 	fmt.Printf("\n")
 

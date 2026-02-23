@@ -40,7 +40,7 @@ var opts struct {
 	Nogtop	bool   `long:"ngt" description:"no generator indicate letter"`
 	Nosec	bool   `long:"nsec" description:"no secret walls shown"`
 // cli option to force an address (originally for g2 force)
-	Addr	int    `long:"ad" default:"0" base:"16" description:"load maze rom address x38000 to x3FFFF (in hex)"`
+	Addr	int    `long:"ad" default:"0" base:"16" description:"load maze rom address x38000 to x3FFF0 (in hex)"`
 // cli option to use rev 14 maze roms (final release, differs from identical maze roms in r1 - r9)
 	R14		bool   `long:"r14" description:"use gauntlet rev14 maze rom"`
 // select gauntlet 1 or 2 to process - default is 2

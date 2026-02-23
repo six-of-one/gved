@@ -103,7 +103,7 @@ sfx, err := sdl.New(mix.INIT_MP3 | mix.INIT_OGG)
 
 	if opts.Intr { fmt.Printf("Audio: %t\n\n",aud) }
 
-	if opts.Addr > 0x37fff && opts.Addr < 0x40000 { Aov = opts.Addr }
+	if opts.Addr > 0x37fff && opts.Addr < 0x3FFF1 { Aov = opts.Addr }
 
 	rand.Seed(time.Now().UnixNano())				// are these essentially the same?
 	source := rand.NewSource(time.Now().UnixNano()) // random #s
