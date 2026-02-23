@@ -678,7 +678,7 @@ func GenerateDFSMaze(mdat MazeData, startX, startY, x, y, BiasCoefficient int) {
 			GenerateDFSMaze(mdat, startX, startY, nx, ny, BiasCoefficient)
 	// Recursively generate the maze
 	// uhh....
-fmt.Printf("wut: %d x %d, sxy: %d x %d  b: %d\n",nx, ny,startX, startY,BiasCoefficient)
+//fmt.Printf("wut: %d x %d, sxy: %d x %d  b: %d\n",nx, ny,startX, startY,BiasCoefficient)
 
 		}
 	}
