@@ -293,6 +293,14 @@ func typedRune(r rune) {
 		dx := 8
 		if logo { dx = 1 }
 		switch r {
+		case '[':
+			psel = maxint(0,minint(psel-1,15))
+			selptype.SetSelectedIndex(psel)
+			pallim = ptyp_lim[selptype.Selected]
+		case ']':
+			psel = maxint(0,minint(psel+1,15))
+			selptype.SetSelectedIndex(psel)
+			pallim = ptyp_lim[selptype.Selected]
 		case 'p':
 			pnumsel++
 			pnum_bounds()

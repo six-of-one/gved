@@ -93,6 +93,8 @@ func adr_mode() {
 var sprview *fyne.Container
 var bld_btn *widget.Button
 var radr *widget.Entry
+var selptype *widget.Select
+var psel int = 6
 var pnumen *widget.Entry
 var xsiz *widget.Entry
 var ysiz *widget.Entry
@@ -104,7 +106,7 @@ var adr_label *widget.Label
 var adr_spc *widget.Label
 var lasadr string = "2048"
 var prcadr int = 2048			// process from this addr, 2048 is ghosts
-var paltype string = "base"
+var paltype string = "gbase"
 var pallim int = 0				// each palete list has a # lim, which exceeding causes a crash
 var laspnume string = "4"
 var pnumsel int = 4				// base pnum 1 - most common items, treasure, foods, potions are in palete 1 of base, 4 = 3rd level ghosts
@@ -166,12 +168,13 @@ var lim *fyne.Container
 		fmt.Printf("use level color custom %t\n", k)
 	})
 // gauntlet palete type - vars lists in palettes.go
-	selptype := widget.NewSelect([]string{"teleff","floor","gfloor","wall","gwall","base","gbase","warrior","valkyrie","wizard","elf","trap","stun","secret","shrub","forcefield"}, func(str string) {
+	selptype = widget.NewSelect([]string{"teleff","floor","gfloor","wall","gwall","base","gbase","warrior","valkyrie","wizard","elf","trap","stun","secret","shrub","forcefield"}, func(str string) {
 		fmt.Printf("Select ptype: %s\n", str)
 		paltype = str
+		psel = selptype.SelectedIndex()
 		pallim = ptyp_lim[str]
 	})
-	selptype.SetSelected("base")
+	selptype.SetSelected("gbase")
 	ptyp_label := widget.NewLabelWithStyle("Pal type:", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 
 // select palete num, limited for each palete type
@@ -420,8 +423,8 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 }
 
 func sprites_keys() {
-//	strp := "t,r		- palette type +,-\n"+
-	strp := "p,o		- pnum +,-\n"+
+	strp := "],[		- palette type +,-\n"+
+			"p,o		- pnum +,-\n"+
 			"x,z		- sprite size x (col) +,-\n"+
 			"y,u		- sprite size y (row) +,-\n"+
 			"<SH>X,Z	- sheet size col +,- 8		<LOGO> for +,- 1\n"+

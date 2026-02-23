@@ -434,7 +434,7 @@ keep: dont update rom address, just keep building same
 
 Key shortcuts:
 
-t,r		- palette type +,-
+],[		- palette type +,-
 p,o		- pnum +,-
 x,z		- sprite size x (col) +,-
 y,u		- sprite size y (row) +,-
