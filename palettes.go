@@ -1128,20 +1128,25 @@ func paletteMakeSpecial(floorpattern int, floorcolor int, wallpattern, wallcolor
 	// for i := 0; i < 16; i++ {
 	// 	trapPalette[0][i] = floorPalettes[floorcolor][i]
 	// }
+	if floorcolor > len(floorPalettes) { floorcolor = 0 }
+	if floorpattern >= len(sColors1) { floorpattern = 0 }
+	sc1,sc2 := sColors1[floorpattern],sColors2[floorpattern]
 	paletteClone(trapPalette[0], floorPalettes[floorcolor])
-	trapPalette[0][sColors1[floorpattern]] = IRGB{0xa0aa}
-	trapPalette[0][sColors2[floorpattern]] = IRGB{0xa0aa}
+	if sc1 > len(trapPalette[0]) { sc1 = 1 }
+	if sc2 > len(trapPalette[0]) { sc2 = 1 }
+	trapPalette[0][sc1] = IRGB{0xa0aa}
+	trapPalette[0][sc2] = IRGB{0xa0aa}
 
 	// for i := 0; i < 16; i++ {
 	// 	stunPalette[0][i] = floorPalettes[floorcolor][i]
 	// }
 	paletteClone(stunPalette[0], floorPalettes[floorcolor])
-	stunPalette[0][sColors1[floorpattern]] = IRGB{0xaaa0}
-	stunPalette[0][sColors2[floorpattern]] = IRGB{0xaaa0}
+	stunPalette[0][sc1] = IRGB{0xaaa0}
+	stunPalette[0][sc2] = IRGB{0xaaa0}
 
 	paletteClone(forcefieldPalette[0], floorPalettes[floorcolor])
-	forcefieldPalette[0][sColors1[floorpattern]] = IRGB{0xaa00}
-	forcefieldPalette[0][sColors2[floorpattern]] = IRGB{0xda60}
+	forcefieldPalette[0][sc1] = IRGB{0xaa00}
+	forcefieldPalette[0][sc2] = IRGB{0xda60}
 
 	paletteSecret(16)
 
@@ -1149,13 +1154,16 @@ func paletteMakeSpecial(floorpattern int, floorcolor int, wallpattern, wallcolor
 	// different mazes.
 	if wallpattern >= 6 {
 		if wallcolor > 0 {
-			paletteClone(shrubPalette[0], wallPalettes[wallcolor-1])
+			wc := wallcolor-1
+			if wc >= len(wallPalettes) { wc = 1 }		// hasnt failed, just put prot incase
+			paletteClone(shrubPalette[0], wallPalettes[wc])
 		}
 
 		z := 0
 		if wallpattern >= 11 {
 			z = 3
 		}
+	if floorpattern >= len(shrubFloorColorNums) { floorpattern = 0 }
 		cn := shrubFloorColorNums[floorpattern]
 		for i := 0; i < 3; i++ {
 			shrubPalette[0][13+i] = floorPalettes[floorcolor][cn[z+i]]

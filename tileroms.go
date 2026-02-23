@@ -133,11 +133,20 @@ var tileRomSetsG1 = []Romset{
 	},
 }
 
+var lstbadbank int
+
 // returns the actual tile number to use, and the rom set to use it with
 // Kind of a mess, since it uses knowledge for calculating the tile number
 // that should be contained in the above structs, but isn't
 func getromset(tilenum int) (int, []string) {
 	whichbank := tilenum / 0x800
+	if whichbank > len(tileRomSets) {
+		if whichbank != lstbadbank {
+			fmt.Printf("\nError: tileRomSets, illegal bank = %d\n\nSet default bank = 0\n\n",whichbank)
+			lstbadbank = whichbank
+		}
+		whichbank = 0
+	}
 	actualtile := (tilenum % 0x800) + tileRomSets[whichbank].offset
 	rombk := tileRomSets[whichbank].roms
 	if G1 {

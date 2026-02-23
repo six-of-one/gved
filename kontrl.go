@@ -243,7 +243,7 @@ func typedRune(r rune) {
 
 // new maze
 	if r == 'a' {
-		if (anum > 0 && anum <= 127 || anum >= 229376 && anum < 262145) {
+		if (anum > 0 && anum <= maxmaze+1 || anum >= 229376 && anum < 262129) {
 
 			nsremaze = true
 			relod = needsav()
@@ -251,7 +251,7 @@ func typedRune(r rune) {
 				opts.mnum = anum - 1
 				Aov = 0
 			} else {
-				Aov = addrver(anum, 0)
+				Aov = maxint(229376,minint(anum,262128))		// 230100 - 262128 ideal range
 				opts.mnum = 0
 				spau = fmt.Sprintf("addr = %d",anum)
 			}
@@ -406,7 +406,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 			keyhints()
 		case 65:		// A
 			if Aov > 0 { Aov = 0 } else {
-				Aov = addrver(slapsticMazeGetRealAddr(opts.mnum), 0)
+				Aov = maxint(229376,minint(slapsticMazeGetRealAddr(opts.mnum),262128))
 			}
 		case 76:		// L
 // with anum != 0, this becomes load s[1] buffer into ebuf
@@ -873,9 +873,10 @@ func pagit(dir int) bool {
 	Ovwallpat = -1
 	pgdir = dir
 	if Aov > 0 {
-		nav := addrver(Aov, dir)
-		Aov = nav
+		if shift { dir *= 10 }
+		Aov = maxint(229376,minint(Aov + dir,262128))
 	} else {
+		if shift { dir *= 4 }
 		opts.mnum += dir
 	}
 	if dir > 0 {
