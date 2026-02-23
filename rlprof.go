@@ -678,13 +678,18 @@ func GenerateDFSMaze(mdat MazeData, startX, startY, x, y, BiasCoefficient int) {
 			mdat[xy{x+dx,y+dy}] = G1OBJ_TILE_FLOOR // Carve a path
 			GenerateDFSMaze(mdat, startX, startY, nx, ny, BiasCoefficient)
 	// Recursively generate the maze
+	// uhh....
+fmt.Printf("wut: %d x %d, sxy: %d x %d  b: %d\n",nx, ny,startX, startY,BiasCoefficient)
+
 		}
 	}
 }
 
 func map_dfs(mdat MazeData) {
 
+	bias := int(time.Now().UnixNano() & 3)
 	InitializeDFSMaze()
+	GenerateDFSMaze(mdat,1,1,mxmd,mymd,bias)
 }
 // wall reducer came with DFS / Prim - sounds like a neet idea
 

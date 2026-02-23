@@ -54,7 +54,7 @@ func menu_lodit(y bool) {
 			remaze(opts.mnum)
 		} else {
 			sdbit(0)
-			ed_maze(true)
+			ed_maze(true,1,1)
 		}
 	}
 }
@@ -66,7 +66,7 @@ func menu_rst(y bool) {
 		Ovwallpat = -1
 		remaze(opts.mnum)
 		opts.edat = sv
-		ed_maze(true)
+		ed_maze(true,1,1)
 		//ed_sav(opts.mnum+1)	// reset does not overwrite file buffer, still need to save
 	}
 }
@@ -162,6 +162,7 @@ func menu_walls(pr bool) {
 		xbuf[xy{tx, ty}] = ""
 	}}
 	opts.dntr = true
+	flordirt, walsdirt = 1,1
 	remaze(opts.mnum)
 }
 
@@ -209,6 +210,7 @@ func menu_blank(pr bool) {
 	}}
 	pr = false
 	opts.dntr = true
+	flordirt, walsdirt = 1,1
 	remaze(opts.mnum)
 }
 
@@ -256,12 +258,12 @@ func st_menu() {
 	menuItemBlan := fyne.NewMenuItem("Blank maze",func() { menu_blank(false) })
 	menuItemBlnK := fyne.NewMenuItem("Blank maze, keep decor",func() { menu_blank(true) })
 	menuItemWll := fyne.NewMenuItem("All walls, keep decor",func() { menu_walls(true) })
-	menuItemRand := fyne.NewMenuItem("Random load",func() { rload(ebuf); ed_maze(true) })
-	menuItemRedwl := fyne.NewMenuItem("Reduct walls",func() { ReduceWalls(ebuf,mxmd,mymd); ed_maze(true) })
-	menuItemFmap := fyne.NewMenuItem("Mapper fargoal",func() { map_fargoal(ebuf); ed_maze(true) })
-	menuItemFmapb := fyne.NewMenuItem("Mapper 2",func() { map_sword(ebuf); ed_maze(true) })
-	menuItemFmapc := fyne.NewMenuItem("Mapper 3",func() { map_wide(ebuf); ed_maze(true) })
-	menuItemFmapd := fyne.NewMenuItem("Mapper DFS",func() { map_dfs(ebuf); ed_maze(true) })
+	menuItemRand := fyne.NewMenuItem("Random load",func() { rload(ebuf); ed_maze(true,1,1) })
+	menuItemRedwl := fyne.NewMenuItem("Reduct walls",func() { ReduceWalls(ebuf,mxmd,mymd); ed_maze(true,1,1) })
+	menuItemFmap := fyne.NewMenuItem("Mapper fargoal",func() { map_fargoal(ebuf); ed_maze(true,1,1) })
+	menuItemFmapb := fyne.NewMenuItem("Mapper 2",func() { map_sword(ebuf); ed_maze(true,1,1) })
+	menuItemFmapc := fyne.NewMenuItem("Mapper 3",func() { map_wide(ebuf); ed_maze(true,1,1) })
+	menuItemFmapd := fyne.NewMenuItem("Mapper DFS",func() { map_dfs(ebuf); ed_maze(true,1,1) })
 //	menuItemTmap := fyne.NewMenuItem("Map++ test",func() { map_test() })
 	menuItemLin1 := fyne.NewMenuItem("═══════════════",nil)
 	menuItemGvs := fyne.NewMenuItem("Gaunlet view sim toggle",func() { gvs = !gvs })

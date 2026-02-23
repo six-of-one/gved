@@ -211,14 +211,14 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 					setcode = g2edit_keymap[edkey]
 					xstcode = "00"
 				}}
-				if del { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = 0; xbuf[xy{mxmd, mymd}] = "0"; opts.bufdrt = true; flordirt, walsdirt = 1,1 } else {	// delete anything for now makes a floor
-				if setcode > 0 { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = setcode; xbuf[xy{mxmd, mymd}] = xstcode; opts.bufdrt = true; flordirt, walsdirt = 1,1 }
+				if del { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = 0; xbuf[xy{mxmd, mymd}] = "0"; opts.bufdrt = true } else {	// delete anything for now makes a floor
+				if setcode > 0 { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = setcode; xbuf[xy{mxmd, mymd}] = xstcode; opts.bufdrt = true }
 				}
 // FX: a loop is happening including this when mouse exits main win
 fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd,mymd,pmx,pmy)
 				prcl++
 				pmx = mxmd; pmy = mymd
-				ed_maze(true)
+				ed_maze(true,1,1)
 			}
 			statlin(pos,tsshn)
 		} else {				// no op on mouse move here
@@ -247,7 +247,7 @@ fmt.Printf("%d down - rel: %.0f x %.0f maze cell: %d x %d\n",mb,sxmd,symd,mxmd,m
 	if mbd {
 		h.MouseMoved(mm)
 	  go func() {
-			time.Sleep(10 * time.Millisecond)
+			time.Sleep(33 * time.Millisecond)
 		fyne.Do(func() {
 			dt := float32(opts.dtec)
 			sx := nong(float32(int(float32(sxmd) / dt)) * dt - 3)				// blotter selects tiles with original unit of 16 x 16
@@ -420,13 +420,13 @@ fmt.Printf(" dtec: %.2f maze: %d x %d - element:%d - %s --- XB: %s\n",dt,ex,ey,o
 			if rop {
 				delstr := 0
 				if shift { delstr = -1 }
-				if del { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = delstr; xopbf[xy{mx, my}] = "0"; opts.bufdrt = true; flordirt, walsdirt = 1,1 } else {	// delete anything for now makes a floor
-				if pasty { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; xopbf[xy{mx, my}] = xcpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true; flordirt, walsdirt = 1,1 }	// cant use setcode below, it wont set floors
+				if del { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = delstr; xopbf[xy{mx, my}] = "0"; opts.bufdrt = true } else {	// delete anything for now makes a floor
+				if pasty { undo_buf(mx, my,rcl); opbuf[xy{mx, my}] = cpbuf[xy{mx - sx, my - sy}]; xopbf[xy{mx, my}] = xcpbuf[xy{mx - sx, my - sy}]; opts.bufdrt = true }	// cant use setcode below, it wont set floors
 				if setcode > 0 {						// i think i found the bug where paste doesnt work right
 					undo_buf(mx, my,rcl);
 					if ! shift { opbuf[xy{mx, my}] = setcode; fmt.Printf("!shift set\n")}
 					if ! ctrl { xopbf[xy{mx, my}] = xstcode; }
-					opts.bufdrt = true; flordirt, walsdirt = 1,1
+					opts.bufdrt = true
 				}
 fmt.Printf("---stored %03d ::%s",opbuf[xy{mx, my}],xopbf[xy{mx, my}])
 				}
@@ -442,7 +442,7 @@ fmt.Printf("\n")
 		if pbe && opts.bufdrt {			// paste buf edit
 			pb_loced(masbcnt)
 			opts.bufdrt = false
-		} else { ed_maze(true) }
+		} else { ed_maze(true,1,1) }
 	}
 
 }

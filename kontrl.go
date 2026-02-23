@@ -141,13 +141,13 @@ func specialKey(cw fyne.Window) {
 //			if key.Name == "Tab" { tab = false }
 			if key.Name == "S" && ctrl  { if shift { menu_savas() } else { menu_sav() }}
 			if key.Name == "L" && ctrl  { if shift { menu_laodf() } else { menu_lod() }}
-			if key.Name == "R" && ctrl  { menu_res(); flordirt, walsdirt = 1,1 }
-			if key.Name == "U" && ctrl  { uswap(); flordirt, walsdirt = 1,1 }
+			if key.Name == "R" && ctrl  { menu_res() }
+			if key.Name == "U" && ctrl  { uswap() }
 			if key.Name == "T" && ctrl  { if ! cmdoff { nothing = 0 }}
-			if key.Name == "Z" && ctrl  { undo(); flordirt, walsdirt = 1,1 }
-			if key.Name == "Y" && ctrl  { redo(); flordirt, walsdirt = 1,1 }
+			if key.Name == "Z" && ctrl  { undo() }
+			if key.Name == "Y" && ctrl  { redo() }
 			if key.Name == "C" && ctrl  { menu_copy() }
-			if key.Name == "X" && ctrl  { menu_cut(); flordirt, walsdirt = 1,1 }
+			if key.Name == "X" && ctrl  { menu_cut() }
 			if key.Name == "P" && ctrl  { if shift { pbsess_cyc(1) } else { menu_paste() }}
 			if key.Name == "O" && ctrl  { if shift { pbmas_cyc(1) }}
 			if key.Name == "V" && ctrl  { gvs = !gvs }
@@ -415,7 +415,7 @@ fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				if opts.bufdrt { menu_savit(true) }		// autosave
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
 				cnd := lod_maz(fil, xbuf, ebuf, false, true)
-				if cnd >= 0 { sdb = anum; fax(&eflg,&tflg,11); ed_maze(true) }
+				if cnd >= 0 { sdb = anum; fax(&eflg,&tflg,11); ed_maze(true,flordirt,walsdirt) }
 				anum = 0
 			} else { opts.Nogtop = !opts.Nogtop; opts.dntr = (opts.edat > 0); relod = true }
 //		case 69:		// E
@@ -774,7 +774,7 @@ fmt.Printf(" stk %d undo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 		}
 fmt.Printf(" del %d elem: %d\n",restak,delbuf.elem[restak])
 		opts.bufdrt = true
-		ed_maze(true)
+		ed_maze(true,1,1)
 	}
 }
 
@@ -793,7 +793,7 @@ fmt.Printf(" stk %d redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 			if delbuf.elem[restak] < 0 || delbuf.revc[restak] == 1 { revk = 0}
 		}
 		opts.bufdrt = true
-		ed_maze(true)
+		ed_maze(true,1,1)
 	}
 //	ed_maze()
 }
@@ -817,7 +817,7 @@ func uswap() {
 		udb.xbfd[y],delbuf.xbfd[y] = ss(udb.xbfd[y],delbuf.xbfd[y])
 //		if udb.elem[y] < 0 { delstak = y; break }
 	}
-	ed_maze(true)
+	ed_maze(true,1,1)
 }
 
 // cut / copy / paste (c/c/p) controls
@@ -898,7 +898,7 @@ func sdbit(dir int) string {
 		if ldb == 0 { ldb = 1 }
 		fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
 		cnd = lod_maz(fil, xbuf, ebuf, false, true)
-		if cnd >= 0 { sdb = ldb; fax(&eflg,&tflg,11); ed_maze(true); spar = fmt.Sprintf("cmd: S - ") }
+		if cnd >= 0 { sdb = ldb; fax(&eflg,&tflg,11); ed_maze(true,1,1); spar = fmt.Sprintf("cmd: S - ") }
 		if dir < 0 && cnd < 0 && ldb == 1 { cnd = 0; break }
 	}
 	if cnd < 0 {

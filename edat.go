@@ -587,9 +587,12 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 	if wpalop && palfol { palete(pals) }
 }
 // udpate maze from edits - rld false to keep overload colors / pats
+// now passing flor & wals dirty flags
+
 var mvpx, mvpy, mvxe, mvye int
 
-func ed_maze(rld bool) {
+func ed_maze(rld bool, fl,wl int) {
+	flordirt, walsdirt = fl,wl
 	upd_edmaze(rld)
 	lviewp := viewp
 	lvpp := 0		// local viewport pass thru to upwin, if sd sim view over blows vp
@@ -803,7 +806,7 @@ fmt.Printf("\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d, DIMS: %d - %d\n",o
 	opts.dntr = false
 	nsremaze = false
 	blotup = (ccp == PASTE)
-	if opts.edat > 0 || sdb > 0 { ed_maze(true) } else {
+	if opts.edat > 0 || sdb > 0 { ed_maze(true,flordirt, walsdirt) } else {
 		Ovimg := genpfimage(edmaze, mazn)
 		upwin(Ovimg, 0)
 		calc_stats()
