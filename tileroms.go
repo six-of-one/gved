@@ -140,7 +140,7 @@ var lstbadbank int
 // that should be contained in the above structs, but isn't
 func getromset(tilenum int) (int, []string) {
 	whichbank := tilenum / 0x800
-	if whichbank > len(tileRomSets) {
+	if whichbank >= len(tileRomSets) {
 		if whichbank != lstbadbank {
 			fmt.Printf("\nError: tileRomSets, illegal bank = %d\n\nSet default bank = 0\n\n",whichbank)
 			lstbadbank = whichbank

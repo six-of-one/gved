@@ -39,7 +39,8 @@ a basic "playable" mode to test mazes
 - sprite system needed (sprites have to replace gens, treasure, keys, pots, etc)
 - sprite sheet organzied, prod
 - player controls (turn off cmd keys, special mode - use actab select in keyrune)
-
+- pixel unit move renderer
+- dialogs: play stats, scores, main sideboard (4 players)
 
 multiple save buffers to store vars maze edits, page thru all wiht 'S', store with #'S', load with #'L'
 * can always store & page -- G¹ & G² have sep buffers

@@ -210,7 +210,7 @@ fmt.Printf("stamp (msk) %d @ %d x %d\n ",stamp.mask,xloc, yloc)
 
 func savetopng(fn string, img *image.NRGBA) {
 	f, _ := os.OpenFile(fn, os.O_WRONLY|os.O_CREATE, 0600)
-fmt.Println(fn)
+if opts.Verbose {fmt.Println(fn)}
 	defer f.Close()
 	png.Encode(f, img)
 }
