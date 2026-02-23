@@ -251,7 +251,7 @@ func typedRune(r rune) {
 				opts.mnum = anum - 1
 				Aov = 0
 			} else {
-				Aov = maxint(229376,minint(anum,262128))		// 230100 - 262128 ideal range
+				Aov = addrver(anum)		// 230100 - 262128 ideal range
 				opts.mnum = 0
 				spau = fmt.Sprintf("addr = %d",anum)
 			}
@@ -406,7 +406,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 			keyhints()
 		case 65:		// A
 			if Aov > 0 { Aov = 0 } else {
-				Aov = maxint(229376,minint(slapsticMazeGetRealAddr(opts.mnum),262128))
+				Aov = addrver(slapsticMazeGetRealAddr(opts.mnum))
 			}
 		case 76:		// L
 // with anum != 0, this becomes load s[1] buffer into ebuf
@@ -874,7 +874,7 @@ func pagit(dir int) bool {
 	pgdir = dir
 	if Aov > 0 {
 		if shift { dir *= 10 }
-		Aov = maxint(229376,minint(Aov + dir,262128))
+		Aov = addrver(Aov + dir)
 	} else {
 		if shift { dir *= 4 }
 		opts.mnum += dir
