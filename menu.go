@@ -147,6 +147,23 @@ func menu_laodf() {
 	fileDialog.Resize(fyne.NewSize(float32(opts.Geow - 10), float32(opts.Geoh - 30)))
 }
 
+// make a block of all walls
+
+func menu_walls(pr bool) {
+	if opts.bufdrt { menu_savit(true) }		// autosave
+	if !pr {
+		eflg[4] = eflg[4] & 0xcf			// turn off H & V
+		eflg[5] = 0							// default floor & wall
+		eflg[6] = 0
+	}
+	for ty := 0; ty <= opts.DimY; ty++ {
+	for tx := 0; tx <= opts.DimX; tx++ {
+		ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR
+	}}
+	opts.dntr = true
+	remaze(opts.mnum)
+}
+
 // insert blank maze into buffer
 // pr true == preserve decor, walls & floors, exit and start
 // called with anum set, preserve items in reverse of hide items #T
@@ -236,6 +253,7 @@ func st_menu() {
 	menuItemSava := fyne.NewMenuItem("Save maze as <ctrl-shift>-s",menu_savas)
 	menuItemBlan := fyne.NewMenuItem("Blank maze",func() { menu_blank(false) })
 	menuItemBlnK := fyne.NewMenuItem("Blank maze, keep decor",func() { menu_blank(true) })
+	menuItemWll := fyne.NewMenuItem("All walls, keep decor",func() { menu_walls(true) })
 	menuItemRand := fyne.NewMenuItem("Random load",func() { rload(ebuf); ed_maze(true) })
 	menuItemFmap := fyne.NewMenuItem("Mapper test",func() { map_fargoal(ebuf); ed_maze(true) })
 	menuItemFmapb := fyne.NewMenuItem("Mapper 2 test",func() { map_sword(ebuf); ed_maze(true) })
@@ -247,7 +265,7 @@ func st_menu() {
 	menuItemWob := fyne.NewMenuItem("Wall border right & bottom",func() { opts.Wob = !opts.Wob; remaze(opts.mnum) })
 	menuItemPalf := fyne.NewMenuItem("Palette; map decore toggle",func() { if wpalop {palfol = !palfol}; palete(0) })
 	menuItemMute := fyne.NewMenuItem("Mute audio toggle",func() { opts.Mute = !opts.Mute })
-	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemFmap, menuItemFmapb, menuItemFmapc, menuItemRand, menuItemLin1, menuItemMute, menuItemExit)
+	menuFile := fyne.NewMenu("File", menuItemLodf, menuItemSava, menuItemBlan, menuItemBlnK, menuItemWll, menuItemFmap, menuItemFmapb, menuItemFmapc, menuItemRand, menuItemLin1, menuItemMute, menuItemExit)
 
 	menuItemSave := fyne.NewMenuItem("Save buffer <ctrl>-s", menu_sav)
 	menuItemLoad := fyne.NewMenuItem("Load buffer <ctrl>-l", menu_lod)

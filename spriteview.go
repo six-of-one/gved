@@ -438,6 +438,6 @@ func sprites_keys() {
 			"r,e		- read row +,-\n"+
 			"c,x		- read col +,-\n"+
 			"\n build writes output 'sheet.png'"
-fmt.Print(strp)
+
 	dboxtx("Sprite viewer", strp, 480, 370,nil,typedRune)
 }
