@@ -647,7 +647,6 @@ func GenerateDFSMaze(mdat MazeData, startX, startY, x, y, BiasCoefficient int) {
 
 	mdat[xy{x,y}] = G1OBJ_TILE_FLOOR // Mark the current cell as walkable
 
-//	rand.Seed(time.Now().UnixNano()) already done
 // Shuffle again with a random bias
 	for i := 0; i < BiasCoefficient; i++ {
 		j := rand.Intn(BiasCoefficient)
@@ -691,6 +690,62 @@ func map_dfs(mdat MazeData) {
 	InitializeDFSMaze()
 	GenerateDFSMaze(mdat,1,1,mxmd,mymd,bias)
 }
+
+// Prim maze gen
+
+func GeneratePrimMaze(mdat MazeData, startX, startY int) {
+
+	frontier := []TPoint{}
+	dirs := []TPoint{{0, -2}, {2, 0}, {0, 2}, {-2, 0}}
+
+	startY--
+	startX--
+
+// Start with a random cell
+	current := TPoint{
+		x: 1 + rand.Intn(32/2)*2,
+		y: 1 + rand.Intn(32/2)*2,
+	}
+	mdat[xy{current.x,current.y}] = G1OBJ_TILE_FLOOR
+
+// Add neighboring walls to the frontier
+	for i := 0; i <= 3; i++ {
+		nx := current.x + dirs[i].x
+		ny := current.y + dirs[i].y
+		if nx > startX && nx < 32 && ny > startY && ny < 32 && mdat[xy{nx,ny}] == G1OBJ_WALL_REGULAR {
+			frontier = append(frontier, TPoint{nx, ny})
+		}
+	}
+
+// Pick a random frontier cell
+	for len(frontier) > 0 {
+		index := rand.Intn(len(frontier))
+		current = frontier[index]
+		frontier[index] = frontier[len(frontier)-1]
+		frontier = frontier[:len(frontier)-1]
+
+// Connect it to the maze
+		for i := 0; i <= 3; i++ {
+			nx := current.x + dirs[i].x
+			ny := current.y + dirs[i].y
+			if nx > startX && nx < 32 && ny > startY && ny < 32 && mdat[xy{nx,ny}] == G1OBJ_TILE_FLOOR {
+				mdat[xy{current.x,current.y}] = 0
+				mdat[xy{(current.x+nx)/2,(current.y+ny)/2}] = G1OBJ_TILE_FLOOR
+				break
+			}
+		}
+
+ // Add new frontier cells
+		for i := 0; i <= 3; i++ {
+			nx := current.x + dirs[i].x
+			ny := current.y + dirs[i].y
+			if nx > startX && nx < 32 && ny > startY && ny < 32 && mdat[xy{nx,ny}] == G1OBJ_WALL_REGULAR {
+				frontier = append(frontier, TPoint{nx, ny})
+			}
+		}
+	}
+}
+
 // wall reducer came with DFS / Prim - sounds like a neet idea
 
 func ReduceWalls(mdat MazeData, startX, startY int) {
