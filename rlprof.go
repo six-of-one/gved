@@ -618,12 +618,6 @@ fmt.Printf("random corridors\n")
 
 // DFS mapper
 
-const (
-	WALL_GEN_ID = 2
-)
-
-type TGauntMap [32][32]int
-
 type TPoint struct {
 	x, y int
 }
@@ -642,7 +636,7 @@ func InitializeDFSMaze() {
 	}
 }
 
-func GenerateDFSMaze(Maze *TGauntMap, startX, startY, x, y, BiasCoefficient int) {
+func GenerateDFSMaze(mdat MazeData, startX, startY, x, y, BiasCoefficient int) {
 
 	if x < startX {
 		x = startX
@@ -651,7 +645,7 @@ func GenerateDFSMaze(Maze *TGauntMap, startX, startY, x, y, BiasCoefficient int)
 		y = startY
 	}
 
-	Maze[x][y] = G1OBJ_TILE_FLOOR // Mark the current cell as walkable
+	mdat[xy{x,y}] = G1OBJ_TILE_FLOOR // Mark the current cell as walkable
 
 //	rand.Seed(time.Now().UnixNano()) already done
 // Shuffle again with a random bias
@@ -680,50 +674,54 @@ func GenerateDFSMaze(Maze *TGauntMap, startX, startY, x, y, BiasCoefficient int)
 		nx := x + dx*2
 		ny := y + dy*2
 
-		if nx >= startX && nx < 32 && ny >= startY && ny < 32 && Maze[nx][ny] == G1OBJ_WALL_REGULAR {
-			Maze[x+dx][y+dy] = G1OBJ_TILE_FLOOR // Carve a path
-			GenerateDFSMaze(Maze, startX, startY, nx, ny, BiasCoefficient)
+		if nx >= startX && nx < 32 && ny >= startY && ny < 32 && mdat[xy{nx,ny}] == G1OBJ_WALL_REGULAR {
+			mdat[xy{x+dx,y+dy}] = G1OBJ_TILE_FLOOR // Carve a path
+			GenerateDFSMaze(mdat, startX, startY, nx, ny, BiasCoefficient)
 	// Recursively generate the maze
 		}
 	}
 }
 
+func map_dfs(mdat MazeData) {
+
+	InitializeDFSMaze()
+}
 // wall reducer came with DFS / Prim - sounds like a neet idea
 
-func ReduceWalls(Maze *TGauntMap, startX, startY int) {
+func ReduceWalls(mdat MazeData, startX, startY int) {
 	countLiveNeighbours := func(x, y int) int {
 		result := 0
 		if x > 0 {
-			result += Maze[x-1][y]
+			result += mdat[xy{x-1,y}]
 			if y > 0 {
-				result += Maze[x-1][y-1]
+				result += mdat[xy{x-1,y-1}]
 			}
 			if y < 31 {
-				result += Maze[x-1][y+1]
+				result += mdat[xy{x-1,y+1}]
 			}
 		}
 		if x < 31 {
-			result += Maze[x+1][y]
+			result += mdat[xy{x+1,y}]
 			if y > 0 {
-				result += Maze[x+1][y-1]
+				result += mdat[xy{x+1,y-1}]
 			}
 			if y < 31 {
-				result += Maze[x+1][y+1]
+				result += mdat[xy{x+1,y+1}]
 			}
 		}
 		if y > 0 {
-			result += Maze[x][y-1]
+			result += mdat[xy{x,y-1}]
 		}
 		if y < 31 {
-			result += Maze[x][y+1]
+			result += mdat[xy{x,y+1}]
 		}
-		return result / WALL_GEN_ID
+		return result / G1OBJ_WALL_REGULAR
 	}
 
 	for x := startX; x <= 31; x++ {
 		for y := startY; y <= 31; y++ {
 			if countLiveNeighbours(x, y) < 2 {
-				Maze[x][y] = G1OBJ_TILE_FLOOR
+				mdat[xy{x,y}] = G1OBJ_TILE_FLOOR
 			}
 		}
 	}
