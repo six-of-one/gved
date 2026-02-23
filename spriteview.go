@@ -324,12 +324,12 @@ var lim *fyne.Container
 			}
 		if !chkg1rom.Checked && !spsheet.Checked  { spchks(true,false,false,false) }
 		sheet_read = spsheet.Checked
-		roms := !sheet_read
+		uroms := !sheet_read
 		gsv := G1
 		if g2m.Checked { G1 = false }
 		fx,fy,gx,gy := 0,0,0,0
 		subf := int((float64(pixx) / (opts.Geoh-190))* 116)
-		if roms {
+		if uroms {
 	// calc how many rows & cols of sprites will fit in pixel area
 			gx,gy = svx*8+trnc, svy*8+trnc
 //fmt.Printf("subf: %d, %f, %f\n",subf, float64(pixx) / (opts.Geoh-190),(float64(pixx) / (opts.Geoh-190)) * 118)
@@ -347,7 +347,7 @@ var lim *fyne.Container
 fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,svy)
 		for y := 0; y <= fy; y++ {
 		for x := 0; x <= fx; x++ {
-		  if roms {
+		  if uroms {
 			bstamp.numbers = tilerange(prcadr, svx * svy)
 			st = fmt.Sprintf("%d",prcadr)
 			prcadr += svx * svy
@@ -376,7 +376,7 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 				draw.Draw(bas, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 			}
 		}}
-		if keepr.Checked { if roms { fmt.Sscanf(lasadr,"%d",&prcadr) }}
+		if keepr.Checked { if uroms { fmt.Sscanf(lasadr,"%d",&prcadr) }}
 		bld := canvas.NewRasterFromImage(bas)
 		gif_blnk(lim)
 		savetopng("sheet.png", bas)
