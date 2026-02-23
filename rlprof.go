@@ -612,3 +612,118 @@ fmt.Printf("random corridors\n")
 		mbuf[xy{x, y}] = gridb[y][x]
 	}}
 }
+
+// all randomizers in G¹G²ved pre-suppose maze has been blanked or walled ahead of time
+// the floowing use all walls & carve out
+
+// DFS mapper
+
+const (
+	WALL_GEN_ID = 2
+)
+
+type TGauntMap [32][32]int
+
+type TPoint struct {
+	x, y int
+}
+
+var DFSdirections = [4]int{0, 1, 2, 3}
+
+func InitializeDFSMaze() {
+//	rand.Seed(time.Now().UnixNano())
+ //initialize direction vector
+  // Shuffle the directions array to randomize the order
+	for x := 0; x <= 3; x++ {
+		y := rand.Intn(4)
+//		t := DFSdirections[x]
+		DFSdirections[x], DFSdirections[y] = is(DFSdirections[x], DFSdirections[y])
+//		DFSdirections[y] = t
+	}
+}
+
+func GenerateDFSMaze(Maze *TGauntMap, startX, startY, x, y, BiasCoefficient int) {
+	if x < startX {
+		x = startX
+	}
+	if y < startY {
+		y = startY
+	}
+
+	Maze[x][y] = G1OBJ_TILE_FLOOR // Mark the current cell as walkable
+
+//	rand.Seed(time.Now().UnixNano()) already done
+// Shuffle again with a random bias
+	for i := 0; i < BiasCoefficient; i++ {
+		j := rand.Intn(BiasCoefficient)
+/*		temp := DFSdirections[i]
+		DFSdirections[i] = DFSdirections[j]
+		DFSdirections[j] = temp */
+		DFSdirections[i], DFSdirections[j] = is(DFSdirections[i], DFSdirections[j])
+	}
+
+  // Explore each direction
+	for i := 0; i <= 3; i++ {
+		var dx, dy int
+		switch DFSdirections[i] {
+		case 0: // Up
+			dx, dy = 0, -1
+		case 1: // Right
+			dx, dy = 1, 0
+		case 2: // Down
+			dx, dy = 0, 1
+		case 3: // Left
+			dx, dy = -1, 0
+		}
+
+		nx := x + dx*2
+		ny := y + dy*2
+
+		if nx >= startX && nx < 32 && ny >= startY && ny < 32 && Maze[nx][ny] == G1OBJ_WALL_REGULAR {
+			Maze[x+dx][y+dy] = G1OBJ_TILE_FLOOR // Carve a path
+			GenerateDFSMaze(Maze, startX, startY, nx, ny, BiasCoefficient)
+	// Recursively generate the maze
+		}
+	}
+}
+
+// wall reducer came with DFS / Prim - sounds like a neet idea
+
+func ReduceWalls(Maze *TGauntMap, startX, startY int) {
+	countLiveNeighbours := func(x, y int) int {
+		result := 0
+		if x > 0 {
+			result += Maze[x-1][y]
+			if y > 0 {
+				result += Maze[x-1][y-1]
+			}
+			if y < 31 {
+				result += Maze[x-1][y+1]
+			}
+		}
+		if x < 31 {
+			result += Maze[x+1][y]
+			if y > 0 {
+				result += Maze[x+1][y-1]
+			}
+			if y < 31 {
+				result += Maze[x+1][y+1]
+			}
+		}
+		if y > 0 {
+			result += Maze[x][y-1]
+		}
+		if y < 31 {
+			result += Maze[x][y+1]
+		}
+		return result / WALL_GEN_ID
+	}
+
+	for x := startX; x <= 31; x++ {
+		for y := startY; y <= 31; y++ {
+			if countLiveNeighbours(x, y) < 2 {
+				Maze[x][y] = G1OBJ_TILE_FLOOR
+			}
+		}
+	}
+}
