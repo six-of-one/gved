@@ -643,6 +643,7 @@ func InitializeDFSMaze() {
 }
 
 func GenerateDFSMaze(Maze *TGauntMap, startX, startY, x, y, BiasCoefficient int) {
+
 	if x < startX {
 		x = startX
 	}

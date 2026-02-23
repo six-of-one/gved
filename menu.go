@@ -159,6 +159,7 @@ func menu_walls(pr bool) {
 	for ty := 0; ty <= opts.DimY; ty++ {
 	for tx := 0; tx <= opts.DimX; tx++ {
 		ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR
+		xbuf[xy{tx, ty}] = ""
 	}}
 	opts.dntr = true
 	remaze(opts.mnum)
@@ -201,6 +202,7 @@ func menu_blank(pr bool) {
 		}
 		if clr {
 			ebuf[xy{tx, ty}] = 0
+			xbuf[xy{tx, ty}] = ""
 			if tx == 0 { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
 			if ty == 0 { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
 		}
