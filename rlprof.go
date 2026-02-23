@@ -698,7 +698,7 @@ func GeneratePrimMaze(mdat MazeData, startX, startY int) {
 	frontier := []TPoint{}
 	dirs := []TPoint{{0, -2}, {2, 0}, {0, 2}, {-2, 0}}
 
-	startY--
+	startY--		// this could hit -1
 	startX--
 
 // Start with a random cell
