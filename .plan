@@ -38,7 +38,7 @@ a basic "playable" mode to test mazes
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
 - sprite system needed (sprites have to replace gens, treasure, keys, pots, etc)
 - sprite sheet organzied, prod
-- player controls (turn off cmd keys, special mode)
+- player controls (turn off cmd keys, special mode - use actab select in keyrune)
 
 
 multiple save buffers to store vars maze edits, page thru all wiht 'S', store with #'S', load with #'L'
@@ -78,6 +78,10 @@ possible:
 - way using sprites to demo half transparent paste content over maze
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 * more keys for dialog win to still operate main win (stats, etc) -- add main win keyrune to most dialogs
+- sprite viewer ideas
+  - get generic rom read coded
+  - sprite sheet saver
+  - customize able for saver
 
 config ideas:
 - master pb ctrl-f filter selections
@@ -106,12 +110,12 @@ se_mflor, se_mwal* - weird could happen if there are walls/floors in xb_* and th
 
 game player:
 
-- save floor layer
-- build shadows & animate floor tiles on that to new img
-- walls & stationary - when updating, changes have dirty flag & update 8 tiles around
+* save floor layer
+* build shadows & animate floor tiles on that to new img
+* walls & stationary - when updating, changes have dirty flag & update 8 tiles around
 - mobs & gens - when things delete, 8 tiles around also need update
 
-- built in 3 layers (and button?) and load to win SetContent(box)
+* built in 3 layers (and button?) and load to win SetContent(box)
 
 
 further research:
