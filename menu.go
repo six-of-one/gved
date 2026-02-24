@@ -219,16 +219,19 @@ func menu_copy() { if opts.edat > 0 { ccp_tog(COPY); if ccp > 0 { smod = "Edit C
 func menu_cut() { if opts.edat > 0 { ccp_tog(CUT); if ccp > 0 { smod = "Edit CUT: "}; statlin(cmdhin,sshin) }}
 func menu_paste() { if opts.edat > 0 { ccp_tog(PASTE); if ccp > 0 { smod = "Edit PASTE: "}; statlin(cmdhin,sshin) }}
 
-var opc *container.AppTabs
-func menu_option() {
+// 1. you can not pass a parm from a menu call as fn(p int), 2. you can not return a value either as fn() int {return 1}
+func dlg_option(tb int) {
 
 	wc := a.NewWindow("Option controls")
 	wc.Resize(fyne.NewSize(400, 500))
-	opc = optCont(wc)
+	opc := optCont(wc)
 	wc.SetContent(opc)
-//	opc.SelectTabIndex(0)
+	if tb >= 0 {opc.SelectTabIndex(tb)}
 	wc.Show()
+}
 
+func menu_option() {
+	dlg_option(-1)
 }
 
 /*
