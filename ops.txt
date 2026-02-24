@@ -381,6 +381,7 @@ Prim algo	- Prim maze gen algorithm
 --added
 X,Y			- set dims for maze op, will make maze that size
 Keep decor	- checkbox for blank & all walls determins decor outcome
+Copy items	- check: attemp copy of maze items from chosen maze or rnd
 Left click	- left click for last 3 ops sets a start place in maze
 --------------
 

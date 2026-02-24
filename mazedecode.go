@@ -356,6 +356,7 @@ if opts.Verbose { fmt.Printf("mdcmp wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4
 }
 
 // only decompress rom stored maze, no edit stuff
+// used by 'build a maze' from
 
 func justDecompress(compressed []int, metaonly bool) *Maze {
 

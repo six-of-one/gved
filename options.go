@@ -239,6 +239,8 @@ fmt.Printf("sv_config\n")
 // testing
 
 var optht float32 = 36.0
+var xcont *widget.Check
+var xconsel *widget.Entry
 
 func optCont(wn fyne.Window) *container.AppTabs {
 
@@ -391,13 +393,13 @@ value="0.1" base % all std maze walls turn invisible
 	})
 	keepdec.Checked = true
 	dim_y := widget.NewEntry()
-	dim_y.Resize(fyne.Size{50, optht})
+	dim_y.Resize(fyne.Size{60, optht})
 	dim_y.SetText(fmt.Sprintf("%d",opts.DimY))
 	dim_x := widget.NewEntry()
-	dim_x.Resize(fyne.Size{50, optht})
+	dim_x.Resize(fyne.Size{60, optht})
 	dim_x.SetText(fmt.Sprintf("%d",opts.DimX))
 	lblnk :=  widget.NewLabelWithStyle("   dims: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
-	lbby  :=  widget.NewLabelWithStyle(" by ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	lbby  :=  widget.NewLabelWithStyle("  by ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 
 	blnk_maz := widget.NewButton("Blank maze", func() {
 		if opts.edat == 0 {
@@ -439,10 +441,16 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 			ed_maze(true,1,1)
 		}
 	})
+	xconsel = widget.NewEntry()
+	xconsel.Resize(fyne.Size{60, optht})
+	xconsel.SetText("rnd")
+	xcont = widget.NewCheck("Copy items", func(xc bool) {
+		fmt.Printf("Transfer maze items %t from %s\n", xc,xconsel.Text)
+	})
 	mapfar := widget.NewButton("Mapper fargoal", func() {
 		if opts.edat == 0 {
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
-			"or by middle mouse click on maze item\n\nFargoal mapper system - std map", wn)
+			"or by middle mouse click on maze item\n\nFargoal mapper system - std map\n-check copy items from maze # to rooms", wn)
 		} else {
 			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
 			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
@@ -453,7 +461,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 	mapfar2 := widget.NewButton("Mapper sword", func() {
 		if opts.edat == 0 {
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
-			"or by middle mouse click on maze item\n\nFargoal mapper system - sword map", wn)
+			"or by middle mouse click on maze item\n\nFargoal mapper system - sword map\n-check copy items from maze # to room", wn)
 		} else {
 			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
 			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
@@ -464,7 +472,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 	mapfar3 := widget.NewButton("Mapper wide", func() {
 		if opts.edat == 0 {
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
-			"or by middle mouse click on maze item\n\nFargoal mapper system - wide map", wn)
+			"or by middle mouse click on maze item\n\nFargoal mapper system - wide map\n-check copy items from maze # to rooms", wn)
 		} else {
 			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
 			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
@@ -629,7 +637,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 		layout.NewSpacer(),
 		container.New(
 			layout.NewHBoxLayout(),
-			blnk_maz,lblnk,dim_x,lbby,dim_y,
+			blnk_maz,lblnk,container.NewWithoutLayout(dim_x),lbby,container.NewWithoutLayout(dim_y),
 		),
 		container.New(
 			layout.NewHBoxLayout(),
@@ -649,7 +657,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 		),
 		container.New(
 			layout.NewHBoxLayout(),
-			mapfar,
+			mapfar,xcont,container.NewWithoutLayout(xconsel),
 		),
 		container.New(
 			layout.NewHBoxLayout(),

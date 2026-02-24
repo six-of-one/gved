@@ -125,11 +125,30 @@ var (
 )
 
 func _room(x1, y1, x2, y2, val int) {
+// user selected a maze (or -1/rnd) to attemp items copy from
+	var maze *Maze
+	if xcont.Checked {
+		maze = &Maze{}
+		mazn,mt := rndr(7, maxmaze),0
+		if xconsel.Text != "rnd" {
+			fmt.Sscanf(xconsel.Text,"%d",&mt)
+			if mt > 0 && mt <= maxmaze { mazn = mt - 1 }
+		}
+		if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(0, 15) - 5 }
+		maze = justDecompress(slapsticReadMaze(mazn), false)
+	}
+
 	for y := y1; y < y2; y++ {
 		if y < 0 || y >= MAP_H { continue }
 		for x := x1; x < x2; x++ {
 			if x < 0 || x >= MAP_W { continue }
 			gridb[y][x] = val
+// replace some tiles with copy items
+// thoughts: rnd on this? also allow T-flags to exclude items
+		if xcont.Checked {
+			if val == G1OBJ_TILE_FLOOR && maze.data[xy{x, y}] != G1OBJ_WALL_REGULAR {
+				gridb[y][x] = maze.data[xy{x, y}]
+			}}
 		}
 	}
 }
