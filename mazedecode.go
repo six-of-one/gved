@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"fmt"
-	"math/rand"
+//	"math/rand"
 )
 
 func getbytefortype(t int) int {
@@ -124,7 +124,7 @@ func vexpand(maze *Maze, location int, t int, count int) int {
 // Outoput is maze[y][x]
 // added g1 / g2 flagger
 func mazeDecompress(compressed []int, metaonly bool) *Maze {
-	rand.Seed(5)
+//	rand.Seed(5)
 	//  var m [32][32]int
 	var maze = &Maze{}
 	maze.data = make(map[xy]int)
@@ -352,5 +352,157 @@ if opts.Verbose { fmt.Printf("mdcmp wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4
 			ebuf[xy{x, y}] = maze.data[xy{x, y}]
 		}}
 	}
+	return maze
+}
+
+// only decompress rom stored maze, no edit stuff
+
+func justDecompress(compressed []int, metaonly bool) *Maze {
+
+	var maze = &Maze{}
+	maze.data = make(map[xy]int)
+	maze.encodedbytes = len(compressed)
+	maze.secret = compressed[0] & 0x1f
+
+// master options x,y need set here for all rom loaded mazes
+// all G¹ & G² mazes are 0 - 31 both axis
+// when these were being set to 1, and index2xy test was bumping them, 3 mazes failed x size
+	opts.DimX = 31; opts.DimY = 31
+
+// have to do this before buffers are set
+// g1 likely has nothing like g2 stuff, and might not use flags at all
+	if G1 {
+// g1 wrap data is still not known, just making this manual for now
+		horz := true		// check horz first
+		for i := 0; i < 70; i++ {
+
+			if g1wrp[i] < 0 { i = 70 } else {
+
+			if opts.mnum == g1wrp[i] {
+// shoe horn these in for all the checks in render, edit & elsewehre
+				if horz { compressed[4] = compressed[4] | LFLAG4_WRAP_H } else {
+					compressed[4] = compressed[4] | LFLAG4_WRAP_V
+				}
+			}
+			if g1wrp[i] == 200 { horz = false }		// check vert
+			}
+		}
+	}
+
+// save for edat
+	for y := 0; y < 11; y++ {
+		maze.optbyts[y] = compressed[y]
+	}
+	// This inability to transparently go back and forth between types is
+	// obnoxious.
+	flagbytes := make([]byte, 4)
+	flagbytes[0] = byte(compressed[1])
+	flagbytes[1] = byte(compressed[2])
+	flagbytes[2] = byte(compressed[3])
+	flagbytes[3] = byte(compressed[4])
+	maze.flags = int(binary.BigEndian.Uint32(flagbytes))
+
+	maze.wallpattern = compressed[5] & 0x0f
+	maze.floorpattern = (compressed[5] & 0xf0) >> 4
+	maze.wallcolor = compressed[6] & 0x0f
+	maze.floorcolor = (compressed[6] & 0xf0) >> 4
+
+	htype1 := compressed[7]  // horiz type 1
+	htype2 := compressed[8]  // horiz type 2
+	vtype1 := compressed[9]  // vert type 1
+	vtype2 := compressed[10] // vert type 2
+
+	prev := htype2 // previous value, for 'repeat previous' types
+//fmt.Printf("Encoded size: %d\n", maze.encodedbytes)
+
+	// Fill in first row with walls, always
+	for i := 0; i < 32; i++ {
+		maze.data[xy{i, 0}] = MAZEOBJ_WALL_REGULAR
+	}
+
+	// Unpack here starts
+	location := 32               // how many spots we've filled
+	compressed = compressed[11:] // pointer to where we are in the input stream
+
+	for location < 1024 {
+//fmt.Printf("input remaining: %d, next byte 0x%02x, output remaining: %d\n", len(compressed), compressed[0], 1024-location)
+		if compressed[0] == 0 {
+			fmt.Printf("WARNING: Read end of maze datastream before maze full.\n")
+			break
+		}
+		var token int
+		//      fmt.Printf("Remaining input length: %d, output remaining: %d\n", len(level), 1024-p)
+		token, compressed = compressed[0], compressed[1:]
+		count := (token & 0x0f) + 1
+		longcount := (token & 0x1f) + 1 // used for 'repeat last' and 'skip'
+
+// stats
+//fmt.Printf("Pos: %04d, left: %03d tok 0x%02x: count:%d lcnt: %d\n", location, len(compressed), token, count, longcount)
+
+		switch token & 0xc0 { // look at top two bits
+		case 0x00: // place one of literal object
+			location = expand(maze, location, token&0x3f, 1)
+			prev = token
+		case 0x40: // Repeat special type
+			switch token & 0x30 {
+			case 0x00:
+				prev = htype1
+			case 0x10:
+				prev = vtype1
+			case 0x20:
+				prev = htype2
+			case 0x30:
+				prev = vtype2
+			}
+
+			previtem := prev & 0x3f
+			switch prev & 0xc0 {
+			case 0x00: // repeat type
+				if (token & 0x10) != 0 {
+
+// vexp goes negative on g1 mazes - blocking it off seems not to affect g1 maze renders
+			if location - ((count - 1) * 32) > 0 {
+					location = vexpand(maze, location, previtem, count)
+			}
+				} else {
+					location = expand(maze, location, previtem, count)
+				}
+			case 0x40: // skip and add
+				location = expand(maze, location, MAZEOBJ_TILE_FLOOR, count)
+				location = expand(maze, location, previtem, 1)
+			case 0x80: // add and skip
+				location = expand(maze, location, previtem, 1)
+				location = expand(maze, location, MAZEOBJ_TILE_FLOOR, count)
+			case 0xc0: // repeat wall and add
+				location = expand(maze, location, MAZEOBJ_WALL_REGULAR, count)
+				location = expand(maze, location, previtem, 1)
+			}
+		case 0x80: // repeat wall
+			if (token & 0x20) != 0 { // Repeat wall
+				if (token & 0x10) != 0 {
+					// vertical
+// vexp goes negative on g1 mazes
+			if location - ((count - 1) * 32) > 0 {
+					location = vexpand(maze, location, MAZEOBJ_WALL_REGULAR, count)
+			}
+				} else {
+					// horizontal
+					location = expand(maze, location, MAZEOBJ_WALL_REGULAR, count)
+				}
+			} else {
+				location = expand(maze, location, prev&0x3f, longcount)
+			}
+		case 0xc0:
+			if (token & 0x20) != 0 {
+				// skip and add wall
+				location = expand(maze, location, MAZEOBJ_TILE_FLOOR, longcount)
+				location = expand(maze, location, MAZEOBJ_WALL_REGULAR, 1)
+			} else {
+				// just skip
+				location = expand(maze, location, MAZEOBJ_TILE_FLOOR, longcount)
+			}
+		}
+	}
+
 	return maze
 }

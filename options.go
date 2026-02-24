@@ -389,6 +389,7 @@ value="0.1" base % all std maze walls turn invisible
 	keepdec := widget.NewCheck("keep decor", func(kp bool) {
 		fmt.Printf("Keep decore %t\n", kp)
 	})
+	keepdec.Checked = true
 	dim_y := widget.NewEntry()
 	dim_y.Resize(fyne.Size{50, optht})
 	dim_y.SetText(fmt.Sprintf("%d",opts.DimY))
@@ -493,6 +494,18 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 			ed_maze(true,1,1)
 		}
 	})
+	mapquar := widget.NewButton("Mapper 1/4's", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or by middle mouse click on maze item\n\nputs random maze quarters together", wn)
+		} else {
+			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
+			Map4quart(ebuf)
+			ed_maze(true,1,1)
+		}
+	})
+
 /*
 	menuItemRedwl := fyne.NewMenuItem("Reduct walls",func() { ReduceWalls(ebuf,mxmd,mymd); ed_maze(true,1,1) })
 	menuItemFmap := fyne.NewMenuItem("Mapper fargoal",func() { map_fargoal(ebuf); ed_maze(true,1,1) })
@@ -628,6 +641,10 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 		container.New(
 			layout.NewHBoxLayout(),
 			rnd_lod,
+		),
+		container.New(
+			layout.NewHBoxLayout(),
+			mapquar,
 		),
 		container.New(
 			layout.NewHBoxLayout(),
