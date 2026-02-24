@@ -9,7 +9,6 @@ import (
 	"os"
 	"fmt"
 	"time"
-	"fyne.io/fyne/v2/canvas"
 	"golang.org/x/image/draw"
 )
 
@@ -778,11 +777,7 @@ func animcon() {
 		rbimg = rimg
 	}
 	if !vlock  && actab == "Maze view" {
-// left this in while options still has animcon maze tab
-		cmzw.Remove(mzw)
-		mzw = canvas.NewRasterFromImage(rbimg)
-		cmzw.Add(mzw)
-		cmzw.Refresh()
+
 		maz_tab(cmain, rbimg, rbtn, blant)
 	}}}
 }

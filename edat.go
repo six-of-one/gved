@@ -13,8 +13,6 @@ import (
 	"regexp"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/data/binding"
-	"fyne.io/fyne/v2/container"
-//	"fyne.io/fyne/v2/canvas"
 )
 
 /*
@@ -122,9 +120,6 @@ var err error
 	nobld = true
 	anmap = AtMap{}
 	anmapt = AtMap{}
-
-// left this in while options still has animcon maze tab
-	cmzw = container.NewStack(mzw)
 
 	go func() {
 		animcon()

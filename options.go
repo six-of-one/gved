@@ -15,7 +15,7 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/theme"
-	"fyne.io/fyne/v2/canvas"
+
 )
 
 var opts struct {
@@ -238,8 +238,6 @@ fmt.Printf("sv_config\n")
 // options dialog
 // testing
 
-var mzw *canvas.Raster
-var cmzw *fyne.Container
 var optht float32 = 36.0
 
 func optCont(wn fyne.Window) fyne.CanvasObject {
@@ -494,8 +492,20 @@ value="0.1" base % all std maze walls turn invisible
 	container.NewTabItemWithIcon("Colors",theme.ColorPaletteIcon(),colorCont(wn),
 	),
 	container.NewTabItemWithIcon("Maze",theme.ViewFullScreenIcon(),
-		cmzw,
-	),
+	container.New(
+		layout.NewVBoxLayout(),
+//		layout.NewSpacer(),
+		container.New(
+			layout.NewVBoxLayout(),
+			layout.NewSpacer(),
+			container.New(
+				layout.NewHBoxLayout(),
+				vp_label,
+				container.NewWithoutLayout(vp_entr),
+			),
+		),
+		layout.NewSpacer(),
+	)),
 	)
 	return opdlg
 }
