@@ -239,6 +239,7 @@ fmt.Printf("sv_config\n")
 // testing
 
 var optht float32 = 36.0
+var bordwal *widget.Check
 var xcont *widget.Check
 var xconsel *widget.Entry
 
@@ -422,6 +423,9 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Text,dim_y.Text)
 			menu_walls(keepdec.Checked)
 		}
+	})
+	bordwal = widget.NewCheck("Top/Left border walls", func(xb bool) {
+		fmt.Printf("Border walls top & left of maze %t\n",xb)
 	})
 	rnd_lod := widget.NewButton("Random item load", func() {
 		if opts.edat == 0 {
@@ -645,7 +649,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 		),
 		container.New(
 			layout.NewHBoxLayout(),
-			keepdec,
+			keepdec,bordwal,
 		),
 		container.New(
 			layout.NewHBoxLayout(),
