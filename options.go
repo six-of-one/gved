@@ -15,7 +15,7 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 	"fyne.io/fyne/v2/theme"
-
+	"fyne.io/fyne/v2/dialog"
 )
 
 var opts struct {
@@ -385,6 +385,120 @@ value="0.1" base % all std maze walls turn invisible
 	per_invw := widget.NewEntry()
 	per_invw.Resize(fyne.Size{50, optht})
 
+// maze config - moved from file menu for now
+	keepdec := widget.NewCheck("keep decor", func(kp bool) {
+		fmt.Printf("Keep decore %t\n", kp)
+	})
+	dim_y := widget.NewEntry()
+	dim_y.Resize(fyne.Size{50, optht})
+	dim_y.SetText("32")
+	dim_x := widget.NewEntry()
+	dim_x.Resize(fyne.Size{50, optht})
+	dim_x.SetText("32")
+	lblnk :=  widget.NewLabelWithStyle("   dims: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	lbby  :=  widget.NewLabelWithStyle(" by ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+
+	blnk_maz := widget.NewButton("Blank maze", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or by middle mouse click on maze item\n\nBlank current maze load to X by Y dims\ncheck 'keep decore' to save wall/floor style", wn)
+		} else {
+			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			menu_blank(keepdec.Checked)
+		}
+	})
+	allwals := widget.NewButton("Walls maze", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or middle mouse click on maze item\n\nMake a maze of all walls of X by X dims\ncheck 'keep decore' to save wall/floor style", wn)
+		} else {
+			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			menu_walls(keepdec.Checked)
+		}
+	})
+	rnd_lod := widget.NewButton("Random item load", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or by middle mouse click on maze item\n\nLoad a profile of random items into current maze", wn)
+		} else {
+			rload(ebuf)
+			ed_maze(true,1,1)
+		}
+	})
+	reducwal := widget.NewButton("Reduct walls", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or by middle mouse click on maze item\n\nReduce walls of maze - good with Prim", wn)
+		} else {
+			ReduceWalls(ebuf,mxmd,mymd)
+			ed_maze(true,1,1)
+		}
+	})
+	mapfar := widget.NewButton("Mapper fargoal", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or by middle mouse click on maze item\n\nFargoal mapper system - std map", wn)
+		} else {
+			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			map_fargoal(ebuf)
+			ed_maze(true,1,1)
+		}
+	})
+	mapfar2 := widget.NewButton("Mapper sword", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or by middle mouse click on maze item\n\nFargoal mapper system - sword map", wn)
+		} else {
+			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			map_sword(ebuf)
+			ed_maze(true,1,1)
+		}
+	})
+	mapfar3 := widget.NewButton("Mapper wide", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or by middle mouse click on maze item\n\nFargoal mapper system - wide map", wn)
+		} else {
+			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			map_wide(ebuf)
+			ed_maze(true,1,1)
+		}
+	})
+	mapdfs := widget.NewButton("Mapper DFS", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or by middle mouse click on maze item\n\nDFS mapper algo", wn)
+		} else {
+			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			map_dfs(ebuf)
+			ed_maze(true,1,1)
+		}
+	})
+	mapprim := widget.NewButton("Mapper Prim", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or by middle mouse click on maze item\n\nPrim mapper algo - nice with reduce walls", wn)
+		} else {
+			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			GeneratePrimMaze(ebuf,mxmd,mymd)
+			ed_maze(true,1,1)
+		}
+	})
+/*
+	menuItemRedwl := fyne.NewMenuItem("Reduct walls",func() { ReduceWalls(ebuf,mxmd,mymd); ed_maze(true,1,1) })
+	menuItemFmap := fyne.NewMenuItem("Mapper fargoal",func() { map_fargoal(ebuf); ed_maze(true,1,1) })
+	menuItemFmapb := fyne.NewMenuItem("Mapper 2",func() { map_sword(ebuf); ed_maze(true,1,1) })
+	menuItemFmapc := fyne.NewMenuItem("Mapper 3",func() { map_wide(ebuf); ed_maze(true,1,1) })
+	menuItemFmapd := fyne.NewMenuItem("Mapper DFS",func() { map_dfs(ebuf); ed_maze(true,1,1) })
+	menuItemFmape := fyne.NewMenuItem("Mapper Prim",func() { GeneratePrimMaze(ebuf,mxmd,mymd); ed_maze(true,1,1) })
+*/
 // the massive block out
 	opdlg := container.NewAppTabs(
 	container.NewTabItemWithIcon("Game",theme.SettingsIcon(),			// stats VisibilityIcon, scores StorageIcon, edit FileApplicationIcon,
@@ -494,17 +608,52 @@ value="0.1" base % all std maze walls turn invisible
 	container.NewTabItemWithIcon("Maze",theme.ViewFullScreenIcon(),
 	container.New(
 		layout.NewVBoxLayout(),
-//		layout.NewSpacer(),
-		container.New(
-			layout.NewVBoxLayout(),
-			layout.NewSpacer(),
-			container.New(
-				layout.NewHBoxLayout(),
-				vp_label,
-				container.NewWithoutLayout(vp_entr),
-			),
-		),
+	container.New(
+		layout.NewVBoxLayout(),
 		layout.NewSpacer(),
+		container.New(
+			layout.NewHBoxLayout(),
+			blnk_maz,lblnk,dim_x,lbby,dim_y,
+		),
+		container.New(
+			layout.NewHBoxLayout(),
+			allwals,
+		),
+		container.New(
+			layout.NewHBoxLayout(),
+			keepdec,
+		),
+		container.New(
+			layout.NewHBoxLayout(),
+			rnd_lod,
+		),
+		container.New(
+			layout.NewHBoxLayout(),
+			mapfar,
+		),
+		container.New(
+			layout.NewHBoxLayout(),
+			mapfar2,
+		),
+		container.New(
+			layout.NewHBoxLayout(),
+			mapfar3,
+		),
+		container.New(
+			layout.NewHBoxLayout(),
+			mapdfs,
+		),
+		container.New(
+			layout.NewHBoxLayout(),
+			mapprim,
+		),
+		container.New(
+			layout.NewHBoxLayout(),
+			reducwal,
+		),
+
+		layout.NewSpacer(),
+	),
 	)),
 	)
 	return opdlg
