@@ -158,6 +158,7 @@ var lim *fyne.Container
 	keepr := widget.NewCheck("keep", func(k bool) {
 		fmt.Printf("keep addr %t\n", k)
 	})
+	keepr.Checked = true
 // show address on sheet for each sprite
 	showr := widget.NewCheck("show", func(sh bool) {
 		fmt.Printf("show addr %t\n", sh)
@@ -254,6 +255,8 @@ var lim *fyne.Container
 	xpar := widget.NewCheck("no bkg", func(k bool) {
 		fmt.Printf("show transparent sprites %t\n", k)
 	})
+	xpar.Checked = true
+
 // address to start rom read
 	if lasadr == "" { lasadr = "0" }
 	adr_label = widget.NewLabelWithStyle("Address: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
