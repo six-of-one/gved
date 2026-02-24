@@ -424,8 +424,8 @@ var sword bool
 
 //	rand.Seed(time.Now().UnixNano())
 
-	opts.DimY = 24
-	opts.DimX = 39
+//	opts.DimY = 24		// these seem not working this way now?
+//	opts.DimX = 39
 /*
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
@@ -524,8 +524,8 @@ var sword bool
 
 func map_wide(mbuf MazeData) {
 
-	opts.DimY = 24
-	opts.DimX = 39
+//	opts.DimY = 24
+//	opts.DimX = 39
 	MAP_H = opts.DimY + 1
 	MAP_W = opts.DimX + 1
 
