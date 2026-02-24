@@ -472,6 +472,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 			ed_maze(true,1,1)
 		}
 	})
+	labstxy :=  widget.NewLabelWithStyle("Left click sets Start X,Y next 3 ops", fyne.TextAlignLeading, fyne.TextStyle{Monospace: false})
 	mapdfs := widget.NewButton("Mapper DFS", func() {
 		if opts.edat == 0 {
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
@@ -660,7 +661,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 		),
 		container.New(
 			layout.NewHBoxLayout(),
-			mapdfs,
+			mapdfs,labstxy,
 		),
 		container.New(
 			layout.NewHBoxLayout(),
