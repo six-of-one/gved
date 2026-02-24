@@ -291,7 +291,7 @@ func ray(lx, ly, mx, my, tx, ty, tv, rv int,tspot [100][100]int) int {
 
 func map_fargoal(mbuf MazeData) {
 
-	rand.Seed(time.Now().UnixNano())
+//	rand.Seed(time.Now().UnixNano())
 
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
@@ -403,7 +403,7 @@ func map_sword(mbuf MazeData) {
 var sword bool
 	SPOT_MARKER := 256
 
-	rand.Seed(time.Now().UnixNano())
+//	rand.Seed(time.Now().UnixNano())
 
 	opts.DimY = 24
 	opts.DimX = 39
@@ -673,7 +673,7 @@ func GenerateDFSMaze(mdat MazeData, startX, startY, x, y, BiasCoefficient int) {
 		nx := x + dx*2
 		ny := y + dy*2
 
-		if nx >= startX && nx < 32 && ny >= startY && ny < 32 && mdat[xy{nx,ny}] == G1OBJ_WALL_REGULAR {
+		if nx >= startX && nx <= opts.DimX && ny >= startY && ny <= opts.DimY && mdat[xy{nx,ny}] == G1OBJ_WALL_REGULAR {
 			mdat[xy{x+dx,y+dy}] = G1OBJ_TILE_FLOOR // Carve a path
 			GenerateDFSMaze(mdat, startX, startY, nx, ny, BiasCoefficient)
 	// Recursively generate the maze
@@ -703,8 +703,8 @@ func GeneratePrimMaze(mdat MazeData, startX, startY int) {
 
 // Start with a random cell
 	current := TPoint{
-		x: 1 + rand.Intn(32/2)*2,
-		y: 1 + rand.Intn(32/2)*2,
+		x: 1 + rand.Intn(opts.DimX/2)*2,
+		y: 1 + rand.Intn(opts.DimY/2)*2,
 	}
 	mdat[xy{current.x,current.y}] = G1OBJ_TILE_FLOOR
 
@@ -712,7 +712,7 @@ func GeneratePrimMaze(mdat MazeData, startX, startY int) {
 	for i := 0; i <= 3; i++ {
 		nx := current.x + dirs[i].x
 		ny := current.y + dirs[i].y
-		if nx > startX && nx < 32 && ny > startY && ny < 32 && mdat[xy{nx,ny}] == G1OBJ_WALL_REGULAR {
+		if nx > startX && nx <= opts.DimX && ny > startY && ny <= opts.DimY && mdat[xy{nx,ny}] == G1OBJ_WALL_REGULAR {
 			frontier = append(frontier, TPoint{nx, ny})
 		}
 	}
@@ -728,7 +728,7 @@ func GeneratePrimMaze(mdat MazeData, startX, startY int) {
 		for i := 0; i <= 3; i++ {
 			nx := current.x + dirs[i].x
 			ny := current.y + dirs[i].y
-			if nx > startX && nx < 32 && ny > startY && ny < 32 && mdat[xy{nx,ny}] == G1OBJ_TILE_FLOOR {
+			if nx > startX && nx <= opts.DimX && ny > startY && ny <= opts.DimY && mdat[xy{nx,ny}] == G1OBJ_TILE_FLOOR {
 				mdat[xy{current.x,current.y}] = 0
 				mdat[xy{(current.x+nx)/2,(current.y+ny)/2}] = G1OBJ_TILE_FLOOR
 				break
@@ -739,7 +739,7 @@ func GeneratePrimMaze(mdat MazeData, startX, startY int) {
 		for i := 0; i <= 3; i++ {
 			nx := current.x + dirs[i].x
 			ny := current.y + dirs[i].y
-			if nx > startX && nx < 32 && ny > startY && ny < 32 && mdat[xy{nx,ny}] == G1OBJ_WALL_REGULAR {
+			if nx > startX && nx <= opts.DimX && ny > startY && ny <= opts.DimY && mdat[xy{nx,ny}] == G1OBJ_WALL_REGULAR {
 				frontier = append(frontier, TPoint{nx, ny})
 			}
 		}
@@ -756,30 +756,30 @@ func ReduceWalls(mdat MazeData, startX, startY int) {
 			if y > 0 {
 				result += mdat[xy{x-1,y-1}]
 			}
-			if y < 31 {
+			if y < opts.DimY {
 				result += mdat[xy{x-1,y+1}]
 			}
 		}
-		if x < 31 {
+		if x < opts.DimX {
 			result += mdat[xy{x+1,y}]
 			if y > 0 {
 				result += mdat[xy{x+1,y-1}]
 			}
-			if y < 31 {
+			if y < opts.DimY {
 				result += mdat[xy{x+1,y+1}]
 			}
 		}
 		if y > 0 {
 			result += mdat[xy{x,y-1}]
 		}
-		if y < 31 {
+		if y < opts.DimY {
 			result += mdat[xy{x,y+1}]
 		}
 		return result / G1OBJ_WALL_REGULAR
 	}
 
-	for x := startX; x <= 31; x++ {
-		for y := startY; y <= 31; y++ {
+	for x := startX; x <= opts.DimX; x++ {
+		for y := startY; y <= opts.DimY; y++ {
 			if countLiveNeighbours(x, y) < 2 {
 				mdat[xy{x,y}] = G1OBJ_TILE_FLOOR
 			}
