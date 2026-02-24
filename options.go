@@ -391,10 +391,10 @@ value="0.1" base % all std maze walls turn invisible
 	})
 	dim_y := widget.NewEntry()
 	dim_y.Resize(fyne.Size{50, optht})
-	dim_y.SetText("32")
+	dim_y.SetText(fmt.Sprintf("%d",opts.DimY))
 	dim_x := widget.NewEntry()
 	dim_x.Resize(fyne.Size{50, optht})
-	dim_x.SetText("32")
+	dim_x.SetText(fmt.Sprintf("%d",opts.DimX))
 	lblnk :=  widget.NewLabelWithStyle("   dims: ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 	lbby  :=  widget.NewLabelWithStyle(" by ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
 
@@ -403,8 +403,9 @@ value="0.1" base % all std maze walls turn invisible
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
 			"or by middle mouse click on maze item\n\nBlank current maze load to X by Y dims\ncheck 'keep decore' to save wall/floor style", wn)
 		} else {
-			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
-			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
+fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Text,dim_y.Text)
 			menu_blank(keepdec.Checked)
 		}
 	})
@@ -413,8 +414,9 @@ value="0.1" base % all std maze walls turn invisible
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
 			"or middle mouse click on maze item\n\nMake a maze of all walls of X by X dims\ncheck 'keep decore' to save wall/floor style", wn)
 		} else {
-			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
-			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
+fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Text,dim_y.Text)
 			menu_walls(keepdec.Checked)
 		}
 	})
@@ -441,8 +443,8 @@ value="0.1" base % all std maze walls turn invisible
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
 			"or by middle mouse click on maze item\n\nFargoal mapper system - std map", wn)
 		} else {
-			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
-			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
 			map_fargoal(ebuf)
 			ed_maze(true,1,1)
 		}
@@ -452,8 +454,8 @@ value="0.1" base % all std maze walls turn invisible
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
 			"or by middle mouse click on maze item\n\nFargoal mapper system - sword map", wn)
 		} else {
-			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
-			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
 			map_sword(ebuf)
 			ed_maze(true,1,1)
 		}
@@ -463,8 +465,8 @@ value="0.1" base % all std maze walls turn invisible
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
 			"or by middle mouse click on maze item\n\nFargoal mapper system - wide map", wn)
 		} else {
-			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
-			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
 			map_wide(ebuf)
 			ed_maze(true,1,1)
 		}
@@ -474,8 +476,8 @@ value="0.1" base % all std maze walls turn invisible
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
 			"or by middle mouse click on maze item\n\nDFS mapper algo", wn)
 		} else {
-			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
-			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
 			map_dfs(ebuf)
 			ed_maze(true,1,1)
 		}
@@ -485,8 +487,8 @@ value="0.1" base % all std maze walls turn invisible
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
 			"or by middle mouse click on maze item\n\nPrim mapper algo - nice with reduce walls", wn)
 		} else {
-			fmt.Sprintf(dim_x.Text,"%d",&opts.DimX)
-			fmt.Sprintf(dim_y.Text,"%d",&opts.DimY)
+			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
 			GeneratePrimMaze(ebuf,mxmd,mymd)
 			ed_maze(true,1,1)
 		}
