@@ -797,28 +797,28 @@ func Map4quart(mdat MazeData) {
 	aovs := Aov
 
 	mazn := rndr(0, maxmaze)
-	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(-5, -10) }
+	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(0, 15) - 5 }
 	maze = justDecompress(slapsticReadMaze(mazn), false)
 	for y := 0; y <= 15; y++ {
 		for x := 0; x <=15; x++ {
 			mdat[xy{x,y}] = maze.data[xy{x,y}]
 	}}
 	mazn = rndr(0, maxmaze)
-	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(-5, -10) }
+	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(0, 15) - 5 }
 	maze = justDecompress(slapsticReadMaze(mazn), false)
 	for y := 15; y <= opts.DimY; y++ {
 		for x := 0; x <= 15; x++ {
 			mdat[xy{x,y}] = maze.data[xy{x,y}]
 	}}
 	mazn = rndr(0, maxmaze)
-	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(-5, -10) }
+	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(0, 15) - 5 }
 	maze = justDecompress(slapsticReadMaze(mazn), false)
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 15; x <= opts.DimX; x++ {
 			mdat[xy{x,y}] = maze.data[xy{x,y}]
 	}}
 	mazn = rndr(0, maxmaze)
-	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(-5, -10) }
+	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) +rndr(0, 15) - 5 }
 	maze = justDecompress(slapsticReadMaze(mazn), false)
 	for y := 15; y <= opts.DimY; y++ {
 		for x := 15; x <= opts.DimX; x++ {
