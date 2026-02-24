@@ -794,29 +794,35 @@ func Map4quart(mdat MazeData) {
 	var maze = &Maze{}
 
 	opts.DimX, opts.DimY = 31,31		// for simplicity for now
+	aovs := Aov
 
 	mazn := rndr(0, maxmaze)
-	maze = mazeDecompress(slapsticReadMaze(mazn), false)
+	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(-5, -10) }
+	maze = justDecompress(slapsticReadMaze(mazn), false)
 	for y := 0; y <= 15; y++ {
 		for x := 0; x <=15; x++ {
 			mdat[xy{x,y}] = maze.data[xy{x,y}]
 	}}
 	mazn = rndr(0, maxmaze)
-	maze = mazeDecompress(slapsticReadMaze(mazn), false)
+	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(-5, -10) }
+	maze = justDecompress(slapsticReadMaze(mazn), false)
 	for y := 15; y <= opts.DimY; y++ {
 		for x := 0; x <= 15; x++ {
 			mdat[xy{x,y}] = maze.data[xy{x,y}]
 	}}
 	mazn = rndr(0, maxmaze)
-	maze = mazeDecompress(slapsticReadMaze(mazn), false)
+	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(-5, -10) }
+	maze = justDecompress(slapsticReadMaze(mazn), false)
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 15; x <= opts.DimX; x++ {
 			mdat[xy{x,y}] = maze.data[xy{x,y}]
 	}}
 	mazn = rndr(0, maxmaze)
-	maze = mazeDecompress(slapsticReadMaze(mazn), false)
+	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(-5, -10) }
+	maze = justDecompress(slapsticReadMaze(mazn), false)
 	for y := 15; y <= opts.DimY; y++ {
 		for x := 15; x <= opts.DimX; x++ {
 			mdat[xy{x,y}] = maze.data[xy{x,y}]
 	}}
+	Aov = aovs
 }
