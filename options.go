@@ -675,6 +675,6 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 	),
 	)),
 	)
-	opdlg.SetTabLocation(container.TabLocationBottom)
+//	opdlg.SetTabLocation(container.TabLocationBottom)	// neet, but doesnt fit the theme
 	return opdlg
 }
