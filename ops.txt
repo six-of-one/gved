@@ -362,6 +362,11 @@ Save		- saves maze to a std file,
               if # is set on title numeric: store that as maze #
 				(maze numbers in files not currently used)
 
+Mute audio	- toggle audio hint when selecting edit elements -middle click
+
+* these moved to options 'maze' tab
+--------------
+All walls	- fill buffer with all walls, keep floor & wall decore
 Blank		- fill buffer with blank maze, default floors & walls
               (must be in edit mode, can also use # keep)
 Blank keep	- blank maze, but keep decor cols & pats, start, exits, and
@@ -370,8 +375,14 @@ Blank keep	- blank maze, but keep decor cols & pats, start, exits, and
 Mapper test	- vars random map generate algorithms
 Random Load - empty tiles (floor) will be load with a random select
 			  profile - uses #T filter if set as include filter
-
-Mute audio	- toggle audio hint when selecting edit elements -middle click
+Reduct walls  reduce wall complexity by removal algorithm
+DFS algo	- DFS maze gen algorithm
+Prim algo	- Prim maze gen algorithm
+--added
+X,Y			- set dims for maze op, will make maze that size
+Keep decor	- checkbox for blank & all walls determins decor outcome
+Left click	- left click for last 3 ops sets a start place in maze
+--------------
 
 Edit:
 Paste buffer menu
