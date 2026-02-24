@@ -433,7 +433,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 	reducwal := widget.NewButton("Reduct walls", func() {
 		if opts.edat == 0 {
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
-			"or by middle mouse click on maze item\n\nReduce walls of maze - good with Prim", wn)
+			"or by middle mouse click on maze item\n\nReduce walls of maze\nleft click sets start X,Y", wn)
 		} else {
 			ReduceWalls(ebuf,mxmd,mymd)
 			ed_maze(true,1,1)
@@ -475,7 +475,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 	mapdfs := widget.NewButton("Mapper DFS", func() {
 		if opts.edat == 0 {
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
-			"or by middle mouse click on maze item\n\nDFS mapper algo", wn)
+			"or by middle mouse click on maze item\n\nDFS mapper algo\nleft click sets start X,Y", wn)
 		} else {
 			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
 			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
@@ -486,7 +486,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 	mapprim := widget.NewButton("Mapper Prim", func() {
 		if opts.edat == 0 {
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
-			"or by middle mouse click on maze item\n\nPrim mapper algo - nice with reduce walls", wn)
+			"or by middle mouse click on maze item\n\nPrim mapper algo - nice with reduce walls\nleft click sets start X,Y", wn)
 		} else {
 			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
 			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)

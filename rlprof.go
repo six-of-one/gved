@@ -797,7 +797,7 @@ func Map4quart(mdat MazeData) {
 	aovs := Aov
 
 	mazn := rndr(0, maxmaze)
-	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(0, 15) - 5 }
+	if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(0, 15) - 5 }		// this is less productive
 	maze = justDecompress(slapsticReadMaze(mazn), false)
 	for y := 0; y <= 15; y++ {
 		for x := 0; x <=15; x++ {
