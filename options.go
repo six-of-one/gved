@@ -240,7 +240,7 @@ fmt.Printf("sv_config\n")
 
 var optht float32 = 36.0
 
-func optCont(wn fyne.Window) fyne.CanvasObject {
+func optCont(wn fyne.Window) *container.AppTabs {
 
 // viewport size
 	vp_label := widget.NewLabelWithStyle("View size:       ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
@@ -433,7 +433,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 	reducwal := widget.NewButton("Reduct walls", func() {
 		if opts.edat == 0 {
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
-			"or by middle mouse click on maze item\n\nReduce walls of maze\nleft click sets start X,Y", wn)
+			"or by middle mouse click on maze item\n\nReduce walls of maze\n-left click sets start X,Y", wn)
 		} else {
 			ReduceWalls(ebuf,mxmd,mymd)
 			ed_maze(true,1,1)
@@ -476,7 +476,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 	mapdfs := widget.NewButton("Mapper DFS", func() {
 		if opts.edat == 0 {
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
-			"or by middle mouse click on maze item\n\nDFS mapper algo\nleft click sets start X,Y", wn)
+			"or by middle mouse click on maze item\n\nDFS mapper algo\n-left click sets start X,Y", wn)
 		} else {
 			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
 			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
@@ -487,7 +487,7 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 	mapprim := widget.NewButton("Mapper Prim", func() {
 		if opts.edat == 0 {
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
-			"or by middle mouse click on maze item\n\nPrim mapper algo - nice with reduce walls\nleft click sets start X,Y", wn)
+			"or by middle mouse click on maze item\n\nPrim mapper algo\n-nice with reduce walls\n-left click sets start X,Y", wn)
 		} else {
 			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
 			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)

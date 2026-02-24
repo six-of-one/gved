@@ -219,12 +219,16 @@ func menu_copy() { if opts.edat > 0 { ccp_tog(COPY); if ccp > 0 { smod = "Edit C
 func menu_cut() { if opts.edat > 0 { ccp_tog(CUT); if ccp > 0 { smod = "Edit CUT: "}; statlin(cmdhin,sshin) }}
 func menu_paste() { if opts.edat > 0 { ccp_tog(PASTE); if ccp > 0 { smod = "Edit PASTE: "}; statlin(cmdhin,sshin) }}
 
+var opc *container.AppTabs
 func menu_option() {
 
 	wc := a.NewWindow("Option controls")
 	wc.Resize(fyne.NewSize(400, 500))
-	wc.SetContent(optCont(wc))
+	opc = optCont(wc)
+	wc.SetContent(opc)
+//	opc.SelectTabIndex(0)
 	wc.Show()
+
 }
 
 /*
