@@ -814,7 +814,9 @@ func Map4quart(mdat MazeData) {
 
 	var maze = &Maze{}
 
-	opts.DimX, opts.DimY = 31,31		// for simplicity for now
+//	opts.DimX, opts.DimY = 31,31		// for simplicity for now
+										// caveats - too small maze copys into null space, too large only fills a portion...
+	svx, svy := opts.DimX, opts.DimY	// justDec resets these
 	aovs := Aov
 
 	mazn := rndr(0, maxmaze)
@@ -846,4 +848,5 @@ func Map4quart(mdat MazeData) {
 			mdat[xy{x,y}] = maze.data[xy{x,y}]
 	}}
 	Aov = aovs
+	opts.DimX, opts.DimY = svx, svy
 }
