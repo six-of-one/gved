@@ -134,8 +134,10 @@ func _room(x1, y1, x2, y2, val int) {
 			fmt.Sscanf(xconsel.Text,"%d",&mt)
 			if mt > 0 && mt <= maxmaze { mazn = mt - 1 }
 		}
+		svx, svy := opts.DimX, opts.DimY	// justDec resets these
 		if Aov > 0 { Aov = addrver(slapsticMazeGetRealAddr(mazn)) + rndr(0, 15) - 5 }
 		maze = justDecompress(slapsticReadMaze(mazn), false)
+		opts.DimX, opts.DimY = svx, svy
 	}
 
 	for y := y1; y < y2; y++ {
