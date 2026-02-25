@@ -33,6 +33,16 @@ a palette system similar to edit in sanctuary
 * bring up on home key
 * or a second window for palette, with edit opts
 
+ideas:
+- sanctuary sample & splash screens
+- figure gauntlet super font & charset (can use with writepngto ?, or draw from an array)
+- way to automate gauntness walls to sheet
+- something like paste buf, but containing 'build chunks'
+- how to represent 'depth of terrain' in render / engine
+- super walls (how to multiplex with norm walls & using resize on gfx from roms)
+- inventory tab similar to sprite view (maybe put it on score board dialog)
+- possible more rand algos
+
 a basic "playable" mode to test mazes
 * port rnd load profile sanctuary code, and use #T flags to remove certain elements, wip
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
