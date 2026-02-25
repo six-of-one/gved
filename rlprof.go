@@ -313,12 +313,12 @@ func ray(lx, ly, mx, my, tx, ty, tv, rv int,tspot [100][100]int) int {
 func map_fargoal(mbuf MazeData) {
 
 //	rand.Seed(time.Now().UnixNano())
-
+/*
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
 		mbuf[xy{x, y}] = G1OBJ_WALL_REGULAR
 	}}
-
+*/
 	MAP_H = opts.DimY
 	MAP_W = opts.DimX
 
@@ -400,7 +400,7 @@ fmt.Printf("run %d, stone %d\n",run,stone)
 			}
 		}
 	}
-// wall off floor from null space
+// wall off floor from null space - pre load room copy is an issue here
 	for y := 1; y <= MAP_H; y++ {
 		for x := 1; x <= MAP_W; x++ {
 		if gridb[y][x] < 0 {
@@ -434,19 +434,19 @@ var sword bool
 		mbuf[xy{x, y}] = G1OBJ_WALL_REGULAR
 	}}*/
 
-	MAP_H = opts.DimY + 1
-	MAP_W = opts.DimX + 1
+	MAP_H = opts.DimY
+	MAP_W = opts.DimX
 
 	for y := 0; y <= MAP_H; y++ {
 		for x := 0; x <= MAP_W; x++ {
 		gridb[y][x] = G1OBJ_WALL_REGULAR
 	}}
 
-	for y := 0; y < 25; y++ {
-		grid_put(39, y, G1OBJ_TILE_FLOOR)
+	for y := 0; y < MAP_H+1; y++ {
+		grid_put(MAP_W, y, G1OBJ_TILE_FLOOR)
 	}
-	for x := 0; x < 40; x++ {
-		grid_put(x, 24, G1OBJ_TILE_FLOOR)
+	for x := 0; x < MAP_W+1; x++ {
+		grid_put(x, MAP_H, G1OBJ_TILE_FLOOR)
 	}
 
 	x, y := 1, 2
@@ -508,14 +508,14 @@ var sword bool
 		grid_put(19, 12, sw)
 		sword = true
 	}
-
+/*
 	for y := 0; y < 25; y++ {
 		grid_put(39, y, G1OBJ_WALL_REGULAR)
 	}
 	for x := 0; x < 40; x++ {
 		grid_put(x, 24, G1OBJ_WALL_REGULAR)
 	}
-
+*/
 	for y := 1; y <= MAP_H; y++ {
 		for x := 1; x <= MAP_W; x++ {
 		mbuf[xy{x, y}] = gridb[y][x]
@@ -530,12 +530,12 @@ func map_wide(mbuf MazeData) {
 //	opts.DimX = 39
 	MAP_H = opts.DimY + 1
 	MAP_W = opts.DimX + 1
-
+/*
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
 		mbuf[xy{x, y}] = G1OBJ_WALL_REGULAR
 	}}
-
+*/
 	MAP_H = opts.DimY
 	MAP_W = opts.DimX
 
