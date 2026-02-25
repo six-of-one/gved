@@ -322,8 +322,8 @@ func map_fargoal(mbuf MazeData) {
 	MAP_H = opts.DimY
 	MAP_W = opts.DimX
 
-	for y := 1; y <= MAP_H; y++ {
-		for x := 1; x <= MAP_W; x++ {
+	for y := 0; y <= MAP_H; y++ {
+		for x := 0; x <= MAP_W; x++ {
 		gridb[y][x] = -1
 	}}
 
@@ -437,8 +437,8 @@ var sword bool
 	MAP_H = opts.DimY + 1
 	MAP_W = opts.DimX + 1
 
-	for y := 1; y <= MAP_H; y++ {
-		for x := 1; x <= MAP_W; x++ {
+	for y := 0; y <= MAP_H; y++ {
+		for x := 0; x <= MAP_W; x++ {
 		gridb[y][x] = G1OBJ_WALL_REGULAR
 	}}
 
@@ -539,8 +539,8 @@ func map_wide(mbuf MazeData) {
 	MAP_H = opts.DimY
 	MAP_W = opts.DimX
 
-	for y := 1; y <= MAP_H; y++ {
-		for x := 1; x <= MAP_W; x++ {
+	for y := 0; y <= MAP_H; y++ {
+		for x := 0; x <= MAP_W; x++ {
 		gridb[y][x] = -1
 	}}
 
