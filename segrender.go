@@ -831,7 +831,7 @@ if font_tst > 0 {
 
 	p,q,r = 0,255,255
 	sfont = 8.0
-	if font_tst < max_font {
+	if font_tst <= max_font {
 	if font_tst == y && x == 3 {
 		c = fmt.Sprintf("%02d GAUNTLET, 7653428901: WIZARD Level 7",font_tst)
 		mlen = len(c) * 14

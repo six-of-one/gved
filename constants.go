@@ -1441,7 +1441,7 @@ var ld_font = map[int]string{
 	20:	"VrMon.ttf",
 	21:	"Vr.ttf",
 }
-var sz_font = map[int]int{
+var sz_font = map[int]float64{
 	1:	11,
 	2:	8,
 	3:	11,
