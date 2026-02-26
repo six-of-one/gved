@@ -829,11 +829,11 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 				}
 if font_tst > 0 {
 
-	p,q,r = 255,0,0
+	p,q,r = 0,255,255
 	sfont = 8.0
 	if font_tst < max_font {
 	if font_tst == y && x == 3 {
-		c = "GAUNTLET, 7653428901: WIZARD Level 7"
+		c = fmt.Sprintf("%02d GAUNTLET, 7653428901: WIZARD Level 7",font_tst)
 		mlen = len(c) * 14
 		lfont = fmt.Sprintf(".font/%s",ld_font[font_tst])
 fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",font_tst,lfont,x,y,mlen, c)
