@@ -813,26 +813,42 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 			case G1OBJ_TILE_FLOOR:
 				p,q,r := parser(xp, SE_LETR)
 				c := ""
-				len := 12
+				mlen := 12
+				lfont := ".font/Gauntlet.ttf"
+				sfont := 6
 				if p < 0 {
 					p,q,r = parser(xp, SE_MSG)		// letter, msg mutually exclude
 					if p >= 0 {
 						for i := 0; i < 32; i++ {
-							if xpar[i] < 130 { if xpar[i] == 0 {break}; c += map_keymap[xpar[i]]; len += 14 }
+							if xpar[i] < 130 { if xpar[i] == 0 {break}; c += map_keymap[xpar[i]]; mlen += 14 }
 						}
 					}
 				} else {
 					l := xpar[0]
 					if l < 130 { c = map_keymap[l] }
 				}
+if font_tst > 0 {
+
+	p,q,r = 1,0,0
+	sfont = 10
+	if font_tst < max_font {
+	if font_tst == y && x == 3 {
+		c = "GAUNTLET, 7653428901: WIZARD Level 7"
+		mlen = len(c)
+		lfont = fmt.Sprintf(".font/%s",ld_font[font_tst])
+fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",font_tst,lfont,x,y,mlen, c)
+		font_tst++
+	}
+	} else { font_tst = 0 }
+}
 				if p >= 0 {
-						gtop := gg.NewContext(len, 12)
-						if err := gtop.LoadFontFace(".font/Gauntlet.ttf", 6); err == nil {
+						gtop := gg.NewContext(mlen, 12)
+						if err := gtop.LoadFontFace(lfont, sfont); err == nil {
 						gtop.Clear()
 						fp, fq, fr := float64(p)/256,float64(q)/256,float64(r)/256
 						gtop.SetRGB(fp, fq, fr)
 						cpos := 0.5
-						if len > 16 { cpos = 0.0 }
+						if mlen > 16 { cpos = 0.0 }
 						gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
 						gtopim := gtop.Image()
 						offset := image.Pt(x*16+4, y*16)

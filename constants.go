@@ -1416,8 +1416,9 @@ var Se_cflr = map[int]string{
 }*/
 
 // font testing
+var font_tst int		// cycle thru all test fonts
+var max_font int = 22
 var ld_font = map[int]string{
-	0:	"VrBd.ttf",
 	1:	"3270-reg.ttf",
 	2:	"Atari-reg.ttf",
 	3:	"AtariSmol.ttf",
@@ -1437,6 +1438,7 @@ var ld_font = map[int]string{
 	17:	"vlg_reg.ttf",
 	18:	"vlpg_reg.ttf",
 	19:	"VPPxl.ttf",
-	20:	"VrMon.ttf",
-	21:	"Vr.ttf",
+	20:	"VrBd.ttf",
+	21:	"VrMon.ttf",
+	22:	"Vr.ttf",
 }

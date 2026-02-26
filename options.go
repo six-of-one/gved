@@ -518,7 +518,15 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 			ed_maze(true,1,1)
 		}
 	})
-
+	fontst := widget.NewButton("Font test", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or by middle mouse click on maze item\n\nFont test\n- click when blank map loaded", wn)
+		} else {
+			font_tst = 1
+			ed_maze(true,0,1)
+		}
+	})
 /*
 	menuItemRedwl := fyne.NewMenuItem("Reduct walls",func() { ReduceWalls(ebuf,mxmd,mymd); ed_maze(true,1,1) })
 	menuItemFmap := fyne.NewMenuItem("Mapper fargoal",func() { map_fargoal(ebuf); ed_maze(true,1,1) })
@@ -683,7 +691,10 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 			layout.NewHBoxLayout(),
 			reducwal,
 		),
-
+		container.New(
+			layout.NewHBoxLayout(),
+			fontst,
+		),
 		layout.NewSpacer(),
 	),
 	)),

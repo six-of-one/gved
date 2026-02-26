@@ -224,7 +224,7 @@ func menu_paste() { if opts.edat > 0 { ccp_tog(PASTE); if ccp > 0 { smod = "Edit
 func dlg_option(tb int) {
 
 	wc := a.NewWindow("Option controls")
-	wc.Resize(fyne.NewSize(400, 500))
+	wc.Resize(fyne.NewSize(400, 600))
 	opc := optCont(wc)
 	wc.SetContent(opc)
 	if tb >= 0 {opc.SelectTabIndex(tb)}
