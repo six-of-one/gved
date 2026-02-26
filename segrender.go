@@ -815,7 +815,7 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 				c := ""
 				mlen := 12
 				lfont := ".font/Gauntlet.ttf"
-				sfont := 6
+				sfont := 6.0
 				if p < 0 {
 					p,q,r = parser(xp, SE_MSG)		// letter, msg mutually exclude
 					if p >= 0 {
@@ -829,12 +829,12 @@ func walbas(img *image.NRGBA, maze *Maze, xdat Xdat, xs, ys int, one bool) {
 				}
 if font_tst > 0 {
 
-	p,q,r = 1,0,0
-	sfont = 10
+	p,q,r = 255,0,0
+	sfont = 8.0
 	if font_tst < max_font {
 	if font_tst == y && x == 3 {
 		c = "GAUNTLET, 7653428901: WIZARD Level 7"
-		mlen = len(c)
+		mlen = len(c) * 14
 		lfont = fmt.Sprintf(".font/%s",ld_font[font_tst])
 fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",font_tst,lfont,x,y,mlen, c)
 		font_tst++

@@ -1417,7 +1417,7 @@ var Se_cflr = map[int]string{
 
 // font testing
 var font_tst int		// cycle thru all test fonts
-var max_font int = 22
+var max_font int = 21
 var ld_font = map[int]string{
 	1:	"3270-reg.ttf",
 	2:	"Atari-reg.ttf",
@@ -1427,18 +1427,17 @@ var ld_font = map[int]string{
 	6:	"ganic2.fnt",
 	7:	"Gauntlet.ttf",
 	8:	"Inconsolata.otf",
-	9:	"license.txt",
-	10:	"prn3.ttf",
-	11:	"ProFont.ttf",
-	12:	"ProggyTiny.ttf",
-	13:	"PxPlus_bios.ttf",
-	14:	"PxPlus_vga8.ttf",
-	15:	"Terminus.ttf",
-	16:	"Venture.fnt",
-	17:	"vlg_reg.ttf",
-	18:	"vlpg_reg.ttf",
-	19:	"VPPxl.ttf",
-	20:	"VrBd.ttf",
-	21:	"VrMon.ttf",
-	22:	"Vr.ttf",
+	9:	"prn3.ttf",
+	10:	"ProFont.ttf",
+	11:	"ProggyTiny.ttf",
+	12:	"PxPlus_bios.ttf",
+	13:	"PxPlus_vga8.ttf",
+	14:	"Terminus.ttf",
+	15:	"Venture.fnt",
+	16:	"vlg_reg.ttf",
+	17:	"vlpg_reg.ttf",
+	18:	"VPPxl.ttf",
+	19:	"VrBd.ttf",
+	20:	"VrMon.ttf",
+	21:	"Vr.ttf",
 }
