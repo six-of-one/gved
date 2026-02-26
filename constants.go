@@ -1414,3 +1414,29 @@ var Se_cflr = map[int]string{
 	10:		"gfx/g1floor7.jpg",
 	11:		"gfx/floor013.jpg",
 }*/
+
+// font testing
+var ld_font = map[int]string{
+	0:	"VrBd.ttf",
+	1:	"3270-reg.ttf",
+	2:	"Atari-reg.ttf",
+	3:	"AtariSmol.ttf",
+	4:	"C64.ttf",
+	5:	"FSEX301-L2.ttf",
+	6:	"ganic2.fnt",
+	7:	"Gauntlet.ttf",
+	8:	"Inconsolata.otf",
+	9:	"license.txt",
+	10:	"prn3.ttf",
+	11:	"ProFont.ttf",
+	12:	"ProggyTiny.ttf",
+	13:	"PxPlus_bios.ttf",
+	14:	"PxPlus_vga8.ttf",
+	15:	"Terminus.ttf",
+	16:	"Venture.fnt",
+	17:	"vlg_reg.ttf",
+	18:	"vlpg_reg.ttf",
+	19:	"VPPxl.ttf",
+	20:	"VrMon.ttf",
+	21:	"Vr.ttf",
+}

@@ -41,6 +41,7 @@ ideas:
 - how to represent 'depth of terrain' in render / engine
 - super walls (how to multiplex with norm walls & using resize on gfx from roms)
 - inventory tab similar to sprite view (maybe put it on score board dialog)
+  +storage chests, pod thing from druid
 - possible more rand algos
 
 a basic "playable" mode to test mazes
