@@ -836,6 +836,7 @@ if font_tst > 0 {
 		c = fmt.Sprintf("%02d GAUNTLET, 7653428901: WIZARD Level 7",font_tst)
 		mlen = len(c) * 14
 		lfont = fmt.Sprintf(".font/%s",ld_font[font_tst])
+		sfont = sz_font[font_tst]
 fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",font_tst,lfont,x,y,mlen, c)
 		font_tst++
 	}
