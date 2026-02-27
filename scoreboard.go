@@ -54,11 +54,11 @@ func scor_post() {
 	p,q,r := 0.0,0.0,0.0
 	lfont := ".font/VPPxl.ttf"
 	sfont := 8.0
-	x := 48
+	x := 26
 	mlen := 42
 	c := ""
 	for i := 1; i <= max_font; i++ {
-		y := i * 16 + 112
+		y := i * 18 + 112
 	//	c = fmt.Sprintf("%02d GAUNTLET, 7653428901: WIZARD Level 7",font_tst)
 	if sb[i].fnr > 0 {
 		c = sb[i].msb
@@ -76,7 +76,7 @@ fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %0.1f %0.1f %0.1f, msg: %s\n
 		gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
 		if p+q+r > 0 { gtop.SetRGB(p/255.0, q/255.0, r/255.0);fmt.Printf("bkg col\n")}
 		gtopim := gtop.Image()
-		offset := image.Pt(x, y)
+		offset := image.Pt(x+sb[i].adj, y)
 		draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 	}}}
 	scorec.Remove(scors)
