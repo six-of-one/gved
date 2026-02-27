@@ -222,10 +222,11 @@ func menu_paste() { if opts.edat > 0 { ccp_tog(PASTE); if ccp > 0 { smod = "Edit
 
 func menu_option() {
 	dlg_option(-1)
+	scor_post()
 }
 
 func menu_scores() {
-	dlg_scboard()
+	dlg_scboard("splash/gII_tsb.gif")
 }
 
 /*
@@ -369,6 +370,7 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 // setup main tabs
 	cmain = container.NewStack()
 	splash = container.NewStack()
+	scors = container.NewStack()
 	spexpl = container.NewStack()
 	sprview = container.NewStack()
 	maintab = container.NewAppTabs(

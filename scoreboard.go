@@ -1,12 +1,14 @@
 package main
 
 import (
-//	"fmt"
+	"fmt"
+	"image"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/layout"
-	"fyne.io/fyne/v2/widget"
-	"fyne.io/fyne/v2/data/binding"
+	"fyne.io/fyne/v2/canvas"
+//	"fyne.io/fyne/v2/layout"
+	"github.com/fogleman/gg"
+	"golang.org/x/image/draw"
 )
 
 // score board (seen in splash screen rotate) and gameplay info
@@ -18,25 +20,87 @@ var sbtl *fyne.Container			// title upd for score board
 var scorec *fyne.Container			// scoreboard contains
 var scors *fyne.Container			// image for scores
 
-func dlg_scboard() {
+func dlg_scboard(stsb string) {
 
 	wc := a.NewWindow("High Score!")
 	wc.Resize(fyne.NewSize(270, 600))
 	tsb = container.NewStack()
 	sbtl = container.NewStack()
-	scorec = container.NewStack()
-	scors = container.NewStack()
-	txtB := binding.NewString()
-	txtWid := widget.NewEntryWithData(txtB)
 
-	osb := container.New(
-		layout.NewVBoxLayout(),
+	ova,ovb = HRGB{0xff010101},HRGB{0xff010101}
+	bas := loadfail(270, 600)
+	bld := canvas.NewRasterFromImage(bas)
+	scorec = container.NewWithoutLayout(bld)
+
+	osb := container.NewWithoutLayout(
+		scorec,
 		tsb,
-		txtWid,
 	)
-	gif_lodr("splash/sanc_tsb.gif", tsb, sbtl, "")
-	sbtl.Resize(fyne.NewSize(270, 120))
-	sbtl.Refresh()
+	gif_lodr(stsb, tsb, sbtl, "")
 	wc.SetContent(osb)
 	wc.Show()
+	bld.Resize(fyne.Size{270, 600})
+	tsb.Resize(fyne.NewSize(270, 120))
+	tsb.Refresh()
 }
+
+// 1 cycle to update scoreboard
+// ---- think about only updating if data changed
+
+func scor_post() {
+
+	ova,ovb = HRGB{0xff000001},HRGB{0xff000001}
+	bas := loadfail(270, 600)
+
+	lfont := ".font/Gauntlet.ttf"
+	p,q,r := 0,255,255
+	sfont := 8.0
+	x := 48
+	c := ""
+	mlen := 42
+	for i := 1; i <= max_font; i++ {
+		y := i * 16 + 144
+	//	c = fmt.Sprintf("%02d GAUNTLET, 7653428901: WIZARD Level 7",font_tst)
+	if sb[i].fnr > 0 {
+		c = sb[i].msb
+		mlen = len(c) * 14
+//		lfont = fmt.Sprintf(".font/%s",ld_font[font_tst])
+//		sfont = sz_font[font_tst]
+		lfont = fmt.Sprintf(".font/%s",ld_font[sb[i].fnr])
+		sfont = sb[i].sz
+		p,q,r = sb[i].r,sb[i].g,sb[i].b
+fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",i,lfont,x,y,mlen, c)
+	}
+
+	gtop := gg.NewContext(mlen, 12)
+	if err := gtop.LoadFontFace(lfont, sfont); err == nil {
+		gtop.Clear()
+		fp, fq, fr := float64(p)/255,float64(q)/255,float64(r)/255
+		gtop.SetRGB(fp, fq, fr)
+		cpos := 0.5
+		if mlen > 16 { cpos = 0.0 }
+		gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
+		gtopim := gtop.Image()
+		offset := image.Pt(x*16+4, y*16)
+		draw.Draw(bas, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
+	}}
+}
+// to change tsb
+/*
+	gif_lodr("splash/sanc_tsb.gif", tsb, sbtl, "")
+	tsb.Resize(fyne.NewSize(270, 120))
+	tsb.Refresh()
+*/
+
+// to update scores
+
+/*	ova,ovb = HRGB{0xff000001},HRGB{0xff000001}
+	bas := loadfail(270, 600)
+	bld := canvas.NewRasterFromImage(bas)
+
+	scorec.Remove(scors)
+	scors = container.NewStack(bld)
+	scorec.Add(scors)
+	scors.Resize(fyne.NewSize(270, 600))
+	scors.Refresh()
+*/

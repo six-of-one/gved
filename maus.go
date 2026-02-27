@@ -247,7 +247,7 @@ fmt.Printf("%d down - rel: %.0f x %.0f maze cell: %d x %d\n",mb,sxmd,symd,mxmd,m
 	if mbd {
 		h.MouseMoved(mm)
 	  go func() {
-			time.Sleep(33 * time.Millisecond)
+			time.Sleep(21 * time.Millisecond)
 		fyne.Do(func() {
 			dt := float32(opts.dtec)
 			sx := nong(float32(int(float32(sxmd) / dt)) * dt - 3)				// blotter selects tiles with original unit of 16 x 16

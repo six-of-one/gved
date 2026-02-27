@@ -418,7 +418,6 @@ fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,s
 	ova,ovb = HRGB{0xff1f1f1f},HRGB{0xff2f2f2f}
 	bas := loadfail(400, 400)
 	bld := canvas.NewRasterFromImage(bas)
-	savetopng("tst.png", bas)
 	sprview.Remove(lim)
 	lim = container.NewWithoutLayout(bld)
 	sprview.Add(lim)
