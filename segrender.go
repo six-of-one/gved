@@ -833,10 +833,13 @@ if font_tst > 0 {
 	sfont = 8.0
 	if font_tst <= max_font {
 	if font_tst == y && x == 3 {
-		c = fmt.Sprintf("%02d GAUNTLET, 7653428901: WIZARD Level 7",font_tst)
+	//	c = fmt.Sprintf("%02d GAUNTLET, 7653428901: WIZARD Level 7",font_tst)
+		c = sb[font_tst].msb
 		mlen = len(c) * 14
-		lfont = fmt.Sprintf(".font/%s",ld_font[font_tst])
-		sfont = sz_font[font_tst]
+//		lfont = fmt.Sprintf(".font/%s",ld_font[font_tst])
+//		sfont = sz_font[font_tst]
+		lfont = fmt.Sprintf(".font/%s",ld_font[sb[font_tst].fnr])
+		sfont = sb[font_tst].sz
 fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",font_tst,lfont,x,y,mlen, c)
 		font_tst++
 	}
@@ -846,7 +849,7 @@ fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",font_tst,lfont,x,y,mlen
 						gtop := gg.NewContext(mlen, 12)
 						if err := gtop.LoadFontFace(lfont, sfont); err == nil {
 						gtop.Clear()
-						fp, fq, fr := float64(p)/256,float64(q)/256,float64(r)/256
+						fp, fq, fr := float64(p)/255,float64(q)/255,float64(r)/255
 						gtop.SetRGB(fp, fq, fr)
 						cpos := 0.5
 						if mlen > 16 { cpos = 0.0 }

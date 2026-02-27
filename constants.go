@@ -1473,8 +1473,20 @@ var sz_font = map[int]float64{
 	22:	9,
 	23:	14,
 	24:	10,
-	25:	18,
+	25:	16,
 	26:	8,
 	27:	12,
 	28:	8,
+}
+
+// further test - dynamic scoreboard
+
+type dysb struct{
+	fnr, sz int
+	msb string
+}
+
+var sb = []dysb{
+	{0,0,""},
+	{22, 9, "LEVEL XXXX"},
 }
