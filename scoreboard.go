@@ -64,8 +64,6 @@ func scor_post() {
 	if sb[i].fnr > 0 {
 		c = sb[i].msb
 		mlen = len(c) * 14
-//		lfont = fmt.Sprintf(".font/%s",ld_font[font_tst])
-//		sfont = sz_font[font_tst]
 		lfont = fmt.Sprintf(".font/%s",ld_font[sb[i].fnr])
 		sfont = sb[i].sz
 		p,q,r = sb[i].r,sb[i].g,sb[i].b
@@ -77,13 +75,27 @@ fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",i,lfont,x,y,mlen, c)
 		gtop.Clear()
 		fp, fq, fr := float64(p)/255,float64(q)/255,float64(r)/255
 		gtop.SetRGB(fp, fq, fr)
-		cpos := 0.5
-		if mlen > 16 { cpos = 0.0 }
+		cpos := 0.0
 		gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
 		gtopim := gtop.Image()
-		offset := image.Pt(x*16+4, y*16)
+		offset := image.Pt(x*16, y*16)
 		draw.Draw(bas, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 	}}
+	scorec.Remove(scors)
+	bld := canvas.NewRasterFromImage(bas)
+	scors = container.NewStack(bld)
+	scorec.Add(scors)
+	scors.Resize(fyne.NewSize(270, 600))
+	scors.Refresh()
+
+	err,tst,_ := itemGetPNG("splash/tmp.jpg")
+if err != nil { fmt.Printf("jpg err:\n"); fmt.Println(err)}
+	scorec.Remove(scors)
+	scors = container.NewStack(tst)
+	scorec.Add(scors)
+	scors.Resize(fyne.NewSize(270, 600))
+	scors.Refresh()
+
 }
 // to change tsb
 /*
@@ -104,3 +116,15 @@ fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",i,lfont,x,y,mlen, c)
 	scors.Resize(fyne.NewSize(270, 600))
 	scors.Refresh()
 */
+
+// upd from test file
+
+/*
+	err,tst,_ := itemGetPNG("splash/tmp.jpg")
+if err != nil { fmt.Printf("jpg err:\n"); fmt.Println(err)}
+	scorec.Remove(scors)
+	scors = container.NewStack(tst)
+	scorec.Add(scors)
+	scors.Resize(fyne.NewSize(270, 480))
+	scors.Refresh()
+	*/
