@@ -83,15 +83,8 @@ fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",i,lfont,x,y,mlen, c)
 	}}
 	scorec.Remove(scors)
 	bld := canvas.NewRasterFromImage(bas)
+savetopng("tst.png", bas)
 	scors = container.NewStack(bld)
-	scorec.Add(scors)
-	scors.Resize(fyne.NewSize(270, 600))
-	scors.Refresh()
-
-	err,tst,_ := itemGetPNG("splash/tmp.jpg")
-if err != nil { fmt.Printf("jpg err:\n"); fmt.Println(err)}
-	scorec.Remove(scors)
-	scors = container.NewStack(tst)
 	scorec.Add(scors)
 	scors.Resize(fyne.NewSize(270, 600))
 	scors.Refresh()
