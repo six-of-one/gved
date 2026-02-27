@@ -50,39 +50,38 @@ func dlg_scboard(stsb string) {
 func scor_post() {
 
 	ova,ovb = HRGB{0xff000001},HRGB{0xff000001}
-	bas := loadfail(270, 600)
-
-	lfont := ".font/Gauntlet.ttf"
-	p,q,r := 0.0,255.0,255.0
+	img := loadfail(270, 600)
+	p,q,r := 0.0,0.0,0.0
+	lfont := ".font/VPPxl.ttf"
 	sfont := 8.0
 	x := 48
-	c := ""
 	mlen := 42
+	c := ""
 	for i := 1; i <= max_font; i++ {
-		y := i * 16 + 144
+		y := i * 16 + 112
 	//	c = fmt.Sprintf("%02d GAUNTLET, 7653428901: WIZARD Level 7",font_tst)
 	if sb[i].fnr > 0 {
 		c = sb[i].msb
 		mlen = len(c) * 14
 		lfont = fmt.Sprintf(".font/%s",ld_font[sb[i].fnr])
 		sfont = sb[i].sz
-		p,q,r = sb[i].r,sb[i].g,sb[i].b
-fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",i,lfont,x,y,mlen, c)
-	}
+		p,q,r = sb[i].br,sb[i].bg,sb[i].bb
+fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %0.1f %0.1f %0.1f, msg: %s\n",i,lfont,x,y,mlen,p,q,r, c)
 
-	gtop := gg.NewContext(mlen, 12)
+	gtop := gg.NewContext(mlen, 14)
 	if err := gtop.LoadFontFace(lfont, sfont); err == nil {
 		gtop.Clear()
-		gtop.SetRGB(p, q, r)
+		gtop.SetRGB(sb[i].r/255.0, sb[i].g/255.0, sb[i].b/255.0)
 		cpos := 0.0
 		gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
+		if p+q+r > 0 { gtop.SetRGB(p/255.0, q/255.0, r/255.0);fmt.Printf("bkg col\n")}
 		gtopim := gtop.Image()
-		offset := image.Pt(x*16, y*16)
-		draw.Draw(bas, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
-	}}
+		offset := image.Pt(x, y)
+		draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
+	}}}
 	scorec.Remove(scors)
-	bld := canvas.NewRasterFromImage(bas)
-savetopng("tst.png", bas)
+	bld := canvas.NewRasterFromImage(img)
+savetopng("tst.png", img)
 	scors = container.NewStack(bld)
 	scorec.Add(scors)
 	scors.Resize(fyne.NewSize(270, 600))
