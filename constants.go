@@ -1484,8 +1484,8 @@ type dysb struct{
 	fnr int
 	sz float64
 	msb string
-	r,g,b int			// font color
-	br,bg,bb int		// bkg color
+	r,g,b float64			// font color
+	br,bg,bb float64		// bkg color
 
 }
 var max_font int = 20

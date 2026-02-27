@@ -53,7 +53,7 @@ func scor_post() {
 	bas := loadfail(270, 600)
 
 	lfont := ".font/Gauntlet.ttf"
-	p,q,r := 0,255,255
+	p,q,r := 0.0,255.0,255.0
 	sfont := 8.0
 	x := 48
 	c := ""
@@ -73,8 +73,7 @@ fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",i,lfont,x,y,mlen, c)
 	gtop := gg.NewContext(mlen, 12)
 	if err := gtop.LoadFontFace(lfont, sfont); err == nil {
 		gtop.Clear()
-		fp, fq, fr := float64(p)/255,float64(q)/255,float64(r)/255
-		gtop.SetRGB(fp, fq, fr)
+		gtop.SetRGB(p, q, r)
 		cpos := 0.0
 		gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
 		gtopim := gtop.Image()

@@ -841,7 +841,7 @@ if font_tst > 0 {
 //		sfont = sz_font[font_tst]
 		lfont = fmt.Sprintf(".font/%s",ld_font[sb[font_tst].fnr])
 		sfont = sb[font_tst].sz
-		p,q,r = sb[font_tst].r,sb[font_tst].g,sb[font_tst].b
+		p,q,r = int(sb[font_tst].r),int(sb[font_tst].g),int(sb[font_tst].b)
 fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",font_tst,lfont,x,y,mlen, c)
 	}
 		font_tst++
