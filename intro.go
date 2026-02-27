@@ -100,7 +100,7 @@ func gif_lodr(fn string, lod, lim *fyne.Container, mus string) bool {
 		gif.Start()
 		lded = true
 		if mus != "" { play_sfx(mus) }
-	}
+	} else { fmt.Printf("gif lod issue: %s\n",fn); fmt.Println(err)}
 	return lded
 }
 

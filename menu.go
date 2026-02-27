@@ -224,6 +224,10 @@ func menu_option() {
 	dlg_option(-1)
 }
 
+func menu_scores() {
+	dlg_scboard()
+}
+
 /*
 // save test code for later
 func map_test() {
@@ -313,6 +317,7 @@ func st_menu() {
 
 	menuItemKeys := fyne.NewMenuItem("Keys ?", keyhints)
 	menuItemOpt := fyne.NewMenuItem("Options", menu_option)
+	menuItemScor := fyne.NewMenuItem("Scores", menu_scores)
 	menuItemOps := fyne.NewMenuItem("Operation", func() {
 		data, err := ioutil.ReadFile("ops.txt")
 		if err == nil {
@@ -329,7 +334,7 @@ func st_menu() {
 	menuHelp := fyne.NewMenu("Help ", menuItemKeys, menuItemEdKey, menuItemOps, menuItemAbout, menuItemLIC)
 
 // list of active main keys for view / edit modes
-	hintup = fyne.NewMenu("cmds↓    ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, ilu, A #a",menuItemOpt, menuItemStats, menuItemGvs, menuItemNosec, menuItemWob, menuItemPalf)
+	hintup = fyne.NewMenu("cmds↓    ?, eE, fFgG, wWqQ, rRt, hm, pPT, sL, S, ilu, A #a",menuItemOpt, menuItemScor, menuItemStats, menuItemGvs, menuItemNosec, menuItemWob, menuItemPalf)
 
 // some extra hint info about what the editor is doing
 	statup = fyne.NewMenu("view mode:")
