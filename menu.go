@@ -222,7 +222,7 @@ func menu_paste() { if opts.edat > 0 { ccp_tog(PASTE); if ccp > 0 { smod = "Edit
 
 func menu_option() {
 	dlg_option(-1)
-	scor_post()
+	scor_post("splash/sanc_tsb.gif")
 }
 
 func menu_scores() {

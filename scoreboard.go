@@ -47,38 +47,63 @@ func dlg_scboard(stsb string) {
 // 1 cycle to update scoreboard
 // ---- think about only updating if data changed
 
-func scor_post() {
+func scor_post(ntsb string) {
 
+	if ntsb != "" {
+		gif_lodr(ntsb, tsb, sbtl, "")
+//		tsb.Resize(fyne.NewSize(270, 120))
+		tsb.Refresh()
+	}
 	ova,ovb = HRGB{0xff000001},HRGB{0xff000001}
 	img := loadfail(270, 600)
-	p,q,r := 0.0,0.0,0.0
+//	p,q,r := 0.0,0.0,0.0
 	lfont := ".font/VPPxl.ttf"
 	sfont := 8.0
-	x := 26
 	mlen := 42
 	c := ""
-	for i := 1; i <= max_font; i++ {
-		y := i * 18 + 112
+sb_loop := func(iv int, sbv []dysb) {
+		x := 26
+		y := iv * 18 + 112
 	//	c = fmt.Sprintf("%02d GAUNTLET, 7653428901: WIZARD Level 7",font_tst)
-	if sb[i].fnr > 0 {
-		c = sb[i].msb
+	if sb[iv].fnr > 0 {
+		c = sbv[iv].msb
 		mlen = len(c) * 14
-		lfont = fmt.Sprintf(".font/%s",ld_font[sb[i].fnr])
-		sfont = sb[i].sz
-		p,q,r = sb[i].br,sb[i].bg,sb[i].bb
-fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %0.1f %0.1f %0.1f, msg: %s\n",i,lfont,x,y,mlen,p,q,r, c)
-
-	gtop := gg.NewContext(mlen, 14)
+		lfont = fmt.Sprintf(".font/%s",ld_font[sbv[iv].fnr])
+		sfont = sbv[iv].sz
+//		p,q,r = sbv[i].br,sbv[i].bg,sbv[i].bb
+		x2,y2 := sbv[iv].xov,sbv[iv].yov
+fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %0X ox,oy %d %d, msg: %s\n",iv,lfont,x,y,mlen,sbv[iv].bkg,x2,y2, c)
+		if x2 > 0 { x = x2 } 
+		if y2 > 0 { y = y2 }
+ 
+	gtop := gg.NewContext(mlen, 16)
 	if err := gtop.LoadFontFace(lfont, sfont); err == nil {
 		gtop.Clear()
-		gtop.SetRGB(sb[i].r/255.0, sb[i].g/255.0, sb[i].b/255.0)
+		gtop.SetRGB(sbv[iv].r/255.0, sbv[iv].g/255.0, sbv[iv].b/255.0)
 		cpos := 0.0
 		gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
-		if p+q+r > 0 { gtop.SetRGB(p/255.0, q/255.0, r/255.0);fmt.Printf("bkg col\n")}
+		bc := HRGB{sbv[iv].bkg}
+		if bc != (HRGB{0}) {
+	//		cc := HRGB{sbv[iv].bkg}
+			ova,ovb = bc,bc
+			bimg := loadfail(270, 18)
+			offset := image.Pt(x-14, y-2)
+			draw.Draw(img, bimg.Bounds().Add(offset), bimg, image.ZP, draw.Over)
+		}
+//		if p+q+r > 0 { gtop.SetRGB(p/255.0, q/255.0, r/255.0);fmt.Printf("bkg col\n")}
 		gtopim := gtop.Image()
-		offset := image.Pt(x+sb[i].adj, y)
+		offset := image.Pt(x+sbv[iv].adj, y)
 		draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
-	}}}
+	}}
+}
+
+	for i := 1; i <= max_sb; i++ {
+		sb_loop(i,sb)
+	}
+	for i := 1; i <= max_sb2; i++ {
+		sb_loop(i,sb2)
+	}
+
 	scorec.Remove(scors)
 	bld := canvas.NewRasterFromImage(img)
 savetopng("tst.png", img)
