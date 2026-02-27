@@ -5,6 +5,8 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/widget"
+	"fyne.io/fyne/v2/data/binding"
 )
 
 // score board (seen in splash screen rotate) and gameplay info
@@ -24,13 +26,13 @@ func dlg_scboard() {
 	sbtl = container.NewStack()
 	scorec = container.NewStack()
 	scors = container.NewStack()
+	txtB := binding.NewString()
+	txtWid := widget.NewEntryWithData(txtB)
 
 	osb := container.New(
 		layout.NewVBoxLayout(),
-		layout.NewSpacer(),
 		tsb,
-		layout.NewSpacer(),
-		scorec,
+		txtWid,
 	)
 	gif_lodr("splash/sanc_tsb.gif", tsb, sbtl, "")
 	sbtl.Resize(fyne.NewSize(270, 120))
