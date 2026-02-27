@@ -15,7 +15,7 @@ import (
 )
 
 // splash screen rotator
-// no video for the time being... he doesnt like them
+// no video for the time being... he doesnt like them. time biengs are like that
 
 var splRot = 6000
 var splCyc = 0

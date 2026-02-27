@@ -236,6 +236,19 @@ fmt.Printf("sv_config\n")
 }
 
 // options dialog
+
+// generate dialog from keypress or menu call
+// 1. you can not pass a parm from a menu call as fn(p int), 2. you can not return a value either as fn() int {return 1}
+func dlg_option(tb int) {
+
+	wc := a.NewWindow("Option controls")
+	wc.Resize(fyne.NewSize(400, 600))
+	opc := optCont(wc)
+	wc.SetContent(opc)
+	if tb >= 0 {opc.SelectTabIndex(tb)}
+	wc.Show()
+}
+
 // testing
 
 var optht float32 = 36.0
