@@ -1417,7 +1417,6 @@ var Se_cflr = map[int]string{
 
 // font testing
 var font_tst int		// cycle thru all test fonts
-var max_font int = 28
 var ld_font = map[int]string{
 	1:	"3270-reg.ttf",
 	2:	"Atari-reg.ttf",
@@ -1482,11 +1481,23 @@ var sz_font = map[int]float64{
 // further test - dynamic scoreboard
 
 type dysb struct{
-	fnr, sz int
+	fnr int
+	sz float64
 	msb string
+	r,g,b int
 }
+var max_font int = 10
 
 var sb = []dysb{
-	{0,0,""},
-	{22, 9, "LEVEL XXXX"},
+	{0,0,"",0,0,0},
+	{22, 9.0,		"      LEVEL  XXXX",130,130,130},
+	{16, 10.0,		"                   WARRIOR",222,10,10},
+	{16, 10.0,		"               SCORE    HEALTH",222,10,10},
+	{22, 9.0,		"      2420     0",222,10,10},
+	{22, 9.0,		"      GAME OVER",130,130,130},
+	{0,0,"",0,0,0},
+	{16, 10.0,		"                   VALKYRIE",23,130,210},
+	{16, 10.0,		"               SCORE    HEALTH",23,130,210},
+	{22, 9.0,		"     11390     0",23,130,210},
+	{22, 9.0,		"    INSERT COIN",130,130,130},
 }

@@ -834,13 +834,16 @@ if font_tst > 0 {
 	if font_tst <= max_font {
 	if font_tst == y && x == 3 {
 	//	c = fmt.Sprintf("%02d GAUNTLET, 7653428901: WIZARD Level 7",font_tst)
+	if sb[font_tst].fnr > 0 {
 		c = sb[font_tst].msb
 		mlen = len(c) * 14
 //		lfont = fmt.Sprintf(".font/%s",ld_font[font_tst])
 //		sfont = sz_font[font_tst]
 		lfont = fmt.Sprintf(".font/%s",ld_font[sb[font_tst].fnr])
 		sfont = sb[font_tst].sz
+		p,q,r = sb[font_tst].r,sb[font_tst].g,sb[font_tst].b
 fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, msg: %s\n",font_tst,lfont,x,y,mlen, c)
+	}
 		font_tst++
 	}
 	} else { font_tst = 0 }
