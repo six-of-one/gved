@@ -49,6 +49,7 @@ func dlg_scboard(stsb string) {
 
 func scor_post(ntsb string) {
 
+wxtr := []int{0,1,1,1,1,1,1,}
 wpotsmp := 10
 wkeysmp := 5
 	if ntsb != "" {
@@ -106,7 +107,7 @@ fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (s
 			x,y := sbv[iv].xov,sbv[iv].yov
 			for k := 0; k < wkeysmp; k++ {
 				offset := image.Pt(x+k*a, y)
-fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %d ox,oy %d %d, msg: %s\n",iv,lfont,x,y,mlen,k*a	,x,y, c)
+//fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %d ox,oy %d %d, msg: %s\n",iv,lfont,x,y,mlen,k*a	,x,y, c)
 				draw.Draw(img, wp.Bounds().Add(offset), wp, image.ZP, draw.Over)
 			}}else { fmt.Printf("lod issue: gfx/sb/key.png\n"); fmt.Println(err)}
 		}
@@ -116,10 +117,20 @@ fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %d ox,oy %d %d, msg: %s\n",i
 			x,y := sbv[iv].xov,sbv[iv].yov
 			for k := 0; k < wpotsmp; k++ {
 				offset := image.Pt(x+k*a, y)
-fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %d ox,oy %d %d, msg: %s\n",iv,lfont,x,y,mlen,k*a	,x,y, c)
 				draw.Draw(img, wp.Bounds().Add(offset), wp, image.ZP, draw.Over)
 			}}else { fmt.Printf("lod issue: gfx/sb/potion.png\n"); fmt.Println(err)}
 		}
+		if sbv[iv].fnr == -6 {		// xpwr
+		for p := 1; p <= max_xpwr; p++ {
+		  if wxtr[p] > 0 {									// later this will handle levels of pwr in expand
+			err,_,wp := itemGetPNG(xpwr_gly[p][0])			// make all these little gets an array of some sorts
+			if err == nil {
+			x,y := xpwr_pos[p],sbv[iv].yov
+			for k := 0; k < wpotsmp; k++ {
+				offset := image.Pt(x+k*a, y)
+				draw.Draw(img, wp.Bounds().Add(offset), wp, image.ZP, draw.Over)
+			}}else { fmt.Printf("lod issue: %s\n",xpwr_gly[p][0]); fmt.Println(err)}
+		}}}
 	}
 }
 

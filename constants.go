@@ -1415,6 +1415,28 @@ var Se_cflr = map[int]string{
 	11:		"gfx/floor013.jpg",
 }*/
 
+// png for extra power pots
+var max_xpwr int = 6
+var xpwr_gly = [][]string{
+	{"",""},
+	{"gfx/sb/xarmor.png",	"gfx/sb/xarmor.png"},
+	{"gfx/sb/xfight.png",	"gfx/sb/xfight.png"},
+	{"gfx/sb/xmagic.png",	"gfx/sb/xmagic.png"},
+	{"gfx/sb/xshotpwr.png",	"gfx/sb/xshotpwr.png"},
+	{"gfx/sb/xshotspd.png",	"gfx/sb/xshotspd.png"},
+	{"gfx/sb/xspeed.png",	"gfx/sb/xspeed.png"},
+}
+// pos xprw display
+var xpwr_pos = []int{
+	0,
+	215,
+	112,
+	67,
+	80,
+	96,
+	231,
+}
+
 // font testing
 var font_tst int		// cycle thru all test fonts
 var max_font int = 20
@@ -1522,6 +1544,7 @@ var sb2 = []dysb{
 	{0,0,"",0,0,0	,0,0,0	,0},
 	{-3, 9.0,		" #",242,182,34	,0,24,386	,14},
 	{-4, 9.0,		" #",242,182,34	,0,118,386	,14},
+	{-6, 9.0,		" #",242,182,34	,0,66,328	,16},
 }
 
 /* positioning by alg writes
