@@ -168,7 +168,7 @@ func splashrot() {
 	if splCyc == 1 || splCyc == 10 || splCyc == 11 {
 		splashsrc = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
 		rot = 9700			// unless playing 18 secs of music g1, or 25.14 secs g2, or 14 secs ...B.gif
-		smpl = "splash/g1smpl.gif"; srot = 44090
+		smpl = "splash/g1smpl.gif"; srot = 44000
 		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 122200 }
 		if splCyc == 11 { rot = 15000; smpl = "" }
 		if (splCyc == 1 && rand.Float64() < 0.71) || !sec { rot = 18700; mus = "sfx/music.title_sf.ogg" }
