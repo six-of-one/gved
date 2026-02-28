@@ -50,10 +50,11 @@ func dlg_scboard(stsb string) {
 func scor_post(ntsb string) {
 
 // REPLACE: samples only, need real vars for player data
-wxtr := []int{0,0,1,1,1,1,1,1,}
+wxtr := []int{0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,}
 wpotsmp := 10
 wkeysmp := 5
-vmode := 1		// 0 for  G¹ / G², 1 for se
+vmode := 0		// 0 for  G¹ / G², 1 for se
+usbk := false
 
 	if ntsb != "" {
 		gif_lodr(ntsb, tsb, sbtl, "")
@@ -89,7 +90,7 @@ sb_loop := func(iv int, sbv []dysb) {
 		cpos := 0.0
 		gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
 		bc := HRGB{sbv[iv].bkg}
-		if bc != (HRGB{0}) {
+		if bc != (HRGB{0}) && usbk {
 	//		cc := HRGB{sbv[iv].bkg}
 			ova,ovb = bc,bc
 			bimg := loadfail(270, 18)
@@ -128,7 +129,7 @@ fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (s
 		  if wxtr[p] > 0 {									// later this will handle levels of pwr in expand
 			err,_,wp := itemGetPNG(xpwr_gly[p][vmode])			// make all these little gets an array of some sorts
 			if err == nil {
-			x,y := xpwr_pos[p],sbv[iv].yov
+			x,y := xpwr_pos[p][0],sbv[iv].yov+xpwr_pos[p][1]
 			offset := image.Pt(x, y)
 			draw.Draw(img, wp.Bounds().Add(offset), wp, image.ZP, draw.Over)
 			} else { fmt.Printf("lod issue: %s\n",xpwr_gly[p][0]); fmt.Println(err)}

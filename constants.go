@@ -1416,27 +1416,55 @@ var Se_cflr = map[int]string{
 }*/
 
 // png for extra power pots
-var max_xpwr int = 7
+var max_xpwr int = 19
 var xpwr_gly = [][]string{
-	{"gfx/sb/key.png","gfx/sb/se_key.png"},
-	{"gfx/sb/potion.png","gfx/sb/se_potion.png"},
-	{"gfx/sb/xarmor.png",	"gfx/sb/se_xarmor.png"},
+	{"gfx/sb/key.png",		"gfx/sb/se_key.png"},
+	{"gfx/sb/potion.png",	"gfx/sb/se_potion.png"},		// keys, pots
+	{"gfx/sb/xarmor.png",	"gfx/sb/se_xarmor.png"},	// std extra powers
 	{"gfx/sb/xfight.png",	"gfx/sb/se_xfight.png"},
 	{"gfx/sb/xmagic.png",	"gfx/sb/se_xmagic.png"},
 	{"gfx/sb/xshotpwr.png",	"gfx/sb/se_xshotpwr.png"},
 	{"gfx/sb/xshotspd.png",	"gfx/sb/se_xshotspd.png"},
 	{"gfx/sb/xspeed.png",	"gfx/sb/se_xspeed.png"},
+	{"gfx/sb/linvis.png",	"gfx/sb/linvis.png"},		// limiteds
+	{"gfx/sb/lsuper.png",	"gfx/sb/lsuper.png"},
+	{"gfx/sb/lreflect.png",	"gfx/sb/lreflect.png"},
+	{"gfx/sb/lrepuls.png",	"gfx/sb/lrepuls.png"},
+	{"gfx/sb/ltele.png",	"gfx/sb/ltele.png"},
+	{"gfx/sb/linvuln.png",	"gfx/sb/linvuln.png"},
+	{"gfx/sb/lank.png",		"gfx/sb/lank.png"},
+	{"gfx/sb/trs.gif",		"gfx/sb/trs.gif"},			// treasure mult			possible status indicators
+	{"gfx/sb/olfpot.png",	"gfx/sb/olfpot.png"},		// exploded potion
+	{"gfx/sb/poison.png",	"gfx/sb/poison.png"},		// poisoned - potion
+	{"gfx/sb/poisonf.png",	"gfx/sb/poisonf.png"},		// poisoned - food
+	{"gfx/sb/goro.png",		"gfx/sb/goro.png"},			// got a mappy treasure / power
+	{"gfx/sb/",		"gfx/sb/"},
+
 }
+
 // pos xprw display
-var xpwr_pos = []int{
-	0,
-	0,
-	215,
-	112,
-	67,
-	80,
-	96,
-	231,
+var xpwr_pos = [][]int{
+	{0, 0},
+	{0, 0},
+	{215, 0},
+	{112, 0},
+	{67, 0},
+	{80, 0},
+	{96, 0},
+	{231, 0},
+	{204, 0},
+	{52, 17},
+	{66, 17},
+	{52, 0},
+	{38, 0},
+	{24, 0},
+	{187, 17},
+	{80, 17},
+	{388, 60},
+	{187, 17},
+	{173, 17},
+	{350, 17},
+	{0, 0},
 }
 
 // font testing
