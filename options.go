@@ -525,10 +525,13 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
 			"or by middle mouse click on maze item\n\nKruskal mapper algo\n\n-left click sets start X,Y", wn)
 		} else {
-			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
-			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
+//			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
+//			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
 			opts.DimX,opts.DimY = 31,31			// temp until algo is adjusted
-			GenerateKruskalMaze(ebuf,mxmd,mymd,1,1)
+			wtx, wty := 3,3
+			fmt.Sscanf(dim_x.Text,"%d",wtx)
+			fmt.Sscanf(dim_y.Text,"%d",&wty)
+			GenerateKruskalMaze(ebuf,mxmd,mymd,wtx, wty)
 			ed_maze(true,1,1)
 		}
 	})
@@ -537,11 +540,10 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
 			"or by middle mouse click on maze item\n\nputs random maze quarters together", wn)
 		} else {
-			wtx, wty := 3,3
-			fmt.Sscanf(dim_x.Text,"%d",wtx)
-			fmt.Sscanf(dim_y.Text,"%d",&wty)
+			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
 			Map4quart(ebuf)
-			ed_maze(true,wtx, wty)
+			ed_maze(true,1,1)
 		}
 	})
 	fontst := widget.NewButton("Font test", func() {
