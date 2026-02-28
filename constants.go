@@ -1416,15 +1416,16 @@ var Se_cflr = map[int]string{
 }*/
 
 // png for extra power pots
-var max_xpwr int = 6
+var max_xpwr int = 7
 var xpwr_gly = [][]string{
-	{"",""},
-	{"gfx/sb/xarmor.png",	"gfx/sb/xarmor.png"},
-	{"gfx/sb/xfight.png",	"gfx/sb/xfight.png"},
-	{"gfx/sb/xmagic.png",	"gfx/sb/xmagic.png"},
-	{"gfx/sb/xshotpwr.png",	"gfx/sb/xshotpwr.png"},
-	{"gfx/sb/xshotspd.png",	"gfx/sb/xshotspd.png"},
-	{"gfx/sb/xspeed.png",	"gfx/sb/xspeed.png"},
+	{"gfx/sb/key.png","gfx/sb/se_key.png"},
+	{"gfx/sb/potion.png","gfx/sb/se_potion.png"},
+	{"gfx/sb/xarmor.png",	"gfx/sb/se_xarmor.png"},
+	{"gfx/sb/xfight.png",	"gfx/sb/se_xfight.png"},
+	{"gfx/sb/xmagic.png",	"gfx/sb/se_xmagic.png"},
+	{"gfx/sb/xshotpwr.png",	"gfx/sb/se_xshotpwr.png"},
+	{"gfx/sb/xshotspd.png",	"gfx/sb/se_xshotspd.png"},
+	{"gfx/sb/xspeed.png",	"gfx/sb/se_xspeed.png"},
 }
 // pos xprw display
 var xpwr_pos = []int{
@@ -1514,7 +1515,7 @@ type dysb struct{
 }
 
 var max_sb int = 20
-var max_sb2 int = 2
+var max_sb2 int = 3
 
 var sb = []dysb{
 	{0,0,"",0,0,0	,0,0,0	,0},

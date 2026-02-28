@@ -49,9 +49,12 @@ func dlg_scboard(stsb string) {
 
 func scor_post(ntsb string) {
 
+// REPLACE: samples only, need real vars for player data
 wxtr := []int{0,1,1,1,1,1,1,}
 wpotsmp := 10
 wkeysmp := 5
+vmode := 1		// 0 for  G¹ / G², 1 for se
+
 	if ntsb != "" {
 		gif_lodr(ntsb, tsb, sbtl, "")
 //		tsb.Resize(fyne.NewSize(270, 120))
@@ -102,7 +105,7 @@ sb_loop := func(iv int, sbv []dysb) {
 fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (sbv[iv].fnr == -4))
 		a := sbv[iv].adj
 		if sbv[iv].fnr == -3 {		// keys
-			err,_,wp := itemGetPNG("gfx/sb/key.png")
+			err,_,wp := itemGetPNG(xpwr_gly[0][vmode])
 			if err == nil {
 			x,y := sbv[iv].xov,sbv[iv].yov
 			for k := 0; k < wkeysmp; k++ {
@@ -112,7 +115,7 @@ fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (s
 			}}else { fmt.Printf("lod issue: gfx/sb/key.png\n"); fmt.Println(err)}
 		}
 		if sbv[iv].fnr == -4 {		// keys
-			err,_,wp := itemGetPNG("gfx/sb/potion.png")
+			err,_,wp := itemGetPNG(xpwr_gly[1][vmode])
 			if err == nil {
 			x,y := sbv[iv].xov,sbv[iv].yov
 			for k := 0; k < wpotsmp; k++ {
@@ -121,15 +124,14 @@ fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (s
 			}}else { fmt.Printf("lod issue: gfx/sb/potion.png\n"); fmt.Println(err)}
 		}
 		if sbv[iv].fnr == -6 {		// xpwr
-		for p := 1; p <= max_xpwr; p++ {
+		for p := 2; p <= max_xpwr; p++ {
 		  if wxtr[p] > 0 {									// later this will handle levels of pwr in expand
-			err,_,wp := itemGetPNG(xpwr_gly[p][0])			// make all these little gets an array of some sorts
+			err,_,wp := itemGetPNG(xpwr_gly[p][vmode])			// make all these little gets an array of some sorts
 			if err == nil {
 			x,y := xpwr_pos[p],sbv[iv].yov
-			for k := 0; k < wpotsmp; k++ {
-				offset := image.Pt(x+k*a, y)
-				draw.Draw(img, wp.Bounds().Add(offset), wp, image.ZP, draw.Over)
-			}}else { fmt.Printf("lod issue: %s\n",xpwr_gly[p][0]); fmt.Println(err)}
+			offset := image.Pt(x, y)
+			draw.Draw(img, wp.Bounds().Add(offset), wp, image.ZP, draw.Over)
+			} else { fmt.Printf("lod issue: %s\n",xpwr_gly[p][0]); fmt.Println(err)}
 		}}}
 	}
 }
