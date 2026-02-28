@@ -1492,32 +1492,55 @@ type dysb struct{
 }
 
 var max_sb int = 20
-var max_sb2 int = 1
+var max_sb2 int = 2
 
 var sb = []dysb{
 	{0,0,"",0,0,0	,0,0,0	,0},
-	{22, 11.0,		"      LEVEL  XXX",130,130,130	,0,0,0	,0},
-	{16, 14.0,		"                      WARRIOR",222,10,10	,0xFF500000,0,0	,0},
-	{16, 14.0,		"               SCORE           HEALTH",222,10,10	,0xFF500000,0,0	,0},
-	{22, 13.0,		"      2420       0",222,10,10	,0xFF500000,0,0	,-14},
-	{22, 11.0,		"      GAME OVER  ",130,130,130	,0xFF500000,0,0	,0},
+	{22, 11.0,		"      LEVEL  XXX",						130,130,130	,0,				0,0	,0},
+	{16, 14.0,		"                      WARRIOR",		222,10,10	,0xFF2A0000,	0,0	,0},
+	{16, 14.0,		"               SCORE           HEALTH",222,10,10	,0xFF2A0000,	0,0	,0},
+	{22, 13.0,		"      2420       0",					222,10,10	,0xFF2A0000,	0,0	,-14},
+	{22, 11.0,		"      GAME OVER  ",					130,130,130	,0,				0,0	,0},
 	{0,0,"",0,0,0	,0,0,0	,0},
-	{16, 14.0,		"                      VALKYRIE",23,130,210	,0,0,0	,0},
-	{16, 14.0,		"               SCORE           HEALTH",23,130,210	,0,0,0	,0},
-	{22, 13.0,		"     11390       0",23,130,210	,0,0,0	,-14},
-	{22, 11.0,		"     INSERT COIN ",130,130,130	,0,0,0	,0},
+	{16, 14.0,		"                      VALKYRIE",		23,130,210	,0xFF01012A,	0,0	,0},
+	{16, 14.0,		"               SCORE           HEALTH",23,130,210	,0xFF01012A,	0,0	,0},
+	{22, 13.0,		"     11390       0",					23,130,210	,0xFF01012A,	0,0	,-14},
+	{22, 11.0,		"     INSERT COIN ",					130,130,130	,0,				0,0	,0},
 	{0,0,"",0,0,0	,0,0,0	,0},
-	{16, 14.0,		"                      WIZARD",255,253,30	,0,0,0	,0},
-	{16, 14.0,		"               SCORE           HEALTH",255,253,30	,0,0,0	,0},
-	{22, 13.0,		"3798001629   17296",255,253,30	,0,0,0	,-14},
-	{6, 12.0,		"                $$$$$$$$$$$",54,54,228	,0,0,0	,0},
+	{16, 14.0,		"                      WIZARD",			255,253,30	,0xFF2A2A00,	0,0	,0},
+	{16, 14.0,		"               SCORE           HEALTH",255,253,30	,0xFF2A2A00,	0,0	,0},
+	{22, 13.0,		"3798001629   17296",					255,253,30	,0xFF2A2A00,	0,0	,-14},
+	{6, 12.0,		"                $$$$$$$$$$$",			54,54,228	,0,				0,0	,0},
 	{0,0,"",0,0,0	,0,0,0	,0},
-	{16, 14.0,		"                      ELF",36,230,46	,0,0,0	,0},
-	{16, 14.0,		"               SCORE           HEALTH",36,230,46	,0,0,0	,0},
-	{22, 13.0,		"         0       0",36,230,46	,0,0,0	,-14},
-	{22, 11.0,		"     INSERT COIN ",130,130,130	,0,0,0	,0},
+	{16, 14.0,		"                      ELF",			36,230,46	,0xFF002A01,	0,0	,0},
+	{16, 14.0,		"               SCORE           HEALTH",36,230,46	,0xFF002A01,	0,0	,0},
+	{22, 13.0,		"         0       0",					36,230,46	,0xFF002A01,	0,0	,-14},
+	{22, 11.0,		"     INSERT COIN ",					130,130,130	,0,				0,0	,0},
 }
 var sb2 = []dysb{
 	{0,0,"",0,0,0	,0,0,0	,0},
-	{6, 9.0,		" #####   ",242,182,34	,0,26,382	,0},
+	{-3, 9.0,		" #",242,182,34	,0,24,386	,0},
+	{-4, 9.0,		" #",242,182,34	,0,118,386	,0},
 }
+
+/* positioning by alg writes
+1	.font/Arcade.ttf,	x,y: 26,130, l:224, bcol: 0 ox,oy 0 0, msg:       LEVEL  XXX
+2	.font/VPPxl.ttf,	x,y: 26,148, l:406, bcol: FF4A0000 ox,oy 0 0, msg:                       WARRIOR
+3	.font/VPPxl.ttf,	x,y: 26,166, l:518, bcol: FF4A0000 ox,oy 0 0, msg:                SCORE           HEALTH
+4	.font/Arcade.ttf,	x,y: 26,184, l:252, bcol: FF4A0000 ox,oy 0 0, msg:       2420       0
+5	.font/Arcade.ttf,	x,y: 26,202, l:238, bcol: FF4A0000 ox,oy 0 0, msg:       GAME OVER  
+7	.font/VPPxl.ttf,	x,y: 26,238, l:420, bcol: FF01011D ox,oy 0 0, msg:                       VALKYRIE
+8	.font/VPPxl.ttf,	x,y: 26,256, l:518, bcol: FF01011D ox,oy 0 0, msg:                SCORE           HEALTH
+9	.font/Arcade.ttf,	x,y: 26,274, l:252, bcol: FF01011D ox,oy 0 0, msg:      11390       0
+10	.font/Arcade.ttf,	x,y: 26,292, l:238, bcol: FF01011D ox,oy 0 0, msg:      INSERT COIN 
+12	.font/VPPxl.ttf,	x,y: 26,328, l:392, bcol: FF190000 ox,oy 0 0, msg:                       WIZARD
+13	.font/VPPxl.ttf,	x,y: 26,346, l:518, bcol: FF190000 ox,oy 0 0, msg:                SCORE           HEALTH
+14	.font/Arcade.ttf,	x,y: 26,364, l:252, bcol: FF190000 ox,oy 0 0, msg: 3798001629   17296
+15	.font/Gauntlet.ttf,	x,y: 26,382, l:378, bcol: FF190000 ox,oy 0 0, msg:                 $$$$$$$$$$$
+17	.font/VPPxl.ttf,	x,y: 26,418, l:350, bcol: FF001D01 ox,oy 0 0, msg:                       ELF
+18	.font/VPPxl.ttf,	x,y: 26,436, l:518, bcol: FF001D01 ox,oy 0 0, msg:                SCORE           HEALTH
+19	.font/Arcade.ttf,	x,y: 26,454, l:252, bcol: FF001D01 ox,oy 0 0, msg:          0       0
+20	.font/Arcade.ttf,	x,y: 26,472, l:238, bcol: FF001D01 ox,oy 0 0, msg:      INSERT COIN 
+
+1	.font/Gauntlet.ttf,	x,y: 26,130, l:126, bcol: 0 ox,oy 26 382, msg:  #####   
+*/

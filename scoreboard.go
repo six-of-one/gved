@@ -49,6 +49,8 @@ func dlg_scboard(stsb string) {
 
 func scor_post(ntsb string) {
 
+wpotsmp := 10
+wkeysmp := 5
 	if ntsb != "" {
 		gif_lodr(ntsb, tsb, sbtl, "")
 //		tsb.Resize(fyne.NewSize(270, 120))
@@ -65,7 +67,7 @@ sb_loop := func(iv int, sbv []dysb) {
 		x := 26
 		y := iv * 18 + 112
 	//	c = fmt.Sprintf("%02d GAUNTLET, 7653428901: WIZARD Level 7",font_tst)
-	if sb[iv].fnr > 0 {
+	if sbv[iv].fnr > 0 {
 		c = sbv[iv].msb
 		mlen = len(c) * 14
 		lfont = fmt.Sprintf(".font/%s",ld_font[sbv[iv].fnr])
@@ -73,9 +75,9 @@ sb_loop := func(iv int, sbv []dysb) {
 //		p,q,r = sbv[i].br,sbv[i].bg,sbv[i].bb
 		x2,y2 := sbv[iv].xov,sbv[iv].yov
 fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %0X ox,oy %d %d, msg: %s\n",iv,lfont,x,y,mlen,sbv[iv].bkg,x2,y2, c)
-		if x2 > 0 { x = x2 } 
+		if x2 > 0 { x = x2 }
 		if y2 > 0 { y = y2 }
- 
+
 	gtop := gg.NewContext(mlen, 16)
 	if err := gtop.LoadFontFace(lfont, sfont); err == nil {
 		gtop.Clear()
@@ -95,6 +97,26 @@ fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %0X ox,oy %d %d, msg: %s\n",
 		offset := image.Pt(x+sbv[iv].adj, y)
 		draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 	}}
+	if sbv[iv].fnr < 0 {
+		if sbv[iv].fnr == -3 {		// keys
+			err,_,wp := itemGetPNG("gfx/sb/key.png")
+			if err != nil {
+			x,y := sbv[iv].xov,sbv[iv].yov
+			for i := 0; i < wkeysmp; i++ {
+				offset := image.Pt(x+i*16, y)
+				draw.Draw(img, wp.Bounds().Add(offset), wp, image.ZP, draw.Over)
+			}}
+		}
+		if sbv[iv].fnr == -4 {		// keys
+			err,_,wp := itemGetPNG("gfx/sb/potion.png")
+			if err != nil {
+			x,y := sbv[iv].xov,sbv[iv].yov
+			for i := 0; i < wpotsmp; i++ {
+				offset := image.Pt(x+i*16, y)
+				draw.Draw(img, wp.Bounds().Add(offset), wp, image.ZP, draw.Over)
+			}}
+		}
+	}
 }
 
 	for i := 1; i <= max_sb; i++ {
