@@ -74,7 +74,7 @@ sb_loop := func(iv int, sbv []dysb) {
 		sfont = sbv[iv].sz
 //		p,q,r = sbv[i].br,sbv[i].bg,sbv[i].bb
 		x2,y2 := sbv[iv].xov,sbv[iv].yov
-fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %0X ox,oy %d %d, msg: %s\n",iv,lfont,x,y,mlen,sbv[iv].bkg,x2,y2, c)
+//fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %0X ox,oy %d %d, msg: %s\n",iv,lfont,x,y,mlen,sbv[iv].bkg,x2,y2, c)
 		if x2 > 0 { x = x2 }
 		if y2 > 0 { y = y2 }
 
@@ -98,23 +98,27 @@ fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %0X ox,oy %d %d, msg: %s\n",
 		draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 	}}
 	if sbv[iv].fnr < 0 {
+fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (sbv[iv].fnr == -4))
+		a := sbv[iv].adj
 		if sbv[iv].fnr == -3 {		// keys
 			err,_,wp := itemGetPNG("gfx/sb/key.png")
-			if err != nil {
+			if err == nil {
 			x,y := sbv[iv].xov,sbv[iv].yov
-			for i := 0; i < wkeysmp; i++ {
-				offset := image.Pt(x+i*16, y)
+			for k := 0; k < wkeysmp; k++ {
+				offset := image.Pt(x+k*a, y)
+fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %d ox,oy %d %d, msg: %s\n",iv,lfont,x,y,mlen,k*a	,x,y, c)
 				draw.Draw(img, wp.Bounds().Add(offset), wp, image.ZP, draw.Over)
-			}}
+			}}else { fmt.Printf("lod issue: gfx/sb/key.png\n"); fmt.Println(err)}
 		}
 		if sbv[iv].fnr == -4 {		// keys
 			err,_,wp := itemGetPNG("gfx/sb/potion.png")
-			if err != nil {
+			if err == nil {
 			x,y := sbv[iv].xov,sbv[iv].yov
-			for i := 0; i < wpotsmp; i++ {
-				offset := image.Pt(x+i*16, y)
+			for k := 0; k < wpotsmp; k++ {
+				offset := image.Pt(x+k*a, y)
+fmt.Printf("#: %d font: %s, x,y: %d,%d, l:%d, bcol: %d ox,oy %d %d, msg: %s\n",iv,lfont,x,y,mlen,k*a	,x,y, c)
 				draw.Draw(img, wp.Bounds().Add(offset), wp, image.ZP, draw.Over)
-			}}
+			}}else { fmt.Printf("lod issue: gfx/sb/potion.png\n"); fmt.Println(err)}
 		}
 	}
 }
