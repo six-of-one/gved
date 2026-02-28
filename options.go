@@ -242,7 +242,7 @@ fmt.Printf("sv_config\n")
 func dlg_option(tb int) {
 
 	wc := a.NewWindow("Option controls")
-	wc.Resize(fyne.NewSize(400, 600))
+	wc.Resize(fyne.NewSize(400, 650))
 	opc := optCont(wc)
 	wc.SetContent(opc)
 	if tb >= 0 {opc.SelectTabIndex(tb)}
@@ -520,6 +520,18 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 			ed_maze(true,1,1)
 		}
 	})
+	mapkru := widget.NewButton("Mapper Kruskal", func() {
+		if opts.edat == 0 {
+			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
+			"or by middle mouse click on maze item\n\nKruskal mapper algo\n\n-left click sets start X,Y", wn)
+		} else {
+			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
+			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
+			opts.DimX,opts.DimY = 31,31			// temp until algo is adjusted
+			GenerateKruskalMaze(ebuf,mxmd,mymd,1,1)
+			ed_maze(true,1,1)
+		}
+	})
 	mapquar := widget.NewButton("Mapper 1/4's", func() {
 		if opts.edat == 0 {
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
@@ -699,6 +711,10 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 		container.New(
 			layout.NewHBoxLayout(),
 			mapprim,
+		),
+		container.New(
+			layout.NewHBoxLayout(),
+			mapkru,
 		),
 		container.New(
 			layout.NewHBoxLayout(),

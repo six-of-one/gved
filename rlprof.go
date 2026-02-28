@@ -850,3 +850,142 @@ func Map4quart(mdat MazeData) {
 	Aov = aovs
 	opts.DimX, opts.DimY = svx, svy
 }
+
+// Kruskal algo
+
+type DisjointSet struct {
+	parent []int
+	rank   []int
+	size   int
+}
+
+func NewDisjointSet(size int) *DisjointSet {
+	ds := &DisjointSet{
+		parent: make([]int, size),
+		rank:   make([]int, size),
+		size:   size,
+	}
+	for i := 0; i < size; i++ {
+		ds.parent[i] = i
+		ds.rank[i] = 0
+	}
+	return ds
+}
+
+func (ds *DisjointSet) Find(i int) int {
+	if ds.parent[i] != i {
+		ds.parent[i] = ds.Find(ds.parent[i])
+	}
+	return ds.parent[i]
+}
+
+func (ds *DisjointSet) Union(i, j int) {
+	rootI := ds.Find(i)
+	rootJ := ds.Find(j)
+	if rootI != rootJ {
+		if ds.rank[rootI] < ds.rank[rootJ] {
+			ds.parent[rootI] = rootJ
+		} else if ds.rank[rootI] > ds.rank[rootJ] {
+			ds.parent[rootJ] = rootI
+		} else {
+			ds.parent[rootJ] = rootI
+			ds.rank[rootI]++
+		}
+	}
+}
+
+func (ds *DisjointSet) GetSize() int {
+	return ds.size
+}
+
+type Edge struct {
+	u, v, weight int
+}
+
+const (
+	MAZE_SIZE   = 16 // example size, adjust as needed
+	MAX_CELLS   = MAZE_SIZE * MAZE_SIZE
+	WALL_GEN_ID = -1
+)
+
+type GauntMap [32][32]int
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func GenerateKruskalMaze(mdat MazeData, startX, startY, weightX, weightY int) {
+	rand.Seed(time.Now().UnixNano())
+
+	var FMaze [32][32]int
+
+	// Initialize maze with walls
+	for y := 0; y < MAZE_SIZE*2+1; y++ {
+		for x := 0; x < MAZE_SIZE*2+1; x++ {
+			FMaze[x][y] = WALL_GEN_ID
+		}
+	}
+
+	// Create edges
+	var edges []Edge
+	for y := 0; y < MAZE_SIZE; y++ {
+		for x := 0; x < MAZE_SIZE; x++ {
+			u := y*MAZE_SIZE + x
+			if x < MAZE_SIZE-1 {
+				edges = append(edges, Edge{
+					u:      u,
+					v:      u + 1,
+					weight: rand.Intn(weightX),
+				})
+			}
+			if y < MAZE_SIZE-1 {
+				edges = append(edges, Edge{
+					u:      u,
+					v:      u + MAZE_SIZE,
+					weight: rand.Intn(weightY),
+				})
+			}
+		}
+	}
+
+	// Sort edges by weight (Bubble Sort)
+	for i := 0; i < len(edges)-1; i++ {
+		for j := i + 1; j < len(edges); j++ {
+			if edges[i].weight > edges[j].weight {
+				edges[i], edges[j] = edges[j], edges[i]
+			}
+		}
+	}
+
+	// Kruskal's algorithm
+	ds := NewDisjointSet(MAX_CELLS)
+	for _, edge := range edges {
+		if ds.Find(edge.u) != ds.Find(edge.v) {
+			ds.Union(edge.u, edge.v)
+			// Create passage in the maze
+			u := edge.u
+			v := edge.v
+			x := u % MAZE_SIZE
+			y := u / MAZE_SIZE
+			FMaze[x*2+1][y*2+1] = 0
+			x = v % MAZE_SIZE
+			y = v / MAZE_SIZE
+			FMaze[x*2+1][y*2+1] = 0
+			if edge.u+1 == edge.v {
+				FMaze[min(edge.u%MAZE_SIZE, edge.v%MAZE_SIZE)*2+2][edge.u/MAZE_SIZE*2+1] = 0
+			} else {
+				FMaze[edge.u%MAZE_SIZE*2+1][min(edge.u/MAZE_SIZE, edge.v/MAZE_SIZE)*2+2] = 0
+			}
+		}
+	}
+
+	// Copy the temporary array to the actual maze
+	for x := startX; x < 32; x++ {
+		for y := startY; y < 32; y++ {
+			mdat[xy{x,y}] = FMaze[x][y]
+		}
+	}
+}
