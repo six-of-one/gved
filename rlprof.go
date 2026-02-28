@@ -905,7 +905,7 @@ type Edge struct {
 const (
 	MAZE_SIZE   = 16 // example size, adjust as needed
 	MAX_CELLS   = MAZE_SIZE * MAZE_SIZE
-	WALL_GEN_ID = -1
+//	WALL_GEN_ID = -1
 )
 
 type GauntMap [32][32]int
@@ -925,7 +925,7 @@ func GenerateKruskalMaze(mdat MazeData, startX, startY, weightX, weightY int) {
 	// Initialize maze with walls
 	for y := 0; y < MAZE_SIZE*2+1; y++ {
 		for x := 0; x < MAZE_SIZE*2+1; x++ {
-			FMaze[x][y] = WALL_GEN_ID
+			FMaze[x][y] = G1OBJ_WALL_REGULAR
 		}
 	}
 
