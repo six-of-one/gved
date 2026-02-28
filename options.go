@@ -537,10 +537,11 @@ fmt.Printf("blnk x,y %d x %d from dims: %s x %s\n", opts.DimX,opts.DimY,dim_x.Te
 			dialog.ShowInformation("G¹G²ved", "Edit mode is off                                           \nturn on edit mode with <ESC>                \n"+
 			"or by middle mouse click on maze item\n\nputs random maze quarters together", wn)
 		} else {
-			fmt.Sscanf(dim_x.Text,"%d",&opts.DimX)
-			fmt.Sscanf(dim_y.Text,"%d",&opts.DimY)
+			wtx, wty := 3,3
+			fmt.Sscanf(dim_x.Text,"%d",wtx)
+			fmt.Sscanf(dim_y.Text,"%d",&wty)
 			Map4quart(ebuf)
-			ed_maze(true,1,1)
+			ed_maze(true,wtx, wty)
 		}
 	})
 	fontst := widget.NewButton("Font test", func() {

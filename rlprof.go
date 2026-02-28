@@ -920,7 +920,7 @@ func min(a, b int) int {
 func GenerateKruskalMaze(mdat MazeData, startX, startY, weightX, weightY int) {
 	rand.Seed(time.Now().UnixNano())
 
-	var FMaze [32][32]int
+	var FMaze [33][33]int
 
 	// Initialize maze with walls
 	for y := 0; y < MAZE_SIZE*2+1; y++ {
