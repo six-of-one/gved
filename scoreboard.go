@@ -153,6 +153,10 @@ savetopng("tst.png", img)
 	scors.Refresh()
 
 }
+
+// high score card
+
+
 // to change tsb
 /*
 	gif_lodr("splash/sanc_tsb.gif", tsb, sbtl, "")

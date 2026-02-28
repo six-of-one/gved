@@ -61,10 +61,6 @@ var AudioFX = struct {
 	Mute: false,
 }
 
-func hideScorDiv() {
-	document.ScorDiv = false
-}
-
 func showScorDiv() {
 	document.ScorDiv = true
 }
@@ -135,7 +131,9 @@ func splashrot() {
 		splCyc++
 	}
 
-//	if splCyc != 12 { hideScorDiv() }
+splCyc = 13
+// testing
+//	if splCyc < 12 { hideScorDiv() }
 
 /*
 			vid.Src = "splash/g2samply_q.ogv"

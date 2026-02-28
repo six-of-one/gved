@@ -350,7 +350,7 @@ var lim *fyne.Container
 
 		st := ""
 		usvy := svy*8
-fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,svy)
+//fmt.Printf("dis sprite gxy: %d x %d fxy %d, %d svxy %d - %d\n",gx,gy,fx,fy,svx,svy)
 		for y := 0; y <= fy; y++ {
 		for x := 0; x <= fx; x++ {
 		  if uroms {

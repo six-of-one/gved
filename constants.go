@@ -1581,6 +1581,14 @@ var sb2 = []dysb{
 	{-6, 9.0,		" #",242,182,34	,0,66,328	,16},
 }
 
+// high score table
+var hsct = []dysb{
+	{0,0,"",0,0,0	,0,0,0	,0},
+	{-3, 9.0,		" #",242,182,34	,0,24,386	,14},
+	{-4, 9.0,		" #",242,182,34	,0,118,386	,14},
+	{-6, 9.0,		" #",242,182,34	,0,66,328	,16},
+}
+
 /* positioning by alg writes
 1	.font/Arcade.ttf,	x,y: 26,130, l:224, bcol: 0 ox,oy 0 0, msg:       LEVEL  XXX
 2	.font/VPPxl.ttf,	x,y: 26,148, l:406, bcol: FF4A0000 ox,oy 0 0, msg:                       WARRIOR
