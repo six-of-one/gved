@@ -50,7 +50,7 @@ func dlg_scboard(stsb string) {
 func scor_post(ntsb string) {
 
 // REPLACE: samples only, need real vars for player data
-wxtr := []int{0,1,1,1,1,1,1,}
+wxtr := []int{0,0,1,1,1,1,1,1,}
 wpotsmp := 10
 wkeysmp := 5
 vmode := 1		// 0 for  G¹ / G², 1 for se

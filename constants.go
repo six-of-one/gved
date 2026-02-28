@@ -1430,6 +1430,7 @@ var xpwr_gly = [][]string{
 // pos xprw display
 var xpwr_pos = []int{
 	0,
+	0,
 	215,
 	112,
 	67,
