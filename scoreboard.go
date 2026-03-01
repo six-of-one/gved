@@ -46,7 +46,7 @@ func dlg_scboard(stsb string) {
 
 // 1 cycle to update any text on an image object and write canvas to a container
 
-func font_post(img *image.NRGBA, mcont *fyne.Container, cupd *fyne.Container) {
+func font_post(img *image.NRGBA, mcont *fyne.Container, cupd *fyne.Container, fnt1, fnt2 []dysb) {
 
 usbk := false
 
@@ -134,10 +134,10 @@ fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (s
 }
 
 	for i := 1; i <= max_sb; i++ {
-		sb_loop(i,sb)
+		sb_loop(i,fnt1)
 	}
 	for i := 1; i <= max_sb2; i++ {
-		sb_loop(i,sb2)
+		sb_loop(i,fnt2)
 	}
 
 	mcont.Remove(cupd)
@@ -161,10 +161,17 @@ func score_board(ntsb string) {
 //		tsb.Resize(fyne.NewSize(270, 120))
 		tsb.Refresh()
 	}
-	font_post(nil, scorec, scors)
+	font_post(nil, scorec, scors, sb, sb2)
 }
 
 // high score card update
+
+func highscores(cnv image.Image, mcnt *fyne.Container, updc *fyne.Container) {
+
+	img := blankimage(cnv.Bounds().Dx(), cnv.Bounds().Dy())
+	draw.Draw(img, img.Bounds(), cnv, image.ZP, draw.Over)		// put splash screen image on nrgba
+	font_post(img, mcnt, updc, sb, sb2)
+}
 
 
 // to change tsb

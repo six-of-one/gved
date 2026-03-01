@@ -178,14 +178,18 @@ splCyc = 13
 //fmt.Printf("Splash disp: %s\n",splashsrc)
 	}}
 	if upng {
-	err, spl, _ := itemGetPNG(splashsrc)
+	err, spl, hsc := itemGetPNG(splashsrc)
 		if err == nil {
-			splash.Remove(splim)
-			splim = container.NewStack(spl)
-			splash.Add(splim)
-		fyne.Do(func() {
-			splim.Refresh()
-		})
+			if splCyc >= 12 {
+				highscores(hsc,splash,splim)
+			} else {
+				splash.Remove(splim)
+				splim = container.NewStack(spl)
+				splash.Add(splim)
+			fyne.Do(func() {
+				splim.Refresh()
+			})
+			}
 		} else { fmt.Printf("Splash screen fail: %s\n",splashsrc);fmt.Print(err) }
 	}
 // show score tbl on 12, 13
