@@ -86,6 +86,7 @@ func splashrot() {
 	}
 
 // testing
+splCyc = 13
 
 /* stat save from se vars vids
 			vid.Src = "splash/g2samply_q.ogv"
