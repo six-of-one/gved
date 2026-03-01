@@ -131,7 +131,7 @@ func splashrot() {
 		splCyc++
 	}
 
-splCyc = 13
+splCyc = 12
 // testing
 //	if splCyc < 12 { hideScorDiv() }
 
