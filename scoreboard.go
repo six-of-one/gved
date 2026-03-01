@@ -27,7 +27,7 @@ func dlg_scboard(stsb string) {
 	tsb = container.NewStack()
 	sbtl = container.NewStack()
 
-	ova,ovb = HRGB{0xff010101},HRGB{0xff010101}
+	ova,ovb = HRGB{0xff000001},HRGB{0xff000001}
 	bas := loadfail(270, 600)
 	bld := canvas.NewRasterFromImage(bas)
 	scorec = container.NewWithoutLayout(bld)
@@ -44,25 +44,14 @@ func dlg_scboard(stsb string) {
 	tsb.Refresh()
 }
 
-// 1 cycle to update scoreboard
-// ---- think about only updating if data changed
+// 1 cycle to update any text on an image object and write canvas to a container
 
-func scor_post(ntsb string) {
+func font_post(img *image.NRGBA, mcont *fyne.Container, cupd *fyne.Container) {
 
-// REPLACE: samples only, need real vars for player data
-wxtr := []int{0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,}
-wpotsmp := 10
-wkeysmp := 5
-vmode := 0		// 0 for  G¹ / G², 1 for se
 usbk := false
 
-	if ntsb != "" {
-		gif_lodr(ntsb, tsb, sbtl, "")
-//		tsb.Resize(fyne.NewSize(270, 120))
-		tsb.Refresh()
-	}
 	ova,ovb = HRGB{0xff000001},HRGB{0xff000001}
-	img := loadfail(270, 600)
+	if img == nil { img = loadfail(270, 600) }
 //	p,q,r := 0.0,0.0,0.0
 	lfont := ".font/VPPxl.ttf"
 	sfont := 8.0
@@ -102,6 +91,13 @@ sb_loop := func(iv int, sbv []dysb) {
 		offset := image.Pt(x+sbv[iv].adj, y)
 		draw.Draw(img, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 	}}
+
+// REPLACE: samples only, need real vars for player data
+wxtr := []int{0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,}
+wpotsmp := 10
+wkeysmp := 5
+vmode := 0		// 0 for  G¹ / G², 1 for se
+// score board specials - jeys, potions, powers
 	if sbv[iv].fnr < 0 {
 fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (sbv[iv].fnr == -4))
 		a := sbv[iv].adj
@@ -144,17 +140,31 @@ fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (s
 		sb_loop(i,sb2)
 	}
 
-	scorec.Remove(scors)
+	mcont.Remove(cupd)
 	bld := canvas.NewRasterFromImage(img)
-savetopng("tst.png", img)
-	scors = container.NewStack(bld)
-	scorec.Add(scors)
-	scors.Resize(fyne.NewSize(270, 600))
-	scors.Refresh()
+//savetopng("tst.png", img)
+	cupd = container.NewStack(bld)
+	mcont.Add(cupd)
+	bx,by := float32(img.Bounds().Dx()),float32(img.Bounds().Dy())
+	cupd.Resize(fyne.NewSize(bx, by))
+	cupd.Refresh()
 
 }
 
-// high score card
+// 1 cycle to update scoreboard
+// ---- think about only updating if data changed
+
+func score_board(ntsb string) {
+
+	if ntsb != "" {
+		gif_lodr(ntsb, tsb, sbtl, "")
+//		tsb.Resize(fyne.NewSize(270, 120))
+		tsb.Refresh()
+	}
+	font_post(nil, scorec, scors)
+}
+
+// high score card update
 
 
 // to change tsb
