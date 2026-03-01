@@ -1585,19 +1585,20 @@ var sb2 = []dysb{
 // high score table
 var hsct = []dysb{
 	{0,0,"",0,0,0	,0,3,0	,0,0},
-	{6, 10.0,		"WARRIORS",222,10,10	,0,28,8	,0,		8},
+	{6, 10.0,		"WARRIORS",222,10,10	,0,28,8	,0,			8},
 	{0,0,"",0,0,0	,0,1,0	,0,0},
-	{22, 12.0,		"VALKYRIES",23,130,210	,0,194,8	,0,		8},
+	{6, 10.0,		 "ELVES",36,230,46		 ,0,220,8	 ,0,	8},
+
 }
 var hsct2 = []dysb{
 	{0,0,"",0,0,0	,0,3,0	,0,0},
-	{6, 10.0,		"ELVES",36,230,46		,0,220,135	,0,		8},
+	{6, 10.0,		"VALKYRIES",23,130,210  ,0,23,135	,0,		8},
 	{0,0,"",0,0,0	,0,1,0	,0,0},
-	{22, 12.0,		"WIZARDS",255,253,30	,0,31,135,	0,		8},
+	{6, 10.0,		"WIZARDS",255,253,30    ,0,210,135,     0,	8},
 }
 
 /* positioning by alg writes
-1	.font/Arcade.ttf,	x,y: 26,130, l:224, bcol: 0 ox,oy 0 0, msg:       LEVEL  XXX
+1	.font/Arcade.ttf,	x,y: 26,130, l:224, bcol: 0 ox,oy 0 0, msg:`LEVEL  XXX
 2	.font/VPPxl.ttf,	x,y: 26,148, l:406, bcol: FF4A0000 ox,oy 0 0, msg:                       WARRIOR
 3	.font/VPPxl.ttf,	x,y: 26,166, l:518, bcol: FF4A0000 ox,oy 0 0, msg:                SCORE           HEALTH
 4	.font/Arcade.ttf,	x,y: 26,184, l:252, bcol: FF4A0000 ox,oy 0 0, msg:       2420       0
@@ -1616,4 +1617,22 @@ var hsct2 = []dysb{
 20	.font/Arcade.ttf,	x,y: 26,472, l:238, bcol: FF001D01 ox,oy 0 0, msg:      INSERT COIN 
 
 1	.font/Gauntlet.ttf,	x,y: 26,130, l:126, bcol: 0 ox,oy 26 382, msg:  #####   
+*/
+
+/* titles, first cut
+	{6, 10.0,		"WARRIORS",222,10,10	,0,28,8	,0,		8},
+	{22, 12.0,		"VALKYRIES",23,130,210	,0,24,135	,0,		8},
+	{6, 10.0,		"ELVES",36,230,46		,0,218,8	,0,		8},
+	{22, 12.0,		"WIZARDS",255,253,30	,0,208,135,	0,		8},
+
+final pos 22/12.0
+	{22, 12.0,		"VALKYRIES",23,130,210  ,0,18,135	,0,		8},
+	{22, 12.0,		"WIZARDS",255,253,30    ,0,206,135,     0,	8},
+
+all pos 6/10.0
+	{6, 10.0,		"WARRIORS",222,10,10	,0,28,8	,0,			8},
+	{6, 10.0,		 "ELVES",36,230,46		 ,0,220,8	 ,0,	8},
+	{6, 10.0,		"VALKYRIES",23,130,210  ,0,23,135	,0,		8},
+	{6, 10.0,		"WIZARDS",255,253,30    ,0,210,135,     0,	8},
+
 */
