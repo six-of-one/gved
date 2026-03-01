@@ -132,11 +132,11 @@ fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (s
 		}}}
 	}
 }
-
-	for i := 1; i <= max_sb; i++ {
+	max_fn,max_fn2 := fnt1[0].xov,fnt2[0].xov		// array lens stored on item 0 xov
+	for i := 1; i <= max_fn; i++ {
 		sb_loop(i,fnt1)
 	}
-	for i := 1; i <= max_sb2; i++ {
+	for i := 1; i <= max_fn2; i++ {
 		sb_loop(i,fnt2)
 	}
 
@@ -170,7 +170,7 @@ func highscores(cnv image.Image, mcnt *fyne.Container, updc *fyne.Container) {
 
 	img := blankimage(cnv.Bounds().Dx(), cnv.Bounds().Dy())
 	draw.Draw(img, img.Bounds(), cnv, image.ZP, draw.Over)		// put splash screen image on nrgba
-	font_post(img, mcnt, updc, sb, sb2)
+	font_post(img, mcnt, updc, hsct, hsct2)
 }
 
 
