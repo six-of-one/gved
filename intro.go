@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"math/rand"
-//	"strconv"
-//	"strings"
 	"image"
 	"image/draw"
 	"time"
@@ -19,51 +17,7 @@ import (
 
 var splRot = 6000
 var splCyc = 0
-var splLoop = "0123456789ABCDEFKc"
-
-type Video struct {
-	Height     int
-	Width      int
-	Src        string
-	Muted      bool
-	Visibility string
-	// Simulate play, pause, load methods
-}
-
-func (v *Video) Play()   {}
-func (v *Video) Pause()  {}
-func (v *Video) Load()   {}
-func (v *Video) SetVisibility(vis string) {
-	v.Visibility = vis
-}
-
-type Image struct {
-	Src string
-}
-
-type Document struct {
-	IntroVid  *Video
-	Splash    *Image
-	ScorDiv   bool // true = visible, false = hidden
-	Splashrot *Image
-}
-
-var document = &Document{
-	IntroVid:  &Video{},
-	Splash:    &Image{},
-	ScorDiv:   false,
-	Splashrot: &Image{},
-}
-
-var AudioFX = struct {
-	Mute bool
-}{
-	Mute: false,
-}
-
-func showScorDiv() {
-	document.ScorDiv = true
-}
+var splLoop = "0123456789ABCDEFK2"
 
 // blank bkg display
 // not removing previous spc blackout - does this low key leak mem, or does garbage collect clear it?
@@ -93,7 +47,7 @@ func gif_lodr(fn string, lod, lim *fyne.Container, mus string) bool {
 		lim.Refresh()
 //fmt.Printf("Splash load: %s\n",fn)
 	})
-		gif.Start()
+		gif.Start()					// sometime - search this out in gif.go and find out what it does
 		lded = true
 		if mus != "" { play_sfx(mus) }
 	} else { fmt.Printf("gif lod issue: %s\n",fn); fmt.Println(err)}
@@ -131,27 +85,20 @@ func splashrot() {
 		splCyc++
 	}
 
-splCyc = 12
 // testing
-//	if splCyc < 12 { hideScorDiv() }
 
-/*
+/* stat save from se vars vids
 			vid.Src = "splash/g2samply_q.ogv"
 			rot = 119700
-			if rand.Float64() < 0.4 {
-				vid.Src = "splash/gII_intro.ogv"
-				rot = 25200
-			}
-			if rand.Float64() < 0.27 {
-				vid.Src = "splash/gIV_intro.ogv"
-				rot = 20650
-			}
-			if rand.Float64() < 0.22 {
-				vid.Src = "splash/gN_intro.ogv"
-				rot = 34210  */
+			vid.Src = "splash/gII_intro.ogv"
+			rot = 25200
+			vid.Src = "splash/gIV_intro.ogv"
+			rot = 20650
+			vid.Src = "splash/gN_intro.ogv"
+			rot = 34210  */
 
 	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
-//	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
+//	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2 - test mode
 
 // add g1 & 2 smpl gifs & musics, later other intro sets
 
@@ -194,11 +141,9 @@ splCyc = 12
 	}
 // show score tbl on 12, 13
 	if splCyc >= 12 {
-//fmt.Printf("Scores: %s\n",splashsrc)
 		if rand.Float64() > 0.9 {		// this skips title scroller, strait into g1 ghosts pg
 			splCyc = 1
 		}
-		showScorDiv()
 	}}
 
 	sec = true		// second loop+
