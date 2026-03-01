@@ -101,6 +101,14 @@ vmode := 0		// 0 for  G¹ / G², 1 for se
 	if sbv[iv].fnr < 0 {
 fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (sbv[iv].fnr == -4))
 		a := sbv[iv].adj
+		if sbv[iv].fnr == -1 {		// display 1 png
+			err,_,wp := itemGetPNG(sbv[iv].msb)
+			if err == nil {
+			x,y := sbv[iv].xov,sbv[iv].yov
+				offset := image.Pt(x, y)
+				draw.Draw(img, wp.Bounds().Add(offset), wp, image.ZP, draw.Over)
+			}else { fmt.Printf("lod issue: gfx/sb/key.png\n"); fmt.Println(err)}
+		}
 		if sbv[iv].fnr == -3 {		// keys
 			err,_,wp := itemGetPNG(xpwr_gly[0][vmode])
 			if err == nil {
