@@ -77,7 +77,7 @@ sb_loop := func(iv int, sbv []dysb) {
 		gtop.Clear()
 		gtop.SetRGB(sbv[iv].r/255.0, sbv[iv].g/255.0, sbv[iv].b/255.0)
 		cpos := 0.0
-		gtop.DrawStringAnchored(c, 6, 6, cpos, 0.5)
+		gtop.DrawStringAnchored(c, sbv[iv].dsi, sbv[iv].dsi, cpos, 0.5)
 		bc := HRGB{sbv[iv].bkg}
 		if bc != (HRGB{0}) && usbk {
 	//		cc := HRGB{sbv[iv].bkg}
