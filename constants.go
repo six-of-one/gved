@@ -1473,7 +1473,7 @@ var xpwr_pos = [][]int{
 
 // font testing
 var font_tst int		// cycle thru all test fonts
-var max_font int = 20
+var max_font int = 28
 var ld_font = map[int]string{
 	1:	"3270-reg.ttf",
 	2:	"Atari-reg.ttf",
