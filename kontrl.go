@@ -272,58 +272,7 @@ func typedRune(r rune) {
 
 //fmt.Printf("r %v shift %v\n",r,shift)
   if actab == "Sprites" {
-		dx := 8
-		if logo { dx = 1 }
-		switch r {
-		case '[':
-			psel = maxint(0,minint(psel-1,15))
-			selptype.SetSelectedIndex(psel)
-			pallim = ptyp_lim[selptype.Selected]
-		case ']':
-			psel = maxint(0,minint(psel+1,15))
-			selptype.SetSelectedIndex(psel)
-			pallim = ptyp_lim[selptype.Selected]
-		case 'p':
-			pnumsel++
-			pnum_bounds()
-		case 'o':
-			pnumsel--
-			pnum_bounds()
-		case 'r':
-			shr++
-		case 'e':
-			shr--
-		case 'c':
-			shc++
-		case 'x':
-			if sheet_read { shc-- } else {
-			svx++ }
-		case 'z':
-			svx--
-		case 'y':
-			svy++
-		case 'u':
-			svy--
-		case 'X':
-			shx += dx
-		case 'Z':
-			shx -= dx
-		case 'Y':
-			shy += dx
-		case 'U':
-			shy -= dx
-		case 'b':
-			prcadr += svx*svy
-			radr_bounds()
-		case 'v':
-			prcadr -= svx*svy
-			radr_bounds()
-		case '?':
-			sprites_keys()
-		}
-		xysiz_bounds()
-		shsiz_bounds()
-		rowcol_bounds()
+		spr_keytyp(r)
   } else {
 		edkey = valid_keys(int(r))
 		if cmdoff {
