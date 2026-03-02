@@ -68,7 +68,7 @@ func splashrot() {
   for {
 	rot := splRot		// def 6000 millis
 
-  if actab == "Game" && splCyc > 0 {		// tab loaded where this happen, set cyc to -1 for game run
+  if actab == "Game" && splCyc >= 0 {		// tab loaded where this happen, set cyc to -1 for game run
 
 	upng := true
 // sample play if it didnt play after title, these screens are already done
@@ -166,3 +166,22 @@ fmt.Printf("cyc: %d subcyc: %d\n",splCyc,splsubCyc)
 			vid.Src = "splash/gN_intro.ogv"
 			rot = 34210
 */
+
+// key press will not take effect until timeout
+// the only way to aborgate this is a shorter timeout and some kind of counter
+
+func splash_keytyp(r rune) {
+
+	switch r {
+
+// call up high score table
+	case 'S','s':
+		splCyc = 1
+		err, _, hsc := itemGetPNG("splash/splashD.png")
+		if err == nil {
+			highscores(hsc,splash,splim)
+		}
+	}
+// start a game!
+
+}
