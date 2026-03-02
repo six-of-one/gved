@@ -421,7 +421,7 @@ var lim *fyne.Container
 			}
 		if fccol.Checked {
 			if prcadr >= 3562 && prcadr <= 4213 { selptype.SetSelectedIndex(5); pnumsel = 0 }
-			if prcadr >= 5395 && prcadr <= 6050 { selptype.SetSelectedIndex(10); pnumsel = 3 }
+			if prcadr >= 5394 && prcadr <= 6050 { selptype.SetSelectedIndex(10); pnumsel = 3 }
 			if prcadr >= 4954 && prcadr <= 5385 { selptype.SetSelectedIndex(9); pnumsel = 2 }
 			if prcadr >= 4231 && prcadr <= 4945 { selptype.SetSelectedIndex(8); pnumsel = 1 }
 			if prcadr >= 2915 && prcadr <= 3533 { selptype.SetSelectedIndex(7); pnumsel = 0 }
@@ -429,11 +429,13 @@ var lim *fyne.Container
 			if prcadr >= 6189 && prcadr <= 6764 { selptype.SetSelectedIndex(5); pnumsel = 8 }	//demons
 			if prcadr >= 6773 && prcadr <= 6984 { selptype.SetSelectedIndex(5); pnumsel = 0 }	//deth
 			if prcadr >= 6993 && prcadr <= 7234 { selptype.SetSelectedIndex(5); pnumsel = 11 }	//deth
-			if prcadr >= 7240 && prcadr <= 7600 { selptype.SetSelectedIndex(5); pnumsel = 0 }	//dors +
+			if prcadr >= 7240 && prcadr <= 7444 { selptype.SetSelectedIndex(5); pnumsel = 1 }	//lob shots
+			if prcadr >= 7448 && prcadr <= 7600 { selptype.SetSelectedIndex(5); pnumsel = 0 }	//dors +
 			if prcadr >= 7604 && prcadr <= 7628 { selptype.SetSelectedIndex(5); pnumsel = 5 }	//nums
 			if prcadr >= 7631 && prcadr <= 7680 { selptype.SetSelectedIndex(5); pnumsel = 1 }
 			if prcadr >= 8960 && prcadr <= 9648 { selptype.SetSelectedIndex(5); pnumsel = 1 }
 			if prcadr >= 9691 && prcadr <= 9726 { selptype.SetSelectedIndex(5); pnumsel = 1 }
+			if prcadr >= 9728 && prcadr <= 9863  { selptype.SetSelectedIndex(5); pnumsel = 8 }
 			if prcadr >= 10024 && prcadr <= 10044 { selptype.SetSelectedIndex(5); pnumsel = 1 }
 			if prcadr >= 10080 && prcadr <= 10120 { selptype.SetSelectedIndex(5); pnumsel = 1 }
 			if prcadr >= 8448 && prcadr <= 8944 { selptype.SetSelectedIndex(5); pnumsel = 8 }
