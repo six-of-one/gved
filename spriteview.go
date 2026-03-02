@@ -339,18 +339,20 @@ var lim *fyne.Container
 		gsv := G1
 		if g2m.Checked { G1 = false }
 		fmt.Sscanf(lasadr,"%d",&prcadr)
+		fx,fy,gx,gy := 0,0,0,0
 		if chkg1rom.Checked && fchak.Checked {
 			tpc := prcadr - 1
 			if prcadr < 926 && (tpc % 16) == 0 { xsiz.SetText("4"); ysiz.SetText("4") }
 			if prcadr == 0 || prcadr == 16 { xsiz.SetText("4"); ysiz.SetText("4") }
 			if prcadr >= 2048 && prcadr < 6993 { xsiz.SetText("3"); ysiz.SetText("3") }
+			if prcadr == 7228 { gx,gy = 3*8+trnc, 3*8+trnc }
+			if prcadr == 8035 || prcadr == 9333 { gx,gy = 4*8+trnc, 4*8+trnc }
 
 		}
-		fx,fy,gx,gy := 0,0,0,0
 		subf := int((float64(pixx) / (opts.Geoh-190))* 116)
 		if uroms {
 	// calc how many rows & cols of sprites will fit in pixel area
-			gx,gy = svx*8+trnc, svy*8+trnc
+			if gx == 0 && gy == 0 { gx,gy = svx*8+trnc, svy*8+trnc }
 //fmt.Printf("subf: %d, %f, %f\n",subf, float64(pixx) / (opts.Geoh-190),(float64(pixx) / (opts.Geoh-190)) * 118)
 			bstamp = Stamp{} //itemGetStamp("key")
 		} else {
@@ -394,8 +396,8 @@ var lim *fyne.Container
 				if prcadr == 7540 { spadj = 7542 }
 				if prcadr == 7551 { spadj = 7548 }
 				if prcadr == 7542 || prcadr == 7631 || prcadr == 8960 || prcadr == 9691 || prcadr == 9728 || prcadr == 10080 || prcadr == 10124 { xsiz.SetText("3"); ysiz.SetText("3"); asvx,asvy = 3,3 }
-				if prcadr == 8035 || prcadr == 9333 { gx,gy = 4*8+trnc, 4*8+trnc }
 				if prcadr == 7228 { gx,gy = 3*8+trnc, 3*8+trnc }
+				if prcadr == 8035 || prcadr == 9333 { gx,gy = 4*8+trnc, 4*8+trnc }
 				if prcadr == 8437 { spadj = 8438 }
 				if prcadr == 8450 { spadj = 8448 }
 				if prcadr == 9680 { spadj = 9691 }
