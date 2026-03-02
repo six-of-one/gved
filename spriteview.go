@@ -340,7 +340,11 @@ var lim *fyne.Container
 		if g2m.Checked { G1 = false }
 		fmt.Sscanf(lasadr,"%d",&prcadr)
 		if chkg1rom.Checked && fchak.Checked {
-			
+			tpc := prcadr - 1
+			if prcadr < 926 && (tpc % 16) == 0 { xsiz.SetText("4"); ysiz.SetText("4") }
+			if prcadr == 0 || prcadr == 16 { xsiz.SetText("4"); ysiz.SetText("4") }
+			if prcadr >= 2048 && prcadr < 6993 { xsiz.SetText("3"); ysiz.SetText("3") }
+
 		}
 		fx,fy,gx,gy := 0,0,0,0
 		subf := int((float64(pixx) / (opts.Geoh-190))* 116)
@@ -362,17 +366,40 @@ var lim *fyne.Container
 		for y := 0; y <= fy; y++ {
 		for x := 0; x <= fx; x++ {
 		  if uroms {
+			spadj := 0
 			st = fmt.Sprintf("%d",prcadr)
 			asvx,asvy := svx,svy
 			if chkg1rom.Checked && fchak.Checked {
 		// 0xXXFC specific - tile mode 3x3 and addr ending in FC, those are always 2x2 tiles in 3x3 range
 				if prcadr >= 0x800 && (prcadr & 0xFF) == 0xFC {
 				if svx == 3 && svx == 3 { asvx,asvy = 2,2 }
+				} else {
 		// dyanmic address mode - attempt a track of most size changes in G¹ / G² roms statrting anywhere
-				
+		// these have to run seq from a detectable start
+				tpc := prcadr - 1
+				if prcadr == 0 { xsiz.SetText("4"); ysiz.SetText("4"); asvx,asvy = 4,4; gx,gy = asvx*8+trnc, asvy*8+trnc }
+				if prcadr == 16 { xsiz.SetText("1"); ysiz.SetText("1"); asvx,asvy = 1,1 }
+				if prcadr > 16 && prcadr < 926 && (tpc % 16) == 0 { xsiz.SetText("4"); ysiz.SetText("4"); asvx,asvy = 4,4; gx,gy = asvx*8+trnc, asvy*8+trnc }
+				if prcadr == 913 { spadj = 926 }
+				if prcadr == 926 || prcadr == 9718 { xsiz.SetText("2"); ysiz.SetText("1"); asvx,asvy = 2,1 }
+				if prcadr == 932 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
+				if prcadr == 936 || prcadr == 8448 || prcadr == 9472 || prcadr == 10048 { xsiz.SetText("4"); ysiz.SetText("4"); asvx,asvy = 4,4 }
+				if prcadr >= 2048 && prcadr < 6993 { xsiz.SetText("3"); ysiz.SetText("3"); asvx,asvy = 3,3 }
+				if prcadr == 2040 { spadj = 2048 }
+				if prcadr == 6993 || prcadr == 7111 || prcadr == 7168 || prcadr == 7693 || prcadr == 8438 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }
+				if prcadr == 7107 || prcadr == 7240 || prcadr == 7307 || prcadr == 7548 || prcadr == 7689 || prcadr ==10024 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
+				if prcadr == 7165 { xsiz.SetText("1"); ysiz.SetText("3"); asvx,asvy = 1,3 }
+				if prcadr == 7304 || prcadr == 7604  { xsiz.SetText("3"); ysiz.SetText("1"); asvx,asvy = 3,1 }
+				if prcadr == 7419 { spadj = 7424 }
+				if prcadr == 7540 { spadj = 7542 }
+				if prcadr == 7542 || prcadr == 7631 || prcadr == 8960 || prcadr == 9691 || prcadr == 9728 { xsiz.SetText("3"); ysiz.SetText("3"); asvx,asvy = 3,3 }
+				if prcadr == 8437 { spadj = 8438 }
+				if prcadr == 9680 { spadj = 9691 }
+				if prcadr == 10020 { spadj = 10024 }
 			}}
 			bstamp.numbers = tilerange(prcadr, asvx * asvy)
 			prcadr += asvx * asvy
+			if spadj > 0 { prcadr = spadj }
 			bstamp.width = asvx
 			bstamp.trans0 = xpar.Checked
 			bstamp.pnum = pnumsel
