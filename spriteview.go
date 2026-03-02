@@ -170,7 +170,7 @@ var lim *fyne.Container
 	})
 // gauntlet palete type - vars lists in palettes.go
 	selptype = widget.NewSelect([]string{"teleff","floor","gfloor","wall","gwall","base","gbase","warrior","valkyrie","wizard","elf","trap","stun","secret","shrub","forcefield"}, func(str string) {
-		fmt.Printf("Select ptype: %s\n", str)
+//		fmt.Printf("Select ptype: %s\n", str)
 		paltype = str
 		psel = selptype.SelectedIndex()
 		pallim = ptyp_lim[str]
@@ -355,7 +355,7 @@ var lim *fyne.Container
 			if prcadr == 7813 || prcadr == 8035 || prcadr == 9315 || prcadr == 10020 { gx,gy = 4*8+trnc, 4*8+trnc }
 	// dragons
 			if (prcadr >= 8448 && prcadr <= 8944 && (prcadr % 16) == 0) || (prcadr >= 9472 && prcadr <= 9552 && (prcadr % 16) == 0) || prcadr == 10048 || prcadr == 10064 { xsiz.SetText("4"); ysiz.SetText("4"); gx,gy = 4*8+trnc, 4*8+trnc }
-fmt.Printf("p: %d m 16 = %d\n",prcadr,prcadr % 16)
+//fmt.Printf("p: %d m 16 = %d\n",prcadr,prcadr % 16)
 		}
 		subf := int((float64(pixx) / (opts.Geoh-190))* 116)
 		if uroms {
@@ -420,13 +420,18 @@ fmt.Printf("p: %d m 16 = %d\n",prcadr,prcadr % 16)
 				if asvy == 1 { usvy = 16 }
 			}
 		if fccol.Checked {
-			if prcadr >= 2048 && prcadr <= 2906 { selptype.SetSelectedIndex(5); pnumsel = 4; xpck = false }
-			if prcadr >= 2475 && prcadr <= 2520 { pnumsel = 5 }
-			if prcadr >= 2403 && prcadr <= 2466 { pnumsel = 1 }
-			if prcadr == 2300 || prcadr == 2340 || prcadr == 2556 || prcadr == 2812 { pnumsel = 1 }
+			if prcadr == 3068 || prcadr == 3324 || prcadr == 3580 { selptype.SetSelectedIndex(5); pnumsel = 5; xpck = false }		// exit
+			if prcadr >= 3562 && prcadr <= 4213 { selptype.SetSelectedIndex(5); pnumsel = 0 }
+			if prcadr >= 4954 && prcadr <= 5385 { selptype.SetSelectedIndex(9); pnumsel = 2 }
+			if prcadr >= 4231 && prcadr <= 4945 { selptype.SetSelectedIndex(8); pnumsel = 1 }
+			if prcadr >= 2915 && prcadr <= 3533 { selptype.SetSelectedIndex(7); pnumsel = 0 }
+			if prcadr >= 2048 && prcadr <= 2906 { selptype.SetSelectedIndex(5); pnumsel = 4 }
+			if prcadr >= 2475 && prcadr <= 2520 { pnumsel = 5 }		// gens
+			if prcadr >= 2403 && prcadr <= 2466 { pnumsel = 1 }		// items
+			if prcadr == 2300 || prcadr == 2340 || prcadr == 2556 || prcadr == 2812 || prcadr == 4604 || prcadr == 4860 || prcadr == 5116 || prcadr == 5372 { selptype.SetSelectedIndex(5); pnumsel = 1 }
 			if prcadr >= 926 && prcadr <= 935 { selptype.SetSelectedIndex(5); pnumsel = 5; xpck = false }
 			if prcadr == 932 { pnumsel = 26 }
-			if prcadr < 926 { selptype.SetSelectedIndex(3); pnumsel = 3 }
+			if prcadr < 926 { selptype.SetSelectedIndex(3); pnumsel = 3; xpck = false }
 			if prcadr < 481 { selptype.SetSelectedIndex(1); pnumsel = 1 }
 		}
 			}
