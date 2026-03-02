@@ -150,8 +150,8 @@ var lim *fyne.Container
 		adr_spc.Hide()
 		adr_label.SetText("Read c/r:")
 	})
-// g2 mode enable
-	g2m := widget.NewCheck("G2 mode", func(g bool) {
+// G² mode enable
+	g2m := widget.NewCheck("G² mode", func(g bool) {
 		fmt.Printf("Gauntlet 2 gfx mode %t\n", g)
 	})
 // keep fixed address
@@ -292,7 +292,7 @@ var lim *fyne.Container
 	})
 
 // build button
-// need - g1/g2 flag check, tranpar flag
+// need - G¹/G² flag check, tranpar flag
 // adjust so it fills test area w/ gx,gy
 	bld_btn = widget.NewButton("BUILD", func() {
 		var bstamp Stamp

@@ -149,7 +149,7 @@ func shad_wallpat() int {
 func checkwalladj3g1(maze *Maze, xdat Xdat, x int, y int) int {
 	adj := 0
 	wp := maze.wallpattern
-	wpsha := shad_wallpat()		// what wall patterns have shadows, G2 < 11, SE < 6
+	wpsha := shad_wallpat()		// what wall patterns have shadows, G² < 11, SE < 6
 
 	if !iswallg1(scanbuf(maze.data, x, y, x, y, -2)) {	// no need for a shadow under a wall
 

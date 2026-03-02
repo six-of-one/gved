@@ -613,7 +613,7 @@ var wallPalettes = [][]color.Color{
 
 var basePalettes = [][]color.Color{
 
-// org coded palettes to 11 - do not perfectly match g2 color ram dump...
+// org coded palettes to 11 - do not perfectly match G² color ram dump...
 
  { IRGB{0x0000}, IRGB{0x0000}, IRGB{0x988F}, IRGB{0xA99F}, IRGB{0xC99F}, IRGB{0xFBBF}, IRGB{0xA888}, IRGB{0x0000}, IRGB{0x9999}, IRGB{0x7F8F}, IRGB{0x711F}, IRGB{0x5F93}, IRGB{0x6F84}, IRGB{0xEF86}, IRGB{0xF0F0}, IRGB{0xFFBB}, },
  { IRGB{0x0000}, IRGB{0x0000}, IRGB{0x7F84}, IRGB{0x8F85}, IRGB{0xAF83}, IRGB{0x40F7}, IRGB{0xFF20}, IRGB{0xFF82}, IRGB{0xFFC0}, IRGB{0xFFFF}, IRGB{0x5F50}, IRGB{0x81F8}, IRGB{0xEF88}, IRGB{0xD79F}, IRGB{0xA17F}, IRGB{0xA00F}, },

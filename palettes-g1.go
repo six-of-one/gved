@@ -626,10 +626,10 @@ var g1wallPalettes = [][]color.Color{
 	},
 }
 
-// g1 pallet is differs from g2 in a few places
+// G¹ pallet is differs from G² in a few places
 var g1basePalettes = [][]color.Color{
 
-// all g1 palettes in mame F4
+// all G¹ palettes in mame F4
 // mem dump from 910200 - 9105FF
 /*910200*/
 // palette 0 - death, doors, maybe thief, trans, forcefield hub

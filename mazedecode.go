@@ -12,7 +12,7 @@ func getbytefortype(t int) int {
 }
 
 func index2xy(index int) (x int, y int) {
-// g1 mazes generate index < 0 with some vexpand, just block them off seems ok
+// G¹ mazes generate index < 0 with some vexpand, just block them off seems ok
 	if index < 0 {
 		fmt.Printf("ERROR: Coordinates requested for index < 0: %d\n", index)
 //		panic("Coordinates requested for index < 0")
@@ -122,7 +122,7 @@ func vexpand(maze *Maze, location int, t int, count int) int {
 }
 
 // Outoput is maze[y][x]
-// added g1 / g2 flagger
+// added G¹ / G² flagger
 func mazeDecompress(compressed []int, metaonly bool) *Maze {
 //	rand.Seed(5)
 	//  var m [32][32]int
@@ -153,9 +153,9 @@ if opts.Verbose {
 	opts.DimX = 31; opts.DimY = 31
 
 // have to do this before buffers are set
-// g1 likely has nothing like g2 stuff, and might not use flags at all
+// G¹ likely has nothing like G² stuff, and might not use flags at all
 	if G1 {
-// g1 wrap data is still not known, just making this manual for now
+// G¹ wrap data is still not known, just making this manual for now
 		horz := true		// check horz first
 		for i := 0; i < 70; i++ {
 
@@ -224,8 +224,8 @@ if opts.Verbose {
 		maze.floorcolor = Ovflorcol
 	}
 
-// removed - this could be g1 codes, hard to tell with out the g1 gfx roms loaded
-// the higher wall patterns is where g2 does shrubs - g1 has no such, as rodger the shrubber could not be contacted during g1 dev
+// removed - this could be G¹ codes, hard to tell with out the G¹ gfx roms loaded
+// the higher wall patterns is where G² does shrubs - G¹ has no such, as rodger the shrubber could not be contacted during G¹ dev
 /*	if G1 {
 		if maze.wallpattern > 5 {
 			maze.wallpattern = rand.Intn(4)
@@ -290,7 +290,7 @@ if opts.Verbose { fmt.Printf("mdcmp wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4
 			case 0x00: // repeat type
 				if (token & 0x10) != 0 {
 
-// vexp goes negative on g1 mazes - blocking it off seems not to affect g1 maze renders
+// vexp goes negative on G¹ mazes - blocking it off seems not to affect G¹ maze renders
 			if location - ((count - 1) * 32) > 0 {
 					location = vexpand(maze, location, previtem, count)
 			}
@@ -311,7 +311,7 @@ if opts.Verbose { fmt.Printf("mdcmp wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4
 			if (token & 0x20) != 0 { // Repeat wall
 				if (token & 0x10) != 0 {
 					// vertical
-// vexp goes negative on g1 mazes
+// vexp goes negative on G¹ mazes
 			if location - ((count - 1) * 32) > 0 {
 					location = vexpand(maze, location, MAZEOBJ_WALL_REGULAR, count)
 			}
@@ -371,9 +371,9 @@ func justDecompress(compressed []int, metaonly bool) *Maze {
 	opts.DimX = 31; opts.DimY = 31
 
 // have to do this before buffers are set
-// g1 likely has nothing like g2 stuff, and might not use flags at all
+// G¹ likely has nothing like G² stuff, and might not use flags at all
 	if G1 {
-// g1 wrap data is still not known, just making this manual for now
+// G¹ wrap data is still not known, just making this manual for now
 		horz := true		// check horz first
 		for i := 0; i < 70; i++ {
 
@@ -461,7 +461,7 @@ func justDecompress(compressed []int, metaonly bool) *Maze {
 			case 0x00: // repeat type
 				if (token & 0x10) != 0 {
 
-// vexp goes negative on g1 mazes - blocking it off seems not to affect g1 maze renders
+// vexp goes negative on G¹ mazes - blocking it off seems not to affect G¹ maze renders
 			if location - ((count - 1) * 32) > 0 {
 					location = vexpand(maze, location, previtem, count)
 			}
@@ -482,7 +482,7 @@ func justDecompress(compressed []int, metaonly bool) *Maze {
 			if (token & 0x20) != 0 { // Repeat wall
 				if (token & 0x10) != 0 {
 					// vertical
-// vexp goes negative on g1 mazes
+// vexp goes negative on G¹ mazes
 			if location - ((count - 1) * 32) > 0 {
 					location = vexpand(maze, location, MAZEOBJ_WALL_REGULAR, count)
 			}

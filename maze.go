@@ -34,7 +34,7 @@ func mazeMetaPrint(maze *Maze, stp bool) string {
 	if eflg[4] > 0 { fmtsp += fmt.Sprintf("_______________________________%08b\n",eflg[4]) }
 	if maze.flags > 0 { fmtsp += fmt.Sprintf("    val:{ %v }\n",maze.flags) }
 	g1flg := false
-	g1mask := 0xB3			// see constants.go, g1 only has these flags type elements, yet I dont think they are controlled by flags
+	g1mask := 0xB3			// see constants.go, G¹ only has these flags type elements, yet I dont think they are controlled by flags
 	for k, v := range mazeFlagStrings {
 		if (maze.flags & k) != 0 {
 			if G1 {
@@ -70,7 +70,7 @@ func domaze(arg string) {
 	var mazeMeta = 0
 	maxmaze = 116
 
-// g1 has more mazes, but treasure rooms can only spec from address, for now
+// G¹ has more mazes, but treasure rooms can only spec from address, for now
 	if G1 { maxmaze = 126 }
 
 	for _, ss := range split {
@@ -175,10 +175,10 @@ if opts.Verbose {
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{lastx - tx, ty}] = maze.data[xy{ty, tx}]
-// g1 - must transform all dors on a rotat since they have horiz & vert dependent
+// G¹ - must transform all dors on a rotat since they have horiz & vert dependent
 				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_HORIZ { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_VERT } else {
 				if xform[xy{lastx - tx, ty}] == G1OBJ_DOOR_VERT { xform[xy{lastx - tx, ty}] = G1OBJ_DOOR_HORIZ } }
-// g2
+// G²
 				if xform[xy{lastx - tx, ty}] == MAZEOBJ_DOOR_HORIZ { xform[xy{lastx - tx, ty}] = MAZEOBJ_DOOR_VERT } else {
 				if xform[xy{lastx - tx, ty}] == MAZEOBJ_DOOR_VERT { xform[xy{lastx - tx, ty}] = MAZEOBJ_DOOR_HORIZ } }
 			}}
@@ -187,10 +187,10 @@ if opts.Verbose {
 			for ty := sy; ty <= lasty; ty++ {
 			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{tx, lasty - ty}] = maze.data[xy{ty, tx}]
-// g1
+// G¹
 				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_HORIZ { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_VERT } else {
 				if xform[xy{tx, lasty - ty}] == G1OBJ_DOOR_VERT { xform[xy{tx, lasty - ty}] = G1OBJ_DOOR_HORIZ } }
-// g2
+// G²
 				if xform[xy{tx, lasty - ty}] == MAZEOBJ_DOOR_HORIZ { xform[xy{tx, lasty - ty}] = MAZEOBJ_DOOR_VERT } else {
 				if xform[xy{tx, lasty - ty}] == MAZEOBJ_DOOR_VERT { xform[xy{tx, lasty - ty}] = MAZEOBJ_DOOR_HORIZ } }
 			}}

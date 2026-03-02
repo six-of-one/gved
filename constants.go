@@ -71,7 +71,7 @@ const (
 	MAZEOBJ_EXTEND
 )
 
-// Six: g1 objects
+// Six: G¹ objects
 const (
 	G1OBJ_TILE_FLOOR = 0
 // 1
@@ -157,9 +157,9 @@ const (
 	SEOBJ_STUN					= 101
 	SEOBJ_PUSHWAL				= 103
 	SEOBJ_SECRTWAL				= 104
-// 5 is g2 destruct wall
+// 5 is G² destruct wall
 	SEOBJ_RNDWAL				= 106
-	SEOBJ_WAL_TRAPCYC1			= 107		// g2 trap & cycle walls
+	SEOBJ_WAL_TRAPCYC1			= 107		// G² trap & cycle walls
 	SEOBJ_WAL_TRAPCYC2			= 108
 	SEOBJ_WAL_TRAPCYC3			= 109
 	SEOBJ_TILE_TRAP1			= 110
@@ -167,8 +167,8 @@ const (
 	SEOBJ_TILE_TRAP3			= 112
 	SEOBJ_DOOR_H				= 113
 	SEOBJ_DOOR_V				= 114
-// g2 start
-// g2 exit
+// G² start
+// G² exit
 	SEOBJ_EXIT6					= 117
 	SEOBJ_G2GHOST				= 118
 	SEOBJ_G2GRUNT				= 119
@@ -198,15 +198,15 @@ const (
 	SEOBJ_G2GN_AUXGR1			= 143
 	SEOBJ_G2GN_AUXGR2			= 144
 	SEOBJ_G2GN_AUXGR3			= 145
-// g2 treasure
+// G² treasure
 	SEOBJ_TREASURE_LOCKED		= 147
-// g2 treasure bag
-// g2 food destr
-// g2 food inv
-// g2 pot
-// g2 pot inv
-// g2 key				153
-// g2 power invis
+// G² treasure bag
+// G² food destr
+// G² food inv
+// G² pot
+// G² pot inv
+// G² key				153
+// G² power invis
 	SEOBJ_SE_ANKH				= 154
 	SEOBJ_POWER_REPULSE			= 155
 	SEOBJ_POWER_REFLECT			= 156
@@ -214,11 +214,11 @@ const (
 	SEOBJ_POWER_SUPERSHOT		= 158
 	SEOBJ_POWER_INVULN			= 159
 	SEOBJ_MONST_DRAGON			= 160
-// g2 hidden potion
-// g2 transport
+// G² hidden potion
+// G² transport
 	SEOBJ_FORCEFIELDHUB			= 163
 	SEOBJ_MONST_MUGGER			= 164
-// g2 thief
+// G² thief
 // extend - sanctuary engine specific
 	SEOBJ_FIRE_STICK			= 166		// 26, 33
 	SEOBJ_G2_POISPOT			= 167		// 8, 11
@@ -287,10 +287,10 @@ const (
 	NOTHN = 256		// anything else left			511  - all the items
 	NOFLOOR = 512
 	NOWALL = 1024	//								1536 - floors & walls
-	NOG1W = 2048	// g1 std wall only
+	NOG1W = 2048	// G¹ std wall only
 	ANIM = 4096		// animated
 )
-// G1 - list of "wrap levels"
+// G¹ - list of "wrap levels"
 var g1wrp = []int{
 // horiz wraps
 	7, 15, 26, 32, 34, 36, 38, 39, 40, 54, 74, 80, 97, 98, 116, 118, 121,
@@ -893,7 +893,7 @@ var g2auds = map[int]string{
 	MAZEOBJ_EXTEND: 		"",
 }
 
-// translate  g2 map into sanctuary now - have to decide how editor will store, but prob all se from here out
+// translate  G² map into sanctuary now - have to decide how editor will store, but prob all se from here out
 
 var g2tose = map[int]int{
 	MAZEOBJ_TILE_FLOOR:		0,

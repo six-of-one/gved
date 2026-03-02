@@ -278,7 +278,7 @@ var itemStamps = map[string]Stamp{
 
 	"tport": Stamp{
 		width:   2,
-		numbers: tilerange(0x49e, 4),		// g2
+		numbers: tilerange(0x49e, 4),		// G²
 		ptype:   "teleff",
 		pnum:    0,
 		trans0:  true,
@@ -286,7 +286,7 @@ var itemStamps = map[string]Stamp{
 	},
 	"tportg1": Stamp{
 		width:   2,
-		numbers: tilerange(0x3a4, 4),		// g1
+		numbers: tilerange(0x3a4, 4),		// G¹
 		ptype:   "teleff",
 		pnum:    0,
 		trans0:  true,
@@ -319,7 +319,7 @@ var itemStamps = map[string]Stamp{
 		trans0:  false,
 		mask:    NOEXP,
 	},
-	"exitg1": Stamp{				// g1 exits wont take floor palette it seems
+	"exitg1": Stamp{				// G¹ exits wont take floor palette it seems
 		width:   2,
 		numbers: tilerange(0xbfc, 4),
 		ptype:   "base",

@@ -9,7 +9,7 @@ type Romset struct {
 	roms   []string
 }
 
-/* rom md5s - these are used by all revs of g1 / g2
+/* rom md5s - these are used by all revs of G¹ / G²
 
 aef6687efa3a8dd75bbc5af9886bb56e  ROMs-g1/136037-111.1a
 20b8d6bd306b258fb7d6dcac237dafa2  ROMs-g1/136037-113.1l
@@ -93,7 +93,7 @@ var tileRomsG1 = [][]string{
 		"ROMs-g1/136037-115.2a",
 		"ROMs-g1/136037-117.2l",
 	},
-// yes. these are a repeat of the g2 roms
+// yes. these are a repeat of the G² roms
 // no. i dont feel like horking the code to exclude them, i like the structure the way it is
 	{
 		"ROMs-g1/136037-112.1b",
@@ -101,7 +101,7 @@ var tileRomsG1 = [][]string{
 		"ROMs-g1/136037-116.2b",
 		"ROMs-g1/136037-118.2mn",
 	},
-// these are the g2 - only gfx, leaving them, in case a g1 read slips in a g2 item some way
+// these are the G² - only gfx, leaving them, in case a G¹ read slips in a G² item some way
 	{
 		"ROMs/136043-1123.1c",
 		"ROMs/136043-1124.1p",
@@ -150,7 +150,7 @@ func getromset(tilenum int) (int, []string) {
 	actualtile := (tilenum % 0x800) + tileRomSets[whichbank].offset
 	rombk := tileRomSets[whichbank].roms
 	if G1 {
-// in g1 mode - select g1 roms, actualtile will have same value, offsets are same
+// in G¹ mode - select G¹ roms, actualtile will have same value, offsets are same
 		rombk = tileRomSetsG1[whichbank].roms
 	}
 

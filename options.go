@@ -39,7 +39,7 @@ var opts struct {
 	Wob		bool   `long:"wb" description:"extra walls border maze right and bottom"`
 	Nogtop	bool   `long:"ngt" description:"no generator indicate letter"`
 	Nosec	bool   `long:"nsec" description:"no secret walls shown"`
-// cli option to force an address (originally for g2 force)
+// cli option to force an address (originally for G² force)
 	Addr	int    `long:"ad" default:"0" base:"16" description:"load maze rom address x38000 to x3FFF0 (in hex)"`
 // cli option to use rev 14 maze roms (final release, differs from identical maze roms in r1 - r9)
 	R14		bool   `long:"r14" description:"use gauntlet rev14 maze rom"`
@@ -129,23 +129,23 @@ func ld_config() {
 		l := "1060 1086 23"
 		if scanr.Scan() { l = scanr.Text() }
 		fmt.Sscanf(string(l),"%v %v %d", &geow, &geoh,&viewp)		// win size w * h, viewport size
-// g1 ed keymap read
+// G¹ ed keymap read
 		for i := 27; i <= 107; i += 20 {
-			if scanr.Scan() { l = scanr.Text()						// edit keys g1
+			if scanr.Scan() { l = scanr.Text()						// edit keys G¹
 				fmt.Sscanf(l,"%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d \n",&g1edit_keymap[i+0], &g1edit_keymap[i+1], &g1edit_keymap[i+2], &g1edit_keymap[i+3],
 						&g1edit_keymap[i+4], &g1edit_keymap[i+5], &g1edit_keymap[i+6], &g1edit_keymap[i+7], &g1edit_keymap[i+8], &g1edit_keymap[i+9], &g1edit_keymap[i+10],&g1edit_keymap[i+11],
 						&g1edit_keymap[i+12], &g1edit_keymap[i+13], &g1edit_keymap[i+14], &g1edit_keymap[i+15], &g1edit_keymap[i+16], &g1edit_keymap[i+17], &g1edit_keymap[i+18], &g1edit_keymap[i+19]) }
 		}
-// g1 xb keymap read
+// G¹ xb keymap read
 		for i := 27; i <= 107; i += 20 {
-			if scanr.Scan() { l = scanr.Text()						// xb keys g1
+			if scanr.Scan() { l = scanr.Text()						// xb keys G¹
 				fmt.Sscanf(l,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n",&g1edit_xbmap[i+0], &g1edit_xbmap[i+1], &g1edit_xbmap[i+2], &g1edit_xbmap[i+3],
 						&g1edit_xbmap[i+4], &g1edit_xbmap[i+5], &g1edit_xbmap[i+6], &g1edit_xbmap[i+7], &g1edit_xbmap[i+8], &g1edit_xbmap[i+9], &g1edit_xbmap[i+10],&g1edit_xbmap[i+11],
 						&g1edit_xbmap[i+12], &g1edit_xbmap[i+13], &g1edit_xbmap[i+14], &g1edit_xbmap[i+15], &g1edit_xbmap[i+16], &g1edit_xbmap[i+17], &g1edit_xbmap[i+18], &g1edit_xbmap[i+19]) }
 		}
-// g2 ed keymap read
+// G²ed keymap read
 		for i := 27; i <= 107; i += 20 {
-			if scanr.Scan() { l = scanr.Text()						// edit keys g2
+			if scanr.Scan() { l = scanr.Text()						// edit keys G²
 						//        0    1                        6                            12                       17                                 24                       29             32
 				fmt.Sscanf(l,"%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d \n",&g2edit_keymap[i+0], &g2edit_keymap[i+1], &g2edit_keymap[i+2], &g2edit_keymap[i+3],
 						&g2edit_keymap[i+4], &g2edit_keymap[i+5], &g2edit_keymap[i+6], &g2edit_keymap[i+7], &g2edit_keymap[i+8], &g2edit_keymap[i+9], &g2edit_keymap[i+10],&g2edit_keymap[i+11],
@@ -191,7 +191,7 @@ func sv_config() {
 	file, err := os.Create(".config")
 	if err == nil {
 		wfs := fmt.Sprintf("%d %d %d\n",int(opts.Geow),int(opts.Geoh),viewp)
-// g1 ed keymap
+// G¹ ed keymap
 		k1, k2, k3, k4, k5 := "","","","",""
 		for i := 27; i < 46; i++ {
 			k1 += fmt.Sprintf("%d ",g1edit_keymap[i])
@@ -202,7 +202,7 @@ func sv_config() {
 		}
 		k1 += "\n"; k2 += "\n"; k3 += "\n"; k4 += "\n"; k5 += "\n"
 		wfs += k1+k2+k3+k4+k5
-// g1 xb keymap
+// G¹ xb keymap
 		k1, k2, k3, k4, k5 = "","","","",""
 		for i := 27; i < 46; i++ {
 			k1 += fmt.Sprintf("%s ",g1edit_xbmap[i])
@@ -213,7 +213,7 @@ func sv_config() {
 		}
 		k1 += "\n"; k2 += "\n"; k3 += "\n"; k4 += "\n"; k5 += "\n"
 		wfs += k1+k2+k3+k4+k5
-// g2 ed keymap
+// G²ed keymap
 		k1, k2, k3, k4, k5 = "","","","",""
 		for i := 27; i < 46; i++ {
 			k1 += fmt.Sprintf("%d ",g2edit_keymap[i])
@@ -354,7 +354,7 @@ mazes will have shots hurt other players, starting on level at base %
 value="33" select level to start shots hurt other players : value="0.16" base % players shots hurt players %
 
 all std maze walls will be set invisible - rnd chance: Se, starting on level at base %
-value="80" randomly turn some mazes (all std walls) invisible - this is a sanctuary enhance, G2 had perm set invis walls
+value="80" randomly turn some mazes (all std walls) invisible - this is a sanctuary enhance, G² had perm set invis walls
 value="0.1" base % all std maze walls turn invisible
 */
 

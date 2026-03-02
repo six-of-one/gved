@@ -77,7 +77,7 @@ func writile(stamp *Stamp, tbas int, tbaddr int, sz int , ada int) {
 // diagonal wall += 8
 // vertical wall += 16
 
-// g2 version - wall shadow, etc
+// G² version - wall shadow, etc
 func checkwalladj3(maze *Maze, x int, y int) int {
 	adj := 0
 
@@ -95,7 +95,7 @@ func checkwalladj3(maze *Maze, x int, y int) int {
 	return adj
 }
 
-// g1 version
+// G¹ version
 func pfcheckwalladj3g1(maze *Maze, x int, y int) int {
 	adj := 0
 
@@ -202,7 +202,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 //fmt.Printf("\ngpf ent: %d x,y: %d x %d, ex %d x %d max: %d, DIMS: %d - %d\n",mazenum,lastx,lasty,extrax,extray,maxvp,opts.DimX,opts.DimY)
 
 // no {floor|wall} - only things
-// option to generate image with no floors or walls (say for color correcting g1 mazes we dont have color codes for)
+// option to generate image with no floors or walls (say for color correcting G¹ mazes we dont have color codes for)
 // nofloor = 1, nowall = 2, no both = 3
 // maybe make a cli switch?
 
@@ -222,7 +222,7 @@ func genpfimage(maze *Maze, mazenum int) *image.NRGBA {
 	paletteMakeSpecial(maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
 fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorcolor, maze.wallpattern, maze.wallcolor)
 	if G2 {
-// g2 checks
+// G² checks
 	for y := 0; y < maxvp; y++ {
 		for x := 0; x < maxvp; x++ {
 			adj := 0
@@ -245,7 +245,7 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
 			}
 		}
 	}} else {
-// g1 checks
+// G¹ checks
 	for y := 0; y < maxvp; y++ {
 		for x := 0; x < maxvp; x++ {
 			adj := 0
@@ -267,7 +267,7 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
 	}}
 
 // seperating walls from other ents so walls dont overwrite 24 x 24 ents
-// unless emu is wrong, this is the way g & g2 draw walls, see screens
+// unless emu is wrong, this is the way g & G² draw walls, see screens
 	for y := 0; y <= lasty; y++ {
 		for x := 0; x <= lastx; x++ {
 			var stamp *Stamp
@@ -325,7 +325,7 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
 					}
 			}}
 			if G1 {
-							if maze.wallpattern > 5 { maze.wallpattern -= 6 }		// Se enhance that allows shadowless g1 walls
+							if maze.wallpattern > 5 { maze.wallpattern -= 6 }		// Se enhance that allows shadowless G¹ walls
 
 				nwt := NOWALL | NOG1W
 				switch scanbuf(maze.data, x, y, x, y, -2) {
@@ -378,7 +378,7 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
 			if err := gtop.LoadFontFace(".font/VrBd.ttf", 14); err != nil {
 				panic(err)
 				}
-// g2 decodes
+// G² decodes
 			if G2 {
  // hack for score table map display of: gold bag after treasure box, special potions
 	if x < (lastx - 1) && mazenum == 103 {	// dont hit past end of array & only do on score table maze
@@ -408,7 +408,7 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
 	}
 			// We should do better
 			switch whatis(maze, x, y) {
- // specials are jammed in somewhere in G2 code, we just do this
+ // specials are jammed in somewhere in G² code, we just do this
 			case 70:
 				stamp = itemGetStamp("speedpotion")
 			case 71:
@@ -629,9 +629,9 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
  // set mask flag in array
 			if whatis(maze, x, y) > 0 && stamp != nil { g2mask[whatis(maze, x, y)] = stamp.mask }
 			}
-// end G2 decodes
+// end G² decodes
 
-// g1 decodes
+// G¹ decodes
 			if G1 {
  // gen type op - put a letter on up left corner of every gen to indicate monsters
  //		brw G - grunts
@@ -639,9 +639,9 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
  //		yel L - lobbers
  //		pur S - sorceror
 				gtop.Clear()
-				gtopl = ""// make sure g2 code (if it runs with g1) doesnt set extra dots on non walls
+				gtopl = ""// make sure G² code (if it runs with G¹) doesnt set extra dots on non walls
 				dots = 0
- // /fmt.Printf("g1 dec: %x -- ", whatis(maze, x, y))
+ // /fmt.Printf("G¹ dec: %x -- ", whatis(maze, x, y))
 			fn := scanbuf(maze.data, x, y, x, y, -2)
 			if x == zm_x && y == zm_y { fn = G1OBJ_WIZARD }
 			switch fn {
@@ -832,7 +832,7 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
  // set mask flag in array
 			if whatis(maze, x, y) > 0 && stamp != nil { g1mask[whatis(maze, x, y)] = stamp.mask }
 		}
-// Six: end G1 decode
+// Six: end G¹ decode
 			if stamp != nil {
 				writestamptoimage(G1,img, stamp, x*16+xpad+stamp.nudgex, y*16+xpad+stamp.nudgey)
 // generator monster type letter draw - only do when set
@@ -1048,7 +1048,7 @@ if false {
 		stamp.pnum = pnum
 		writile(stamp, 0x25e4, 9, 24 ,0)
 
- // g2 temp powers
+ // G² temp powers
 		stamp = itemGetStamp("transportability")
 		stamp.pnum = pnum
 		writile(stamp, 0x23fc, 4, 16 ,0)
@@ -1064,7 +1064,7 @@ if false {
 		stamp = itemGetStamp("supershot")
 		stamp.pnum = pnum
 		writile(stamp, 0x2788, 4, 16 ,0)
- // g1 powers
+ // G¹ powers
  // handled by loop now
 
 		stamp = itemGetStamp("it")

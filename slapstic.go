@@ -6,17 +6,17 @@ import (
 )
 
 /* 
-   g2 - bank info precalculated & addr of maze decoded from rom header per maze number
+   G² - bank info precalculated & addr of maze decoded from rom header per maze number
  *110[56].10[ab]
 42a7f2b4a456e70319d1a5506341905f  ROMs/136043-1105.10a
 c3feebd1f91ae90056351ffbbcee675b  ROMs/136043-1106.10b
--- all g2 sets use same maze roms
+-- all G² sets use same maze roms
 */
 var slapsticRoms = []string{
 	"ROMs/136043-1105.10a",
 	"ROMs/136043-1106.10b",
 }
-// g1 - now using big endian table with caveat of +3 to use G2 decoder
+// G¹ - now using big endian table with caveat of +3 to use G² decoder
 /*
  *20[56].10[ab] - r14
 d06c71b1cf55cd3f637c94f3570b5450  ROMs-g1/136037-205.10a
@@ -25,7 +25,7 @@ d06c71b1cf55cd3f637c94f3570b5450  ROMs-g1/136037-205.10a
  *10[56].10[ab] - r7
 862976922791fda377c23039db74c203  ROMs-g1/gauntletr7/136037-105.10a
 16ce166415e8cdc678ef0411371ee004  ROMs-g1/gauntletr7/136037-106.10b
--- all g1 roms 105.10a / 106.10b are the same
+-- all G¹ roms 105.10a / 106.10b are the same
 */
 var slapsticRomsG1 = []string{
 
@@ -33,7 +33,7 @@ var slapsticRomsG1 = []string{
 	"ROMs-g1/gauntletr7/136037-106.10b",
 
 }
-// seperate out g1 rev 14 roms, selectable by --r14
+// seperate out G¹ rev 14 roms, selectable by --r14
 var slapsticRomsG1fr = []string{
 
 	"ROMs-g1/136037-205.10a",
@@ -75,7 +75,7 @@ var slapsticBankInfoG1 = []int{
 	0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000, 0x4000,		//	104, 105, 106, 107, 108, 109, 110, 111,
 	0x4000, 0x4000, 0x4000,												//	112, 113, 114,
 
-// g1 address read direct for demo maze, score table maze, treasure rooms - these have no big endian store
+// G¹ address read direct for demo maze, score table maze, treasure rooms - these have no big endian store
 	0x3F2F8, 0x3F357, 0x3F3DD, 0x3F479, 0x3F504, 0x3F654,				//	115, 116, 117, 118, 119, 120,
 	0x3F6E6, 0x3F813, 0x3F940, 0x3FA22, 0x3FB20, 0x3FBD8, 0x3FCBD,		//	121, 122, 123, 124, 125, 126, 127,
 }
@@ -113,7 +113,7 @@ func slapsticMazeGetRealAddr(mazenum int) int {
 	addr := slapsticReadMazeOffset(mazenum,0xc) + (0x2000 * bank)
 
 	if G1 {
-// note: manual load of g1 banks, need proper algorithm for bank data with g1 slaps
+// note: manual load of G¹ banks, need proper algorithm for bank data with G¹ slaps
 		bankof := slapsticBankInfoG1[mazenum]
 		if mazenum < 114 {
 			addr = slapsticReadMazeOffset(mazenum,0x32) + bankof + 3
@@ -129,7 +129,7 @@ if opts.Verbose { fmt.Printf("G:%d Maze real addr: %d - 0x%06X, bank %d, boff: 0
 
 func slapsticMazeGetBank(mazenum int) int {
 
-	if G1 { return 0 }	// g1 bank info not available here
+	if G1 { return 0 }	// G¹ bank info not available here
 
 	if mazenum < 0 || mazenum > 116 {
 		panic("Invalid maze number requested (must be 0 <= x <= 116")
@@ -145,9 +145,9 @@ func slapsticMazeGetBank(mazenum int) int {
 	return bi
 }
 
-// cohde philosophizing: do i add 3 and use the g2 decode (which works except floor/wall colors)
-//                       or not add 3 and put in an adjust in mazedecode for g1 mazes having 3 more lead in bytes
-// followup - disassemble trace of g1 & see if the decoder is different
+// cohde philosophizing: do i add 3 and use the G² decode (which works except floor/wall colors)
+//                       or not add 3 and put in an adjust in mazedecode for G¹ mazes having 3 more lead in bytes
+// followup - disassemble trace of G¹ & see if the decoder is different
 
 func slapsticReadMazeOffset(mazenum int, x int) int {
 

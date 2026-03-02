@@ -693,11 +693,11 @@ func rotmirmov(mdat MazeData, xdat Xdat, sx int, sy int, lastx int, lasty int, f
 			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{lasty - ty, tx}] = mdat[xy{tx, ty}]
 				xbxf[xy{lasty - ty, tx}] = xdat[xy{tx, ty}]
-// g1 - must transform all dors on a rotat since they have horiz & vert dependent
-// xb doors will have to use g1 codes cause of this
+// G¹ - must transform all dors on a rotat since they have horiz & vert dependent
+// xb doors will have to use G¹ codes cause of this
 				if xform[xy{lasty - ty, tx}] == G1OBJ_DOOR_HORIZ { xform[xy{lasty - ty, tx}] = G1OBJ_DOOR_VERT } else {
 				if xform[xy{lasty - ty, tx}] == G1OBJ_DOOR_VERT { xform[xy{lasty - ty, tx}] = G1OBJ_DOOR_HORIZ } }
-// g2
+// G²
 				if xform[xy{lasty - ty, tx}] == MAZEOBJ_DOOR_HORIZ { xform[xy{lasty - ty, tx}] = MAZEOBJ_DOOR_VERT } else {
 				if xform[xy{lasty - ty, tx}] == MAZEOBJ_DOOR_VERT { xform[xy{lasty - ty, tx}] = MAZEOBJ_DOOR_HORIZ } }
 			}}
@@ -708,10 +708,10 @@ func rotmirmov(mdat MazeData, xdat Xdat, sx int, sy int, lastx int, lasty int, f
 			for tx := sx; tx <= lastx; tx++ {
 				xform[xy{ty, lastx - tx}] = mdat[xy{tx, ty}]
 				xbxf[xy{ty, lastx - tx}] = xdat[xy{tx, ty}]
-// g1
+// G¹
 				if xform[xy{ty, lastx - tx}] == G1OBJ_DOOR_HORIZ { xform[xy{ty, lastx - tx}] = G1OBJ_DOOR_VERT } else {
 				if xform[xy{ty, lastx - tx}] == G1OBJ_DOOR_VERT { xform[xy{ty, lastx - tx}] = G1OBJ_DOOR_HORIZ } }
-// g2
+// G²
 				if xform[xy{ty, lastx - tx}] == MAZEOBJ_DOOR_HORIZ { xform[xy{ty, lastx - tx}] = MAZEOBJ_DOOR_VERT } else {
 				if xform[xy{ty, lastx - tx}] == MAZEOBJ_DOOR_VERT { xform[xy{ty, lastx - tx}] = MAZEOBJ_DOOR_HORIZ } }
 			}}
@@ -989,7 +989,7 @@ func close_keys() {
 	listK = nil
 }
 
-// walls & floors g1/g2 color valid
+// walls & floors G¹/G² color valid
 
 var gmaxcol = 16
 
@@ -1208,7 +1208,7 @@ var cpy int
 var masbcnt int		// run thru master pb
 var sesbcnt int		// run thru local ses pb
 var lg1cnt int		// ses pb save for G¹ maps
-var lg2cnt int		// ses pb save for g2 maps
+var lg2cnt int		// ses pb save for G² maps
 
 // i've discovered a 'local' in function version of these will crash, this prob needs to be a struct
 var wpbop bool		// is the pb win open?

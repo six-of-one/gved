@@ -60,7 +60,7 @@ var splim *fyne.Container			// image to splash
 
 func splashrot() {
 
-	sec := false	// first time in play g1 scroller intro w/music
+	sec := false	// first time in play G¹ scroller intro w/music
 	smpl := ""		// sample play item
 	mus := ""		// music with anim, or static even
 	srot := 0		// sample play rot
@@ -80,7 +80,7 @@ func splashrot() {
 	} else {
 
 	if splsubCyc == 0 {
-	if splCyc == 9 {		// done with g1 splash, load g1 score tbl gfx
+	if splCyc == 9 {		// done with G¹ splash, load G¹ score tbl gfx
 		hsct[1].msb = fmt.Sprintf("./splash/splD1.png")
 		splCyc = 13
 	} else {
@@ -91,11 +91,11 @@ func splashrot() {
 // testing
 if splCyc == 12 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
 
-	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
-//	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2 - test mode
+	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from G¹ to G²
+//	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from G¹ to G² - test mode
 fmt.Printf("cyc: %d subcyc: %d\n",splCyc,splsubCyc)
 
-// add g1 & 2 smpl gifs & musics, later other intro sets
+// add G¹ & 2 smpl gifs & musics, later other intro sets
 
 	if (splCyc == 2 || splCyc == 11) && smpl != "" && rand.Float64() < 0.47 {	// chance for sample play after scroller
 		splCyc--	// go back one, hold advance for sample
@@ -107,7 +107,7 @@ fmt.Printf("cyc: %d subcyc: %d\n",splCyc,splsubCyc)
 	} else {		// skip anim splash since cyc goes back to 1 or 10
 	if splCyc == 1 || splCyc == 10 || splCyc == 11 {
 		splashsrc = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
-		rot = 9700			// unless playing 18 secs of music g1, or 25.14 secs g2, or 14 secs ...B.gif
+		rot = 9700			// unless playing 18 secs of music G¹, or 25.14 secs G², or 14 secs ...B.gif
 		smpl = "splash/g1smpl.gif"; srot = 43930
 		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 122200 }
 		if splCyc == 11 { rot = 15000; smpl = "" }
@@ -136,7 +136,7 @@ fmt.Printf("cyc: %d subcyc: %d\n",splCyc,splsubCyc)
 	}
 // show score tbl on 12, 13
 	if splCyc >= 12 && splsubCyc == 0 {
-		if rand.Float64() > 0.9 {		// this skips title scroller, strait into g1 ghosts pg
+		if rand.Float64() > 0.9 {		// this skips title scroller, strait into G¹ ghosts pg
 			splCyc = 1
 		}
 	}}

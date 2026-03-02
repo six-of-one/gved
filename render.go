@@ -189,7 +189,7 @@ func genimage_fromarray(tiles []int, xtiles int, ytiles int) *image.NRGBA {
 
 func writestamptoimage(g1 bool, img *image.NRGBA, stamp *Stamp, xloc int, yloc int) {
 	ptyp := stamp.ptype
-// gauntlet has diff base pallet from g2, this is easiest way for now
+// gauntlet has diff base pallet from G², this is easiest way for now
 	if ptyp == "base" && g1 { ptyp = "gbase" }
 	if ptyp == "wall" && g1 { ptyp = "gwall" }
 	if ptyp == "floor" && g1 { ptyp = "gfloor" }
@@ -235,7 +235,7 @@ func genanim(animarray []int, xtiles int, ytiles int) []*image.Paletted {
 const (
 	SE_FLOR		= 1		// load any gauntlet & G² floors & walls
 	SE_WALL		= 2
-	SE_G2		= 3		// gauntlet 2 mode - e.g. turn off g1
+	SE_G2		= 3		// gauntlet 2 mode - e.g. turn off G²
 	SE_CFLOR	= 4		// custom floor unit from xb*.ed file wall & floor lines
 	SE_CWAL		= 5		// data: sheet, r, (c is wally), xy size		wal: sheet, row, (xy size?)
 	SE_COLRT	= 6		// color tiles under any
