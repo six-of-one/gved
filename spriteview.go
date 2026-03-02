@@ -256,6 +256,11 @@ var lim *fyne.Container
 		fmt.Printf("show transparent sprites %t\n", k)
 	})
 	xpar.Checked = true
+	fch_label := widget.NewLabelWithStyle("                                     ", fyne.TextAlignLeading, fyne.TextStyle{Monospace: true})
+	fchak := widget.NewCheck("FC hack", func(k bool) {
+		fmt.Printf("When 3x3 in G roms render every xxxFC 2x2 %t\n", k)
+	})
+	fchak.Checked = true
 
 // address to start rom read
 	if lasadr == "" { lasadr = "0" }
@@ -354,10 +359,14 @@ var lim *fyne.Container
 		for y := 0; y <= fy; y++ {
 		for x := 0; x <= fx; x++ {
 		  if uroms {
-			bstamp.numbers = tilerange(prcadr, svx * svy)
 			st = fmt.Sprintf("%d",prcadr)
-			prcadr += svx * svy
-			bstamp.width = svx
+			asvx,asvy := svx,svy
+			if chkg1rom.Checked {
+			if fchak.Checked && (prcadr & 0xFF) == 0xFC {
+			if svx == 3 && svx == 3 { asvx,asvy = 2,2 }}}
+			bstamp.numbers = tilerange(prcadr, asvx * asvy)
+			prcadr += asvx * asvy
+			bstamp.width = asvx
 			bstamp.trans0 = xpar.Checked
 			bstamp.pnum = pnumsel
 			bstamp.ptype = paltype
@@ -401,7 +410,7 @@ var lim *fyne.Container
 			chkg1rom, ptyp_label, selptype, pnum_label,pnumen,g2m,trench_label,trench,xpar,
 		),
 		container.New(layout.NewHBoxLayout(),
-			filerom, spsheet, fnload, container.NewWithoutLayout(fnent),
+			filerom, spsheet, fnload, container.NewWithoutLayout(fnent),fch_label,fchak,
 		),
 		container.New(layout.NewHBoxLayout(),
 			bld_btn,keepr, pixs_label, xpxz, ssiz_label, xsiz,shxsiz, x_label, ysiz,shysiz, adr_label, container.NewWithoutLayout(radr),redc,redr,adr_spc,showr,lvlcol,
@@ -439,7 +448,8 @@ func sprites_keys() {
 			"\nsprite sheet mode:\n"+
 			"r,e		- read row +,-\n"+
 			"c,x		- read col +,-\n"+
+			"\nFC: hack - starting at 0x2000 all address ending xxFC\n are read 2x2 if in G roms and 3x3 is set\n"+
 			"\n build writes output 'sheet.png'"
 
-	dboxtx("Sprite viewer", strp, 480, 370,nil,typedRune)
+	dboxtx("Sprite viewer", strp, 480, 460,nil,typedRune)
 }

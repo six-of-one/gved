@@ -88,10 +88,10 @@ func splashrot() {
 		splCyc++
 	}}
 
-// testing
 if splCyc == 12 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
 
 	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from G¹ to G²
+// testing
 //	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from G¹ to G² - test mode
 fmt.Printf("cyc: %d subcyc: %d\n",splCyc,splsubCyc)
 
@@ -148,7 +148,7 @@ fmt.Printf("cyc: %d subcyc: %d\n",splCyc,splsubCyc)
 	if splsubCyc > 0 {			// G² flash high score colors test
 		splsubCyc--
 		rot = 111
-		hsct[1].msb = fmt.Sprintf("./splash/splD%1d.png",(splsubCyc & 3)+1)
+		hsct[1].msb = fmt.Sprintf("./splash/splD%1d.png",(splsubCyc & 3)+1)		// these need to be splD?g2.png and scores need rearranged to match
 		time.Sleep(333 * time.Millisecond)
 	} else {
 		time.Sleep(time.Duration(rot) * time.Millisecond)
