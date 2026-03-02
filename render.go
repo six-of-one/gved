@@ -567,12 +567,15 @@ func bld_star(lk int ) {
 		mask = 256 | ANIM
 		cnt = 4
 	case SEOBJ_G2_POISPOT:
+		arstamp[lk] = itemGetStamp("ppotion")
 		psx, psy = 8, 11
 		mask = NOPOT
 	case SEOBJ_G2_POISFUD:
+		arstamp[lk] = itemGetStamp("pfood")
 		psx, psy = 1, 11
 		mask = NOFUD
 	case SEOBJ_G2_QFUD:
+		arstamp[lk] = itemGetStamp("mfood")
 		psx, psy = 2, 11
 		mask = NOFUD
 	case SEOBJ_KEYRING:
