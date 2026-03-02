@@ -141,6 +141,6 @@ further research:
 - walls -> exits
   - trap walls      
   - shootables      exits (even part shot)
-  - cycle walls g2  
-  - random walls g2 
-  - secret walls g2 
+  - cycle walls G²
+  - random walls G²
+  - secret walls G²

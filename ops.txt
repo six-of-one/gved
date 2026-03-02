@@ -413,7 +413,7 @@ Palette map - default: palette walls / floor match level cols & pats
 ---------------------------------------------
 ops for sprite viewer
 
-Gauntlet / G² rom - use this systems rom image (G² selected by G2 mode)
+Gauntlet / G² rom - use this systems rom image (G² selected by G² mode)
 File rom, load the rom spec by file: {filename entry}
 | ---- these 2 options apply to all roms
 \_ palette type - select one of the palette types, which all limit pnum
@@ -422,7 +422,7 @@ File rom, load the rom spec by file: {filename entry}
 	{ 0 - 3 wizard, warrior, valkyrie, elf },
 	{ 0: trap, stun, secret, shrub, forcefield, teleff }
 
-G2 mode - use Gauntlet II tile ops (differs from G1 mostly by palette)
+G² mode - use Gauntlet II tile ops (differs from G¹ mostly by palette)
 
 trench	- space between all sprites, default 8, range 0 - 32
 no bkg	- render with no background - see through parts of sprites
@@ -432,7 +432,7 @@ no bkg	- render with no background - see through parts of sprites
 Sprite sheet, load the png sheet spec by file: {filename entry}
 - this has slight differences from rom mode
   size x,y is replaced by read x,y size to divide sheet into col,row
-  pixel size, G2, pnum, palette, do nothing
+  pixel size, G², pnum, palette, do nothing
   show puts col & row under glyph
   address is now row & col
 - disk icon button selects a file to load
