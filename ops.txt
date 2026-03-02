@@ -442,7 +442,7 @@ BUILD - build and display the view of sprites
 
 pixel size: build a bkg grafic this size square and fill best way possible
 size x by y: x and y (col and row) of sprites to build from source
-FC hack: when 3 x 3 in gauntlet roms, every addr ending xxFC will be 2 x 2
+FC hack: addr > x800 & 3x3 in G roms, every addr ending xxFC will be 2x2
 address: starting address in rom
          NOTE: currently bounded 0 - 65536, if past end this WILL crash!
 show: write address of each sprite on sheet

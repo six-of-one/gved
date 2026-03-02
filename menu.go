@@ -366,6 +366,9 @@ func aw_init() {
 p := 128 << 2	// 512
 q := 128 >> 2	// 32
 fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
+p = 49 % 16
+q = 48 % 16
+fmt.Printf("p 49 m 16: %d\nq 48 m 16: %d\n",p,q)
 
 // setup main tabs
 	cmain = container.NewStack()

@@ -338,6 +338,10 @@ var lim *fyne.Container
 		uroms := !sheet_read
 		gsv := G1
 		if g2m.Checked { G1 = false }
+		fmt.Sscanf(lasadr,"%d",&prcadr)
+		if chkg1rom.Checked && fchak.Checked {
+			
+		}
 		fx,fy,gx,gy := 0,0,0,0
 		subf := int((float64(pixx) / (opts.Geoh-190))* 116)
 		if uroms {
@@ -345,7 +349,6 @@ var lim *fyne.Container
 			gx,gy = svx*8+trnc, svy*8+trnc
 //fmt.Printf("subf: %d, %f, %f\n",subf, float64(pixx) / (opts.Geoh-190),(float64(pixx) / (opts.Geoh-190)) * 118)
 			bstamp = Stamp{} //itemGetStamp("key")
-			fmt.Sscanf(lasadr,"%d",&prcadr)
 		} else {
 			gx,gy = shx+trnc,shy+trnc
 			_,_,parimg = itemGetPNG(fnent.Text)
@@ -361,9 +364,13 @@ var lim *fyne.Container
 		  if uroms {
 			st = fmt.Sprintf("%d",prcadr)
 			asvx,asvy := svx,svy
-			if chkg1rom.Checked {
-			if fchak.Checked && (prcadr & 0xFF) == 0xFC {
-			if svx == 3 && svx == 3 { asvx,asvy = 2,2 }}}
+			if chkg1rom.Checked && fchak.Checked {
+		// 0xXXFC specific - tile mode 3x3 and addr ending in FC, those are always 2x2 tiles in 3x3 range
+				if prcadr >= 0x800 && (prcadr & 0xFF) == 0xFC {
+				if svx == 3 && svx == 3 { asvx,asvy = 2,2 }
+		// dyanmic address mode - attempt a track of most size changes in G¹ / G² roms statrting anywhere
+				
+			}}
 			bstamp.numbers = tilerange(prcadr, asvx * asvy)
 			prcadr += asvx * asvy
 			bstamp.width = asvx
@@ -448,7 +455,8 @@ func sprites_keys() {
 			"\nsprite sheet mode:\n"+
 			"r,e		- read row +,-\n"+
 			"c,x		- read col +,-\n"+
-			"\nFC: hack - starting at 0x2000 all address ending xxFC\n are read 2x2 if in G roms and 3x3 is set\n"+
+			"\nFC: hack - starting at 0x800 all address ending xxFC\n"+
+			" are read 2x2 if in G roms and 3x3 is set\n 2. attempt dynamic tracking of sprite sizes as well"+
 			"\n build writes output 'sheet.png'"
 
 	dboxtx("Sprite viewer", strp, 480, 460,nil,typedRune)
