@@ -352,7 +352,7 @@ var lim *fyne.Container
 			if prcadr >= 2048 && prcadr < 10241 { xsiz.SetText("3"); ysiz.SetText("3") }
 			if prcadr > 10240 { xsiz.SetText("6"); ysiz.SetText("6") }
 			if prcadr == 7228 { gx,gy = 3*8+trnc, 3*8+trnc }
-			if prcadr == 7813 || prcadr == 8035 || prcadr == 9315 || prcadr == 10020 { gx,gy = 4*8+trnc, 4*8+trnc }
+			if prcadr == 7448 || prcadr == 7813 || prcadr == 8035 || prcadr == 9315 || prcadr == 10020 { gx,gy = 4*8+trnc, 4*8+trnc }
 	// dragons
 			if (prcadr >= 8448 && prcadr <= 8944 && (prcadr % 16) == 0) || (prcadr >= 9472 && prcadr <= 9552 && (prcadr % 16) == 0) || prcadr == 10048 || prcadr == 10064 { xsiz.SetText("4"); ysiz.SetText("4"); gx,gy = 4*8+trnc, 4*8+trnc }
 //fmt.Printf("p: %d m 16 = %d\n",prcadr,prcadr % 16)
@@ -399,23 +399,26 @@ var lim *fyne.Container
 				if prcadr >= 2048 && prcadr < 6993 { xsiz.SetText("3"); ysiz.SetText("3"); asvx,asvy = 3,3 }
 				if asvx == 3 && prcadr >= 2040 && prcadr < 2048 { spadj = 2048 }
 				if asvx == 4 && prcadr >= 2033 && prcadr < 2048 { spadj = 2048 }
+				if prcadr == 7107 || prcadr == 7240 || prcadr == 7307 || prcadr == 7496 || (prcadr >= 7448 && prcadr <= 7596) || prcadr == 7689 || prcadr ==10024 || prcadr == 10116 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
+				if prcadr == 7165 { xsiz.SetText("1"); ysiz.SetText("3"); asvx,asvy = 1,3 }
 				if prcadr == 6993 || prcadr == 7111 || prcadr == 7228 || prcadr == 7168 || prcadr == 7542 || prcadr == 7693 || prcadr == 8035 || prcadr == 8438 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }
 				if prcadr == 7484 || prcadr == 7490 || prcadr == 7500 || prcadr == 7514 || prcadr == 7528 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }
 				if prcadr == 7506 || prcadr == 7520 || prcadr == 7534 { xsiz.SetText("4"); ysiz.SetText("2"); asvx,asvy = 4,2 }
-				if prcadr == 7107 || prcadr == 7240 || prcadr == 7307 || prcadr == 7496  || (prcadr >= 7548 && prcadr <= 7572) || prcadr == 7689 || prcadr ==10024 || prcadr == 10116 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
-				if prcadr == 7165 { xsiz.SetText("1"); ysiz.SetText("3"); asvx,asvy = 1,3 }
+				if prcadr == 7548 || (prcadr >= 7558 && prcadr <= 7582) { xsiz.SetText("2"); ysiz.SetText("3"); asvx,asvy = 2,3 }
+				if prcadr == 7564 || prcadr == 7588 || prcadr == 7596 { xsiz.SetText("2"); ysiz.SetText("4"); asvx,asvy = 2,4 }
+				if prcadr == 7572 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
 				if prcadr == 7304 || prcadr == 7604  { xsiz.SetText("3"); ysiz.SetText("1"); asvx,asvy = 3,1 }
 				if pgstr >= 936 && pgstr < 2048 && prcadr >= 2048 { break }			// makes it so we only need one seq from 0, where the big 3x3 area with 2x2 at xxFC is mostly mobs
+				if pgstr >= 6709 && pgstr < 7447 && prcadr >= 7448 { spadj = 7448; break }
+				if pgstr >= 7605 && pgstr < 8448 && prcadr >= 8448 { spadj = 8448; break }
 			//	if pgstr >= 936 && pgstr < 977 &&  prcadr >= 2048 { break }
-				if pgstr == 7753 && prcadr == 8448 { break }//&& prcadr == 9113 { spadj = 8448 }
 				if prcadr == 7419 { spadj = 7424 }
 				if prcadr == 7540 { spadj = 7542 }
 				if prcadr == 7551 { spadj = 7548 }
-				if prcadr == 7542 || prcadr == 7631 || prcadr == 8960 || prcadr == 9691 || prcadr == 9728 || prcadr == 10080 || prcadr == 10124 { xsiz.SetText("3"); ysiz.SetText("3"); asvx,asvy = 3,3 }
+				if prcadr == 7631 || prcadr == 8960 || prcadr == 9691 || prcadr == 9728 || prcadr == 10080 || prcadr == 10124 { xsiz.SetText("3"); ysiz.SetText("3"); asvx,asvy = 3,3 }
 //				if prcadr == 8035 || prcadr == 9333 { gx,gy = 4*8+trnc, 4*8+trnc }
 //				if prcadr == 7228 { gx,gy = 3*8+trnc, 3*8+trnc }
 				if prcadr == 8437 { spadj = 8438 }
-				if prcadr == 8450 { spadj = 8448 }
 				if prcadr == 9664 { spadj = 9691 }
 				if prcadr == 10020 { spadj = 10024 }
 				usvy = asvy*8										// 10124 is the effective end of G² roms
@@ -431,7 +434,8 @@ var lim *fyne.Container
 			if prcadr >= 6189 && prcadr <= 6764 { selptype.SetSelectedIndex(5); pnumsel = 8 }	//demons
 			if prcadr >= 6773 && prcadr <= 6984 { selptype.SetSelectedIndex(5); pnumsel = 0 }	//deth
 			if prcadr >= 6993 && prcadr <= 7234 { selptype.SetSelectedIndex(5); pnumsel = 11 }	//lobbers
-			if prcadr >= 7240 && prcadr <= 7444 { selptype.SetSelectedIndex(5); pnumsel = 1 }	//lob shots
+			if prcadr >= 7240 && prcadr <= 7268 { selptype.SetSelectedIndex(5); pnumsel = 1 }	//lob shots
+			if prcadr >= 7272 && prcadr <= 7444 { selptype.SetSelectedIndex(7); pnumsel = 0 }	// pl shots, all red here
 			if prcadr >= 7448 && prcadr <= 7600 { selptype.SetSelectedIndex(5); pnumsel = 0 }	//dors +
 			if prcadr >= 7604 && prcadr <= 7628 { selptype.SetSelectedIndex(5); pnumsel = 5 }	//nums
 			if prcadr >= 7631 && prcadr <= 7680 { selptype.SetSelectedIndex(5); pnumsel = 1 }
