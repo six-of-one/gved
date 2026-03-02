@@ -400,12 +400,14 @@ var lim *fyne.Container
 				if asvx == 3 && prcadr >= 2040 && prcadr < 2048 { spadj = 2048 }
 				if asvx == 4 && prcadr >= 2033 && prcadr < 2048 { spadj = 2048 }
 				if prcadr == 6993 || prcadr == 7111 || prcadr == 7228 || prcadr == 7168 || prcadr == 7542 || prcadr == 7693 || prcadr == 8035 || prcadr == 8438 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }
-				if prcadr == 7107 || prcadr == 7240 || prcadr == 7307 || prcadr == 7548 || prcadr == 7689 || prcadr ==10024 || prcadr == 10116 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
+				if prcadr == 7484 || prcadr == 7490 || prcadr == 7500 || prcadr == 7514 || prcadr == 7528 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }
+				if prcadr == 7506 || prcadr == 7520 || prcadr == 7534 { xsiz.SetText("4"); ysiz.SetText("2"); asvx,asvy = 4,2 }
+				if prcadr == 7107 || prcadr == 7240 || prcadr == 7307 || prcadr == 7496  || (prcadr >= 7548 && prcadr <= 7572) || prcadr == 7689 || prcadr ==10024 || prcadr == 10116 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
 				if prcadr == 7165 { xsiz.SetText("1"); ysiz.SetText("3"); asvx,asvy = 1,3 }
 				if prcadr == 7304 || prcadr == 7604  { xsiz.SetText("3"); ysiz.SetText("1"); asvx,asvy = 3,1 }
 				if pgstr >= 936 && pgstr < 2048 && prcadr >= 2048 { break }			// makes it so we only need one seq from 0, where the big 3x3 area with 2x2 at xxFC is mostly mobs
 			//	if pgstr >= 936 && pgstr < 977 &&  prcadr >= 2048 { break }
-				if pgstr == 7747 && prcadr == 8448 { break }//&& prcadr == 9113 { spadj = 8448 }
+				if pgstr == 7753 && prcadr == 8448 { break }//&& prcadr == 9113 { spadj = 8448 }
 				if prcadr == 7419 { spadj = 7424 }
 				if prcadr == 7540 { spadj = 7542 }
 				if prcadr == 7551 { spadj = 7548 }
@@ -428,7 +430,7 @@ var lim *fyne.Container
 			if prcadr >= 2048 && prcadr <= 2906 { selptype.SetSelectedIndex(5); pnumsel = 4 }
 			if prcadr >= 6189 && prcadr <= 6764 { selptype.SetSelectedIndex(5); pnumsel = 8 }	//demons
 			if prcadr >= 6773 && prcadr <= 6984 { selptype.SetSelectedIndex(5); pnumsel = 0 }	//deth
-			if prcadr >= 6993 && prcadr <= 7234 { selptype.SetSelectedIndex(5); pnumsel = 11 }	//deth
+			if prcadr >= 6993 && prcadr <= 7234 { selptype.SetSelectedIndex(5); pnumsel = 11 }	//lobbers
 			if prcadr >= 7240 && prcadr <= 7444 { selptype.SetSelectedIndex(5); pnumsel = 1 }	//lob shots
 			if prcadr >= 7448 && prcadr <= 7600 { selptype.SetSelectedIndex(5); pnumsel = 0 }	//dors +
 			if prcadr >= 7604 && prcadr <= 7628 { selptype.SetSelectedIndex(5); pnumsel = 5 }	//nums
