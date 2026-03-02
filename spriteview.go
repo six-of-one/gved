@@ -402,11 +402,11 @@ var lim *fyne.Container
 				if prcadr == 7107 || prcadr == 7240 || prcadr == 7307 || prcadr == 7496 || (prcadr >= 7448 && prcadr <= 7596) || prcadr == 7689 || prcadr ==10024 || prcadr == 10116 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
 				if prcadr == 7165 { xsiz.SetText("1"); ysiz.SetText("3"); asvx,asvy = 1,3 }
 				if prcadr == 6993 || prcadr == 7111 || prcadr == 7228 || prcadr == 7168 || prcadr == 7542 || prcadr == 7693 || prcadr == 8035 || prcadr == 8438 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }
-				if prcadr == 7484 || prcadr == 7490 || prcadr == 7500 || prcadr == 7514 || prcadr == 7528 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }
+				if prcadr == 7484 || prcadr == 7490 || prcadr == 7500 || prcadr == 7514 || prcadr == 7528 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }		// doors -v
 				if prcadr == 7506 || prcadr == 7520 || prcadr == 7534 { xsiz.SetText("4"); ysiz.SetText("2"); asvx,asvy = 4,2 }
 				if prcadr == 7548 || (prcadr >= 7558 && prcadr <= 7582) { xsiz.SetText("2"); ysiz.SetText("3"); asvx,asvy = 2,3 }
 				if prcadr == 7564 || prcadr == 7588 || prcadr == 7596 { xsiz.SetText("2"); ysiz.SetText("4"); asvx,asvy = 2,4 }
-				if prcadr == 7572 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
+				if prcadr == 7572 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }																				// doors -^
 				if prcadr == 7304 || prcadr == 7604  { xsiz.SetText("3"); ysiz.SetText("1"); asvx,asvy = 3,1 }
 				if pgstr >= 936 && pgstr < 2048 && prcadr >= 2048 { break }			// makes it so we only need one seq from 0, where the big 3x3 area with 2x2 at xxFC is mostly mobs
 				if pgstr >= 6709 && pgstr < 7447 && prcadr >= 7448 { spadj = 7448; break }

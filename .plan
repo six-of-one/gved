@@ -48,10 +48,10 @@ a basic "playable" mode to test mazes
 * port rnd load profile sanctuary code, and use #T flags to remove certain elements, wip
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
 - sprite system needed (sprites have to replace gens, treasure, keys, pots, etc)
-- sprite sheet organzied, prod
+- *sprite sheet organzied, produce array of animated mobs / ents & fixed ents
 - player controls (turn off cmd keys, special mode - use actab select in keyrune)
 - pixel unit move renderer
-- dialogs: play stats, scores, main sideboard (4 players)
+- dialogs: play stats, scores, main sideboard (4 players), 'use keys to open doors' dialogs
  * sideboard render mostly done
  * render for highscores is done
 
@@ -89,7 +89,7 @@ possible:
 - .ed files need sanctuary details - special floors, cust walls, special settings
   - indicator for treasure rooms, secret rooms
 - dialog for setting / reading bits of #T hide mask and #flg blank maze keep mask
-- way using sprites to demo half transparent paste content over maze
+- way using blotter to demo half transparent paste content over maze
 think about retooling buffer file read to work like rom reader in roms.go instead of ioutil.ReadFile(fil)
 * more keys for dialog win to still operate main win (stats, etc) -- add main win keyrune to most dialogs
 - sprite viewer ideas

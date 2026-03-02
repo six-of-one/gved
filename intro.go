@@ -68,7 +68,7 @@ func splashrot() {
   for {
 	rot := splRot		// def 6000 millis
 
-  if actab == "Game" {		// tab loaded where this happen
+  if actab == "Game" && splCyc > 0 {		// tab loaded where this happen, set cyc to -1 for game run
 
 	upng := true
 // sample play if it didnt play after title, these screens are already done
