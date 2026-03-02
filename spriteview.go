@@ -399,7 +399,7 @@ var lim *fyne.Container
 				if prcadr >= 2048 && prcadr < 6993 { xsiz.SetText("3"); ysiz.SetText("3"); asvx,asvy = 3,3 }
 				if asvx == 3 && prcadr >= 2040 && prcadr < 2048 { spadj = 2048 }
 				if asvx == 4 && prcadr >= 2033 && prcadr < 2048 { spadj = 2048 }
-				if prcadr == 6993 || prcadr == 7111 || prcadr == 7228 || prcadr == 7168 || prcadr == 7693 || prcadr == 8035 || prcadr == 8438 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }
+				if prcadr == 6993 || prcadr == 7111 || prcadr == 7228 || prcadr == 7168 || prcadr == 7542 || prcadr == 7693 || prcadr == 8035 || prcadr == 8438 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }
 				if prcadr == 7107 || prcadr == 7240 || prcadr == 7307 || prcadr == 7548 || prcadr == 7689 || prcadr ==10024 || prcadr == 10116 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
 				if prcadr == 7165 { xsiz.SetText("1"); ysiz.SetText("3"); asvx,asvy = 1,3 }
 				if prcadr == 7304 || prcadr == 7604  { xsiz.SetText("3"); ysiz.SetText("1"); asvx,asvy = 3,1 }
@@ -420,15 +420,20 @@ var lim *fyne.Container
 				if asvy == 1 { usvy = 16 }
 			}
 		if fccol.Checked {
-			if prcadr == 3068 || prcadr == 3324 || prcadr == 3580 { selptype.SetSelectedIndex(5); pnumsel = 5; xpck = false }		// exit
 			if prcadr >= 3562 && prcadr <= 4213 { selptype.SetSelectedIndex(5); pnumsel = 0 }
+			if prcadr >= 5395 && prcadr <= 6050 { selptype.SetSelectedIndex(10); pnumsel = 3 }
 			if prcadr >= 4954 && prcadr <= 5385 { selptype.SetSelectedIndex(9); pnumsel = 2 }
 			if prcadr >= 4231 && prcadr <= 4945 { selptype.SetSelectedIndex(8); pnumsel = 1 }
 			if prcadr >= 2915 && prcadr <= 3533 { selptype.SetSelectedIndex(7); pnumsel = 0 }
 			if prcadr >= 2048 && prcadr <= 2906 { selptype.SetSelectedIndex(5); pnumsel = 4 }
+			if prcadr >= 6189 && prcadr <= 6764 { selptype.SetSelectedIndex(5); pnumsel = 8 }	//demons
+			if prcadr >= 6673 && prcadr <= 6984 { selptype.SetSelectedIndex(5); pnumsel = 0 }	//deth
+			if prcadr >= 6993 && prcadr <= 7234 { selptype.SetSelectedIndex(5); pnumsel = 11 }	//deth
+			if prcadr >= 7240 && prcadr <= 7600 { selptype.SetSelectedIndex(5); pnumsel = 1 }	//deth
 			if prcadr >= 2475 && prcadr <= 2520 { pnumsel = 5 }		// gens
 			if prcadr >= 2403 && prcadr <= 2466 { pnumsel = 1 }		// items
-			if prcadr == 2300 || prcadr == 2340 || prcadr == 2556 || prcadr == 2812 || prcadr == 4604 || prcadr == 4860 || prcadr == 5116 || prcadr == 5372 { selptype.SetSelectedIndex(5); pnumsel = 1 }
+			if prcadr == 2300 || prcadr == 2340 || prcadr == 2556 || prcadr == 2812 || prcadr == 4604 || prcadr == 4860 || prcadr == 5116 || prcadr == 5372 || prcadr == 5628 || prcadr == 5884  || prcadr == 7542 { selptype.SetSelectedIndex(5); pnumsel = 1 }		// items
+			if prcadr == 3068 || prcadr == 3324 || prcadr == 3580 { selptype.SetSelectedIndex(5); pnumsel = 5; xpck = false }		// exit
 			if prcadr >= 926 && prcadr <= 935 { selptype.SetSelectedIndex(5); pnumsel = 5; xpck = false }
 			if prcadr == 932 { pnumsel = 26 }
 			if prcadr < 926 { selptype.SetSelectedIndex(3); pnumsel = 3; xpck = false }
