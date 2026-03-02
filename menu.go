@@ -387,6 +387,7 @@ fmt.Printf("p 128 << 2: %d\nq 128 >> 2: %d\n",p,q)
 //fmt.Printf("tab: %s\n",t.Text)
 		actab = t.Text
 		if actab == "Sprites" { sprite_view() }
+		if actab == "Game" { splCyc = 11 }		// TESTING
 	}
 	actab = "Maze view"
 	gif_lodr("splash/splash1.gif", splash, splim, "")		// pre-load intro gif

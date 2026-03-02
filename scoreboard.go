@@ -99,7 +99,7 @@ wkeysmp := 5
 vmode := 0		// 0 for  G¹ / G², 1 for se
 // score board specials - jeys, potions, powers
 	if sbv[iv].fnr < 0 {
-fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (sbv[iv].fnr == -4))
+//fmt.Printf("v: %d ox,oy %d %d,== ? %t\n",sbv[iv].fnr,sbv[iv].xov,sbv[iv].yov, (sbv[iv].fnr == -4))
 		a := sbv[iv].adj
 		if sbv[iv].fnr == -1 {		// display 1 png
 			err,_,wp := itemGetPNG(sbv[iv].msb)

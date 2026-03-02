@@ -17,6 +17,7 @@ import (
 
 var splRot = 6000
 var splCyc = 0
+var splsubCyc = 0
 var splLoop = "0123456789ABCDEFK2"
 
 // blank bkg display
@@ -78,28 +79,21 @@ func splashrot() {
 //fmt.Printf("smpl2: %s\n",rot)
 	} else {
 
+	if splsubCyc == 0 {
 	if splCyc == 9 {		// done with g1 splash, load g1 score tbl gfx
+		hsct[1].msb = fmt.Sprintf("./splash/splD1.png")
 		splCyc = 13
 	} else {
 		if splCyc < 1 || splCyc >= 12 { splCyc = 0 }
 		splCyc++
-	}
+	}}
 
 // testing
-splCyc = 13
-
-/* stat save from se vars vids
-			vid.Src = "splash/g2samply_q.ogv"
-			rot = 119700
-			vid.Src = "splash/gII_intro.ogv"
-			rot = 25200
-			vid.Src = "splash/gIV_intro.ogv"
-			rot = 20650
-			vid.Src = "splash/gN_intro.ogv"
-			rot = 34210  */
+if splCyc == 12 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
 
 	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2
 //	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from g1 to g2 - test mode
+fmt.Printf("cyc: %d subcyc: %d\n",splCyc,splsubCyc)
 
 // add g1 & 2 smpl gifs & musics, later other intro sets
 
@@ -141,14 +135,34 @@ splCyc = 13
 		} else { fmt.Printf("Splash screen fail: %s\n",splashsrc);fmt.Print(err) }
 	}
 // show score tbl on 12, 13
-	if splCyc >= 12 {
+	if splCyc >= 12 && splsubCyc == 0 {
 		if rand.Float64() > 0.9 {		// this skips title scroller, strait into g1 ghosts pg
 			splCyc = 1
 		}
 	}}
 
 	sec = true		// second loop+
-  }
-	time.Sleep(time.Duration(rot) * time.Millisecond)
+  } else {
+		splsubCyc = 0		// not in game tab
+	}
+	if splsubCyc > 0 {			// G² flash high score colors test
+		splsubCyc--
+		rot = 111
+		hsct[1].msb = fmt.Sprintf("./splash/splD%1d.png",(splsubCyc & 3)+1)
+		time.Sleep(333 * time.Millisecond)
+	} else {
+		time.Sleep(time.Duration(rot) * time.Millisecond)
+	}
   }
 }
+
+/* stat save from se vars vids
+			vid.Src = "splash/g2samply_q.ogv"
+			rot = 119700
+			vid.Src = "splash/gII_intro.ogv"
+			rot = 25200
+			vid.Src = "splash/gIV_intro.ogv"
+			rot = 20650
+			vid.Src = "splash/gN_intro.ogv"
+			rot = 34210
+*/
