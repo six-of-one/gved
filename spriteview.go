@@ -261,6 +261,10 @@ var lim *fyne.Container
 		fmt.Printf("When 3x3 in G roms render every xxxFC 2x2 %t\n", k)
 	})
 	fchak.Checked = true
+	fccol := widget.NewCheck("", func(k bool) {
+		fmt.Printf("Render colors / pnum in fchack %t\n", k)
+	})
+	fccol.Checked = true
 
 // address to start rom read
 	if lasadr == "" { lasadr = "0" }
@@ -372,6 +376,7 @@ fmt.Printf("p: %d m 16 = %d\n",prcadr,prcadr % 16)
 //fmt.Printf("pg start: %d\n",pgstr)
 		for y := 0; y <= fy; y++ {
 		for x := 0; x <= fx; x++ {
+			xpck := xpar.Checked
 		  if uroms {
 			spadj := 0
 			st = fmt.Sprintf("%d",prcadr)
@@ -413,12 +418,23 @@ fmt.Printf("p: %d m 16 = %d\n",prcadr,prcadr % 16)
 				if prcadr == 10020 { spadj = 10024 }
 				usvy = asvy*8										// 10124 is the effective end of G² roms
 				if asvy == 1 { usvy = 16 }
-			}}
+			}
+		if fccol.Checked {
+			if prcadr >= 2048 && prcadr <= 2906 { selptype.SetSelectedIndex(5); pnumsel = 4; xpck = false }
+			if prcadr >= 2475 && prcadr <= 2520 { pnumsel = 5 }
+			if prcadr >= 2403 && prcadr <= 2466 { pnumsel = 1 }
+			if prcadr == 2300 || prcadr == 2340 || prcadr == 2556 || prcadr == 2812 { pnumsel = 1 }
+			if prcadr >= 926 && prcadr <= 935 { selptype.SetSelectedIndex(5); pnumsel = 5; xpck = false }
+			if prcadr == 932 { pnumsel = 26 }
+			if prcadr < 926 { selptype.SetSelectedIndex(3); pnumsel = 3 }
+			if prcadr < 481 { selptype.SetSelectedIndex(1); pnumsel = 1 }
+		}
+			}
 			bstamp.numbers = tilerange(prcadr, asvx * asvy)
 			prcadr += asvx * asvy
 			if spadj > 0 { prcadr = spadj }
 			bstamp.width = asvx
-			bstamp.trans0 = xpar.Checked
+			bstamp.trans0 = xpck
 			bstamp.pnum = pnumsel
 			bstamp.ptype = paltype
 //fmt.Printf("Write sprite : %s: %d, %d x %d adr: %X - @%d, %d\n",paltype,pnumsel,fx,fy,prcadr,x*gx, y*gy)
@@ -461,7 +477,7 @@ fmt.Printf("p: %d m 16 = %d\n",prcadr,prcadr % 16)
 			chkg1rom, ptyp_label, selptype, pnum_label,pnumen,g2m,trench_label,trench,xpar,
 		),
 		container.New(layout.NewHBoxLayout(),
-			filerom, spsheet, fnload, container.NewWithoutLayout(fnent),fch_label,fchak,
+			filerom, spsheet, fnload, container.NewWithoutLayout(fnent),fch_label,fchak,fccol,
 		),
 		container.New(layout.NewHBoxLayout(),
 			bld_btn,keepr, pixs_label, xpxz, ssiz_label, xsiz,shxsiz, x_label, ysiz,shysiz, adr_label, container.NewWithoutLayout(radr),redc,redr,adr_spc,showr,lvlcol,
