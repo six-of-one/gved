@@ -549,3 +549,31 @@ func sprites_keys() {
 
 	dboxtx("Sprite viewer", strp, 480, 460,nil,typedRune)
 }
+
+// sprite view keys, called from kontrol.go specialKey and typedRune
+
+func spr_keyspec(key *fyne.KeyEvent) {
+
+	da, cen := 1, 100
+	if shift { da, cen = 4, 1000 }
+	if key.Name == "Left" {
+		prcadr -= da
+			}
+	if key.Name == "Right" {
+		prcadr += da
+			}
+	if key.Name == "Up" {
+		prcadr -= da * 10
+			}
+	if key.Name == "Down" {
+		prcadr += da * 10
+			}
+	if key.Name == "Prior" {
+		prcadr -= cen
+		}
+	if key.Name == "Next" {
+		prcadr += cen
+		}
+	radr_bounds() 	// bound any of those changes, and update
+
+}

@@ -71,7 +71,7 @@ func specialKey(cw fyne.Window) {
 			sta := "vp ⊙ %d x %d"
 			stu := ""
 			px, py := 0, 0
-			va, da, cen := 4, 1, 100		// view port adjust, maze dimension adjust by ↑↓←→ and <CTRL>↑↓←→
+			va, da := 4, 1		// view port adjust, maze dimension adjust by ↑↓←→ and <CTRL>↑↓←→
 			if key.Name == "Home" { home = false }
 			if key.Name == "LeftSuper" { logo = false }
 			if key.Name == "LeftShift" { shift = false }
@@ -79,29 +79,10 @@ func specialKey(cw fyne.Window) {
 			if key.Name == "LeftControl" { ctrl = false }
 			if key.Name == "RightControl" { ctrl = false }
 			if key.Name == "Q" && ctrl  { exitsel = true; needsav() }
-			if shift { va, da, cen  = 1, 4, 1000 }
+			if shift { va, da  = 1, 4 }
 		  if actab == "Sprites" {
 // sprite sheet keys
-			if key.Name == "Left" {
-				prcadr -= da
-					}
-			if key.Name == "Right" {
-				prcadr += da
-					}
-			if key.Name == "Up" {
-				prcadr -= da * 10
-					}
-			if key.Name == "Down" {
-				prcadr += da * 10
-					}
-			if key.Name == "Prior" {
-				prcadr -= cen
-				}
-			if key.Name == "Next" {
-				prcadr += cen
-				}
-			radr_bounds() 	// bound any of those changes, and update
-
+				spr_keyspec(key)
 		  } else {
 			if key.Name == "Escape" {		// now toggle editor on/ off
 				if opts.Aob { dialog.ShowInformation("Edit mode", "Error: can not edit with border around maze!", w) } else {
