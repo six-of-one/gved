@@ -387,15 +387,20 @@ var lim *fyne.Container
 				if prcadr >= 2048 && prcadr < 6993 { xsiz.SetText("3"); ysiz.SetText("3"); asvx,asvy = 3,3 }
 				if prcadr == 2040 { spadj = 2048 }
 				if prcadr == 6993 || prcadr == 7111 || prcadr == 7168 || prcadr == 7693 || prcadr == 8438 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }
-				if prcadr == 7107 || prcadr == 7240 || prcadr == 7307 || prcadr == 7548 || prcadr == 7689 || prcadr ==10024 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
+				if prcadr == 7107 || prcadr == 7240 || prcadr == 7307 || prcadr == 7548 || prcadr == 7689 || prcadr ==10024 || prcadr == 10116 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
 				if prcadr == 7165 { xsiz.SetText("1"); ysiz.SetText("3"); asvx,asvy = 1,3 }
 				if prcadr == 7304 || prcadr == 7604  { xsiz.SetText("3"); ysiz.SetText("1"); asvx,asvy = 3,1 }
 				if prcadr == 7419 { spadj = 7424 }
 				if prcadr == 7540 { spadj = 7542 }
-				if prcadr == 7542 || prcadr == 7631 || prcadr == 8960 || prcadr == 9691 || prcadr == 9728 { xsiz.SetText("3"); ysiz.SetText("3"); asvx,asvy = 3,3 }
+				if prcadr == 7551 { spadj = 7548 }
+				if prcadr == 7542 || prcadr == 7631 || prcadr == 8960 || prcadr == 9691 || prcadr == 9728 || prcadr == 10080 || prcadr == 10124 { xsiz.SetText("3"); ysiz.SetText("3"); asvx,asvy = 3,3 }
+				if prcadr == 8035 || prcadr == 9333 { gx,gy = 4*8+trnc, 4*8+trnc }
+				if prcadr == 7228 { gx,gy = 3*8+trnc, 3*8+trnc }
 				if prcadr == 8437 { spadj = 8438 }
+				if prcadr == 8450 { spadj = 8448 }
 				if prcadr == 9680 { spadj = 9691 }
 				if prcadr == 10020 { spadj = 10024 }
+														// 10124 is the effective end of G² roms
 			}}
 			bstamp.numbers = tilerange(prcadr, asvx * asvy)
 			prcadr += asvx * asvy
