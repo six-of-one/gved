@@ -427,12 +427,22 @@ var lim *fyne.Container
 			if prcadr >= 2915 && prcadr <= 3533 { selptype.SetSelectedIndex(7); pnumsel = 0 }
 			if prcadr >= 2048 && prcadr <= 2906 { selptype.SetSelectedIndex(5); pnumsel = 4 }
 			if prcadr >= 6189 && prcadr <= 6764 { selptype.SetSelectedIndex(5); pnumsel = 8 }	//demons
-			if prcadr >= 6673 && prcadr <= 6984 { selptype.SetSelectedIndex(5); pnumsel = 0 }	//deth
+			if prcadr >= 6773 && prcadr <= 6984 { selptype.SetSelectedIndex(5); pnumsel = 0 }	//deth
 			if prcadr >= 6993 && prcadr <= 7234 { selptype.SetSelectedIndex(5); pnumsel = 11 }	//deth
-			if prcadr >= 7240 && prcadr <= 7600 { selptype.SetSelectedIndex(5); pnumsel = 1 }	//deth
+			if prcadr >= 7240 && prcadr <= 7600 { selptype.SetSelectedIndex(5); pnumsel = 0 }	//dors +
+			if prcadr >= 7604 && prcadr <= 7628 { selptype.SetSelectedIndex(5); pnumsel = 5 }	//nums
+			if prcadr >= 7631 && prcadr <= 7680 { selptype.SetSelectedIndex(5); pnumsel = 1 }
+			if prcadr >= 8960 && prcadr <= 9648 { selptype.SetSelectedIndex(5); pnumsel = 1 }
+			if prcadr >= 9691 && prcadr <= 9726 { selptype.SetSelectedIndex(5); pnumsel = 1 }
+			if prcadr >= 10024 && prcadr <= 10044 { selptype.SetSelectedIndex(5); pnumsel = 1 }
+			if prcadr >= 10080 && prcadr <= 10120 { selptype.SetSelectedIndex(5); pnumsel = 1 }
+			if prcadr >= 8448 && prcadr <= 8944 { selptype.SetSelectedIndex(5); pnumsel = 8 }
+			if prcadr >= 9472 && prcadr <= 9552 { selptype.SetSelectedIndex(5); pnumsel = 8 }
+			if prcadr >= 10124 && prcadr <= 10223 || prcadr == 10048 || prcadr == 10064{ selptype.SetSelectedIndex(5); pnumsel = 8 }
 			if prcadr >= 2475 && prcadr <= 2520 { pnumsel = 5 }		// gens
 			if prcadr >= 2403 && prcadr <= 2466 { pnumsel = 1 }		// items
 			if prcadr == 2300 || prcadr == 2340 || prcadr == 2556 || prcadr == 2812 || prcadr == 4604 || prcadr == 4860 || prcadr == 5116 || prcadr == 5372 || prcadr == 5628 || prcadr == 5884  || prcadr == 7542 { selptype.SetSelectedIndex(5); pnumsel = 1 }		// items
+			if prcadr == 8438 || prcadr == 8444 { selptype.SetSelectedIndex(5); pnumsel = 1 }		// items
 			if prcadr == 3068 || prcadr == 3324 || prcadr == 3580 { selptype.SetSelectedIndex(5); pnumsel = 5; xpck = false }		// exit
 			if prcadr >= 926 && prcadr <= 935 { selptype.SetSelectedIndex(5); pnumsel = 5; xpck = false }
 			if prcadr == 932 { pnumsel = 26 }
