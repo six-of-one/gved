@@ -341,15 +341,17 @@ var lim *fyne.Container
 		fmt.Sscanf(lasadr,"%d",&prcadr)
 		pgstr := prcadr
 		fx,fy,gx,gy := 0,0,0,0
+		tpc := prcadr - 1
 		if chkg1rom.Checked && fchak.Checked {
-			tpc := prcadr - 1
-			if prcadr < 926 && (tpc % 16) == 0 { xsiz.SetText("4"); ysiz.SetText("4") }
+			if prcadr <= 2040 && (tpc % 16) == 0 { xsiz.SetText("4"); ysiz.SetText("4") }
 			if prcadr == 0 || prcadr == 16 { xsiz.SetText("4"); ysiz.SetText("4") }
-			if prcadr >= 2048 && prcadr < 10232 { xsiz.SetText("3"); ysiz.SetText("3") }
+			if prcadr >= 2048 && prcadr < 10241 { xsiz.SetText("3"); ysiz.SetText("3") }
+			if prcadr > 10240 { xsiz.SetText("6"); ysiz.SetText("6") }
 			if prcadr == 7228 { gx,gy = 3*8+trnc, 3*8+trnc }
-			if prcadr == 7813 || prcadr == 8035 || prcadr == 9315 || prcadr == 10020  || prcadr == 10048 || prcadr == 10064 { gx,gy = 4*8+trnc, 4*8+trnc }
-			if (prcadr >= 8448 && prcadr <= 8994 && (prcadr % 32) == 0) || (prcadr >= 9472 && prcadr <= 9552 && (prcadr % 32) == 0) { gx,gy = 4*8+trnc, 4*8+trnc }
-
+			if prcadr == 7813 || prcadr == 8035 || prcadr == 9315 || prcadr == 10020 { gx,gy = 4*8+trnc, 4*8+trnc }
+	// dragons
+			if (prcadr >= 8448 && prcadr <= 8944 && (prcadr % 16) == 0) || (prcadr >= 9472 && prcadr <= 9552 && (prcadr % 16) == 0) || prcadr == 10048 || prcadr == 10064 { xsiz.SetText("4"); ysiz.SetText("4"); gx,gy = 4*8+trnc, 4*8+trnc }
+fmt.Printf("p: %d m 16 = %d\n",prcadr,prcadr % 16)
 		}
 		subf := int((float64(pixx) / (opts.Geoh-190))* 116)
 		if uroms {
@@ -390,12 +392,14 @@ var lim *fyne.Container
 				if prcadr == 932 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
 				if prcadr == 936 || prcadr == 8448 || prcadr == 9472 || prcadr == 10048 { xsiz.SetText("4"); ysiz.SetText("4"); asvx,asvy = 4,4 }
 				if prcadr >= 2048 && prcadr < 6993 { xsiz.SetText("3"); ysiz.SetText("3"); asvx,asvy = 3,3 }
-				if prcadr == 2040 { spadj = 2048 }
+				if asvx == 3 && prcadr >= 2040 && prcadr < 2048 { spadj = 2048 }
+				if asvx == 4 && prcadr >= 2033 && prcadr < 2048 { spadj = 2048 }
 				if prcadr == 6993 || prcadr == 7111 || prcadr == 7228 || prcadr == 7168 || prcadr == 7693 || prcadr == 8035 || prcadr == 8438 { xsiz.SetText("3"); ysiz.SetText("2"); asvx,asvy = 3,2 }
 				if prcadr == 7107 || prcadr == 7240 || prcadr == 7307 || prcadr == 7548 || prcadr == 7689 || prcadr ==10024 || prcadr == 10116 { xsiz.SetText("2"); ysiz.SetText("2"); asvx,asvy = 2,2 }
 				if prcadr == 7165 { xsiz.SetText("1"); ysiz.SetText("3"); asvx,asvy = 1,3 }
 				if prcadr == 7304 || prcadr == 7604  { xsiz.SetText("3"); ysiz.SetText("1"); asvx,asvy = 3,1 }
-				if pgstr == 1080 && prcadr == 2048 { break }			// makes it so we only need one seq from 0, where the big 3x3 area with 2x2 at xxFC is mostly mobs
+				if pgstr >= 936 && pgstr < 2048 && prcadr >= 2048 { break }			// makes it so we only need one seq from 0, where the big 3x3 area with 2x2 at xxFC is mostly mobs
+			//	if pgstr >= 936 && pgstr < 977 &&  prcadr >= 2048 { break }
 				if pgstr == 7747 && prcadr == 8448 { break }//&& prcadr == 9113 { spadj = 8448 }
 				if prcadr == 7419 { spadj = 7424 }
 				if prcadr == 7540 { spadj = 7542 }
