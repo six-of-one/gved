@@ -372,7 +372,7 @@ func map_fargoal(mbuf MazeData) {
 			stone = 1
 			run := rndr(0, 8) + 5
 			j = 1
-fmt.Printf("run %d, stone %d\n",run,stone)
+//fmt.Printf("run %d, stone %d\n",run,stone)
 
 			for j != run {
 				m_x := x + dirs[dir].x

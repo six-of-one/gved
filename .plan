@@ -49,6 +49,9 @@ a basic "playable" mode to test mazes
 - no h/s, multiplay, thief, mugger, diff move monsters, treasure rooms, secret rooms, dragons, etc
 - sprite system needed (sprites have to replace gens, treasure, keys, pots, etc)
 - *sprite sheet organzied, produce array of animated mobs / ents & fixed ents
+  - organize anim array for: dir * cnt = pos to loop cnt for given dir
+                             dir * acnt + last dir+1 - pos to loop attack frms
+  - dirs 0: dn, 1: dn rt, 2: rt, 3: up rt. 4: up, 5: up l, 6: l, 7: dn l
 - player controls (turn off cmd keys, special mode - use actab select in keyrune)
 - pixel unit move renderer
 - dialogs: play stats, scores, main sideboard (4 players), 'use keys to open doors' dialogs
