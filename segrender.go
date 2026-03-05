@@ -1162,9 +1162,10 @@ if opts.Verbose { fmt.Printf("%03d ",sb) }
 //				writestamptoimage(G1,img, arstamp[sb], vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
 				offset := image.Pt(vcx*16+arstamp[sb].nudgex, vcy*16+arstamp[sb].nudgey)
 //if sb < 99 || sb > 100 { fmt.Printf("star ld %d, %v %v\n",sb,arstamp[sb].mimg.Bounds(),offset) }
-				if arstamp[sb].mask & NOFLOOR != 0 && flordirt >= 0 {
+				if arstamp[sb].mask & NOFLOOR != 0 {
+				if flordirt >= 0 {
 					draw.Draw(fimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)	// this will work, but may not be ideal
-				} else {
+				}} else {
 					drimg := arstamp[sb].mimg
 					r := anmapt[xy{x, y}]
 					if r > 0 {
