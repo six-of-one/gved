@@ -719,8 +719,12 @@ var dyn [100]int
 				arstamp[lk].anim[i] = blankimage(v,v)
 				stc := arstamp[lk]
 				if dyn[i] > 0 {
-					stc.numbers = tilerange(dyn[i],len(stc.numbers))
+					stc.numbers = tilerange(dyn[i],len(stc.data))
+					fillstamp(stc)
+//fmt.Printf("anim stamp %d ad: %v\n",lk,stc.numbers)
 					writestamptoimage(G1,arstamp[lk].anim[i], stc, 0, 0)
+//fl := fmt.Sprintf("tst%d.png",i)
+//savetopng(fl, arstamp[lk].anim[i])
 				}
 		}}
 	}
@@ -781,7 +785,10 @@ func animcon() {
 				r--
 				if r <= 0 { r = arstamp[tl].animtm }
 				anmapt[xy{ux, uy}] = r
-				drimg := arstamp[tl].anim[r - 1]
+				drimg := blankimage(16,16)
+				if r < len(arstamp[tl].anim) {
+					drimg = arstamp[tl].anim[r - 1]
+				}
 				offset := image.Pt(vcoord(x,mvpx,xba)*16, vcoord(y,mvpy,yba)*16)
 				if arstamp[tl].mask & NOFLOOR != 0 {
 					draw.Draw(fimg, drimg.Bounds().Add(offset), drimg, image.ZP, draw.Over)

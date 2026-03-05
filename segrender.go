@@ -1166,11 +1166,12 @@ if opts.Verbose { fmt.Printf("%03d ",sb) }
 				if flordirt >= 0 {
 					draw.Draw(fimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)	// this will work, but may not be ideal
 				}} else {
+					if arstamp[sb].animtm > 0 && anmap[xy{x, y}] == 0 { anmap[xy{x, y}] = arstamp[sb].animtm; anmapt[xy{x, y}] = arstamp[sb].animtm; manim = true }
 					drimg := arstamp[sb].mimg
 					r := anmapt[xy{x, y}]
 					if r > 0 {
-//fmt.Printf("anim len: %d-st r %d, len: %d\n"sb,r,len(arstamp[sb].anim))
 						if r <= len(arstamp[sb].anim) {
+//fmt.Printf("anim len: %d-st r %d, len: %d - @ %d, %d\n",sb,r,len(arstamp[sb].anim),x,y)
 							drimg = arstamp[sb].anim[r - 1]
 						} else {
 							fmt.Printf("WARNING: anim len exceeded: %d-st with %d, len: %d\n",sb,r,len(arstamp[sb].anim))
