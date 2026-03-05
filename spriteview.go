@@ -480,12 +480,14 @@ var lim *fyne.Container
 				gtop.Clear()
 				gtop.SetRGB(0.5, 0.5, 0.5)
 				gtop.DrawStringAnchored(st, 0, 6, 0, 0.5)
+fmt.Printf("%s, ",st)
 				gtop.SetRGB(0.12, 0.12, 0.12)
 				gtopim := gtop.Image()
 				offset := image.Pt(x*gx, y*gy+(usvy)-2)
 				draw.Draw(bas, gtopim.Bounds().Add(offset), gtopim, image.ZP, draw.Over)
 			}
-		}}
+		}
+		fmt.Printf("\n") }
 		if keepr.Checked { if uroms { fmt.Sscanf(lasadr,"%d",&prcadr) }}
 		bld := canvas.NewRasterFromImage(bas)
 		gif_blnk(lim)

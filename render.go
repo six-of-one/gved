@@ -312,6 +312,8 @@ func bld_star(lk int ) {
 	gsv := G1
 	mask := 256 		// set some masks here
 	cnt := 0			// animation frames
+//	acnt := 0			// attack anim
+var dyn [100]int
 
 	switch lk {
 	case SEOBJ_PUSHWAL:
@@ -359,6 +361,8 @@ func bld_star(lk int ) {
 		G1 = false; fallthrough
 	case G1OBJ_MONST_GHOST3:
 		arstamp[lk] = itemGetStamp("ghost")
+		cnt = 32
+		dyn = [100]int{2048,2057,2066,2075,2084,2093, 2102, 2111, 2120, 2129, 2138, 2147, 2156, 2165, 2174, 2183, 2192, 2201, 2210, 2219, 2228, 2237, 2246, 2255,2264, 2273, 2282, 2291, 2304, 2313, 2322, 2331,-1}
 	case G1OBJ_MONST_GRUNT1:
 		arstamp[lk] = itemGetStamp("grunt1")
 	case G1OBJ_MONST_GRUNT2:
@@ -705,6 +709,16 @@ func bld_star(lk int ) {
 		arstamp[lk].mimg = blankimage(v,v)
 		writestamptoimage(G1,arstamp[lk].mimg, arstamp[lk], 0, 0)
 		arstamp[lk].altimg = arstamp[lk].mimg
+		if cnt > 0 {
+			for i := 0; i < cnt; i++ {
+				arstamp[lk].anim = append(arstamp[lk].anim,nil)
+				arstamp[lk].anim[i] = blankimage(v,v)
+				stc := arstamp[lk]
+				if dyn[i] > 0 {
+					stc.numbers = tilerange(dyn[i],len(stc.numbers))
+					writestamptoimage(G1,arstamp[lk].anim[i], stc, 0, 0)
+				}
+		}}
 	}
 	if psx >= 0 && psy >= 0 {			// supply alt img
 		parimg = sents
