@@ -25,7 +25,7 @@ type Stamp struct {
 	altimg	*image.NRGBA
 	anim	[]*image.NRGBA		// to animate mobs & such
 	animtm	int					// frames to animate, total set
-	animm   int					// frames of move cyc
+	animw   int					// frames of move cyc
 	anima   int					// frames of attach cyc
 	animo   int					// frames of other anim (player drain, monster something)
 }
@@ -462,7 +462,7 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
-		aninm:   4
+		animw:   4,
 	},
 // encode levels 1, 2 for pre-gen monsters
 	"ghost2": Stamp{
@@ -474,7 +474,7 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
-		aninm:   4
+		animw:   4,
 	},
 	"ghost1": Stamp{
 		width:   3,
@@ -485,7 +485,7 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
-		aninm:   4
+		animw:   4,
 	},
 	"grunt": Stamp{
 		width:   3,
