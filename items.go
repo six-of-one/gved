@@ -649,6 +649,7 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
+		animw:   3,
 	},
 	"mugger": Stamp{
 		width:   3,
