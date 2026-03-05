@@ -1166,7 +1166,7 @@ if opts.Verbose { fmt.Printf("%03d ",sb) }
 				if flordirt >= 0 {
 					draw.Draw(fimg, arstamp[sb].mimg.Bounds().Add(offset), arstamp[sb].mimg, image.ZP, draw.Over)	// this will work, but may not be ideal
 				}} else {
-					if arstamp[sb].animtm > 0 && anmap[xy{x, y}] == 0 { anmap[xy{x, y}] = arstamp[sb].animtm; anmapt[xy{x, y}] = arstamp[sb].animtm; manim = true }
+					if arstamp[sb].animtm > 0 && anmap[xy{x, y}] == 0 { anmap[xy{x, y}] = sb; anmapt[xy{x, y}] = arstamp[sb].animtm; manim = true }
 					drimg := arstamp[sb].mimg
 					r := anmapt[xy{x, y}]
 					if r > 0 {

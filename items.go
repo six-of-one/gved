@@ -496,6 +496,8 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
+		animw:   3,
+		anima:   2,
 	},
 	"grunt2": Stamp{
 		width:   3,
@@ -506,6 +508,8 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
+		animw:   3,
+		anima:   2,
 	},
 	"grunt1": Stamp{
 		width:   3,
@@ -516,6 +520,8 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
+		animw:   3,
+		anima:   2,
 	},
 	"demon": Stamp{
 		width:   3,
@@ -526,6 +532,8 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -6,
 		mask:    NOMON,
+		animw:   5,
+		anima:   2,
 	},
 	"demon2": Stamp{
 		width:   3,
@@ -536,6 +544,8 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -6,
 		mask:    NOMON,
+		animw:   5,
+		anima:   2,
 	},
 	"demon1": Stamp{
 		width:   3,
@@ -546,6 +556,8 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -6,
 		mask:    NOMON,
+		animw:   5,
+		anima:   2,
 	},
 	"lobber": Stamp{
 		width:   3,
