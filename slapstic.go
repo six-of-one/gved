@@ -132,7 +132,8 @@ func slapsticMazeGetBank(mazenum int) int {
 	if G1 { return 0 }	// G¹ bank info not available here
 
 	if mazenum < 0 || mazenum > 116 {
-		panic("Invalid maze number requested (must be 0 <= x <= 116")
+		fmt.Printf("ERROR: Invalid maze number requested %d (must be 0 <= x <= 116",mazenum)
+		mazenum = 0
 	}
 
 	// More or less a direct port of the 68k cohde. Should improve this.

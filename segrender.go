@@ -1167,7 +1167,14 @@ if opts.Verbose { fmt.Printf("%03d ",sb) }
 				} else {
 					drimg := arstamp[sb].mimg
 					r := anmapt[xy{x, y}]
-					if r > 0 { drimg = arstamp[sb].anim[r - 1] }
+					if r > 0 {
+//fmt.Printf("anim len: %d-st r %d, len: %d\n"sb,r,len(arstamp[sb].anim))
+						if r <= len(arstamp[sb].anim) {
+							drimg = arstamp[sb].anim[r - 1]
+						} else {
+							fmt.Printf("WARNING: anim len exceeded: %d-st with %d, len: %d\n",sb,r,len(arstamp[sb].anim))
+						}
+					}
 					draw.Draw(mimg, drimg.Bounds().Add(offset), drimg, image.ZP, draw.Over)
 				}
 				if arstamp[sb].pnum != -7 { nugetx, nugety = arstamp[sb].nudgex, arstamp[sb].nudgey }
