@@ -23,11 +23,15 @@ type Stamp struct {
 	theme	color.NRGBA			// this is the color set generator id letters had
 	mimg	*image.NRGBA		// faster vers has img store
 	altimg	*image.NRGBA
-	anim	[]*image.NRGBA		// to animate mobs & such
-	animtm	int					// frames to animate, total set
-	animw   int					// frames of move cyc
-	anima   int					// frames of attach cyc
-	animo   int					// frames of other anim (player drain, monster something)
+	anim	[]*image.NRGBA		// all frames to animate mobs & such
+	animtm	int					// total frames to animate & any single run ent
+							//		dir set 1 = D, 2 = DR, 3 = R, 4 = UR, 5 = U, 6 = UL, 7 = L, 8 = DL
+	awalk	[12]int				// pointer start frame in set to walk, [0] cyc timer - [9] live frame
+								//  if cyc timer < 0 cycle that many frames
+								// other possibility from cycle timer - run from {start frame} to {next start frame - 1}
+	ashot	[12]int				// pointer start frame in set to shoot, [0] cyc timer - [9] live frame
+	amel	[12]int				// pointer start frame in set to melee, [0] cyc timer - [9] live frame
+	aaux	[12]int				// frames of other anim (player drain, monster something)
 }
 var arstamp []*Stamp
 
@@ -257,6 +261,7 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -8,
 		mask:    NOTRS,
+		awalk:   [12]int{-3},
 	},
 	"treasurelocked": Stamp{
 		width:   3,
@@ -462,7 +467,6 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
-		animw:   4,
 	},
 // encode levels 1, 2 for pre-gen monsters
 	"ghost2": Stamp{
@@ -474,7 +478,6 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
-		animw:   4,
 	},
 	"ghost1": Stamp{
 		width:   3,
@@ -485,7 +488,6 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
-		animw:   4,
 	},
 	"grunt": Stamp{
 		width:   3,
@@ -496,8 +498,6 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
-		animw:   3,
-		anima:   2,
 	},
 	"grunt2": Stamp{
 		width:   3,
@@ -508,8 +508,6 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
-		animw:   3,
-		anima:   2,
 	},
 	"grunt1": Stamp{
 		width:   3,
@@ -520,8 +518,6 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
-		animw:   3,
-		anima:   2,
 	},
 	"demon": Stamp{
 		width:   3,
@@ -532,8 +528,6 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -6,
 		mask:    NOMON,
-		animw:   5,
-		anima:   2,
 	},
 	"demon2": Stamp{
 		width:   3,
@@ -544,8 +538,6 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -6,
 		mask:    NOMON,
-		animw:   5,
-		anima:   2,
 	},
 	"demon1": Stamp{
 		width:   3,
@@ -556,8 +548,6 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -6,
 		mask:    NOMON,
-		animw:   5,
-		anima:   2,
 	},
 	"lobber": Stamp{
 		width:   3,
@@ -638,7 +628,6 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
-		animw:   3,
 	},
 	"thief": Stamp{
 		width:   3,
@@ -649,7 +638,6 @@ var itemStamps = map[string]Stamp{
 		nudgex:  -4,
 		nudgey:  -4,
 		mask:    NOMON,
-		animw:   3,
 	},
 	"mugger": Stamp{
 		width:   3,

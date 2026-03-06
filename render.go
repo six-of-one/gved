@@ -366,6 +366,8 @@ var dyn [100]int
 			2264, 2273, 2282, 2291,		// L
 			2304, 2313, 2322, 2331,		// DL
 			-1}
+		arstamp[lk].awalk = [12]int{4,0,4,8,12,16,20,24,28,-1}
+
 	case G1OBJ_MONST_GHOST2:
 		arstamp[lk] = itemGetStamp("ghost2")
 		cnt = 32
@@ -379,6 +381,7 @@ var dyn [100]int
 			2264, 2273, 2282, 2291,		// L
 			2304, 2313, 2322, 2331,		// DL
 			-1}
+		arstamp[lk].awalk = [12]int{4,0,4,8,12,16,20,24,28,-1}
 	case SEOBJ_G2GHOST:
 		G1 = false; fallthrough
 	case G1OBJ_MONST_GHOST3:
@@ -394,6 +397,7 @@ var dyn [100]int
 			2264, 2273, 2282, 2291,		// L
 			2304, 2313, 2322, 2331,		// DL
 			-1}
+		arstamp[lk].awalk = [12]int{4,0,4,8,12,16,20,24,28,-1}
 	case G1OBJ_MONST_GRUNT1:
 		arstamp[lk] = itemGetStamp("grunt1")
 		cnt = 40
@@ -415,6 +419,8 @@ var dyn [100]int
 			2879, 2888,		// L
 			2897, 2906,		// DL
 			-1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+		arstamp[lk].amel = [12]int{2,24,26,28,30,32,34,36,38,-1}
 	case G1OBJ_MONST_GRUNT2:
 		arstamp[lk] = itemGetStamp("grunt2")
 		cnt = 40
@@ -436,6 +442,8 @@ var dyn [100]int
 			2879, 2888,		// L
 			2897, 2906,		// DL
 			-1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+		arstamp[lk].amel = [12]int{2,24,26,28,30,32,34,36,38,-1}
 	case SEOBJ_G2GRUNT:		// grunts & ghosts go D, DR, R, UR, U, UL, L, DL walk, & grunt attack
 		G1 = false; fallthrough
 	case G1OBJ_MONST_GRUNT3:
@@ -459,6 +467,8 @@ var dyn [100]int
 			2879, 2888,		// L
 			2897, 2906,		// DL
 			-1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+		arstamp[lk].amel = [12]int{2,24,26,28,30,32,34,36,38,-1}
 	case G1OBJ_MONST_DEMON1:
 		arstamp[lk] = itemGetStamp("demon1")
 		cnt = 64
@@ -481,6 +491,8 @@ var dyn [100]int
 			6701, 6710,
 			6643, 6656,
 			-1}
+		arstamp[lk].awalk = [12]int{5,0,5,10,15,20,25,30,35,-1}
+		arstamp[lk].ashot = [12]int{2,48,50,52,54,56,58,60,62,-1}
 /*
 6189, 6198, 6207, 6216, 6225, 		// D
 6234, 6243, 6252, 6261, 6270, 		// DL
@@ -522,6 +534,8 @@ var dyn [100]int
 			6701, 6710,
 			6643, 6656,
 			-1}
+		arstamp[lk].awalk = [12]int{5,0,5,10,15,20,25,30,35,-1}
+		arstamp[lk].ashot = [12]int{2,48,50,52,54,56,58,60,62,-1}
 	case SEOBJ_G2DEMON:
 		G1 = false; fallthrough
 	case G1OBJ_MONST_DEMON3:
@@ -546,6 +560,8 @@ var dyn [100]int
 			6701, 6710,
 			6643, 6656,
 			-1}
+		arstamp[lk].awalk = [12]int{5,0,5,10,15,20,25,30,35,-1}
+		arstamp[lk].ashot = [12]int{2,48,50,52,54,56,58,60,62,-1}
 	case G1OBJ_MONST_LOBBER1:
 		arstamp[lk] = itemGetStamp("lobber1")
 		cnt = 49
@@ -569,7 +585,8 @@ var dyn [100]int
 7240, 7244, 7248, 7252, 7256, // shot sm, up, big, dn, sm
 7252, 7248, 7244, 7240,
 			-1}
-
+		arstamp[lk].awalk = [12]int{4,0,5,10,15,20,25,30,35,-1}
+		arstamp[lk].ashot = [12]int{2,3,8,13,18,23,28,33,38,-1}
 	case G1OBJ_MONST_LOBBER2:
 		arstamp[lk] = itemGetStamp("lobber2")
 		cnt = 49
@@ -593,6 +610,8 @@ var dyn [100]int
 7240, 7244, 7248, 7252, 7256, // shot sm, up, big, dn, sm
 7252, 7248, 7244, 7240,
 			-1}
+		arstamp[lk].awalk = [12]int{4,0,5,10,15,20,25,30,35,-1}
+		arstamp[lk].ashot = [12]int{2,3,8,13,18,23,28,33,38,-1}
 	case SEOBJ_G2LOBER:
 		G1 = false; fallthrough
 	case G1OBJ_MONST_LOBBER3:
@@ -618,6 +637,8 @@ var dyn [100]int
 7240, 7244, 7248, 7252, 7256, // shot sm, up, big, dn, sm
 7252, 7248, 7244, 7240,
 			-1}
+		arstamp[lk].awalk = [12]int{4,0,5,10,15,20,25,30,35,-1}
+		arstamp[lk].ashot = [12]int{2,3,8,13,18,23,28,33,38,-1}
 	case G1OBJ_MONST_SORC1:
 		arstamp[lk] = itemGetStamp("sorcerer1")
 		cnt = 40
@@ -639,6 +660,8 @@ var dyn [100]int
 			5282, 5291, 	// L
 			5264, 5273, 	// DL
 			-1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+		arstamp[lk].amel = [12]int{2,24,26,28,30,32,34,36,38,-1}
 /*
 // also wizzerd - 48 frems
 4954, 4963, 4972, 4981, 4990, 4999, 5008, 5017, 	// shots D, DL, L, UL, U, UR, R, DR
@@ -680,6 +703,8 @@ var dyn [100]int
 			5282, 5291, 	// L
 			5264, 5273, 	// DL
 			-1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+		arstamp[lk].amel = [12]int{2,24,26,28,30,32,34,36,38,-1}
 	case SEOBJ_G2SORC:
 		G1 = false; fallthrough
 	case G1OBJ_MONST_SORC3:
@@ -703,11 +728,32 @@ var dyn [100]int
 			5282, 5291, 	// L
 			5264, 5273, 	// DL
 			-1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+		arstamp[lk].amel = [12]int{2,24,26,28,30,32,34,36,38,-1}
 	case SEOBJ_G2AUXGR:
 		G1 = false
 		arstamp[lk] = itemGetStamp("auxgrunt")
 		cnt = 40
-		dyn = [100]int{ 2529, 2538, 2547, 2560, 2569, 2578, 2587, 2596, 2605, 2623, 2632, 2641, 2650, 2659, 2668, 2677, 2686, 2695, 2704, 2713, 2722, 2740, 2749, 2758, 2767, 2776, 2785, 2794, 2803, 2816, 2825, 2834, 2843, 2852, 2861, 2870, 2879, 2888, 2897, 2906,-1}			// 1 extar walk cyc going directly L & R 	- 2614, 2731
+		dyn = [100]int{
+			2529, 2538, 2547,	// D
+			2560, 2569, 2578,	// DR
+			2587, 2596, 2605,	// R
+			2623, 2632, 2641,	// UR
+			2650, 2659, 2668,	// U
+			2677, 2686, 2695,	// UL
+			2704, 2713, 2722,	// L
+			2740, 2749, 2758,	// DL
+			2767, 2776,		// D
+			2785, 2794,		// DR
+			2803, 2816,		// R
+			2825, 2834,		// UR
+			2843, 2852,		// U
+			2861, 2870,		// UL
+			2879, 2888,		// L
+			2897, 2906,		// DL
+			-1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+		arstamp[lk].amel = [12]int{2,24,26,28,30,32,34,36,38,-1}
 
 	case G1OBJ_MONST_DEATH:		// D DL L U DR R UR UL
 		arstamp[lk] = itemGetStamp("death")
@@ -722,15 +768,16 @@ var dyn [100]int
 			6827, 6836, 6845,		// L
 			6800, 6809, 6818,		// DL
 			 -1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
 	case SEOBJ_G2ACID:
 		G1 = false
 		arstamp[lk] = itemGetStamp("acid")
 		cnt = 28
 		dyn = [100]int{
 			8960, 8969, 8978, 8987, 8996, 9005, 9014, 9023, 	// vert
+			9158, 9167, 9176, 9185, 9194, 9203,			//  diag \
 			9032, 9041, 9050, 9059, 9068, 9077, 9086, 9095, 	// horiz
 			9104, 9113, 9122, 9131, 9140, 9149, 		//  diag /
-			9158, 9167, 9176, 9185, 9194, 9203,			//  diag \
 			 -1}
 	case SEOBJ_G2SUPSORC:
 		G1 = false
@@ -755,6 +802,8 @@ var dyn [100]int
 			5264, 5273, 	// DL
 			4954, 5017, 5008, 4999, 4990, 4981, 4972, 4963, 	// shots D, DR, R, UR, U, UL, L, DL
 			-1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+		arstamp[lk].amel = [12]int{2,24,26,28,30,32,34,36,38,-1}
 	case SEOBJ_G2IT:
 		G1 = false
 		arstamp[lk] = itemGetStamp("it")
@@ -762,6 +811,7 @@ var dyn [100]int
 		dyn = [100]int{
 			9728, 9737, 9746, 9755, 9764, 9773, 9782, 9791, 9800, 9809, 9818, 9827, 9836, 9845, 9854, 9863,		// just a cycle
 			-1}
+		arstamp[lk].awalk = [12]int{-15,0}
 	case SEOBJ_MONST_DRAGON:
 		G1 = false
 		arstamp[lk] = itemGetStamp("dragon")
@@ -774,6 +824,7 @@ var dyn [100]int
 			9472, 9488, 9504, 9520, 	// waking? DL DR UR UL
 			9536, 9552, 10048, 10064,	// sleeping D R U L ????
 			-1}
+		arstamp[lk].awalk = [12]int{8,0,0,8,8,16,16,24,24,-1}
 	case G1OBJ_MONST_THIEF:
 		arstamp[lk] = itemGetStamp("thief")
 		cnt = 72
@@ -803,6 +854,8 @@ var dyn [100]int
 			4096, 4105, 4114, 	// L
 			4123, 4132, 		// DL ?
 			-1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+		arstamp[lk].amel = [12]int{3,24,27,30,33,36,39,42,45,-1}
 
 	case SEOBJ_MONST_MUGGER:
 		G1 = false
@@ -824,6 +877,7 @@ var dyn [100]int
 			9953, 9962, 9971,// UR
 			10080,10089,10098, // R
 			-1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
 
 	case SEOBJ_G2GN_GST1:
 		G1 = false; fallthrough
