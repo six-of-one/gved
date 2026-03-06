@@ -687,6 +687,23 @@ var dyn [100]int
 	case SEOBJ_MONST_MUGGER:
 		G1 = false
 		arstamp[lk] = itemGetStamp("mugger")
+		cnt = 42
+		dyn = [100]int{
+			9216, 9225, 9234, // D
+			9243, 9252, 9261, // U
+			9270, 9279, 9288, // DL
+			9297, 9306, 9315, // DR
+			9333, 9342, 9351, // R
+			9360, 9369, 9378, // L
+			9387, 9396, 9405, // UR
+			9414, 9423, 9432, // UL
+			9441, 9450, 9459, // attacks D
+			9872, 9881, 9890, // L ?
+			9899, 9908, 9917, // R ?
+			9926, 9935, 9944, // U
+			9953, 9962, 9971,// UR
+			10080,10089,10098, // R
+			-1}
 
 	case SEOBJ_G2GN_GST1:
 		G1 = false; fallthrough
@@ -798,6 +815,10 @@ var dyn [100]int
 
 	case G1OBJ_TREASURE:
 		arstamp[lk] = itemGetStamp("treasure")
+		cnt = 3
+		dyn = [100]int{
+			2439,2448,2457,
+			-1}
 	case SEOBJ_TREASURE_LOCKED:
 		G1 = false
 		arstamp[lk] = itemGetStamp("treasurelocked")
@@ -984,7 +1005,7 @@ var dyn [100]int
 				stc := arstamp[lk]
 				if dyn[i] > 0 {
 					ld := len(stc.data)
-					if dyn[i] > 7239 && dyn[i] < 7269 { ld = 4; stc.ptype = "gbase"; stc.pnum = 1 } // lobber rocks,  shots will prob need rebase
+					if dyn[i] > 7239 && dyn[i] < 7269 { ld = 4; stc.ptype = "base"; stc.pnum = 1; stc.width = 2 } // lobber rocks,  shots will prob need rebase
 					stc.numbers = tilerange(dyn[i],ld)
 					fillstamp(stc)
 //fmt.Printf("anim stamp %d ad: %v\n",lk,stc.numbers)
@@ -1030,6 +1051,7 @@ var nobld bool		// dont build multi layer
 
 func animcon() {
 
+	time.Sleep(2 * time.Second)
 	for {
 	time.Sleep(100 * time.Millisecond)
 // anim not compatible with blot
@@ -1074,5 +1096,6 @@ func animcon() {
 	if !vlock  && actab == "Maze view" {
 
 		maz_tab(cmain, rbimg, rbtn, blant)
+		if ctrl {time.Sleep(1400 * time.Millisecond)}
 	}}}
 }
