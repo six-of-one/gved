@@ -817,10 +817,10 @@ var dyn [100]int
 		arstamp[lk] = itemGetStamp("dragon")
 		cnt = 40
 		dyn = [100]int{								// drag fighting 4 dirs
-			8448, 8464, 8480, 8496, 8512, 8528, 8544, 8560, 	// L
+			8704, 8720, 8736, 8752, 8768, 8784, 8800, 8816, 	// D		L
 			8576, 8592, 8608, 8624, 8640, 8656, 8672, 8688, 	// R
-			8704, 8720, 8736, 8752, 8768, 8784, 8800, 8816, 	// D
-			8832, 8848, 8864, 8880, 8896, 8912, 8928, 8944,		// U
+			8448, 8464, 8480, 8496, 8512, 8528, 8544, 8560, 	// L		U
+			8832, 8848, 8864, 8880, 8896, 8912, 8928, 8944,		// U		D
 			9472, 9488, 9504, 9520, 	// waking? DL DR UR UL
 			9536, 9552, 10048, 10064,	// sleeping D R U L ????
 			-1}
@@ -1222,6 +1222,7 @@ func vpc_adj(x, y int) (int,int) {
 // animate tiles
 var vlock bool		// viewport lock so maze loads dont blank screen
 var nobld bool		// dont build multi layer
+var tdir int		// test dir, incr 1 - 8 with logo
 
 func animcon() {
 
@@ -1246,7 +1247,12 @@ func animcon() {
 			if tl > 0 {
 //fmt.Printf("in anim %d, r %d @ %d, %d\n",tl,r,x,y)
 				r--
-				if r <= 0 { r = arstamp[tl].animtm }
+				if r <= 0 {
+					r = arstamp[tl].animtm
+					if arstamp[tl].awalk[0] < 0 { r = -arstamp[tl].awalk[0] }
+					if arstamp[tl].awalk[0] > 0 { r = arstamp[tl].awalk[0] }
+				}
+				if arstamp[tl].awalk[0] > 0 { arstamp[tl].awalk[9] = tdir; arstamp[tl].awalk[10] = arstamp[tl].awalk[tdir] }	// this has to be stored per entity
 				anmapt[xy{ux, uy}] = r
 				drimg := blankimage(16,16)
 				if r < len(arstamp[tl].anim) {

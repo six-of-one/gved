@@ -73,7 +73,7 @@ func specialKey(cw fyne.Window) {
 			px, py := 0, 0
 			va, da := 4, 1		// view port adjust, maze dimension adjust by ↑↓←→ and <CTRL>↑↓←→
 			if key.Name == "Home" { home = false }
-			if key.Name == "LeftSuper" { logo = false }
+			if key.Name == "LeftSuper" { logo = false; tdir++; if tdir > 8 { tdir = 1 } }
 			if key.Name == "LeftShift" { shift = false }
 			if key.Name == "RightShift" { shift = false }
 			if key.Name == "LeftControl" { ctrl = false }

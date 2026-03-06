@@ -1170,9 +1170,13 @@ if opts.Verbose { fmt.Printf("%03d ",sb) }
 					drimg := arstamp[sb].mimg
 					r := anmapt[xy{x, y}]
 					if r > 0 {
-						if r <= len(arstamp[sb].anim) {
+						dr := r
+			// future ops - check anim state of this ent
+			// render loop still handles abs loop, like treasure
+						if arstamp[sb].awalk[0] > 0 { dr = arstamp[sb].awalk[10] + r }
+						if dr <= len(arstamp[sb].anim) {
 //fmt.Printf("anim len: %d-st r %d, len: %d - @ %d, %d\n",sb,r,len(arstamp[sb].anim),x,y)
-							drimg = arstamp[sb].anim[r - 1]
+							drimg = arstamp[sb].anim[dr - 1]
 						} else {
 							fmt.Printf("WARNING: anim len exceeded: %d-st with %d, len: %d\n",sb,r,len(arstamp[sb].anim))
 						}
