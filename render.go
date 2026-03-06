@@ -1030,6 +1030,38 @@ var dyn [100]int
 	case G1OBJ_TRANSPORTER:
 		arstamp[lk] = itemGetStamp("tportg1")
 //		if G2 { arstamp[lk] = itemGetStamp("tport") }
+// player animation
+	case G1OBJ_WARRIOR:
+		arstamp[lk] = itemGetStamp("warrior")
+	case G1OBJ_WIZARD:
+		arstamp[lk] = itemGetStamp("wizard")
+		cnt = 48
+		dyn = [100]int{
+			5026, 5035, 5044, 	//. walks D
+			5219, 5228, 5237, 	// DR
+			5192, 5201, 5210, 	// R
+			5165, 5174, 5183, 	// UR
+			5138, 5147, 5156, 	// U
+			5107, 5120, 5129, 	// UL
+			5080, 5089, 5098, 	// L
+			5053, 5062, 5071, 	// DL
+			5246, 5255,		// melee D
+			5376, 5385, 	// DR
+			5354, 5363, 	// R
+			5336, 5345, 	// UR
+			5318, 5327, 	// U
+			5300, 5309, 	// UL
+			5282, 5291, 	// L
+			5264, 5273, 	// DL
+			4954, 5017, 5008, 4999, 4990, 4981, 4972, 4963, 	// shots D, DR, R, UR, U, UL, L, DL
+			-1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+		arstamp[lk].amel = [12]int{2,24,26,28,30,32,34,36,38,-1}
+		arstamp[lk].ashot = [12]int{1,40,41,42,43,44,45,46,47,-1}
+	case G1OBJ_VALKYRIE:
+		arstamp[lk] = itemGetStamp("valkyrie")
+	case G1OBJ_ELF:
+		arstamp[lk] = itemGetStamp("elf")
 // SE expand
 	case SEOBJ_SE_ANKH:
 		psx, psy = 21, 11
