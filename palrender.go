@@ -26,7 +26,7 @@ fmt.Printf("palimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 			for x := 0; x <= opts.DimX; x++ {
 				c := g2tose[mdat[xy{x, y}]]
 				g1stat[c] = g2stat[mdat[xy{x, y}]]
-				if mdat[xy{x, y}] > G1OBJ_EXTEND { skp = true }
+				if mdat[xy{x, y}] > MAZEOBJ_EXTEND { skp = true }
 				maze.data[xy{x, y}] = c
 			}}
 	}

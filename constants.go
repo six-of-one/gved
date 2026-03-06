@@ -68,7 +68,7 @@ const (
 	MAZEOBJ_FORCEFIELDHUB
 	MAZEOBJ_MONST_MUGGER		// 64 - these 2 are add-ins to round out monsters
 	MAZEOBJ_MONST_THIEF			//		engine is not coded to place them in mazes
-	MAZEOBJ_EXTEND
+	MAZEOBJ_EXTEND				// G² not extnded
 )
 
 // Six: G¹ objects
@@ -139,10 +139,12 @@ const (
 // 63
 	G1OBJ_TREASURE_BAG			= 64
 	G1OBJ_MONST_THIEF			= 65
-	G1OBJ_EXTEND				= 66
+// sltos to animate player spirtes
+	G1OBJ_WARRIOR				= 66
 	G1OBJ_WIZARD				= 67
-// 68
-// 69
+	G1OBJ_VALKYRIE				= 68
+	G1OBJ_ELF					= 69
+
 	GORO_TEST					= 70
 // sanctuary engine ops
 	SEOBJ_FAKE_BLK				= 90			// fake item, block movement/ weps			will need xb to change appearance
@@ -369,10 +371,11 @@ var g1mapid = map[int]string{
 	63:		"Nothing_63",
 	G1OBJ_TREASURE_BAG:	"TREASURE_BAG",
 	G1OBJ_MONST_THIEF:	"THIEF",
-	G1OBJ_EXTEND: "Extended",
-	67:		"Wizard_67",
-	68:		"No_thing_68",
-	69:		"No_thing_69",
+//	G1OBJ_EXTEND: "Extended",
+	G1OBJ_WARRIOR:	"Warrior_s",		// placeholders to animate players
+	G1OBJ_WIZARD:	"Wizard_s",
+	G1OBJ_VALKYRIE:	"Valkyrie_s",
+	G1OBJ_ELF:	"Elf_s",
 	70:		"Test_70",
 	71:		"No_thing_71",
 	72:		"No_thing_72",
@@ -667,8 +670,11 @@ var g1auds = map[int]string{
 	63:		"",
 	G1OBJ_TREASURE_BAG:	"sfx/g1_treaspick.ogg",
 	G1OBJ_MONST_THIEF:	"sfx/g1thf_lau1.ogg",
-	G1OBJ_EXTEND: 		"",
+//	G1OBJ_EXTEND: 		"",
+	G1OBJ_WARRIOR:	"sfx/g1an_war0.ogg",		// placeholders to animate players
 	G1OBJ_WIZARD:		"sfx/g1an_wiz2.ogg",
+	G1OBJ_VALKYRIE:	"sfx/g1an_val2.ogg",
+	G1OBJ_ELF:	"sfx/g1an_elf1.ogg",
 	68:		"",
 	69:		"",
 	GORO_TEST:		"sfx/crow.ogg",
@@ -962,7 +968,7 @@ var g2tose = map[int]int{
 	MAZEOBJ_FORCEFIELDHUB:	SEOBJ_FORCEFIELDHUB,
 	MAZEOBJ_MONST_MUGGER:	SEOBJ_MONST_MUGGER,
 	MAZEOBJ_MONST_THIEF:	G1OBJ_MONST_THIEF,
-	MAZEOBJ_EXTEND: 		G1OBJ_EXTEND,
+	MAZEOBJ_EXTEND: 		SEOBJ_FLOORNUL,
 }
 
 // Flags for levels
