@@ -1178,7 +1178,7 @@ if opts.Verbose { fmt.Printf("%03d ",sb) }
 //fmt.Printf("anim len: %d-st r %d, len: %d - @ %d, %d\n",sb,r,len(arstamp[sb].anim),x,y)
 							drimg = arstamp[sb].anim[dr - 1]
 						} else {
-							fmt.Printf("WARNING: anim len exceeded: %d-st with %d, len: %d\n",sb,r,len(arstamp[sb].anim))
+							fmt.Printf("WARNING: anim len exceeded: %d-st with %d, len: %d\n",sb,dr,len(arstamp[sb].anim))
 						}
 					}
 					draw.Draw(mimg, drimg.Bounds().Add(offset), drimg, image.ZP, draw.Over)

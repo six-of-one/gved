@@ -26,11 +26,11 @@ type Stamp struct {
 	anim	[]*image.NRGBA		// all frames to animate mobs & such
 	animtm	int					// total frames to animate & any single run ent
 							//		dir set 1 = D, 2 = DR, 3 = R, 4 = UR, 5 = U, 6 = UL, 7 = L, 8 = DL
-	awalk	[12]int				// pointer start frame in set to walk, [0] cyc timer - [9] dir 1-8 [10] additive
+	awalk	[12]int				// pointer start frame in set to walk, [0] cyc timer
 								//  if cyc timer < 0 cycle that many frames
 								// other possibility from cycle timer - run from {start frame} to {next start frame - 1}
-	ashot	[12]int				// pointer start frame in set to shoot, [0] cyc timer - [9] dir 1-8
-	amel	[12]int				// pointer start frame in set to melee, [0] cyc timer - [9] dir 1-8
+	ashot	[12]int				// pointer start frame in set to shoot, [0] cyc timer
+	amel	[12]int				// pointer start frame in set to melee, [0] cyc timer
 	aaux	[12]int				// frames of other anim (player drain, monster something)
 }
 var arstamp []*Stamp
