@@ -983,7 +983,9 @@ var dyn [100]int
 				arstamp[lk].anim[i] = blankimage(v,v)
 				stc := arstamp[lk]
 				if dyn[i] > 0 {
-					stc.numbers = tilerange(dyn[i],len(stc.data))
+					ld := len(stc.data)
+					if dyn[i] > 7239 && dyn[i] < 7269 { ld = 4; stc.ptype = "gbase"; stc.pnum = 1 } // lobber rocks,  shots will prob need rebase
+					stc.numbers = tilerange(dyn[i],ld)
 					fillstamp(stc)
 //fmt.Printf("anim stamp %d ad: %v\n",lk,stc.numbers)
 					writestamptoimage(G1,arstamp[lk].anim[i], stc, 0, 0)
@@ -1029,7 +1031,7 @@ var nobld bool		// dont build multi layer
 func animcon() {
 
 	for {
-	time.Sleep(200 * time.Millisecond)
+	time.Sleep(100 * time.Millisecond)
 // anim not compatible with blot
   if !mbd && ccp != PASTE && !gvs {
 	ablot = false

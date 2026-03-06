@@ -442,6 +442,7 @@ var lim *fyne.Container
 			if prcadr >= 8960 && prcadr <= 9648 { selptype.SetSelectedIndex(5); pnumsel = 1 }
 			if prcadr >= 9691 && prcadr <= 9726 { selptype.SetSelectedIndex(5); pnumsel = 1 }
 			if prcadr >= 9728 && prcadr <= 9863  { selptype.SetSelectedIndex(5); pnumsel = 8 }
+			if prcadr >= 9872 && prcadr <= 9980 { selptype.SetSelectedIndex(5); pnumsel = 1 }
 			if prcadr >= 10024 && prcadr <= 10044 { selptype.SetSelectedIndex(5); pnumsel = 1 }
 			if prcadr >= 10080 && prcadr <= 10120 { selptype.SetSelectedIndex(5); pnumsel = 1 }
 			if prcadr >= 8448 && prcadr <= 8944 { selptype.SetSelectedIndex(5); pnumsel = 8 }
