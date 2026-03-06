@@ -675,8 +675,6 @@ var g1auds = map[int]string{
 	G1OBJ_WIZARD:		"sfx/g1an_wiz2.ogg",
 	G1OBJ_VALKYRIE:	"sfx/g1an_val2.ogg",
 	G1OBJ_ELF:	"sfx/g1an_elf1.ogg",
-	68:		"",
-	69:		"",
 	GORO_TEST:		"sfx/crow.ogg",
 	71:		"",
 	72:		"",
