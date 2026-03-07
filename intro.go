@@ -18,7 +18,17 @@ import (
 /*
 org seq: G¹ sampl, leg, monst, cred, scores, scrolr
 		 G² scrolr, sampl, leg, monst, cred, scores
+
+option controls:
+slow or fast sample play on any that have
+random chance for each splash set (unless # 5)
+1. orig
+2. sampl after scrolr
+3. sampl between monsters & cred
+4. mixed up splash set
+5. entire load randomized
 */
+
 var splRot = 6000
 var splCyc = 0
 var splsubCyc = 0
