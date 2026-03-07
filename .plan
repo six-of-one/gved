@@ -149,3 +149,34 @@ further research:
   - cycle walls G²
   - random walls G²
   - secret walls G²
+
+---------------------------------------------------------------------------------------
+"trouble in monster land" - TIML
+ based on 'trouble in terrorist town' from garrys mod
+
+- players control one of a group of various monsters
+- these 'wandering monsters' have more health and power than placed or generated monsters
+- however, 1 or more of the monsters have 'betrayed the plan'
+- a 'detective' monster is assigned to sort things out
+- detectives & special roles have 'buy stuff menus' requiring credits
+- some monsters may 'turn zomby' - zombies cant use range weps, and melee attack to create more zombies
+ . mad scientist role can create zombies
+
+- weapons (bows, swords, axes, etc) can be picked up and used except:
+ . ghosts cant wield material weps (they can use effects)
+ . lobbers arent strong enough to wield larger weps
+- potions and poisons can be used to various effects
+- keys can be used (not by ghosts) to unlock chest, and both will respawn
+- ghosts can temporarily 'ghostify' some things
+ . a ghostified thing is now immaterial and can only be used by ghosts
+
+infighting list:
+- ghosts will never fight ghosts or death
+- death wont fight deaths or ghosts
+- grunts will fight outside their tribe (color)
+- demons will shoot anything, but not generally attack any demons
+- lobbers will infight with any lobbers when getting hit, but cant kill each other
+- generated monsters wont usually fight same type generated
+- sorcerors wont fight in the same school (color) and less so vs. other colors than with grunts vs. grunts
+
+player bots:
