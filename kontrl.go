@@ -478,7 +478,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MRP = true
 				upd_edmaze(false)
-				opts.DimX, opts.DimY = rotmirbuf(edmaze,xbuf, opts.DimX, opts.DimY)
+				opts.DimX, opts.DimY = rotmirbuf(emaze,xbuf, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
 				flordirt, walsdirt = 1,1
@@ -491,7 +491,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MRM = true
 				upd_edmaze(false)
-				opts.DimX, opts.DimY = rotmirbuf(edmaze,xbuf, opts.DimX, opts.DimY)
+				opts.DimX, opts.DimY = rotmirbuf(emaze,xbuf, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
 				flordirt, walsdirt = 1,1
@@ -510,7 +510,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MV = true
 				upd_edmaze(false)
-				rotmirbuf(edmaze,xbuf, opts.DimX, opts.DimY)
+				rotmirbuf(emaze,xbuf, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
 				flordirt, walsdirt = 1,1
@@ -529,7 +529,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MH = true
 				upd_edmaze(false)
-				rotmirbuf(edmaze,xbuf, opts.DimX, opts.DimY)
+				rotmirbuf(emaze,xbuf, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
 				flordirt, walsdirt = 1,1

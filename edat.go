@@ -24,7 +24,7 @@ more complexity will be required for:
  b. sanctuary (g3) mazes
 */
 
-var edmaze *Maze
+var emaze *Maze		// taking over ebuf & xbuf as main edit maze
 var ebuf MazeData		// main edit buffer and corresponding flags
 type Xdat map[xy]string	// extra data store
 var xbuf Xdat
@@ -558,27 +558,27 @@ func upd_edmaze(ovrm bool) {
 fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
-		edmaze.data[xy{x, y}] = ebuf[xy{x, y}]
+		emaze.data[xy{x, y}] = ebuf[xy{x, y}]
 	}}
 	for y := 0; y < 11; y++ {
-		edmaze.optbyts[y] = eflg[y]
+		emaze.optbyts[y] = eflg[y]
 	}
 	flagbytes := make([]byte, 4)
 	flagbytes[0] = byte(eflg[1])
 	flagbytes[1] = byte(eflg[2])
 	flagbytes[2] = byte(eflg[3])
 	flagbytes[3] = byte(eflg[4])
-	edmaze.flags = int(binary.BigEndian.Uint32(flagbytes))
+	emaze.flags = int(binary.BigEndian.Uint32(flagbytes))
 	if ovrm {
-		edmaze.wallpattern = eflg[5] & 0x0f
-		edmaze.floorpattern = (eflg[5] & 0xf0) >> 4
-		edmaze.wallcolor = eflg[6] & 0x0f
-		edmaze.floorcolor = (eflg[6] & 0xf0) >> 4
+		emaze.wallpattern = eflg[5] & 0x0f
+		emaze.floorpattern = (eflg[5] & 0xf0) >> 4
+		emaze.wallcolor = eflg[6] & 0x0f
+		emaze.floorcolor = (eflg[6] & 0xf0) >> 4
 	} else {
-		edmaze.wallpattern = Ovwallpat
-		edmaze.floorpattern = Ovflorpat
-		edmaze.wallcolor = Ovwallcol
-		edmaze.floorcolor = Ovflorcol
+		emaze.wallpattern = Ovwallpat
+		emaze.floorpattern = Ovflorpat
+		emaze.wallcolor = Ovwallcol
+		emaze.floorcolor = Ovflorcol
 	}
 	if wpalop && palfol { palete(pals) }
 }
@@ -795,15 +795,15 @@ fmt.Printf("\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d, DIMS: %d - %d\n",o
 		sdb = -1
 		delbset(0)
 		clr_buf(ebuf, xbuf, 32, 32, -1, -66)
-		edmaze = mazeDecompress(slapsticReadMaze(mazn), false)
-		mazeloop(edmaze)
+		emaze = mazeDecompress(slapsticReadMaze(mazn), false)
+		mazeloop(emaze)
 		opts.bufdrt = false
 	}
 	opts.dntr = false
 	nsremaze = false
 	blotup = (ccp == PASTE)
 	if opts.edat > 0 || sdb > 0 { ed_maze(true,flordirt, walsdirt) } else {
-		Ovimg := genpfimage(edmaze, mazn)
+		Ovimg := genpfimage(emaze, mazn)
 		upwin(Ovimg, 0)
 		calc_stats()
 	}
@@ -1190,7 +1190,7 @@ func calc_stats() {
 		stl += fmt.Sprintf("(%03d) _ %s: %d\n",valid_id(y),g2mapid[valid_id(y)],g2stat[y])
 	}}}
 	stl += "══════════════════════\n"
-	stl += mazeMetaPrint(edmaze, true)
+	stl += mazeMetaPrint(emaze, true)
 	if statsB != nil { statsB.Set(stl) }
 	stl_str = stl	// for mini stat append
 //	bwin(palxs, palys, 0, plbuf, plflg)
