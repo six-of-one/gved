@@ -15,6 +15,10 @@ import (
 // splash screen rotator
 // no video for the time being... he doesnt like them. time biengs are like that
 
+/*
+org seq: G¹ sampl, leg, monst, cred, scores, scrolr
+		 G² scrolr, sampl, leg, monst, cred, scores
+*/
 var splRot = 6000
 var splCyc = 0
 var splsubCyc = 0
@@ -22,23 +26,7 @@ var splsubCyc = 0
 
 var splLoop = []string{
 
-	"splash/splash1.gif",
-	"splash/splash1.gif",
-	"splash/splash2.png",
-	"splash/splash3.png",
-	"splash/splash4.png",
-	"splash/splash5.png",
-	"splash/splash6.png",
-	"splash/splash7.png",
-	"splash/splash8.png",
-	"splash/splash9.png",
-	"splash/splashA.gif",
-	"splash/splashB.gif",
-	"splash/splashC.png",
-	"splash/splashD.png",
-//	"splash/splashE.png",
-//	"splash/splashF.png",
-//	"splash/splashK.png",
+	"splash/splash1.gif",		// 0
 	"splash/splashSE1.gif",
 	"splash/splashSE2.png",
 	"splash/splashSE3.png",
@@ -47,6 +35,22 @@ var splLoop = []string{
 	"splash/splashSE6.png",
 	"splash/splashSE7.png",
 	"splash/splashSE8.png",
+	"splash/splash9.png",
+	"splash/splashA.gif",
+	"splash/splashB.gif",
+	"splash/splashC.png",
+	"splash/splashD.png",
+//	"splash/splashE.png",
+//	"splash/splashF.png",
+//	"splash/splashK.png",
+	"splash/splash1.gif",		// 1
+	"splash/splash2.png",
+	"splash/splash3.png",
+	"splash/splash4.png",
+	"splash/splash5.png",
+	"splash/splash6.png",
+	"splash/splash7.png",
+	"splash/splash8.png",
 }
 
 // blank bkg display
@@ -139,8 +143,10 @@ if splCyc == 12 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
 		rot = 9700			// unless playing 18 secs of music G¹, or 25.14 secs G², or 14 secs ...B.gif
 //		smpl = "splash/g1smpl.gif"; srot = 43930
 //		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 122200 }
-		smpl = "splash/g1smplf.gif"; srot = 38530		// fast samples
-		if splCyc == 10 { smpl = "splash/g2smplf.gif"; srot = 108090 }
+//		smpl = "splash/g1smplf.gif"; srot = 38970		// faster samples play
+//		if splCyc == 10 { smpl = "splash/g2smplf.gif"; srot = 108490 }
+		smpl = "splash/g1smplsf.gif"; srot = 26580		// suporfaster samples play
+		if splCyc == 10 { smpl = "splash/g2smplsf.gif"; srot = 72390 }
 		if splCyc == 11 { rot = 15000; smpl = "" }
 		if (splCyc == 1 && rand.Float64() < 0.71) || !sec { rot = 18700; mus = "sfx/music.title_sf.ogg" }
 		if (splCyc == 10 && rand.Float64() < 0.73) { rot = 25160; mus = "sfx/music.g2.title.ogg" }
