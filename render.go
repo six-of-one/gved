@@ -757,18 +757,19 @@ var dyn [100]int
 
 	case G1OBJ_MONST_DEATH:		// D DL L U DR R UR UL
 		arstamp[lk] = itemGetStamp("death")
-		cnt = 24
+		cnt = 32
 		dyn = [100]int{
-			6773, 6782, 6791,		// D
-			6881, 6890, 6899,		// DR
-			6912, 6921, 6930,		// R
-			6939, 6948, 6957,		// UR
-			6854, 6863, 6872,		// U
-			6966, 6975, 6984,		// UL
-			6827, 6836, 6845,		// L
-			6800, 6809, 6818,		// DL
+			6773, 6782, 6791, 6782,		// D
+			6881, 6890, 6899, 6890,		// DR
+			6912, 6921, 6930, 6921,		// R
+			6939, 6948, 6957, 6948,		// UR
+			6854, 6863, 6872, 6863,		// U
+			6966, 6975, 6984, 6975,		// UL
+			6827, 6836, 6845, 6836,		// L
+			6800, 6809, 6818, 6809,		// DL
 			 -1}
-		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+//		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+		arstamp[lk].awalk = [12]int{3,0,4,8,12,16,20,24,28,-1}
 	case SEOBJ_G2ACID:
 		G1 = false
 		arstamp[lk] = itemGetStamp("acid")
@@ -783,7 +784,7 @@ var dyn [100]int
 			9068, 9059, 9050, 9041, 9095, 9086,			// L
 			9122, 9113, 9149, 9140, 9131, 9104,			// DL
 			 -1}
-		 arstamp[lk].awalk = [12]int{6,1,8,15,22,28,34,40,46}		// acid could have rnd 4-6 loop, & rnd starts
+		arstamp[lk].awalk = [12]int{6,1,8,15,22,28,34,40,46}		// acid could have rnd 4-6 loop, & rnd starts
 	case SEOBJ_G2SUPSORC:
 		G1 = false
 		arstamp[lk] = itemGetStamp("supersorc")
