@@ -18,7 +18,36 @@ import (
 var splRot = 6000
 var splCyc = 0
 var splsubCyc = 0
-var splLoop = "0123456789ABCDEFK2"
+//var splLoop = "0123456789ABCDEFK2"
+
+var splLoop = []string{
+
+	"splash/splash1.gif",
+	"splash/splash1.gif",
+	"splash/splash2.png",
+	"splash/splash3.png",
+	"splash/splash4.png",
+	"splash/splash5.png",
+	"splash/splash6.png",
+	"splash/splash7.png",
+	"splash/splash8.png",
+	"splash/splash9.png",
+	"splash/splashA.gif",
+	"splash/splashB.gif",
+	"splash/splashC.png",
+	"splash/splashD.png",
+//	"splash/splashE.png",
+//	"splash/splashF.png",
+//	"splash/splashK.png",
+	"splash/splashSE1.gif",
+	"splash/splashSE2.png",
+	"splash/splashSE3.png",
+	"splash/splashSE4.png",
+	"splash/splashSE5.png",
+	"splash/splashSE6.png",
+	"splash/splashSE7.png",
+	"splash/splashSE8.png",
+}
 
 // blank bkg display
 // not removing previous spc blackout - does this low key leak mem, or does garbage collect clear it?
@@ -93,7 +122,7 @@ if splCyc == 12 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
 	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from G¹ to G²
 // testing
 //	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from G¹ to G² - test mode
-fmt.Printf("cyc: %d subcyc: %d\n",splCyc,splsubCyc)
+//fmt.Printf("cyc: %d subcyc: %d\n",splCyc,splsubCyc)
 
 // add G¹ & 2 smpl gifs & musics, later other intro sets
 
@@ -106,17 +135,19 @@ fmt.Printf("cyc: %d subcyc: %d\n",splCyc,splsubCyc)
 		upng = false
 	} else {		// skip anim splash since cyc goes back to 1 or 10
 	if splCyc == 1 || splCyc == 10 || splCyc == 11 {
-		splashsrc = fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
+		splashsrc = splLoop[splCyc]	//fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
 		rot = 9700			// unless playing 18 secs of music G¹, or 25.14 secs G², or 14 secs ...B.gif
-		smpl = "splash/g1smpl.gif"; srot = 43930
-		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 122200 }
+//		smpl = "splash/g1smpl.gif"; srot = 43930
+//		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 122200 }
+		smpl = "splash/g1smplf.gif"; srot = 38530		// fast samples
+		if splCyc == 10 { smpl = "splash/g2smplf.gif"; srot = 108090 }
 		if splCyc == 11 { rot = 15000; smpl = "" }
 		if (splCyc == 1 && rand.Float64() < 0.71) || !sec { rot = 18700; mus = "sfx/music.title_sf.ogg" }
 		if (splCyc == 10 && rand.Float64() < 0.73) { rot = 25160; mus = "sfx/music.g2.title.ogg" }
 		upng = !gif_lodr(splashsrc, splash, splim, mus)
 		mus = ""
 	} else {
-		splashsrc = "splash/splash" + string(splLoop[splCyc]) + ".png"
+		splashsrc = splLoop[splCyc]		//"splash/splash" + string(splLoop[splCyc]) + ".png"
 //fmt.Printf("Splash disp: %s\n",splashsrc)
 	}}
 	if upng {
