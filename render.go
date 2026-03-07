@@ -757,6 +757,19 @@ var dyn [100]int
 
 	case G1OBJ_MONST_DEATH:		// D DL L U DR R UR UL
 		arstamp[lk] = itemGetStamp("death")
+		cnt = 24
+		dyn = [100]int{
+			6773, 6782, 6791,		// D
+			6881, 6890, 6899,		// DR
+			6912, 6921, 6930,		// R
+			6939, 6948, 6957,		// UR
+			6854, 6863, 6872,		// U
+			6966, 6975, 6984,		// UL
+			6827, 6836, 6845,		// L
+			6800, 6809, 6818,		// DL
+			 -1}
+		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
+/* esperiment - 4 frame deth		-- doesnt look right, tho not yet combine with move
 		cnt = 32
 		dyn = [100]int{
 			6773, 6782, 6791, 6782,		// D
@@ -768,8 +781,8 @@ var dyn [100]int
 			6827, 6836, 6845, 6836,		// L
 			6800, 6809, 6818, 6809,		// DL
 			 -1}
-//		arstamp[lk].awalk = [12]int{3,0,3,6,9,12,15,18,21,-1}
-		arstamp[lk].awalk = [12]int{3,0,4,8,12,16,20,24,28,-1}
+		arstamp[lk].awalk = [12]int{4,0,4,8,12,16,20,24,28,-1}
+*/
 	case SEOBJ_G2ACID:
 		G1 = false
 		arstamp[lk] = itemGetStamp("acid")
