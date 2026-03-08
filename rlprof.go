@@ -504,7 +504,7 @@ var sword bool
 	}
 
 	if !sword {
-		sw := rng.Intn(6) + G1OBJ_INVISIBL
+		sw := rng.Intn(6) + G1OBJ_X_SPEED
 		grid_put(19, 12, sw)
 		sword = true
 	}

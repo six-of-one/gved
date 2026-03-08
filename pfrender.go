@@ -607,7 +607,7 @@ fmt.Printf("\npats: mf %d fc %d mw  %d wc  %d\n",maze.floorpattern, maze.floorco
  // testing special potions
 			case MAZEOBJ_HIDDENPOT:
 				if opts.SP {
-					ts := rand.Intn(6)
+					ts := rand.Intn(6)+1
 					switch ts {
 					case 1:
 						stamp = itemGetStamp("speedpotion")
