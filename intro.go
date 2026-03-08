@@ -82,7 +82,7 @@ var splLoop = []string{
 // timing for loops
 
 var splTim = []int{
-	18700,				// 0 unit music
+	6000,//18700,				// 0 unit music
 	3000,//9700,				// 1 unit time without music
 	2000,//6000,				// 2 unit - legend
 	1000,//6000,
@@ -98,9 +98,9 @@ var splTim = []int{
 	9000,				// A unit - scores
 	-1,
 
-	25160,				// unit '0' music	... 13
+	6000,//25160,				// unit '0' music	... 13
 	3000,//9700,
-	15000,				// time for legend + monsters
+	15500,				// time for legend + monsters
 	1000,//72610,				// demo play suporfaster
 //	108490,
 //	122200,
