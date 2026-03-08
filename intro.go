@@ -20,11 +20,11 @@ org seq: G¹ sampl, leg, monst, cred, scores, scrolr
 		 G² scrolr, sampl, leg, monst, cred, scores
 
 option controls:
-slow or fast sample play on any that have
+slow or fast sample play or none
 random chance for each splash set (unless # 5)
 1. orig
 2. sampl after scrolr
-3. sampl between monsters & cred
+3. sampl between monsters & score
 4. mixed up splash set
 5. entire load randomized
 */
@@ -32,11 +32,10 @@ random chance for each splash set (unless # 5)
 var splRot = 6000
 var splCyc = 0
 var splsubCyc = 0
-//var splLoop = "0123456789ABCDEFK2"
 
 var splLoop = []string{
 
-	"splash/splash1.gif",		// 0
+	"sfx/music.title_sf.ogg",	// 0 unit of loop is music
 	"splash/splash1.gif",		// 1
 	"splash/splash2.png",
 	"splash/splash3.png",
@@ -46,13 +45,22 @@ var splLoop = []string{
 	"splash/splash7.png",
 	"splash/splash8.png",
 	"splash/splash9.png",
-	"splash/splashA.gif",
-	"splash/splashB.gif",
-	"splash/splashC.png",
-	"splash/splashD.png",
-//	"splash/splashE.png",
-//	"splash/splashF.png",
-//	"splash/splashK.png",
+	"splash/g1smplsf.gif",		// B demo play, suporfaster
+	"splash/splashD.png",		// scores
+//	"splash/g1smplf.gif",		// faster demo play
+//	"splash/g1smpl.gif",		// normal speed demo play
+	"",		// end of splash set
+
+	"sfx/music.g2.title.ogg",
+	"splash/splashA.gif",		// title scroller
+	"splash/splashB.gif",		// legend & monsters combine
+	"splash/g2smplsf.gif",		// demo play suporfaster
+	"splash/splashC.png",		// scores
+//	"splash/g2smplf.gif",
+//	"splash/g2smpl.gif",
+	"",		// end of splash set
+
+	"sfx/z_elec1.ogg",
 	"splash/splashSE1.gif",
 	"splash/splashSE2.png",
 	"splash/splashSE3.png",
@@ -61,6 +69,53 @@ var splLoop = []string{
 	"splash/splashSE6.png",
 	"splash/splashSE7.png",
 	"splash/splashSE8.png",
+// no demo play yet
+	"",		// end of splash set
+
+//	"splash/splashE.png",
+//	"splash/splashF.png",
+//	"splash/splashK.png",
+
+}
+
+// timing for loops
+
+var splTim = []int{
+	18700,				// 0 unit music
+	9700,				// 1 unit time without music
+	6000,				// 2 unit - legend
+	6000,
+	6000,
+	6000,
+	6000,
+	6000,
+	6000,
+	6000,				// 9 unit - theif closes out G¹ monsters
+	26550,				// B unit - demo play (suporfaster)
+//	38970,				// faster demo play
+//	43930,				// normal speed demo play
+	9000,				// A unit - scores
+	-1,
+
+	25160,				// unit '0' music	... 13
+	9700,
+	15000,				// time for legend + monsters
+	72510,				// demo play suporfaster
+//	108490,
+//	122200,
+	9000,				// scores
+	-1,
+
+	66020,				// unit '0' music sanctuary relec1		19
+	9700,
+	7000,
+	7000,
+	7000,
+	7000,
+	7000,
+	7000,
+	7000,
+	-1,
 }
 
 // blank bkg display
@@ -108,15 +163,33 @@ func splashrot() {
 	mus := ""		// music with anim, or static even
 	srot := 0		// sample play rot
 	splashsrc := ""
+	ip := -1		// splash set in play
+var	sset = []int{0,13,19}			// start of unit
+var	pmus = []int{0.71,0.33,0.33}	// music percent play
   for {
 	rot := splRot		// def 6000 millis
 // TESTING
-	if splCyc == -11 { splCyc = 11; smpl = "splash/g2smplsf.gif"; srot = 72390 }
+//	if splCyc == -11 { splCyc = 11; smpl = "splash/g2smplsf.gif"; srot = 72390 }
 // TESTING
 
   if actab == "Game" && splCyc >= 0 {		// tab loaded where this happen, set cyc to -1 for game run
 
 	upng := true
+
+// new sequence player
+	if ip < 0 {		// select a set
+		ip = sset[rng.Intn(2)]
+		if rand.Float64() < pmus[ip] { mus = splLoop[ip]; rot = splTim[ip] }
+	}
+	ip++	// get 1st splash, or incr past music
+	if splLoop[ip] == "skip" { ip++ }	// not doing sample play
+	splashsrc = splLoop[ip]
+	if mus != "" { rot = splTim[ip] }
+	if rot > 0 {
+
+	} else {
+		ip = -1
+	}
 // sample play if it didnt play after title, these screens are already done
 	if (splCyc == 11 || splCyc == 9) && smpl != "" {
 		gif_lodr(smpl, splash, splim, mus)
@@ -158,7 +231,7 @@ if splCyc == 12 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
 //		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 122200 }
 //		smpl = "splash/g1smplf.gif"; srot = 38970		// faster samples play
 //		if splCyc == 10 { smpl = "splash/g2smplf.gif"; srot = 108490 }
-		smpl = "splash/g1smplsf.gif"; srot = 26560		// suporfaster samples play
+		smpl = "splash/g1smplsf.gif"; srot = 26550		// suporfaster samples play
 		if splCyc == 10 { smpl = "splash/g2smplsf.gif"; srot = 72510 }
 		if splCyc == 11 { rot = 15000; smpl = "" }
 		if (splCyc == 1 && rand.Float64() < 0.71) || !sec { rot = 18700; mus = "sfx/music.title_sf.ogg" }
