@@ -184,9 +184,11 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 	ip++	// get 1st splash, or incr past music
 	if splLoop[ip] == "skip" { ip++ }	// not doing sample play
 	splashsrc = splLoop[ip]
-	if mus != "" { rot = splTim[ip] }
+	if mus == "" { rot = splTim[ip] }
 	if rot > 0 {
-
+// clear mus when played
+// auto detect gifs, otherwise load png
+// set flasher for g2 scores
 	} else {
 		ip = -1
 	}
