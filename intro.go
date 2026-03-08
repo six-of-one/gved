@@ -165,6 +165,7 @@ func splashrot() {
 //	srot := 0		// sample play rot
 	splashsrc := ""
 	ip := -1		// splash set in play
+var hscv image.Image
 var	sset = []int{0,13,19}			// start of unit
 var	pmus = []float64{0.71,0.33,0.33}	// music percent play
   for {
@@ -179,19 +180,20 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 
 // new sequence player
 	if ip < 0 {		// select a set
-		rs := rng.Intn(2)
+		rs := rng.Intn(3)
 		ip = sset[rs]
 		if !sec { ip = 0; rs = 0 }
 		if rand.Float64() < pmus[rs] || !sec { mus = splLoop[ip]; rot = splTim[ip] }
 		hsct[1].msb = fmt.Sprintf("./splash/splD1.png")		// reset for G² hs title flasher
 	}
+//fmt.Printf("rnd %d, %d, %d, %d, %d, %d\n",rng.Intn(2),rng.Intn(2),rng.Intn(3),rng.Intn(3),rng.Intn(3),rng.Intn(4))
 // do splsubCyc here...
   if splsubCyc == 0 {
 	ip++	// get next splash, or incr past music
 	if splLoop[ip] == "skip" { ip++ }	// not doing sample play
 	splashsrc = splLoop[ip]
 	if mus == "" { rot = splTim[ip] }
-  }
+
 	if rot > 0 {
 		if strings.Contains(splashsrc, ".gif") {
 			upng = !gif_lodr(splashsrc, splash, splim, mus)
@@ -202,6 +204,7 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 			if err == nil {
 				if rot == 9000 {
 					highscores(hsc,splash,splim)
+					hscv = hsc
 					if ip == 17 && splsubCyc == 0 { splsubCyc = 18 }
 				} else {
 					splash.Remove(splim)
@@ -215,7 +218,7 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 		}
 	} else {
 		ip = -1
-	}
+	}}
 
 /*
 // show score tbl on 12, 13
@@ -231,9 +234,10 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 	}
 	if splsubCyc > 0 {			// G² flash high score colors test
 		splsubCyc--
-		if splsubCyc < 1 { rot = 111 }
+		rot = 111
 		hsct[1].msb = fmt.Sprintf("./splash/splD%1d.png",(splsubCyc & 3)+1)		// these need to be splD?g2.png and scores need rearranged to match
 		time.Sleep(333 * time.Millisecond)
+		highscores(hscv,splash,splim)
 	} else {
 		time.Sleep(time.Duration(rot) * time.Millisecond)
 	}
