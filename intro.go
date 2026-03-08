@@ -83,25 +83,25 @@ var splLoop = []string{
 
 var splTim = []int{
 	18700,				// 0 unit music
-	9700,				// 1 unit time without music
-	6000,				// 2 unit - legend
-	6000,
-	6000,
-	6000,
-	6000,
-	6000,
-	6000,
-	6000,				// 9 unit - theif closes out G¹ monsters
-	26550,				// B unit - demo play (suporfaster)
+	3000,//9700,				// 1 unit time without music
+	2000,//6000,				// 2 unit - legend
+	1000,//6000,
+	1000,//6000,
+	1000,//6000,
+	1000,//6000,
+	1000,//6000,
+	1000,//6000,
+	1000,//6000,				// 9 unit - theif closes out G¹ monsters
+	1000,//26550,				// B unit - demo play (suporfaster)
 //	38970,				// faster demo play
 //	43930,				// normal speed demo play
 	9000,				// A unit - scores
 	-1,
 
 	25160,				// unit '0' music	... 13
-	9700,
+	3000,//9700,
 	15000,				// time for legend + monsters
-	72510,				// demo play suporfaster
+	1000,//72610,				// demo play suporfaster
 //	108490,
 //	122200,
 	9000,				// scores
@@ -200,7 +200,7 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 			if err == nil {
 				if rot == 9000 {
 					highscores(hsc,splash,splim)
-					if splCyc == 17 && splsubCyc == 0 { splsubCyc = 18 }
+					if ip == 17 && splsubCyc == 0 { splsubCyc = 18 }
 				} else {
 					splash.Remove(splim)
 					splim = container.NewStack(spl)
