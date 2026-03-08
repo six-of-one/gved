@@ -51,6 +51,7 @@ var splLoop = []string{
 //	"splash/g1smplf.gif",		// faster demo play
 //	"splash/g1smpl.gif",		// normal speed demo play
 	"",		// end of splash set
+	"splash/splash10.png",		// for opt 1, orig credits
 
 	"sfx/music.g2.title.ogg",
 	"splash/splashA.gif",		// title scroller
@@ -60,6 +61,7 @@ var splLoop = []string{
 //	"splash/g2smplf.gif",
 //	"splash/g2smpl.gif",
 	"",		// end of splash set
+	"splash/splash11.png",		// for opt 1, orig credits
 
 	"sfx/z_elec1.ogg",
 	"splash/splashSE1.gif",
@@ -164,7 +166,7 @@ func splashrot() {
 	splashsrc := ""
 	ip := -1		// splash set in play
 var hscv image.Image
-var	sset = []int{0,13,19}			// start of unit
+var	sset = []int{0,14,21}			// start of unit
 var	pmus = []float64{0.71,0.33,0.33}	// music percent play
   for {
 	rot := splRot		// def 3000 millis
@@ -186,11 +188,11 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 	}
 //fmt.Printf("rnd %d, %d, %d, %d, %d, %d\n",rng.Intn(2),rng.Intn(2),rng.Intn(3),rng.Intn(3),rng.Intn(3),rng.Intn(4))
   if splsubCyc == 0 {
-fmt.Printf("rnd %d, m: %s, lp: %s, r: %d\n",ip,mus,splLoop[ip],rot)
 	ip++	// get next splash, or incr past music
 	if splLoop[ip] == "skip" { ip++ }	// not doing sample play
 	splashsrc = splLoop[ip]
 	if mus == "" { rot = splTim[ip] }
+fmt.Printf("rnd %d, m: %s, lp: %s, r: %d\n",ip,mus,splLoop[ip],rot)
 
 	if rot > 0 {
 		if strings.Contains(splashsrc, ".gif") {
@@ -202,7 +204,7 @@ fmt.Printf("rnd %d, m: %s, lp: %s, r: %d\n",ip,mus,splLoop[ip],rot)
 				if rot == 9000 {
 					highscores(hsc,splash,splim)
 					hscv = hsc
-					if ip == 17 && splsubCyc == 0 { splsubCyc = 18 }
+					if ip == 17 && splsubCyc == 0 { splsubCyc = 25 }
 				} else {
 					splash.Remove(splim)
 					splim = container.NewStack(spl)
@@ -236,6 +238,7 @@ fmt.Printf("rnd %d, m: %s, lp: %s, r: %d\n",ip,mus,splLoop[ip],rot)
 		time.Sleep(333 * time.Millisecond)
 		highscores(hscv,splash,splim)
 	} else {
+		splsubCyc = 0
 		time.Sleep(time.Duration(rot) * time.Millisecond)
 	}
   }
