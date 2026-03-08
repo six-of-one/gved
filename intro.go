@@ -30,7 +30,7 @@ random chance for each splash set (unless # 5)
 5. entire load randomized
 */
 
-var splRot = 6000
+var splRot = 3000
 var splCyc = -1
 var splsubCyc = 0
 
@@ -92,7 +92,7 @@ var splTim = []int{
 	1000,//6000,
 	1000,//6000,
 	1000,//6000,				// 9 unit - theif closes out G¹ monsters
-	1000,//26550,				// B unit - demo play (suporfaster)
+	1000,//26570,				// B unit - demo play (suporfaster)
 //	38970,				// faster demo play
 //	43930,				// normal speed demo play
 	9000,				// A unit - scores
@@ -101,7 +101,7 @@ var splTim = []int{
 	6000,//25160,				// unit '0' music	... 13
 	3000,//9700,
 	15500,				// time for legend + monsters
-	1000,//72610,				// demo play suporfaster
+	1000,//72630,				// demo play suporfaster
 //	108490,
 //	122200,
 	9000,				// scores		17
@@ -168,7 +168,7 @@ func splashrot() {
 var	sset = []int{0,13,19}			// start of unit
 var	pmus = []float64{0.71,0.33,0.33}	// music percent play
   for {
-	rot := splRot		// def 6000 millis
+	rot := splRot		// def 3000 millis
 // TESTING
 //	if splCyc == -11 { splCyc = 11; smpl = "splash/g2smplsf.gif"; srot = 72390 }
 // TESTING
@@ -191,6 +191,7 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 	if splLoop[ip] == "skip" { ip++ }	// not doing sample play
 	splashsrc = splLoop[ip]
 	if mus == "" { rot = splTim[ip] }
+  }
 	if rot > 0 {
 		if strings.Contains(splashsrc, ".gif") {
 			upng = !gif_lodr(splashsrc, splash, splim, mus)
@@ -214,7 +215,7 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 		}
 	} else {
 		ip = -1
-	}}
+	}
 /*
 // sample play if it didnt play after title, these screens are already done
 	if (splCyc == 11 || splCyc == 9) && smpl != "" {
@@ -297,7 +298,7 @@ if splCyc == 17 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
 	}
 	if splsubCyc > 0 {			// G² flash high score colors test
 		splsubCyc--
-		rot = 111
+		if splsubCyc < 1 { rot = 111 }
 		hsct[1].msb = fmt.Sprintf("./splash/splD%1d.png",(splsubCyc & 3)+1)		// these need to be splD?g2.png and scores need rearranged to match
 		time.Sleep(333 * time.Millisecond)
 	} else {
