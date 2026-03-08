@@ -165,7 +165,7 @@ func splashrot() {
 	splashsrc := ""
 	ip := -1		// splash set in play
 var	sset = []int{0,13,19}			// start of unit
-var	pmus = []int{0.71,0.33,0.33}	// music percent play
+var	pmus = []float64{0.71,0.33,0.33}	// music percent play
   for {
 	rot := splRot		// def 6000 millis
 // TESTING
