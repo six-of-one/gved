@@ -181,7 +181,8 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 		ip = sset[rng.Intn(2)]
 		if rand.Float64() < pmus[ip] { mus = splLoop[ip]; rot = splTim[ip] }
 	}
-	ip++	// get 1st splash, or incr past music
+// do splsubCyc here...
+	ip++	// get next splash, or incr past music
 	if splLoop[ip] == "skip" { ip++ }	// not doing sample play
 	splashsrc = splLoop[ip]
 	if mus == "" { rot = splTim[ip] }
@@ -192,6 +193,7 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 	} else {
 		ip = -1
 	}
+
 // sample play if it didnt play after title, these screens are already done
 	if (splCyc == 11 || splCyc == 9) && smpl != "" {
 		gif_lodr(smpl, splash, splim, mus)
