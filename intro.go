@@ -6,6 +6,7 @@ import (
 	"image"
 	"image/draw"
 	"time"
+	"strings"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/storage"
@@ -159,9 +160,9 @@ var splim *fyne.Container			// image to splash
 func splashrot() {
 
 	sec := false	// first time in play G¹ scroller intro w/music
-	smpl := ""		// sample play item
+//	smpl := ""		// sample play item
 	mus := ""		// music with anim, or static even
-	srot := 0		// sample play rot
+//	srot := 0		// sample play rot
 	splashsrc := ""
 	ip := -1		// splash set in play
 var	sset = []int{0,13,19}			// start of unit
@@ -179,6 +180,7 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 // new sequence player
 	if ip < 0 {		// select a set
 		ip = sset[rng.Intn(2)]
+		if !sec { ip = 0 }
 		if rand.Float64() < pmus[ip] { mus = splLoop[ip]; rot = splTim[ip] }
 	}
 // do splsubCyc here...
@@ -187,13 +189,31 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 	splashsrc = splLoop[ip]
 	if mus == "" { rot = splTim[ip] }
 	if rot > 0 {
-// clear mus when played
+		if strings.Contains(splashsrc, ".gif") {
+			upng = !gif_lodr(splashsrc, splash, splim, mus)
+			mus = ""
+		}
+		if upng {
+		err, spl, hsc := itemGetPNG(splashsrc)
+			if err == nil {
+				if splCyc >= 12 {
+					highscores(hsc,splash,splim)
+				} else {
+					splash.Remove(splim)
+					splim = container.NewStack(spl)
+					splash.Add(splim)
+				fyne.Do(func() {
+					splim.Refresh()
+				})
+				}
+			} else { fmt.Printf("Splash screen fail: %s\n",splashsrc);fmt.Print(err) }
+		}
 // auto detect gifs, otherwise load png
 // set flasher for g2 scores
 	} else {
 		ip = -1
 	}
-
+/*
 // sample play if it didnt play after title, these screens are already done
 	if (splCyc == 11 || splCyc == 9) && smpl != "" {
 		gif_lodr(smpl, splash, splim, mus)
@@ -267,7 +287,7 @@ if splCyc == 12 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
 			splCyc = 1
 		}
 	}}
-
+*/
 	sec = true		// second loop+
   } else {
 		splsubCyc = 0		// not in game tab
