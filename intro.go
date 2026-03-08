@@ -178,6 +178,9 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 
 	upng := true
 
+	if splCyc > 0 { ip = splCyc }
+	splCyc = -1
+	mus = ""
 // new sequence player
 	if ip < 0 {		// select a set
 		rs := rng.Intn(3)
@@ -196,8 +199,7 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 
 	if rot > 0 {
 		if strings.Contains(splashsrc, ".gif") {
-			upng = !gif_lodr(splashsrc, splash, splim, mus)
-			mus = ""
+			upng = !gif_lodr(splashsrc, splash, splim, mus)		// not music only starts on gifs
 		}
 		if upng {
 		err, spl, hsc := itemGetPNG(splashsrc)
