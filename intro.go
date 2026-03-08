@@ -99,17 +99,19 @@ var splTim = []int{
 //	43930,				// normal speed demo play
 	9000,				// A unit - scores
 	-1,
+	1000,//5000,				// 13 - G¹ cred
 
-	6000,//25160,				// unit '0' music	... 13
+	6000,//25160,				// unit '0' music	... 14
 	3000,//9700,
 	15500,				// time for legend + monsters
 	1000,//72630,				// demo play suporfaster
 //	108490,
 //	122200,
-	9000,				// scores		17
+	9000,				// scores		18
 	-1,
+	1000,//5000,				// 20 - G² cred
 
-	66020,				// unit '0' music sanctuary relec1		19
+	66020,				// unit '0' music sanctuary relec1		21
 	9700,
 	7000,
 	7000,
