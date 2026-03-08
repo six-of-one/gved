@@ -160,9 +160,7 @@ var splim *fyne.Container			// image to splash
 func splashrot() {
 
 	sec := false	// first time in play G¹ scroller intro w/music
-//	smpl := ""		// sample play item
 	mus := ""		// music with anim, or static even
-//	srot := 0		// sample play rot
 	splashsrc := ""
 	ip := -1		// splash set in play
 var hscv image.Image
@@ -170,9 +168,6 @@ var	sset = []int{0,13,19}			// start of unit
 var	pmus = []float64{0.71,0.33,0.33}	// music percent play
   for {
 	rot := splRot		// def 3000 millis
-// TESTING
-//	if splCyc == -11 { splCyc = 11; smpl = "splash/g2smplsf.gif"; srot = 72390 }
-// TESTING
 
   if actab == "Game" {		// tab loaded where this happen, set cyc to -1 for game run
 
