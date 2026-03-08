@@ -216,74 +216,7 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 	} else {
 		ip = -1
 	}
-/*
-// sample play if it didnt play after title, these screens are already done
-	if (splCyc == 11 || splCyc == 9) && smpl != "" {
-		gif_lodr(smpl, splash, splim, mus)
-		smpl = ""
-		rot = srot
-//fmt.Printf("smpl2: %s\n",rot)
-	} else {
 
-	if splsubCyc == 0 {
-	if splCyc == 9 {		// done with G¹ splash, load G¹ score tbl gfx
-		hsct[1].msb = fmt.Sprintf("./splash/splD1.png")
-		splCyc = 13
-	} else {
-		if splCyc < 1 || splCyc >= 12 { splCyc = 0 }
-		splCyc++
-	}}
-
-if splCyc == 17 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
-
-	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from G¹ to G²
-// testing
-//	if !sec && splCyc == 1 && rand.Float64() > 0.05 { splCyc = 10 }	// after 1st cycle chance to skip from G¹ to G² - test mode
-//fmt.Printf("cyc: %d subcyc: %d\n",splCyc,splsubCyc)
-
-// add G¹ & 2 smpl gifs & musics, later other intro sets
-
-	if (splCyc == 2 || splCyc == 11) && smpl != "" && rand.Float64() < 0.47 {	// chance for sample play after scroller
-		splCyc--	// go back one, hold advance for sample
-		gif_lodr(smpl, splash, splim, mus)
-		smpl = ""
-		rot = srot
-//fmt.Printf("smpl1: %s\n",rot)
-		upng = false
-	} else {		// skip anim splash since cyc goes back to 1 or 10
-	if splCyc == 1 || splCyc == 10 || splCyc == 11 {
-		splashsrc = splLoop[splCyc]	//fmt.Sprintf("splash/splash%s.gif",string(splLoop[splCyc]))
-		rot = 9700			// unless playing 18 secs of music G¹, or 25.14 secs G², or 14 secs ...B.gif
-//		smpl = "splash/g1smpl.gif"; srot = 43930		// std time
-//		if splCyc == 10 { smpl = "splash/g2smpl.gif"; srot = 122200 }
-//		smpl = "splash/g1smplf.gif"; srot = 38970		// faster samples play
-//		if splCyc == 10 { smpl = "splash/g2smplf.gif"; srot = 108490 }
-		smpl = "splash/g1smplsf.gif"; srot = 26550		// suporfaster samples play
-		if splCyc == 10 { smpl = "splash/g2smplsf.gif"; srot = 72510 }
-		if splCyc == 11 { rot = 15000; smpl = "" }
-		if (splCyc == 1 && rand.Float64() < 0.71) || !sec { rot = 18700; mus = "sfx/music.title_sf.ogg" }
-		if (splCyc == 10 && rand.Float64() < 0.73) { rot = 25160; mus = "sfx/music.g2.title.ogg" }
-		upng = !gif_lodr(splashsrc, splash, splim, mus)
-		mus = ""
-	} else {
-		splashsrc = splLoop[splCyc]		//"splash/splash" + string(splLoop[splCyc]) + ".png"
-//fmt.Printf("Splash disp: %s\n",splashsrc)
-	}}
-	if upng {
-	err, spl, hsc := itemGetPNG(splashsrc)
-		if err == nil {
-			if splCyc >= 12 {
-				highscores(hsc,splash,splim)
-			} else {
-				splash.Remove(splim)
-				splim = container.NewStack(spl)
-				splash.Add(splim)
-			fyne.Do(func() {
-				splim.Refresh()
-			})
-			}
-		} else { fmt.Printf("Splash screen fail: %s\n",splashsrc);fmt.Print(err) }
-	}
 /*
 // show score tbl on 12, 13
 	if splCyc >= 12 && splsubCyc == 0 {
