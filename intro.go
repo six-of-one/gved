@@ -88,7 +88,7 @@ var splTim = []int{
 	1000,//6000,
 	1000,//6000,
 	1000,//6000,
-	1000,//6000,
+	1000,//6000,				// 6
 	1000,//6000,
 	1000,//6000,
 	1000,//6000,				// 9 unit - theif closes out G¹ monsters
@@ -104,7 +104,7 @@ var splTim = []int{
 	1000,//72610,				// demo play suporfaster
 //	108490,
 //	122200,
-	9000,				// scores
+	9000,				// scores		17
 	-1,
 
 	66020,				// unit '0' music sanctuary relec1		19
@@ -183,6 +183,7 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 		ip = sset[rs]
 		if !sec { ip = 0; rs = 0 }
 		if rand.Float64() < pmus[rs] || !sec { mus = splLoop[ip]; rot = splTim[ip] }
+		hsct[1].msb = fmt.Sprintf("./splash/splD1.png")		// reset for G² hs title flasher
 	}
 // do splsubCyc here...
   if splsubCyc == 0 {
@@ -282,6 +283,7 @@ if splCyc == 17 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
 			}
 		} else { fmt.Printf("Splash screen fail: %s\n",splashsrc);fmt.Print(err) }
 	}
+/*
 // show score tbl on 12, 13
 	if splCyc >= 12 && splsubCyc == 0 {
 		if rand.Float64() > 0.9 {		// this skips title scroller, strait into G¹ ghosts pg
