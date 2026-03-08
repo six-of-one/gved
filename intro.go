@@ -31,7 +31,7 @@ random chance for each splash set (unless # 5)
 */
 
 var splRot = 6000
-var splCyc = 0
+var splCyc = -1
 var splsubCyc = 0
 
 var splLoop = []string{
@@ -173,17 +173,19 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 //	if splCyc == -11 { splCyc = 11; smpl = "splash/g2smplsf.gif"; srot = 72390 }
 // TESTING
 
-  if actab == "Game" && splCyc >= 0 {		// tab loaded where this happen, set cyc to -1 for game run
+  if actab == "Game" {		// tab loaded where this happen, set cyc to -1 for game run
 
 	upng := true
 
 // new sequence player
 	if ip < 0 {		// select a set
-		ip = sset[rng.Intn(2)]
-		if !sec { ip = 0 }
-		if rand.Float64() < pmus[ip] { mus = splLoop[ip]; rot = splTim[ip] }
+		rs := rng.Intn(2)
+		ip = sset[rs]
+		if !sec { ip = 0; rs = 0 }
+		if rand.Float64() < pmus[rs] || !sec { mus = splLoop[ip]; rot = splTim[ip] }
 	}
 // do splsubCyc here...
+  if splsubCyc == 0 {
 	ip++	// get next splash, or incr past music
 	if splLoop[ip] == "skip" { ip++ }	// not doing sample play
 	splashsrc = splLoop[ip]
@@ -196,8 +198,9 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 		if upng {
 		err, spl, hsc := itemGetPNG(splashsrc)
 			if err == nil {
-				if splCyc >= 12 {
+				if rot == 9000 {
 					highscores(hsc,splash,splim)
+					if splCyc == 17 && splsubCyc == 0 { splsubCyc = 18 }
 				} else {
 					splash.Remove(splim)
 					splim = container.NewStack(spl)
@@ -208,11 +211,9 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 				}
 			} else { fmt.Printf("Splash screen fail: %s\n",splashsrc);fmt.Print(err) }
 		}
-// auto detect gifs, otherwise load png
-// set flasher for g2 scores
 	} else {
 		ip = -1
-	}
+	}}
 /*
 // sample play if it didnt play after title, these screens are already done
 	if (splCyc == 11 || splCyc == 9) && smpl != "" {
@@ -231,7 +232,7 @@ var	pmus = []float64{0.71,0.33,0.33}	// music percent play
 		splCyc++
 	}}
 
-if splCyc == 12 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
+if splCyc == 17 && splsubCyc == 0 { splsubCyc = 18 }		// replace with ops
 
 	if sec && splCyc == 1 && rand.Float64() > 0.65 { splCyc = 10 }	// after 1st cycle chance to skip from G¹ to G²
 // testing
@@ -323,7 +324,7 @@ func splash_keytyp(r rune) {
 
 // call up high score table
 	case 'S','s':
-		splCyc = 1
+		splCyc = 0
 		err, _, hsc := itemGetPNG("splash/splashD.png")
 		if err == nil {
 			highscores(hsc,splash,splim)

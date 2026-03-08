@@ -273,7 +273,7 @@ func typedRune(r rune) {
 //fmt.Printf("r %v shift %v\n",r,shift)
   if actab == "Sprites" || actab == "Game" {
 		if actab == "Sprites" { spr_keytyp(r) }
-		if actab == "Game" && splCyc >= 0 { splash_keytyp(r) }
+		if actab == "Game" { splash_keytyp(r) }
   } else {
 		edkey = valid_keys(int(r))
 		if cmdoff {
