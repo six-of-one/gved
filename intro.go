@@ -72,6 +72,7 @@ var splLoop = []string{
 	"splash/splashSE6.png",
 	"splash/splashSE7.png",
 	"splash/splashSE8.png",
+	"splash/splashSES.png",
 // no demo play yet
 	"",		// end of splash set
 
@@ -120,6 +121,7 @@ var splTim = []int{
 	7000,
 	7000,
 	7000,
+	9000,				// 30 - scor bored
 	-1,
 }
 
@@ -266,7 +268,7 @@ func splash_keytyp(r rune) {
 
 // call up high score table
 	case 'S','s':
-		splCyc = 1
+		splCyc = 28
 		err, _, hsc := itemGetPNG("splash/splashD.png")
 		if err == nil {
 			highscores(hsc,splash,splim)
