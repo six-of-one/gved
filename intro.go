@@ -77,9 +77,17 @@ var splLoop = []string{
 	"",		// end of splash set
 
 //	"splash/splashE.png",	// dandy
-//	"splash/splashF.png",	// nes gaunt
+//	"splash/splashF.png",	// nes gaunt / gII
 //	"splash/splashK.png",	// c64 gaunt
-
+// genesis gaunt IV
+// dark chambers
+// garrison
+// time bandit		// <-- when these are added
+// mappy ?	(deps on features in game)
+// druid
+// vict road
+// crossfire
+// archon
 }
 
 // timing for loops
