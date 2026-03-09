@@ -1243,6 +1243,8 @@ if opts.Verbose { fmt.Printf("%03d ",sb) }
 	draw.Draw(rimg, wimg.Bounds(), wimg, image.ZP, draw.Over)
 	draw.Draw(rimg, mimg.Bounds(), mimg, image.ZP, draw.Over)
 
+if opts.Verbose {savetopng("seg.png", img)}
+
 	flordirt, walsdirt = 0,0		// whether rebuild layers or jsut animating mobs, reset these
 
 	vlock = false

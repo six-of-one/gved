@@ -75,9 +75,9 @@ var splLoop = []string{
 // no demo play yet
 	"",		// end of splash set
 
-//	"splash/splashE.png",
-//	"splash/splashF.png",
-//	"splash/splashK.png",
+//	"splash/splashE.png",	// dandy
+//	"splash/splashF.png",	// nes gaunt
+//	"splash/splashK.png",	// c64 gaunt
 
 }
 
