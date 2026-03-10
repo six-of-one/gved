@@ -24,23 +24,6 @@ func index2xy(index int) (x int, y int) {
 	return
 }
 
-type xy struct{ x, y int }
-
-type MazeData map[xy]int
-type Xdat map[xy]string	// extra data store
-
-type Maze struct {
-	data         MazeData
-	encodedbytes int
-	secret       int
-	flags        int
-	wallpattern  int
-	wallcolor    int
-	floorpattern int
-	floorcolor   int
-	optbyts  [11]int
-}
-
 // Is a maze object a wall?
 func iswall(t int) bool {
 	if t == MAZEOBJ_WALL_REGULAR || t == MAZEOBJ_WALL_SECRET || t == MAZEOBJ_WALL_DESTRUCTABLE || t == MAZEOBJ_WALL_RANDOM || t == MAZEOBJ_WALL_TRAPCYC1 || t == MAZEOBJ_WALL_TRAPCYC2 || t == MAZEOBJ_WALL_TRAPCYC3 { // || t == MAZEOBJ_FORCEFIELDHUB {

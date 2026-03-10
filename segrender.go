@@ -10,6 +10,32 @@ import (
 	"golang.org/x/image/draw"
 )
 
+// now the main render system for: editor, view portal, palette, pastebuf, animation control, and soon full play mode
+// maze struct is expand to handle all the extra data and isolate to a per-maze instance
+
+type xy struct{ x, y int }
+
+type MazeData map[xy]int
+type Xdat map[xy]string	// extra data store		- mvd out edat.go
+type FFMap map[xy]bool						//	- mvd out segrender.go
+type AtMap map[xy]int		// animate tiles+ --/
+
+type Maze struct {
+	data         MazeData
+	xdata        Xdat
+	ffmap        FFMap		// where ff tiles are
+	an_map       AtMap		// animated map tiles (ideally non movers or fixed movers)
+	an_mapt      AtMap		// animated timers for tiles
+	blok         AtMap		// blok list for maze - all cells that block movement
+	encodedbytes int
+	secret       int
+	flags        int
+	wallpattern  int
+	wallcolor    int
+	floorpattern int
+	floorcolor   int
+	optbyts  [11]int
+}
 
 // arrays for item masks
 var g1mask [256]int
@@ -305,8 +331,7 @@ func checkffadj4(maze *Maze, x int, y int) int {
 	return adj
 }
 
-type FFMap map[xy]bool
-type AtMap map[xy]int		// animate tiles
+
 var alock bool				// fix concurrent read/write anmap
 var mlock bool				// fix concurrent read/write xdat
 var anmap AtMap
