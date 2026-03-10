@@ -27,6 +27,7 @@ func index2xy(index int) (x int, y int) {
 type xy struct{ x, y int }
 
 type MazeData map[xy]int
+type Xdat map[xy]string	// extra data store
 
 type Maze struct {
 	data         MazeData
