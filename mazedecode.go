@@ -180,7 +180,7 @@ if opts.Verbose {
 
 // save for edat
 	for y := 0; y < 11; y++ {
-		maze.optbyts[y] = compressed[y]
+		maze.flgs[y] = compressed[y]
 	}
 	// This inability to transparently go back and forth between types is
 	// obnoxious.
@@ -376,7 +376,7 @@ func justDecompress(compressed []int, metaonly bool) *Maze {
 
 // save for edat
 	for y := 0; y < 11; y++ {
-		maze.optbyts[y] = compressed[y]
+		maze.flgs[y] = compressed[y]
 	}
 	// This inability to transparently go back and forth between types is
 	// obnoxious.

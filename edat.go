@@ -383,7 +383,7 @@ if opts.Verbose { fmt.Printf("loading maze %s\n",fil) }
 		l = " 00 00 00 00 00 00 00 0B 5A 5B 49"
 		if scanr.Scan() { l = scanr.Text() }
 		fmt.Sscanf(l," %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n", &tflg[0], &tflg[1], &tflg[2], &tflg[3], &tflg[4], &tflg[5], &tflg[6], &tflg[7], &tflg[8], &tflg[9], &tflg[10])
-		if ud { fax(&uflg,&tflg,11) }
+		if ud { fax(&uflg,&tflg,14) }
 	if opts.Verbose {
 			for y := 0; y < 11; y++ { fmt.Printf(" %02X", tflg[y]) }
 			fmt.Printf("\n")
@@ -560,9 +560,9 @@ fmt.Printf("upd_edmaze: x,y: %d, %d\n",opts.DimX,opts.DimY)
 		for x := 0; x <= opts.DimX; x++ {
 		emaze.data[xy{x, y}] = ebuf[xy{x, y}]
 	}}
-	for y := 0; y < 11; y++ {
+/*	for y := 0; y < 11; y++ {
 		emaze.optbyts[y] = eflg[y]
-	}
+	}*/
 	flagbytes := make([]byte, 4)
 	flagbytes[0] = byte(eflg[1])
 	flagbytes[1] = byte(eflg[2])

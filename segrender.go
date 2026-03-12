@@ -23,10 +23,12 @@ type AtMap map[xy]int		// animate tiles+ --/
 type Maze struct {
 	data         MazeData
 	xdata        Xdat
+	flgs     [14]int		// store flags from compressed data + X,Y dims in 12,13
 	ffmap        FFMap		// where ff tiles are
 	an_map       AtMap		// animated map tiles (ideally non movers or fixed movers)
 	an_mapt      AtMap		// animated timers for tiles
 	blok         AtMap		// blok list for maze - all cells that block movement
+//	show         AtMap		// plan to display only map player has covered, a la fargoal
 	encodedbytes int
 	secret       int
 	flags        int
@@ -34,7 +36,6 @@ type Maze struct {
 	wallcolor    int
 	floorpattern int
 	floorcolor   int
-	optbyts  [11]int
 }
 
 // arrays for item masks

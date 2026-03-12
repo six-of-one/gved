@@ -736,7 +736,7 @@ func uswap() {
 			ebuf[xy{x,y}],ubuf[xy{x,y}] = is(ebuf[xy{x,y}],ubuf[xy{x,y}])
 			xbuf[xy{x,y}],xubf[xy{x,y}] = ss(xbuf[xy{x,y}],xubf[xy{x,y}])
 	}}
-	for y := 0; y < 11; y++ { eflg[y], uflg[y] = is(eflg[y], uflg[y]) }
+	for y := 0; y < 14; y++ { eflg[y], uflg[y] = is(eflg[y], uflg[y]) }
 // also have to swap delete stak
 	udbck(delstak+1,delstak)
 	udstak, delstak = is(udstak, delstak)
