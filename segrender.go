@@ -18,16 +18,16 @@ type xy struct{ x, y int }
 type MazeData map[xy]int
 type Xdat map[xy]string	// extra data store		- mvd out edat.go
 type FFMap map[xy]bool						//	- mvd out segrender.go
-type AtMap map[xy]int		// animate tiles+ --/
+type tMap map[xy]int		// animate tiles or other map features coded by int --/
 
 type Maze struct {
 	data         MazeData
 	xdata        Xdat
 	flgs     [14]int		// store flags from compressed data + X,Y dims in 12,13
 	ffmap        FFMap		// where ff tiles are
-	an_map       AtMap		// animated map tiles (ideally non movers or fixed movers)
-	an_mapt      AtMap		// animated timers for tiles
-	blok         AtMap		// blok list for maze - all cells that block movement
+	an_map       tMap		// animated map tiles (ideally non movers or fixed movers)
+	an_mapt      tMap		// animated timers for tiles
+	blok         tMap		// blok list for maze - all cells that block movement
 //	show         AtMap		// plan to display only map player has covered, a la fargoal
 	encodedbytes int
 	secret       int
@@ -335,8 +335,8 @@ func checkffadj4(maze *Maze, x int, y int) int {
 
 var alock bool				// fix concurrent read/write anmap
 var mlock bool				// fix concurrent read/write xdat
-var anmap AtMap
-var anmapt AtMap			// animated timer cnt
+var anmap tMap
+var anmapt tMap			// animated timer cnt
 var svanim bool				// if true save animated map
 
 func ffMark(ffmap FFMap, maze *Maze, x int, y int, dir int) {
@@ -938,11 +938,11 @@ fmt.Printf("segimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 // G² edit & game will now translate to SE mode
 	var skp bool
 	if G2 {
-		maze.data = make(map[xy]int)
+//		maze.data = make(map[xy]int)
 		for y := 0; y <= opts.DimY; y++ {
 			for x := 0; x <= opts.DimX; x++ {
 				c := g2tose[mdat[xy{x, y}]]
-				g1stat[c] = g2stat[mdat[xy{x, y}]]
+				if mdat[xy{x, y}] > -1 { g1stat[c] = g2stat[mdat[xy{x, y}]] }
 				if mdat[xy{x, y}] > MAZEOBJ_EXTEND { skp = true }
 				maze.data[xy{x, y}] = c
 			}}

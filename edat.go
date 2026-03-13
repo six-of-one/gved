@@ -118,8 +118,8 @@ var err error
 	for i := 0; i <= g1maxid; i++ { arstamp = append(arstamp,nil); bld_star(i) }
 // animation map & timers - set by ffMakeMap, read by animcon
 	nobld = true
-	anmap = AtMap{}
-	anmapt = AtMap{}
+	anmap = tMap{}
+	anmapt = tMap{}
 
 	go func() {
 		animcon()
@@ -254,8 +254,13 @@ func init_buf() {
 
 func maze_init() *Maze {
 
-	var maze = &Maze{}
-	maze.data = make(map[xy]int)
+	var maze		= &Maze{}
+	maze.data		= make(map[xy]int)
+	maze.xdata		= make(map[xy]string)
+	maze.ffmap		= ffMakeMap(maze)
+	maze.an_map		= make(map[xy]int)
+	maze.an_mapt	= make(map[xy]int)
+	maze.blok		= make(map[xy]int)
 
 	return maze
 }
