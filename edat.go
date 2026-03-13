@@ -257,7 +257,7 @@ func maze_init() *Maze {
 	var maze		= &Maze{}
 	maze.data		= make(map[xy]int)
 	maze.xdata		= make(map[xy]string)
-	maze.ffmap		= ffMakeMap(maze)
+	maze.ffmap		= make(map[xy]bool)
 	maze.an_map		= make(map[xy]int)
 	maze.an_mapt	= make(map[xy]int)
 	maze.blok		= make(map[xy]int)
@@ -275,10 +275,15 @@ func clr_buf(buf MazeData, xdat Xdat, mx int, my int, z int, wh int) {
 	}
 	for y := 0; y <= my; y++ {
 		for x := 0; x <= mx; x++ {
-			if wh < -65 { buf[xy{x, y}] = z; xdat[xy{x, y}] = "0"
+			if wh < -65 { buf[xy{x, y}] = z
 		} else {
-			if buf[xy{x, y}] == wh { buf[xy{x, y}] = z; xdat[xy{x, y}] = "0" }
+			if buf[xy{x, y}] == wh { buf[xy{x, y}] = z }
 		}
+		xdat[xy{x, y}] = "0"
+//		lmaze.ffmap[xy{x, y}] = false
+//		lmaze.an_map[xy{x, y}] = 0
+//		lmaze.an_mapt[xy{x, y}] = 0
+//		lmaze.block[xy{x, y}] = 0
 	}}
 }
 
