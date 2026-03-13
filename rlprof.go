@@ -128,7 +128,7 @@ func _room(x1, y1, x2, y2, val int) {
 // user selected a maze (or -1/rnd) to attemp items copy from
 	var maze *Maze
 	if xcont.Checked {
-		maze = &Maze{}
+		maze = maze_init()
 		mazn,mt := rndr(7, maxmaze),0
 		if xconsel.Text != "rnd" {
 			fmt.Sscanf(xconsel.Text,"%d",&mt)
@@ -812,7 +812,7 @@ func ReduceWalls(mdat MazeData, startX, startY int) {
 
 func Map4quart(mdat MazeData) {
 
-	var maze = &Maze{}
+	var maze = maze_init()
 
 //	opts.DimX, opts.DimY = 31,31		// for simplicity for now
 										// caveats - too small maze copys into null space, too large only fills a portion...

@@ -250,6 +250,16 @@ func init_buf() {
 	if xplb == nil { xplb = make(map[xy]string) }
 }
 
+// init the entire boosted maze struct
+
+func maze_init() *Maze {
+
+	var maze = &Maze{}
+	maze.data = make(map[xy]int)
+
+	return maze
+}
+
 // clear mazedata buf, max size mx x my, fill with z, unless wh is set > -66, then only replace wh
 
 func clr_buf(buf MazeData, xdat Xdat, mx int, my int, z int, wh int) {

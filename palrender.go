@@ -17,7 +17,7 @@ func palimage(mdat MazeData, xdat Xdat, fdat [14]int, xb int, yb int, xs int, ys
 fmt.Printf("palimage %dx%d - %dx%d: %t, vp: %d\n",xb,yb,xs,ys,stat,viewp)
 
 // dummy maze for ops that require it
-	var maze = &Maze{}
+	var maze = maze_init()
 // G² edit & game will now translate to SE mode
 	var skp bool
 	if G2 {

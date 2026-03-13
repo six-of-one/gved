@@ -110,8 +110,8 @@ func vexpand(maze *Maze, location int, t int, count int) int {
 func mazeDecompress(compressed []int, metaonly bool) *Maze {
 //	rand.Seed(5)
 	//  var m [32][32]int
-	var maze = &Maze{}
-	maze.data = make(map[xy]int)
+	var maze = maze_init()
+
 	maze.encodedbytes = len(compressed)
 	maze.secret = compressed[0] & 0x1f
 
@@ -344,8 +344,8 @@ if opts.Verbose { fmt.Printf("mdcmp wraps -- hw: %d vw: %d\n", maze.flags&LFLAG4
 
 func justDecompress(compressed []int, metaonly bool) *Maze {
 
-	var maze = &Maze{}
-	maze.data = make(map[xy]int)
+	var maze = maze_init()
+
 	maze.encodedbytes = len(compressed)
 	maze.secret = compressed[0] & 0x1f
 
