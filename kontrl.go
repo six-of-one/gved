@@ -148,7 +148,7 @@ func specialKey(cw fyne.Window) {
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimX += da; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
-						  clr_buf(ebuf, xbuf, px, py, 0, -1)
+						  clr_buf(ebuf, emaze.xdata, px, py, 0, -1)
 						  flordirt = 1
 						} else {
 							//if vpx + viewp < opts.DimX { vpx++ }
@@ -170,7 +170,7 @@ func specialKey(cw fyne.Window) {
 				opts.dntr = true; srelod = true
 				if ctrl { opts.DimY += da; opts.bufdrt = true
 						  sta = "maze: %d x %d"; px, py = opts.DimX, opts.DimY
-						  clr_buf(ebuf, xbuf, px, py, 0, -1)
+						  clr_buf(ebuf, emaze.xdata, px, py, 0, -1)
 						  flordirt = 1
 						} else {
 							//if vpy + viewp < opts.DimY { vpy++ }
@@ -346,7 +346,7 @@ fmt.Printf("G¹ ed key: %d - %s\n",edkey,kys)
 fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				if opts.bufdrt { menu_savit(true) }		// autosave
 				fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
-				cnd := lod_maz(fil, xbuf, ebuf, false, true)
+				cnd := lod_maz(fil, emaze.xdata, ebuf, false, true)
 				if cnd >= 0 { sdb = anum; fax(&eflg,&tflg,14); ed_maze(true,flordirt,walsdirt) }
 				anum = 0
 			} else { opts.Nogtop = !opts.Nogtop; opts.dntr = (opts.edat > 0); relod = true }
@@ -391,7 +391,7 @@ fmt.Printf("Load SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 				if anum > 0 && anum < sdmax {		// save buf when not in edit, rand load can go into all mazes
 fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 					fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",anum,opts.Gtp)
-					sav_maz(fil, xbuf, ebuf, eflg, opts.DimX, opts.DimY, 0 - anum, true)
+					sav_maz(fil, emaze.xdata, ebuf, eflg, opts.DimX, opts.DimY, 0 - anum, true)
 					anum = 0
 				} else {
 					spau = sdbit(1)
@@ -478,7 +478,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MRP = true
 				upd_edmaze(false)
-				opts.DimX, opts.DimY = rotmirbuf(emaze,xbuf, opts.DimX, opts.DimY)
+				opts.DimX, opts.DimY = rotmirbuf(emaze,emaze.xdata, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
 				flordirt, walsdirt = 1,1
@@ -491,7 +491,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MRM = true
 				upd_edmaze(false)
-				opts.DimX, opts.DimY = rotmirbuf(emaze,xbuf, opts.DimX, opts.DimY)
+				opts.DimX, opts.DimY = rotmirbuf(emaze,emaze.xdata, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
 				flordirt, walsdirt = 1,1
@@ -510,7 +510,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MV = true
 				upd_edmaze(false)
-				rotmirbuf(emaze,xbuf, opts.DimX, opts.DimY)
+				rotmirbuf(emaze,emaze.xdata, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
 				flordirt, walsdirt = 1,1
@@ -529,7 +529,7 @@ fmt.Printf("Save to SD buf, anum: %05d, sdb: %d\n",anum, sdb)
 			if opts.edat > 0 {
 				opts.MH = true
 				upd_edmaze(false)
-				rotmirbuf(emaze,xbuf, opts.DimX, opts.DimY)
+				rotmirbuf(emaze,emaze.xdata, opts.DimX, opts.DimY)
 				opts.dntr = true
 				opts.bufdrt = true
 				flordirt, walsdirt = 1,1
@@ -663,10 +663,10 @@ func menu_ndsav(y bool) {
 	if y {
 		if nssb < 0 {
 			fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",nsgg,nsmz)
-			sav_maz(fil, xbuf, ebuf, eflg, nsxd, nsyd, nsmz, true)
+			sav_maz(fil, emaze.xdata, ebuf, eflg, nsxd, nsyd, nsmz, true)
 		} else {
 			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",nssb,nsgg)
-			sav_maz(fil, xbuf, ebuf, eflg, nsxd, nsyd, 0 - nssb, true)
+			sav_maz(fil, emaze.xdata, ebuf, eflg, nsxd, nsyd, 0 - nssb, true)
 		}
 	}
 	if exitsel { os.Exit(0) }
@@ -699,7 +699,7 @@ fmt.Printf(" stk %d undo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 		for revk > 0 && restak >= 0 {
 
 			ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.elem[restak] = is(ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.elem[restak])
-			xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak] = ss(xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak])
+			emaze.xdata[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak] = ss(emaze.xdata[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak])
 
 			revk--
 			if revk > 0 && restak > 0 { restak-- }
@@ -718,7 +718,7 @@ fmt.Printf(" stk %d redo %d elem: %d maze: %d x %d - rloop: %d\n",delstak,restak
 //fmt.Printf(" redo %d elem: %d maze: %d x %d - rloop: %d\n",restak,delbuf.elem[restak],delbuf.mx[restak],delbuf.my[restak],delbuf.revc[restak])
 
 			ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.elem[restak] = is(ebuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.elem[restak])
-			xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak] = ss(xbuf[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak])
+			emaze.xdata[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak] = ss(emaze.xdata[xy{delbuf.mx[restak], delbuf.my[restak]}], delbuf.xbfd[restak])
 
 			revk++
 			restak++
@@ -734,7 +734,7 @@ func uswap() {
 	for y := 0; y <= opts.DimY; y++ {
 		for x := 0; x <= opts.DimX; x++ {
 			ebuf[xy{x,y}],ubuf[xy{x,y}] = is(ebuf[xy{x,y}],ubuf[xy{x,y}])
-			xbuf[xy{x,y}],xubf[xy{x,y}] = ss(xbuf[xy{x,y}],xubf[xy{x,y}])
+			emaze.xdata[xy{x,y}],xubf[xy{x,y}] = ss(emaze.xdata[xy{x,y}],xubf[xy{x,y}])
 	}}
 	for y := 0; y < 14; y++ { eflg[y], uflg[y] = is(eflg[y], uflg[y]) }
 // also have to swap delete stak
@@ -830,7 +830,7 @@ func sdbit(dir int) string {
 		ldb += dir
 		if ldb == 0 { ldb = 1 }
 		fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",ldb,opts.Gtp)
-		cnd = lod_maz(fil, xbuf, ebuf, false, true)
+		cnd = lod_maz(fil, emaze.xdata, ebuf, false, true)
 		if cnd >= 0 { sdb = ldb; fax(&eflg,&tflg,14); ed_maze(true,1,1); spar = fmt.Sprintf("cmd: S - ") }
 		if dir < 0 && cnd < 0 && ldb == 1 { cnd = 0; break }
 	}

@@ -160,7 +160,7 @@ if opts.Verbose {
 	if opts.edat > 0 {
 		sdb = -1
 		fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,opts.mnum+1)
-		cnd := lod_maz(fil, xbuf, ebuf, true, true)
+		cnd := lod_maz(fil, maze.xdata, ebuf, true, true)
 		if cnd > -1 { opts.edip = cnd }
 		fax(&eflg,&tflg,11)
 		if opts.edip != 0 {

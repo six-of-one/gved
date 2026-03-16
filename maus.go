@@ -211,8 +211,8 @@ func (h *holdableButton) MouseMoved(mm *desktop.MouseEvent){
 					setcode = g2edit_keymap[edkey]
 					xstcode = "00"
 				}}
-				if del { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = 0; xbuf[xy{mxmd, mymd}] = "0"; opts.bufdrt = true } else {	// delete anything for now makes a floor
-				if setcode > 0 { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = setcode; xbuf[xy{mxmd, mymd}] = xstcode; opts.bufdrt = true }
+				if del { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = 0; emaze.xdata[xy{mxmd, mymd}] = "0"; opts.bufdrt = true } else {	// delete anything for now makes a floor
+				if setcode > 0 { undo_buf(mxmd, mymd,prcl); ebuf[xy{mxmd, mymd}] = setcode; emaze.xdata[xy{mxmd, mymd}] = xstcode; opts.bufdrt = true }
 				}
 // FX: a loop is happening including this when mouse exits main win
 fmt.Printf("prc: %d r: %.0f x %.0f cel: %d x %d - ls: %d x %d\n",prcl,rx,ry,mxmd,mymd,pmx,pmy)
@@ -314,7 +314,7 @@ func (h *holdableButton) MouseUp(mm *desktop.MouseEvent){
  //   fmt.Printf("up %v\n",mm)
 	if opts.edat > 0 {
 		opbuf := ebuf
-		xopbf := xbuf
+		xopbf := emaze.xdata
 		pbe := false		// paste buf edit
 		if strings.Contains(h.title, " pbf") {			// simple edit on pb win content
 			opbuf = cpbuf

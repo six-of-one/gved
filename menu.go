@@ -39,7 +39,7 @@ func menu_savit(y bool) {
 			ed_sav(opts.mnum+1)
 		} else {
 			fil := fmt.Sprintf(".ed/sd%05d_g%d.ed",sdb,opts.Gtp)
-			sav_maz(fil, xbuf, ebuf, eflg, opts.DimX, opts.DimY, 0 - sdb, true)
+			sav_maz(fil, emaze.xdata, ebuf, eflg, opts.DimX, opts.DimY, 0 - sdb, true)
 		}
 	}
 }
@@ -49,7 +49,7 @@ func menu_lodit(y bool) {
 	if y {
 		if sdb < 0 {
 			Ovwallpat = -1
-			cnd := lod_maz(fil, xbuf, ebuf, true, true)
+			cnd := lod_maz(fil, emaze.xdata, ebuf, true, true)
 			if cnd >= 0 { fax(&eflg,&tflg,14) }
 			remaze(opts.mnum)
 		} else {
@@ -113,7 +113,7 @@ func menu_savas() {
 
 		mazn := opts.mnum+1
 		if anum > 0 { mazn = anum }
-		sav_maz(fil, xbuf, ebuf, eflg, opts.DimX, opts.DimY, mazn, true)
+		sav_maz(fil, emaze.xdata, ebuf, eflg, opts.DimX, opts.DimY, mazn, true)
 
 	}, w)
 	fileDialog.Show()
@@ -138,7 +138,7 @@ func menu_laodf() {
 
 		if opts.bufdrt { menu_savit(true) }		// autosave
 		Ovwallpat = -1
-		cnd := lod_maz(fil, xbuf, ebuf, true, true)
+		cnd := lod_maz(fil, emaze.xdata, ebuf, true, true)
 		sdb = -1
 		if cnd >= 0 { fax(&eflg,&tflg,14) }
 		remaze(opts.mnum)
@@ -159,7 +159,7 @@ func menu_walls(pr bool) {
 	for ty := 0; ty <= opts.DimY; ty++ {
 	for tx := 0; tx <= opts.DimX; tx++ {
 		ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR
-		xbuf[xy{tx, ty}] = ""
+		emaze.xdata[xy{tx, ty}] = ""
 	}}
 	opts.dntr = true
 	flordirt, walsdirt = 1,1
@@ -204,7 +204,7 @@ func menu_blank(pr bool) {
 		}}
 		if clr {
 			ebuf[xy{tx, ty}] = 0
-			xbuf[xy{tx, ty}] = ""
+			emaze.xdata[xy{tx, ty}] = ""
 			if bordwal.Checked {
 			if tx == 0 { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }
 			if ty == 0 { ebuf[xy{tx, ty}] = MAZEOBJ_WALL_REGULAR }

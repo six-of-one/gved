@@ -27,7 +27,7 @@ more complexity will be required for:
 var emaze *Maze		// taking over ebuf & xbuf as main edit maze
 var ebuf MazeData		// main edit buffer and corresponding flags
 
-var xbuf Xdat
+//var xbuf Xdat
 var ecolor color.Color	// master color for maze elements
 var eid string			// id string for titles
 
@@ -241,7 +241,7 @@ func prep(fn string, prp string) string {
 
 func init_buf() {
 	if ebuf == nil { ebuf = make(map[xy]int) }
-	if xbuf == nil { xbuf = make(map[xy]string) }
+//	if xbuf == nil { xbuf = make(map[xy]string) }
 	if ubuf == nil { ubuf = make(map[xy]int) }
 	if xubf == nil { xubf = make(map[xy]string) }
 	if cpbuf == nil { cpbuf = make(map[xy]int) }
@@ -571,7 +571,7 @@ func ed_sav(mazn int) {
 
 	upd_edmaze(false)
 	fil := fmt.Sprintf(".ed/g%dmaze%03d.ed",opts.Gtp,mazn)
-	sav_maz(fil, xbuf, ebuf, eflg, opts.DimX, opts.DimY, mazn, true)
+	sav_maz(fil, emaze.xdata, ebuf, eflg, opts.DimX, opts.DimY, mazn, true)
 }
 
 func upd_edmaze(ovrm bool) {
@@ -638,7 +638,7 @@ fmt.Printf("lvpp: %d sx,sy: %d, %d - ex,ey: %d, %d\n",lvpp,vpx,vpy,fx,fy)
 	}
 	mvpx, mvpy, mvxe, mvye = vpx, vpy, fx,fy
 	for vlock {}
-	Ovimg := segimage(ebuf, xbuf, eflg, vpx, vpy, fx,fy, false)
+	Ovimg := segimage(ebuf, emaze.xdata, eflg, vpx, vpy, fx,fy, false)
 	upwin(Ovimg, lvpp)
 	calc_stats()
 }
@@ -651,7 +651,7 @@ func undo_buf(sx int, sy int, rc int) {
 	delbuf.my[delstak] = sy
 	delbuf.revc[delstak] = rc					// revoke count for the loop
 	delbuf.elem[delstak] = ebuf[xy{sx, sy}]
-	delbuf.xbfd[delstak] = xbuf[xy{sx, sy}]
+	delbuf.xbfd[delstak] = emaze.xdata[xy{sx, sy}]
 // append the next unit blank if needed
 //fmt.Printf(" del %d elem: %d maze: %d x %d - rloop: %d\n",delstak,delbuf.elem[delstak],delbuf.mx[delstak],delbuf.my[delstak],rc)
 	delstak++
@@ -814,7 +814,7 @@ fmt.Printf("\nin remaze dntr: %t edat:%d sdb: %d, delstk: %d, DIMS: %d - %d\n",o
 	if !opts.dntr {
 		sdb = -1
 		delbset(0)
-		clr_buf(ebuf, xbuf, 32, 32, -1, -66)
+		clr_buf(ebuf, emaze.xdata, 32, 32, -1, -66)
 		emaze = mazeDecompress(slapsticReadMaze(mazn), false)
 		mazeloop(emaze)
 		opts.bufdrt = false
